@@ -46,6 +46,28 @@ public class WelcomeScreenModifyBuilder : AuditRequestBuilder<GuildWelcomeScreen
         )
     }
 
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other == null || this::class != other::class) return false
+
+        other as WelcomeScreenModifyBuilder
+
+        if (reason != other.reason) return false
+        if (enabled != other.enabled) return false
+        if (description != other.description) return false
+        if (welcomeScreenChannels != other.welcomeScreenChannels) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = reason?.hashCode() ?: 0
+        result = 31 * result + (enabled?.hashCode() ?: 0)
+        result = 31 * result + (description?.hashCode() ?: 0)
+        result = 31 * result + (welcomeScreenChannels?.hashCode() ?: 0)
+        return result
+    }
+
 }
 
 @KordDsl
@@ -57,6 +79,28 @@ public class WelcomeScreenChannelBuilder(
 ) : RequestBuilder<DiscordWelcomeScreenChannel> {
     override fun toRequest(): DiscordWelcomeScreenChannel {
         return DiscordWelcomeScreenChannel(channelId, description, emojiId, emojiName)
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other == null || this::class != other::class) return false
+
+        other as WelcomeScreenChannelBuilder
+
+        if (channelId != other.channelId) return false
+        if (description != other.description) return false
+        if (emojiId != other.emojiId) return false
+        if (emojiName != other.emojiName) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = channelId.hashCode()
+        result = 31 * result + description.hashCode()
+        result = 31 * result + (emojiId?.hashCode() ?: 0)
+        result = 31 * result + (emojiName?.hashCode() ?: 0)
+        return result
     }
 
 }

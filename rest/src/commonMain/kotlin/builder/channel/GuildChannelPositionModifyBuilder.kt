@@ -37,6 +37,20 @@ public class GuildChannelPositionModifyBuilder : RequestBuilder<GuildChannelPosi
 
     override fun toRequest(): GuildChannelPositionModifyRequest =
         GuildChannelPositionModifyRequest(swaps.map { it.toRequest() })
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other == null || this::class != other::class) return false
+
+        other as GuildChannelPositionModifyBuilder
+
+        return swaps == other.swaps
+    }
+
+    override fun hashCode(): Int {
+        return swaps.hashCode()
+    }
+
 }
 
 @KordDsl
@@ -74,5 +88,27 @@ public class GuildChannelSwapBuilder(public var channelId: Snowflake) {
     public fun toRequest(): ChannelPositionSwapRequest = ChannelPositionSwapRequest(
         channelId, _position, _lockPermissionsToParent, _parentId
     )
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other == null || this::class != other::class) return false
+
+        other as GuildChannelSwapBuilder
+
+        if (channelId != other.channelId) return false
+        if (position != other.position) return false
+        if (parentId != other.parentId) return false
+        if (lockPermissionsToParent != other.lockPermissionsToParent) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = channelId.hashCode()
+        result = 31 * result + (position ?: 0)
+        result = 31 * result + (parentId?.hashCode() ?: 0)
+        result = 31 * result + (lockPermissionsToParent?.hashCode() ?: 0)
+        return result
+    }
 
 }

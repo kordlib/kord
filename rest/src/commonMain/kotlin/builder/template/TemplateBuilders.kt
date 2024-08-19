@@ -20,6 +20,25 @@ public class GuildFromTemplateCreateBuilder(public var name: String) : RequestBu
     override fun toRequest(): GuildFromTemplateCreateRequest = GuildFromTemplateCreateRequest(
         name, _image.map { it.dataUri }
     )
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other == null || this::class != other::class) return false
+
+        other as GuildFromTemplateCreateBuilder
+
+        if (name != other.name) return false
+        if (image != other.image) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = name.hashCode()
+        result = 31 * result + (image?.hashCode() ?: 0)
+        return result
+    }
+
 }
 
 @KordDsl
@@ -28,6 +47,25 @@ public class GuildTemplateCreateBuilder(public var name: String) : RequestBuilde
     public var description: String? by ::_description.delegate()
 
     override fun toRequest(): GuildTemplateCreateRequest = GuildTemplateCreateRequest(name, _description)
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other == null || this::class != other::class) return false
+
+        other as GuildTemplateCreateBuilder
+
+        if (name != other.name) return false
+        if (description != other.description) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = name.hashCode()
+        result = 31 * result + (description?.hashCode() ?: 0)
+        return result
+    }
+
 }
 
 @KordDsl
@@ -40,4 +78,23 @@ public class GuildTemplateModifyBuilder : RequestBuilder<GuildTemplateModifyRequ
     public var description: String? by ::_description.delegate()
 
     override fun toRequest(): GuildTemplateModifyRequest = GuildTemplateModifyRequest(_name, _description)
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other == null || this::class != other::class) return false
+
+        other as GuildTemplateModifyBuilder
+
+        if (name != other.name) return false
+        if (description != other.description) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = name?.hashCode() ?: 0
+        result = 31 * result + (description?.hashCode() ?: 0)
+        return result
+    }
+
 }

@@ -45,4 +45,35 @@ public class MemberModifyBuilder : AuditRequestBuilder<GuildMemberModifyRequest>
         communicationDisabledUntil = _communicationDisabledUntil,
         flags = _flags,
     )
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other == null || this::class != other::class) return false
+
+        other as MemberModifyBuilder
+
+        if (reason != other.reason) return false
+        if (voiceChannelId != other.voiceChannelId) return false
+        if (muted != other.muted) return false
+        if (deafened != other.deafened) return false
+        if (nickname != other.nickname) return false
+        if (communicationDisabledUntil != other.communicationDisabledUntil) return false
+        if (roles != other.roles) return false
+        if (flags != other.flags) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = reason?.hashCode() ?: 0
+        result = 31 * result + (voiceChannelId?.hashCode() ?: 0)
+        result = 31 * result + (muted?.hashCode() ?: 0)
+        result = 31 * result + (deafened?.hashCode() ?: 0)
+        result = 31 * result + (nickname?.hashCode() ?: 0)
+        result = 31 * result + (communicationDisabledUntil?.hashCode() ?: 0)
+        result = 31 * result + (roles?.hashCode() ?: 0)
+        result = 31 * result + (flags?.hashCode() ?: 0)
+        return result
+    }
+
 }

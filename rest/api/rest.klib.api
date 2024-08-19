@@ -683,6 +683,8 @@ final class dev.kord.rest.builder.application/ApplicationRoleConnectionMetadataB
         final fun <get-type>(): dev.kord.common.entity/ApplicationRoleConnectionMetadataType // dev.kord.rest.builder.application/ApplicationRoleConnectionMetadataBuilder.type.<get-type>|<get-type>(){}[0]
         final fun <set-type>(dev.kord.common.entity/ApplicationRoleConnectionMetadataType) // dev.kord.rest.builder.application/ApplicationRoleConnectionMetadataBuilder.type.<set-type>|<set-type>(dev.kord.common.entity.ApplicationRoleConnectionMetadataType){}[0]
 
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.builder.application/ApplicationRoleConnectionMetadataBuilder.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.rest.builder.application/ApplicationRoleConnectionMetadataBuilder.hashCode|hashCode(){}[0]
     final fun toRequest(): dev.kord.common.entity/DiscordApplicationRoleConnectionMetadata // dev.kord.rest.builder.application/ApplicationRoleConnectionMetadataBuilder.toRequest|toRequest(){}[0]
 }
 
@@ -693,6 +695,8 @@ final class dev.kord.rest.builder.application/ApplicationRoleConnectionMetadataR
         final fun <get-records>(): kotlin.collections/MutableList<dev.kord.rest.builder.application/ApplicationRoleConnectionMetadataBuilder> // dev.kord.rest.builder.application/ApplicationRoleConnectionMetadataRecordsBuilder.records.<get-records>|<get-records>(){}[0]
         final fun <set-records>(kotlin.collections/MutableList<dev.kord.rest.builder.application/ApplicationRoleConnectionMetadataBuilder>) // dev.kord.rest.builder.application/ApplicationRoleConnectionMetadataRecordsBuilder.records.<set-records>|<set-records>(kotlin.collections.MutableList<dev.kord.rest.builder.application.ApplicationRoleConnectionMetadataBuilder>){}[0]
 
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.builder.application/ApplicationRoleConnectionMetadataRecordsBuilder.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.rest.builder.application/ApplicationRoleConnectionMetadataRecordsBuilder.hashCode|hashCode(){}[0]
     final fun toRequest(): kotlin.collections/List<dev.kord.common.entity/DiscordApplicationRoleConnectionMetadata> // dev.kord.rest.builder.application/ApplicationRoleConnectionMetadataRecordsBuilder.toRequest|toRequest(){}[0]
     final inline fun record(dev.kord.common.entity/ApplicationRoleConnectionMetadataType, kotlin/String, kotlin/String, kotlin/String, kotlin/Function1<dev.kord.rest.builder.application/ApplicationRoleConnectionMetadataBuilder, kotlin/Unit> = ...) // dev.kord.rest.builder.application/ApplicationRoleConnectionMetadataRecordsBuilder.record|record(dev.kord.common.entity.ApplicationRoleConnectionMetadataType;kotlin.String;kotlin.String;kotlin.String;kotlin.Function1<dev.kord.rest.builder.application.ApplicationRoleConnectionMetadataBuilder,kotlin.Unit>){}[0]
 }
@@ -716,6 +720,8 @@ final class dev.kord.rest.builder.auditlog/AuditLogGetRequestBuilder : dev.kord.
         final fun <get-userId>(): dev.kord.common.entity/Snowflake? // dev.kord.rest.builder.auditlog/AuditLogGetRequestBuilder.userId.<get-userId>|<get-userId>(){}[0]
         final fun <set-userId>(dev.kord.common.entity/Snowflake?) // dev.kord.rest.builder.auditlog/AuditLogGetRequestBuilder.userId.<set-userId>|<set-userId>(dev.kord.common.entity.Snowflake?){}[0]
 
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.builder.auditlog/AuditLogGetRequestBuilder.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.rest.builder.auditlog/AuditLogGetRequestBuilder.hashCode|hashCode(){}[0]
     final fun toRequest(): dev.kord.rest.json.request/AuditLogGetRequest // dev.kord.rest.builder.auditlog/AuditLogGetRequestBuilder.toRequest|toRequest(){}[0]
 }
 
@@ -728,6 +734,9 @@ final class dev.kord.rest.builder.automoderation/BlockMessageAutoModerationActio
     final var customMessage // dev.kord.rest.builder.automoderation/BlockMessageAutoModerationActionBuilder.customMessage|{}customMessage[0]
         final fun <get-customMessage>(): kotlin/String? // dev.kord.rest.builder.automoderation/BlockMessageAutoModerationActionBuilder.customMessage.<get-customMessage>|<get-customMessage>(){}[0]
         final fun <set-customMessage>(kotlin/String?) // dev.kord.rest.builder.automoderation/BlockMessageAutoModerationActionBuilder.customMessage.<set-customMessage>|<set-customMessage>(kotlin.String?){}[0]
+
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.builder.automoderation/BlockMessageAutoModerationActionBuilder.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.rest.builder.automoderation/BlockMessageAutoModerationActionBuilder.hashCode|hashCode(){}[0]
 }
 
 final class dev.kord.rest.builder.automoderation/KeywordAutoModerationRuleCreateBuilder : dev.kord.rest.builder.automoderation/AutoModerationRuleCreateBuilder, dev.kord.rest.builder.automoderation/KeywordAutoModerationRuleBuilder { // dev.kord.rest.builder.automoderation/KeywordAutoModerationRuleCreateBuilder|null[0]
@@ -742,6 +751,9 @@ final class dev.kord.rest.builder.automoderation/KeywordAutoModerationRuleCreate
     final var regexPatterns // dev.kord.rest.builder.automoderation/KeywordAutoModerationRuleCreateBuilder.regexPatterns|{}regexPatterns[0]
         final fun <get-regexPatterns>(): kotlin.collections/MutableList<kotlin/String>? // dev.kord.rest.builder.automoderation/KeywordAutoModerationRuleCreateBuilder.regexPatterns.<get-regexPatterns>|<get-regexPatterns>(){}[0]
         final fun <set-regexPatterns>(kotlin.collections/MutableList<kotlin/String>?) // dev.kord.rest.builder.automoderation/KeywordAutoModerationRuleCreateBuilder.regexPatterns.<set-regexPatterns>|<set-regexPatterns>(kotlin.collections.MutableList<kotlin.String>?){}[0]
+
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.builder.automoderation/KeywordAutoModerationRuleCreateBuilder.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.rest.builder.automoderation/KeywordAutoModerationRuleCreateBuilder.hashCode|hashCode(){}[0]
 }
 
 final class dev.kord.rest.builder.automoderation/KeywordAutoModerationRuleModifyBuilder : dev.kord.rest.builder.automoderation/AutoModerationRuleModifyBuilder, dev.kord.rest.builder.automoderation/KeywordAutoModerationRuleBuilder { // dev.kord.rest.builder.automoderation/KeywordAutoModerationRuleModifyBuilder|null[0]
@@ -756,6 +768,9 @@ final class dev.kord.rest.builder.automoderation/KeywordAutoModerationRuleModify
     final var regexPatterns // dev.kord.rest.builder.automoderation/KeywordAutoModerationRuleModifyBuilder.regexPatterns|{}regexPatterns[0]
         final fun <get-regexPatterns>(): kotlin.collections/MutableList<kotlin/String>? // dev.kord.rest.builder.automoderation/KeywordAutoModerationRuleModifyBuilder.regexPatterns.<get-regexPatterns>|<get-regexPatterns>(){}[0]
         final fun <set-regexPatterns>(kotlin.collections/MutableList<kotlin/String>?) // dev.kord.rest.builder.automoderation/KeywordAutoModerationRuleModifyBuilder.regexPatterns.<set-regexPatterns>|<set-regexPatterns>(kotlin.collections.MutableList<kotlin.String>?){}[0]
+
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.builder.automoderation/KeywordAutoModerationRuleModifyBuilder.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.rest.builder.automoderation/KeywordAutoModerationRuleModifyBuilder.hashCode|hashCode(){}[0]
 }
 
 final class dev.kord.rest.builder.automoderation/KeywordPresetAutoModerationRuleCreateBuilder : dev.kord.rest.builder.automoderation/AutoModerationRuleCreateBuilder, dev.kord.rest.builder.automoderation/KeywordPresetAutoModerationRuleBuilder { // dev.kord.rest.builder.automoderation/KeywordPresetAutoModerationRuleCreateBuilder|null[0]
@@ -769,6 +784,8 @@ final class dev.kord.rest.builder.automoderation/KeywordPresetAutoModerationRule
         final fun <set-presets>(kotlin.collections/MutableList<dev.kord.common.entity/AutoModerationRuleKeywordPresetType>) // dev.kord.rest.builder.automoderation/KeywordPresetAutoModerationRuleCreateBuilder.presets.<set-presets>|<set-presets>(kotlin.collections.MutableList<dev.kord.common.entity.AutoModerationRuleKeywordPresetType>){}[0]
 
     final fun assignPresets(kotlin.collections/MutableList<dev.kord.common.entity/AutoModerationRuleKeywordPresetType>) // dev.kord.rest.builder.automoderation/KeywordPresetAutoModerationRuleCreateBuilder.assignPresets|assignPresets(kotlin.collections.MutableList<dev.kord.common.entity.AutoModerationRuleKeywordPresetType>){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.builder.automoderation/KeywordPresetAutoModerationRuleCreateBuilder.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.rest.builder.automoderation/KeywordPresetAutoModerationRuleCreateBuilder.hashCode|hashCode(){}[0]
 }
 
 final class dev.kord.rest.builder.automoderation/KeywordPresetAutoModerationRuleModifyBuilder : dev.kord.rest.builder.automoderation/AutoModerationRuleModifyBuilder, dev.kord.rest.builder.automoderation/KeywordPresetAutoModerationRuleBuilder { // dev.kord.rest.builder.automoderation/KeywordPresetAutoModerationRuleModifyBuilder|null[0]
@@ -782,6 +799,8 @@ final class dev.kord.rest.builder.automoderation/KeywordPresetAutoModerationRule
         final fun <set-presets>(kotlin.collections/MutableList<dev.kord.common.entity/AutoModerationRuleKeywordPresetType>?) // dev.kord.rest.builder.automoderation/KeywordPresetAutoModerationRuleModifyBuilder.presets.<set-presets>|<set-presets>(kotlin.collections.MutableList<dev.kord.common.entity.AutoModerationRuleKeywordPresetType>?){}[0]
 
     final fun assignPresets(kotlin.collections/MutableList<dev.kord.common.entity/AutoModerationRuleKeywordPresetType>) // dev.kord.rest.builder.automoderation/KeywordPresetAutoModerationRuleModifyBuilder.assignPresets|assignPresets(kotlin.collections.MutableList<dev.kord.common.entity.AutoModerationRuleKeywordPresetType>){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.builder.automoderation/KeywordPresetAutoModerationRuleModifyBuilder.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.rest.builder.automoderation/KeywordPresetAutoModerationRuleModifyBuilder.hashCode|hashCode(){}[0]
 }
 
 final class dev.kord.rest.builder.automoderation/MentionSpamAutoModerationRuleCreateBuilder : dev.kord.rest.builder.automoderation/AutoModerationRuleCreateBuilder, dev.kord.rest.builder.automoderation/MentionSpamAutoModerationRuleBuilder { // dev.kord.rest.builder.automoderation/MentionSpamAutoModerationRuleCreateBuilder|null[0]
@@ -793,6 +812,9 @@ final class dev.kord.rest.builder.automoderation/MentionSpamAutoModerationRuleCr
     final var mentionRaidProtectionEnabled // dev.kord.rest.builder.automoderation/MentionSpamAutoModerationRuleCreateBuilder.mentionRaidProtectionEnabled|{}mentionRaidProtectionEnabled[0]
         final fun <get-mentionRaidProtectionEnabled>(): kotlin/Boolean? // dev.kord.rest.builder.automoderation/MentionSpamAutoModerationRuleCreateBuilder.mentionRaidProtectionEnabled.<get-mentionRaidProtectionEnabled>|<get-mentionRaidProtectionEnabled>(){}[0]
         final fun <set-mentionRaidProtectionEnabled>(kotlin/Boolean?) // dev.kord.rest.builder.automoderation/MentionSpamAutoModerationRuleCreateBuilder.mentionRaidProtectionEnabled.<set-mentionRaidProtectionEnabled>|<set-mentionRaidProtectionEnabled>(kotlin.Boolean?){}[0]
+
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.builder.automoderation/MentionSpamAutoModerationRuleCreateBuilder.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.rest.builder.automoderation/MentionSpamAutoModerationRuleCreateBuilder.hashCode|hashCode(){}[0]
 }
 
 final class dev.kord.rest.builder.automoderation/MentionSpamAutoModerationRuleModifyBuilder : dev.kord.rest.builder.automoderation/AutoModerationRuleModifyBuilder, dev.kord.rest.builder.automoderation/MentionSpamAutoModerationRuleBuilder { // dev.kord.rest.builder.automoderation/MentionSpamAutoModerationRuleModifyBuilder|null[0]
@@ -804,6 +826,9 @@ final class dev.kord.rest.builder.automoderation/MentionSpamAutoModerationRuleMo
     final var mentionRaidProtectionEnabled // dev.kord.rest.builder.automoderation/MentionSpamAutoModerationRuleModifyBuilder.mentionRaidProtectionEnabled|{}mentionRaidProtectionEnabled[0]
         final fun <get-mentionRaidProtectionEnabled>(): kotlin/Boolean? // dev.kord.rest.builder.automoderation/MentionSpamAutoModerationRuleModifyBuilder.mentionRaidProtectionEnabled.<get-mentionRaidProtectionEnabled>|<get-mentionRaidProtectionEnabled>(){}[0]
         final fun <set-mentionRaidProtectionEnabled>(kotlin/Boolean?) // dev.kord.rest.builder.automoderation/MentionSpamAutoModerationRuleModifyBuilder.mentionRaidProtectionEnabled.<set-mentionRaidProtectionEnabled>|<set-mentionRaidProtectionEnabled>(kotlin.Boolean?){}[0]
+
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.builder.automoderation/MentionSpamAutoModerationRuleModifyBuilder.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.rest.builder.automoderation/MentionSpamAutoModerationRuleModifyBuilder.hashCode|hashCode(){}[0]
 }
 
 final class dev.kord.rest.builder.automoderation/SendAlertMessageAutoModerationActionBuilder : dev.kord.rest.builder.automoderation/AutoModerationActionBuilder { // dev.kord.rest.builder.automoderation/SendAlertMessageAutoModerationActionBuilder|null[0]
@@ -815,6 +840,9 @@ final class dev.kord.rest.builder.automoderation/SendAlertMessageAutoModerationA
     final var channelId // dev.kord.rest.builder.automoderation/SendAlertMessageAutoModerationActionBuilder.channelId|{}channelId[0]
         final fun <get-channelId>(): dev.kord.common.entity/Snowflake // dev.kord.rest.builder.automoderation/SendAlertMessageAutoModerationActionBuilder.channelId.<get-channelId>|<get-channelId>(){}[0]
         final fun <set-channelId>(dev.kord.common.entity/Snowflake) // dev.kord.rest.builder.automoderation/SendAlertMessageAutoModerationActionBuilder.channelId.<set-channelId>|<set-channelId>(dev.kord.common.entity.Snowflake){}[0]
+
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.builder.automoderation/SendAlertMessageAutoModerationActionBuilder.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.rest.builder.automoderation/SendAlertMessageAutoModerationActionBuilder.hashCode|hashCode(){}[0]
 }
 
 final class dev.kord.rest.builder.automoderation/SpamAutoModerationRuleCreateBuilder : dev.kord.rest.builder.automoderation/AutoModerationRuleCreateBuilder, dev.kord.rest.builder.automoderation/SpamAutoModerationRuleBuilder { // dev.kord.rest.builder.automoderation/SpamAutoModerationRuleCreateBuilder|null[0]
@@ -834,6 +862,9 @@ final class dev.kord.rest.builder.automoderation/TimeoutAutoModerationActionBuil
     final var duration // dev.kord.rest.builder.automoderation/TimeoutAutoModerationActionBuilder.duration|{}duration[0]
         final fun <get-duration>(): kotlin.time/Duration // dev.kord.rest.builder.automoderation/TimeoutAutoModerationActionBuilder.duration.<get-duration>|<get-duration>(){}[0]
         final fun <set-duration>(kotlin.time/Duration) // dev.kord.rest.builder.automoderation/TimeoutAutoModerationActionBuilder.duration.<set-duration>|<set-duration>(kotlin.time.Duration){}[0]
+
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.builder.automoderation/TimeoutAutoModerationActionBuilder.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.rest.builder.automoderation/TimeoutAutoModerationActionBuilder.hashCode|hashCode(){}[0]
 }
 
 final class dev.kord.rest.builder.automoderation/UntypedAutoModerationRuleModifyBuilder : dev.kord.rest.builder.automoderation/AutoModerationRuleModifyBuilder { // dev.kord.rest.builder.automoderation/UntypedAutoModerationRuleModifyBuilder|null[0]
@@ -841,6 +872,9 @@ final class dev.kord.rest.builder.automoderation/UntypedAutoModerationRuleModify
 
     final val triggerType // dev.kord.rest.builder.automoderation/UntypedAutoModerationRuleModifyBuilder.triggerType|{}triggerType[0]
         final fun <get-triggerType>(): kotlin/Nothing? // dev.kord.rest.builder.automoderation/UntypedAutoModerationRuleModifyBuilder.triggerType.<get-triggerType>|<get-triggerType>(){}[0]
+
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.builder.automoderation/UntypedAutoModerationRuleModifyBuilder.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.rest.builder.automoderation/UntypedAutoModerationRuleModifyBuilder.hashCode|hashCode(){}[0]
 }
 
 final class dev.kord.rest.builder.ban/BanCreateBuilder : dev.kord.rest.builder/AuditRequestBuilder<dev.kord.rest.json.request/GuildBanCreateRequest> { // dev.kord.rest.builder.ban/BanCreateBuilder|null[0]
@@ -853,6 +887,8 @@ final class dev.kord.rest.builder.ban/BanCreateBuilder : dev.kord.rest.builder/A
         final fun <get-reason>(): kotlin/String? // dev.kord.rest.builder.ban/BanCreateBuilder.reason.<get-reason>|<get-reason>(){}[0]
         final fun <set-reason>(kotlin/String?) // dev.kord.rest.builder.ban/BanCreateBuilder.reason.<set-reason>|<set-reason>(kotlin.String?){}[0]
 
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.builder.ban/BanCreateBuilder.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.rest.builder.ban/BanCreateBuilder.hashCode|hashCode(){}[0]
     final fun toRequest(): dev.kord.rest.json.request/GuildBanCreateRequest // dev.kord.rest.builder.ban/BanCreateBuilder.toRequest|toRequest(){}[0]
 }
 
@@ -878,6 +914,8 @@ final class dev.kord.rest.builder.channel.thread/StartForumThreadBuilder : dev.k
         final fun <get-reason>(): kotlin/String? // dev.kord.rest.builder.channel.thread/StartForumThreadBuilder.reason.<get-reason>|<get-reason>(){}[0]
         final fun <set-reason>(kotlin/String?) // dev.kord.rest.builder.channel.thread/StartForumThreadBuilder.reason.<set-reason>|<set-reason>(kotlin.String?){}[0]
 
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.builder.channel.thread/StartForumThreadBuilder.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.rest.builder.channel.thread/StartForumThreadBuilder.hashCode|hashCode(){}[0]
     final fun message(kotlin/String) // dev.kord.rest.builder.channel.thread/StartForumThreadBuilder.message|message(kotlin.String){}[0]
     final fun toRequest(): dev.kord.rest.json.request/MultipartStartThreadRequest // dev.kord.rest.builder.channel.thread/StartForumThreadBuilder.toRequest|toRequest(){}[0]
     final inline fun message(kotlin/Function1<dev.kord.rest.builder.message.create/ForumMessageCreateBuilder, kotlin/Unit>) // dev.kord.rest.builder.channel.thread/StartForumThreadBuilder.message|message(kotlin.Function1<dev.kord.rest.builder.message.create.ForumMessageCreateBuilder,kotlin.Unit>){}[0]
@@ -905,6 +943,8 @@ final class dev.kord.rest.builder.channel.thread/StartThreadBuilder : dev.kord.r
         final fun <get-reason>(): kotlin/String? // dev.kord.rest.builder.channel.thread/StartThreadBuilder.reason.<get-reason>|<get-reason>(){}[0]
         final fun <set-reason>(kotlin/String?) // dev.kord.rest.builder.channel.thread/StartThreadBuilder.reason.<set-reason>|<set-reason>(kotlin.String?){}[0]
 
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.builder.channel.thread/StartThreadBuilder.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.rest.builder.channel.thread/StartThreadBuilder.hashCode|hashCode(){}[0]
     final fun toRequest(): dev.kord.rest.json.request/StartThreadRequest // dev.kord.rest.builder.channel.thread/StartThreadBuilder.toRequest|toRequest(){}[0]
 }
 
@@ -924,6 +964,8 @@ final class dev.kord.rest.builder.channel.thread/StartThreadWithMessageBuilder :
         final fun <get-reason>(): kotlin/String? // dev.kord.rest.builder.channel.thread/StartThreadWithMessageBuilder.reason.<get-reason>|<get-reason>(){}[0]
         final fun <set-reason>(kotlin/String?) // dev.kord.rest.builder.channel.thread/StartThreadWithMessageBuilder.reason.<set-reason>|<set-reason>(kotlin.String?){}[0]
 
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.builder.channel.thread/StartThreadWithMessageBuilder.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.rest.builder.channel.thread/StartThreadWithMessageBuilder.hashCode|hashCode(){}[0]
     final fun toRequest(): dev.kord.rest.json.request/StartThreadRequest // dev.kord.rest.builder.channel.thread/StartThreadWithMessageBuilder.toRequest|toRequest(){}[0]
 }
 
@@ -958,6 +1000,8 @@ final class dev.kord.rest.builder.channel.thread/ThreadModifyBuilder : dev.kord.
         final fun <get-reason>(): kotlin/String? // dev.kord.rest.builder.channel.thread/ThreadModifyBuilder.reason.<get-reason>|<get-reason>(){}[0]
         final fun <set-reason>(kotlin/String?) // dev.kord.rest.builder.channel.thread/ThreadModifyBuilder.reason.<set-reason>|<set-reason>(kotlin.String?){}[0]
 
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.builder.channel.thread/ThreadModifyBuilder.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.rest.builder.channel.thread/ThreadModifyBuilder.hashCode|hashCode(){}[0]
     final fun toRequest(): dev.kord.rest.json.request/ChannelModifyPatchRequest // dev.kord.rest.builder.channel.thread/ThreadModifyBuilder.toRequest|toRequest(){}[0]
 }
 
@@ -980,6 +1024,8 @@ final class dev.kord.rest.builder.channel/CategoryCreateBuilder : dev.kord.rest.
         final fun <get-reason>(): kotlin/String? // dev.kord.rest.builder.channel/CategoryCreateBuilder.reason.<get-reason>|<get-reason>(){}[0]
         final fun <set-reason>(kotlin/String?) // dev.kord.rest.builder.channel/CategoryCreateBuilder.reason.<set-reason>|<set-reason>(kotlin.String?){}[0]
 
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.builder.channel/CategoryCreateBuilder.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.rest.builder.channel/CategoryCreateBuilder.hashCode|hashCode(){}[0]
     final fun toRequest(): dev.kord.rest.json.request/GuildChannelCreateRequest // dev.kord.rest.builder.channel/CategoryCreateBuilder.toRequest|toRequest(){}[0]
 }
 
@@ -999,6 +1045,8 @@ final class dev.kord.rest.builder.channel/CategoryModifyBuilder : dev.kord.rest.
         final fun <get-reason>(): kotlin/String? // dev.kord.rest.builder.channel/CategoryModifyBuilder.reason.<get-reason>|<get-reason>(){}[0]
         final fun <set-reason>(kotlin/String?) // dev.kord.rest.builder.channel/CategoryModifyBuilder.reason.<set-reason>|<set-reason>(kotlin.String?){}[0]
 
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.builder.channel/CategoryModifyBuilder.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.rest.builder.channel/CategoryModifyBuilder.hashCode|hashCode(){}[0]
     final fun toRequest(): dev.kord.rest.json.request/ChannelModifyPatchRequest // dev.kord.rest.builder.channel/CategoryModifyBuilder.toRequest|toRequest(){}[0]
 }
 
@@ -1015,6 +1063,8 @@ final class dev.kord.rest.builder.channel/ChannelPermissionModifyBuilder : dev.k
         final fun <get-reason>(): kotlin/String? // dev.kord.rest.builder.channel/ChannelPermissionModifyBuilder.reason.<get-reason>|<get-reason>(){}[0]
         final fun <set-reason>(kotlin/String?) // dev.kord.rest.builder.channel/ChannelPermissionModifyBuilder.reason.<set-reason>|<set-reason>(kotlin.String?){}[0]
 
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.builder.channel/ChannelPermissionModifyBuilder.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.rest.builder.channel/ChannelPermissionModifyBuilder.hashCode|hashCode(){}[0]
     final fun toRequest(): dev.kord.rest.json.request/ChannelPermissionEditRequest // dev.kord.rest.builder.channel/ChannelPermissionModifyBuilder.toRequest|toRequest(){}[0]
 }
 
@@ -1073,6 +1123,8 @@ final class dev.kord.rest.builder.channel/ForumChannelCreateBuilder : dev.kord.r
         final fun <get-topic>(): kotlin/String? // dev.kord.rest.builder.channel/ForumChannelCreateBuilder.topic.<get-topic>|<get-topic>(){}[0]
         final fun <set-topic>(kotlin/String?) // dev.kord.rest.builder.channel/ForumChannelCreateBuilder.topic.<set-topic>|<set-topic>(kotlin.String?){}[0]
 
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.builder.channel/ForumChannelCreateBuilder.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.rest.builder.channel/ForumChannelCreateBuilder.hashCode|hashCode(){}[0]
     final fun tag(kotlin/String, kotlin/Function1<dev.kord.rest.builder.channel/ForumTagBuilder, kotlin/Unit> = ...) // dev.kord.rest.builder.channel/ForumChannelCreateBuilder.tag|tag(kotlin.String;kotlin.Function1<dev.kord.rest.builder.channel.ForumTagBuilder,kotlin.Unit>){}[0]
     final fun toRequest(): dev.kord.rest.json.request/GuildChannelCreateRequest // dev.kord.rest.builder.channel/ForumChannelCreateBuilder.toRequest|toRequest(){}[0]
 }
@@ -1132,6 +1184,8 @@ final class dev.kord.rest.builder.channel/ForumChannelModifyBuilder : dev.kord.r
         final fun <get-topic>(): kotlin/String? // dev.kord.rest.builder.channel/ForumChannelModifyBuilder.topic.<get-topic>|<get-topic>(){}[0]
         final fun <set-topic>(kotlin/String?) // dev.kord.rest.builder.channel/ForumChannelModifyBuilder.topic.<set-topic>|<set-topic>(kotlin.String?){}[0]
 
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.builder.channel/ForumChannelModifyBuilder.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.rest.builder.channel/ForumChannelModifyBuilder.hashCode|hashCode(){}[0]
     final fun tag(kotlin/String, kotlin/Function1<dev.kord.rest.builder.channel/ForumTagBuilder, kotlin/Unit> = ...) // dev.kord.rest.builder.channel/ForumChannelModifyBuilder.tag|tag(kotlin.String;kotlin.Function1<dev.kord.rest.builder.channel.ForumTagBuilder,kotlin.Unit>){}[0]
     final fun toRequest(): dev.kord.rest.json.request/ChannelModifyPatchRequest // dev.kord.rest.builder.channel/ForumChannelModifyBuilder.toRequest|toRequest(){}[0]
 }
@@ -1152,6 +1206,8 @@ final class dev.kord.rest.builder.channel/ForumTagBuilder : dev.kord.rest.builde
         final fun <get-reactionEmojiName>(): kotlin/String? // dev.kord.rest.builder.channel/ForumTagBuilder.reactionEmojiName.<get-reactionEmojiName>|<get-reactionEmojiName>(){}[0]
         final fun <set-reactionEmojiName>(kotlin/String?) // dev.kord.rest.builder.channel/ForumTagBuilder.reactionEmojiName.<set-reactionEmojiName>|<set-reactionEmojiName>(kotlin.String?){}[0]
 
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.builder.channel/ForumTagBuilder.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.rest.builder.channel/ForumTagBuilder.hashCode|hashCode(){}[0]
     final fun toRequest(): dev.kord.rest.json.request/ForumTagRequest // dev.kord.rest.builder.channel/ForumTagBuilder.toRequest|toRequest(){}[0]
 }
 
@@ -1162,6 +1218,8 @@ final class dev.kord.rest.builder.channel/GuildChannelPositionModifyBuilder : de
         final fun <get-swaps>(): kotlin.collections/MutableList<dev.kord.rest.builder.channel/GuildChannelSwapBuilder> // dev.kord.rest.builder.channel/GuildChannelPositionModifyBuilder.swaps.<get-swaps>|<get-swaps>(){}[0]
         final fun <set-swaps>(kotlin.collections/MutableList<dev.kord.rest.builder.channel/GuildChannelSwapBuilder>) // dev.kord.rest.builder.channel/GuildChannelPositionModifyBuilder.swaps.<set-swaps>|<set-swaps>(kotlin.collections.MutableList<dev.kord.rest.builder.channel.GuildChannelSwapBuilder>){}[0]
 
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.builder.channel/GuildChannelPositionModifyBuilder.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.rest.builder.channel/GuildChannelPositionModifyBuilder.hashCode|hashCode(){}[0]
     final fun move(kotlin/Array<out kotlin/Pair<dev.kord.common.entity/Snowflake, kotlin/Int>>...) // dev.kord.rest.builder.channel/GuildChannelPositionModifyBuilder.move|move(kotlin.Array<out|kotlin.Pair<dev.kord.common.entity.Snowflake,kotlin.Int>>...){}[0]
     final fun move(kotlin/Pair<dev.kord.common.entity/Snowflake, kotlin/Int>) // dev.kord.rest.builder.channel/GuildChannelPositionModifyBuilder.move|move(kotlin.Pair<dev.kord.common.entity.Snowflake,kotlin.Int>){}[0]
     final fun toRequest(): dev.kord.rest.json.request/GuildChannelPositionModifyRequest // dev.kord.rest.builder.channel/GuildChannelPositionModifyBuilder.toRequest|toRequest(){}[0]
@@ -1184,6 +1242,8 @@ final class dev.kord.rest.builder.channel/GuildChannelSwapBuilder { // dev.kord.
         final fun <get-position>(): kotlin/Int? // dev.kord.rest.builder.channel/GuildChannelSwapBuilder.position.<get-position>|<get-position>(){}[0]
         final fun <set-position>(kotlin/Int?) // dev.kord.rest.builder.channel/GuildChannelSwapBuilder.position.<set-position>|<set-position>(kotlin.Int?){}[0]
 
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.builder.channel/GuildChannelSwapBuilder.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.rest.builder.channel/GuildChannelSwapBuilder.hashCode|hashCode(){}[0]
     final fun toRequest(): dev.kord.rest.json.request/ChannelPositionSwapRequest // dev.kord.rest.builder.channel/GuildChannelSwapBuilder.toRequest|toRequest(){}[0]
 }
 
@@ -1215,6 +1275,8 @@ final class dev.kord.rest.builder.channel/InviteCreateBuilder : dev.kord.rest.bu
         final fun <get-unique>(): kotlin/Boolean? // dev.kord.rest.builder.channel/InviteCreateBuilder.unique.<get-unique>|<get-unique>(){}[0]
         final fun <set-unique>(kotlin/Boolean?) // dev.kord.rest.builder.channel/InviteCreateBuilder.unique.<set-unique>|<set-unique>(kotlin.Boolean?){}[0]
 
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.builder.channel/InviteCreateBuilder.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.rest.builder.channel/InviteCreateBuilder.hashCode|hashCode(){}[0]
     final fun toRequest(): dev.kord.rest.json.request/InviteCreateRequest // dev.kord.rest.builder.channel/InviteCreateBuilder.toRequest|toRequest(){}[0]
 }
 
@@ -1270,6 +1332,8 @@ final class dev.kord.rest.builder.channel/MediaChannelCreateBuilder : dev.kord.r
         final fun <get-topic>(): kotlin/String? // dev.kord.rest.builder.channel/MediaChannelCreateBuilder.topic.<get-topic>|<get-topic>(){}[0]
         final fun <set-topic>(kotlin/String?) // dev.kord.rest.builder.channel/MediaChannelCreateBuilder.topic.<set-topic>|<set-topic>(kotlin.String?){}[0]
 
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.builder.channel/MediaChannelCreateBuilder.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.rest.builder.channel/MediaChannelCreateBuilder.hashCode|hashCode(){}[0]
     final fun tag(kotlin/String, kotlin/Function1<dev.kord.rest.builder.channel/ForumTagBuilder, kotlin/Unit> = ...) // dev.kord.rest.builder.channel/MediaChannelCreateBuilder.tag|tag(kotlin.String;kotlin.Function1<dev.kord.rest.builder.channel.ForumTagBuilder,kotlin.Unit>){}[0]
     final fun toRequest(): dev.kord.rest.json.request/GuildChannelCreateRequest // dev.kord.rest.builder.channel/MediaChannelCreateBuilder.toRequest|toRequest(){}[0]
 }
@@ -1326,6 +1390,8 @@ final class dev.kord.rest.builder.channel/MediaChannelModifyBuilder : dev.kord.r
         final fun <get-topic>(): kotlin/String? // dev.kord.rest.builder.channel/MediaChannelModifyBuilder.topic.<get-topic>|<get-topic>(){}[0]
         final fun <set-topic>(kotlin/String?) // dev.kord.rest.builder.channel/MediaChannelModifyBuilder.topic.<set-topic>|<set-topic>(kotlin.String?){}[0]
 
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.builder.channel/MediaChannelModifyBuilder.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.rest.builder.channel/MediaChannelModifyBuilder.hashCode|hashCode(){}[0]
     final fun toRequest(): dev.kord.rest.json.request/ChannelModifyPatchRequest // dev.kord.rest.builder.channel/MediaChannelModifyBuilder.toRequest|toRequest(){}[0]
     final inline fun tag(kotlin/String, kotlin/Function1<dev.kord.rest.builder.channel/ForumTagBuilder, kotlin/Unit> = ...) // dev.kord.rest.builder.channel/MediaChannelModifyBuilder.tag|tag(kotlin.String;kotlin.Function1<dev.kord.rest.builder.channel.ForumTagBuilder,kotlin.Unit>){}[0]
 }
@@ -1358,6 +1424,8 @@ final class dev.kord.rest.builder.channel/NewsChannelCreateBuilder : dev.kord.re
         final fun <get-topic>(): kotlin/String? // dev.kord.rest.builder.channel/NewsChannelCreateBuilder.topic.<get-topic>|<get-topic>(){}[0]
         final fun <set-topic>(kotlin/String?) // dev.kord.rest.builder.channel/NewsChannelCreateBuilder.topic.<set-topic>|<set-topic>(kotlin.String?){}[0]
 
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.builder.channel/NewsChannelCreateBuilder.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.rest.builder.channel/NewsChannelCreateBuilder.hashCode|hashCode(){}[0]
     final fun toRequest(): dev.kord.rest.json.request/GuildChannelCreateRequest // dev.kord.rest.builder.channel/NewsChannelCreateBuilder.toRequest|toRequest(){}[0]
 }
 
@@ -1392,6 +1460,8 @@ final class dev.kord.rest.builder.channel/NewsChannelModifyBuilder : dev.kord.re
         final fun <get-topic>(): kotlin/String? // dev.kord.rest.builder.channel/NewsChannelModifyBuilder.topic.<get-topic>|<get-topic>(){}[0]
         final fun <set-topic>(kotlin/String?) // dev.kord.rest.builder.channel/NewsChannelModifyBuilder.topic.<set-topic>|<set-topic>(kotlin.String?){}[0]
 
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.builder.channel/NewsChannelModifyBuilder.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.rest.builder.channel/NewsChannelModifyBuilder.hashCode|hashCode(){}[0]
     final fun toRequest(): dev.kord.rest.json.request/ChannelModifyPatchRequest // dev.kord.rest.builder.channel/NewsChannelModifyBuilder.toRequest|toRequest(){}[0]
 }
 
@@ -1405,6 +1475,8 @@ final class dev.kord.rest.builder.channel/PermissionOverwriteBuilder { // dev.ko
         final fun <get-denied>(): dev.kord.common.entity/Permissions // dev.kord.rest.builder.channel/PermissionOverwriteBuilder.denied.<get-denied>|<get-denied>(){}[0]
         final fun <set-denied>(dev.kord.common.entity/Permissions) // dev.kord.rest.builder.channel/PermissionOverwriteBuilder.denied.<set-denied>|<set-denied>(dev.kord.common.entity.Permissions){}[0]
 
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.builder.channel/PermissionOverwriteBuilder.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.rest.builder.channel/PermissionOverwriteBuilder.hashCode|hashCode(){}[0]
     final fun toOverwrite(): dev.kord.common.entity/Overwrite // dev.kord.rest.builder.channel/PermissionOverwriteBuilder.toOverwrite|toOverwrite(){}[0]
 }
 
@@ -1439,6 +1511,8 @@ final class dev.kord.rest.builder.channel/StageChannelCreateBuilder : dev.kord.r
         final fun <get-userLimit>(): kotlin/Int? // dev.kord.rest.builder.channel/StageChannelCreateBuilder.userLimit.<get-userLimit>|<get-userLimit>(){}[0]
         final fun <set-userLimit>(kotlin/Int?) // dev.kord.rest.builder.channel/StageChannelCreateBuilder.userLimit.<set-userLimit>|<set-userLimit>(kotlin.Int?){}[0]
 
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.builder.channel/StageChannelCreateBuilder.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.rest.builder.channel/StageChannelCreateBuilder.hashCode|hashCode(){}[0]
     final fun toRequest(): dev.kord.rest.json.request/GuildChannelCreateRequest // dev.kord.rest.builder.channel/StageChannelCreateBuilder.toRequest|toRequest(){}[0]
 }
 
@@ -1470,6 +1544,8 @@ final class dev.kord.rest.builder.channel/StageVoiceChannelModifyBuilder : dev.k
         final fun <get-topic>(): kotlin/String? // dev.kord.rest.builder.channel/StageVoiceChannelModifyBuilder.topic.<get-topic>|<get-topic>(){}[0]
         final fun <set-topic>(kotlin/String?) // dev.kord.rest.builder.channel/StageVoiceChannelModifyBuilder.topic.<set-topic>|<set-topic>(kotlin.String?){}[0]
 
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.builder.channel/StageVoiceChannelModifyBuilder.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.rest.builder.channel/StageVoiceChannelModifyBuilder.hashCode|hashCode(){}[0]
     final fun toRequest(): dev.kord.rest.json.request/ChannelModifyPatchRequest // dev.kord.rest.builder.channel/StageVoiceChannelModifyBuilder.toRequest|toRequest(){}[0]
 }
 
@@ -1507,6 +1583,8 @@ final class dev.kord.rest.builder.channel/TextChannelCreateBuilder : dev.kord.re
         final fun <get-topic>(): kotlin/String? // dev.kord.rest.builder.channel/TextChannelCreateBuilder.topic.<get-topic>|<get-topic>(){}[0]
         final fun <set-topic>(kotlin/String?) // dev.kord.rest.builder.channel/TextChannelCreateBuilder.topic.<set-topic>|<set-topic>(kotlin.String?){}[0]
 
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.builder.channel/TextChannelCreateBuilder.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.rest.builder.channel/TextChannelCreateBuilder.hashCode|hashCode(){}[0]
     final fun toRequest(): dev.kord.rest.json.request/GuildChannelCreateRequest // dev.kord.rest.builder.channel/TextChannelCreateBuilder.toRequest|toRequest(){}[0]
 }
 
@@ -1544,6 +1622,8 @@ final class dev.kord.rest.builder.channel/TextChannelModifyBuilder : dev.kord.re
         final fun <get-topic>(): kotlin/String? // dev.kord.rest.builder.channel/TextChannelModifyBuilder.topic.<get-topic>|<get-topic>(){}[0]
         final fun <set-topic>(kotlin/String?) // dev.kord.rest.builder.channel/TextChannelModifyBuilder.topic.<set-topic>|<set-topic>(kotlin.String?){}[0]
 
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.builder.channel/TextChannelModifyBuilder.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.rest.builder.channel/TextChannelModifyBuilder.hashCode|hashCode(){}[0]
     final fun toRequest(): dev.kord.rest.json.request/ChannelModifyPatchRequest // dev.kord.rest.builder.channel/TextChannelModifyBuilder.toRequest|toRequest(){}[0]
 }
 
@@ -1575,6 +1655,8 @@ final class dev.kord.rest.builder.channel/VoiceChannelCreateBuilder : dev.kord.r
         final fun <get-userLimit>(): kotlin/Int? // dev.kord.rest.builder.channel/VoiceChannelCreateBuilder.userLimit.<get-userLimit>|<get-userLimit>(){}[0]
         final fun <set-userLimit>(kotlin/Int?) // dev.kord.rest.builder.channel/VoiceChannelCreateBuilder.userLimit.<set-userLimit>|<set-userLimit>(kotlin.Int?){}[0]
 
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.builder.channel/VoiceChannelCreateBuilder.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.rest.builder.channel/VoiceChannelCreateBuilder.hashCode|hashCode(){}[0]
     final fun toRequest(): dev.kord.rest.json.request/GuildChannelCreateRequest // dev.kord.rest.builder.channel/VoiceChannelCreateBuilder.toRequest|toRequest(){}[0]
 }
 
@@ -1615,6 +1697,8 @@ final class dev.kord.rest.builder.channel/VoiceChannelModifyBuilder : dev.kord.r
         final fun <get-videoQualityMode>(): dev.kord.common.entity/VideoQualityMode? // dev.kord.rest.builder.channel/VoiceChannelModifyBuilder.videoQualityMode.<get-videoQualityMode>|<get-videoQualityMode>(){}[0]
         final fun <set-videoQualityMode>(dev.kord.common.entity/VideoQualityMode?) // dev.kord.rest.builder.channel/VoiceChannelModifyBuilder.videoQualityMode.<set-videoQualityMode>|<set-videoQualityMode>(dev.kord.common.entity.VideoQualityMode?){}[0]
 
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.builder.channel/VoiceChannelModifyBuilder.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.rest.builder.channel/VoiceChannelModifyBuilder.hashCode|hashCode(){}[0]
     final fun toRequest(): dev.kord.rest.json.request/ChannelModifyPatchRequest // dev.kord.rest.builder.channel/VoiceChannelModifyBuilder.toRequest|toRequest(){}[0]
 }
 
@@ -1625,6 +1709,8 @@ final class dev.kord.rest.builder.component/ActionRowBuilder : dev.kord.rest.bui
         final fun <get-components>(): kotlin.collections/MutableList<dev.kord.rest.builder.component/ActionRowComponentBuilder> // dev.kord.rest.builder.component/ActionRowBuilder.components.<get-components>|<get-components>(){}[0]
 
     final fun build(): dev.kord.common.entity/DiscordChatComponent // dev.kord.rest.builder.component/ActionRowBuilder.build|build(){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.builder.component/ActionRowBuilder.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.rest.builder.component/ActionRowBuilder.hashCode|hashCode(){}[0]
     final inline fun channelSelect(kotlin/String, kotlin/Function1<dev.kord.rest.builder.component/ChannelSelectBuilder, kotlin/Unit> = ...) // dev.kord.rest.builder.component/ActionRowBuilder.channelSelect|channelSelect(kotlin.String;kotlin.Function1<dev.kord.rest.builder.component.ChannelSelectBuilder,kotlin.Unit>){}[0]
     final inline fun interactionButton(dev.kord.common.entity/ButtonStyle, kotlin/String, kotlin/Function1<dev.kord.rest.builder.component/ButtonBuilder.InteractionButtonBuilder, kotlin/Unit>) // dev.kord.rest.builder.component/ActionRowBuilder.interactionButton|interactionButton(dev.kord.common.entity.ButtonStyle;kotlin.String;kotlin.Function1<dev.kord.rest.builder.component.ButtonBuilder.InteractionButtonBuilder,kotlin.Unit>){}[0]
     final inline fun linkButton(kotlin/String, kotlin/Function1<dev.kord.rest.builder.component/ButtonBuilder.LinkButtonBuilder, kotlin/Unit>) // dev.kord.rest.builder.component/ActionRowBuilder.linkButton|linkButton(kotlin.String;kotlin.Function1<dev.kord.rest.builder.component.ButtonBuilder.LinkButtonBuilder,kotlin.Unit>){}[0]
@@ -1644,6 +1730,9 @@ final class dev.kord.rest.builder.component/ChannelSelectBuilder : dev.kord.rest
     final var channelTypes // dev.kord.rest.builder.component/ChannelSelectBuilder.channelTypes|{}channelTypes[0]
         final fun <get-channelTypes>(): kotlin.collections/MutableList<dev.kord.common.entity/ChannelType>? // dev.kord.rest.builder.component/ChannelSelectBuilder.channelTypes.<get-channelTypes>|<get-channelTypes>(){}[0]
         final fun <set-channelTypes>(kotlin.collections/MutableList<dev.kord.common.entity/ChannelType>?) // dev.kord.rest.builder.component/ChannelSelectBuilder.channelTypes.<set-channelTypes>|<set-channelTypes>(kotlin.collections.MutableList<dev.kord.common.entity.ChannelType>?){}[0]
+
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.builder.component/ChannelSelectBuilder.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.rest.builder.component/ChannelSelectBuilder.hashCode|hashCode(){}[0]
 }
 
 final class dev.kord.rest.builder.component/MentionableSelectBuilder : dev.kord.rest.builder.component/SelectMenuBuilder { // dev.kord.rest.builder.component/MentionableSelectBuilder|null[0]
@@ -1653,6 +1742,9 @@ final class dev.kord.rest.builder.component/MentionableSelectBuilder : dev.kord.
         final fun <get-defaultRoles>(): kotlin.collections/MutableList<dev.kord.common.entity/Snowflake> // dev.kord.rest.builder.component/MentionableSelectBuilder.defaultRoles.<get-defaultRoles>|<get-defaultRoles>(){}[0]
     final val defaultUsers // dev.kord.rest.builder.component/MentionableSelectBuilder.defaultUsers|{}defaultUsers[0]
         final fun <get-defaultUsers>(): kotlin.collections/MutableList<dev.kord.common.entity/Snowflake> // dev.kord.rest.builder.component/MentionableSelectBuilder.defaultUsers.<get-defaultUsers>|<get-defaultUsers>(){}[0]
+
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.builder.component/MentionableSelectBuilder.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.rest.builder.component/MentionableSelectBuilder.hashCode|hashCode(){}[0]
 }
 
 final class dev.kord.rest.builder.component/RoleSelectBuilder : dev.kord.rest.builder.component/SelectMenuBuilder { // dev.kord.rest.builder.component/RoleSelectBuilder|null[0]
@@ -1660,6 +1752,9 @@ final class dev.kord.rest.builder.component/RoleSelectBuilder : dev.kord.rest.bu
 
     final val defaultRoles // dev.kord.rest.builder.component/RoleSelectBuilder.defaultRoles|{}defaultRoles[0]
         final fun <get-defaultRoles>(): kotlin.collections/MutableList<dev.kord.common.entity/Snowflake> // dev.kord.rest.builder.component/RoleSelectBuilder.defaultRoles.<get-defaultRoles>|<get-defaultRoles>(){}[0]
+
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.builder.component/RoleSelectBuilder.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.rest.builder.component/RoleSelectBuilder.hashCode|hashCode(){}[0]
 }
 
 final class dev.kord.rest.builder.component/SelectOptionBuilder { // dev.kord.rest.builder.component/SelectOptionBuilder|null[0]
@@ -1682,6 +1777,8 @@ final class dev.kord.rest.builder.component/SelectOptionBuilder { // dev.kord.re
         final fun <set-value>(kotlin/String) // dev.kord.rest.builder.component/SelectOptionBuilder.value.<set-value>|<set-value>(kotlin.String){}[0]
 
     final fun build(): dev.kord.common.entity/DiscordSelectOption // dev.kord.rest.builder.component/SelectOptionBuilder.build|build(){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.builder.component/SelectOptionBuilder.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.rest.builder.component/SelectOptionBuilder.hashCode|hashCode(){}[0]
 }
 
 final class dev.kord.rest.builder.component/StringSelectBuilder : dev.kord.rest.builder.component/SelectMenuBuilder { // dev.kord.rest.builder.component/StringSelectBuilder|null[0]
@@ -1690,6 +1787,9 @@ final class dev.kord.rest.builder.component/StringSelectBuilder : dev.kord.rest.
     final var options // dev.kord.rest.builder.component/StringSelectBuilder.options|{}options[0]
         final fun <get-options>(): kotlin.collections/MutableList<dev.kord.rest.builder.component/SelectOptionBuilder> // dev.kord.rest.builder.component/StringSelectBuilder.options.<get-options>|<get-options>(){}[0]
         final fun <set-options>(kotlin.collections/MutableList<dev.kord.rest.builder.component/SelectOptionBuilder>) // dev.kord.rest.builder.component/StringSelectBuilder.options.<set-options>|<set-options>(kotlin.collections.MutableList<dev.kord.rest.builder.component.SelectOptionBuilder>){}[0]
+
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.builder.component/StringSelectBuilder.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.rest.builder.component/StringSelectBuilder.hashCode|hashCode(){}[0]
 }
 
 final class dev.kord.rest.builder.component/TextInputBuilder : dev.kord.rest.builder.component/ActionRowComponentBuilder { // dev.kord.rest.builder.component/TextInputBuilder|null[0]
@@ -1718,6 +1818,8 @@ final class dev.kord.rest.builder.component/TextInputBuilder : dev.kord.rest.bui
         final fun <set-value>(kotlin/String?) // dev.kord.rest.builder.component/TextInputBuilder.value.<set-value>|<set-value>(kotlin.String?){}[0]
 
     final fun build(): dev.kord.common.entity/DiscordTextInputComponent // dev.kord.rest.builder.component/TextInputBuilder.build|build(){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.builder.component/TextInputBuilder.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.rest.builder.component/TextInputBuilder.hashCode|hashCode(){}[0]
 }
 
 final class dev.kord.rest.builder.component/UserSelectBuilder : dev.kord.rest.builder.component/SelectMenuBuilder { // dev.kord.rest.builder.component/UserSelectBuilder|null[0]
@@ -1725,6 +1827,9 @@ final class dev.kord.rest.builder.component/UserSelectBuilder : dev.kord.rest.bu
 
     final val defaultUsers // dev.kord.rest.builder.component/UserSelectBuilder.defaultUsers|{}defaultUsers[0]
         final fun <get-defaultUsers>(): kotlin.collections/MutableList<dev.kord.common.entity/Snowflake> // dev.kord.rest.builder.component/UserSelectBuilder.defaultUsers.<get-defaultUsers>|<get-defaultUsers>(){}[0]
+
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.builder.component/UserSelectBuilder.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.rest.builder.component/UserSelectBuilder.hashCode|hashCode(){}[0]
 }
 
 final class dev.kord.rest.builder.guild/CurrentVoiceStateModifyBuilder : dev.kord.rest.builder/RequestBuilder<dev.kord.rest.json.request/CurrentVoiceStateModifyRequest> { // dev.kord.rest.builder.guild/CurrentVoiceStateModifyBuilder|null[0]
@@ -1740,6 +1845,8 @@ final class dev.kord.rest.builder.guild/CurrentVoiceStateModifyBuilder : dev.kor
         final fun <get-suppress>(): kotlin/Boolean? // dev.kord.rest.builder.guild/CurrentVoiceStateModifyBuilder.suppress.<get-suppress>|<get-suppress>(){}[0]
         final fun <set-suppress>(kotlin/Boolean?) // dev.kord.rest.builder.guild/CurrentVoiceStateModifyBuilder.suppress.<set-suppress>|<set-suppress>(kotlin.Boolean?){}[0]
 
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.builder.guild/CurrentVoiceStateModifyBuilder.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.rest.builder.guild/CurrentVoiceStateModifyBuilder.hashCode|hashCode(){}[0]
     final fun toRequest(): dev.kord.rest.json.request/CurrentVoiceStateModifyRequest // dev.kord.rest.builder.guild/CurrentVoiceStateModifyBuilder.toRequest|toRequest(){}[0]
 }
 
@@ -1759,6 +1866,8 @@ final class dev.kord.rest.builder.guild/EmojiCreateBuilder : dev.kord.rest.build
         final fun <get-roles>(): kotlin.collections/MutableSet<dev.kord.common.entity/Snowflake> // dev.kord.rest.builder.guild/EmojiCreateBuilder.roles.<get-roles>|<get-roles>(){}[0]
         final fun <set-roles>(kotlin.collections/MutableSet<dev.kord.common.entity/Snowflake>) // dev.kord.rest.builder.guild/EmojiCreateBuilder.roles.<set-roles>|<set-roles>(kotlin.collections.MutableSet<dev.kord.common.entity.Snowflake>){}[0]
 
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.builder.guild/EmojiCreateBuilder.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.rest.builder.guild/EmojiCreateBuilder.hashCode|hashCode(){}[0]
     final fun toRequest(): dev.kord.rest.json.request/EmojiCreateRequest // dev.kord.rest.builder.guild/EmojiCreateBuilder.toRequest|toRequest(){}[0]
 }
 
@@ -1775,6 +1884,8 @@ final class dev.kord.rest.builder.guild/EmojiModifyBuilder : dev.kord.rest.build
         final fun <get-roles>(): kotlin.collections/MutableSet<dev.kord.common.entity/Snowflake>? // dev.kord.rest.builder.guild/EmojiModifyBuilder.roles.<get-roles>|<get-roles>(){}[0]
         final fun <set-roles>(kotlin.collections/MutableSet<dev.kord.common.entity/Snowflake>?) // dev.kord.rest.builder.guild/EmojiModifyBuilder.roles.<set-roles>|<set-roles>(kotlin.collections.MutableSet<dev.kord.common.entity.Snowflake>?){}[0]
 
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.builder.guild/EmojiModifyBuilder.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.rest.builder.guild/EmojiModifyBuilder.hashCode|hashCode(){}[0]
     final fun toRequest(): dev.kord.rest.json.request/EmojiModifyRequest // dev.kord.rest.builder.guild/EmojiModifyBuilder.toRequest|toRequest(){}[0]
 }
 
@@ -1819,6 +1930,8 @@ final class dev.kord.rest.builder.guild/GuildCreateBuilder : dev.kord.rest.build
         final fun <get-verificationLevel>(): dev.kord.common.entity/VerificationLevel? // dev.kord.rest.builder.guild/GuildCreateBuilder.verificationLevel.<get-verificationLevel>|<get-verificationLevel>(){}[0]
         final fun <set-verificationLevel>(dev.kord.common.entity/VerificationLevel?) // dev.kord.rest.builder.guild/GuildCreateBuilder.verificationLevel.<set-verificationLevel>|<set-verificationLevel>(dev.kord.common.entity.VerificationLevel?){}[0]
 
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.builder.guild/GuildCreateBuilder.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.rest.builder.guild/GuildCreateBuilder.hashCode|hashCode(){}[0]
     final fun newUniqueSnowflake(): dev.kord.common.entity/Snowflake // dev.kord.rest.builder.guild/GuildCreateBuilder.newUniqueSnowflake|newUniqueSnowflake(){}[0]
     final fun toRequest(): dev.kord.rest.json.request/GuildCreateRequest // dev.kord.rest.builder.guild/GuildCreateBuilder.toRequest|toRequest(){}[0]
     final inline fun category(kotlin/String, dev.kord.common.entity/Snowflake = ..., kotlin/Function1<dev.kord.rest.builder.channel/CategoryCreateBuilder, kotlin/Unit>): dev.kord.common.entity/Snowflake // dev.kord.rest.builder.guild/GuildCreateBuilder.category|category(kotlin.String;dev.kord.common.entity.Snowflake;kotlin.Function1<dev.kord.rest.builder.channel.CategoryCreateBuilder,kotlin.Unit>){}[0]
@@ -1888,6 +2001,8 @@ final class dev.kord.rest.builder.guild/GuildModifyBuilder : dev.kord.rest.build
         final fun <get-verificationLevel>(): dev.kord.common.entity/VerificationLevel? // dev.kord.rest.builder.guild/GuildModifyBuilder.verificationLevel.<get-verificationLevel>|<get-verificationLevel>(){}[0]
         final fun <set-verificationLevel>(dev.kord.common.entity/VerificationLevel?) // dev.kord.rest.builder.guild/GuildModifyBuilder.verificationLevel.<set-verificationLevel>|<set-verificationLevel>(dev.kord.common.entity.VerificationLevel?){}[0]
 
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.builder.guild/GuildModifyBuilder.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.rest.builder.guild/GuildModifyBuilder.hashCode|hashCode(){}[0]
     final fun toRequest(): dev.kord.rest.json.request/GuildModifyRequest // dev.kord.rest.builder.guild/GuildModifyBuilder.toRequest|toRequest(){}[0]
 }
 
@@ -1910,6 +2025,8 @@ final class dev.kord.rest.builder.guild/GuildOnboardingModifyBuilder : dev.kord.
         final fun <get-reason>(): kotlin/String? // dev.kord.rest.builder.guild/GuildOnboardingModifyBuilder.reason.<get-reason>|<get-reason>(){}[0]
         final fun <set-reason>(kotlin/String?) // dev.kord.rest.builder.guild/GuildOnboardingModifyBuilder.reason.<set-reason>|<set-reason>(kotlin.String?){}[0]
 
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.builder.guild/GuildOnboardingModifyBuilder.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.rest.builder.guild/GuildOnboardingModifyBuilder.hashCode|hashCode(){}[0]
     final fun toRequest(): dev.kord.rest.json.request/GuildOnboardingModifyRequest // dev.kord.rest.builder.guild/GuildOnboardingModifyBuilder.toRequest|toRequest(){}[0]
 }
 
@@ -1926,6 +2043,8 @@ final class dev.kord.rest.builder.guild/GuildWidgetModifyBuilder : dev.kord.rest
         final fun <get-reason>(): kotlin/String? // dev.kord.rest.builder.guild/GuildWidgetModifyBuilder.reason.<get-reason>|<get-reason>(){}[0]
         final fun <set-reason>(kotlin/String?) // dev.kord.rest.builder.guild/GuildWidgetModifyBuilder.reason.<set-reason>|<set-reason>(kotlin.String?){}[0]
 
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.builder.guild/GuildWidgetModifyBuilder.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.rest.builder.guild/GuildWidgetModifyBuilder.hashCode|hashCode(){}[0]
     final fun toRequest(): dev.kord.rest.json.request/GuildWidgetModifyRequest // dev.kord.rest.builder.guild/GuildWidgetModifyBuilder.toRequest|toRequest(){}[0]
 }
 
@@ -1954,6 +2073,8 @@ final class dev.kord.rest.builder.guild/OnboardingPromptBuilder : dev.kord.rest.
         final fun <get-type>(): dev.kord.common.entity/OnboardingPromptType // dev.kord.rest.builder.guild/OnboardingPromptBuilder.type.<get-type>|<get-type>(){}[0]
         final fun <set-type>(dev.kord.common.entity/OnboardingPromptType) // dev.kord.rest.builder.guild/OnboardingPromptBuilder.type.<set-type>|<set-type>(dev.kord.common.entity.OnboardingPromptType){}[0]
 
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.builder.guild/OnboardingPromptBuilder.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.rest.builder.guild/OnboardingPromptBuilder.hashCode|hashCode(){}[0]
     final fun toRequest(): dev.kord.rest.json.request/OnboardingPromptRequest // dev.kord.rest.builder.guild/OnboardingPromptBuilder.toRequest|toRequest(){}[0]
 }
 
@@ -1972,6 +2093,8 @@ final class dev.kord.rest.builder.guild/OnboardingPromptOptionBuilder : dev.kord
         final fun <get-title>(): kotlin/String // dev.kord.rest.builder.guild/OnboardingPromptOptionBuilder.title.<get-title>|<get-title>(){}[0]
         final fun <set-title>(kotlin/String) // dev.kord.rest.builder.guild/OnboardingPromptOptionBuilder.title.<set-title>|<set-title>(kotlin.String){}[0]
 
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.builder.guild/OnboardingPromptOptionBuilder.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.rest.builder.guild/OnboardingPromptOptionBuilder.hashCode|hashCode(){}[0]
     final fun toRequest(): dev.kord.rest.json.request/OnboardingPromptOptionRequest // dev.kord.rest.builder.guild/OnboardingPromptOptionBuilder.toRequest|toRequest(){}[0]
 }
 
@@ -2009,6 +2132,8 @@ final class dev.kord.rest.builder.guild/ScheduledEventCreateBuilder : dev.kord.r
         final fun <get-scheduledStartTime>(): kotlinx.datetime/Instant // dev.kord.rest.builder.guild/ScheduledEventCreateBuilder.scheduledStartTime.<get-scheduledStartTime>|<get-scheduledStartTime>(){}[0]
         final fun <set-scheduledStartTime>(kotlinx.datetime/Instant) // dev.kord.rest.builder.guild/ScheduledEventCreateBuilder.scheduledStartTime.<set-scheduledStartTime>|<set-scheduledStartTime>(kotlinx.datetime.Instant){}[0]
 
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.builder.guild/ScheduledEventCreateBuilder.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.rest.builder.guild/ScheduledEventCreateBuilder.hashCode|hashCode(){}[0]
     final fun toRequest(): dev.kord.rest.json.request/GuildScheduledEventCreateRequest // dev.kord.rest.builder.guild/ScheduledEventCreateBuilder.toRequest|toRequest(){}[0]
 }
 
@@ -2025,6 +2150,8 @@ final class dev.kord.rest.builder.guild/StickerModifyBuilder : dev.kord.rest.bui
         final fun <get-tags>(): kotlin/String? // dev.kord.rest.builder.guild/StickerModifyBuilder.tags.<get-tags>|<get-tags>(){}[0]
         final fun <set-tags>(kotlin/String?) // dev.kord.rest.builder.guild/StickerModifyBuilder.tags.<set-tags>|<set-tags>(kotlin.String?){}[0]
 
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.builder.guild/StickerModifyBuilder.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.rest.builder.guild/StickerModifyBuilder.hashCode|hashCode(){}[0]
     final fun toRequest(): dev.kord.rest.json.request/GuildStickerModifyRequest // dev.kord.rest.builder.guild/StickerModifyBuilder.toRequest|toRequest(){}[0]
 }
 
@@ -2038,6 +2165,8 @@ final class dev.kord.rest.builder.guild/VoiceStateModifyBuilder : dev.kord.rest.
         final fun <get-suppress>(): kotlin/Boolean? // dev.kord.rest.builder.guild/VoiceStateModifyBuilder.suppress.<get-suppress>|<get-suppress>(){}[0]
         final fun <set-suppress>(kotlin/Boolean?) // dev.kord.rest.builder.guild/VoiceStateModifyBuilder.suppress.<set-suppress>|<set-suppress>(kotlin.Boolean?){}[0]
 
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.builder.guild/VoiceStateModifyBuilder.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.rest.builder.guild/VoiceStateModifyBuilder.hashCode|hashCode(){}[0]
     final fun toRequest(): dev.kord.rest.json.request/VoiceStateModifyRequest // dev.kord.rest.builder.guild/VoiceStateModifyBuilder.toRequest|toRequest(){}[0]
 }
 
@@ -2057,6 +2186,8 @@ final class dev.kord.rest.builder.guild/WelcomeScreenChannelBuilder : dev.kord.r
         final fun <get-emojiName>(): kotlin/String? // dev.kord.rest.builder.guild/WelcomeScreenChannelBuilder.emojiName.<get-emojiName>|<get-emojiName>(){}[0]
         final fun <set-emojiName>(kotlin/String?) // dev.kord.rest.builder.guild/WelcomeScreenChannelBuilder.emojiName.<set-emojiName>|<set-emojiName>(kotlin.String?){}[0]
 
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.builder.guild/WelcomeScreenChannelBuilder.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.rest.builder.guild/WelcomeScreenChannelBuilder.hashCode|hashCode(){}[0]
     final fun toRequest(): dev.kord.common.entity/DiscordWelcomeScreenChannel // dev.kord.rest.builder.guild/WelcomeScreenChannelBuilder.toRequest|toRequest(){}[0]
 }
 
@@ -2076,6 +2207,8 @@ final class dev.kord.rest.builder.guild/WelcomeScreenModifyBuilder : dev.kord.re
         final fun <get-welcomeScreenChannels>(): kotlin.collections/MutableList<dev.kord.rest.builder.guild/WelcomeScreenChannelBuilder>? // dev.kord.rest.builder.guild/WelcomeScreenModifyBuilder.welcomeScreenChannels.<get-welcomeScreenChannels>|<get-welcomeScreenChannels>(){}[0]
         final fun <set-welcomeScreenChannels>(kotlin.collections/MutableList<dev.kord.rest.builder.guild/WelcomeScreenChannelBuilder>?) // dev.kord.rest.builder.guild/WelcomeScreenModifyBuilder.welcomeScreenChannels.<set-welcomeScreenChannels>|<set-welcomeScreenChannels>(kotlin.collections.MutableList<dev.kord.rest.builder.guild.WelcomeScreenChannelBuilder>?){}[0]
 
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.builder.guild/WelcomeScreenModifyBuilder.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.rest.builder.guild/WelcomeScreenModifyBuilder.hashCode|hashCode(){}[0]
     final fun toRequest(): dev.kord.rest.json.request/GuildWelcomeScreenModifyRequest // dev.kord.rest.builder.guild/WelcomeScreenModifyBuilder.toRequest|toRequest(){}[0]
     final inline fun welcomeChannel(dev.kord.common.entity/Snowflake, kotlin/String, kotlin/Function1<dev.kord.rest.builder.guild/WelcomeScreenChannelBuilder, kotlin/Unit>) // dev.kord.rest.builder.guild/WelcomeScreenModifyBuilder.welcomeChannel|welcomeChannel(dev.kord.common.entity.Snowflake;kotlin.String;kotlin.Function1<dev.kord.rest.builder.guild.WelcomeScreenChannelBuilder,kotlin.Unit>){}[0]
 }
@@ -2096,6 +2229,8 @@ final class dev.kord.rest.builder.integration/IntegrationModifyBuilder : dev.kor
         final fun <get-reason>(): kotlin/String? // dev.kord.rest.builder.integration/IntegrationModifyBuilder.reason.<get-reason>|<get-reason>(){}[0]
         final fun <set-reason>(kotlin/String?) // dev.kord.rest.builder.integration/IntegrationModifyBuilder.reason.<set-reason>|<set-reason>(kotlin.String?){}[0]
 
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.builder.integration/IntegrationModifyBuilder.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.rest.builder.integration/IntegrationModifyBuilder.hashCode|hashCode(){}[0]
     final fun toRequest(): dev.kord.rest.json.request/GuildIntegrationModifyRequest // dev.kord.rest.builder.integration/IntegrationModifyBuilder.toRequest|toRequest(){}[0]
 }
 
@@ -2114,6 +2249,8 @@ final class dev.kord.rest.builder.interaction/ChannelBuilder : dev.kord.rest.bui
         final fun <get-channelTypes>(): kotlin.collections/List<dev.kord.common.entity/ChannelType>? // dev.kord.rest.builder.interaction/ChannelBuilder.channelTypes.<get-channelTypes>|<get-channelTypes>(){}[0]
         final fun <set-channelTypes>(kotlin.collections/List<dev.kord.common.entity/ChannelType>?) // dev.kord.rest.builder.interaction/ChannelBuilder.channelTypes.<set-channelTypes>|<set-channelTypes>(kotlin.collections.List<dev.kord.common.entity.ChannelType>?){}[0]
 
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.builder.interaction/ChannelBuilder.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.rest.builder.interaction/ChannelBuilder.hashCode|hashCode(){}[0]
     final fun toRequest(): dev.kord.common.entity/ApplicationCommandOption // dev.kord.rest.builder.interaction/ChannelBuilder.toRequest|toRequest(){}[0]
 }
 
@@ -2151,6 +2288,8 @@ final class dev.kord.rest.builder.interaction/ChatInputCreateBuilderImpl : dev.k
         final fun <get-options>(): kotlin.collections/MutableList<dev.kord.rest.builder.interaction/OptionsBuilder>? // dev.kord.rest.builder.interaction/ChatInputCreateBuilderImpl.options.<get-options>|<get-options>(){}[0]
         final fun <set-options>(kotlin.collections/MutableList<dev.kord.rest.builder.interaction/OptionsBuilder>?) // dev.kord.rest.builder.interaction/ChatInputCreateBuilderImpl.options.<set-options>|<set-options>(kotlin.collections.MutableList<dev.kord.rest.builder.interaction.OptionsBuilder>?){}[0]
 
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.builder.interaction/ChatInputCreateBuilderImpl.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.rest.builder.interaction/ChatInputCreateBuilderImpl.hashCode|hashCode(){}[0]
     final fun toRequest(): dev.kord.rest.json.request/ApplicationCommandCreateRequest // dev.kord.rest.builder.interaction/ChatInputCreateBuilderImpl.toRequest|toRequest(){}[0]
 }
 
@@ -2185,6 +2324,8 @@ final class dev.kord.rest.builder.interaction/ChatInputModifyBuilderImpl : dev.k
         final fun <get-options>(): kotlin.collections/MutableList<dev.kord.rest.builder.interaction/OptionsBuilder>? // dev.kord.rest.builder.interaction/ChatInputModifyBuilderImpl.options.<get-options>|<get-options>(){}[0]
         final fun <set-options>(kotlin.collections/MutableList<dev.kord.rest.builder.interaction/OptionsBuilder>?) // dev.kord.rest.builder.interaction/ChatInputModifyBuilderImpl.options.<set-options>|<set-options>(kotlin.collections.MutableList<dev.kord.rest.builder.interaction.OptionsBuilder>?){}[0]
 
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.builder.interaction/ChatInputModifyBuilderImpl.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.rest.builder.interaction/ChatInputModifyBuilderImpl.hashCode|hashCode(){}[0]
     final fun toRequest(): dev.kord.rest.json.request/ApplicationCommandModifyRequest // dev.kord.rest.builder.interaction/ChatInputModifyBuilderImpl.toRequest|toRequest(){}[0]
 }
 
@@ -2200,6 +2341,9 @@ final class dev.kord.rest.builder.interaction/ChoiceLocalizationsBuilder : dev.k
     final var nameLocalizations // dev.kord.rest.builder.interaction/ChoiceLocalizationsBuilder.nameLocalizations|{}nameLocalizations[0]
         final fun <get-nameLocalizations>(): kotlin.collections/MutableMap<dev.kord.common/Locale, kotlin/String>? // dev.kord.rest.builder.interaction/ChoiceLocalizationsBuilder.nameLocalizations.<get-nameLocalizations>|<get-nameLocalizations>(){}[0]
         final fun <set-nameLocalizations>(kotlin.collections/MutableMap<dev.kord.common/Locale, kotlin/String>?) // dev.kord.rest.builder.interaction/ChoiceLocalizationsBuilder.nameLocalizations.<set-nameLocalizations>|<set-nameLocalizations>(kotlin.collections.MutableMap<dev.kord.common.Locale,kotlin.String>?){}[0]
+
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.builder.interaction/ChoiceLocalizationsBuilder.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.rest.builder.interaction/ChoiceLocalizationsBuilder.hashCode|hashCode(){}[0]
 }
 
 final class dev.kord.rest.builder.interaction/GlobalMultiApplicationCommandBuilder : dev.kord.rest.builder.interaction/MultiApplicationCommandBuilder { // dev.kord.rest.builder.interaction/GlobalMultiApplicationCommandBuilder|null[0]
@@ -2259,6 +2403,8 @@ final class dev.kord.rest.builder.interaction/MessageCommandCreateBuilderImpl : 
         final fun <get-nsfw>(): kotlin/Boolean? // dev.kord.rest.builder.interaction/MessageCommandCreateBuilderImpl.nsfw.<get-nsfw>|<get-nsfw>(){}[0]
         final fun <set-nsfw>(kotlin/Boolean?) // dev.kord.rest.builder.interaction/MessageCommandCreateBuilderImpl.nsfw.<set-nsfw>|<set-nsfw>(kotlin.Boolean?){}[0]
 
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.builder.interaction/MessageCommandCreateBuilderImpl.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.rest.builder.interaction/MessageCommandCreateBuilderImpl.hashCode|hashCode(){}[0]
     final fun toRequest(): dev.kord.rest.json.request/ApplicationCommandCreateRequest // dev.kord.rest.builder.interaction/MessageCommandCreateBuilderImpl.toRequest|toRequest(){}[0]
 }
 
@@ -2284,6 +2430,8 @@ final class dev.kord.rest.builder.interaction/MessageCommandModifyBuilderImpl : 
         final fun <get-nsfw>(): kotlin/Boolean? // dev.kord.rest.builder.interaction/MessageCommandModifyBuilderImpl.nsfw.<get-nsfw>|<get-nsfw>(){}[0]
         final fun <set-nsfw>(kotlin/Boolean?) // dev.kord.rest.builder.interaction/MessageCommandModifyBuilderImpl.nsfw.<set-nsfw>|<set-nsfw>(kotlin.Boolean?){}[0]
 
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.builder.interaction/MessageCommandModifyBuilderImpl.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.rest.builder.interaction/MessageCommandModifyBuilderImpl.hashCode|hashCode(){}[0]
     final fun toRequest(): dev.kord.rest.json.request/ApplicationCommandModifyRequest // dev.kord.rest.builder.interaction/MessageCommandModifyBuilderImpl.toRequest|toRequest(){}[0]
 }
 
@@ -2300,6 +2448,8 @@ final class dev.kord.rest.builder.interaction/ModalBuilder : dev.kord.rest.build
         final fun <get-title>(): kotlin/String // dev.kord.rest.builder.interaction/ModalBuilder.title.<get-title>|<get-title>(){}[0]
         final fun <set-title>(kotlin/String) // dev.kord.rest.builder.interaction/ModalBuilder.title.<set-title>|<set-title>(kotlin.String){}[0]
 
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.builder.interaction/ModalBuilder.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.rest.builder.interaction/ModalBuilder.hashCode|hashCode(){}[0]
     final fun toRequest(): dev.kord.common.entity/DiscordModal // dev.kord.rest.builder.interaction/ModalBuilder.toRequest|toRequest(){}[0]
     final inline fun actionRow(kotlin/Function1<dev.kord.rest.builder.component/ActionRowBuilder, kotlin/Unit>) // dev.kord.rest.builder.interaction/ModalBuilder.actionRow|actionRow(kotlin.Function1<dev.kord.rest.builder.component.ActionRowBuilder,kotlin.Unit>){}[0]
 }
@@ -2325,6 +2475,8 @@ final class dev.kord.rest.builder.interaction/StringChoiceBuilder : dev.kord.res
         final fun <set-minLength>(kotlin/Int?) // dev.kord.rest.builder.interaction/StringChoiceBuilder.minLength.<set-minLength>|<set-minLength>(kotlin.Int?){}[0]
 
     final fun choice(kotlin/String, kotlin/String, dev.kord.common.entity.optional/Optional<kotlin.collections/Map<dev.kord.common/Locale, kotlin/String>?>) // dev.kord.rest.builder.interaction/StringChoiceBuilder.choice|choice(kotlin.String;kotlin.String;dev.kord.common.entity.optional.Optional<kotlin.collections.Map<dev.kord.common.Locale,kotlin.String>?>){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.builder.interaction/StringChoiceBuilder.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.rest.builder.interaction/StringChoiceBuilder.hashCode|hashCode(){}[0]
     final fun toRequest(): dev.kord.common.entity/ApplicationCommandOption // dev.kord.rest.builder.interaction/StringChoiceBuilder.toRequest|toRequest(){}[0]
 }
 
@@ -2361,6 +2513,8 @@ final class dev.kord.rest.builder.interaction/UserCommandCreateBuilderImpl : dev
         final fun <get-nsfw>(): kotlin/Boolean? // dev.kord.rest.builder.interaction/UserCommandCreateBuilderImpl.nsfw.<get-nsfw>|<get-nsfw>(){}[0]
         final fun <set-nsfw>(kotlin/Boolean?) // dev.kord.rest.builder.interaction/UserCommandCreateBuilderImpl.nsfw.<set-nsfw>|<set-nsfw>(kotlin.Boolean?){}[0]
 
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.builder.interaction/UserCommandCreateBuilderImpl.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.rest.builder.interaction/UserCommandCreateBuilderImpl.hashCode|hashCode(){}[0]
     final fun toRequest(): dev.kord.rest.json.request/ApplicationCommandCreateRequest // dev.kord.rest.builder.interaction/UserCommandCreateBuilderImpl.toRequest|toRequest(){}[0]
 }
 
@@ -2386,6 +2540,8 @@ final class dev.kord.rest.builder.interaction/UserCommandModifyBuilderImpl : dev
         final fun <get-nsfw>(): kotlin/Boolean? // dev.kord.rest.builder.interaction/UserCommandModifyBuilderImpl.nsfw.<get-nsfw>|<get-nsfw>(){}[0]
         final fun <set-nsfw>(kotlin/Boolean?) // dev.kord.rest.builder.interaction/UserCommandModifyBuilderImpl.nsfw.<set-nsfw>|<set-nsfw>(kotlin.Boolean?){}[0]
 
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.builder.interaction/UserCommandModifyBuilderImpl.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.rest.builder.interaction/UserCommandModifyBuilderImpl.hashCode|hashCode(){}[0]
     final fun toRequest(): dev.kord.rest.json.request/ApplicationCommandModifyRequest // dev.kord.rest.builder.interaction/UserCommandModifyBuilderImpl.toRequest|toRequest(){}[0]
 }
 
@@ -2408,6 +2564,8 @@ final class dev.kord.rest.builder.member/MemberAddBuilder : dev.kord.rest.builde
         final fun <get-token>(): kotlin/String // dev.kord.rest.builder.member/MemberAddBuilder.token.<get-token>|<get-token>(){}[0]
         final fun <set-token>(kotlin/String) // dev.kord.rest.builder.member/MemberAddBuilder.token.<set-token>|<set-token>(kotlin.String){}[0]
 
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.builder.member/MemberAddBuilder.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.rest.builder.member/MemberAddBuilder.hashCode|hashCode(){}[0]
     final fun toRequest(): dev.kord.rest.json.request/GuildMemberAddRequest // dev.kord.rest.builder.member/MemberAddBuilder.toRequest|toRequest(){}[0]
 }
 
@@ -2439,6 +2597,8 @@ final class dev.kord.rest.builder.member/MemberModifyBuilder : dev.kord.rest.bui
         final fun <get-voiceChannelId>(): dev.kord.common.entity/Snowflake? // dev.kord.rest.builder.member/MemberModifyBuilder.voiceChannelId.<get-voiceChannelId>|<get-voiceChannelId>(){}[0]
         final fun <set-voiceChannelId>(dev.kord.common.entity/Snowflake?) // dev.kord.rest.builder.member/MemberModifyBuilder.voiceChannelId.<set-voiceChannelId>|<set-voiceChannelId>(dev.kord.common.entity.Snowflake?){}[0]
 
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.builder.member/MemberModifyBuilder.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.rest.builder.member/MemberModifyBuilder.hashCode|hashCode(){}[0]
     final fun toRequest(): dev.kord.rest.json.request/GuildMemberModifyRequest // dev.kord.rest.builder.member/MemberModifyBuilder.toRequest|toRequest(){}[0]
 }
 
@@ -2448,6 +2608,8 @@ final class dev.kord.rest.builder.message.create/FollowupMessageCreateBuilder : 
     final val ephemeral // dev.kord.rest.builder.message.create/FollowupMessageCreateBuilder.ephemeral|{}ephemeral[0]
         final fun <get-ephemeral>(): kotlin/Boolean // dev.kord.rest.builder.message.create/FollowupMessageCreateBuilder.ephemeral.<get-ephemeral>|<get-ephemeral>(){}[0]
 
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.builder.message.create/FollowupMessageCreateBuilder.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.rest.builder.message.create/FollowupMessageCreateBuilder.hashCode|hashCode(){}[0]
     final fun toRequest(): dev.kord.rest.json.request/MultipartFollowupMessageCreateRequest // dev.kord.rest.builder.message.create/FollowupMessageCreateBuilder.toRequest|toRequest(){}[0]
 }
 
@@ -2458,6 +2620,8 @@ final class dev.kord.rest.builder.message.create/ForumMessageCreateBuilder : dev
         final fun <get-stickerIds>(): kotlin.collections/MutableList<dev.kord.common.entity/Snowflake>? // dev.kord.rest.builder.message.create/ForumMessageCreateBuilder.stickerIds.<get-stickerIds>|<get-stickerIds>(){}[0]
         final fun <set-stickerIds>(kotlin.collections/MutableList<dev.kord.common.entity/Snowflake>?) // dev.kord.rest.builder.message.create/ForumMessageCreateBuilder.stickerIds.<set-stickerIds>|<set-stickerIds>(kotlin.collections.MutableList<dev.kord.common.entity.Snowflake>?){}[0]
 
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.builder.message.create/ForumMessageCreateBuilder.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.rest.builder.message.create/ForumMessageCreateBuilder.hashCode|hashCode(){}[0]
     final fun toRequest(): dev.kord.rest.json.request/MultipartForumThreadMessageCreateRequest // dev.kord.rest.builder.message.create/ForumMessageCreateBuilder.toRequest|toRequest(){}[0]
 }
 
@@ -2467,6 +2631,8 @@ final class dev.kord.rest.builder.message.create/InteractionResponseCreateBuilde
     final val ephemeral // dev.kord.rest.builder.message.create/InteractionResponseCreateBuilder.ephemeral|{}ephemeral[0]
         final fun <get-ephemeral>(): kotlin/Boolean // dev.kord.rest.builder.message.create/InteractionResponseCreateBuilder.ephemeral.<get-ephemeral>|<get-ephemeral>(){}[0]
 
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.builder.message.create/InteractionResponseCreateBuilder.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.rest.builder.message.create/InteractionResponseCreateBuilder.hashCode|hashCode(){}[0]
     final fun toRequest(): dev.kord.rest.json.request/MultipartInteractionResponseCreateRequest // dev.kord.rest.builder.message.create/InteractionResponseCreateBuilder.toRequest|toRequest(){}[0]
 }
 
@@ -2492,6 +2658,8 @@ final class dev.kord.rest.builder.message.create/UserMessageCreateBuilder : dev.
         final fun <get-stickerIds>(): kotlin.collections/MutableList<dev.kord.common.entity/Snowflake>? // dev.kord.rest.builder.message.create/UserMessageCreateBuilder.stickerIds.<get-stickerIds>|<get-stickerIds>(){}[0]
         final fun <set-stickerIds>(kotlin.collections/MutableList<dev.kord.common.entity/Snowflake>?) // dev.kord.rest.builder.message.create/UserMessageCreateBuilder.stickerIds.<set-stickerIds>|<set-stickerIds>(kotlin.collections.MutableList<dev.kord.common.entity.Snowflake>?){}[0]
 
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.builder.message.create/UserMessageCreateBuilder.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.rest.builder.message.create/UserMessageCreateBuilder.hashCode|hashCode(){}[0]
     final fun toRequest(): dev.kord.rest.json.request/MultipartMessageCreateRequest // dev.kord.rest.builder.message.create/UserMessageCreateBuilder.toRequest|toRequest(){}[0]
 }
 
@@ -2511,6 +2679,8 @@ final class dev.kord.rest.builder.message.create/WebhookMessageCreateBuilder : d
         final fun <get-username>(): kotlin/String? // dev.kord.rest.builder.message.create/WebhookMessageCreateBuilder.username.<get-username>|<get-username>(){}[0]
         final fun <set-username>(kotlin/String?) // dev.kord.rest.builder.message.create/WebhookMessageCreateBuilder.username.<set-username>|<set-username>(kotlin.String?){}[0]
 
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.builder.message.create/WebhookMessageCreateBuilder.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.rest.builder.message.create/WebhookMessageCreateBuilder.hashCode|hashCode(){}[0]
     final fun toRequest(): dev.kord.rest.json.request/MultiPartWebhookExecuteRequest // dev.kord.rest.builder.message.create/WebhookMessageCreateBuilder.toRequest|toRequest(){}[0]
 }
 
@@ -2555,6 +2725,8 @@ final class dev.kord.rest.builder.message/AllowedMentionsBuilder { // dev.kord.r
     final fun (dev.kord.common.entity/AllowedMentionType).unaryPlus() // dev.kord.rest.builder.message/AllowedMentionsBuilder.unaryPlus|unaryPlus@dev.kord.common.entity.AllowedMentionType(){}[0]
     final fun add(dev.kord.common.entity/AllowedMentionType) // dev.kord.rest.builder.message/AllowedMentionsBuilder.add|add(dev.kord.common.entity.AllowedMentionType){}[0]
     final fun build(): dev.kord.common.entity/AllowedMentions // dev.kord.rest.builder.message/AllowedMentionsBuilder.build|build(){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.builder.message/AllowedMentionsBuilder.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.rest.builder.message/AllowedMentionsBuilder.hashCode|hashCode(){}[0]
 }
 
 final class dev.kord.rest.builder.message/AttachmentBuilder : dev.kord.rest.builder/RequestBuilder<dev.kord.rest.json.request/AttachmentRequest> { // dev.kord.rest.builder.message/AttachmentBuilder|null[0]
@@ -2567,6 +2739,8 @@ final class dev.kord.rest.builder.message/AttachmentBuilder : dev.kord.rest.buil
         final fun <get-filename>(): kotlin/String? // dev.kord.rest.builder.message/AttachmentBuilder.filename.<get-filename>|<get-filename>(){}[0]
         final fun <set-filename>(kotlin/String?) // dev.kord.rest.builder.message/AttachmentBuilder.filename.<set-filename>|<set-filename>(kotlin.String?){}[0]
 
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.builder.message/AttachmentBuilder.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.rest.builder.message/AttachmentBuilder.hashCode|hashCode(){}[0]
     final fun toRequest(): dev.kord.rest.json.request/AttachmentRequest // dev.kord.rest.builder.message/AttachmentBuilder.toRequest|toRequest(){}[0]
 }
 
@@ -2604,6 +2778,8 @@ final class dev.kord.rest.builder.message/EmbedBuilder : dev.kord.rest.builder/R
         final fun <get-url>(): kotlin/String? // dev.kord.rest.builder.message/EmbedBuilder.url.<get-url>|<get-url>(){}[0]
         final fun <set-url>(kotlin/String?) // dev.kord.rest.builder.message/EmbedBuilder.url.<set-url>|<set-url>(kotlin.String?){}[0]
 
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.builder.message/EmbedBuilder.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.rest.builder.message/EmbedBuilder.hashCode|hashCode(){}[0]
     final fun toRequest(): dev.kord.rest.json.request/EmbedRequest // dev.kord.rest.builder.message/EmbedBuilder.toRequest|toRequest(){}[0]
     final inline fun author(kotlin/Function1<dev.kord.rest.builder.message/EmbedBuilder.Author, kotlin/Unit>) // dev.kord.rest.builder.message/EmbedBuilder.author|author(kotlin.Function1<dev.kord.rest.builder.message.EmbedBuilder.Author,kotlin.Unit>){}[0]
     final inline fun field(kotlin/Function1<dev.kord.rest.builder.message/EmbedBuilder.Field, kotlin/Unit>) // dev.kord.rest.builder.message/EmbedBuilder.field|field(kotlin.Function1<dev.kord.rest.builder.message.EmbedBuilder.Field,kotlin.Unit>){}[0]
@@ -2624,6 +2800,8 @@ final class dev.kord.rest.builder.message/EmbedBuilder : dev.kord.rest.builder/R
             final fun <get-url>(): kotlin/String? // dev.kord.rest.builder.message/EmbedBuilder.Author.url.<get-url>|<get-url>(){}[0]
             final fun <set-url>(kotlin/String?) // dev.kord.rest.builder.message/EmbedBuilder.Author.url.<set-url>|<set-url>(kotlin.String?){}[0]
 
+        final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.builder.message/EmbedBuilder.Author.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // dev.kord.rest.builder.message/EmbedBuilder.Author.hashCode|hashCode(){}[0]
         final fun toRequest(): dev.kord.rest.json.request/EmbedAuthorRequest // dev.kord.rest.builder.message/EmbedBuilder.Author.toRequest|toRequest(){}[0]
 
         final object Limits { // dev.kord.rest.builder.message/EmbedBuilder.Author.Limits|null[0]
@@ -2645,6 +2823,8 @@ final class dev.kord.rest.builder.message/EmbedBuilder : dev.kord.rest.builder/R
             final fun <get-value>(): kotlin/String // dev.kord.rest.builder.message/EmbedBuilder.Field.value.<get-value>|<get-value>(){}[0]
             final fun <set-value>(kotlin/String) // dev.kord.rest.builder.message/EmbedBuilder.Field.value.<set-value>|<set-value>(kotlin.String){}[0]
 
+        final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.builder.message/EmbedBuilder.Field.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // dev.kord.rest.builder.message/EmbedBuilder.Field.hashCode|hashCode(){}[0]
         final fun toRequest(): dev.kord.rest.json.request/EmbedFieldRequest // dev.kord.rest.builder.message/EmbedBuilder.Field.toRequest|toRequest(){}[0]
 
         final object Limits { // dev.kord.rest.builder.message/EmbedBuilder.Field.Limits|null[0]
@@ -2665,6 +2845,8 @@ final class dev.kord.rest.builder.message/EmbedBuilder : dev.kord.rest.builder/R
             final fun <get-text>(): kotlin/String // dev.kord.rest.builder.message/EmbedBuilder.Footer.text.<get-text>|<get-text>(){}[0]
             final fun <set-text>(kotlin/String) // dev.kord.rest.builder.message/EmbedBuilder.Footer.text.<set-text>|<set-text>(kotlin.String){}[0]
 
+        final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.builder.message/EmbedBuilder.Footer.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // dev.kord.rest.builder.message/EmbedBuilder.Footer.hashCode|hashCode(){}[0]
         final fun toRequest(): dev.kord.rest.json.request/EmbedFooterRequest // dev.kord.rest.builder.message/EmbedBuilder.Footer.toRequest|toRequest(){}[0]
 
         final object Limits { // dev.kord.rest.builder.message/EmbedBuilder.Footer.Limits|null[0]
@@ -2680,6 +2862,8 @@ final class dev.kord.rest.builder.message/EmbedBuilder : dev.kord.rest.builder/R
             final fun <get-url>(): kotlin/String // dev.kord.rest.builder.message/EmbedBuilder.Thumbnail.url.<get-url>|<get-url>(){}[0]
             final fun <set-url>(kotlin/String) // dev.kord.rest.builder.message/EmbedBuilder.Thumbnail.url.<set-url>|<set-url>(kotlin.String){}[0]
 
+        final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.builder.message/EmbedBuilder.Thumbnail.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // dev.kord.rest.builder.message/EmbedBuilder.Thumbnail.hashCode|hashCode(){}[0]
         final fun toRequest(): dev.kord.rest.json.request/EmbedThumbnailRequest // dev.kord.rest.builder.message/EmbedBuilder.Thumbnail.toRequest|toRequest(){}[0]
     }
 
@@ -2728,6 +2912,8 @@ final class dev.kord.rest.builder.role/RoleCreateBuilder : dev.kord.rest.builder
         final fun <get-unicodeEmoji>(): kotlin/String? // dev.kord.rest.builder.role/RoleCreateBuilder.unicodeEmoji.<get-unicodeEmoji>|<get-unicodeEmoji>(){}[0]
         final fun <set-unicodeEmoji>(kotlin/String?) // dev.kord.rest.builder.role/RoleCreateBuilder.unicodeEmoji.<set-unicodeEmoji>|<set-unicodeEmoji>(kotlin.String?){}[0]
 
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.builder.role/RoleCreateBuilder.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.rest.builder.role/RoleCreateBuilder.hashCode|hashCode(){}[0]
     final fun toRequest(): dev.kord.rest.json.request/GuildRoleCreateRequest // dev.kord.rest.builder.role/RoleCreateBuilder.toRequest|toRequest(){}[0]
 }
 
@@ -2759,6 +2945,8 @@ final class dev.kord.rest.builder.role/RoleModifyBuilder : dev.kord.rest.builder
         final fun <get-unicodeEmoji>(): kotlin/String? // dev.kord.rest.builder.role/RoleModifyBuilder.unicodeEmoji.<get-unicodeEmoji>|<get-unicodeEmoji>(){}[0]
         final fun <set-unicodeEmoji>(kotlin/String?) // dev.kord.rest.builder.role/RoleModifyBuilder.unicodeEmoji.<set-unicodeEmoji>|<set-unicodeEmoji>(kotlin.String?){}[0]
 
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.builder.role/RoleModifyBuilder.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.rest.builder.role/RoleModifyBuilder.hashCode|hashCode(){}[0]
     final fun toRequest(): dev.kord.rest.json.request/GuildRoleModifyRequest // dev.kord.rest.builder.role/RoleModifyBuilder.toRequest|toRequest(){}[0]
 }
 
@@ -2769,6 +2957,8 @@ final class dev.kord.rest.builder.role/RolePositionsModifyBuilder : dev.kord.res
         final fun <get-reason>(): kotlin/String? // dev.kord.rest.builder.role/RolePositionsModifyBuilder.reason.<get-reason>|<get-reason>(){}[0]
         final fun <set-reason>(kotlin/String?) // dev.kord.rest.builder.role/RolePositionsModifyBuilder.reason.<set-reason>|<set-reason>(kotlin.String?){}[0]
 
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.builder.role/RolePositionsModifyBuilder.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.rest.builder.role/RolePositionsModifyBuilder.hashCode|hashCode(){}[0]
     final fun move(kotlin/Array<out kotlin/Pair<dev.kord.common.entity/Snowflake, kotlin/Int>>...) // dev.kord.rest.builder.role/RolePositionsModifyBuilder.move|move(kotlin.Array<out|kotlin.Pair<dev.kord.common.entity.Snowflake,kotlin.Int>>...){}[0]
     final fun move(kotlin/Pair<dev.kord.common.entity/Snowflake, kotlin/Int>) // dev.kord.rest.builder.role/RolePositionsModifyBuilder.move|move(kotlin.Pair<dev.kord.common.entity.Snowflake,kotlin.Int>){}[0]
     final fun toRequest(): dev.kord.rest.json.request/GuildRolePositionModifyRequest // dev.kord.rest.builder.role/RolePositionsModifyBuilder.toRequest|toRequest(){}[0]
@@ -2811,6 +3001,8 @@ final class dev.kord.rest.builder.scheduled_events/ScheduledEventModifyBuilder :
         final fun <get-status>(): dev.kord.common.entity/GuildScheduledEventStatus? // dev.kord.rest.builder.scheduled_events/ScheduledEventModifyBuilder.status.<get-status>|<get-status>(){}[0]
         final fun <set-status>(dev.kord.common.entity/GuildScheduledEventStatus?) // dev.kord.rest.builder.scheduled_events/ScheduledEventModifyBuilder.status.<set-status>|<set-status>(dev.kord.common.entity.GuildScheduledEventStatus?){}[0]
 
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.builder.scheduled_events/ScheduledEventModifyBuilder.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.rest.builder.scheduled_events/ScheduledEventModifyBuilder.hashCode|hashCode(){}[0]
     final fun toRequest(): dev.kord.rest.json.request/ScheduledEventModifyRequest // dev.kord.rest.builder.scheduled_events/ScheduledEventModifyBuilder.toRequest|toRequest(){}[0]
 }
 
@@ -2836,6 +3028,8 @@ final class dev.kord.rest.builder.stage/StageInstanceCreateBuilder : dev.kord.re
         final fun <get-topic>(): kotlin/String // dev.kord.rest.builder.stage/StageInstanceCreateBuilder.topic.<get-topic>|<get-topic>(){}[0]
         final fun <set-topic>(kotlin/String) // dev.kord.rest.builder.stage/StageInstanceCreateBuilder.topic.<set-topic>|<set-topic>(kotlin.String){}[0]
 
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.builder.stage/StageInstanceCreateBuilder.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.rest.builder.stage/StageInstanceCreateBuilder.hashCode|hashCode(){}[0]
     final fun toRequest(): dev.kord.rest.json.request/StageInstanceCreateRequest // dev.kord.rest.builder.stage/StageInstanceCreateBuilder.toRequest|toRequest(){}[0]
 }
 
@@ -2852,6 +3046,8 @@ final class dev.kord.rest.builder.stage/StageInstanceModifyBuilder : dev.kord.re
         final fun <get-topic>(): kotlin/String? // dev.kord.rest.builder.stage/StageInstanceModifyBuilder.topic.<get-topic>|<get-topic>(){}[0]
         final fun <set-topic>(kotlin/String?) // dev.kord.rest.builder.stage/StageInstanceModifyBuilder.topic.<set-topic>|<set-topic>(kotlin.String?){}[0]
 
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.builder.stage/StageInstanceModifyBuilder.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.rest.builder.stage/StageInstanceModifyBuilder.hashCode|hashCode(){}[0]
     final fun toRequest(): dev.kord.rest.json.request/StageInstanceModifyRequest // dev.kord.rest.builder.stage/StageInstanceModifyBuilder.toRequest|toRequest(){}[0]
 }
 
@@ -2865,6 +3061,8 @@ final class dev.kord.rest.builder.template/GuildFromTemplateCreateBuilder : dev.
         final fun <get-name>(): kotlin/String // dev.kord.rest.builder.template/GuildFromTemplateCreateBuilder.name.<get-name>|<get-name>(){}[0]
         final fun <set-name>(kotlin/String) // dev.kord.rest.builder.template/GuildFromTemplateCreateBuilder.name.<set-name>|<set-name>(kotlin.String){}[0]
 
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.builder.template/GuildFromTemplateCreateBuilder.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.rest.builder.template/GuildFromTemplateCreateBuilder.hashCode|hashCode(){}[0]
     final fun toRequest(): dev.kord.rest.json.request/GuildFromTemplateCreateRequest // dev.kord.rest.builder.template/GuildFromTemplateCreateBuilder.toRequest|toRequest(){}[0]
 }
 
@@ -2878,6 +3076,8 @@ final class dev.kord.rest.builder.template/GuildTemplateCreateBuilder : dev.kord
         final fun <get-name>(): kotlin/String // dev.kord.rest.builder.template/GuildTemplateCreateBuilder.name.<get-name>|<get-name>(){}[0]
         final fun <set-name>(kotlin/String) // dev.kord.rest.builder.template/GuildTemplateCreateBuilder.name.<set-name>|<set-name>(kotlin.String){}[0]
 
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.builder.template/GuildTemplateCreateBuilder.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.rest.builder.template/GuildTemplateCreateBuilder.hashCode|hashCode(){}[0]
     final fun toRequest(): dev.kord.rest.json.request/GuildTemplateCreateRequest // dev.kord.rest.builder.template/GuildTemplateCreateBuilder.toRequest|toRequest(){}[0]
 }
 
@@ -2891,6 +3091,8 @@ final class dev.kord.rest.builder.template/GuildTemplateModifyBuilder : dev.kord
         final fun <get-name>(): kotlin/String? // dev.kord.rest.builder.template/GuildTemplateModifyBuilder.name.<get-name>|<get-name>(){}[0]
         final fun <set-name>(kotlin/String?) // dev.kord.rest.builder.template/GuildTemplateModifyBuilder.name.<set-name>|<set-name>(kotlin.String?){}[0]
 
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.builder.template/GuildTemplateModifyBuilder.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.rest.builder.template/GuildTemplateModifyBuilder.hashCode|hashCode(){}[0]
     final fun toRequest(): dev.kord.rest.json.request/GuildTemplateModifyRequest // dev.kord.rest.builder.template/GuildTemplateModifyBuilder.toRequest|toRequest(){}[0]
 }
 
@@ -2904,6 +3106,8 @@ final class dev.kord.rest.builder.user/CurrentUserModifyBuilder : dev.kord.rest.
         final fun <get-username>(): kotlin/String? // dev.kord.rest.builder.user/CurrentUserModifyBuilder.username.<get-username>|<get-username>(){}[0]
         final fun <set-username>(kotlin/String?) // dev.kord.rest.builder.user/CurrentUserModifyBuilder.username.<set-username>|<set-username>(kotlin.String?){}[0]
 
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.builder.user/CurrentUserModifyBuilder.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.rest.builder.user/CurrentUserModifyBuilder.hashCode|hashCode(){}[0]
     final fun toRequest(): dev.kord.rest.json.request/CurrentUserModifyRequest // dev.kord.rest.builder.user/CurrentUserModifyBuilder.toRequest|toRequest(){}[0]
 }
 
@@ -2915,6 +3119,8 @@ final class dev.kord.rest.builder.user/GroupDMCreateBuilder : dev.kord.rest.buil
     final val tokens // dev.kord.rest.builder.user/GroupDMCreateBuilder.tokens|{}tokens[0]
         final fun <get-tokens>(): kotlin.collections/MutableList<kotlin/String> // dev.kord.rest.builder.user/GroupDMCreateBuilder.tokens.<get-tokens>|<get-tokens>(){}[0]
 
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.builder.user/GroupDMCreateBuilder.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.rest.builder.user/GroupDMCreateBuilder.hashCode|hashCode(){}[0]
     final fun toRequest(): dev.kord.rest.json.request/GroupDMCreateRequest // dev.kord.rest.builder.user/GroupDMCreateBuilder.toRequest|toRequest(){}[0]
 }
 
@@ -2931,6 +3137,8 @@ final class dev.kord.rest.builder.webhook/WebhookCreateBuilder : dev.kord.rest.b
         final fun <get-reason>(): kotlin/String? // dev.kord.rest.builder.webhook/WebhookCreateBuilder.reason.<get-reason>|<get-reason>(){}[0]
         final fun <set-reason>(kotlin/String?) // dev.kord.rest.builder.webhook/WebhookCreateBuilder.reason.<set-reason>|<set-reason>(kotlin.String?){}[0]
 
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.builder.webhook/WebhookCreateBuilder.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.rest.builder.webhook/WebhookCreateBuilder.hashCode|hashCode(){}[0]
     final fun toRequest(): dev.kord.rest.json.request/WebhookCreateRequest // dev.kord.rest.builder.webhook/WebhookCreateBuilder.toRequest|toRequest(){}[0]
 }
 
@@ -2950,6 +3158,8 @@ final class dev.kord.rest.builder.webhook/WebhookModifyBuilder : dev.kord.rest.b
         final fun <get-reason>(): kotlin/String? // dev.kord.rest.builder.webhook/WebhookModifyBuilder.reason.<get-reason>|<get-reason>(){}[0]
         final fun <set-reason>(kotlin/String?) // dev.kord.rest.builder.webhook/WebhookModifyBuilder.reason.<set-reason>|<set-reason>(kotlin.String?){}[0]
 
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.builder.webhook/WebhookModifyBuilder.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.rest.builder.webhook/WebhookModifyBuilder.hashCode|hashCode(){}[0]
     final fun toRequest(): dev.kord.rest.json.request/WebhookModifyRequest // dev.kord.rest.builder.webhook/WebhookModifyBuilder.toRequest|toRequest(){}[0]
 }
 
@@ -6993,6 +7203,8 @@ sealed class <#A: kotlin/Any?, #B: dev.kord.common.entity/Choice> dev.kord.rest.
 
     abstract fun choice(kotlin/String, #A, dev.kord.common.entity.optional/Optional<kotlin.collections/Map<dev.kord.common/Locale, kotlin/String>?> = ...) // dev.kord.rest.builder.interaction/BaseChoiceBuilder.choice|choice(kotlin.String;1:0;dev.kord.common.entity.optional.Optional<kotlin.collections.Map<dev.kord.common.Locale,kotlin.String>?>){}[0]
     final inline fun choice(kotlin/String, #A, kotlin/Function1<dev.kord.rest.builder.interaction/ChoiceLocalizationsBuilder, kotlin/Unit>) // dev.kord.rest.builder.interaction/BaseChoiceBuilder.choice|choice(kotlin.String;1:0;kotlin.Function1<dev.kord.rest.builder.interaction.ChoiceLocalizationsBuilder,kotlin.Unit>){}[0]
+    open fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.builder.interaction/BaseChoiceBuilder.equals|equals(kotlin.Any?){}[0]
+    open fun hashCode(): kotlin/Int // dev.kord.rest.builder.interaction/BaseChoiceBuilder.hashCode|hashCode(){}[0]
     open fun toRequest(): dev.kord.common.entity/ApplicationCommandOption // dev.kord.rest.builder.interaction/BaseChoiceBuilder.toRequest|toRequest(){}[0]
 }
 
@@ -7422,6 +7634,8 @@ sealed class <#A: kotlin/Number, #B: dev.kord.common.entity/Choice> dev.kord.res
         final fun <get-minValue>(): #A? // dev.kord.rest.builder.interaction/NumericOptionBuilder.minValue.<get-minValue>|<get-minValue>(){}[0]
         final fun <set-minValue>(#A?) // dev.kord.rest.builder.interaction/NumericOptionBuilder.minValue.<set-minValue>|<set-minValue>(1:0?){}[0]
 
+    open fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.builder.interaction/NumericOptionBuilder.equals|equals(kotlin.Any?){}[0]
+    open fun hashCode(): kotlin/Int // dev.kord.rest.builder.interaction/NumericOptionBuilder.hashCode|hashCode(){}[0]
     open fun toRequest(): dev.kord.common.entity/ApplicationCommandOption // dev.kord.rest.builder.interaction/NumericOptionBuilder.toRequest|toRequest(){}[0]
 }
 
@@ -7433,6 +7647,8 @@ sealed class dev.kord.rest.builder.automoderation/AutoModerationActionBuilder : 
 
     final fun toRequest(): dev.kord.common.entity/DiscordAutoModerationAction // dev.kord.rest.builder.automoderation/AutoModerationActionBuilder.toRequest|toRequest(){}[0]
     open fun buildMetadata(): dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordAutoModerationActionMetadata> // dev.kord.rest.builder.automoderation/AutoModerationActionBuilder.buildMetadata|buildMetadata(){}[0]
+    open fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.builder.automoderation/AutoModerationActionBuilder.equals|equals(kotlin.Any?){}[0]
+    open fun hashCode(): kotlin/Int // dev.kord.rest.builder.automoderation/AutoModerationActionBuilder.hashCode|hashCode(){}[0]
 }
 
 sealed class dev.kord.rest.builder.automoderation/AutoModerationRuleCreateBuilder : dev.kord.rest.builder.automoderation/TypedAutoModerationRuleBuilder, dev.kord.rest.builder/AuditRequestBuilder<dev.kord.rest.json.request/AutoModerationRuleCreateRequest> { // dev.kord.rest.builder.automoderation/AutoModerationRuleCreateBuilder|null[0]
@@ -7465,6 +7681,8 @@ sealed class dev.kord.rest.builder.automoderation/AutoModerationRuleCreateBuilde
     final fun assignName(kotlin/String) // dev.kord.rest.builder.automoderation/AutoModerationRuleCreateBuilder.assignName|assignName(kotlin.String){}[0]
     final fun toRequest(): dev.kord.rest.json.request/AutoModerationRuleCreateRequest // dev.kord.rest.builder.automoderation/AutoModerationRuleCreateBuilder.toRequest|toRequest(){}[0]
     open fun buildTriggerMetadata(): dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordAutoModerationRuleTriggerMetadata> // dev.kord.rest.builder.automoderation/AutoModerationRuleCreateBuilder.buildTriggerMetadata|buildTriggerMetadata(){}[0]
+    open fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.builder.automoderation/AutoModerationRuleCreateBuilder.equals|equals(kotlin.Any?){}[0]
+    open fun hashCode(): kotlin/Int // dev.kord.rest.builder.automoderation/AutoModerationRuleCreateBuilder.hashCode|hashCode(){}[0]
 }
 
 sealed class dev.kord.rest.builder.automoderation/AutoModerationRuleModifyBuilder : dev.kord.rest.builder.automoderation/AutoModerationRuleBuilder, dev.kord.rest.builder/AuditRequestBuilder<dev.kord.rest.json.request/AutoModerationRuleModifyRequest> { // dev.kord.rest.builder.automoderation/AutoModerationRuleModifyBuilder|null[0]
@@ -7497,6 +7715,8 @@ sealed class dev.kord.rest.builder.automoderation/AutoModerationRuleModifyBuilde
     final fun assignName(kotlin/String) // dev.kord.rest.builder.automoderation/AutoModerationRuleModifyBuilder.assignName|assignName(kotlin.String){}[0]
     final fun toRequest(): dev.kord.rest.json.request/AutoModerationRuleModifyRequest // dev.kord.rest.builder.automoderation/AutoModerationRuleModifyBuilder.toRequest|toRequest(){}[0]
     open fun buildTriggerMetadata(): dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordAutoModerationRuleTriggerMetadata> // dev.kord.rest.builder.automoderation/AutoModerationRuleModifyBuilder.buildTriggerMetadata|buildTriggerMetadata(){}[0]
+    open fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.builder.automoderation/AutoModerationRuleModifyBuilder.equals|equals(kotlin.Any?){}[0]
+    open fun hashCode(): kotlin/Int // dev.kord.rest.builder.automoderation/AutoModerationRuleModifyBuilder.hashCode|hashCode(){}[0]
 }
 
 sealed class dev.kord.rest.builder.component/ActionRowComponentBuilder : dev.kord.rest.builder.component/ComponentBuilder { // dev.kord.rest.builder.component/ActionRowComponentBuilder|null[0]
@@ -7507,6 +7727,9 @@ sealed class dev.kord.rest.builder.component/ActionRowComponentBuilder : dev.kor
     final var disabled // dev.kord.rest.builder.component/ActionRowComponentBuilder.disabled|{}disabled[0]
         final fun <get-disabled>(): kotlin/Boolean? // dev.kord.rest.builder.component/ActionRowComponentBuilder.disabled.<get-disabled>|<get-disabled>(){}[0]
         final fun <set-disabled>(kotlin/Boolean?) // dev.kord.rest.builder.component/ActionRowComponentBuilder.disabled.<set-disabled>|<set-disabled>(kotlin.Boolean?){}[0]
+
+    open fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.builder.component/ActionRowComponentBuilder.equals|equals(kotlin.Any?){}[0]
+    open fun hashCode(): kotlin/Int // dev.kord.rest.builder.component/ActionRowComponentBuilder.hashCode|hashCode(){}[0]
 }
 
 sealed class dev.kord.rest.builder.component/ButtonBuilder : dev.kord.rest.builder.component/ActionRowComponentBuilder { // dev.kord.rest.builder.component/ButtonBuilder|null[0]
@@ -7524,6 +7747,8 @@ sealed class dev.kord.rest.builder.component/ButtonBuilder : dev.kord.rest.build
         final fun <set-label>(kotlin/String?) // dev.kord.rest.builder.component/ButtonBuilder.label.<set-label>|<set-label>(kotlin.String?){}[0]
 
     abstract fun build(): dev.kord.common.entity/DiscordChatComponent // dev.kord.rest.builder.component/ButtonBuilder.build|build(){}[0]
+    open fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.builder.component/ButtonBuilder.equals|equals(kotlin.Any?){}[0]
+    open fun hashCode(): kotlin/Int // dev.kord.rest.builder.component/ButtonBuilder.hashCode|hashCode(){}[0]
 
     final class InteractionButtonBuilder : dev.kord.rest.builder.component/ButtonBuilder { // dev.kord.rest.builder.component/ButtonBuilder.InteractionButtonBuilder|null[0]
         constructor <init>(dev.kord.common.entity/ButtonStyle, kotlin/String) // dev.kord.rest.builder.component/ButtonBuilder.InteractionButtonBuilder.<init>|<init>(dev.kord.common.entity.ButtonStyle;kotlin.String){}[0]
@@ -7536,6 +7761,8 @@ sealed class dev.kord.rest.builder.component/ButtonBuilder : dev.kord.rest.build
             final fun <set-style>(dev.kord.common.entity/ButtonStyle) // dev.kord.rest.builder.component/ButtonBuilder.InteractionButtonBuilder.style.<set-style>|<set-style>(dev.kord.common.entity.ButtonStyle){}[0]
 
         final fun build(): dev.kord.common.entity/DiscordChatComponent // dev.kord.rest.builder.component/ButtonBuilder.InteractionButtonBuilder.build|build(){}[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.builder.component/ButtonBuilder.InteractionButtonBuilder.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // dev.kord.rest.builder.component/ButtonBuilder.InteractionButtonBuilder.hashCode|hashCode(){}[0]
     }
 
     final class LinkButtonBuilder : dev.kord.rest.builder.component/ButtonBuilder { // dev.kord.rest.builder.component/ButtonBuilder.LinkButtonBuilder|null[0]
@@ -7546,6 +7773,8 @@ sealed class dev.kord.rest.builder.component/ButtonBuilder : dev.kord.rest.build
             final fun <set-url>(kotlin/String) // dev.kord.rest.builder.component/ButtonBuilder.LinkButtonBuilder.url.<set-url>|<set-url>(kotlin.String){}[0]
 
         final fun build(): dev.kord.common.entity/DiscordChatComponent // dev.kord.rest.builder.component/ButtonBuilder.LinkButtonBuilder.build|build(){}[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.builder.component/ButtonBuilder.LinkButtonBuilder.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // dev.kord.rest.builder.component/ButtonBuilder.LinkButtonBuilder.hashCode|hashCode(){}[0]
     }
 }
 
@@ -7569,6 +7798,8 @@ sealed class dev.kord.rest.builder.component/SelectMenuBuilder : dev.kord.rest.b
     open fun buildChannelTypes(): dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.common.entity/ChannelType>> // dev.kord.rest.builder.component/SelectMenuBuilder.buildChannelTypes|buildChannelTypes(){}[0]
     open fun buildDefaultValues(): dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.common.entity/DiscordSelectDefaultValue>> // dev.kord.rest.builder.component/SelectMenuBuilder.buildDefaultValues|buildDefaultValues(){}[0]
     open fun buildOptions(): dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.common.entity/DiscordSelectOption>> // dev.kord.rest.builder.component/SelectMenuBuilder.buildOptions|buildOptions(){}[0]
+    open fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.builder.component/SelectMenuBuilder.equals|equals(kotlin.Any?){}[0]
+    open fun hashCode(): kotlin/Int // dev.kord.rest.builder.component/SelectMenuBuilder.hashCode|hashCode(){}[0]
 }
 
 sealed class dev.kord.rest.builder.interaction/BaseCommandOptionBuilder : dev.kord.rest.builder.interaction/OptionsBuilder { // dev.kord.rest.builder.interaction/BaseCommandOptionBuilder|null[0]
@@ -7578,6 +7809,8 @@ sealed class dev.kord.rest.builder.interaction/BaseCommandOptionBuilder : dev.ko
         final fun <get-options>(): kotlin.collections/MutableList<dev.kord.rest.builder.interaction/OptionsBuilder>? // dev.kord.rest.builder.interaction/BaseCommandOptionBuilder.options.<get-options>|<get-options>(){}[0]
         final fun <set-options>(kotlin.collections/MutableList<dev.kord.rest.builder.interaction/OptionsBuilder>?) // dev.kord.rest.builder.interaction/BaseCommandOptionBuilder.options.<set-options>|<set-options>(kotlin.collections.MutableList<dev.kord.rest.builder.interaction.OptionsBuilder>?){}[0]
 
+    open fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.builder.interaction/BaseCommandOptionBuilder.equals|equals(kotlin.Any?){}[0]
+    open fun hashCode(): kotlin/Int // dev.kord.rest.builder.interaction/BaseCommandOptionBuilder.hashCode|hashCode(){}[0]
     open fun toRequest(): dev.kord.common.entity/ApplicationCommandOption // dev.kord.rest.builder.interaction/BaseCommandOptionBuilder.toRequest|toRequest(){}[0]
 }
 
@@ -7588,6 +7821,8 @@ sealed class dev.kord.rest.builder.interaction/MultiApplicationCommandBuilder { 
         final fun <get-commands>(): kotlin.collections/MutableList<dev.kord.rest.builder.interaction/ApplicationCommandCreateBuilder> // dev.kord.rest.builder.interaction/MultiApplicationCommandBuilder.commands.<get-commands>|<get-commands>(){}[0]
 
     final fun build(): kotlin.collections/List<dev.kord.rest.json.request/ApplicationCommandCreateRequest> // dev.kord.rest.builder.interaction/MultiApplicationCommandBuilder.build|build(){}[0]
+    open fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.builder.interaction/MultiApplicationCommandBuilder.equals|equals(kotlin.Any?){}[0]
+    open fun hashCode(): kotlin/Int // dev.kord.rest.builder.interaction/MultiApplicationCommandBuilder.hashCode|hashCode(){}[0]
 }
 
 sealed class dev.kord.rest.builder.interaction/OptionsBuilder : dev.kord.rest.builder.interaction/LocalizedDescriptionCreateBuilder, dev.kord.rest.builder.interaction/LocalizedNameCreateBuilder, dev.kord.rest.builder/RequestBuilder<dev.kord.common.entity/ApplicationCommandOption> { // dev.kord.rest.builder.interaction/OptionsBuilder|null[0]
@@ -7618,6 +7853,8 @@ sealed class dev.kord.rest.builder.interaction/OptionsBuilder : dev.kord.rest.bu
         open fun <get-nameLocalizations>(): kotlin.collections/MutableMap<dev.kord.common/Locale, kotlin/String>? // dev.kord.rest.builder.interaction/OptionsBuilder.nameLocalizations.<get-nameLocalizations>|<get-nameLocalizations>(){}[0]
         open fun <set-nameLocalizations>(kotlin.collections/MutableMap<dev.kord.common/Locale, kotlin/String>?) // dev.kord.rest.builder.interaction/OptionsBuilder.nameLocalizations.<set-nameLocalizations>|<set-nameLocalizations>(kotlin.collections.MutableMap<dev.kord.common.Locale,kotlin.String>?){}[0]
 
+    open fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.builder.interaction/OptionsBuilder.equals|equals(kotlin.Any?){}[0]
+    open fun hashCode(): kotlin/Int // dev.kord.rest.builder.interaction/OptionsBuilder.hashCode|hashCode(){}[0]
     open fun toRequest(): dev.kord.common.entity/ApplicationCommandOption // dev.kord.rest.builder.interaction/OptionsBuilder.toRequest|toRequest(){}[0]
 }
 
@@ -7654,6 +7891,9 @@ sealed class dev.kord.rest.builder.message.create/AbstractMessageCreateBuilder :
     final var tts // dev.kord.rest.builder.message.create/AbstractMessageCreateBuilder.tts|{}tts[0]
         final fun <get-tts>(): kotlin/Boolean? // dev.kord.rest.builder.message.create/AbstractMessageCreateBuilder.tts.<get-tts>|<get-tts>(){}[0]
         final fun <set-tts>(kotlin/Boolean?) // dev.kord.rest.builder.message.create/AbstractMessageCreateBuilder.tts.<set-tts>|<set-tts>(kotlin.Boolean?){}[0]
+
+    open fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.builder.message.create/AbstractMessageCreateBuilder.equals|equals(kotlin.Any?){}[0]
+    open fun hashCode(): kotlin/Int // dev.kord.rest.builder.message.create/AbstractMessageCreateBuilder.hashCode|hashCode(){}[0]
 }
 
 sealed class dev.kord.rest.builder.message.modify/AbstractMessageModifyBuilder : dev.kord.rest.builder.message.modify/MessageModifyBuilder { // dev.kord.rest.builder.message.modify/AbstractMessageModifyBuilder|null[0]
@@ -7683,6 +7923,9 @@ sealed class dev.kord.rest.builder.message.modify/AbstractMessageModifyBuilder :
     final var suppressEmbeds // dev.kord.rest.builder.message.modify/AbstractMessageModifyBuilder.suppressEmbeds|{}suppressEmbeds[0]
         final fun <get-suppressEmbeds>(): kotlin/Boolean? // dev.kord.rest.builder.message.modify/AbstractMessageModifyBuilder.suppressEmbeds.<get-suppressEmbeds>|<get-suppressEmbeds>(){}[0]
         final fun <set-suppressEmbeds>(kotlin/Boolean?) // dev.kord.rest.builder.message.modify/AbstractMessageModifyBuilder.suppressEmbeds.<set-suppressEmbeds>|<set-suppressEmbeds>(kotlin.Boolean?){}[0]
+
+    open fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.builder.message.modify/AbstractMessageModifyBuilder.equals|equals(kotlin.Any?){}[0]
+    open fun hashCode(): kotlin/Int // dev.kord.rest.builder.message.modify/AbstractMessageModifyBuilder.hashCode|hashCode(){}[0]
 }
 
 sealed class dev.kord.rest.ratelimit/RequestResponse { // dev.kord.rest.ratelimit/RequestResponse|null[0]

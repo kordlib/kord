@@ -176,4 +176,45 @@ public class GuildCreateBuilder(public var name: String) : RequestBuilder<GuildC
         _afkTimeout,
         _systemChannelId,
     )
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other == null || this::class != other::class) return false
+
+        other as GuildCreateBuilder
+
+        if (name != other.name) return false
+        if (snowflakeGenerator != other.snowflakeGenerator) return false
+        if (region != other.region) return false
+        if (icon != other.icon) return false
+        if (verificationLevel != other.verificationLevel) return false
+        if (defaultMessageNotificationLevel != other.defaultMessageNotificationLevel) return false
+        if (explicitContentFilter != other.explicitContentFilter) return false
+        if (everyoneRole != other.everyoneRole) return false
+        if (roles != other.roles) return false
+        if (channels != other.channels) return false
+        if (afkChannelId != other.afkChannelId) return false
+        if (afkTimeout != other.afkTimeout) return false
+        if (systemChannelId != other.systemChannelId) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = name.hashCode()
+        result = 31 * result + snowflakeGenerator.hashCode()
+        result = 31 * result + (region?.hashCode() ?: 0)
+        result = 31 * result + (icon?.hashCode() ?: 0)
+        result = 31 * result + (verificationLevel?.hashCode() ?: 0)
+        result = 31 * result + (defaultMessageNotificationLevel?.hashCode() ?: 0)
+        result = 31 * result + (explicitContentFilter?.hashCode() ?: 0)
+        result = 31 * result + (everyoneRole?.hashCode() ?: 0)
+        result = 31 * result + roles.hashCode()
+        result = 31 * result + channels.hashCode()
+        result = 31 * result + (afkChannelId?.hashCode() ?: 0)
+        result = 31 * result + (afkTimeout?.hashCode() ?: 0)
+        result = 31 * result + (systemChannelId?.hashCode() ?: 0)
+        return result
+    }
+
 }

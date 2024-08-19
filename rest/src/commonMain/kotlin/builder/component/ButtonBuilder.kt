@@ -33,6 +33,26 @@ public sealed class ButtonBuilder : ActionRowComponentBuilder() {
 
     abstract override fun build(): DiscordChatComponent
 
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other == null || this::class != other::class) return false
+        if (!super.equals(other)) return false
+
+        other as ButtonBuilder
+
+        if (label != other.label) return false
+        if (emoji != other.emoji) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = super.hashCode()
+        result = 31 * result + (label?.hashCode() ?: 0)
+        result = 31 * result + (emoji?.hashCode() ?: 0)
+        return result
+    }
+
     /**
      * A builder for a button that can create Interactions when clicked.
      *
@@ -53,6 +73,27 @@ public sealed class ButtonBuilder : ActionRowComponentBuilder() {
             Optional.Missing(),
             _disabled,
         )
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) return true
+            if (other == null || this::class != other::class) return false
+            if (!super.equals(other)) return false
+
+            other as InteractionButtonBuilder
+
+            if (style != other.style) return false
+            if (customId != other.customId) return false
+
+            return true
+        }
+
+        override fun hashCode(): Int {
+            var result = super.hashCode()
+            result = 31 * result + style.hashCode()
+            result = 31 * result + customId.hashCode()
+            return result
+        }
+
     }
 
     /**
@@ -73,5 +114,22 @@ public sealed class ButtonBuilder : ActionRowComponentBuilder() {
             Optional.Value(url),
             _disabled,
         )
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) return true
+            if (other == null || this::class != other::class) return false
+            if (!super.equals(other)) return false
+
+            other as LinkButtonBuilder
+
+            return url == other.url
+        }
+
+        override fun hashCode(): Int {
+            var result = super.hashCode()
+            result = 31 * result + url.hashCode()
+            return result
+        }
+
     }
 }

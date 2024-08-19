@@ -21,4 +21,22 @@ public class CurrentUserModifyBuilder : RequestBuilder<CurrentUserModifyRequest>
         _username, _avatar.map { it.dataUri }
     )
 
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other == null || this::class != other::class) return false
+
+        other as CurrentUserModifyBuilder
+
+        if (username != other.username) return false
+        if (avatar != other.avatar) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = username?.hashCode() ?: 0
+        result = 31 * result + (avatar?.hashCode() ?: 0)
+        return result
+    }
+
 }

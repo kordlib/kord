@@ -51,6 +51,33 @@ public class StartForumThreadBuilder(public var name: String) : AuditRequestBuil
             files = messageRequest.files,
         )
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other == null || this::class != other::class) return false
+
+        other as StartForumThreadBuilder
+
+        if (name != other.name) return false
+        if (reason != other.reason) return false
+        if (autoArchiveDuration != other.autoArchiveDuration) return false
+        if (rateLimitPerUser != other.rateLimitPerUser) return false
+        if (appliedTags != other.appliedTags) return false
+        if (message != other.message) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = name.hashCode()
+        result = 31 * result + (reason?.hashCode() ?: 0)
+        result = 31 * result + (autoArchiveDuration?.hashCode() ?: 0)
+        result = 31 * result + (rateLimitPerUser?.hashCode() ?: 0)
+        result = 31 * result + (appliedTags?.hashCode() ?: 0)
+        result = 31 * result + message.hashCode()
+        return result
+    }
+
 }
 
 /** Add a [tagId] to [appliedTags][StartForumThreadBuilder.appliedTags]. */

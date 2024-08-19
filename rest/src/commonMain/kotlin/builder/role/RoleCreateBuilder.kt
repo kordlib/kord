@@ -63,4 +63,35 @@ public class RoleCreateBuilder : AuditRequestBuilder<GuildRoleCreateRequest> {
         mentionable = _mentionable,
         permissions = _permissions
     )
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other == null || this::class != other::class) return false
+
+        other as RoleCreateBuilder
+
+        if (reason != other.reason) return false
+        if (color != other.color) return false
+        if (hoist != other.hoist) return false
+        if (icon != other.icon) return false
+        if (unicodeEmoji != other.unicodeEmoji) return false
+        if (name != other.name) return false
+        if (mentionable != other.mentionable) return false
+        if (permissions != other.permissions) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = reason?.hashCode() ?: 0
+        result = 31 * result + (color?.hashCode() ?: 0)
+        result = 31 * result + (hoist?.hashCode() ?: 0)
+        result = 31 * result + (icon?.hashCode() ?: 0)
+        result = 31 * result + (unicodeEmoji?.hashCode() ?: 0)
+        result = 31 * result + (name?.hashCode() ?: 0)
+        result = 31 * result + (mentionable?.hashCode() ?: 0)
+        result = 31 * result + (permissions?.hashCode() ?: 0)
+        return result
+    }
+
 }

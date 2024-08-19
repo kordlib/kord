@@ -31,4 +31,29 @@ public class CategoryCreateBuilder(
         permissionOverwrite = Optional.missingOnEmpty(permissionOverwrites),
         type = ChannelType.GuildCategory
     )
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other == null || this::class != other::class) return false
+
+        other as CategoryCreateBuilder
+
+        if (name != other.name) return false
+        if (reason != other.reason) return false
+        if (position != other.position) return false
+        if (nsfw != other.nsfw) return false
+        if (permissionOverwrites != other.permissionOverwrites) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = name.hashCode()
+        result = 31 * result + (reason?.hashCode() ?: 0)
+        result = 31 * result + (position ?: 0)
+        result = 31 * result + (nsfw?.hashCode() ?: 0)
+        result = 31 * result + permissionOverwrites.hashCode()
+        return result
+    }
+
 }

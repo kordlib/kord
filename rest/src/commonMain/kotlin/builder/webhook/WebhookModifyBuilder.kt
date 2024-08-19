@@ -28,4 +28,27 @@ public class WebhookModifyBuilder : AuditRequestBuilder<WebhookModifyRequest> {
         avatar = _avatar.map { it.dataUri },
         channelId = _channelId
     )
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other == null || this::class != other::class) return false
+
+        other as WebhookModifyBuilder
+
+        if (reason != other.reason) return false
+        if (name != other.name) return false
+        if (avatar != other.avatar) return false
+        if (channelId != other.channelId) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = reason?.hashCode() ?: 0
+        result = 31 * result + (name?.hashCode() ?: 0)
+        result = 31 * result + (avatar?.hashCode() ?: 0)
+        result = 31 * result + (channelId?.hashCode() ?: 0)
+        return result
+    }
+
 }

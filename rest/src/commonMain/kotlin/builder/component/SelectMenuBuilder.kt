@@ -51,6 +51,31 @@ public sealed class SelectMenuBuilder(public var customId: String) : ActionRowCo
         maxValues = OptionalInt.Value(allowedValues.endInclusive),
         disabled = _disabled,
     )
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other == null || this::class != other::class) return false
+        if (!super.equals(other)) return false
+
+        other as SelectMenuBuilder
+
+        if (customId != other.customId) return false
+        if (allowedValues != other.allowedValues) return false
+        if (placeholder != other.placeholder) return false
+        if (type != other.type) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = super.hashCode()
+        result = 31 * result + customId.hashCode()
+        result = 31 * result + allowedValues.hashCode()
+        result = 31 * result + (placeholder?.hashCode() ?: 0)
+        result = 31 * result + type.hashCode()
+        return result
+    }
+
 }
 
 @KordDsl
@@ -61,6 +86,27 @@ public class StringSelectBuilder(customId: String) : SelectMenuBuilder(customId)
     public var options: MutableList<SelectOptionBuilder> = mutableListOf()
 
     override fun buildOptions(): Optional<List<DiscordSelectOption>> = Optional(options.map { it.build() })
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other == null || this::class != other::class) return false
+        if (!super.equals(other)) return false
+
+        other as StringSelectBuilder
+
+        if (type != other.type) return false
+        if (options != other.options) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = super.hashCode()
+        result = 31 * result + type.hashCode()
+        result = 31 * result + options.hashCode()
+        return result
+    }
+
 }
 
 /**
@@ -92,6 +138,27 @@ public class UserSelectBuilder(customId: String) : SelectMenuBuilder(customId) {
 
     override fun buildDefaultValues(): Optional<List<DiscordSelectDefaultValue>> =
         Optional.missingOnEmpty(defaultUsers.map { id -> DiscordSelectDefaultValue(id, type = User) })
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other == null || this::class != other::class) return false
+        if (!super.equals(other)) return false
+
+        other as UserSelectBuilder
+
+        if (type != other.type) return false
+        if (defaultUsers != other.defaultUsers) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = super.hashCode()
+        result = 31 * result + type.hashCode()
+        result = 31 * result + defaultUsers.hashCode()
+        return result
+    }
+
 }
 
 @KordDsl
@@ -107,6 +174,27 @@ public class RoleSelectBuilder(customId: String) : SelectMenuBuilder(customId) {
 
     override fun buildDefaultValues(): Optional<List<DiscordSelectDefaultValue>> =
         Optional.missingOnEmpty(defaultRoles.map { id -> DiscordSelectDefaultValue(id, type = Role) })
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other == null || this::class != other::class) return false
+        if (!super.equals(other)) return false
+
+        other as RoleSelectBuilder
+
+        if (type != other.type) return false
+        if (defaultRoles != other.defaultRoles) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = super.hashCode()
+        result = 31 * result + type.hashCode()
+        result = 31 * result + defaultRoles.hashCode()
+        return result
+    }
+
 }
 
 @KordDsl
@@ -131,6 +219,29 @@ public class MentionableSelectBuilder(customId: String) : SelectMenuBuilder(cust
         defaultUsers.map { id -> DiscordSelectDefaultValue(id, type = User) } +
             defaultRoles.map { id -> DiscordSelectDefaultValue(id, type = Role) }
     )
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other == null || this::class != other::class) return false
+        if (!super.equals(other)) return false
+
+        other as MentionableSelectBuilder
+
+        if (type != other.type) return false
+        if (defaultUsers != other.defaultUsers) return false
+        if (defaultRoles != other.defaultRoles) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = super.hashCode()
+        result = 31 * result + type.hashCode()
+        result = 31 * result + defaultUsers.hashCode()
+        result = 31 * result + defaultRoles.hashCode()
+        return result
+    }
+
 }
 
 @KordDsl
@@ -150,6 +261,29 @@ public class ChannelSelectBuilder(customId: String) : SelectMenuBuilder(customId
     override fun buildChannelTypes(): Optional<List<ChannelType>> = _channelTypes.mapCopy()
     override fun buildDefaultValues(): Optional<List<DiscordSelectDefaultValue>> =
         Optional.missingOnEmpty(defaultChannels.map { id -> DiscordSelectDefaultValue(id, type = Channel) })
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other == null || this::class != other::class) return false
+        if (!super.equals(other)) return false
+
+        other as ChannelSelectBuilder
+
+        if (type != other.type) return false
+        if (channelTypes != other.channelTypes) return false
+        if (defaultChannels != other.defaultChannels) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = super.hashCode()
+        result = 31 * result + type.hashCode()
+        result = 31 * result + (channelTypes?.hashCode() ?: 0)
+        result = 31 * result + defaultChannels.hashCode()
+        return result
+    }
+
 }
 
 public fun ChannelSelectBuilder.channelType(type: ChannelType) {

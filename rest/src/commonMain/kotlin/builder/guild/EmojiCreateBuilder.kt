@@ -20,4 +20,27 @@ public class EmojiCreateBuilder(
         image = image.dataUri,
         roles = roles
     )
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other == null || this::class != other::class) return false
+
+        other as EmojiCreateBuilder
+
+        if (name != other.name) return false
+        if (image != other.image) return false
+        if (reason != other.reason) return false
+        if (roles != other.roles) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = name.hashCode()
+        result = 31 * result + image.hashCode()
+        result = 31 * result + (reason?.hashCode() ?: 0)
+        result = 31 * result + roles.hashCode()
+        return result
+    }
+
 }

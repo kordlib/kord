@@ -26,4 +26,27 @@ public class StartThreadWithMessageBuilder(public var name: String) : AuditReque
             rateLimitPerUser = _rateLimitPerUser
         )
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other == null || this::class != other::class) return false
+
+        other as StartThreadWithMessageBuilder
+
+        if (name != other.name) return false
+        if (reason != other.reason) return false
+        if (autoArchiveDuration != other.autoArchiveDuration) return false
+        if (rateLimitPerUser != other.rateLimitPerUser) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = name.hashCode()
+        result = 31 * result + (reason?.hashCode() ?: 0)
+        result = 31 * result + (autoArchiveDuration?.hashCode() ?: 0)
+        result = 31 * result + (rateLimitPerUser?.hashCode() ?: 0)
+        return result
+    }
+
 }

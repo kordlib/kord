@@ -36,6 +36,23 @@ public class ForumMessageCreateBuilder :
         ),
         files = files.toList(),
     )
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other == null || this::class != other::class) return false
+        if (!super.equals(other)) return false
+
+        other as ForumMessageCreateBuilder
+
+        return stickerIds == other.stickerIds
+    }
+
+    override fun hashCode(): Int {
+        var result = super.hashCode()
+        result = 31 * result + (stickerIds?.hashCode() ?: 0)
+        return result
+    }
+
 }
 
 /** Add a [stickerId] to [stickerIds][ForumMessageCreateBuilder.stickerIds]. */

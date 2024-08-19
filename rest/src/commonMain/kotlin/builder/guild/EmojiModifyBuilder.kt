@@ -21,4 +21,25 @@ public class EmojiModifyBuilder : AuditRequestBuilder<EmojiModifyRequest> {
         name = _name,
         roles = _roles
     )
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other == null || this::class != other::class) return false
+
+        other as EmojiModifyBuilder
+
+        if (reason != other.reason) return false
+        if (name != other.name) return false
+        if (roles != other.roles) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = reason?.hashCode() ?: 0
+        result = 31 * result + (name?.hashCode() ?: 0)
+        result = 31 * result + (roles?.hashCode() ?: 0)
+        return result
+    }
+
 }

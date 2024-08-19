@@ -29,6 +29,20 @@ public sealed class AutoModerationActionBuilder : RequestBuilder<DiscordAutoMode
         type = type,
         metadata = buildMetadata(),
     )
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other == null || this::class != other::class) return false
+
+        other as AutoModerationActionBuilder
+
+        return type == other.type
+    }
+
+    override fun hashCode(): Int {
+        return type.hashCode()
+    }
+
 }
 
 /** An [AutoModerationActionBuilder] for building actions with type [BlockMessage]. */
@@ -53,6 +67,23 @@ public class BlockMessageAutoModerationActionBuilder : AutoModerationActionBuild
             Optional.Missing()
         }
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other == null || this::class != other::class) return false
+        if (!super.equals(other)) return false
+
+        other as BlockMessageAutoModerationActionBuilder
+
+        return customMessage == other.customMessage
+    }
+
+    override fun hashCode(): Int {
+        var result = super.hashCode()
+        result = 31 * result + (customMessage?.hashCode() ?: 0)
+        return result
+    }
+
 }
 
 /** An [AutoModerationActionBuilder] for building actions with type [SendAlertMessage]. */
@@ -66,6 +97,23 @@ public class SendAlertMessageAutoModerationActionBuilder(
 
     override fun buildMetadata(): Optional.Value<DiscordAutoModerationActionMetadata> =
         DiscordAutoModerationActionMetadata(channelId = channelId.optionalSnowflake()).optional()
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other == null || this::class != other::class) return false
+        if (!super.equals(other)) return false
+
+        other as SendAlertMessageAutoModerationActionBuilder
+
+        return channelId == other.channelId
+    }
+
+    override fun hashCode(): Int {
+        var result = super.hashCode()
+        result = 31 * result + channelId.hashCode()
+        return result
+    }
+
 }
 
 /** An [AutoModerationActionBuilder] for building actions with type [Timeout]. */
@@ -79,4 +127,21 @@ public class TimeoutAutoModerationActionBuilder(
 
     override fun buildMetadata(): Optional.Value<DiscordAutoModerationActionMetadata> =
         DiscordAutoModerationActionMetadata(durationSeconds = duration.optional()).optional()
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other == null || this::class != other::class) return false
+        if (!super.equals(other)) return false
+
+        other as TimeoutAutoModerationActionBuilder
+
+        return duration == other.duration
+    }
+
+    override fun hashCode(): Int {
+        var result = super.hashCode()
+        result = 31 * result + duration.hashCode()
+        return result
+    }
+
 }

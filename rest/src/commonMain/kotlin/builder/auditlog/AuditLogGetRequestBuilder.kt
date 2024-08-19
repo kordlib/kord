@@ -40,4 +40,29 @@ public class AuditLogGetRequestBuilder : RequestBuilder<AuditLogGetRequest> {
     public var limit: Int? = null
 
     override fun toRequest(): AuditLogGetRequest = AuditLogGetRequest(userId, action, before, after, limit)
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other == null || this::class != other::class) return false
+
+        other as AuditLogGetRequestBuilder
+
+        if (userId != other.userId) return false
+        if (action != other.action) return false
+        if (before != other.before) return false
+        if (after != other.after) return false
+        if (limit != other.limit) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = userId?.hashCode() ?: 0
+        result = 31 * result + (action?.hashCode() ?: 0)
+        result = 31 * result + (before?.hashCode() ?: 0)
+        result = 31 * result + (after?.hashCode() ?: 0)
+        result = 31 * result + (limit ?: 0)
+        return result
+    }
+
 }

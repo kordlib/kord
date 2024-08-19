@@ -62,6 +62,31 @@ public class WebhookMessageCreateBuilder :
         ),
         files = files.toList(),
     )
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other == null || this::class != other::class) return false
+        if (!super.equals(other)) return false
+
+        other as WebhookMessageCreateBuilder
+
+        if (username != other.username) return false
+        if (avatarUrl != other.avatarUrl) return false
+        if (threadName != other.threadName) return false
+        if (appliedTags != other.appliedTags) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = super.hashCode()
+        result = 31 * result + (username?.hashCode() ?: 0)
+        result = 31 * result + (avatarUrl?.hashCode() ?: 0)
+        result = 31 * result + (threadName?.hashCode() ?: 0)
+        result = 31 * result + (appliedTags?.hashCode() ?: 0)
+        return result
+    }
+
 }
 
 /** Add a [tagId] to [appliedTags][WebhookMessageCreateBuilder.appliedTags]. */

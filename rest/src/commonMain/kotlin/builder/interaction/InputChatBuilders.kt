@@ -170,6 +170,40 @@ internal class ChatInputCreateBuilderImpl(
 
     }
 
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other == null || this::class != other::class) return false
+
+        other as ChatInputCreateBuilderImpl
+
+        if (name != other.name) return false
+        if (description != other.description) return false
+        if (state != other.state) return false
+        if (nameLocalizations != other.nameLocalizations) return false
+        if (descriptionLocalizations != other.descriptionLocalizations) return false
+        if (type != other.type) return false
+        if (options != other.options) return false
+        if (defaultMemberPermissions != other.defaultMemberPermissions) return false
+        if (dmPermission != other.dmPermission) return false
+        if (nsfw != other.nsfw) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = name.hashCode()
+        result = 31 * result + description.hashCode()
+        result = 31 * result + state.hashCode()
+        result = 31 * result + (nameLocalizations?.hashCode() ?: 0)
+        result = 31 * result + (descriptionLocalizations?.hashCode() ?: 0)
+        result = 31 * result + type.hashCode()
+        result = 31 * result + (options?.hashCode() ?: 0)
+        result = 31 * result + (defaultMemberPermissions?.hashCode() ?: 0)
+        result = 31 * result + (dmPermission?.hashCode() ?: 0)
+        result = 31 * result + (nsfw?.hashCode() ?: 0)
+        return result
+    }
+
 }
 
 @KordDsl
@@ -212,6 +246,38 @@ internal class ChatInputModifyBuilderImpl : GlobalChatInputModifyBuilder {
             nsfw = state.nsfw,
         )
 
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other == null || this::class != other::class) return false
+
+        other as ChatInputModifyBuilderImpl
+
+        if (state != other.state) return false
+        if (name != other.name) return false
+        if (nameLocalizations != other.nameLocalizations) return false
+        if (description != other.description) return false
+        if (descriptionLocalizations != other.descriptionLocalizations) return false
+        if (options != other.options) return false
+        if (defaultMemberPermissions != other.defaultMemberPermissions) return false
+        if (dmPermission != other.dmPermission) return false
+        if (nsfw != other.nsfw) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = state.hashCode()
+        result = 31 * result + (name?.hashCode() ?: 0)
+        result = 31 * result + (nameLocalizations?.hashCode() ?: 0)
+        result = 31 * result + (description?.hashCode() ?: 0)
+        result = 31 * result + (descriptionLocalizations?.hashCode() ?: 0)
+        result = 31 * result + (options?.hashCode() ?: 0)
+        result = 31 * result + (defaultMemberPermissions?.hashCode() ?: 0)
+        result = 31 * result + (dmPermission?.hashCode() ?: 0)
+        result = 31 * result + (nsfw?.hashCode() ?: 0)
+        return result
     }
 
 }

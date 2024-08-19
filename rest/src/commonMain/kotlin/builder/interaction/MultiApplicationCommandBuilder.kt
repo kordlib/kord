@@ -12,6 +12,21 @@ public sealed class MultiApplicationCommandBuilder {
     public fun build(): List<ApplicationCommandCreateRequest> {
         return commands.map { it.toRequest() }
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other == null || this::class != other::class) return false
+
+        other as MultiApplicationCommandBuilder
+
+        return commands == other.commands
+    }
+
+    override fun hashCode(): Int {
+        return commands.hashCode()
+    }
+
+
 }
 public inline fun MultiApplicationCommandBuilder.input(
     name: String,
@@ -53,6 +68,7 @@ public class GlobalMultiApplicationCommandBuilder : MultiApplicationCommandBuild
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
         commands += UserCommandCreateBuilderImpl(name).apply(builder)
     }
+
 }
 
 @KordDsl
@@ -72,4 +88,5 @@ public class GuildMultiApplicationCommandBuilder : MultiApplicationCommandBuilde
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
         commands += UserCommandCreateBuilderImpl(name).apply(builder)
     }
+
 }

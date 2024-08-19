@@ -38,6 +38,8 @@ public class ThreadModifyBuilder : AuditRequestBuilder<ChannelModifyPatchRequest
     private var _appliedTags: Optional<MutableList<Snowflake>> = Optional.Missing()
     public var appliedTags: MutableList<Snowflake>? by ::_appliedTags.delegate()
 
+    override var reason: String? = null
+
     override fun toRequest(): ChannelModifyPatchRequest {
         return ChannelModifyPatchRequest(
             name = _name,
@@ -51,7 +53,38 @@ public class ThreadModifyBuilder : AuditRequestBuilder<ChannelModifyPatchRequest
         )
     }
 
-    override var reason: String? = null
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other == null || this::class != other::class) return false
+
+        other as ThreadModifyBuilder
+
+        if (name != other.name) return false
+        if (archived != other.archived) return false
+        if (locked != other.locked) return false
+        if (rateLimitPerUser != other.rateLimitPerUser) return false
+        if (autoArchiveDuration != other.autoArchiveDuration) return false
+        if (invitable != other.invitable) return false
+        if (flags != other.flags) return false
+        if (appliedTags != other.appliedTags) return false
+        if (reason != other.reason) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = name?.hashCode() ?: 0
+        result = 31 * result + (archived?.hashCode() ?: 0)
+        result = 31 * result + (locked?.hashCode() ?: 0)
+        result = 31 * result + (rateLimitPerUser?.hashCode() ?: 0)
+        result = 31 * result + (autoArchiveDuration?.hashCode() ?: 0)
+        result = 31 * result + (invitable?.hashCode() ?: 0)
+        result = 31 * result + (flags?.hashCode() ?: 0)
+        result = 31 * result + (appliedTags?.hashCode() ?: 0)
+        result = 31 * result + (reason?.hashCode() ?: 0)
+        return result
+    }
+
 }
 
 /** Add a [tagId] to [appliedTags][ThreadModifyBuilder.appliedTags]. */

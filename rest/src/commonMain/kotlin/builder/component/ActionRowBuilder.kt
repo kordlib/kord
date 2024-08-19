@@ -122,4 +122,18 @@ public class ActionRowBuilder : MessageComponentBuilder {
             ComponentType.ActionRow,
             components = Optional.missingOnEmpty(components.map(ActionRowComponentBuilder::build))
         )
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other == null || this::class != other::class) return false
+
+        other as ActionRowBuilder
+
+        return components == other.components
+    }
+
+    override fun hashCode(): Int {
+        return components.hashCode()
+    }
+
 }

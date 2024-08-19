@@ -80,4 +80,41 @@ public class ScheduledEventModifyBuilder : AuditRequestBuilder<ScheduledEventMod
         status = _status,
         image = _image.map { it.dataUri },
     )
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other == null || this::class != other::class) return false
+
+        other as ScheduledEventModifyBuilder
+
+        if (reason != other.reason) return false
+        if (channelId != other.channelId) return false
+        if (name != other.name) return false
+        if (privacyLevel != other.privacyLevel) return false
+        if (scheduledStartTime != other.scheduledStartTime) return false
+        if (description != other.description) return false
+        if (entityType != other.entityType) return false
+        if (entityMetadata != other.entityMetadata) return false
+        if (scheduledEndTime != other.scheduledEndTime) return false
+        if (status != other.status) return false
+        if (image != other.image) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = reason?.hashCode() ?: 0
+        result = 31 * result + (channelId?.hashCode() ?: 0)
+        result = 31 * result + (name?.hashCode() ?: 0)
+        result = 31 * result + (privacyLevel?.hashCode() ?: 0)
+        result = 31 * result + (scheduledStartTime?.hashCode() ?: 0)
+        result = 31 * result + (description?.hashCode() ?: 0)
+        result = 31 * result + (entityType?.hashCode() ?: 0)
+        result = 31 * result + (entityMetadata?.hashCode() ?: 0)
+        result = 31 * result + (scheduledEndTime?.hashCode() ?: 0)
+        result = 31 * result + (status?.hashCode() ?: 0)
+        result = 31 * result + (image?.hashCode() ?: 0)
+        return result
+    }
+
 }

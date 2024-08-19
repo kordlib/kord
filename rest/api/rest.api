@@ -86,12 +86,14 @@ public abstract interface class dev/kord/rest/builder/RequestBuilder {
 public final class dev/kord/rest/builder/application/ApplicationRoleConnectionMetadataBuilder : dev/kord/rest/builder/RequestBuilder, dev/kord/rest/builder/interaction/LocalizedDescriptionCreateBuilder, dev/kord/rest/builder/interaction/LocalizedNameCreateBuilder {
 	public fun <init> (Ldev/kord/common/entity/ApplicationRoleConnectionMetadataType;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
 	public fun description (Ldev/kord/common/Locale;Ljava/lang/String;)V
+	public fun equals (Ljava/lang/Object;)Z
 	public fun getDescription ()Ljava/lang/String;
 	public fun getDescriptionLocalizations ()Ljava/util/Map;
 	public final fun getKey ()Ljava/lang/String;
 	public fun getName ()Ljava/lang/String;
 	public fun getNameLocalizations ()Ljava/util/Map;
 	public final fun getType ()Ldev/kord/common/entity/ApplicationRoleConnectionMetadataType;
+	public fun hashCode ()I
 	public fun name (Ldev/kord/common/Locale;Ljava/lang/String;)V
 	public fun setDescription (Ljava/lang/String;)V
 	public fun setDescriptionLocalizations (Ljava/util/Map;)V
@@ -105,7 +107,9 @@ public final class dev/kord/rest/builder/application/ApplicationRoleConnectionMe
 
 public final class dev/kord/rest/builder/application/ApplicationRoleConnectionMetadataRecordsBuilder : dev/kord/rest/builder/RequestBuilder {
 	public fun <init> ()V
+	public fun equals (Ljava/lang/Object;)Z
 	public final fun getRecords ()Ljava/util/List;
+	public fun hashCode ()I
 	public final fun record (Ldev/kord/common/entity/ApplicationRoleConnectionMetadataType;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
 	public static synthetic fun record$default (Ldev/kord/rest/builder/application/ApplicationRoleConnectionMetadataRecordsBuilder;Ldev/kord/common/entity/ApplicationRoleConnectionMetadataType;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
 	public final fun setRecords (Ljava/util/List;)V
@@ -115,11 +119,13 @@ public final class dev/kord/rest/builder/application/ApplicationRoleConnectionMe
 
 public final class dev/kord/rest/builder/auditlog/AuditLogGetRequestBuilder : dev/kord/rest/builder/RequestBuilder {
 	public fun <init> ()V
+	public fun equals (Ljava/lang/Object;)Z
 	public final fun getAction ()Ldev/kord/common/entity/AuditLogEvent;
 	public final fun getAfter ()Ldev/kord/common/entity/Snowflake;
 	public final fun getBefore ()Ldev/kord/common/entity/Snowflake;
 	public final fun getLimit ()Ljava/lang/Integer;
 	public final fun getUserId ()Ldev/kord/common/entity/Snowflake;
+	public fun hashCode ()I
 	public final fun setAction (Ldev/kord/common/entity/AuditLogEvent;)V
 	public final fun setAfter (Ldev/kord/common/entity/Snowflake;)V
 	public final fun setBefore (Ldev/kord/common/entity/Snowflake;)V
@@ -136,7 +142,9 @@ public abstract interface class dev/kord/rest/builder/automoderation/AllowedKeyw
 
 public abstract class dev/kord/rest/builder/automoderation/AutoModerationActionBuilder : dev/kord/rest/builder/RequestBuilder {
 	protected fun buildMetadata ()Ldev/kord/common/entity/optional/Optional;
+	public fun equals (Ljava/lang/Object;)Z
 	public abstract fun getType ()Ldev/kord/common/entity/AutoModerationActionType;
+	public fun hashCode ()I
 	public final fun toRequest ()Ldev/kord/common/entity/DiscordAutoModerationAction;
 	public synthetic fun toRequest ()Ljava/lang/Object;
 }
@@ -184,6 +192,7 @@ public abstract class dev/kord/rest/builder/automoderation/AutoModerationRuleCre
 	public final fun assignEventType (Ldev/kord/common/entity/AutoModerationRuleEventType;)V
 	public final fun assignName (Ljava/lang/String;)V
 	protected fun buildTriggerMetadata ()Ldev/kord/common/entity/optional/Optional;
+	public fun equals (Ljava/lang/Object;)Z
 	public final fun getActions ()Ljava/util/List;
 	public final fun getEnabled ()Ljava/lang/Boolean;
 	public final fun getEventType ()Ldev/kord/common/entity/AutoModerationRuleEventType;
@@ -191,6 +200,7 @@ public abstract class dev/kord/rest/builder/automoderation/AutoModerationRuleCre
 	public final fun getExemptRoles ()Ljava/util/List;
 	public final fun getName ()Ljava/lang/String;
 	public final fun getReason ()Ljava/lang/String;
+	public fun hashCode ()I
 	public final fun setActions (Ljava/util/List;)V
 	public final fun setEnabled (Ljava/lang/Boolean;)V
 	public final fun setEventType (Ldev/kord/common/entity/AutoModerationRuleEventType;)V
@@ -207,6 +217,7 @@ public abstract class dev/kord/rest/builder/automoderation/AutoModerationRuleMod
 	public final fun assignEventType (Ldev/kord/common/entity/AutoModerationRuleEventType;)V
 	public final fun assignName (Ljava/lang/String;)V
 	protected fun buildTriggerMetadata ()Ldev/kord/common/entity/optional/Optional;
+	public fun equals (Ljava/lang/Object;)Z
 	public final fun getActions ()Ljava/util/List;
 	public final fun getEnabled ()Ljava/lang/Boolean;
 	public final fun getEventType ()Ldev/kord/common/entity/AutoModerationRuleEventType;
@@ -214,6 +225,7 @@ public abstract class dev/kord/rest/builder/automoderation/AutoModerationRuleMod
 	public final fun getExemptRoles ()Ljava/util/List;
 	public final fun getName ()Ljava/lang/String;
 	public final fun getReason ()Ljava/lang/String;
+	public fun hashCode ()I
 	public final fun setActions (Ljava/util/List;)V
 	public final fun setEnabled (Ljava/lang/Boolean;)V
 	public final fun setEventType (Ldev/kord/common/entity/AutoModerationRuleEventType;)V
@@ -227,9 +239,11 @@ public abstract class dev/kord/rest/builder/automoderation/AutoModerationRuleMod
 
 public final class dev/kord/rest/builder/automoderation/BlockMessageAutoModerationActionBuilder : dev/kord/rest/builder/automoderation/AutoModerationActionBuilder {
 	public fun <init> ()V
+	public fun equals (Ljava/lang/Object;)Z
 	public final fun getCustomMessage ()Ljava/lang/String;
 	public fun getType ()Ldev/kord/common/entity/AutoModerationActionType$BlockMessage;
 	public synthetic fun getType ()Ldev/kord/common/entity/AutoModerationActionType;
+	public fun hashCode ()I
 	public final fun setCustomMessage (Ljava/lang/String;)V
 }
 
@@ -248,11 +262,13 @@ public final class dev/kord/rest/builder/automoderation/KeywordAutoModerationRul
 public final class dev/kord/rest/builder/automoderation/KeywordAutoModerationRuleCreateBuilder : dev/kord/rest/builder/automoderation/AutoModerationRuleCreateBuilder, dev/kord/rest/builder/automoderation/KeywordAutoModerationRuleBuilder {
 	public fun <init> (Ljava/lang/String;Ldev/kord/common/entity/AutoModerationRuleEventType;)V
 	public synthetic fun buildTriggerMetadata ()Ldev/kord/common/entity/optional/Optional;
+	public fun equals (Ljava/lang/Object;)Z
 	public fun getAllowedKeywords ()Ljava/util/List;
 	public fun getKeywords ()Ljava/util/List;
 	public fun getRegexPatterns ()Ljava/util/List;
 	public fun getTriggerType ()Ldev/kord/common/entity/AutoModerationRuleTriggerType$Keyword;
 	public synthetic fun getTriggerType ()Ldev/kord/common/entity/AutoModerationRuleTriggerType;
+	public fun hashCode ()I
 	public fun setAllowedKeywords (Ljava/util/List;)V
 	public fun setKeywords (Ljava/util/List;)V
 	public fun setRegexPatterns (Ljava/util/List;)V
@@ -260,11 +276,13 @@ public final class dev/kord/rest/builder/automoderation/KeywordAutoModerationRul
 
 public final class dev/kord/rest/builder/automoderation/KeywordAutoModerationRuleModifyBuilder : dev/kord/rest/builder/automoderation/AutoModerationRuleModifyBuilder, dev/kord/rest/builder/automoderation/KeywordAutoModerationRuleBuilder {
 	public fun <init> ()V
+	public fun equals (Ljava/lang/Object;)Z
 	public fun getAllowedKeywords ()Ljava/util/List;
 	public fun getKeywords ()Ljava/util/List;
 	public fun getRegexPatterns ()Ljava/util/List;
 	public fun getTriggerType ()Ldev/kord/common/entity/AutoModerationRuleTriggerType$Keyword;
 	public synthetic fun getTriggerType ()Ldev/kord/common/entity/AutoModerationRuleTriggerType;
+	public fun hashCode ()I
 	public fun setAllowedKeywords (Ljava/util/List;)V
 	public fun setKeywords (Ljava/util/List;)V
 	public fun setRegexPatterns (Ljava/util/List;)V
@@ -284,10 +302,12 @@ public final class dev/kord/rest/builder/automoderation/KeywordPresetAutoModerat
 	public fun <init> (Ljava/lang/String;Ldev/kord/common/entity/AutoModerationRuleEventType;)V
 	public fun assignPresets (Ljava/util/List;)V
 	public synthetic fun buildTriggerMetadata ()Ldev/kord/common/entity/optional/Optional;
+	public fun equals (Ljava/lang/Object;)Z
 	public fun getAllowedKeywords ()Ljava/util/List;
 	public fun getPresets ()Ljava/util/List;
 	public fun getTriggerType ()Ldev/kord/common/entity/AutoModerationRuleTriggerType$KeywordPreset;
 	public synthetic fun getTriggerType ()Ldev/kord/common/entity/AutoModerationRuleTriggerType;
+	public fun hashCode ()I
 	public fun setAllowedKeywords (Ljava/util/List;)V
 	public fun setPresets (Ljava/util/List;)V
 }
@@ -295,10 +315,12 @@ public final class dev/kord/rest/builder/automoderation/KeywordPresetAutoModerat
 public final class dev/kord/rest/builder/automoderation/KeywordPresetAutoModerationRuleModifyBuilder : dev/kord/rest/builder/automoderation/AutoModerationRuleModifyBuilder, dev/kord/rest/builder/automoderation/KeywordPresetAutoModerationRuleBuilder {
 	public fun <init> ()V
 	public fun assignPresets (Ljava/util/List;)V
+	public fun equals (Ljava/lang/Object;)Z
 	public fun getAllowedKeywords ()Ljava/util/List;
 	public fun getPresets ()Ljava/util/List;
 	public fun getTriggerType ()Ldev/kord/common/entity/AutoModerationRuleTriggerType$KeywordPreset;
 	public synthetic fun getTriggerType ()Ldev/kord/common/entity/AutoModerationRuleTriggerType;
+	public fun hashCode ()I
 	public fun setAllowedKeywords (Ljava/util/List;)V
 	public fun setPresets (Ljava/util/List;)V
 }
@@ -318,20 +340,24 @@ public final class dev/kord/rest/builder/automoderation/MentionSpamAutoModeratio
 public final class dev/kord/rest/builder/automoderation/MentionSpamAutoModerationRuleCreateBuilder : dev/kord/rest/builder/automoderation/AutoModerationRuleCreateBuilder, dev/kord/rest/builder/automoderation/MentionSpamAutoModerationRuleBuilder {
 	public fun <init> (Ljava/lang/String;Ldev/kord/common/entity/AutoModerationRuleEventType;)V
 	public synthetic fun buildTriggerMetadata ()Ldev/kord/common/entity/optional/Optional;
+	public fun equals (Ljava/lang/Object;)Z
 	public fun getMentionLimit ()Ljava/lang/Integer;
 	public fun getMentionRaidProtectionEnabled ()Ljava/lang/Boolean;
 	public fun getTriggerType ()Ldev/kord/common/entity/AutoModerationRuleTriggerType$MentionSpam;
 	public synthetic fun getTriggerType ()Ldev/kord/common/entity/AutoModerationRuleTriggerType;
+	public fun hashCode ()I
 	public fun setMentionLimit (Ljava/lang/Integer;)V
 	public fun setMentionRaidProtectionEnabled (Ljava/lang/Boolean;)V
 }
 
 public final class dev/kord/rest/builder/automoderation/MentionSpamAutoModerationRuleModifyBuilder : dev/kord/rest/builder/automoderation/AutoModerationRuleModifyBuilder, dev/kord/rest/builder/automoderation/MentionSpamAutoModerationRuleBuilder {
 	public fun <init> ()V
+	public fun equals (Ljava/lang/Object;)Z
 	public fun getMentionLimit ()Ljava/lang/Integer;
 	public fun getMentionRaidProtectionEnabled ()Ljava/lang/Boolean;
 	public fun getTriggerType ()Ldev/kord/common/entity/AutoModerationRuleTriggerType$MentionSpam;
 	public synthetic fun getTriggerType ()Ldev/kord/common/entity/AutoModerationRuleTriggerType;
+	public fun hashCode ()I
 	public fun setMentionLimit (Ljava/lang/Integer;)V
 	public fun setMentionRaidProtectionEnabled (Ljava/lang/Boolean;)V
 }
@@ -339,9 +365,11 @@ public final class dev/kord/rest/builder/automoderation/MentionSpamAutoModeratio
 public final class dev/kord/rest/builder/automoderation/SendAlertMessageAutoModerationActionBuilder : dev/kord/rest/builder/automoderation/AutoModerationActionBuilder {
 	public fun <init> (Ldev/kord/common/entity/Snowflake;)V
 	public synthetic fun buildMetadata ()Ldev/kord/common/entity/optional/Optional;
+	public fun equals (Ljava/lang/Object;)Z
 	public final fun getChannelId ()Ldev/kord/common/entity/Snowflake;
 	public fun getType ()Ldev/kord/common/entity/AutoModerationActionType$SendAlertMessage;
 	public synthetic fun getType ()Ldev/kord/common/entity/AutoModerationActionType;
+	public fun hashCode ()I
 	public final fun setChannelId (Ldev/kord/common/entity/Snowflake;)V
 }
 
@@ -368,9 +396,11 @@ public final class dev/kord/rest/builder/automoderation/SpamAutoModerationRuleMo
 public final class dev/kord/rest/builder/automoderation/TimeoutAutoModerationActionBuilder : dev/kord/rest/builder/automoderation/AutoModerationActionBuilder {
 	public synthetic fun <init> (JLkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public synthetic fun buildMetadata ()Ldev/kord/common/entity/optional/Optional;
+	public fun equals (Ljava/lang/Object;)Z
 	public final fun getDuration-UwyO8pc ()J
 	public fun getType ()Ldev/kord/common/entity/AutoModerationActionType$Timeout;
 	public synthetic fun getType ()Ldev/kord/common/entity/AutoModerationActionType;
+	public fun hashCode ()I
 	public final fun setDuration-LRDsOJo (J)V
 }
 
@@ -383,14 +413,18 @@ public abstract interface class dev/kord/rest/builder/automoderation/TypedAutoMo
 
 public final class dev/kord/rest/builder/automoderation/UntypedAutoModerationRuleModifyBuilder : dev/kord/rest/builder/automoderation/AutoModerationRuleModifyBuilder {
 	public fun <init> ()V
+	public fun equals (Ljava/lang/Object;)Z
 	public synthetic fun getTriggerType ()Ldev/kord/common/entity/AutoModerationRuleTriggerType;
 	public fun getTriggerType ()Ljava/lang/Void;
+	public fun hashCode ()I
 }
 
 public final class dev/kord/rest/builder/ban/BanCreateBuilder : dev/kord/rest/builder/AuditRequestBuilder {
 	public fun <init> ()V
+	public fun equals (Ljava/lang/Object;)Z
 	public final fun getDeleteMessageDuration-FghU774 ()Lkotlin/time/Duration;
 	public fun getReason ()Ljava/lang/String;
+	public fun hashCode ()I
 	public final fun setDeleteMessageDuration-BwNAW2A (Lkotlin/time/Duration;)V
 	public fun setReason (Ljava/lang/String;)V
 	public fun toRequest ()Ldev/kord/rest/json/request/GuildBanCreateRequest;
@@ -400,11 +434,13 @@ public final class dev/kord/rest/builder/ban/BanCreateBuilder : dev/kord/rest/bu
 public final class dev/kord/rest/builder/channel/CategoryCreateBuilder : dev/kord/rest/builder/AuditRequestBuilder, dev/kord/rest/builder/channel/PermissionOverwritesCreateBuilder {
 	public fun <init> (Ljava/lang/String;)V
 	public fun addOverwrite (Ldev/kord/common/entity/Overwrite;)V
+	public fun equals (Ljava/lang/Object;)Z
 	public final fun getName ()Ljava/lang/String;
 	public final fun getNsfw ()Ljava/lang/Boolean;
 	public fun getPermissionOverwrites ()Ljava/util/Set;
 	public final fun getPosition ()Ljava/lang/Integer;
 	public fun getReason ()Ljava/lang/String;
+	public fun hashCode ()I
 	public final fun setName (Ljava/lang/String;)V
 	public final fun setNsfw (Ljava/lang/Boolean;)V
 	public fun setPermissionOverwrites (Ljava/util/Set;)V
@@ -417,10 +453,12 @@ public final class dev/kord/rest/builder/channel/CategoryCreateBuilder : dev/kor
 public final class dev/kord/rest/builder/channel/CategoryModifyBuilder : dev/kord/rest/builder/AuditRequestBuilder, dev/kord/rest/builder/channel/PermissionOverwritesModifyBuilder {
 	public fun <init> ()V
 	public fun addOverwrite (Ldev/kord/common/entity/Overwrite;)V
+	public fun equals (Ljava/lang/Object;)Z
 	public final fun getName ()Ljava/lang/String;
 	public fun getPermissionOverwrites ()Ljava/util/Set;
 	public final fun getPosition ()Ljava/lang/Integer;
 	public fun getReason ()Ljava/lang/String;
+	public fun hashCode ()I
 	public final fun setName (Ljava/lang/String;)V
 	public fun setPermissionOverwrites (Ljava/util/Set;)V
 	public final fun setPosition (Ljava/lang/Integer;)V
@@ -431,9 +469,11 @@ public final class dev/kord/rest/builder/channel/CategoryModifyBuilder : dev/kor
 
 public final class dev/kord/rest/builder/channel/ChannelPermissionModifyBuilder : dev/kord/rest/builder/AuditRequestBuilder {
 	public fun <init> (Ldev/kord/common/entity/OverwriteType;)V
+	public fun equals (Ljava/lang/Object;)Z
 	public final fun getAllowed ()Ldev/kord/common/entity/Permissions;
 	public final fun getDenied ()Ldev/kord/common/entity/Permissions;
 	public fun getReason ()Ljava/lang/String;
+	public fun hashCode ()I
 	public final fun setAllowed (Ldev/kord/common/entity/Permissions;)V
 	public final fun setDenied (Ldev/kord/common/entity/Permissions;)V
 	public fun setReason (Ljava/lang/String;)V
@@ -444,6 +484,7 @@ public final class dev/kord/rest/builder/channel/ChannelPermissionModifyBuilder 
 public final class dev/kord/rest/builder/channel/ForumChannelCreateBuilder : dev/kord/rest/builder/AuditRequestBuilder, dev/kord/rest/builder/channel/PermissionOverwritesCreateBuilder {
 	public fun <init> (Ljava/lang/String;)V
 	public fun addOverwrite (Ldev/kord/common/entity/Overwrite;)V
+	public fun equals (Ljava/lang/Object;)Z
 	public final fun getAvailableTags ()Ljava/util/List;
 	public final fun getDefaultAutoArchiveDuration ()Ldev/kord/common/entity/ArchiveDuration;
 	public final fun getDefaultForumLayout ()Ldev/kord/common/entity/ForumLayoutType;
@@ -461,6 +502,7 @@ public final class dev/kord/rest/builder/channel/ForumChannelCreateBuilder : dev
 	public final fun getRateLimitPerUser-FghU774 ()Lkotlin/time/Duration;
 	public fun getReason ()Ljava/lang/String;
 	public final fun getTopic ()Ljava/lang/String;
+	public fun hashCode ()I
 	public final fun setAvailableTags (Ljava/util/List;)V
 	public final fun setDefaultAutoArchiveDuration (Ldev/kord/common/entity/ArchiveDuration;)V
 	public final fun setDefaultForumLayout (Ldev/kord/common/entity/ForumLayoutType;)V
@@ -487,6 +529,7 @@ public final class dev/kord/rest/builder/channel/ForumChannelCreateBuilder : dev
 public final class dev/kord/rest/builder/channel/ForumChannelModifyBuilder : dev/kord/rest/builder/AuditRequestBuilder, dev/kord/rest/builder/channel/PermissionOverwritesModifyBuilder {
 	public fun <init> ()V
 	public fun addOverwrite (Ldev/kord/common/entity/Overwrite;)V
+	public fun equals (Ljava/lang/Object;)Z
 	public final fun getAvailableTags ()Ljava/util/List;
 	public final fun getDefaultAutoArchiveDuration ()Ldev/kord/common/entity/ArchiveDuration;
 	public final fun getDefaultForumLayout ()Ldev/kord/common/entity/ForumLayoutType;
@@ -504,6 +547,7 @@ public final class dev/kord/rest/builder/channel/ForumChannelModifyBuilder : dev
 	public final fun getRateLimitPerUser-FghU774 ()Lkotlin/time/Duration;
 	public fun getReason ()Ljava/lang/String;
 	public final fun getTopic ()Ljava/lang/String;
+	public fun hashCode ()I
 	public final fun setAvailableTags (Ljava/util/List;)V
 	public final fun setDefaultAutoArchiveDuration (Ldev/kord/common/entity/ArchiveDuration;)V
 	public final fun setDefaultForumLayout (Ldev/kord/common/entity/ForumLayoutType;)V
@@ -529,10 +573,12 @@ public final class dev/kord/rest/builder/channel/ForumChannelModifyBuilder : dev
 
 public final class dev/kord/rest/builder/channel/ForumTagBuilder : dev/kord/rest/builder/RequestBuilder {
 	public fun <init> (Ljava/lang/String;)V
+	public fun equals (Ljava/lang/Object;)Z
 	public final fun getModerated ()Ljava/lang/Boolean;
 	public final fun getName ()Ljava/lang/String;
 	public final fun getReactionEmojiId ()Ldev/kord/common/entity/Snowflake;
 	public final fun getReactionEmojiName ()Ljava/lang/String;
+	public fun hashCode ()I
 	public final fun setModerated (Ljava/lang/Boolean;)V
 	public final fun setName (Ljava/lang/String;)V
 	public final fun setReactionEmojiId (Ldev/kord/common/entity/Snowflake;)V
@@ -543,7 +589,9 @@ public final class dev/kord/rest/builder/channel/ForumTagBuilder : dev/kord/rest
 
 public final class dev/kord/rest/builder/channel/GuildChannelPositionModifyBuilder : dev/kord/rest/builder/RequestBuilder {
 	public fun <init> ()V
+	public fun equals (Ljava/lang/Object;)Z
 	public final fun getSwaps ()Ljava/util/List;
+	public fun hashCode ()I
 	public final fun move (Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;)V
 	public final fun move (Lkotlin/Pair;)V
 	public final fun move ([Lkotlin/Pair;)V
@@ -554,10 +602,12 @@ public final class dev/kord/rest/builder/channel/GuildChannelPositionModifyBuild
 
 public final class dev/kord/rest/builder/channel/GuildChannelSwapBuilder {
 	public fun <init> (Ldev/kord/common/entity/Snowflake;)V
+	public fun equals (Ljava/lang/Object;)Z
 	public final fun getChannelId ()Ldev/kord/common/entity/Snowflake;
 	public final fun getLockPermissionsToParent ()Ljava/lang/Boolean;
 	public final fun getParentId ()Ldev/kord/common/entity/Snowflake;
 	public final fun getPosition ()Ljava/lang/Integer;
+	public fun hashCode ()I
 	public final fun setChannelId (Ldev/kord/common/entity/Snowflake;)V
 	public final fun setLockPermissionsToParent (Ljava/lang/Boolean;)V
 	public final fun setParentId (Ldev/kord/common/entity/Snowflake;)V
@@ -567,6 +617,7 @@ public final class dev/kord/rest/builder/channel/GuildChannelSwapBuilder {
 
 public final class dev/kord/rest/builder/channel/InviteCreateBuilder : dev/kord/rest/builder/AuditRequestBuilder {
 	public fun <init> ()V
+	public fun equals (Ljava/lang/Object;)Z
 	public final fun getMaxAge-FghU774 ()Lkotlin/time/Duration;
 	public final fun getMaxUses ()Ljava/lang/Integer;
 	public fun getReason ()Ljava/lang/String;
@@ -575,6 +626,7 @@ public final class dev/kord/rest/builder/channel/InviteCreateBuilder : dev/kord/
 	public final fun getTargetUserId ()Ldev/kord/common/entity/Snowflake;
 	public final fun getTemporary ()Ljava/lang/Boolean;
 	public final fun getUnique ()Ljava/lang/Boolean;
+	public fun hashCode ()I
 	public final fun setMaxAge-BwNAW2A (Lkotlin/time/Duration;)V
 	public final fun setMaxUses (Ljava/lang/Integer;)V
 	public fun setReason (Ljava/lang/String;)V
@@ -590,6 +642,7 @@ public final class dev/kord/rest/builder/channel/InviteCreateBuilder : dev/kord/
 public final class dev/kord/rest/builder/channel/MediaChannelCreateBuilder : dev/kord/rest/builder/AuditRequestBuilder, dev/kord/rest/builder/channel/PermissionOverwritesCreateBuilder {
 	public fun <init> (Ljava/lang/String;)V
 	public fun addOverwrite (Ldev/kord/common/entity/Overwrite;)V
+	public fun equals (Ljava/lang/Object;)Z
 	public final fun getAvailableTags ()Ljava/util/List;
 	public final fun getDefaultAutoArchiveDuration ()Ldev/kord/common/entity/ArchiveDuration;
 	public final fun getDefaultReactionEmoji ()Ldev/kord/common/entity/DefaultReaction;
@@ -606,6 +659,7 @@ public final class dev/kord/rest/builder/channel/MediaChannelCreateBuilder : dev
 	public final fun getRateLimitPerUser-FghU774 ()Lkotlin/time/Duration;
 	public fun getReason ()Ljava/lang/String;
 	public final fun getTopic ()Ljava/lang/String;
+	public fun hashCode ()I
 	public final fun setAvailableTags (Ljava/util/List;)V
 	public final fun setDefaultAutoArchiveDuration (Ldev/kord/common/entity/ArchiveDuration;)V
 	public final fun setDefaultReactionEmoji (Ldev/kord/common/entity/DefaultReaction;)V
@@ -631,6 +685,7 @@ public final class dev/kord/rest/builder/channel/MediaChannelCreateBuilder : dev
 public final class dev/kord/rest/builder/channel/MediaChannelModifyBuilder : dev/kord/rest/builder/AuditRequestBuilder, dev/kord/rest/builder/channel/PermissionOverwritesModifyBuilder {
 	public fun <init> ()V
 	public fun addOverwrite (Ldev/kord/common/entity/Overwrite;)V
+	public fun equals (Ljava/lang/Object;)Z
 	public final fun getAvailableTags ()Ljava/util/List;
 	public final fun getDefaultAutoArchiveDuration ()Ldev/kord/common/entity/ArchiveDuration;
 	public final fun getDefaultReactionEmoji ()Ldev/kord/common/entity/DefaultReaction;
@@ -647,6 +702,7 @@ public final class dev/kord/rest/builder/channel/MediaChannelModifyBuilder : dev
 	public final fun getRateLimitPerUser-FghU774 ()Lkotlin/time/Duration;
 	public fun getReason ()Ljava/lang/String;
 	public final fun getTopic ()Ljava/lang/String;
+	public fun hashCode ()I
 	public final fun setAvailableTags (Ljava/util/List;)V
 	public final fun setDefaultAutoArchiveDuration (Ldev/kord/common/entity/ArchiveDuration;)V
 	public final fun setDefaultReactionEmoji (Ldev/kord/common/entity/DefaultReaction;)V
@@ -672,6 +728,7 @@ public final class dev/kord/rest/builder/channel/MediaChannelModifyBuilder : dev
 public final class dev/kord/rest/builder/channel/NewsChannelCreateBuilder : dev/kord/rest/builder/AuditRequestBuilder, dev/kord/rest/builder/channel/PermissionOverwritesCreateBuilder {
 	public fun <init> (Ljava/lang/String;)V
 	public fun addOverwrite (Ldev/kord/common/entity/Overwrite;)V
+	public fun equals (Ljava/lang/Object;)Z
 	public final fun getDefaultAutoArchiveDuration ()Ldev/kord/common/entity/ArchiveDuration;
 	public final fun getName ()Ljava/lang/String;
 	public final fun getNsfw ()Ljava/lang/Boolean;
@@ -680,6 +737,7 @@ public final class dev/kord/rest/builder/channel/NewsChannelCreateBuilder : dev/
 	public final fun getPosition ()Ljava/lang/Integer;
 	public fun getReason ()Ljava/lang/String;
 	public final fun getTopic ()Ljava/lang/String;
+	public fun hashCode ()I
 	public final fun setDefaultAutoArchiveDuration (Ldev/kord/common/entity/ArchiveDuration;)V
 	public final fun setName (Ljava/lang/String;)V
 	public final fun setNsfw (Ljava/lang/Boolean;)V
@@ -695,6 +753,7 @@ public final class dev/kord/rest/builder/channel/NewsChannelCreateBuilder : dev/
 public final class dev/kord/rest/builder/channel/NewsChannelModifyBuilder : dev/kord/rest/builder/AuditRequestBuilder, dev/kord/rest/builder/channel/PermissionOverwritesModifyBuilder {
 	public fun <init> ()V
 	public fun addOverwrite (Ldev/kord/common/entity/Overwrite;)V
+	public fun equals (Ljava/lang/Object;)Z
 	public final fun getDefaultAutoArchiveDuration ()Ldev/kord/common/entity/ArchiveDuration;
 	public final fun getName ()Ljava/lang/String;
 	public final fun getNsfw ()Ljava/lang/Boolean;
@@ -704,6 +763,7 @@ public final class dev/kord/rest/builder/channel/NewsChannelModifyBuilder : dev/
 	public final fun getRateLimitPerUser-FghU774 ()Lkotlin/time/Duration;
 	public fun getReason ()Ljava/lang/String;
 	public final fun getTopic ()Ljava/lang/String;
+	public fun hashCode ()I
 	public final fun setDefaultAutoArchiveDuration (Ldev/kord/common/entity/ArchiveDuration;)V
 	public final fun setName (Ljava/lang/String;)V
 	public final fun setNsfw (Ljava/lang/Boolean;)V
@@ -719,8 +779,10 @@ public final class dev/kord/rest/builder/channel/NewsChannelModifyBuilder : dev/
 
 public final class dev/kord/rest/builder/channel/PermissionOverwriteBuilder {
 	public fun <init> (Ldev/kord/common/entity/OverwriteType;Ldev/kord/common/entity/Snowflake;)V
+	public fun equals (Ljava/lang/Object;)Z
 	public final fun getAllowed ()Ldev/kord/common/entity/Permissions;
 	public final fun getDenied ()Ldev/kord/common/entity/Permissions;
+	public fun hashCode ()I
 	public final fun setAllowed (Ldev/kord/common/entity/Permissions;)V
 	public final fun setDenied (Ldev/kord/common/entity/Permissions;)V
 	public final fun toOverwrite ()Ldev/kord/common/entity/Overwrite;
@@ -758,6 +820,7 @@ public final class dev/kord/rest/builder/channel/PermissionOverwritesModifyBuild
 public final class dev/kord/rest/builder/channel/StageChannelCreateBuilder : dev/kord/rest/builder/AuditRequestBuilder, dev/kord/rest/builder/channel/PermissionOverwritesCreateBuilder {
 	public fun <init> (Ljava/lang/String;)V
 	public fun addOverwrite (Ldev/kord/common/entity/Overwrite;)V
+	public fun equals (Ljava/lang/Object;)Z
 	public final fun getBitrate ()Ljava/lang/Integer;
 	public final fun getName ()Ljava/lang/String;
 	public final fun getNsfw ()Ljava/lang/Boolean;
@@ -767,6 +830,7 @@ public final class dev/kord/rest/builder/channel/StageChannelCreateBuilder : dev
 	public final fun getRateLimitPerUser-FghU774 ()Lkotlin/time/Duration;
 	public fun getReason ()Ljava/lang/String;
 	public final fun getUserLimit ()Ljava/lang/Integer;
+	public fun hashCode ()I
 	public final fun setBitrate (Ljava/lang/Integer;)V
 	public final fun setName (Ljava/lang/String;)V
 	public final fun setNsfw (Ljava/lang/Boolean;)V
@@ -783,6 +847,7 @@ public final class dev/kord/rest/builder/channel/StageChannelCreateBuilder : dev
 public final class dev/kord/rest/builder/channel/StageVoiceChannelModifyBuilder : dev/kord/rest/builder/AuditRequestBuilder, dev/kord/rest/builder/channel/PermissionOverwritesModifyBuilder {
 	public fun <init> ()V
 	public fun addOverwrite (Ldev/kord/common/entity/Overwrite;)V
+	public fun equals (Ljava/lang/Object;)Z
 	public final fun getBitrate ()Ljava/lang/Integer;
 	public final fun getName ()Ljava/lang/String;
 	public final fun getParentId ()Ldev/kord/common/entity/Snowflake;
@@ -791,6 +856,7 @@ public final class dev/kord/rest/builder/channel/StageVoiceChannelModifyBuilder 
 	public fun getReason ()Ljava/lang/String;
 	public final fun getRtcRegion ()Ljava/lang/String;
 	public final fun getTopic ()Ljava/lang/String;
+	public fun hashCode ()I
 	public final fun setBitrate (Ljava/lang/Integer;)V
 	public final fun setName (Ljava/lang/String;)V
 	public final fun setParentId (Ldev/kord/common/entity/Snowflake;)V
@@ -806,6 +872,7 @@ public final class dev/kord/rest/builder/channel/StageVoiceChannelModifyBuilder 
 public final class dev/kord/rest/builder/channel/TextChannelCreateBuilder : dev/kord/rest/builder/AuditRequestBuilder, dev/kord/rest/builder/channel/PermissionOverwritesCreateBuilder {
 	public fun <init> (Ljava/lang/String;)V
 	public fun addOverwrite (Ldev/kord/common/entity/Overwrite;)V
+	public fun equals (Ljava/lang/Object;)Z
 	public final fun getDefaultAutoArchiveDuration ()Ldev/kord/common/entity/ArchiveDuration;
 	public final fun getDefaultThreadRateLimitPerUser-FghU774 ()Lkotlin/time/Duration;
 	public final fun getName ()Ljava/lang/String;
@@ -816,6 +883,7 @@ public final class dev/kord/rest/builder/channel/TextChannelCreateBuilder : dev/
 	public final fun getRateLimitPerUser-FghU774 ()Lkotlin/time/Duration;
 	public fun getReason ()Ljava/lang/String;
 	public final fun getTopic ()Ljava/lang/String;
+	public fun hashCode ()I
 	public final fun setDefaultAutoArchiveDuration (Ldev/kord/common/entity/ArchiveDuration;)V
 	public final fun setDefaultThreadRateLimitPerUser-BwNAW2A (Lkotlin/time/Duration;)V
 	public final fun setName (Ljava/lang/String;)V
@@ -833,6 +901,7 @@ public final class dev/kord/rest/builder/channel/TextChannelCreateBuilder : dev/
 public final class dev/kord/rest/builder/channel/TextChannelModifyBuilder : dev/kord/rest/builder/AuditRequestBuilder, dev/kord/rest/builder/channel/PermissionOverwritesModifyBuilder {
 	public fun <init> ()V
 	public fun addOverwrite (Ldev/kord/common/entity/Overwrite;)V
+	public fun equals (Ljava/lang/Object;)Z
 	public final fun getDefaultAutoArchiveDuration ()Ldev/kord/common/entity/ArchiveDuration;
 	public final fun getDefaultThreadRateLimitPerUser-FghU774 ()Lkotlin/time/Duration;
 	public final fun getName ()Ljava/lang/String;
@@ -843,6 +912,7 @@ public final class dev/kord/rest/builder/channel/TextChannelModifyBuilder : dev/
 	public final fun getRateLimitPerUser-FghU774 ()Lkotlin/time/Duration;
 	public fun getReason ()Ljava/lang/String;
 	public final fun getTopic ()Ljava/lang/String;
+	public fun hashCode ()I
 	public final fun setDefaultAutoArchiveDuration (Ldev/kord/common/entity/ArchiveDuration;)V
 	public final fun setDefaultThreadRateLimitPerUser-BwNAW2A (Lkotlin/time/Duration;)V
 	public final fun setName (Ljava/lang/String;)V
@@ -860,6 +930,7 @@ public final class dev/kord/rest/builder/channel/TextChannelModifyBuilder : dev/
 public final class dev/kord/rest/builder/channel/VoiceChannelCreateBuilder : dev/kord/rest/builder/AuditRequestBuilder, dev/kord/rest/builder/channel/PermissionOverwritesCreateBuilder {
 	public fun <init> (Ljava/lang/String;)V
 	public fun addOverwrite (Ldev/kord/common/entity/Overwrite;)V
+	public fun equals (Ljava/lang/Object;)Z
 	public final fun getBitrate ()Ljava/lang/Integer;
 	public final fun getName ()Ljava/lang/String;
 	public final fun getNsfw ()Ljava/lang/Boolean;
@@ -868,6 +939,7 @@ public final class dev/kord/rest/builder/channel/VoiceChannelCreateBuilder : dev
 	public final fun getPosition ()Ljava/lang/Integer;
 	public fun getReason ()Ljava/lang/String;
 	public final fun getUserLimit ()Ljava/lang/Integer;
+	public fun hashCode ()I
 	public final fun setBitrate (Ljava/lang/Integer;)V
 	public final fun setName (Ljava/lang/String;)V
 	public final fun setNsfw (Ljava/lang/Boolean;)V
@@ -883,6 +955,7 @@ public final class dev/kord/rest/builder/channel/VoiceChannelCreateBuilder : dev
 public final class dev/kord/rest/builder/channel/VoiceChannelModifyBuilder : dev/kord/rest/builder/AuditRequestBuilder, dev/kord/rest/builder/channel/PermissionOverwritesModifyBuilder {
 	public fun <init> ()V
 	public fun addOverwrite (Ldev/kord/common/entity/Overwrite;)V
+	public fun equals (Ljava/lang/Object;)Z
 	public final fun getBitrate ()Ljava/lang/Integer;
 	public final fun getName ()Ljava/lang/String;
 	public final fun getNsfw ()Ljava/lang/Boolean;
@@ -894,6 +967,7 @@ public final class dev/kord/rest/builder/channel/VoiceChannelModifyBuilder : dev
 	public final fun getTopic ()Ljava/lang/String;
 	public final fun getUserLimit ()Ljava/lang/Integer;
 	public final fun getVideoQualityMode ()Ldev/kord/common/entity/VideoQualityMode;
+	public fun hashCode ()I
 	public final fun setBitrate (Ljava/lang/Integer;)V
 	public final fun setName (Ljava/lang/String;)V
 	public final fun setNsfw (Ljava/lang/Boolean;)V
@@ -911,12 +985,14 @@ public final class dev/kord/rest/builder/channel/VoiceChannelModifyBuilder : dev
 
 public final class dev/kord/rest/builder/channel/thread/StartForumThreadBuilder : dev/kord/rest/builder/AuditRequestBuilder {
 	public fun <init> (Ljava/lang/String;)V
+	public fun equals (Ljava/lang/Object;)Z
 	public final fun getAppliedTags ()Ljava/util/List;
 	public final fun getAutoArchiveDuration ()Ldev/kord/common/entity/ArchiveDuration;
 	public final fun getMessage ()Ldev/kord/rest/builder/message/create/ForumMessageCreateBuilder;
 	public final fun getName ()Ljava/lang/String;
 	public final fun getRateLimitPerUser-FghU774 ()Lkotlin/time/Duration;
 	public fun getReason ()Ljava/lang/String;
+	public fun hashCode ()I
 	public final fun message (Ljava/lang/String;)V
 	public final fun message (Lkotlin/jvm/functions/Function1;)V
 	public final fun setAppliedTags (Ljava/util/List;)V
@@ -935,12 +1011,14 @@ public final class dev/kord/rest/builder/channel/thread/StartForumThreadBuilderK
 
 public final class dev/kord/rest/builder/channel/thread/StartThreadBuilder : dev/kord/rest/builder/AuditRequestBuilder {
 	public fun <init> (Ljava/lang/String;Ldev/kord/common/entity/ChannelType;)V
+	public fun equals (Ljava/lang/Object;)Z
 	public final fun getAutoArchiveDuration ()Ldev/kord/common/entity/ArchiveDuration;
 	public final fun getInvitable ()Ljava/lang/Boolean;
 	public final fun getName ()Ljava/lang/String;
 	public final fun getRateLimitPerUser-FghU774 ()Lkotlin/time/Duration;
 	public fun getReason ()Ljava/lang/String;
 	public final fun getType ()Ldev/kord/common/entity/ChannelType;
+	public fun hashCode ()I
 	public final fun setAutoArchiveDuration (Ldev/kord/common/entity/ArchiveDuration;)V
 	public final fun setInvitable (Ljava/lang/Boolean;)V
 	public final fun setName (Ljava/lang/String;)V
@@ -952,10 +1030,12 @@ public final class dev/kord/rest/builder/channel/thread/StartThreadBuilder : dev
 
 public final class dev/kord/rest/builder/channel/thread/StartThreadWithMessageBuilder : dev/kord/rest/builder/AuditRequestBuilder {
 	public fun <init> (Ljava/lang/String;)V
+	public fun equals (Ljava/lang/Object;)Z
 	public final fun getAutoArchiveDuration ()Ldev/kord/common/entity/ArchiveDuration;
 	public final fun getName ()Ljava/lang/String;
 	public final fun getRateLimitPerUser-FghU774 ()Lkotlin/time/Duration;
 	public fun getReason ()Ljava/lang/String;
+	public fun hashCode ()I
 	public final fun setAutoArchiveDuration (Ldev/kord/common/entity/ArchiveDuration;)V
 	public final fun setName (Ljava/lang/String;)V
 	public final fun setRateLimitPerUser-BwNAW2A (Lkotlin/time/Duration;)V
@@ -966,6 +1046,7 @@ public final class dev/kord/rest/builder/channel/thread/StartThreadWithMessageBu
 
 public final class dev/kord/rest/builder/channel/thread/ThreadModifyBuilder : dev/kord/rest/builder/AuditRequestBuilder {
 	public fun <init> ()V
+	public fun equals (Ljava/lang/Object;)Z
 	public final fun getAppliedTags ()Ljava/util/List;
 	public final fun getArchived ()Ljava/lang/Boolean;
 	public final fun getAutoArchiveDuration ()Ldev/kord/common/entity/ArchiveDuration;
@@ -975,6 +1056,7 @@ public final class dev/kord/rest/builder/channel/thread/ThreadModifyBuilder : de
 	public final fun getName ()Ljava/lang/String;
 	public final fun getRateLimitPerUser-FghU774 ()Lkotlin/time/Duration;
 	public fun getReason ()Ljava/lang/String;
+	public fun hashCode ()I
 	public final fun setAppliedTags (Ljava/util/List;)V
 	public final fun setArchived (Ljava/lang/Boolean;)V
 	public final fun setAutoArchiveDuration (Ldev/kord/common/entity/ArchiveDuration;)V
@@ -998,7 +1080,9 @@ public final class dev/kord/rest/builder/component/ActionRowBuilder : dev/kord/r
 	public synthetic fun build ()Ldev/kord/common/entity/DiscordComponent;
 	public final fun channelSelect (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
 	public static synthetic fun channelSelect$default (Ldev/kord/rest/builder/component/ActionRowBuilder;Ljava/lang/String;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
+	public fun equals (Ljava/lang/Object;)Z
 	public final fun getComponents ()Ljava/util/List;
+	public fun hashCode ()I
 	public final fun interactionButton (Ldev/kord/common/entity/ButtonStyle;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
 	public final fun linkButton (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
 	public final fun mentionableSelect (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
@@ -1013,17 +1097,21 @@ public final class dev/kord/rest/builder/component/ActionRowBuilder : dev/kord/r
 }
 
 public abstract class dev/kord/rest/builder/component/ActionRowComponentBuilder : dev/kord/rest/builder/component/ComponentBuilder {
+	public fun equals (Ljava/lang/Object;)Z
 	public final fun getDisabled ()Ljava/lang/Boolean;
 	protected final fun get_disabled ()Ldev/kord/common/entity/optional/OptionalBoolean;
+	public fun hashCode ()I
 	public final fun setDisabled (Ljava/lang/Boolean;)V
 }
 
 public abstract class dev/kord/rest/builder/component/ButtonBuilder : dev/kord/rest/builder/component/ActionRowComponentBuilder {
 	public abstract fun build ()Ldev/kord/common/entity/DiscordChatComponent;
+	public fun equals (Ljava/lang/Object;)Z
 	public final fun getEmoji ()Ldev/kord/common/entity/DiscordPartialEmoji;
 	public final fun getLabel ()Ljava/lang/String;
 	protected final fun get_emoji ()Ldev/kord/common/entity/optional/Optional;
 	protected final fun get_label ()Ldev/kord/common/entity/optional/Optional;
+	public fun hashCode ()I
 	public final fun setEmoji (Ldev/kord/common/entity/DiscordPartialEmoji;)V
 	public final fun setLabel (Ljava/lang/String;)V
 }
@@ -1032,8 +1120,10 @@ public final class dev/kord/rest/builder/component/ButtonBuilder$InteractionButt
 	public fun <init> (Ldev/kord/common/entity/ButtonStyle;Ljava/lang/String;)V
 	public fun build ()Ldev/kord/common/entity/DiscordChatComponent;
 	public synthetic fun build ()Ldev/kord/common/entity/DiscordComponent;
+	public fun equals (Ljava/lang/Object;)Z
 	public final fun getCustomId ()Ljava/lang/String;
 	public final fun getStyle ()Ldev/kord/common/entity/ButtonStyle;
+	public fun hashCode ()I
 	public final fun setCustomId (Ljava/lang/String;)V
 	public final fun setStyle (Ldev/kord/common/entity/ButtonStyle;)V
 }
@@ -1042,14 +1132,18 @@ public final class dev/kord/rest/builder/component/ButtonBuilder$LinkButtonBuild
 	public fun <init> (Ljava/lang/String;)V
 	public fun build ()Ldev/kord/common/entity/DiscordChatComponent;
 	public synthetic fun build ()Ldev/kord/common/entity/DiscordComponent;
+	public fun equals (Ljava/lang/Object;)Z
 	public final fun getUrl ()Ljava/lang/String;
+	public fun hashCode ()I
 	public final fun setUrl (Ljava/lang/String;)V
 }
 
 public final class dev/kord/rest/builder/component/ChannelSelectBuilder : dev/kord/rest/builder/component/SelectMenuBuilder {
 	public fun <init> (Ljava/lang/String;)V
+	public fun equals (Ljava/lang/Object;)Z
 	public final fun getChannelTypes ()Ljava/util/List;
 	public final fun getDefaultChannels ()Ljava/util/List;
+	public fun hashCode ()I
 	public final fun setChannelTypes (Ljava/util/List;)V
 }
 
@@ -1059,8 +1153,10 @@ public abstract interface class dev/kord/rest/builder/component/ComponentBuilder
 
 public final class dev/kord/rest/builder/component/MentionableSelectBuilder : dev/kord/rest/builder/component/SelectMenuBuilder {
 	public fun <init> (Ljava/lang/String;)V
+	public fun equals (Ljava/lang/Object;)Z
 	public final fun getDefaultRoles ()Ljava/util/List;
 	public final fun getDefaultUsers ()Ljava/util/List;
+	public fun hashCode ()I
 }
 
 public abstract interface class dev/kord/rest/builder/component/MessageComponentBuilder : dev/kord/rest/builder/component/ComponentBuilder {
@@ -1068,7 +1164,9 @@ public abstract interface class dev/kord/rest/builder/component/MessageComponent
 
 public final class dev/kord/rest/builder/component/RoleSelectBuilder : dev/kord/rest/builder/component/SelectMenuBuilder {
 	public fun <init> (Ljava/lang/String;)V
+	public fun equals (Ljava/lang/Object;)Z
 	public final fun getDefaultRoles ()Ljava/util/List;
+	public fun hashCode ()I
 }
 
 public abstract class dev/kord/rest/builder/component/SelectMenuBuilder : dev/kord/rest/builder/component/ActionRowComponentBuilder {
@@ -1078,10 +1176,12 @@ public abstract class dev/kord/rest/builder/component/SelectMenuBuilder : dev/ko
 	protected fun buildChannelTypes ()Ldev/kord/common/entity/optional/Optional;
 	protected fun buildDefaultValues ()Ldev/kord/common/entity/optional/Optional;
 	protected fun buildOptions ()Ldev/kord/common/entity/optional/Optional;
+	public fun equals (Ljava/lang/Object;)Z
 	public final fun getAllowedValues ()Lkotlin/ranges/ClosedRange;
 	public final fun getCustomId ()Ljava/lang/String;
 	public final fun getPlaceholder ()Ljava/lang/String;
 	protected abstract fun getType ()Ldev/kord/common/entity/ComponentType;
+	public fun hashCode ()I
 	public final fun setAllowedValues (Lkotlin/ranges/ClosedRange;)V
 	public final fun setCustomId (Ljava/lang/String;)V
 	public final fun setPlaceholder (Ljava/lang/String;)V
@@ -1096,11 +1196,13 @@ public final class dev/kord/rest/builder/component/SelectMenuBuilderKt {
 public final class dev/kord/rest/builder/component/SelectOptionBuilder {
 	public fun <init> (Ljava/lang/String;Ljava/lang/String;)V
 	public final fun build ()Ldev/kord/common/entity/DiscordSelectOption;
+	public fun equals (Ljava/lang/Object;)Z
 	public final fun getDefault ()Ljava/lang/Boolean;
 	public final fun getDescription ()Ljava/lang/String;
 	public final fun getEmoji ()Ldev/kord/common/entity/DiscordPartialEmoji;
 	public final fun getLabel ()Ljava/lang/String;
 	public final fun getValue ()Ljava/lang/String;
+	public fun hashCode ()I
 	public final fun setDefault (Ljava/lang/Boolean;)V
 	public final fun setDescription (Ljava/lang/String;)V
 	public final fun setEmoji (Ldev/kord/common/entity/DiscordPartialEmoji;)V
@@ -1110,7 +1212,9 @@ public final class dev/kord/rest/builder/component/SelectOptionBuilder {
 
 public final class dev/kord/rest/builder/component/StringSelectBuilder : dev/kord/rest/builder/component/SelectMenuBuilder {
 	public fun <init> (Ljava/lang/String;)V
+	public fun equals (Ljava/lang/Object;)Z
 	public final fun getOptions ()Ljava/util/List;
+	public fun hashCode ()I
 	public final fun setOptions (Ljava/util/List;)V
 }
 
@@ -1118,6 +1222,7 @@ public final class dev/kord/rest/builder/component/TextInputBuilder : dev/kord/r
 	public fun <init> (Ldev/kord/common/entity/TextInputStyle;Ljava/lang/String;Ljava/lang/String;)V
 	public synthetic fun build ()Ldev/kord/common/entity/DiscordComponent;
 	public fun build ()Ldev/kord/common/entity/DiscordTextInputComponent;
+	public fun equals (Ljava/lang/Object;)Z
 	public final fun getAllowedLength ()Lkotlin/ranges/ClosedRange;
 	public final fun getCustomId ()Ljava/lang/String;
 	public final fun getLabel ()Ljava/lang/String;
@@ -1125,6 +1230,7 @@ public final class dev/kord/rest/builder/component/TextInputBuilder : dev/kord/r
 	public final fun getRequired ()Ljava/lang/Boolean;
 	public final fun getStyle ()Ldev/kord/common/entity/TextInputStyle;
 	public final fun getValue ()Ljava/lang/String;
+	public fun hashCode ()I
 	public final fun setAllowedLength (Lkotlin/ranges/ClosedRange;)V
 	public final fun setCustomId (Ljava/lang/String;)V
 	public final fun setLabel (Ljava/lang/String;)V
@@ -1136,14 +1242,18 @@ public final class dev/kord/rest/builder/component/TextInputBuilder : dev/kord/r
 
 public final class dev/kord/rest/builder/component/UserSelectBuilder : dev/kord/rest/builder/component/SelectMenuBuilder {
 	public fun <init> (Ljava/lang/String;)V
+	public fun equals (Ljava/lang/Object;)Z
 	public final fun getDefaultUsers ()Ljava/util/List;
+	public fun hashCode ()I
 }
 
 public final class dev/kord/rest/builder/guild/CurrentVoiceStateModifyBuilder : dev/kord/rest/builder/RequestBuilder {
 	public fun <init> ()V
+	public fun equals (Ljava/lang/Object;)Z
 	public final fun getChannelId ()Ldev/kord/common/entity/Snowflake;
 	public final fun getRequestToSpeakTimestamp ()Lkotlinx/datetime/Instant;
 	public final fun getSuppress ()Ljava/lang/Boolean;
+	public fun hashCode ()I
 	public final fun setChannelId (Ldev/kord/common/entity/Snowflake;)V
 	public final fun setRequestToSpeakTimestamp (Lkotlinx/datetime/Instant;)V
 	public final fun setSuppress (Ljava/lang/Boolean;)V
@@ -1153,10 +1263,12 @@ public final class dev/kord/rest/builder/guild/CurrentVoiceStateModifyBuilder : 
 
 public final class dev/kord/rest/builder/guild/EmojiCreateBuilder : dev/kord/rest/builder/AuditRequestBuilder {
 	public fun <init> (Ljava/lang/String;Ldev/kord/rest/Image;)V
+	public fun equals (Ljava/lang/Object;)Z
 	public final fun getImage ()Ldev/kord/rest/Image;
 	public final fun getName ()Ljava/lang/String;
 	public fun getReason ()Ljava/lang/String;
 	public final fun getRoles ()Ljava/util/Set;
+	public fun hashCode ()I
 	public final fun setImage (Ldev/kord/rest/Image;)V
 	public final fun setName (Ljava/lang/String;)V
 	public fun setReason (Ljava/lang/String;)V
@@ -1167,9 +1279,11 @@ public final class dev/kord/rest/builder/guild/EmojiCreateBuilder : dev/kord/res
 
 public final class dev/kord/rest/builder/guild/EmojiModifyBuilder : dev/kord/rest/builder/AuditRequestBuilder {
 	public fun <init> ()V
+	public fun equals (Ljava/lang/Object;)Z
 	public final fun getName ()Ljava/lang/String;
 	public fun getReason ()Ljava/lang/String;
 	public final fun getRoles ()Ljava/util/Set;
+	public fun hashCode ()I
 	public final fun setName (Ljava/lang/String;)V
 	public fun setReason (Ljava/lang/String;)V
 	public final fun setRoles (Ljava/util/Set;)V
@@ -1181,6 +1295,7 @@ public final class dev/kord/rest/builder/guild/GuildCreateBuilder : dev/kord/res
 	public fun <init> (Ljava/lang/String;)V
 	public final fun category (Ljava/lang/String;Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;)Ldev/kord/common/entity/Snowflake;
 	public static synthetic fun category$default (Ldev/kord/rest/builder/guild/GuildCreateBuilder;Ljava/lang/String;Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Ldev/kord/common/entity/Snowflake;
+	public fun equals (Ljava/lang/Object;)Z
 	public final fun everyoneRole (Lkotlin/jvm/functions/Function1;)V
 	public final fun forumChannel (Ljava/lang/String;Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;)Ldev/kord/common/entity/Snowflake;
 	public static synthetic fun forumChannel$default (Ldev/kord/rest/builder/guild/GuildCreateBuilder;Ljava/lang/String;Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Ldev/kord/common/entity/Snowflake;
@@ -1197,6 +1312,7 @@ public final class dev/kord/rest/builder/guild/GuildCreateBuilder : dev/kord/res
 	public final fun getSnowflakeGenerator ()Ljava/util/Iterator;
 	public final fun getSystemChannelId ()Ldev/kord/common/entity/Snowflake;
 	public final fun getVerificationLevel ()Ldev/kord/common/entity/VerificationLevel;
+	public fun hashCode ()I
 	public final fun mediaChannel (Ljava/lang/String;Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;)Ldev/kord/common/entity/Snowflake;
 	public static synthetic fun mediaChannel$default (Ldev/kord/rest/builder/guild/GuildCreateBuilder;Ljava/lang/String;Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Ldev/kord/common/entity/Snowflake;
 	public final fun newUniqueSnowflake ()Ldev/kord/common/entity/Snowflake;
@@ -1222,6 +1338,7 @@ public final class dev/kord/rest/builder/guild/GuildCreateBuilder : dev/kord/res
 
 public final class dev/kord/rest/builder/guild/GuildModifyBuilder : dev/kord/rest/builder/AuditRequestBuilder {
 	public fun <init> ()V
+	public fun equals (Ljava/lang/Object;)Z
 	public final fun getAfkChannelId ()Ldev/kord/common/entity/Snowflake;
 	public final fun getAfkTimeout-FghU774 ()Lkotlin/time/Duration;
 	public final fun getBanner ()Ldev/kord/rest/Image;
@@ -1240,6 +1357,7 @@ public final class dev/kord/rest/builder/guild/GuildModifyBuilder : dev/kord/res
 	public final fun getSplash ()Ldev/kord/rest/Image;
 	public final fun getSystemChannelId ()Ldev/kord/common/entity/Snowflake;
 	public final fun getVerificationLevel ()Ldev/kord/common/entity/VerificationLevel;
+	public fun hashCode ()I
 	public final fun setAfkChannelId (Ldev/kord/common/entity/Snowflake;)V
 	public final fun setAfkTimeout-BwNAW2A (Lkotlin/time/Duration;)V
 	public final fun setBanner (Ldev/kord/rest/Image;)V
@@ -1264,11 +1382,13 @@ public final class dev/kord/rest/builder/guild/GuildModifyBuilder : dev/kord/res
 
 public final class dev/kord/rest/builder/guild/GuildOnboardingModifyBuilder : dev/kord/rest/builder/AuditRequestBuilder {
 	public fun <init> ()V
+	public fun equals (Ljava/lang/Object;)Z
 	public final fun getDefaultChannelIds ()Ljava/util/List;
 	public final fun getEnabled ()Ljava/lang/Boolean;
 	public final fun getMode ()Ldev/kord/common/entity/OnboardingMode;
 	public final fun getPrompts ()Ljava/util/List;
 	public fun getReason ()Ljava/lang/String;
+	public fun hashCode ()I
 	public final fun setDefaultChannelIds (Ljava/util/List;)V
 	public final fun setEnabled (Ljava/lang/Boolean;)V
 	public final fun setMode (Ldev/kord/common/entity/OnboardingMode;)V
@@ -1286,9 +1406,11 @@ public final class dev/kord/rest/builder/guild/GuildOnboardingModifyBuilderKt {
 
 public final class dev/kord/rest/builder/guild/GuildWidgetModifyBuilder : dev/kord/rest/builder/AuditRequestBuilder {
 	public fun <init> ()V
+	public fun equals (Ljava/lang/Object;)Z
 	public final fun getChannelId ()Ldev/kord/common/entity/Snowflake;
 	public final fun getEnabled ()Ljava/lang/Boolean;
 	public fun getReason ()Ljava/lang/String;
+	public fun hashCode ()I
 	public final fun setChannelId (Ldev/kord/common/entity/Snowflake;)V
 	public final fun setEnabled (Ljava/lang/Boolean;)V
 	public fun setReason (Ljava/lang/String;)V
@@ -1298,6 +1420,7 @@ public final class dev/kord/rest/builder/guild/GuildWidgetModifyBuilder : dev/ko
 
 public final class dev/kord/rest/builder/guild/OnboardingPromptBuilder : dev/kord/rest/builder/RequestBuilder {
 	public fun <init> (Ldev/kord/common/entity/OnboardingPromptType;Ljava/lang/String;ZZZ)V
+	public fun equals (Ljava/lang/Object;)Z
 	public final fun getId ()Ldev/kord/common/entity/Snowflake;
 	public final fun getInOnboarding ()Z
 	public final fun getOptions ()Ljava/util/List;
@@ -1305,6 +1428,7 @@ public final class dev/kord/rest/builder/guild/OnboardingPromptBuilder : dev/kor
 	public final fun getSingleSelect ()Z
 	public final fun getTitle ()Ljava/lang/String;
 	public final fun getType ()Ldev/kord/common/entity/OnboardingPromptType;
+	public fun hashCode ()I
 	public final fun setId (Ldev/kord/common/entity/Snowflake;)V
 	public final fun setInOnboarding (Z)V
 	public final fun setRequired (Z)V
@@ -1317,10 +1441,12 @@ public final class dev/kord/rest/builder/guild/OnboardingPromptBuilder : dev/kor
 
 public final class dev/kord/rest/builder/guild/OnboardingPromptOptionBuilder : dev/kord/rest/builder/RequestBuilder {
 	public fun <init> (Ljava/lang/String;)V
+	public fun equals (Ljava/lang/Object;)Z
 	public final fun getChannelIds ()Ljava/util/List;
 	public final fun getDescription ()Ljava/lang/String;
 	public final fun getRoleIds ()Ljava/util/List;
 	public final fun getTitle ()Ljava/lang/String;
+	public fun hashCode ()I
 	public final fun setDescription (Ljava/lang/String;)V
 	public final fun setTitle (Ljava/lang/String;)V
 	public fun toRequest ()Ldev/kord/rest/json/request/OnboardingPromptOptionRequest;
@@ -1329,6 +1455,7 @@ public final class dev/kord/rest/builder/guild/OnboardingPromptOptionBuilder : d
 
 public final class dev/kord/rest/builder/guild/ScheduledEventCreateBuilder : dev/kord/rest/builder/AuditRequestBuilder {
 	public fun <init> (Ljava/lang/String;Ldev/kord/common/entity/GuildScheduledEventPrivacyLevel;Lkotlinx/datetime/Instant;Ldev/kord/common/entity/ScheduledEntityType;)V
+	public fun equals (Ljava/lang/Object;)Z
 	public final fun getChannelId ()Ldev/kord/common/entity/Snowflake;
 	public final fun getDescription ()Ljava/lang/String;
 	public final fun getEntityMetadata ()Ldev/kord/common/entity/GuildScheduledEventEntityMetadata;
@@ -1339,6 +1466,7 @@ public final class dev/kord/rest/builder/guild/ScheduledEventCreateBuilder : dev
 	public fun getReason ()Ljava/lang/String;
 	public final fun getScheduledEndTime ()Lkotlinx/datetime/Instant;
 	public final fun getScheduledStartTime ()Lkotlinx/datetime/Instant;
+	public fun hashCode ()I
 	public final fun setChannelId (Ldev/kord/common/entity/Snowflake;)V
 	public final fun setDescription (Ljava/lang/String;)V
 	public final fun setEntityMetadata (Ldev/kord/common/entity/GuildScheduledEventEntityMetadata;)V
@@ -1355,9 +1483,11 @@ public final class dev/kord/rest/builder/guild/ScheduledEventCreateBuilder : dev
 
 public final class dev/kord/rest/builder/guild/StickerModifyBuilder : dev/kord/rest/builder/RequestBuilder {
 	public fun <init> ()V
+	public fun equals (Ljava/lang/Object;)Z
 	public final fun getDescription ()Ljava/lang/String;
 	public final fun getName ()Ljava/lang/String;
 	public final fun getTags ()Ljava/lang/String;
+	public fun hashCode ()I
 	public final fun setDescription (Ljava/lang/String;)V
 	public final fun setName (Ljava/lang/String;)V
 	public final fun setTags (Ljava/lang/String;)V
@@ -1367,8 +1497,10 @@ public final class dev/kord/rest/builder/guild/StickerModifyBuilder : dev/kord/r
 
 public final class dev/kord/rest/builder/guild/VoiceStateModifyBuilder : dev/kord/rest/builder/RequestBuilder {
 	public fun <init> (Ldev/kord/common/entity/Snowflake;)V
+	public fun equals (Ljava/lang/Object;)Z
 	public final fun getChannelId ()Ldev/kord/common/entity/Snowflake;
 	public final fun getSuppress ()Ljava/lang/Boolean;
+	public fun hashCode ()I
 	public final fun setChannelId (Ldev/kord/common/entity/Snowflake;)V
 	public final fun setSuppress (Ljava/lang/Boolean;)V
 	public fun toRequest ()Ldev/kord/rest/json/request/VoiceStateModifyRequest;
@@ -1377,10 +1509,12 @@ public final class dev/kord/rest/builder/guild/VoiceStateModifyBuilder : dev/kor
 
 public final class dev/kord/rest/builder/guild/WelcomeScreenChannelBuilder : dev/kord/rest/builder/RequestBuilder {
 	public fun <init> (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;)V
+	public fun equals (Ljava/lang/Object;)Z
 	public final fun getChannelId ()Ldev/kord/common/entity/Snowflake;
 	public final fun getDescription ()Ljava/lang/String;
 	public final fun getEmojiId ()Ldev/kord/common/entity/Snowflake;
 	public final fun getEmojiName ()Ljava/lang/String;
+	public fun hashCode ()I
 	public final fun setChannelId (Ldev/kord/common/entity/Snowflake;)V
 	public final fun setDescription (Ljava/lang/String;)V
 	public final fun setEmojiId (Ldev/kord/common/entity/Snowflake;)V
@@ -1391,10 +1525,12 @@ public final class dev/kord/rest/builder/guild/WelcomeScreenChannelBuilder : dev
 
 public final class dev/kord/rest/builder/guild/WelcomeScreenModifyBuilder : dev/kord/rest/builder/AuditRequestBuilder {
 	public fun <init> ()V
+	public fun equals (Ljava/lang/Object;)Z
 	public final fun getDescription ()Ljava/lang/String;
 	public final fun getEnabled ()Ljava/lang/Boolean;
 	public fun getReason ()Ljava/lang/String;
 	public final fun getWelcomeScreenChannels ()Ljava/util/List;
+	public fun hashCode ()I
 	public final fun setDescription (Ljava/lang/String;)V
 	public final fun setEnabled (Ljava/lang/Boolean;)V
 	public fun setReason (Ljava/lang/String;)V
@@ -1406,10 +1542,12 @@ public final class dev/kord/rest/builder/guild/WelcomeScreenModifyBuilder : dev/
 
 public final class dev/kord/rest/builder/integration/IntegrationModifyBuilder : dev/kord/rest/builder/AuditRequestBuilder {
 	public fun <init> ()V
+	public fun equals (Ljava/lang/Object;)Z
 	public final fun getEnableEmoticons ()Ljava/lang/Boolean;
 	public final fun getExpireBehavior ()Ldev/kord/common/entity/IntegrationExpireBehavior;
 	public final fun getExpirePeriodInDays ()Ljava/lang/Integer;
 	public fun getReason ()Ljava/lang/String;
+	public fun hashCode ()I
 	public final fun setEnableEmoticons (Ljava/lang/Boolean;)V
 	public final fun setExpireBehavior (Ldev/kord/common/entity/IntegrationExpireBehavior;)V
 	public final fun setExpirePeriodInDays (Ljava/lang/Integer;)V
@@ -1456,7 +1594,9 @@ public abstract class dev/kord/rest/builder/interaction/BaseChoiceBuilder : dev/
 	public abstract fun choice (Ljava/lang/String;Ljava/lang/Object;Ldev/kord/common/entity/optional/Optional;)V
 	public final fun choice (Ljava/lang/String;Ljava/lang/Object;Lkotlin/jvm/functions/Function1;)V
 	public static synthetic fun choice$default (Ldev/kord/rest/builder/interaction/BaseChoiceBuilder;Ljava/lang/String;Ljava/lang/Object;Ldev/kord/common/entity/optional/Optional;ILjava/lang/Object;)V
+	public fun equals (Ljava/lang/Object;)Z
 	public final fun getChoices ()Ljava/util/List;
+	public fun hashCode ()I
 	public final fun setChoices (Ljava/util/List;)V
 	public fun toRequest ()Ldev/kord/common/entity/ApplicationCommandOption;
 	public synthetic fun toRequest ()Ljava/lang/Object;
@@ -1464,7 +1604,9 @@ public abstract class dev/kord/rest/builder/interaction/BaseChoiceBuilder : dev/
 
 public abstract class dev/kord/rest/builder/interaction/BaseCommandOptionBuilder : dev/kord/rest/builder/interaction/OptionsBuilder {
 	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Ldev/kord/common/entity/ApplicationCommandOptionType;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun equals (Ljava/lang/Object;)Z
 	public final fun getOptions ()Ljava/util/List;
+	public fun hashCode ()I
 	public final fun setOptions (Ljava/util/List;)V
 	public fun toRequest ()Ldev/kord/common/entity/ApplicationCommandOption;
 	public synthetic fun toRequest ()Ljava/lang/Object;
@@ -1481,7 +1623,9 @@ public final class dev/kord/rest/builder/interaction/BooleanBuilder : dev/kord/r
 
 public final class dev/kord/rest/builder/interaction/ChannelBuilder : dev/kord/rest/builder/interaction/OptionsBuilder {
 	public fun <init> (Ljava/lang/String;Ljava/lang/String;)V
+	public fun equals (Ljava/lang/Object;)Z
 	public final fun getChannelTypes ()Ljava/util/List;
+	public fun hashCode ()I
 	public final fun setChannelTypes (Ljava/util/List;)V
 	public fun toRequest ()Ldev/kord/common/entity/ApplicationCommandOption;
 	public synthetic fun toRequest ()Ljava/lang/Object;
@@ -1500,6 +1644,7 @@ public final class dev/kord/rest/builder/interaction/ChatInputCreateBuilderImpl 
 	public fun <init> (Ljava/lang/String;Ljava/lang/String;)V
 	public fun description (Ldev/kord/common/Locale;Ljava/lang/String;)V
 	public fun disableCommandInGuilds ()V
+	public fun equals (Ljava/lang/Object;)Z
 	public fun getDefaultMemberPermissions ()Ldev/kord/common/entity/Permissions;
 	public fun getDefaultPermission ()Ljava/lang/Boolean;
 	public fun getDescription ()Ljava/lang/String;
@@ -1510,6 +1655,7 @@ public final class dev/kord/rest/builder/interaction/ChatInputCreateBuilderImpl 
 	public fun getNsfw ()Ljava/lang/Boolean;
 	public fun getOptions ()Ljava/util/List;
 	public fun getType ()Ldev/kord/common/entity/ApplicationCommandType;
+	public fun hashCode ()I
 	public fun name (Ldev/kord/common/Locale;Ljava/lang/String;)V
 	public fun setDefaultMemberPermissions (Ldev/kord/common/entity/Permissions;)V
 	public fun setDefaultPermission (Ljava/lang/Boolean;)V
@@ -1535,6 +1681,7 @@ public final class dev/kord/rest/builder/interaction/ChatInputModifyBuilder$Defa
 public final class dev/kord/rest/builder/interaction/ChatInputModifyBuilderImpl : dev/kord/rest/builder/interaction/GlobalChatInputModifyBuilder {
 	public fun <init> ()V
 	public fun description (Ldev/kord/common/Locale;Ljava/lang/String;)V
+	public fun equals (Ljava/lang/Object;)Z
 	public fun getDefaultMemberPermissions ()Ldev/kord/common/entity/Permissions;
 	public fun getDefaultPermission ()Ljava/lang/Boolean;
 	public fun getDescription ()Ljava/lang/String;
@@ -1544,6 +1691,7 @@ public final class dev/kord/rest/builder/interaction/ChatInputModifyBuilderImpl 
 	public fun getNameLocalizations ()Ljava/util/Map;
 	public fun getNsfw ()Ljava/lang/Boolean;
 	public fun getOptions ()Ljava/util/List;
+	public fun hashCode ()I
 	public fun name (Ldev/kord/common/Locale;Ljava/lang/String;)V
 	public fun setDefaultMemberPermissions (Ldev/kord/common/entity/Permissions;)V
 	public fun setDefaultPermission (Ljava/lang/Boolean;)V
@@ -1560,9 +1708,11 @@ public final class dev/kord/rest/builder/interaction/ChatInputModifyBuilderImpl 
 
 public final class dev/kord/rest/builder/interaction/ChoiceLocalizationsBuilder : dev/kord/rest/builder/interaction/LocalizedNameCreateBuilder {
 	public fun <init> (Ljava/lang/String;)V
+	public fun equals (Ljava/lang/Object;)Z
 	public fun getName ()Ljava/lang/String;
 	public fun getNameLocalizations ()Ljava/util/Map;
 	public final fun get_nameLocalizations ()Ldev/kord/common/entity/optional/Optional;
+	public fun hashCode ()I
 	public fun name (Ldev/kord/common/Locale;Ljava/lang/String;)V
 	public fun setName (Ljava/lang/String;)V
 	public fun setNameLocalizations (Ljava/util/Map;)V
@@ -1764,6 +1914,7 @@ public final class dev/kord/rest/builder/interaction/MessageCommandCreateBuilder
 public final class dev/kord/rest/builder/interaction/MessageCommandCreateBuilderImpl : dev/kord/rest/builder/interaction/GlobalMessageCommandCreateBuilder {
 	public fun <init> (Ljava/lang/String;)V
 	public fun disableCommandInGuilds ()V
+	public fun equals (Ljava/lang/Object;)Z
 	public fun getDefaultMemberPermissions ()Ldev/kord/common/entity/Permissions;
 	public fun getDefaultPermission ()Ljava/lang/Boolean;
 	public fun getDmPermission ()Ljava/lang/Boolean;
@@ -1771,6 +1922,7 @@ public final class dev/kord/rest/builder/interaction/MessageCommandCreateBuilder
 	public fun getNameLocalizations ()Ljava/util/Map;
 	public fun getNsfw ()Ljava/lang/Boolean;
 	public fun getType ()Ldev/kord/common/entity/ApplicationCommandType;
+	public fun hashCode ()I
 	public fun name (Ldev/kord/common/Locale;Ljava/lang/String;)V
 	public fun setDefaultMemberPermissions (Ldev/kord/common/entity/Permissions;)V
 	public fun setDefaultPermission (Ljava/lang/Boolean;)V
@@ -1791,12 +1943,14 @@ public final class dev/kord/rest/builder/interaction/MessageCommandModifyBuilder
 
 public final class dev/kord/rest/builder/interaction/MessageCommandModifyBuilderImpl : dev/kord/rest/builder/interaction/GlobalMessageCommandModifyBuilder {
 	public fun <init> ()V
+	public fun equals (Ljava/lang/Object;)Z
 	public fun getDefaultMemberPermissions ()Ldev/kord/common/entity/Permissions;
 	public fun getDefaultPermission ()Ljava/lang/Boolean;
 	public fun getDmPermission ()Ljava/lang/Boolean;
 	public fun getName ()Ljava/lang/String;
 	public fun getNameLocalizations ()Ljava/util/Map;
 	public fun getNsfw ()Ljava/lang/Boolean;
+	public fun hashCode ()I
 	public fun name (Ldev/kord/common/Locale;Ljava/lang/String;)V
 	public fun setDefaultMemberPermissions (Ldev/kord/common/entity/Permissions;)V
 	public fun setDefaultPermission (Ljava/lang/Boolean;)V
@@ -1811,9 +1965,11 @@ public final class dev/kord/rest/builder/interaction/MessageCommandModifyBuilder
 public final class dev/kord/rest/builder/interaction/ModalBuilder : dev/kord/rest/builder/RequestBuilder {
 	public fun <init> (Ljava/lang/String;Ljava/lang/String;)V
 	public final fun actionRow (Lkotlin/jvm/functions/Function1;)V
+	public fun equals (Ljava/lang/Object;)Z
 	public final fun getComponents ()Ljava/util/List;
 	public final fun getCustomId ()Ljava/lang/String;
 	public final fun getTitle ()Ljava/lang/String;
+	public fun hashCode ()I
 	public final fun setCustomId (Ljava/lang/String;)V
 	public final fun setTitle (Ljava/lang/String;)V
 	public fun toRequest ()Ldev/kord/common/entity/DiscordModal;
@@ -1822,7 +1978,9 @@ public final class dev/kord/rest/builder/interaction/ModalBuilder : dev/kord/res
 
 public abstract class dev/kord/rest/builder/interaction/MultiApplicationCommandBuilder {
 	public final fun build ()Ljava/util/List;
+	public fun equals (Ljava/lang/Object;)Z
 	public final fun getCommands ()Ljava/util/List;
+	public fun hashCode ()I
 }
 
 public final class dev/kord/rest/builder/interaction/MultiApplicationCommandBuilderKt {
@@ -1842,8 +2000,10 @@ public final class dev/kord/rest/builder/interaction/NumberOptionBuilder : dev/k
 
 public abstract class dev/kord/rest/builder/interaction/NumericOptionBuilder : dev/kord/rest/builder/interaction/BaseChoiceBuilder {
 	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Ldev/kord/common/entity/ApplicationCommandOptionType;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun equals (Ljava/lang/Object;)Z
 	public final fun getMaxValue ()Ljava/lang/Number;
 	public final fun getMinValue ()Ljava/lang/Number;
+	public fun hashCode ()I
 	public final fun setMaxValue (Ljava/lang/Number;)V
 	public final fun setMinValue (Ljava/lang/Number;)V
 	public fun toRequest ()Ldev/kord/common/entity/ApplicationCommandOption;
@@ -1853,6 +2013,7 @@ public abstract class dev/kord/rest/builder/interaction/NumericOptionBuilder : d
 public abstract class dev/kord/rest/builder/interaction/OptionsBuilder : dev/kord/rest/builder/RequestBuilder, dev/kord/rest/builder/interaction/LocalizedDescriptionCreateBuilder, dev/kord/rest/builder/interaction/LocalizedNameCreateBuilder {
 	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Ldev/kord/common/entity/ApplicationCommandOptionType;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun description (Ldev/kord/common/Locale;Ljava/lang/String;)V
+	public fun equals (Ljava/lang/Object;)Z
 	public final fun getAutocomplete ()Ljava/lang/Boolean;
 	public final fun getDefault ()Ljava/lang/Boolean;
 	public fun getDescription ()Ljava/lang/String;
@@ -1861,6 +2022,7 @@ public abstract class dev/kord/rest/builder/interaction/OptionsBuilder : dev/kor
 	public fun getNameLocalizations ()Ljava/util/Map;
 	public final fun getRequired ()Ljava/lang/Boolean;
 	public final fun getType ()Ldev/kord/common/entity/ApplicationCommandOptionType;
+	public fun hashCode ()I
 	public fun name (Ldev/kord/common/Locale;Ljava/lang/String;)V
 	public final fun setAutocomplete (Ljava/lang/Boolean;)V
 	public final fun setDefault (Ljava/lang/Boolean;)V
@@ -1884,8 +2046,10 @@ public final class dev/kord/rest/builder/interaction/StringChoiceBuilder : dev/k
 	public fun <init> (Ljava/lang/String;Ljava/lang/String;)V
 	public synthetic fun choice (Ljava/lang/String;Ljava/lang/Object;Ldev/kord/common/entity/optional/Optional;)V
 	public fun choice (Ljava/lang/String;Ljava/lang/String;Ldev/kord/common/entity/optional/Optional;)V
+	public fun equals (Ljava/lang/Object;)Z
 	public final fun getMaxLength ()Ljava/lang/Integer;
 	public final fun getMinLength ()Ljava/lang/Integer;
+	public fun hashCode ()I
 	public final fun setMaxLength (Ljava/lang/Integer;)V
 	public final fun setMinLength (Ljava/lang/Integer;)V
 	public fun toRequest ()Ldev/kord/common/entity/ApplicationCommandOption;
@@ -1911,6 +2075,7 @@ public final class dev/kord/rest/builder/interaction/UserCommandCreateBuilder$De
 public final class dev/kord/rest/builder/interaction/UserCommandCreateBuilderImpl : dev/kord/rest/builder/interaction/GlobalUserCommandCreateBuilder {
 	public fun <init> (Ljava/lang/String;)V
 	public fun disableCommandInGuilds ()V
+	public fun equals (Ljava/lang/Object;)Z
 	public fun getDefaultMemberPermissions ()Ldev/kord/common/entity/Permissions;
 	public fun getDefaultPermission ()Ljava/lang/Boolean;
 	public fun getDmPermission ()Ljava/lang/Boolean;
@@ -1918,6 +2083,7 @@ public final class dev/kord/rest/builder/interaction/UserCommandCreateBuilderImp
 	public fun getNameLocalizations ()Ljava/util/Map;
 	public fun getNsfw ()Ljava/lang/Boolean;
 	public fun getType ()Ldev/kord/common/entity/ApplicationCommandType;
+	public fun hashCode ()I
 	public fun name (Ldev/kord/common/Locale;Ljava/lang/String;)V
 	public fun setDefaultMemberPermissions (Ldev/kord/common/entity/Permissions;)V
 	public fun setDefaultPermission (Ljava/lang/Boolean;)V
@@ -1938,12 +2104,14 @@ public final class dev/kord/rest/builder/interaction/UserCommandModifyBuilder$De
 
 public final class dev/kord/rest/builder/interaction/UserCommandModifyBuilderImpl : dev/kord/rest/builder/interaction/GlobalUserCommandModifyBuilder {
 	public fun <init> ()V
+	public fun equals (Ljava/lang/Object;)Z
 	public fun getDefaultMemberPermissions ()Ldev/kord/common/entity/Permissions;
 	public fun getDefaultPermission ()Ljava/lang/Boolean;
 	public fun getDmPermission ()Ljava/lang/Boolean;
 	public fun getName ()Ljava/lang/String;
 	public fun getNameLocalizations ()Ljava/util/Map;
 	public fun getNsfw ()Ljava/lang/Boolean;
+	public fun hashCode ()I
 	public fun name (Ldev/kord/common/Locale;Ljava/lang/String;)V
 	public fun setDefaultMemberPermissions (Ldev/kord/common/entity/Permissions;)V
 	public fun setDefaultPermission (Ljava/lang/Boolean;)V
@@ -1957,11 +2125,13 @@ public final class dev/kord/rest/builder/interaction/UserCommandModifyBuilderImp
 
 public final class dev/kord/rest/builder/member/MemberAddBuilder : dev/kord/rest/builder/RequestBuilder {
 	public fun <init> (Ljava/lang/String;)V
+	public fun equals (Ljava/lang/Object;)Z
 	public final fun getDeafened ()Ljava/lang/Boolean;
 	public final fun getMuted ()Ljava/lang/Boolean;
 	public final fun getNickname ()Ljava/lang/String;
 	public final fun getRoles ()Ljava/util/Set;
 	public final fun getToken ()Ljava/lang/String;
+	public fun hashCode ()I
 	public final fun setDeafened (Ljava/lang/Boolean;)V
 	public final fun setMuted (Ljava/lang/Boolean;)V
 	public final fun setNickname (Ljava/lang/String;)V
@@ -1973,6 +2143,7 @@ public final class dev/kord/rest/builder/member/MemberAddBuilder : dev/kord/rest
 
 public final class dev/kord/rest/builder/member/MemberModifyBuilder : dev/kord/rest/builder/AuditRequestBuilder {
 	public fun <init> ()V
+	public fun equals (Ljava/lang/Object;)Z
 	public final fun getCommunicationDisabledUntil ()Lkotlinx/datetime/Instant;
 	public final fun getDeafened ()Ljava/lang/Boolean;
 	public final fun getFlags ()Ldev/kord/common/entity/GuildMemberFlags;
@@ -1981,6 +2152,7 @@ public final class dev/kord/rest/builder/member/MemberModifyBuilder : dev/kord/r
 	public fun getReason ()Ljava/lang/String;
 	public final fun getRoles ()Ljava/util/Set;
 	public final fun getVoiceChannelId ()Ldev/kord/common/entity/Snowflake;
+	public fun hashCode ()I
 	public final fun setCommunicationDisabledUntil (Lkotlinx/datetime/Instant;)V
 	public final fun setDeafened (Ljava/lang/Boolean;)V
 	public final fun setFlags (Ldev/kord/common/entity/GuildMemberFlags;)V
@@ -1997,18 +2169,22 @@ public final class dev/kord/rest/builder/message/AllowedMentionsBuilder {
 	public fun <init> ()V
 	public final fun add (Ldev/kord/common/entity/AllowedMentionType;)V
 	public final fun build ()Ldev/kord/common/entity/AllowedMentions;
+	public fun equals (Ljava/lang/Object;)Z
 	public final fun getRepliedUser ()Ljava/lang/Boolean;
 	public final fun getRoles ()Ljava/util/Set;
 	public final fun getTypes ()Ljava/util/Set;
 	public final fun getUsers ()Ljava/util/Set;
+	public fun hashCode ()I
 	public final fun setRepliedUser (Ljava/lang/Boolean;)V
 	public final fun unaryPlus (Ldev/kord/common/entity/AllowedMentionType;)V
 }
 
 public final class dev/kord/rest/builder/message/AttachmentBuilder : dev/kord/rest/builder/RequestBuilder {
 	public fun <init> (Ldev/kord/common/entity/Snowflake;)V
+	public fun equals (Ljava/lang/Object;)Z
 	public final fun getDescription ()Ljava/lang/String;
 	public final fun getFilename ()Ljava/lang/String;
+	public fun hashCode ()I
 	public final fun setDescription (Ljava/lang/String;)V
 	public final fun setFilename (Ljava/lang/String;)V
 	public fun toRequest ()Ldev/kord/rest/json/request/AttachmentRequest;
@@ -2020,6 +2196,7 @@ public final class dev/kord/rest/builder/message/EmbedBuilder : dev/kord/rest/bu
 	public static final field ZERO_WIDTH_SPACE Ljava/lang/String;
 	public fun <init> ()V
 	public final fun author (Lkotlin/jvm/functions/Function1;)V
+	public fun equals (Ljava/lang/Object;)Z
 	public final fun field (Ljava/lang/String;ZLkotlin/jvm/functions/Function0;)V
 	public final fun field (Lkotlin/jvm/functions/Function1;)V
 	public static synthetic fun field$default (Ldev/kord/rest/builder/message/EmbedBuilder;Ljava/lang/String;ZLkotlin/jvm/functions/Function0;ILjava/lang/Object;)V
@@ -2034,6 +2211,7 @@ public final class dev/kord/rest/builder/message/EmbedBuilder : dev/kord/rest/bu
 	public final fun getTimestamp ()Lkotlinx/datetime/Instant;
 	public final fun getTitle ()Ljava/lang/String;
 	public final fun getUrl ()Ljava/lang/String;
+	public fun hashCode ()I
 	public final fun setAuthor (Ldev/kord/rest/builder/message/EmbedBuilder$Author;)V
 	public final fun setColor (Ldev/kord/common/Color;)V
 	public final fun setDescription (Ljava/lang/String;)V
@@ -2051,9 +2229,11 @@ public final class dev/kord/rest/builder/message/EmbedBuilder : dev/kord/rest/bu
 
 public final class dev/kord/rest/builder/message/EmbedBuilder$Author : dev/kord/rest/builder/RequestBuilder {
 	public fun <init> ()V
+	public fun equals (Ljava/lang/Object;)Z
 	public final fun getIcon ()Ljava/lang/String;
 	public final fun getName ()Ljava/lang/String;
 	public final fun getUrl ()Ljava/lang/String;
+	public fun hashCode ()I
 	public final fun setIcon (Ljava/lang/String;)V
 	public final fun setName (Ljava/lang/String;)V
 	public final fun setUrl (Ljava/lang/String;)V
@@ -2071,9 +2251,11 @@ public final class dev/kord/rest/builder/message/EmbedBuilder$Companion {
 
 public final class dev/kord/rest/builder/message/EmbedBuilder$Field : dev/kord/rest/builder/RequestBuilder {
 	public fun <init> ()V
+	public fun equals (Ljava/lang/Object;)Z
 	public final fun getInline ()Ljava/lang/Boolean;
 	public final fun getName ()Ljava/lang/String;
 	public final fun getValue ()Ljava/lang/String;
+	public fun hashCode ()I
 	public final fun setInline (Ljava/lang/Boolean;)V
 	public final fun setName (Ljava/lang/String;)V
 	public final fun setValue (Ljava/lang/String;)V
@@ -2090,8 +2272,10 @@ public final class dev/kord/rest/builder/message/EmbedBuilder$Field$Limits {
 public final class dev/kord/rest/builder/message/EmbedBuilder$Footer : dev/kord/rest/builder/RequestBuilder {
 	public field text Ljava/lang/String;
 	public fun <init> ()V
+	public fun equals (Ljava/lang/Object;)Z
 	public final fun getIcon ()Ljava/lang/String;
 	public final fun getText ()Ljava/lang/String;
+	public fun hashCode ()I
 	public final fun setIcon (Ljava/lang/String;)V
 	public final fun setText (Ljava/lang/String;)V
 	public fun toRequest ()Ldev/kord/rest/json/request/EmbedFooterRequest;
@@ -2114,7 +2298,9 @@ public final class dev/kord/rest/builder/message/EmbedBuilder$Limits {
 public final class dev/kord/rest/builder/message/EmbedBuilder$Thumbnail : dev/kord/rest/builder/RequestBuilder {
 	public field url Ljava/lang/String;
 	public fun <init> ()V
+	public fun equals (Ljava/lang/Object;)Z
 	public final fun getUrl ()Ljava/lang/String;
+	public fun hashCode ()I
 	public final fun setUrl (Ljava/lang/String;)V
 	public fun toRequest ()Ldev/kord/rest/json/request/EmbedThumbnailRequest;
 	public synthetic fun toRequest ()Ljava/lang/Object;
@@ -2159,6 +2345,7 @@ public final class dev/kord/rest/builder/message/MessageBuilderKt {
 
 public abstract class dev/kord/rest/builder/message/create/AbstractMessageCreateBuilder : dev/kord/rest/builder/message/create/MessageCreateBuilder {
 	public fun addFile (Ljava/lang/String;Lio/ktor/client/request/forms/ChannelProvider;)Ldev/kord/rest/NamedFile;
+	public fun equals (Ljava/lang/Object;)Z
 	public final fun getAllowedMentions ()Ldev/kord/rest/builder/message/AllowedMentionsBuilder;
 	public final fun getAttachments ()Ljava/util/List;
 	public final fun getComponents ()Ljava/util/List;
@@ -2169,6 +2356,7 @@ public abstract class dev/kord/rest/builder/message/create/AbstractMessageCreate
 	public final fun getSuppressEmbeds ()Ljava/lang/Boolean;
 	public final fun getSuppressNotifications ()Ljava/lang/Boolean;
 	public final fun getTts ()Ljava/lang/Boolean;
+	public fun hashCode ()I
 	public final fun setAllowedMentions (Ldev/kord/rest/builder/message/AllowedMentionsBuilder;)V
 	public final fun setAttachments (Ljava/util/List;)V
 	public final fun setComponents (Ljava/util/List;)V
@@ -2182,14 +2370,18 @@ public abstract class dev/kord/rest/builder/message/create/AbstractMessageCreate
 
 public final class dev/kord/rest/builder/message/create/FollowupMessageCreateBuilder : dev/kord/rest/builder/message/create/AbstractMessageCreateBuilder, dev/kord/rest/builder/RequestBuilder {
 	public fun <init> (Z)V
+	public fun equals (Ljava/lang/Object;)Z
 	public final fun getEphemeral ()Z
+	public fun hashCode ()I
 	public fun toRequest ()Ldev/kord/rest/json/request/MultipartFollowupMessageCreateRequest;
 	public synthetic fun toRequest ()Ljava/lang/Object;
 }
 
 public final class dev/kord/rest/builder/message/create/ForumMessageCreateBuilder : dev/kord/rest/builder/message/create/AbstractMessageCreateBuilder, dev/kord/rest/builder/RequestBuilder {
 	public fun <init> ()V
+	public fun equals (Ljava/lang/Object;)Z
 	public final fun getStickerIds ()Ljava/util/List;
+	public fun hashCode ()I
 	public final fun setStickerIds (Ljava/util/List;)V
 	public fun toRequest ()Ldev/kord/rest/json/request/MultipartForumThreadMessageCreateRequest;
 	public synthetic fun toRequest ()Ljava/lang/Object;
@@ -2203,7 +2395,9 @@ public final class dev/kord/rest/builder/message/create/InteractionResponseCreat
 	public fun <init> ()V
 	public fun <init> (Z)V
 	public synthetic fun <init> (ZILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun equals (Ljava/lang/Object;)Z
 	public final fun getEphemeral ()Z
+	public fun hashCode ()I
 	public fun toRequest ()Ldev/kord/rest/json/request/MultipartInteractionResponseCreateRequest;
 	public synthetic fun toRequest ()Ljava/lang/Object;
 }
@@ -2229,10 +2423,12 @@ public final class dev/kord/rest/builder/message/create/UpdateMessageInteraction
 
 public final class dev/kord/rest/builder/message/create/UserMessageCreateBuilder : dev/kord/rest/builder/message/create/AbstractMessageCreateBuilder, dev/kord/rest/builder/RequestBuilder {
 	public fun <init> ()V
+	public fun equals (Ljava/lang/Object;)Z
 	public final fun getFailIfNotExists ()Ljava/lang/Boolean;
 	public final fun getMessageReference ()Ldev/kord/common/entity/Snowflake;
 	public final fun getNonce ()Ljava/lang/String;
 	public final fun getStickerIds ()Ljava/util/List;
+	public fun hashCode ()I
 	public final fun setFailIfNotExists (Ljava/lang/Boolean;)V
 	public final fun setMessageReference (Ldev/kord/common/entity/Snowflake;)V
 	public final fun setNonce (Ljava/lang/String;)V
@@ -2247,10 +2443,12 @@ public final class dev/kord/rest/builder/message/create/UserMessageCreateBuilder
 
 public final class dev/kord/rest/builder/message/create/WebhookMessageCreateBuilder : dev/kord/rest/builder/message/create/AbstractMessageCreateBuilder, dev/kord/rest/builder/RequestBuilder {
 	public fun <init> ()V
+	public fun equals (Ljava/lang/Object;)Z
 	public final fun getAppliedTags ()Ljava/util/List;
 	public final fun getAvatarUrl ()Ljava/lang/String;
 	public final fun getThreadName ()Ljava/lang/String;
 	public final fun getUsername ()Ljava/lang/String;
+	public fun hashCode ()I
 	public final fun setAppliedTags (Ljava/util/List;)V
 	public final fun setAvatarUrl (Ljava/lang/String;)V
 	public final fun setThreadName (Ljava/lang/String;)V
@@ -2265,6 +2463,7 @@ public final class dev/kord/rest/builder/message/create/WebhookMessageCreateBuil
 
 public abstract class dev/kord/rest/builder/message/modify/AbstractMessageModifyBuilder : dev/kord/rest/builder/message/modify/MessageModifyBuilder {
 	public fun addFile (Ljava/lang/String;Lio/ktor/client/request/forms/ChannelProvider;)Ldev/kord/rest/NamedFile;
+	public fun equals (Ljava/lang/Object;)Z
 	public final fun getAllowedMentions ()Ldev/kord/rest/builder/message/AllowedMentionsBuilder;
 	public final fun getAttachments ()Ljava/util/List;
 	public final fun getComponents ()Ljava/util/List;
@@ -2273,6 +2472,7 @@ public abstract class dev/kord/rest/builder/message/modify/AbstractMessageModify
 	public final fun getFiles ()Ljava/util/List;
 	public final fun getFlags ()Ldev/kord/common/entity/MessageFlags;
 	public final fun getSuppressEmbeds ()Ljava/lang/Boolean;
+	public fun hashCode ()I
 	public final fun setAllowedMentions (Ldev/kord/rest/builder/message/AllowedMentionsBuilder;)V
 	public final fun setAttachments (Ljava/util/List;)V
 	public final fun setComponents (Ljava/util/List;)V
@@ -2320,6 +2520,7 @@ public final class dev/kord/rest/builder/message/modify/WebhookMessageModifyBuil
 
 public final class dev/kord/rest/builder/role/RoleCreateBuilder : dev/kord/rest/builder/AuditRequestBuilder {
 	public fun <init> ()V
+	public fun equals (Ljava/lang/Object;)Z
 	public final fun getColor ()Ldev/kord/common/Color;
 	public final fun getHoist ()Ljava/lang/Boolean;
 	public final fun getIcon ()Ldev/kord/rest/Image;
@@ -2328,6 +2529,7 @@ public final class dev/kord/rest/builder/role/RoleCreateBuilder : dev/kord/rest/
 	public final fun getPermissions ()Ldev/kord/common/entity/Permissions;
 	public fun getReason ()Ljava/lang/String;
 	public final fun getUnicodeEmoji ()Ljava/lang/String;
+	public fun hashCode ()I
 	public final fun setColor (Ldev/kord/common/Color;)V
 	public final fun setHoist (Ljava/lang/Boolean;)V
 	public final fun setIcon (Ldev/kord/rest/Image;)V
@@ -2342,6 +2544,7 @@ public final class dev/kord/rest/builder/role/RoleCreateBuilder : dev/kord/rest/
 
 public final class dev/kord/rest/builder/role/RoleModifyBuilder : dev/kord/rest/builder/AuditRequestBuilder {
 	public fun <init> ()V
+	public fun equals (Ljava/lang/Object;)Z
 	public final fun getColor ()Ldev/kord/common/Color;
 	public final fun getHoist ()Ljava/lang/Boolean;
 	public final fun getIcon ()Ldev/kord/rest/Image;
@@ -2350,6 +2553,7 @@ public final class dev/kord/rest/builder/role/RoleModifyBuilder : dev/kord/rest/
 	public final fun getPermissions ()Ldev/kord/common/entity/Permissions;
 	public fun getReason ()Ljava/lang/String;
 	public final fun getUnicodeEmoji ()Ljava/lang/String;
+	public fun hashCode ()I
 	public final fun setColor (Ldev/kord/common/Color;)V
 	public final fun setHoist (Ljava/lang/Boolean;)V
 	public final fun setIcon (Ldev/kord/rest/Image;)V
@@ -2364,7 +2568,9 @@ public final class dev/kord/rest/builder/role/RoleModifyBuilder : dev/kord/rest/
 
 public final class dev/kord/rest/builder/role/RolePositionsModifyBuilder : dev/kord/rest/builder/AuditRequestBuilder {
 	public fun <init> ()V
+	public fun equals (Ljava/lang/Object;)Z
 	public fun getReason ()Ljava/lang/String;
+	public fun hashCode ()I
 	public final fun move (Lkotlin/Pair;)V
 	public final fun move ([Lkotlin/Pair;)V
 	public fun setReason (Ljava/lang/String;)V
@@ -2374,6 +2580,7 @@ public final class dev/kord/rest/builder/role/RolePositionsModifyBuilder : dev/k
 
 public final class dev/kord/rest/builder/scheduled_events/ScheduledEventModifyBuilder : dev/kord/rest/builder/AuditRequestBuilder {
 	public fun <init> ()V
+	public fun equals (Ljava/lang/Object;)Z
 	public final fun getChannelId ()Ldev/kord/common/entity/Snowflake;
 	public final fun getDescription ()Ljava/lang/String;
 	public final fun getEntityMetadata ()Ldev/kord/common/entity/GuildScheduledEventEntityMetadata;
@@ -2385,6 +2592,7 @@ public final class dev/kord/rest/builder/scheduled_events/ScheduledEventModifyBu
 	public final fun getScheduledEndTime ()Lkotlinx/datetime/Instant;
 	public final fun getScheduledStartTime ()Lkotlinx/datetime/Instant;
 	public final fun getStatus ()Ldev/kord/common/entity/GuildScheduledEventStatus;
+	public fun hashCode ()I
 	public final fun setChannelId (Ldev/kord/common/entity/Snowflake;)V
 	public final fun setDescription (Ljava/lang/String;)V
 	public final fun setEntityMetadata (Ldev/kord/common/entity/GuildScheduledEventEntityMetadata;)V
@@ -2402,12 +2610,14 @@ public final class dev/kord/rest/builder/scheduled_events/ScheduledEventModifyBu
 
 public final class dev/kord/rest/builder/stage/StageInstanceCreateBuilder : dev/kord/rest/builder/AuditRequestBuilder {
 	public fun <init> (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;)V
+	public fun equals (Ljava/lang/Object;)Z
 	public final fun getChannelId ()Ldev/kord/common/entity/Snowflake;
 	public final fun getGuildScheduledEventId ()Ldev/kord/common/entity/Snowflake;
 	public final fun getPrivacyLevel ()Ldev/kord/common/entity/StageInstancePrivacyLevel;
 	public fun getReason ()Ljava/lang/String;
 	public final fun getSendStartNotification ()Ljava/lang/Boolean;
 	public final fun getTopic ()Ljava/lang/String;
+	public fun hashCode ()I
 	public final fun setChannelId (Ldev/kord/common/entity/Snowflake;)V
 	public final fun setGuildScheduledEventId (Ldev/kord/common/entity/Snowflake;)V
 	public final fun setPrivacyLevel (Ldev/kord/common/entity/StageInstancePrivacyLevel;)V
@@ -2420,9 +2630,11 @@ public final class dev/kord/rest/builder/stage/StageInstanceCreateBuilder : dev/
 
 public final class dev/kord/rest/builder/stage/StageInstanceModifyBuilder : dev/kord/rest/builder/AuditRequestBuilder {
 	public fun <init> ()V
+	public fun equals (Ljava/lang/Object;)Z
 	public final fun getPrivacyLevel ()Ldev/kord/common/entity/StageInstancePrivacyLevel;
 	public fun getReason ()Ljava/lang/String;
 	public final fun getTopic ()Ljava/lang/String;
+	public fun hashCode ()I
 	public final fun setPrivacyLevel (Ldev/kord/common/entity/StageInstancePrivacyLevel;)V
 	public fun setReason (Ljava/lang/String;)V
 	public final fun setTopic (Ljava/lang/String;)V
@@ -2432,8 +2644,10 @@ public final class dev/kord/rest/builder/stage/StageInstanceModifyBuilder : dev/
 
 public final class dev/kord/rest/builder/template/GuildFromTemplateCreateBuilder : dev/kord/rest/builder/RequestBuilder {
 	public fun <init> (Ljava/lang/String;)V
+	public fun equals (Ljava/lang/Object;)Z
 	public final fun getImage ()Ldev/kord/rest/Image;
 	public final fun getName ()Ljava/lang/String;
+	public fun hashCode ()I
 	public final fun setImage (Ldev/kord/rest/Image;)V
 	public final fun setName (Ljava/lang/String;)V
 	public fun toRequest ()Ldev/kord/rest/json/request/GuildFromTemplateCreateRequest;
@@ -2442,8 +2656,10 @@ public final class dev/kord/rest/builder/template/GuildFromTemplateCreateBuilder
 
 public final class dev/kord/rest/builder/template/GuildTemplateCreateBuilder : dev/kord/rest/builder/RequestBuilder {
 	public fun <init> (Ljava/lang/String;)V
+	public fun equals (Ljava/lang/Object;)Z
 	public final fun getDescription ()Ljava/lang/String;
 	public final fun getName ()Ljava/lang/String;
+	public fun hashCode ()I
 	public final fun setDescription (Ljava/lang/String;)V
 	public final fun setName (Ljava/lang/String;)V
 	public fun toRequest ()Ldev/kord/rest/json/request/GuildTemplateCreateRequest;
@@ -2452,8 +2668,10 @@ public final class dev/kord/rest/builder/template/GuildTemplateCreateBuilder : d
 
 public final class dev/kord/rest/builder/template/GuildTemplateModifyBuilder : dev/kord/rest/builder/RequestBuilder {
 	public fun <init> ()V
+	public fun equals (Ljava/lang/Object;)Z
 	public final fun getDescription ()Ljava/lang/String;
 	public final fun getName ()Ljava/lang/String;
+	public fun hashCode ()I
 	public final fun setDescription (Ljava/lang/String;)V
 	public final fun setName (Ljava/lang/String;)V
 	public fun toRequest ()Ldev/kord/rest/json/request/GuildTemplateModifyRequest;
@@ -2462,8 +2680,10 @@ public final class dev/kord/rest/builder/template/GuildTemplateModifyBuilder : d
 
 public final class dev/kord/rest/builder/user/CurrentUserModifyBuilder : dev/kord/rest/builder/RequestBuilder {
 	public fun <init> ()V
+	public fun equals (Ljava/lang/Object;)Z
 	public final fun getAvatar ()Ldev/kord/rest/Image;
 	public final fun getUsername ()Ljava/lang/String;
+	public fun hashCode ()I
 	public final fun setAvatar (Ldev/kord/rest/Image;)V
 	public final fun setUsername (Ljava/lang/String;)V
 	public fun toRequest ()Ldev/kord/rest/json/request/CurrentUserModifyRequest;
@@ -2472,17 +2692,21 @@ public final class dev/kord/rest/builder/user/CurrentUserModifyBuilder : dev/kor
 
 public final class dev/kord/rest/builder/user/GroupDMCreateBuilder : dev/kord/rest/builder/RequestBuilder {
 	public fun <init> ()V
+	public fun equals (Ljava/lang/Object;)Z
 	public final fun getNicknames ()Ljava/util/Map;
 	public final fun getTokens ()Ljava/util/List;
+	public fun hashCode ()I
 	public fun toRequest ()Ldev/kord/rest/json/request/GroupDMCreateRequest;
 	public synthetic fun toRequest ()Ljava/lang/Object;
 }
 
 public final class dev/kord/rest/builder/webhook/WebhookCreateBuilder : dev/kord/rest/builder/AuditRequestBuilder {
 	public fun <init> (Ljava/lang/String;)V
+	public fun equals (Ljava/lang/Object;)Z
 	public final fun getAvatar ()Ldev/kord/rest/Image;
 	public final fun getName ()Ljava/lang/String;
 	public fun getReason ()Ljava/lang/String;
+	public fun hashCode ()I
 	public final fun setAvatar (Ldev/kord/rest/Image;)V
 	public final fun setName (Ljava/lang/String;)V
 	public fun setReason (Ljava/lang/String;)V
@@ -2492,10 +2716,12 @@ public final class dev/kord/rest/builder/webhook/WebhookCreateBuilder : dev/kord
 
 public final class dev/kord/rest/builder/webhook/WebhookModifyBuilder : dev/kord/rest/builder/AuditRequestBuilder {
 	public fun <init> ()V
+	public fun equals (Ljava/lang/Object;)Z
 	public final fun getAvatar ()Ldev/kord/rest/Image;
 	public final fun getChannelId ()Ldev/kord/common/entity/Snowflake;
 	public final fun getName ()Ljava/lang/String;
 	public fun getReason ()Ljava/lang/String;
+	public fun hashCode ()I
 	public final fun setAvatar (Ldev/kord/rest/Image;)V
 	public final fun setChannelId (Ldev/kord/common/entity/Snowflake;)V
 	public final fun setName (Ljava/lang/String;)V

@@ -19,4 +19,25 @@ public class StickerModifyBuilder : RequestBuilder<GuildStickerModifyRequest> {
     override fun toRequest(): GuildStickerModifyRequest {
         return GuildStickerModifyRequest(_name, _description, _tags)
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other == null || this::class != other::class) return false
+
+        other as StickerModifyBuilder
+
+        if (name != other.name) return false
+        if (description != other.description) return false
+        if (tags != other.tags) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = name?.hashCode() ?: 0
+        result = 31 * result + (description?.hashCode() ?: 0)
+        result = 31 * result + (tags?.hashCode() ?: 0)
+        return result
+    }
+
 }

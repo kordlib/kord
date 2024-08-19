@@ -61,4 +61,35 @@ public class TextInputBuilder(
             required = _required,
         )
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other == null || this::class != other::class) return false
+        if (!super.equals(other)) return false
+
+        other as TextInputBuilder
+
+        if (style != other.style) return false
+        if (customId != other.customId) return false
+        if (label != other.label) return false
+        if (allowedLength != other.allowedLength) return false
+        if (placeholder != other.placeholder) return false
+        if (value != other.value) return false
+        if (required != other.required) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = super.hashCode()
+        result = 31 * result + style.hashCode()
+        result = 31 * result + customId.hashCode()
+        result = 31 * result + label.hashCode()
+        result = 31 * result + (allowedLength?.hashCode() ?: 0)
+        result = 31 * result + (placeholder?.hashCode() ?: 0)
+        result = 31 * result + (value?.hashCode() ?: 0)
+        result = 31 * result + (required?.hashCode() ?: 0)
+        return result
+    }
+
 }

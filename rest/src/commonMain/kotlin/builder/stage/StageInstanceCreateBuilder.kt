@@ -43,4 +43,31 @@ public class StageInstanceCreateBuilder(
         _sendStartNotification,
         _guildScheduledEventId,
     )
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other == null || this::class != other::class) return false
+
+        other as StageInstanceCreateBuilder
+
+        if (channelId != other.channelId) return false
+        if (topic != other.topic) return false
+        if (reason != other.reason) return false
+        if (privacyLevel != other.privacyLevel) return false
+        if (sendStartNotification != other.sendStartNotification) return false
+        if (guildScheduledEventId != other.guildScheduledEventId) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = channelId.hashCode()
+        result = 31 * result + topic.hashCode()
+        result = 31 * result + (reason?.hashCode() ?: 0)
+        result = 31 * result + (privacyLevel?.hashCode() ?: 0)
+        result = 31 * result + (sendStartNotification?.hashCode() ?: 0)
+        result = 31 * result + (guildScheduledEventId?.hashCode() ?: 0)
+        return result
+    }
+
 }

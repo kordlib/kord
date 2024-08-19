@@ -42,4 +42,26 @@ public class IntegrationModifyBuilder : AuditRequestBuilder<GuildIntegrationModi
         _expireBehavior, _expirePeriodInDays, _enableEmoticons
     )
 
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other == null || this::class != other::class) return false
+
+        other as IntegrationModifyBuilder
+
+        if (reason != other.reason) return false
+        if (expireBehavior != other.expireBehavior) return false
+        if (expirePeriodInDays != other.expirePeriodInDays) return false
+        if (enableEmoticons != other.enableEmoticons) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = reason?.hashCode() ?: 0
+        result = 31 * result + (expireBehavior?.hashCode() ?: 0)
+        result = 31 * result + (expirePeriodInDays ?: 0)
+        result = 31 * result + (enableEmoticons?.hashCode() ?: 0)
+        return result
+    }
+
 }

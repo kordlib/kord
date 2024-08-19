@@ -51,6 +51,37 @@ public sealed class OptionsBuilder(
         _required,
         autocomplete = _autocomplete
     )
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other == null || this::class != other::class) return false
+
+        other as OptionsBuilder
+
+        if (name != other.name) return false
+        if (description != other.description) return false
+        if (type != other.type) return false
+        if (default != other.default) return false
+        if (nameLocalizations != other.nameLocalizations) return false
+        if (descriptionLocalizations != other.descriptionLocalizations) return false
+        if (required != other.required) return false
+        if (autocomplete != other.autocomplete) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = name.hashCode()
+        result = 31 * result + description.hashCode()
+        result = 31 * result + type.hashCode()
+        result = 31 * result + (default?.hashCode() ?: 0)
+        result = 31 * result + (nameLocalizations?.hashCode() ?: 0)
+        result = 31 * result + (descriptionLocalizations?.hashCode() ?: 0)
+        result = 31 * result + (required?.hashCode() ?: 0)
+        result = 31 * result + (autocomplete?.hashCode() ?: 0)
+        return result
+    }
+
 }
 
 @KordDsl
@@ -86,6 +117,23 @@ public sealed class BaseChoiceBuilder<T, C : Choice>(
         default = _default,
         autocomplete = _autocomplete,
     )
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other == null || this::class != other::class) return false
+        if (!super.equals(other)) return false
+
+        other as BaseChoiceBuilder<*, *>
+
+        return choices == other.choices
+    }
+
+    override fun hashCode(): Int {
+        var result = super.hashCode()
+        result = 31 * result + (choices?.hashCode() ?: 0)
+        return result
+    }
+
 }
 
 /**
@@ -99,6 +147,25 @@ public class ChoiceLocalizationsBuilder(override var name: String) : LocalizedNa
     @PublishedApi
     internal var _nameLocalizations: Optional<MutableMap<Locale, String>?> = Optional.Missing()
     override var nameLocalizations: MutableMap<Locale, String>? by ::_nameLocalizations.delegate()
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other == null || this::class != other::class) return false
+
+        other as ChoiceLocalizationsBuilder
+
+        if (name != other.name) return false
+        if (nameLocalizations != other.nameLocalizations) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = name.hashCode()
+        result = 31 * result + (nameLocalizations?.hashCode() ?: 0)
+        return result
+    }
+
 }
 
 /**
@@ -138,6 +205,27 @@ public sealed class NumericOptionBuilder<T : Number, C : Choice>(
         minValue = _minValue.map { JsonPrimitive(it) },
         maxValue = _maxValue.map { JsonPrimitive(it) },
     )
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other == null || this::class != other::class) return false
+        if (!super.equals(other)) return false
+
+        other as NumericOptionBuilder<*, *>
+
+        if (minValue != other.minValue) return false
+        if (maxValue != other.maxValue) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = super.hashCode()
+        result = 31 * result + (minValue?.hashCode() ?: 0)
+        result = 31 * result + (maxValue?.hashCode() ?: 0)
+        return result
+    }
+
 }
 
 @KordDsl
@@ -148,6 +236,7 @@ public class IntegerOptionBuilder(name: String, description: String) :
         if (choices == null) choices = mutableListOf()
         choices!!.add(Choice.IntegerChoice(name, nameLocalizations, value))
     }
+
 }
 
 @KordDsl
@@ -197,6 +286,27 @@ public class StringChoiceBuilder(name: String, description: String) :
         minLength = _minLength,
         maxLength = _maxLength
     )
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other == null || this::class != other::class) return false
+        if (!super.equals(other)) return false
+
+        other as StringChoiceBuilder
+
+        if (minLength != other.minLength) return false
+        if (maxLength != other.maxLength) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = super.hashCode()
+        result = 31 * result + (minLength ?: 0)
+        result = 31 * result + (maxLength ?: 0)
+        return result
+    }
+
 }
 
 @KordDsl
@@ -227,6 +337,23 @@ public class ChannelBuilder(name: String, description: String) :
         autocomplete = _autocomplete,
         channelTypes = _channelTypes
     )
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other == null || this::class != other::class) return false
+        if (!super.equals(other)) return false
+
+        other as ChannelBuilder
+
+        return channelTypes == other.channelTypes
+    }
+
+    override fun hashCode(): Int {
+        var result = super.hashCode()
+        result = 31 * result + (channelTypes?.hashCode() ?: 0)
+        return result
+    }
+
 }
 
 @KordDsl
@@ -255,6 +382,23 @@ public sealed class BaseCommandOptionBuilder(
         _descriptionLocalizations,
         options = _options.mapList { it.toRequest() }
     )
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other == null || this::class != other::class) return false
+        if (!super.equals(other)) return false
+
+        other as BaseCommandOptionBuilder
+
+        return options == other.options
+    }
+
+    override fun hashCode(): Int {
+        var result = super.hashCode()
+        result = 31 * result + (options?.hashCode() ?: 0)
+        return result
+    }
+
 }
 
 @KordDsl
