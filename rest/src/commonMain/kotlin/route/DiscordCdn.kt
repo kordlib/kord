@@ -21,7 +21,8 @@ public object DiscordCdn {
     public fun userBanner(userId: Snowflake, hash: String): CdnUrl = CdnUrl("$BASE_URL/banners/$userId/$hash")
 
     @Deprecated(
-        "Renamed to 'defaultUserAvatar' to align name with documentation and overload taking Snowflake.",
+        "Renamed to 'defaultUserAvatar' to align name with documentation and overload taking Snowflake. This " +
+            "declaration will be removed in 0.16.0.",
         ReplaceWith("DiscordCdn.defaultUserAvatar(discriminator)", imports = ["dev.kord.rest.route.DiscordCdn"]),
         DeprecationLevel.HIDDEN,
     )

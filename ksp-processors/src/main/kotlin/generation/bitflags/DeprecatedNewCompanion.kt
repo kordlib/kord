@@ -18,7 +18,8 @@ context(BitFlags, GenerationContext)
 internal fun TypeSpec.Builder.addDeprecatedNewCompanion() {
     val newCompanion = collectionCN.nestedClass("NewCompanion")
     val deprecated = Deprecated(
-        "Renamed to 'Companion'.",
+        "Renamed to 'Companion'. The deprecation level will be raised to HIDDEN in 0.16.0 and this declaration will " +
+            "be removed in 0.17.0.",
         ReplaceWith("${collectionCN.simpleName}.Companion", imports = arrayOf(collectionCN.canonicalName)),
         LEVEL,
     )

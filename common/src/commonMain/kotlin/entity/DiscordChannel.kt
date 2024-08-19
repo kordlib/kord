@@ -233,7 +233,7 @@ public sealed class ArchiveDuration(
         @Suppress("UNUSED_PARAMETER") unused: Nothing?,
     ) : ArchiveDuration(duration) {
         @Deprecated(
-            "Replaced by 'ArchiveDuration.from()'.",
+            "Replaced by 'ArchiveDuration.from()'. This declaration will be removed in 0.16.0.",
             ReplaceWith("ArchiveDuration.from(duration)", imports = ["dev.kord.common.entity.ArchiveDuration"]),
             DeprecationLevel.HIDDEN,
         )
