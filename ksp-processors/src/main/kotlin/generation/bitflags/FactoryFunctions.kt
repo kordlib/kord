@@ -34,7 +34,12 @@ internal fun FileSpec.Builder.addFactoryFunctions() {
         @OptIn(DelicateKotlinPoetApi::class)
         addFunction(factoryFunctionName + '0') {
             addAnnotation(Suppress("FunctionName"))
-            addAnnotation(Deprecated("Binary compatibility, keep for some releases.", level = DeprecationLevel.HIDDEN))
+            addAnnotation(
+                Deprecated(
+                    "Kept for binary compatibility, this declaration will be removed in 0.17.0.",
+                    level = DeprecationLevel.HIDDEN,
+                )
+            )
             addModifiers(PUBLIC, INLINE)
             addParameter("builder", type = LambdaTypeName.get(receiver = builderCN, returnType = UNIT)) {
                 defaultValue("{}")
