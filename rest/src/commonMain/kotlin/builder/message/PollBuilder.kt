@@ -1,7 +1,6 @@
 package dev.kord.rest.builder.message
 
 import dev.kord.common.annotation.KordDsl
-import dev.kord.rest.json.request.CreatablePoll
 import dev.kord.common.entity.DiscordPartialEmoji
 import dev.kord.common.entity.DiscordPoll
 import dev.kord.common.entity.PollLayoutType
@@ -10,6 +9,7 @@ import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.coerceToMissing
 import dev.kord.common.entity.optional.delegate.delegate
 import dev.kord.rest.builder.RequestBuilder
+import dev.kord.rest.json.request.CreatablePoll
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import kotlin.time.Duration
@@ -115,7 +115,7 @@ public class PollBuilder : RequestBuilder<CreatablePoll> {
     override fun toRequest(): CreatablePoll = CreatablePoll(
         question ?: error("Please set a question"),
         answers,
-        expiry ?: error("Please set an expiry"),
+        expiry,
         _allowMultiselect,
         layoutType
     )

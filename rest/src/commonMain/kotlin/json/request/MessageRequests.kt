@@ -126,7 +126,7 @@ public data class MultipartForumThreadMessageCreateRequest(
 public data class CreatablePoll(
     val question: DiscordPoll.Media,
     val answers: List<DiscordPoll.Answer>,
-    val expiry: Instant,
+    val expiry: Instant?,
     @SerialName("allow_multiselect")
     val allowMultiselect: Optional<Boolean> = Optional.Missing(),
     @SerialName("layout_type")
