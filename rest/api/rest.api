@@ -1420,18 +1420,26 @@ public final class dev/kord/rest/builder/integration/IntegrationModifyBuilder : 
 
 public abstract interface class dev/kord/rest/builder/interaction/ApplicationCommandCreateBuilder : dev/kord/rest/builder/RequestBuilder, dev/kord/rest/builder/interaction/LocalizedNameCreateBuilder {
 	public abstract fun disableCommandInGuilds ()V
+	public abstract fun getContexts ()Ljava/util/List;
 	public abstract fun getDefaultMemberPermissions ()Ldev/kord/common/entity/Permissions;
 	public abstract fun getDefaultPermission ()Ljava/lang/Boolean;
+	public abstract fun getIntegrationTypes ()Ljava/util/List;
 	public abstract fun getNsfw ()Ljava/lang/Boolean;
 	public abstract fun getType ()Ldev/kord/common/entity/ApplicationCommandType;
+	public abstract fun requireContext ([Ldev/kord/common/entity/InteractionContextType;)V
+	public abstract fun requireIntegrationTypes ([Ldev/kord/common/entity/ApplicationIntegrationType;)V
+	public abstract fun setContexts (Ljava/util/List;)V
 	public abstract fun setDefaultMemberPermissions (Ldev/kord/common/entity/Permissions;)V
 	public abstract fun setDefaultPermission (Ljava/lang/Boolean;)V
+	public abstract fun setIntegrationTypes (Ljava/util/List;)V
 	public abstract fun setNsfw (Ljava/lang/Boolean;)V
 }
 
 public final class dev/kord/rest/builder/interaction/ApplicationCommandCreateBuilder$DefaultImpls {
 	public static fun disableCommandInGuilds (Ldev/kord/rest/builder/interaction/ApplicationCommandCreateBuilder;)V
 	public static fun name (Ldev/kord/rest/builder/interaction/ApplicationCommandCreateBuilder;Ldev/kord/common/Locale;Ljava/lang/String;)V
+	public static fun requireContext (Ldev/kord/rest/builder/interaction/ApplicationCommandCreateBuilder;[Ldev/kord/common/entity/InteractionContextType;)V
+	public static fun requireIntegrationTypes (Ldev/kord/rest/builder/interaction/ApplicationCommandCreateBuilder;[Ldev/kord/common/entity/ApplicationIntegrationType;)V
 }
 
 public abstract interface class dev/kord/rest/builder/interaction/ApplicationCommandModifyBuilder : dev/kord/rest/builder/RequestBuilder, dev/kord/rest/builder/interaction/LocalizedNameModifyBuilder {
@@ -1494,28 +1502,36 @@ public final class dev/kord/rest/builder/interaction/ChatInputCreateBuilder$Defa
 	public static fun description (Ldev/kord/rest/builder/interaction/ChatInputCreateBuilder;Ldev/kord/common/Locale;Ljava/lang/String;)V
 	public static fun disableCommandInGuilds (Ldev/kord/rest/builder/interaction/ChatInputCreateBuilder;)V
 	public static fun name (Ldev/kord/rest/builder/interaction/ChatInputCreateBuilder;Ldev/kord/common/Locale;Ljava/lang/String;)V
+	public static fun requireContext (Ldev/kord/rest/builder/interaction/ChatInputCreateBuilder;[Ldev/kord/common/entity/InteractionContextType;)V
+	public static fun requireIntegrationTypes (Ldev/kord/rest/builder/interaction/ChatInputCreateBuilder;[Ldev/kord/common/entity/ApplicationIntegrationType;)V
 }
 
 public final class dev/kord/rest/builder/interaction/ChatInputCreateBuilderImpl : dev/kord/rest/builder/interaction/GlobalChatInputCreateBuilder {
 	public fun <init> (Ljava/lang/String;Ljava/lang/String;)V
 	public fun description (Ldev/kord/common/Locale;Ljava/lang/String;)V
 	public fun disableCommandInGuilds ()V
+	public fun getContexts ()Ljava/util/List;
 	public fun getDefaultMemberPermissions ()Ldev/kord/common/entity/Permissions;
 	public fun getDefaultPermission ()Ljava/lang/Boolean;
 	public fun getDescription ()Ljava/lang/String;
 	public fun getDescriptionLocalizations ()Ljava/util/Map;
 	public fun getDmPermission ()Ljava/lang/Boolean;
+	public fun getIntegrationTypes ()Ljava/util/List;
 	public fun getName ()Ljava/lang/String;
 	public fun getNameLocalizations ()Ljava/util/Map;
 	public fun getNsfw ()Ljava/lang/Boolean;
 	public fun getOptions ()Ljava/util/List;
 	public fun getType ()Ldev/kord/common/entity/ApplicationCommandType;
 	public fun name (Ldev/kord/common/Locale;Ljava/lang/String;)V
+	public fun requireContext ([Ldev/kord/common/entity/InteractionContextType;)V
+	public fun requireIntegrationTypes ([Ldev/kord/common/entity/ApplicationIntegrationType;)V
+	public fun setContexts (Ljava/util/List;)V
 	public fun setDefaultMemberPermissions (Ldev/kord/common/entity/Permissions;)V
 	public fun setDefaultPermission (Ljava/lang/Boolean;)V
 	public fun setDescription (Ljava/lang/String;)V
 	public fun setDescriptionLocalizations (Ljava/util/Map;)V
 	public fun setDmPermission (Ljava/lang/Boolean;)V
+	public fun setIntegrationTypes (Ljava/util/List;)V
 	public fun setName (Ljava/lang/String;)V
 	public fun setNameLocalizations (Ljava/util/Map;)V
 	public fun setNsfw (Ljava/lang/Boolean;)V
@@ -1577,6 +1593,8 @@ public abstract interface class dev/kord/rest/builder/interaction/GlobalApplicat
 public final class dev/kord/rest/builder/interaction/GlobalApplicationCommandCreateBuilder$DefaultImpls {
 	public static fun disableCommandInGuilds (Ldev/kord/rest/builder/interaction/GlobalApplicationCommandCreateBuilder;)V
 	public static fun name (Ldev/kord/rest/builder/interaction/GlobalApplicationCommandCreateBuilder;Ldev/kord/common/Locale;Ljava/lang/String;)V
+	public static fun requireContext (Ldev/kord/rest/builder/interaction/GlobalApplicationCommandCreateBuilder;[Ldev/kord/common/entity/InteractionContextType;)V
+	public static fun requireIntegrationTypes (Ldev/kord/rest/builder/interaction/GlobalApplicationCommandCreateBuilder;[Ldev/kord/common/entity/ApplicationIntegrationType;)V
 }
 
 public abstract interface class dev/kord/rest/builder/interaction/GlobalApplicationCommandModifyBuilder : dev/kord/rest/builder/interaction/ApplicationCommandModifyBuilder {
@@ -1595,6 +1613,8 @@ public final class dev/kord/rest/builder/interaction/GlobalChatInputCreateBuilde
 	public static fun description (Ldev/kord/rest/builder/interaction/GlobalChatInputCreateBuilder;Ldev/kord/common/Locale;Ljava/lang/String;)V
 	public static fun disableCommandInGuilds (Ldev/kord/rest/builder/interaction/GlobalChatInputCreateBuilder;)V
 	public static fun name (Ldev/kord/rest/builder/interaction/GlobalChatInputCreateBuilder;Ldev/kord/common/Locale;Ljava/lang/String;)V
+	public static fun requireContext (Ldev/kord/rest/builder/interaction/GlobalChatInputCreateBuilder;[Ldev/kord/common/entity/InteractionContextType;)V
+	public static fun requireIntegrationTypes (Ldev/kord/rest/builder/interaction/GlobalChatInputCreateBuilder;[Ldev/kord/common/entity/ApplicationIntegrationType;)V
 }
 
 public abstract interface class dev/kord/rest/builder/interaction/GlobalChatInputModifyBuilder : dev/kord/rest/builder/interaction/ChatInputModifyBuilder, dev/kord/rest/builder/interaction/GlobalApplicationCommandModifyBuilder {
@@ -1611,6 +1631,8 @@ public abstract interface class dev/kord/rest/builder/interaction/GlobalMessageC
 public final class dev/kord/rest/builder/interaction/GlobalMessageCommandCreateBuilder$DefaultImpls {
 	public static fun disableCommandInGuilds (Ldev/kord/rest/builder/interaction/GlobalMessageCommandCreateBuilder;)V
 	public static fun name (Ldev/kord/rest/builder/interaction/GlobalMessageCommandCreateBuilder;Ldev/kord/common/Locale;Ljava/lang/String;)V
+	public static fun requireContext (Ldev/kord/rest/builder/interaction/GlobalMessageCommandCreateBuilder;[Ldev/kord/common/entity/InteractionContextType;)V
+	public static fun requireIntegrationTypes (Ldev/kord/rest/builder/interaction/GlobalMessageCommandCreateBuilder;[Ldev/kord/common/entity/ApplicationIntegrationType;)V
 }
 
 public abstract interface class dev/kord/rest/builder/interaction/GlobalMessageCommandModifyBuilder : dev/kord/rest/builder/interaction/GlobalApplicationCommandModifyBuilder, dev/kord/rest/builder/interaction/MessageCommandModifyBuilder {
@@ -1636,6 +1658,8 @@ public abstract interface class dev/kord/rest/builder/interaction/GlobalUserComm
 public final class dev/kord/rest/builder/interaction/GlobalUserCommandCreateBuilder$DefaultImpls {
 	public static fun disableCommandInGuilds (Ldev/kord/rest/builder/interaction/GlobalUserCommandCreateBuilder;)V
 	public static fun name (Ldev/kord/rest/builder/interaction/GlobalUserCommandCreateBuilder;Ldev/kord/common/Locale;Ljava/lang/String;)V
+	public static fun requireContext (Ldev/kord/rest/builder/interaction/GlobalUserCommandCreateBuilder;[Ldev/kord/common/entity/InteractionContextType;)V
+	public static fun requireIntegrationTypes (Ldev/kord/rest/builder/interaction/GlobalUserCommandCreateBuilder;[Ldev/kord/common/entity/ApplicationIntegrationType;)V
 }
 
 public abstract interface class dev/kord/rest/builder/interaction/GlobalUserCommandModifyBuilder : dev/kord/rest/builder/interaction/GlobalApplicationCommandModifyBuilder, dev/kord/rest/builder/interaction/UserCommandModifyBuilder {
@@ -1759,22 +1783,30 @@ public abstract interface class dev/kord/rest/builder/interaction/MessageCommand
 public final class dev/kord/rest/builder/interaction/MessageCommandCreateBuilder$DefaultImpls {
 	public static fun disableCommandInGuilds (Ldev/kord/rest/builder/interaction/MessageCommandCreateBuilder;)V
 	public static fun name (Ldev/kord/rest/builder/interaction/MessageCommandCreateBuilder;Ldev/kord/common/Locale;Ljava/lang/String;)V
+	public static fun requireContext (Ldev/kord/rest/builder/interaction/MessageCommandCreateBuilder;[Ldev/kord/common/entity/InteractionContextType;)V
+	public static fun requireIntegrationTypes (Ldev/kord/rest/builder/interaction/MessageCommandCreateBuilder;[Ldev/kord/common/entity/ApplicationIntegrationType;)V
 }
 
 public final class dev/kord/rest/builder/interaction/MessageCommandCreateBuilderImpl : dev/kord/rest/builder/interaction/GlobalMessageCommandCreateBuilder {
 	public fun <init> (Ljava/lang/String;)V
 	public fun disableCommandInGuilds ()V
+	public fun getContexts ()Ljava/util/List;
 	public fun getDefaultMemberPermissions ()Ldev/kord/common/entity/Permissions;
 	public fun getDefaultPermission ()Ljava/lang/Boolean;
 	public fun getDmPermission ()Ljava/lang/Boolean;
+	public fun getIntegrationTypes ()Ljava/util/List;
 	public fun getName ()Ljava/lang/String;
 	public fun getNameLocalizations ()Ljava/util/Map;
 	public fun getNsfw ()Ljava/lang/Boolean;
 	public fun getType ()Ldev/kord/common/entity/ApplicationCommandType;
 	public fun name (Ldev/kord/common/Locale;Ljava/lang/String;)V
+	public fun requireContext ([Ldev/kord/common/entity/InteractionContextType;)V
+	public fun requireIntegrationTypes ([Ldev/kord/common/entity/ApplicationIntegrationType;)V
+	public fun setContexts (Ljava/util/List;)V
 	public fun setDefaultMemberPermissions (Ldev/kord/common/entity/Permissions;)V
 	public fun setDefaultPermission (Ljava/lang/Boolean;)V
 	public fun setDmPermission (Ljava/lang/Boolean;)V
+	public fun setIntegrationTypes (Ljava/util/List;)V
 	public fun setName (Ljava/lang/String;)V
 	public fun setNameLocalizations (Ljava/util/Map;)V
 	public fun setNsfw (Ljava/lang/Boolean;)V
@@ -1906,22 +1938,30 @@ public abstract interface class dev/kord/rest/builder/interaction/UserCommandCre
 public final class dev/kord/rest/builder/interaction/UserCommandCreateBuilder$DefaultImpls {
 	public static fun disableCommandInGuilds (Ldev/kord/rest/builder/interaction/UserCommandCreateBuilder;)V
 	public static fun name (Ldev/kord/rest/builder/interaction/UserCommandCreateBuilder;Ldev/kord/common/Locale;Ljava/lang/String;)V
+	public static fun requireContext (Ldev/kord/rest/builder/interaction/UserCommandCreateBuilder;[Ldev/kord/common/entity/InteractionContextType;)V
+	public static fun requireIntegrationTypes (Ldev/kord/rest/builder/interaction/UserCommandCreateBuilder;[Ldev/kord/common/entity/ApplicationIntegrationType;)V
 }
 
 public final class dev/kord/rest/builder/interaction/UserCommandCreateBuilderImpl : dev/kord/rest/builder/interaction/GlobalUserCommandCreateBuilder {
 	public fun <init> (Ljava/lang/String;)V
 	public fun disableCommandInGuilds ()V
+	public fun getContexts ()Ljava/util/List;
 	public fun getDefaultMemberPermissions ()Ldev/kord/common/entity/Permissions;
 	public fun getDefaultPermission ()Ljava/lang/Boolean;
 	public fun getDmPermission ()Ljava/lang/Boolean;
+	public fun getIntegrationTypes ()Ljava/util/List;
 	public fun getName ()Ljava/lang/String;
 	public fun getNameLocalizations ()Ljava/util/Map;
 	public fun getNsfw ()Ljava/lang/Boolean;
 	public fun getType ()Ldev/kord/common/entity/ApplicationCommandType;
 	public fun name (Ldev/kord/common/Locale;Ljava/lang/String;)V
+	public fun requireContext ([Ldev/kord/common/entity/InteractionContextType;)V
+	public fun requireIntegrationTypes ([Ldev/kord/common/entity/ApplicationIntegrationType;)V
+	public fun setContexts (Ljava/util/List;)V
 	public fun setDefaultMemberPermissions (Ldev/kord/common/entity/Permissions;)V
 	public fun setDefaultPermission (Ljava/lang/Boolean;)V
 	public fun setDmPermission (Ljava/lang/Boolean;)V
+	public fun setIntegrationTypes (Ljava/util/List;)V
 	public fun setName (Ljava/lang/String;)V
 	public fun setNameLocalizations (Ljava/util/Map;)V
 	public fun setNsfw (Ljava/lang/Boolean;)V

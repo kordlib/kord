@@ -101,6 +101,7 @@ public data class DiscordApplication(
     val botPublic: Boolean,
     @SerialName("bot_require_code_grant")
     val botRequireCodeGrant: Boolean,
+    val bot: Optional<DiscordUser> = Optional.Missing(),
     @SerialName("terms_of_service_url")
     override val termsOfServiceUrl: Optional<String> = Optional.Missing(),
     @SerialName("privacy_policy_url")
@@ -111,6 +112,7 @@ public data class DiscordApplication(
     val team: DiscordTeam?,
     @SerialName("guild_id")
     override val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
+    val guild: Optional<DiscordPartialGuild> = Optional.Missing(),
     @SerialName("primary_sku_id")
     override val primarySkuId: OptionalSnowflake = OptionalSnowflake.Missing,
     override val slug: Optional<String> = Optional.Missing(),
@@ -120,6 +122,8 @@ public data class DiscordApplication(
     override val tags: Optional<List<String>> = Optional.Missing(),
     @SerialName("install_params")
     override val installParams: Optional<InstallParams> = Optional.Missing(),
+    @SerialName("integration_types_config")
+    val integrationTypesConfig: Optional<Map<ApplicationIntegrationType, InstallParams>> = Optional.Missing(),
     @SerialName("custom_install_url")
     override val customInstallUrl: Optional<String> = Optional.Missing(),
     @SerialName("role_connections_verification_url")

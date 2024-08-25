@@ -234,9 +234,37 @@ public data class DiscordMessage(
      * This is a list even though the docs say it's a component
      */
     val components: Optional<List<DiscordComponent>> = Optional.Missing(),
+    val interactionMetadata: Optional<DiscordInteractionMetadata> = Optional.Missing(),
+    @Deprecated("Deprecated in favor of interactionMetadata", ReplaceWith("interactionMetadata"))
     val interaction: Optional<DiscordMessageInteraction> = Optional.Missing(),
     val thread: Optional<DiscordChannel> = Optional.Missing(),
     val position: OptionalInt = OptionalInt.Missing
+)
+
+/**
+ * Metadata about the interaction, including the source of the interaction and relevant server and user IDs.
+ *
+ * @property id The ID of the interaction.
+ * @property type The type of the interaction.
+ * @property user The user associated with the interaction.
+ * @property authorizingIntegrationOwners IDs for installation context(s) related to an interaction
+ * @property originalResponseMessageId ID of the original response message, present only on follow-up messages
+ * @property interactedMessageId ID of the message that contained interactive component, present only on messages created from component interactions
+ * @property triggeringInteractionMetadata 	Metadata for the interaction that was used to open the modal, present only on modal submit interactions
+ */
+@Serializable
+public data class DiscordInteractionMetadata(
+    val id: Snowflake,
+    val type: InteractionType,
+    val user: DiscordUser,
+    @SerialName("authorizing_integration_owners")
+    val authorizingIntegrationOwners: IntegrationOwners,
+    @SerialName("original_response_message_id")
+    val originalResponseMessageId: OptionalSnowflake = OptionalSnowflake.Missing,
+    @SerialName("interacted_message_id")
+    val interactedMessageId: OptionalSnowflake = OptionalSnowflake.Missing,
+    @SerialName("triggering_interaction_metadata")
+    val triggeringInteractionMetadata: Optional<DiscordInteractionMetadata> = Optional.Missing()
 )
 
 /**
@@ -370,6 +398,8 @@ public data class DiscordPartialMessage(
     val stickers: Optional<List<DiscordStickerItem>> = Optional.Missing(),
     @SerialName("referenced_message")
     val referencedMessage: Optional<DiscordMessage?> = Optional.Missing(),
+    val interactionMetadata: Optional<DiscordInteractionMetadata> = Optional.Missing(),
+    @Deprecated("Deprecated in favor of interactionMetadata")
     val interaction: Optional<DiscordMessageInteraction> = Optional.Missing(),
     val position: OptionalInt = OptionalInt.Missing,
 )

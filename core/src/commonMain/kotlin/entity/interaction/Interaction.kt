@@ -1,6 +1,8 @@
 package dev.kord.core.entity.interaction
 
 import dev.kord.common.Locale
+import dev.kord.common.entity.ApplicationIntegrationType
+import dev.kord.common.entity.InteractionContextType
 import dev.kord.common.entity.InteractionType
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.OptionalSnowflake
@@ -53,6 +55,24 @@ public sealed interface Interaction : InteractionBehavior {
      */
     public val version: Int get() = data.version
 
+    /**
+     * Map of the authorizing users id by [type][ApplicationIntegrationType].
+     *
+     * For [ApplicationIntegrationType.GuildInstall] this will be:
+     *  - the guildId, if it's on a guild
+     *  - `0` if it is from a user DM
+     *
+     * For [ApplicationIntegrationType.UserInstall] this will be:
+     * - The id of the authorizing user
+     */
+    public val authorizingIntegrationOwners: Map<ApplicationIntegrationType, Snowflake>
+        get() = data.authorizingIntegrationOwners
+
+    /**
+     * [Context][InteractionContextType] where the interaction was triggered from.
+     */
+    public val context: InteractionContextType? get() = data.context.value
+
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): Interaction
 
     public companion object {
@@ -71,6 +91,7 @@ public sealed interface Interaction : InteractionBehavior {
                     GlobalApplicationCommandInteraction(data, kord, strategy.supply(kord))
                 }
             }
+
             InteractionType.Ping, is InteractionType.Unknown -> error("Unsupported interaction type: $type")
         }
     }

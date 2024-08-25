@@ -51,12 +51,6 @@ public class Integration(
         get() = data.enabled
 
     /**
-     * Whether this integrations is syncing.
-     */
-    public val isSyncing: Boolean?
-        get() = data.syncing.value
-
-    /**
      * The id of the [guild][Guild] this integration is tied to.
      */
     public val guildId: Snowflake

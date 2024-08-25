@@ -7,6 +7,16 @@
     ],
 )
 
+@file:Generate(
+    INT_KORD_ENUM, name = "ApplicationIntegrationType",
+    docUrl = "https://discord.com/developers/docs/resources/application#application-object-application-integration-types",
+    kDoc = "Where an app can be installed, also called its supported installation contexts",
+    entries = [
+        Entry("GuildInstall", intValue = 0, kDoc = "App is installable to servers"),
+        Entry("UserInstall", intValue = 0, kDoc = "App is installable to users"),
+    ],
+)
+
 package dev.kord.common.entity
 
 import dev.kord.common.entity.optional.Optional
@@ -27,7 +37,6 @@ public data class DiscordIntegration(
     val name: String,
     val type: String,
     val enabled: Boolean,
-    val syncing: OptionalBoolean = OptionalBoolean.Missing,
     @SerialName("role_id")
     val roleId: OptionalSnowflake = OptionalSnowflake.Missing,
     @SerialName("enable_emoticons")
