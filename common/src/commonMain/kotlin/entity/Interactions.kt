@@ -137,7 +137,7 @@ public data class DiscordApplicationCommand(
     val nsfw: OptionalBoolean = OptionalBoolean.Missing,
     @SerialName("integration_types")
     val integrationTypes: Optional<List<ApplicationIntegrationType>> = Optional.Missing(),
-    val contexts: Optional<List<InteractionContextType>> = Optional.Missing(),
+    val contexts: Optional<List<InteractionContextType>?> = Optional.Missing(),
     val version: Snowflake
 )
 
