@@ -641,6 +641,37 @@ public final class dev/kord/core/behavior/MessageCommandBehavior$DefaultImpls {
 	public static fun compareTo (Ldev/kord/core/behavior/MessageCommandBehavior;Ldev/kord/core/entity/Entity;)I
 }
 
+public abstract interface class dev/kord/core/behavior/PollBehavior : dev/kord/core/behavior/MessageBehavior {
+	public abstract fun end (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun getAnswerVoters (ILkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class dev/kord/core/behavior/PollBehavior$DefaultImpls {
+	public static fun addReaction (Ldev/kord/core/behavior/PollBehavior;Ldev/kord/core/entity/GuildEmoji;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static fun addReaction (Ldev/kord/core/behavior/PollBehavior;Ldev/kord/core/entity/ReactionEmoji;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static fun asMessage (Ldev/kord/core/behavior/PollBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static fun asMessageOrNull (Ldev/kord/core/behavior/PollBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static fun compareTo (Ldev/kord/core/behavior/PollBehavior;Ldev/kord/core/entity/Entity;)I
+	public static fun delete (Ldev/kord/core/behavior/PollBehavior;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static fun delete (Ldev/kord/core/behavior/PollBehavior;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static fun deleteAllReactions (Ldev/kord/core/behavior/PollBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static fun deleteOwnReaction (Ldev/kord/core/behavior/PollBehavior;Ldev/kord/core/entity/ReactionEmoji;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static fun deleteReaction (Ldev/kord/core/behavior/PollBehavior;Ldev/kord/common/entity/Snowflake;Ldev/kord/core/entity/ReactionEmoji;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static fun deleteReaction (Ldev/kord/core/behavior/PollBehavior;Ldev/kord/core/entity/ReactionEmoji;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static fun end (Ldev/kord/core/behavior/PollBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static fun fetchMessage (Ldev/kord/core/behavior/PollBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static fun fetchMessageOrNull (Ldev/kord/core/behavior/PollBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static fun getAnswerVoters (Ldev/kord/core/behavior/PollBehavior;ILkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static fun getChannel (Ldev/kord/core/behavior/PollBehavior;)Ldev/kord/core/behavior/channel/MessageChannelBehavior;
+	public static fun getChannel (Ldev/kord/core/behavior/PollBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static fun getChannelOrNull (Ldev/kord/core/behavior/PollBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static fun getReactors (Ldev/kord/core/behavior/PollBehavior;Ldev/kord/core/entity/ReactionEmoji;)Lkotlinx/coroutines/flow/Flow;
+	public static fun pin (Ldev/kord/core/behavior/PollBehavior;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static fun publish (Ldev/kord/core/behavior/PollBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static fun unpin (Ldev/kord/core/behavior/PollBehavior;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static fun withStrategy (Ldev/kord/core/behavior/PollBehavior;Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/MessageBehavior;
+}
+
 public abstract interface class dev/kord/core/behavior/RoleBehavior : dev/kord/core/entity/KordEntity, dev/kord/core/entity/Strategizable {
 	public abstract fun asRole (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun asRoleOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -6922,7 +6953,7 @@ public final class dev/kord/core/entity/PermissionOverwriteEntity : dev/kord/cor
 	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/Strategizable;
 }
 
-public final class dev/kord/core/entity/Poll : dev/kord/core/entity/Message {
+public final class dev/kord/core/entity/Poll : dev/kord/core/behavior/PollBehavior, dev/kord/core/entity/Message {
 	public fun <init> (Ldev/kord/core/cache/data/MessageData;Ldev/kord/core/Kord;Ldev/kord/core/supplier/EntitySupplier;)V
 	public synthetic fun <init> (Ldev/kord/core/cache/data/MessageData;Ldev/kord/core/Kord;Ldev/kord/core/supplier/EntitySupplier;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun addReaction (Ldev/kord/core/entity/GuildEmoji;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -6937,10 +6968,12 @@ public final class dev/kord/core/entity/Poll : dev/kord/core/entity/Message {
 	public fun deleteOwnReaction (Ldev/kord/core/entity/ReactionEmoji;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun deleteReaction (Ldev/kord/common/entity/Snowflake;Ldev/kord/core/entity/ReactionEmoji;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun deleteReaction (Ldev/kord/core/entity/ReactionEmoji;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun end (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun equals (Ljava/lang/Object;)Z
 	public fun fetchMessage (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun fetchMessageOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getActionRows ()Ljava/util/List;
+	public fun getAnswerVoters (ILkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getApplicationId ()Ldev/kord/common/entity/Snowflake;
 	public fun getAttachments ()Ljava/util/Set;
 	public fun getAuthor ()Ldev/kord/core/entity/User;

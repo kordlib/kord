@@ -1,6 +1,7 @@
 package dev.kord.core.rest
 
 import dev.kord.common.Color
+import dev.kord.common.annotation.KordUnsafe
 import dev.kord.common.entity.*
 import dev.kord.core.Kord
 import dev.kord.core.behavior.*
@@ -21,6 +22,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.*
 import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable
 import kotlin.io.path.toPath
@@ -533,6 +535,20 @@ class RestServiceTest {
         assertTrue(privateArchive.toList().isNotEmpty())
 
 
+    }
+
+    @OptIn(KordUnsafe::class)
+    @Test
+    @Order(29)
+    fun `poll in channel`() = runTest {
+        val poll = channel.createPoll {
+            question("Is Kord great?")
+            answer("Yes")
+            answer("no")
+        }
+
+        assertEquals(emptyList(), poll.getAnswerVoters(1))
+        poll.end()
     }
 
     @Test

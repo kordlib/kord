@@ -625,6 +625,11 @@ abstract interface dev.kord.core.behavior/MessageCommandBehavior : dev.kord.core
     abstract suspend fun edit(kotlin.coroutines/SuspendFunction1<dev.kord.rest.builder.interaction/MessageCommandModifyBuilder, kotlin/Unit>): dev.kord.core.entity.application/MessageCommand // dev.kord.core.behavior/MessageCommandBehavior.edit|edit(kotlin.coroutines.SuspendFunction1<dev.kord.rest.builder.interaction.MessageCommandModifyBuilder,kotlin.Unit>){}[0]
 }
 
+abstract interface dev.kord.core.behavior/PollBehavior : dev.kord.core.behavior/MessageBehavior { // dev.kord.core.behavior/PollBehavior|null[0]
+    open suspend fun end(): dev.kord.core.entity/Poll // dev.kord.core.behavior/PollBehavior.end|end(){}[0]
+    open suspend fun getAnswerVoters(kotlin/Int): kotlin.collections/List<dev.kord.core.entity/User> // dev.kord.core.behavior/PollBehavior.getAnswerVoters|getAnswerVoters(kotlin.Int){}[0]
+}
+
 abstract interface dev.kord.core.behavior/RoleBehavior : dev.kord.core.entity/KordEntity, dev.kord.core.entity/Strategizable { // dev.kord.core.behavior/RoleBehavior|null[0]
     abstract val guildId // dev.kord.core.behavior/RoleBehavior.guildId|{}guildId[0]
         abstract fun <get-guildId>(): dev.kord.common.entity/Snowflake // dev.kord.core.behavior/RoleBehavior.guildId.<get-guildId>|<get-guildId>(){}[0]
@@ -8081,7 +8086,7 @@ final class dev.kord.core.entity/PermissionOverwriteEntity : dev.kord.core.entit
     final suspend fun getGuildOrNull(): dev.kord.core.entity/Guild? // dev.kord.core.entity/PermissionOverwriteEntity.getGuildOrNull|getGuildOrNull(){}[0]
 }
 
-final class dev.kord.core.entity/Poll : dev.kord.core.entity/Message { // dev.kord.core.entity/Poll|null[0]
+final class dev.kord.core.entity/Poll : dev.kord.core.behavior/PollBehavior, dev.kord.core.entity/Message { // dev.kord.core.entity/Poll|null[0]
     constructor <init>(dev.kord.core.cache.data/MessageData, dev.kord.core/Kord, dev.kord.core.supplier/EntitySupplier = ...) // dev.kord.core.entity/Poll.<init>|<init>(dev.kord.core.cache.data.MessageData;dev.kord.core.Kord;dev.kord.core.supplier.EntitySupplier){}[0]
 
     final val data // dev.kord.core.entity/Poll.data|{}data[0]

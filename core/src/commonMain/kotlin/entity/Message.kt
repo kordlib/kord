@@ -6,6 +6,7 @@ import dev.kord.common.entity.optional.*
 import dev.kord.common.exception.RequestException
 import dev.kord.core.Kord
 import dev.kord.core.behavior.MessageBehavior
+import dev.kord.core.behavior.PollBehavior
 import dev.kord.core.behavior.UserBehavior
 import dev.kord.core.behavior.channel.ChannelBehavior
 import dev.kord.core.behavior.interaction.response.InteractionResponseBehavior
@@ -369,7 +370,7 @@ public class Poll(
     override val data: MessageData,
     override val kord: Kord,
     override val supplier: EntitySupplier = kord.defaultSupplier,
-) : Message {
+) : Message, PollBehavior {
     /**
      * The [poll][DiscordPoll].
      */
