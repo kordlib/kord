@@ -54,5 +54,6 @@
   "application_id": "297153970613387264",
   "app_permissions": "2147483647",
   "locale": "de",
-  "guild_locale": "en-US"
+  "guild_locale": "en-US",
+  "authorizing_integration_owners": {"0":  "0"}
 }

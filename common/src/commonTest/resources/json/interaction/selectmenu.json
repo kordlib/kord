@@ -122,5 +122,6 @@
   },
   "token": "UNIQUE_TOKEN",
   "type": 3,
-  "version": 1
+  "version": 1,
+  "authorizing_integration_owners": {"0":  "0"}
 }
