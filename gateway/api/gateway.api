@@ -1436,13 +1436,13 @@ public final class dev/kord/gateway/MessagePollEventData {
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class dev/kord/gateway/MessagePollEventData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+public synthetic class dev/kord/gateway/MessagePollEventData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/gateway/MessagePollEventData$$serializer;
-	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
-	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/gateway/MessagePollEventData;
+	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/gateway/MessagePollEventData;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
-	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/gateway/MessagePollEventData;)V
+	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/gateway/MessagePollEventData;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
 	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }

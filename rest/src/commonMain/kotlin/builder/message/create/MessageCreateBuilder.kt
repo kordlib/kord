@@ -1,6 +1,7 @@
 package dev.kord.rest.builder.message.create
 
 import dev.kord.common.annotation.KordDsl
+import dev.kord.common.annotation.KordUnsafe
 import dev.kord.rest.json.request.CreatablePoll
 import dev.kord.common.entity.DiscordPoll
 import dev.kord.common.entity.MessageFlag

@@ -5313,13 +5313,13 @@ public final class dev/kord/common/entity/DiscordPoll {
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class dev/kord/common/entity/DiscordPoll$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+public synthetic class dev/kord/common/entity/DiscordPoll$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/common/entity/DiscordPoll$$serializer;
-	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
-	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/common/entity/DiscordPoll;
+	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/common/entity/DiscordPoll;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
-	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/common/entity/DiscordPoll;)V
+	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/common/entity/DiscordPoll;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
 	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
@@ -5338,13 +5338,13 @@ public final class dev/kord/common/entity/DiscordPoll$Answer {
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class dev/kord/common/entity/DiscordPoll$Answer$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+public synthetic class dev/kord/common/entity/DiscordPoll$Answer$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/common/entity/DiscordPoll$Answer$$serializer;
-	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
-	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/common/entity/DiscordPoll$Answer;
+	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/common/entity/DiscordPoll$Answer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
-	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/common/entity/DiscordPoll$Answer;)V
+	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/common/entity/DiscordPoll$Answer;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
 	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
@@ -5373,13 +5373,13 @@ public final class dev/kord/common/entity/DiscordPoll$Media {
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class dev/kord/common/entity/DiscordPoll$Media$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+public synthetic class dev/kord/common/entity/DiscordPoll$Media$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/common/entity/DiscordPoll$Media$$serializer;
-	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
-	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/common/entity/DiscordPoll$Media;
+	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/common/entity/DiscordPoll$Media;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
-	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/common/entity/DiscordPoll$Media;)V
+	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/common/entity/DiscordPoll$Media;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
 	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
@@ -5402,13 +5402,13 @@ public final class dev/kord/common/entity/DiscordPoll$Results {
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class dev/kord/common/entity/DiscordPoll$Results$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+public synthetic class dev/kord/common/entity/DiscordPoll$Results$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/common/entity/DiscordPoll$Results$$serializer;
-	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
-	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/common/entity/DiscordPoll$Results;
+	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/common/entity/DiscordPoll$Results;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
-	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/common/entity/DiscordPoll$Results;)V
+	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/common/entity/DiscordPoll$Results;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
 	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
@@ -5429,13 +5429,13 @@ public final class dev/kord/common/entity/DiscordPoll$Results$AnswerCount {
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class dev/kord/common/entity/DiscordPoll$Results$AnswerCount$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+public synthetic class dev/kord/common/entity/DiscordPoll$Results$AnswerCount$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/common/entity/DiscordPoll$Results$AnswerCount$$serializer;
-	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
-	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/common/entity/DiscordPoll$Results$AnswerCount;
+	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/common/entity/DiscordPoll$Results$AnswerCount;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
-	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/common/entity/DiscordPoll$Results$AnswerCount;)V
+	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/common/entity/DiscordPoll$Results$AnswerCount;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
 	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }

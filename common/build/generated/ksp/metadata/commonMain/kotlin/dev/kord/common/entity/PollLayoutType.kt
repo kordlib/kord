@@ -69,7 +69,6 @@ public sealed class PollLayoutType(
             )
         }
 
-
         /**
          * Returns an instance of [PollLayoutType] with [PollLayoutType.value] equal to the
          * specified [value].

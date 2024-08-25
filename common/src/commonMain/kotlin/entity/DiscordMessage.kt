@@ -715,7 +715,7 @@ public data class RoleSubscription(
 public data class DiscordPoll(
     val question: Media,
     val answers: List<Answer>,
-    val expiry: Instant,
+    val expiry: Instant?,
     @SerialName("allow_multiselect")
     val allowMultiselect: Boolean,
     @SerialName("layout_type")
