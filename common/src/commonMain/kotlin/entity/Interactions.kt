@@ -266,7 +266,7 @@ public data class DiscordInteraction(
     val data: InteractionCallbackData,
     @SerialName("guild_id")
     val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
-    val guild: Optional<DiscordGuild> = Optional.Missing(),
+    val guild: Optional<Guild> = Optional.Missing(),
     val channel: Optional<DiscordChannel> = Optional.Missing(),
     @SerialName("channel_id")
     val channelId: OptionalSnowflake = OptionalSnowflake.Missing,
@@ -285,6 +285,9 @@ public data class DiscordInteraction(
     val authorizingIntegrationOwners: IntegrationOwners,
     val context: Optional<InteractionContextType> = Optional.Missing()
 ) {
+
+    @Serializable
+    public data class Guild(val locale: Locale, val id: Snowflake, val features: List<GuildFeature>)
 
     /**
      * Serializer that handles incomplete messages in [DiscordInteraction.message]. Discards
