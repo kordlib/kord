@@ -13,7 +13,7 @@
     kDoc = "Where an app can be installed, also called its supported installation contexts",
     entries = [
         Entry("GuildInstall", intValue = 0, kDoc = "App is installable to servers"),
-        Entry("UserInstall", intValue = 0, kDoc = "App is installable to users"),
+        Entry("UserInstall", intValue = 1, kDoc = "App is installable to users"),
     ],
 )
 
