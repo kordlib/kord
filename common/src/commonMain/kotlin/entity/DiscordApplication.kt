@@ -57,6 +57,7 @@
 package dev.kord.common.entity
 
 import dev.kord.common.entity.optional.Optional
+import dev.kord.common.entity.optional.OptionalInt
 import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.ksp.Generate
 import dev.kord.ksp.Generate.EntityType.INT_FLAGS
@@ -119,6 +120,10 @@ public data class DiscordApplication(
     @SerialName("cover_image")
     override val coverImage: Optional<String> = Optional.Missing(),
     override val flags: Optional<ApplicationFlags> = Optional.Missing(),
+    @SerialName("approximate_guild_count")
+    val approximateGuildCount: OptionalInt = OptionalInt.Missing,
+    @SerialName("approximate_user_install_count")
+    val approximateUserInstallCount: OptionalInt = OptionalInt.Missing,
     override val tags: Optional<List<String>> = Optional.Missing(),
     @SerialName("install_params")
     override val installParams: Optional<InstallParams> = Optional.Missing(),
