@@ -48,20 +48,16 @@ public class StandardEmoji(override val name: String) : Emoji {
 }
 
 /**
- * An instance of an [emoji](https://discord.com/developers/docs/resources/emoji#emoji-object) belonging to a specific
- * [Guild].
+ * Superclass for all non standard emojis.
+ *
+ * @see GuildEmoji
+ * @see ApplicationEmoji
  */
-public class GuildEmoji(
-    public val data: EmojiData,
-    override val kord: Kord,
-    override val supplier: EntitySupplier = kord.defaultSupplier
-) : Emoji, KordEntity, Strategizable {
+public sealed class CustomEmoji : Emoji, KordEntity, Strategizable {
+    public abstract val data: EmojiData
 
     override val id: Snowflake
         get() = data.id
-
-    public val guildId: Snowflake
-        get() = data.guildId
 
     override val mention: String
         get() = if (isAnimated) "<a:$name:$id>" else "<:$name:$id>"
@@ -93,16 +89,55 @@ public class GuildEmoji(
      */
     public val requiresColons: Boolean get() = data.requireColons.discordBoolean
 
+
+    /**
+     * The id of the [User] who created the emote, if present.
+     */
+    public val userId: Snowflake? get() = data.userId.value
+
+    /**
+     * The [User] who created the emote, if present.
+     */
+    public val user: UserBehavior? get() = userId?.let { UserBehavior(it, kord) }
+
+    /** The image of this emoji as an [Asset]. */
+    public val image: Asset get() = Asset.emoji(id, isAnimated, kord)
+
+
+    /**
+     * Requests to delete this emoji, with the given [reason].
+     *
+     * @param reason the reason showing up in the audit log
+     * @throws RequestException if anything went wrong during the request.
+     */
+    public abstract suspend fun delete(reason: String? = null)
+
+    /**
+     * Requests to get the creator of the emoji as a [User],
+     * returns null if the [User] isn't present or [userId] is null.
+     *
+     * @throws [RequestException] if anything went wrong during the request.
+     */
+    public suspend fun getUser(): User? = userId?.let { supplier.getUserOrNull(it) }
+}
+
+/**
+ * An instance of an [emoji](https://discord.com/developers/docs/resources/emoji#emoji-object) belonging to a specific
+ * [Guild].
+ */
+public class GuildEmoji(
+    override val data: EmojiData,
+    override val kord: Kord,
+    override val supplier: EntitySupplier = kord.defaultSupplier
+) : CustomEmoji() {
+
+    public val guildId: Snowflake
+        get() = data.guildId
+
     /**
      * The ids of the [roles][Role] for which this emoji was whitelisted.
      */
     public val roleIds: Set<Snowflake> get() = data.roles.orEmpty().toSet()
-
-    /**
-     * The behaviors of the [roles][Role] for which this emoji was whitelisted.
-     */
-    public val roleBehaviors: Set<RoleBehavior>
-        get() = data.roles.orEmpty().map { roleId -> RoleBehavior(guildId = guildId, id = roleId, kord = kord) }.toSet()
 
     /**
      * The [roles][Role] for which this emoji was whitelisted.
@@ -118,22 +153,15 @@ public class GuildEmoji(
         else supplier.getGuildRoles(guildId).filter { it.id in roleIds }
 
     /**
+     * The behaviors of the [roles][Role] for which this emoji was whitelisted.
+     */
+    public val roleBehaviors: Set<RoleBehavior>
+        get() = data.roles.orEmpty().map { roleId -> RoleBehavior(guildId = guildId, id = roleId, kord = kord) }.toSet()
+
+    /**
      * The behavior of the [Member] who created the emote, if present.
      */
     public val member: MemberBehavior? get() = userId?.let { MemberBehavior(guildId, it, kord) }
-
-    /**
-     * The id of the [User] who created the emote, if present.
-     */
-    public val userId: Snowflake? get() = data.userId.value
-
-    /**
-     * The [User] who created the emote, if present.
-     */
-    public val user: UserBehavior? get() = userId?.let { UserBehavior(it, kord) }
-
-    /** The image of this emoji as an [Asset]. */
-    public val image: Asset get() = Asset.emoji(id, isAnimated, kord)
 
     /**
      * Requests to delete this emoji, with the given [reason].
@@ -141,7 +169,7 @@ public class GuildEmoji(
      * @param reason the reason showing up in the audit log
      * @throws RequestException if anything went wrong during the request.
      */
-    public suspend fun delete(reason: String? = null) {
+    public override suspend fun delete(reason: String?) {
         kord.rest.emoji.deleteEmoji(guildId = guildId, emojiId = id, reason = reason)
     }
 
@@ -165,13 +193,6 @@ public class GuildEmoji(
      */
     public suspend fun getMember(): Member? = userId?.let { supplier.getMemberOrNull(guildId = guildId, userId = it) }
 
-    /**
-     * Requests to get the creator of the emoji as a [User],
-     * returns null if the [User] isn't present or [userId] is null.
-     *
-     * @throws [RequestException] if anything went wrong during the request.
-     */
-    public suspend fun getUser(): User? = userId?.let { supplier.getUserOrNull(it) }
 
     /**
      * Returns a new [GuildEmoji] with the given [strategy].
@@ -188,5 +209,55 @@ public class GuildEmoji(
     override fun toString(): String {
         return "GuildEmoji(data=$data, kord=$kord, supplier=$supplier)"
     }
+}
 
+/**
+ * An instance of an [emoji](https://discord.com/developers/docs/resources/emoji#emoji-object) belonging to a specific
+ * [Application].
+ */
+public class ApplicationEmoji(
+    override val data: EmojiData,
+    override val kord: Kord,
+    override val supplier: EntitySupplier = kord.defaultSupplier
+) : CustomEmoji() {
+    public val applicationId: Snowflake
+        get() = kord.selfId
+
+    /**
+     * Requests to delete this emoji, with the given [reason].
+     *
+     * @param reason the reason showing up in the audit log
+     * @throws RequestException if anything went wrong during the request.
+     */
+    public override suspend fun delete(reason: String?) {
+        kord.rest.application.deleteApplicationEmoji(appId = applicationId, emojiId = id, reason = reason)
+    }
+
+    /**
+     *  Requests to edit the emoji.
+     *
+     *  @throws [RequestException] if anything went wrong during the request.
+     */
+    public suspend inline fun edit(builder: EmojiModifyBuilder.() -> Unit) {
+        contract {
+            callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+        }
+        kord.rest.application.modifyApplicationEmoji(appId = applicationId, emojiId = id, builder = builder)
+    }
+
+    /**
+     * Returns a new [ApplicationEmoji] with the given [strategy].
+     */
+    override fun withStrategy(strategy: EntitySupplyStrategy<*>): ApplicationEmoji = ApplicationEmoji(data, kord, strategy.supply(kord))
+
+    override fun hashCode(): Int = hash(id, applicationId)
+
+    override fun equals(other: Any?): Boolean = when (other) {
+        is ApplicationEmoji -> other.id == id && other.applicationId == applicationId
+        else -> super.equals(other)
+    }
+
+    override fun toString(): String {
+        return "ApplicationEmoji(data=$data, kord=$kord, supplier=$supplier)"
+    }
 }
