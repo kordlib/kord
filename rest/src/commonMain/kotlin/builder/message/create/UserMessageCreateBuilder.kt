@@ -77,7 +77,7 @@ public class UserMessageCreateBuilder : AbstractMessageCreateBuilder(), RequestB
             stickerIds = _stickerIds.mapCopy(),
             attachments = _attachments.mapList { it.toRequest() },
             flags = buildMessageFlags(flags, suppressEmbeds, suppressNotifications),
-            enforceNonce = _enforeceNonce,
+            enforceNonce = _enforceNonce,
         ),
         files = files.toList(),
     )
