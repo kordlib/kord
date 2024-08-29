@@ -140,7 +140,10 @@ public suspend inline fun Gateway.start(token: String, config: GatewayConfigurat
 }
 
 @Suppress("unused")
-@Deprecated("Binary compatibility, remove after deprecation cycle.", level = DeprecationLevel.HIDDEN)
+@Deprecated(
+    "Kept for binary compatibility, this declaration will be removed in 0.16.0.",
+    level = DeprecationLevel.HIDDEN,
+)
 @PublishedApi
 internal val gatewayOnLogger: mu.KLogger = mu.KotlinLogging.logger("Gateway.on")
 
