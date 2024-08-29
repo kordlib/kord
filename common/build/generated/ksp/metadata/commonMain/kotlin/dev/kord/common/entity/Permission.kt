@@ -549,7 +549,7 @@ public class Permissions internal constructor(
 
     @Deprecated(
         level = DeprecationLevel.HIDDEN,
-        message = "Binary compatibility, keep for some releases.",
+        message = "Kept for binary compatibility, this declaration will be removed in 0.17.0.",
     )
     public inline fun copy0(builder: Builder.() -> Unit): Permissions {
         contract { callsInPlace(builder, EXACTLY_ONCE) }
@@ -620,7 +620,8 @@ public class Permissions internal constructor(
         @Suppress(names = arrayOf("DEPRECATION_ERROR"))
         @Deprecated(
             level = DeprecationLevel.ERROR,
-            message = "Renamed to 'Companion'.",
+            message =
+                    "Renamed to 'Companion'. The deprecation level will be raised to HIDDEN in 0.16.0 and this declaration will be removed in 0.17.0.",
             replaceWith = ReplaceWith(expression = "Permissions.Companion", imports =
                         arrayOf("dev.kord.common.entity.Permissions")),
         )
@@ -630,7 +631,8 @@ public class Permissions internal constructor(
 
     @Deprecated(
         level = DeprecationLevel.ERROR,
-        message = "Renamed to 'Companion'.",
+        message =
+                "Renamed to 'Companion'. The deprecation level will be raised to HIDDEN in 0.16.0 and this declaration will be removed in 0.17.0.",
         replaceWith = ReplaceWith(expression = "Permissions.Companion", imports =
                     arrayOf("dev.kord.common.entity.Permissions")),
     )
@@ -650,7 +652,7 @@ public inline fun Permissions(builder: Permissions.Builder.() -> Unit = {}): Per
 @Suppress(names = arrayOf("FunctionName"))
 @Deprecated(
     level = DeprecationLevel.HIDDEN,
-    message = "Binary compatibility, keep for some releases.",
+    message = "Kept for binary compatibility, this declaration will be removed in 0.17.0.",
 )
 public inline fun Permissions0(builder: Permissions.Builder.() -> Unit = {}): Permissions {
     contract { callsInPlace(builder, EXACTLY_ONCE) }

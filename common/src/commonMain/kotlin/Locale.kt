@@ -237,7 +237,7 @@ public data class Locale(val language: String, val country: String? = null) {
     }
 
     @Deprecated(
-        "Replaced by 'Locale.serializer()'.",
+        "Replaced by 'Locale.serializer()'. This declaration will be removed in 0.16.0.",
         ReplaceWith("Locale.serializer()", imports = ["dev.kord.common.Locale"]),
         DeprecationLevel.HIDDEN,
     )

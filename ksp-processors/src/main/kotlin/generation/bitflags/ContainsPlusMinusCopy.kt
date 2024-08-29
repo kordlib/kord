@@ -83,7 +83,12 @@ internal fun TypeSpec.Builder.addCopy() = addFunction("copy") {
 context(BitFlags, GenerationContext)
 internal fun TypeSpec.Builder.addCopy0() = addFunction("copy0") {
     @OptIn(DelicateKotlinPoetApi::class)
-    addAnnotation(Deprecated("Binary compatibility, keep for some releases.", level = DeprecationLevel.HIDDEN))
+    addAnnotation(
+        Deprecated(
+            "Kept for binary compatibility, this declaration will be removed in 0.17.0.",
+            level = DeprecationLevel.HIDDEN,
+        )
+    )
     addModifiers(PUBLIC, INLINE)
     addParameter("builder", type = LambdaTypeName.get(receiver = builderCN, returnType = UNIT))
     returns(collectionCN)

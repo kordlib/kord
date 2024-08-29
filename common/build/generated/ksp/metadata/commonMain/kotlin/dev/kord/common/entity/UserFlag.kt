@@ -315,7 +315,7 @@ public class UserFlags internal constructor(
 
     @Deprecated(
         level = DeprecationLevel.HIDDEN,
-        message = "Binary compatibility, keep for some releases.",
+        message = "Kept for binary compatibility, this declaration will be removed in 0.17.0.",
     )
     public inline fun copy0(builder: Builder.() -> Unit): UserFlags {
         contract { callsInPlace(builder, EXACTLY_ONCE) }
