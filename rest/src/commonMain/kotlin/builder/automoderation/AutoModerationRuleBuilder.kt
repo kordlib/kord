@@ -66,15 +66,6 @@ public sealed interface AutoModerationRuleBuilder : AuditBuilder {
     public var exemptChannels: MutableList<Snowflake>?
 }
 
-/** Add a [BlockMessage] action which will execute whenever the rule is triggered. */
-public inline fun AutoModerationRuleBuilder.blockMessage(
-    builder: BlockMessageAutoModerationActionBuilder.() -> Unit = {},
-) {
-    contract { callsInPlace(builder, EXACTLY_ONCE) }
-    val action = BlockMessageAutoModerationActionBuilder().apply(builder)
-    actions?.add(action) ?: assignActions(mutableListOf(action))
-}
-
 /**
  * Add a [SendAlertMessage] action which will execute whenever the rule is triggered.
  *
@@ -109,6 +100,22 @@ public sealed interface TypedAutoModerationRuleBuilder : AutoModerationRuleBuild
 }
 
 
+// -------- interfaces for supported actions shared between rule types --------
+
+/** An [AutoModerationRuleBuilder] for building rules that can have a [BlockMessage] action. */
+@KordDsl
+public sealed interface BlockMessageAutoModerationRuleBuilder : TypedAutoModerationRuleBuilder
+
+/** Add a [BlockMessage] action which will execute whenever the rule is triggered. */
+public inline fun BlockMessageAutoModerationRuleBuilder.blockMessage(
+    builder: BlockMessageAutoModerationActionBuilder.() -> Unit = {},
+) {
+    contract { callsInPlace(builder, EXACTLY_ONCE) }
+    val action = BlockMessageAutoModerationActionBuilder().apply(builder)
+    actions?.add(action) ?: assignActions(mutableListOf(action))
+}
+
+
 /** An [AutoModerationRuleBuilder] for building rules that can have a [Timeout] action. */
 @KordDsl
 public sealed interface TimeoutAutoModerationRuleBuilder : TypedAutoModerationRuleBuilder
@@ -127,6 +134,83 @@ public inline fun TimeoutAutoModerationRuleBuilder.timeout(
     contract { callsInPlace(builder, EXACTLY_ONCE) }
     val action = TimeoutAutoModerationActionBuilder(duration).apply(builder)
     actions?.add(action) ?: assignActions(mutableListOf(action))
+}
+
+
+// -------- interfaces for supported options shared between rule types --------
+
+/** An [AutoModerationRuleBuilder] for building rules that can have [keywords] and [regexPatterns]. */
+@KordDsl
+public sealed interface FilteredKeywordsAutoModerationRuleBuilder : TypedAutoModerationRuleBuilder {
+
+    /**
+     * Substrings which will be searched for in content (maximum of 1000).
+     *
+     * A keyword can be a phrase which contains multiple words.
+     * [Wildcard symbols](https://discord.com/developers/docs/resources/auto-moderation#auto-moderation-rule-object-keyword-matching-strategies)
+     * can be used to customize how each keyword will be matched. Each keyword must be 60 characters or less.
+     */
+    public var keywords: MutableList<String>?
+
+    /**
+     * Regular expression patterns which will be matched against content (maximum of 10).
+     *
+     * Only Rust flavored regex is currently supported. Each regex pattern must be 260 characters or less.
+     */
+    public var regexPatterns: MutableList<String>?
+}
+
+/**
+ * Add a [keyword] to [keywords][FilteredKeywordsAutoModerationRuleBuilder.keywords] (maximum of 1000).
+ *
+ * A keyword can be a phrase which contains multiple words.
+ * [Wildcard symbols](https://discord.com/developers/docs/resources/auto-moderation#auto-moderation-rule-object-keyword-matching-strategies)
+ * can be used to customize how each keyword will be matched. Each keyword must be 60 characters or less.
+ */
+public fun FilteredKeywordsAutoModerationRuleBuilder.keyword(keyword: String) {
+    keywords?.add(keyword) ?: run { keywords = mutableListOf(keyword) }
+}
+
+/**
+ * Add a [keyword] with keyword matching strategy
+ * [Prefix](https://discord.com/developers/docs/resources/auto-moderation#auto-moderation-rule-object-keyword-matching-strategies)
+ * to [keywords][FilteredKeywordsAutoModerationRuleBuilder.keywords] (maximum of 1000).
+ *
+ * A keyword can be a phrase which contains multiple words. Each keyword must be 60 characters or less.
+ */
+public fun FilteredKeywordsAutoModerationRuleBuilder.prefixKeyword(keyword: String) {
+    keyword("$keyword*")
+}
+
+/**
+ * Add a [keyword] with keyword matching strategy
+ * [Suffix](https://discord.com/developers/docs/resources/auto-moderation#auto-moderation-rule-object-keyword-matching-strategies)
+ * to [keywords][FilteredKeywordsAutoModerationRuleBuilder.keywords] (maximum of 1000).
+ *
+ * A keyword can be a phrase which contains multiple words. Each keyword must be 60 characters or less.
+ */
+public fun FilteredKeywordsAutoModerationRuleBuilder.suffixKeyword(keyword: String) {
+    keyword("*$keyword")
+}
+
+/**
+ * Add a [keyword] with keyword matching strategy
+ * [Anywhere](https://discord.com/developers/docs/resources/auto-moderation#auto-moderation-rule-object-keyword-matching-strategies)
+ * to [keywords][FilteredKeywordsAutoModerationRuleBuilder.keywords] (maximum of 1000).
+ *
+ * A keyword can be a phrase which contains multiple words. Each keyword must be 60 characters or less.
+ */
+public fun FilteredKeywordsAutoModerationRuleBuilder.anywhereKeyword(keyword: String) {
+    keyword("*$keyword*")
+}
+
+/**
+ * Add a [pattern] to [regexPatterns][FilteredKeywordsAutoModerationRuleBuilder.regexPatterns] (maximum of 10).
+ *
+ * Only Rust flavored regex is currently supported. Each regex pattern must be 260 characters or less.
+ */
+public fun FilteredKeywordsAutoModerationRuleBuilder.regexPattern(pattern: String) {
+    regexPatterns?.add(pattern) ?: run { regexPatterns = mutableListOf(pattern) }
 }
 
 
@@ -189,95 +273,32 @@ public fun AllowedKeywordsAutoModerationRuleBuilder.allowAnywhereKeyword(keyword
 }
 
 
+// -------- builders for concrete rule types --------
+
 /** An [AutoModerationRuleBuilder] for building rules with trigger type [Keyword]. */
 @KordDsl
 public sealed interface KeywordAutoModerationRuleBuilder :
+    BlockMessageAutoModerationRuleBuilder,
     TimeoutAutoModerationRuleBuilder,
+    FilteredKeywordsAutoModerationRuleBuilder,
     AllowedKeywordsAutoModerationRuleBuilder {
 
     override val triggerType: Keyword get() = Keyword
-
-    /**
-     * Substrings which will be searched for in content (maximum of 1000).
-     *
-     * A keyword can be a phrase which contains multiple words.
-     * [Wildcard symbols](https://discord.com/developers/docs/resources/auto-moderation#auto-moderation-rule-object-keyword-matching-strategies)
-     * can be used to customize how each keyword will be matched. Each keyword must be 60 characters or less.
-     */
-    public var keywords: MutableList<String>?
-
-    /**
-     * Regular expression patterns which will be matched against content (maximum of 10).
-     *
-     * Only Rust flavored regex is currently supported. Each regex pattern must be 260 characters or less.
-     */
-    public var regexPatterns: MutableList<String>?
-}
-
-/**
- * Add a [keyword] to [keywords][KeywordAutoModerationRuleBuilder.keywords] (maximum of 1000).
- *
- * A keyword can be a phrase which contains multiple words.
- * [Wildcard symbols](https://discord.com/developers/docs/resources/auto-moderation#auto-moderation-rule-object-keyword-matching-strategies)
- * can be used to customize how each keyword will be matched. Each keyword must be 60 characters or less.
- */
-public fun KeywordAutoModerationRuleBuilder.keyword(keyword: String) {
-    keywords?.add(keyword) ?: run { keywords = mutableListOf(keyword) }
-}
-
-/**
- * Add a [keyword] with keyword matching strategy
- * [Prefix](https://discord.com/developers/docs/resources/auto-moderation#auto-moderation-rule-object-keyword-matching-strategies)
- * to [keywords][KeywordAutoModerationRuleBuilder.keywords] (maximum of 1000).
- *
- * A keyword can be a phrase which contains multiple words. Each keyword must be 60 characters or less.
- */
-public fun KeywordAutoModerationRuleBuilder.prefixKeyword(keyword: String) {
-    keyword("$keyword*")
-}
-
-/**
- * Add a [keyword] with keyword matching strategy
- * [Suffix](https://discord.com/developers/docs/resources/auto-moderation#auto-moderation-rule-object-keyword-matching-strategies)
- * to [keywords][KeywordAutoModerationRuleBuilder.keywords] (maximum of 1000).
- *
- * A keyword can be a phrase which contains multiple words. Each keyword must be 60 characters or less.
- */
-public fun KeywordAutoModerationRuleBuilder.suffixKeyword(keyword: String) {
-    keyword("*$keyword")
-}
-
-/**
- * Add a [keyword] with keyword matching strategy
- * [Anywhere](https://discord.com/developers/docs/resources/auto-moderation#auto-moderation-rule-object-keyword-matching-strategies)
- * to [keywords][KeywordAutoModerationRuleBuilder.keywords] (maximum of 1000).
- *
- * A keyword can be a phrase which contains multiple words. Each keyword must be 60 characters or less.
- */
-public fun KeywordAutoModerationRuleBuilder.anywhereKeyword(keyword: String) {
-    keyword("*$keyword*")
-}
-
-/**
- * Add a [pattern] to [regexPatterns][KeywordAutoModerationRuleBuilder.regexPatterns] (maximum of 10).
- *
- * Only Rust flavored regex is currently supported. Each regex pattern must be 260 characters or less.
- */
-public fun KeywordAutoModerationRuleBuilder.regexPattern(pattern: String) {
-    regexPatterns?.add(pattern) ?: run { regexPatterns = mutableListOf(pattern) }
 }
 
 
 /** An [AutoModerationRuleBuilder] for building rules with trigger type [Spam]. */
 @KordDsl
-public sealed interface SpamAutoModerationRuleBuilder : TypedAutoModerationRuleBuilder {
+public sealed interface SpamAutoModerationRuleBuilder : BlockMessageAutoModerationRuleBuilder {
     override val triggerType: Spam get() = Spam
 }
 
 
 /** An [AutoModerationRuleBuilder] for building rules with trigger type [KeywordPreset]. */
 @KordDsl
-public sealed interface KeywordPresetAutoModerationRuleBuilder : AllowedKeywordsAutoModerationRuleBuilder {
+public sealed interface KeywordPresetAutoModerationRuleBuilder :
+    BlockMessageAutoModerationRuleBuilder,
+    AllowedKeywordsAutoModerationRuleBuilder {
 
     override val triggerType: KeywordPreset get() = KeywordPreset
 
@@ -299,7 +320,9 @@ public fun KeywordPresetAutoModerationRuleBuilder.preset(preset: AutoModerationR
 
 /** An [AutoModerationRuleBuilder] for building rules with trigger type [MentionSpam]. */
 @KordDsl
-public sealed interface MentionSpamAutoModerationRuleBuilder : TimeoutAutoModerationRuleBuilder {
+public sealed interface MentionSpamAutoModerationRuleBuilder :
+    BlockMessageAutoModerationRuleBuilder,
+    TimeoutAutoModerationRuleBuilder {
 
     override val triggerType: MentionSpam get() = MentionSpam
 
@@ -309,3 +332,70 @@ public sealed interface MentionSpamAutoModerationRuleBuilder : TimeoutAutoModera
     /** Whether to automatically detect mention raids. */
     public var mentionRaidProtectionEnabled: Boolean?
 }
+
+
+/** An [AutoModerationRuleBuilder] for building rules with trigger type [MemberProfile]. */
+public sealed interface MemberProfileAutoModerationRuleBuilder :
+    FilteredKeywordsAutoModerationRuleBuilder,
+    AllowedKeywordsAutoModerationRuleBuilder {
+
+    override val triggerType: MemberProfile get() = MemberProfile
+}
+
+/** Add a [BlockMemberInteraction] action which will execute whenever the rule is triggered. */
+public inline fun MemberProfileAutoModerationRuleBuilder.blockMemberInteraction(
+    builder: BlockMemberInteractionAutoModerationActionBuilder.() -> Unit = {},
+) {
+    contract { callsInPlace(builder, EXACTLY_ONCE) }
+    val action = BlockMemberInteractionAutoModerationActionBuilder().apply(builder)
+    actions?.add(action) ?: assignActions(mutableListOf(action))
+}
+
+
+// -------- deprecated stuff --------
+
+/** Add a [BlockMessage] action which will execute whenever the rule is triggered. */
+@Deprecated(
+    "Not all Auto Moderation Rules can have a 'BlockMessage' action (e.g. 'MemberProfile' rules can't), so this " +
+        "extension function is deprecated for 'AutoModerationRuleBuilder'. Use the extension function on " +
+        "'BlockMessageAutoModerationRuleBuilder' instead. The deprecation level will be raised to ERROR in 0.16.0, " +
+        "to HIDDEN in 0.17.0, and this declaration will be removed in 0.18.0.",
+    ReplaceWith(
+        "(this as? BlockMessageAutoModerationRuleBuilder)?.blockMessage { builder() } ?: Unit",
+        imports = [
+            "dev.kord.rest.builder.automoderation.BlockMessageAutoModerationRuleBuilder",
+            "dev.kord.rest.builder.automoderation.blockMessage", "kotlin.Unit",
+        ],
+    ),
+    DeprecationLevel.WARNING,
+)
+public inline fun AutoModerationRuleBuilder.blockMessage(
+    builder: BlockMessageAutoModerationActionBuilder.() -> Unit = {},
+) {
+    contract { callsInPlace(builder, EXACTLY_ONCE) }
+    val action = BlockMessageAutoModerationActionBuilder().apply(builder)
+    actions?.add(action) ?: assignActions(mutableListOf(action))
+}
+
+private const val MESSAGE = "This extension is now defined on 'FilteredKeywordsAutoModerationRuleBuilder'. The " +
+    "declaration is kept for binary compatibility, it will be removed in 0.18.0."
+
+@Deprecated(MESSAGE, level = DeprecationLevel.HIDDEN)
+public fun KeywordAutoModerationRuleBuilder.keyword(keyword: String): Unit =
+    (this as FilteredKeywordsAutoModerationRuleBuilder).keyword(keyword)
+
+@Deprecated(MESSAGE, level = DeprecationLevel.HIDDEN)
+public fun KeywordAutoModerationRuleBuilder.prefixKeyword(keyword: String): Unit =
+    (this as FilteredKeywordsAutoModerationRuleBuilder).prefixKeyword(keyword)
+
+@Deprecated(MESSAGE, level = DeprecationLevel.HIDDEN)
+public fun KeywordAutoModerationRuleBuilder.suffixKeyword(keyword: String): Unit =
+    (this as FilteredKeywordsAutoModerationRuleBuilder).suffixKeyword(keyword)
+
+@Deprecated(MESSAGE, level = DeprecationLevel.HIDDEN)
+public fun KeywordAutoModerationRuleBuilder.anywhereKeyword(keyword: String): Unit =
+    (this as FilteredKeywordsAutoModerationRuleBuilder).anywhereKeyword(keyword)
+
+@Deprecated(MESSAGE, level = DeprecationLevel.HIDDEN)
+public fun KeywordAutoModerationRuleBuilder.regexPattern(pattern: String): Unit =
+    (this as FilteredKeywordsAutoModerationRuleBuilder).regexPattern(pattern)

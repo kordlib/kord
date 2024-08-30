@@ -7367,6 +7367,8 @@ sealed class dev.kord.common.entity/AutoModerationActionType { // dev.kord.commo
 
     final class Unknown : dev.kord.common.entity/AutoModerationActionType // dev.kord.common.entity/AutoModerationActionType.Unknown|null[0]
 
+    final object BlockMemberInteraction : dev.kord.common.entity/AutoModerationActionType // dev.kord.common.entity/AutoModerationActionType.BlockMemberInteraction|null[0]
+
     final object BlockMessage : dev.kord.common.entity/AutoModerationActionType // dev.kord.common.entity/AutoModerationActionType.BlockMessage|null[0]
 
     final object Companion { // dev.kord.common.entity/AutoModerationActionType.Companion|null[0]
@@ -7401,6 +7403,8 @@ sealed class dev.kord.common.entity/AutoModerationRuleEventType { // dev.kord.co
         final fun from(kotlin/Int): dev.kord.common.entity/AutoModerationRuleEventType // dev.kord.common.entity/AutoModerationRuleEventType.Companion.from|from(kotlin.Int){}[0]
         final fun serializer(): kotlinx.serialization/KSerializer<dev.kord.common.entity/AutoModerationRuleEventType> // dev.kord.common.entity/AutoModerationRuleEventType.Companion.serializer|serializer(){}[0]
     }
+
+    final object MemberUpdate : dev.kord.common.entity/AutoModerationRuleEventType // dev.kord.common.entity/AutoModerationRuleEventType.MemberUpdate|null[0]
 
     final object MessageSend : dev.kord.common.entity/AutoModerationRuleEventType // dev.kord.common.entity/AutoModerationRuleEventType.MessageSend|null[0]
 }
@@ -7455,6 +7459,8 @@ sealed class dev.kord.common.entity/AutoModerationRuleTriggerType { // dev.kord.
     final object Keyword : dev.kord.common.entity/AutoModerationRuleTriggerType // dev.kord.common.entity/AutoModerationRuleTriggerType.Keyword|null[0]
 
     final object KeywordPreset : dev.kord.common.entity/AutoModerationRuleTriggerType // dev.kord.common.entity/AutoModerationRuleTriggerType.KeywordPreset|null[0]
+
+    final object MemberProfile : dev.kord.common.entity/AutoModerationRuleTriggerType // dev.kord.common.entity/AutoModerationRuleTriggerType.MemberProfile|null[0]
 
     final object MentionSpam : dev.kord.common.entity/AutoModerationRuleTriggerType // dev.kord.common.entity/AutoModerationRuleTriggerType.MentionSpam|null[0]
 
