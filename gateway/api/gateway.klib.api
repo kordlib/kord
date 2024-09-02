@@ -2185,8 +2185,6 @@ final class dev.kord.gateway/WebhooksUpdate : dev.kord.gateway/DispatchEvent { /
 }
 
 sealed class dev.kord.gateway/Close : dev.kord.gateway/Event { // dev.kord.gateway/Close|null[0]
-    constructor <init>() // dev.kord.gateway/Close.<init>|<init>(){}[0]
-
     final class DiscordClose : dev.kord.gateway/Close { // dev.kord.gateway/Close.DiscordClose|null[0]
         constructor <init>(dev.kord.gateway/GatewayCloseCode, kotlin/Boolean) // dev.kord.gateway/Close.DiscordClose.<init>|<init>(dev.kord.gateway.GatewayCloseCode;kotlin.Boolean){}[0]
 
@@ -2219,8 +2217,6 @@ sealed class dev.kord.gateway/Close : dev.kord.gateway/Event { // dev.kord.gatew
 }
 
 sealed class dev.kord.gateway/Command { // dev.kord.gateway/Command|null[0]
-    constructor <init>() // dev.kord.gateway/Command.<init>|<init>(){}[0]
-
     final class Heartbeat : dev.kord.gateway/Command { // dev.kord.gateway/Command.Heartbeat|null[0]
         constructor <init>(kotlin/Int?) // dev.kord.gateway/Command.Heartbeat.<init>|<init>(kotlin.Int?){}[0]
 
@@ -2243,15 +2239,11 @@ sealed class dev.kord.gateway/Command { // dev.kord.gateway/Command|null[0]
 }
 
 sealed class dev.kord.gateway/DispatchEvent : dev.kord.gateway/Event { // dev.kord.gateway/DispatchEvent|null[0]
-    constructor <init>() // dev.kord.gateway/DispatchEvent.<init>|<init>(){}[0]
-
     abstract val sequence // dev.kord.gateway/DispatchEvent.sequence|{}sequence[0]
         abstract fun <get-sequence>(): kotlin/Int? // dev.kord.gateway/DispatchEvent.sequence.<get-sequence>|<get-sequence>(){}[0]
 }
 
 sealed class dev.kord.gateway/Event { // dev.kord.gateway/Event|null[0]
-    constructor <init>() // dev.kord.gateway/Event.<init>|<init>(){}[0]
-
     final object DeserializationStrategy : kotlinx.serialization/DeserializationStrategy<dev.kord.gateway/Event> { // dev.kord.gateway/Event.DeserializationStrategy|null[0]
         final val descriptor // dev.kord.gateway/Event.DeserializationStrategy.descriptor|{}descriptor[0]
             final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // dev.kord.gateway/Event.DeserializationStrategy.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
@@ -2261,8 +2253,6 @@ sealed class dev.kord.gateway/Event { // dev.kord.gateway/Event|null[0]
 }
 
 sealed class dev.kord.gateway/Intent { // dev.kord.gateway/Intent|null[0]
-    constructor <init>(kotlin/Int) // dev.kord.gateway/Intent.<init>|<init>(kotlin.Int){}[0]
-
     final val code // dev.kord.gateway/Intent.code|{}code[0]
         final fun <get-code>(): dev.kord.common/DiscordBitSet // dev.kord.gateway/Intent.code.<get-code>|<get-code>(){}[0]
     final val shift // dev.kord.gateway/Intent.shift|{}shift[0]

@@ -6513,8 +6513,6 @@ final class dev.kord.common/Locale { // dev.kord.common/Locale|null[0]
 }
 
 sealed class <#A: kotlin/Any?> dev.kord.common.entity/AuditLogChangeKey { // dev.kord.common.entity/AuditLogChangeKey|null[0]
-    constructor <init>(kotlin/String, kotlinx.serialization/KSerializer<#A>) // dev.kord.common.entity/AuditLogChangeKey.<init>|<init>(kotlin.String;kotlinx.serialization.KSerializer<1:0>){}[0]
-
     final val name // dev.kord.common.entity/AuditLogChangeKey.name|{}name[0]
         final fun <get-name>(): kotlin/String // dev.kord.common.entity/AuditLogChangeKey.name.<get-name>|<get-name>(){}[0]
     final val serializer // dev.kord.common.entity/AuditLogChangeKey.serializer|{}serializer[0]
@@ -6651,8 +6649,6 @@ sealed class <#A: kotlin/Any?> dev.kord.common.entity/AuditLogChangeKey { // dev
 }
 
 sealed class <#A: out kotlin/Any?> dev.kord.common.entity.optional/Optional { // dev.kord.common.entity.optional/Optional|null[0]
-    constructor <init>() // dev.kord.common.entity.optional/Optional.<init>|<init>(){}[0]
-
     open val value // dev.kord.common.entity.optional/Optional.value|{}value[0]
         open fun <get-value>(): #A? // dev.kord.common.entity.optional/Optional.value.<get-value>|<get-value>(){}[0]
 
@@ -6705,8 +6701,6 @@ sealed class <#A: out kotlin/Any?> dev.kord.common.entity.optional/Optional { //
 }
 
 sealed class <#A: out kotlin/Any?> dev.kord.common.entity/CommandArgument : dev.kord.common.entity/Option { // dev.kord.common.entity/CommandArgument|null[0]
-    constructor <init>() // dev.kord.common.entity/CommandArgument.<init>|<init>(){}[0]
-
     abstract val focused // dev.kord.common.entity/CommandArgument.focused|{}focused[0]
         abstract fun <get-focused>(): dev.kord.common.entity.optional/OptionalBoolean // dev.kord.common.entity/CommandArgument.focused.<get-focused>|<get-focused>(){}[0]
     abstract val value // dev.kord.common.entity/CommandArgument.value|{}value[0]
@@ -6930,8 +6924,6 @@ sealed class <#A: out kotlin/Any?> dev.kord.common.entity/CommandArgument : dev.
 }
 
 sealed class dev.kord.common.entity.optional/OptionalBoolean { // dev.kord.common.entity.optional/OptionalBoolean|null[0]
-    constructor <init>() // dev.kord.common.entity.optional/OptionalBoolean.<init>|<init>(){}[0]
-
     final val asNullable // dev.kord.common.entity.optional/OptionalBoolean.asNullable|{}asNullable[0]
         final fun <get-asNullable>(): kotlin/Boolean? // dev.kord.common.entity.optional/OptionalBoolean.asNullable.<get-asNullable>|<get-asNullable>(){}[0]
     final val asOptional // dev.kord.common.entity.optional/OptionalBoolean.asOptional|{}asOptional[0]
@@ -6964,8 +6956,6 @@ sealed class dev.kord.common.entity.optional/OptionalBoolean { // dev.kord.commo
 }
 
 sealed class dev.kord.common.entity.optional/OptionalInt { // dev.kord.common.entity.optional/OptionalInt|null[0]
-    constructor <init>() // dev.kord.common.entity.optional/OptionalInt.<init>|<init>(){}[0]
-
     final val asNullable // dev.kord.common.entity.optional/OptionalInt.asNullable|{}asNullable[0]
         final fun <get-asNullable>(): kotlin/Int? // dev.kord.common.entity.optional/OptionalInt.asNullable.<get-asNullable>|<get-asNullable>(){}[0]
     final val asOptional // dev.kord.common.entity.optional/OptionalInt.asOptional|{}asOptional[0]
@@ -6995,8 +6985,6 @@ sealed class dev.kord.common.entity.optional/OptionalInt { // dev.kord.common.en
 }
 
 sealed class dev.kord.common.entity.optional/OptionalLong { // dev.kord.common.entity.optional/OptionalLong|null[0]
-    constructor <init>() // dev.kord.common.entity.optional/OptionalLong.<init>|<init>(){}[0]
-
     final val asNullable // dev.kord.common.entity.optional/OptionalLong.asNullable|{}asNullable[0]
         final fun <get-asNullable>(): kotlin/Long? // dev.kord.common.entity.optional/OptionalLong.asNullable.<get-asNullable>|<get-asNullable>(){}[0]
     final val asOptional // dev.kord.common.entity.optional/OptionalLong.asOptional|{}asOptional[0]
@@ -7026,8 +7014,6 @@ sealed class dev.kord.common.entity.optional/OptionalLong { // dev.kord.common.e
 }
 
 sealed class dev.kord.common.entity.optional/OptionalSnowflake { // dev.kord.common.entity.optional/OptionalSnowflake|null[0]
-    constructor <init>() // dev.kord.common.entity.optional/OptionalSnowflake.<init>|<init>(){}[0]
-
     final val asOptional // dev.kord.common.entity.optional/OptionalSnowflake.asOptional|{}asOptional[0]
         final fun <get-asOptional>(): dev.kord.common.entity.optional/Optional<dev.kord.common.entity/Snowflake> // dev.kord.common.entity.optional/OptionalSnowflake.asOptional.<get-asOptional>|<get-asOptional>(){}[0]
     open val value // dev.kord.common.entity.optional/OptionalSnowflake.value|{}value[0]
@@ -7058,8 +7044,6 @@ sealed class dev.kord.common.entity.optional/OptionalSnowflake { // dev.kord.com
 }
 
 sealed class dev.kord.common.entity/ActivityFlag { // dev.kord.common.entity/ActivityFlag|null[0]
-    constructor <init>(kotlin/Int) // dev.kord.common.entity/ActivityFlag.<init>|<init>(kotlin.Int){}[0]
-
     final val shift // dev.kord.common.entity/ActivityFlag.shift|{}shift[0]
         final fun <get-shift>(): kotlin/Int // dev.kord.common.entity/ActivityFlag.shift.<get-shift>|<get-shift>(){}[0]
     final val value // dev.kord.common.entity/ActivityFlag.value|{}value[0]
@@ -7100,8 +7084,6 @@ sealed class dev.kord.common.entity/ActivityFlag { // dev.kord.common.entity/Act
 }
 
 sealed class dev.kord.common.entity/ActivityType { // dev.kord.common.entity/ActivityType|null[0]
-    constructor <init>(kotlin/Int) // dev.kord.common.entity/ActivityType.<init>|<init>(kotlin.Int){}[0]
-
     final val code // dev.kord.common.entity/ActivityType.code|{}code[0]
         final fun <get-code>(): kotlin/Int // dev.kord.common.entity/ActivityType.code.<get-code>|<get-code>(){}[0]
 
@@ -7133,8 +7115,6 @@ sealed class dev.kord.common.entity/ActivityType { // dev.kord.common.entity/Act
 }
 
 sealed class dev.kord.common.entity/AllowedMentionType { // dev.kord.common.entity/AllowedMentionType|null[0]
-    constructor <init>(kotlin/String) // dev.kord.common.entity/AllowedMentionType.<init>|<init>(kotlin.String){}[0]
-
     final val value // dev.kord.common.entity/AllowedMentionType.value|{}value[0]
         final fun <get-value>(): kotlin/String // dev.kord.common.entity/AllowedMentionType.value.<get-value>|<get-value>(){}[0]
 
@@ -7160,8 +7140,6 @@ sealed class dev.kord.common.entity/AllowedMentionType { // dev.kord.common.enti
 }
 
 sealed class dev.kord.common.entity/ApplicationCommandOptionType { // dev.kord.common.entity/ApplicationCommandOptionType|null[0]
-    constructor <init>(kotlin/Int) // dev.kord.common.entity/ApplicationCommandOptionType.<init>|<init>(kotlin.Int){}[0]
-
     final val type // dev.kord.common.entity/ApplicationCommandOptionType.type|{}type[0]
         final fun <get-type>(): kotlin/Int // dev.kord.common.entity/ApplicationCommandOptionType.type.<get-type>|<get-type>(){}[0]
 
@@ -7203,8 +7181,6 @@ sealed class dev.kord.common.entity/ApplicationCommandOptionType { // dev.kord.c
 }
 
 sealed class dev.kord.common.entity/ApplicationCommandPermissionType { // dev.kord.common.entity/ApplicationCommandPermissionType|null[0]
-    constructor <init>(kotlin/Int) // dev.kord.common.entity/ApplicationCommandPermissionType.<init>|<init>(kotlin.Int){}[0]
-
     final val value // dev.kord.common.entity/ApplicationCommandPermissionType.value|{}value[0]
         final fun <get-value>(): kotlin/Int // dev.kord.common.entity/ApplicationCommandPermissionType.value.<get-value>|<get-value>(){}[0]
 
@@ -7230,8 +7206,6 @@ sealed class dev.kord.common.entity/ApplicationCommandPermissionType { // dev.ko
 }
 
 sealed class dev.kord.common.entity/ApplicationCommandType { // dev.kord.common.entity/ApplicationCommandType|null[0]
-    constructor <init>(kotlin/Int) // dev.kord.common.entity/ApplicationCommandType.<init>|<init>(kotlin.Int){}[0]
-
     final val value // dev.kord.common.entity/ApplicationCommandType.value|{}value[0]
         final fun <get-value>(): kotlin/Int // dev.kord.common.entity/ApplicationCommandType.value.<get-value>|<get-value>(){}[0]
 
@@ -7257,8 +7231,6 @@ sealed class dev.kord.common.entity/ApplicationCommandType { // dev.kord.common.
 }
 
 sealed class dev.kord.common.entity/ApplicationFlag { // dev.kord.common.entity/ApplicationFlag|null[0]
-    constructor <init>(kotlin/Int) // dev.kord.common.entity/ApplicationFlag.<init>|<init>(kotlin.Int){}[0]
-
     final val code // dev.kord.common.entity/ApplicationFlag.code|{}code[0]
         final fun <get-code>(): kotlin/Int // dev.kord.common.entity/ApplicationFlag.code.<get-code>|<get-code>(){}[0]
     final val shift // dev.kord.common.entity/ApplicationFlag.shift|{}shift[0]
@@ -7301,8 +7273,6 @@ sealed class dev.kord.common.entity/ApplicationFlag { // dev.kord.common.entity/
 }
 
 sealed class dev.kord.common.entity/ApplicationRoleConnectionMetadataType { // dev.kord.common.entity/ApplicationRoleConnectionMetadataType|null[0]
-    constructor <init>(kotlin/Int) // dev.kord.common.entity/ApplicationRoleConnectionMetadataType.<init>|<init>(kotlin.Int){}[0]
-
     final val value // dev.kord.common.entity/ApplicationRoleConnectionMetadataType.value|{}value[0]
         final fun <get-value>(): kotlin/Int // dev.kord.common.entity/ApplicationRoleConnectionMetadataType.value.<get-value>|<get-value>(){}[0]
 
@@ -7338,8 +7308,6 @@ sealed class dev.kord.common.entity/ApplicationRoleConnectionMetadataType { // d
 }
 
 sealed class dev.kord.common.entity/ArchiveDuration { // dev.kord.common.entity/ArchiveDuration|null[0]
-    constructor <init>(kotlin.time/Duration) // dev.kord.common.entity/ArchiveDuration.<init>|<init>(kotlin.time.Duration){}[0]
-
     final val duration // dev.kord.common.entity/ArchiveDuration.duration|{}duration[0]
         final fun <get-duration>(): kotlin.time/Duration // dev.kord.common.entity/ArchiveDuration.duration.<get-duration>|<get-duration>(){}[0]
 
@@ -7369,8 +7337,6 @@ sealed class dev.kord.common.entity/ArchiveDuration { // dev.kord.common.entity/
 }
 
 sealed class dev.kord.common.entity/AttachmentFlag { // dev.kord.common.entity/AttachmentFlag|null[0]
-    constructor <init>(kotlin/Int) // dev.kord.common.entity/AttachmentFlag.<init>|<init>(kotlin.Int){}[0]
-
     final val shift // dev.kord.common.entity/AttachmentFlag.shift|{}shift[0]
         final fun <get-shift>(): kotlin/Int // dev.kord.common.entity/AttachmentFlag.shift.<get-shift>|<get-shift>(){}[0]
     final val value // dev.kord.common.entity/AttachmentFlag.value|{}value[0]
@@ -7395,8 +7361,6 @@ sealed class dev.kord.common.entity/AttachmentFlag { // dev.kord.common.entity/A
 }
 
 sealed class dev.kord.common.entity/AuditLogEvent { // dev.kord.common.entity/AuditLogEvent|null[0]
-    constructor <init>(kotlin/Int) // dev.kord.common.entity/AuditLogEvent.<init>|<init>(kotlin.Int){}[0]
-
     final val value // dev.kord.common.entity/AuditLogEvent.value|{}value[0]
         final fun <get-value>(): kotlin/Int // dev.kord.common.entity/AuditLogEvent.value.<get-value>|<get-value>(){}[0]
 
@@ -7528,8 +7492,6 @@ sealed class dev.kord.common.entity/AuditLogEvent { // dev.kord.common.entity/Au
 }
 
 sealed class dev.kord.common.entity/AutoModerationActionType { // dev.kord.common.entity/AutoModerationActionType|null[0]
-    constructor <init>(kotlin/Int) // dev.kord.common.entity/AutoModerationActionType.<init>|<init>(kotlin.Int){}[0]
-
     final val value // dev.kord.common.entity/AutoModerationActionType.value|{}value[0]
         final fun <get-value>(): kotlin/Int // dev.kord.common.entity/AutoModerationActionType.value.<get-value>|<get-value>(){}[0]
 
@@ -7555,8 +7517,6 @@ sealed class dev.kord.common.entity/AutoModerationActionType { // dev.kord.commo
 }
 
 sealed class dev.kord.common.entity/AutoModerationRuleEventType { // dev.kord.common.entity/AutoModerationRuleEventType|null[0]
-    constructor <init>(kotlin/Int) // dev.kord.common.entity/AutoModerationRuleEventType.<init>|<init>(kotlin.Int){}[0]
-
     final val value // dev.kord.common.entity/AutoModerationRuleEventType.value|{}value[0]
         final fun <get-value>(): kotlin/Int // dev.kord.common.entity/AutoModerationRuleEventType.value.<get-value>|<get-value>(){}[0]
 
@@ -7578,8 +7538,6 @@ sealed class dev.kord.common.entity/AutoModerationRuleEventType { // dev.kord.co
 }
 
 sealed class dev.kord.common.entity/AutoModerationRuleKeywordPresetType { // dev.kord.common.entity/AutoModerationRuleKeywordPresetType|null[0]
-    constructor <init>(kotlin/Int) // dev.kord.common.entity/AutoModerationRuleKeywordPresetType.<init>|<init>(kotlin.Int){}[0]
-
     final val value // dev.kord.common.entity/AutoModerationRuleKeywordPresetType.value|{}value[0]
         final fun <get-value>(): kotlin/Int // dev.kord.common.entity/AutoModerationRuleKeywordPresetType.value.<get-value>|<get-value>(){}[0]
 
@@ -7605,8 +7563,6 @@ sealed class dev.kord.common.entity/AutoModerationRuleKeywordPresetType { // dev
 }
 
 sealed class dev.kord.common.entity/AutoModerationRuleTriggerType { // dev.kord.common.entity/AutoModerationRuleTriggerType|null[0]
-    constructor <init>(kotlin/Int) // dev.kord.common.entity/AutoModerationRuleTriggerType.<init>|<init>(kotlin.Int){}[0]
-
     final val value // dev.kord.common.entity/AutoModerationRuleTriggerType.value|{}value[0]
         final fun <get-value>(): kotlin/Int // dev.kord.common.entity/AutoModerationRuleTriggerType.value.<get-value>|<get-value>(){}[0]
 
@@ -7634,8 +7590,6 @@ sealed class dev.kord.common.entity/AutoModerationRuleTriggerType { // dev.kord.
 }
 
 sealed class dev.kord.common.entity/ButtonStyle { // dev.kord.common.entity/ButtonStyle|null[0]
-    constructor <init>(kotlin/Int) // dev.kord.common.entity/ButtonStyle.<init>|<init>(kotlin.Int){}[0]
-
     final val value // dev.kord.common.entity/ButtonStyle.value|{}value[0]
         final fun <get-value>(): kotlin/Int // dev.kord.common.entity/ButtonStyle.value.<get-value>|<get-value>(){}[0]
 
@@ -7665,8 +7619,6 @@ sealed class dev.kord.common.entity/ButtonStyle { // dev.kord.common.entity/Butt
 }
 
 sealed class dev.kord.common.entity/ChannelFlag { // dev.kord.common.entity/ChannelFlag|null[0]
-    constructor <init>(kotlin/Int) // dev.kord.common.entity/ChannelFlag.<init>|<init>(kotlin.Int){}[0]
-
     final val code // dev.kord.common.entity/ChannelFlag.code|{}code[0]
         final fun <get-code>(): kotlin/Int // dev.kord.common.entity/ChannelFlag.code.<get-code>|<get-code>(){}[0]
     final val shift // dev.kord.common.entity/ChannelFlag.shift|{}shift[0]
@@ -7695,8 +7647,6 @@ sealed class dev.kord.common.entity/ChannelFlag { // dev.kord.common.entity/Chan
 }
 
 sealed class dev.kord.common.entity/ChannelType { // dev.kord.common.entity/ChannelType|null[0]
-    constructor <init>(kotlin/Int) // dev.kord.common.entity/ChannelType.<init>|<init>(kotlin.Int){}[0]
-
     final val value // dev.kord.common.entity/ChannelType.value|{}value[0]
         final fun <get-value>(): kotlin/Int // dev.kord.common.entity/ChannelType.value.<get-value>|<get-value>(){}[0]
 
@@ -7742,8 +7692,6 @@ sealed class dev.kord.common.entity/ChannelType { // dev.kord.common.entity/Chan
 }
 
 sealed class dev.kord.common.entity/Choice { // dev.kord.common.entity/Choice|null[0]
-    constructor <init>() // dev.kord.common.entity/Choice.<init>|<init>(){}[0]
-
     abstract val name // dev.kord.common.entity/Choice.name|{}name[0]
         abstract fun <get-name>(): kotlin/String // dev.kord.common.entity/Choice.name.<get-name>|<get-name>(){}[0]
     abstract val nameLocalizations // dev.kord.common.entity/Choice.nameLocalizations|{}nameLocalizations[0]
@@ -7814,8 +7762,6 @@ sealed class dev.kord.common.entity/Choice { // dev.kord.common.entity/Choice|nu
 }
 
 sealed class dev.kord.common.entity/ComponentType { // dev.kord.common.entity/ComponentType|null[0]
-    constructor <init>(kotlin/Int) // dev.kord.common.entity/ComponentType.<init>|<init>(kotlin.Int){}[0]
-
     final val value // dev.kord.common.entity/ComponentType.value|{}value[0]
         final fun <get-value>(): kotlin/Int // dev.kord.common.entity/ComponentType.value.<get-value>|<get-value>(){}[0]
 
@@ -7851,8 +7797,6 @@ sealed class dev.kord.common.entity/ComponentType { // dev.kord.common.entity/Co
 }
 
 sealed class dev.kord.common.entity/DefaultMessageNotificationLevel { // dev.kord.common.entity/DefaultMessageNotificationLevel|null[0]
-    constructor <init>(kotlin/Int) // dev.kord.common.entity/DefaultMessageNotificationLevel.<init>|<init>(kotlin.Int){}[0]
-
     final val value // dev.kord.common.entity/DefaultMessageNotificationLevel.value|{}value[0]
         final fun <get-value>(): kotlin/Int // dev.kord.common.entity/DefaultMessageNotificationLevel.value.<get-value>|<get-value>(){}[0]
 
@@ -7876,8 +7820,6 @@ sealed class dev.kord.common.entity/DefaultMessageNotificationLevel { // dev.kor
 }
 
 sealed class dev.kord.common.entity/DiscordComponent { // dev.kord.common.entity/DiscordComponent|null[0]
-    constructor <init>() // dev.kord.common.entity/DiscordComponent.<init>|<init>(){}[0]
-
     abstract val channelTypes // dev.kord.common.entity/DiscordComponent.channelTypes|{}channelTypes[0]
         abstract fun <get-channelTypes>(): dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.common.entity/ChannelType>> // dev.kord.common.entity/DiscordComponent.channelTypes.<get-channelTypes>|<get-channelTypes>(){}[0]
     abstract val components // dev.kord.common.entity/DiscordComponent.components|{}components[0]
@@ -7919,8 +7861,6 @@ sealed class dev.kord.common.entity/DiscordComponent { // dev.kord.common.entity
 }
 
 sealed class dev.kord.common.entity/DiscordConnectionVisibility { // dev.kord.common.entity/DiscordConnectionVisibility|null[0]
-    constructor <init>(kotlin/Int) // dev.kord.common.entity/DiscordConnectionVisibility.<init>|<init>(kotlin.Int){}[0]
-
     final val value // dev.kord.common.entity/DiscordConnectionVisibility.value|{}value[0]
         final fun <get-value>(): kotlin/Int // dev.kord.common.entity/DiscordConnectionVisibility.value.<get-value>|<get-value>(){}[0]
 
@@ -7944,8 +7884,6 @@ sealed class dev.kord.common.entity/DiscordConnectionVisibility { // dev.kord.co
 }
 
 sealed class dev.kord.common.entity/EmbedType { // dev.kord.common.entity/EmbedType|null[0]
-    constructor <init>(kotlin/String) // dev.kord.common.entity/EmbedType.<init>|<init>(kotlin.String){}[0]
-
     final val value // dev.kord.common.entity/EmbedType.value|{}value[0]
         final fun <get-value>(): kotlin/String // dev.kord.common.entity/EmbedType.value.<get-value>|<get-value>(){}[0]
 
@@ -7977,8 +7915,6 @@ sealed class dev.kord.common.entity/EmbedType { // dev.kord.common.entity/EmbedT
 }
 
 sealed class dev.kord.common.entity/ExplicitContentFilter { // dev.kord.common.entity/ExplicitContentFilter|null[0]
-    constructor <init>(kotlin/Int) // dev.kord.common.entity/ExplicitContentFilter.<init>|<init>(kotlin.Int){}[0]
-
     final val value // dev.kord.common.entity/ExplicitContentFilter.value|{}value[0]
         final fun <get-value>(): kotlin/Int // dev.kord.common.entity/ExplicitContentFilter.value.<get-value>|<get-value>(){}[0]
 
@@ -8004,8 +7940,6 @@ sealed class dev.kord.common.entity/ExplicitContentFilter { // dev.kord.common.e
 }
 
 sealed class dev.kord.common.entity/ForumLayoutType { // dev.kord.common.entity/ForumLayoutType|null[0]
-    constructor <init>(kotlin/Int) // dev.kord.common.entity/ForumLayoutType.<init>|<init>(kotlin.Int){}[0]
-
     final val value // dev.kord.common.entity/ForumLayoutType.value|{}value[0]
         final fun <get-value>(): kotlin/Int // dev.kord.common.entity/ForumLayoutType.value.<get-value>|<get-value>(){}[0]
 
@@ -8031,8 +7965,6 @@ sealed class dev.kord.common.entity/ForumLayoutType { // dev.kord.common.entity/
 }
 
 sealed class dev.kord.common.entity/GuildFeature { // dev.kord.common.entity/GuildFeature|null[0]
-    constructor <init>(kotlin/String) // dev.kord.common.entity/GuildFeature.<init>|<init>(kotlin.String){}[0]
-
     final val value // dev.kord.common.entity/GuildFeature.value|{}value[0]
         final fun <get-value>(): kotlin/String // dev.kord.common.entity/GuildFeature.value.<get-value>|<get-value>(){}[0]
 
@@ -8106,8 +8038,6 @@ sealed class dev.kord.common.entity/GuildFeature { // dev.kord.common.entity/Gui
 }
 
 sealed class dev.kord.common.entity/GuildMemberFlag { // dev.kord.common.entity/GuildMemberFlag|null[0]
-    constructor <init>(kotlin/Int) // dev.kord.common.entity/GuildMemberFlag.<init>|<init>(kotlin.Int){}[0]
-
     final val code // dev.kord.common.entity/GuildMemberFlag.code|{}code[0]
         final fun <get-code>(): kotlin/Int // dev.kord.common.entity/GuildMemberFlag.code.<get-code>|<get-code>(){}[0]
     final val shift // dev.kord.common.entity/GuildMemberFlag.shift|{}shift[0]
@@ -8138,8 +8068,6 @@ sealed class dev.kord.common.entity/GuildMemberFlag { // dev.kord.common.entity/
 }
 
 sealed class dev.kord.common.entity/GuildScheduledEventPrivacyLevel { // dev.kord.common.entity/GuildScheduledEventPrivacyLevel|null[0]
-    constructor <init>(kotlin/Int) // dev.kord.common.entity/GuildScheduledEventPrivacyLevel.<init>|<init>(kotlin.Int){}[0]
-
     final val value // dev.kord.common.entity/GuildScheduledEventPrivacyLevel.value|{}value[0]
         final fun <get-value>(): kotlin/Int // dev.kord.common.entity/GuildScheduledEventPrivacyLevel.value.<get-value>|<get-value>(){}[0]
 
@@ -8161,8 +8089,6 @@ sealed class dev.kord.common.entity/GuildScheduledEventPrivacyLevel { // dev.kor
 }
 
 sealed class dev.kord.common.entity/GuildScheduledEventStatus { // dev.kord.common.entity/GuildScheduledEventStatus|null[0]
-    constructor <init>(kotlin/Int) // dev.kord.common.entity/GuildScheduledEventStatus.<init>|<init>(kotlin.Int){}[0]
-
     final val value // dev.kord.common.entity/GuildScheduledEventStatus.value|{}value[0]
         final fun <get-value>(): kotlin/Int // dev.kord.common.entity/GuildScheduledEventStatus.value.<get-value>|<get-value>(){}[0]
 
@@ -8190,8 +8116,6 @@ sealed class dev.kord.common.entity/GuildScheduledEventStatus { // dev.kord.comm
 }
 
 sealed class dev.kord.common.entity/IntegrationExpireBehavior { // dev.kord.common.entity/IntegrationExpireBehavior|null[0]
-    constructor <init>(kotlin/Int) // dev.kord.common.entity/IntegrationExpireBehavior.<init>|<init>(kotlin.Int){}[0]
-
     final val value // dev.kord.common.entity/IntegrationExpireBehavior.value|{}value[0]
         final fun <get-value>(): kotlin/Int // dev.kord.common.entity/IntegrationExpireBehavior.value.<get-value>|<get-value>(){}[0]
 
@@ -8215,8 +8139,6 @@ sealed class dev.kord.common.entity/IntegrationExpireBehavior { // dev.kord.comm
 }
 
 sealed class dev.kord.common.entity/InteractionResponseType { // dev.kord.common.entity/InteractionResponseType|null[0]
-    constructor <init>(kotlin/Int) // dev.kord.common.entity/InteractionResponseType.<init>|<init>(kotlin.Int){}[0]
-
     final val type // dev.kord.common.entity/InteractionResponseType.type|{}type[0]
         final fun <get-type>(): kotlin/Int // dev.kord.common.entity/InteractionResponseType.type.<get-type>|<get-type>(){}[0]
 
@@ -8250,8 +8172,6 @@ sealed class dev.kord.common.entity/InteractionResponseType { // dev.kord.common
 }
 
 sealed class dev.kord.common.entity/InteractionType { // dev.kord.common.entity/InteractionType|null[0]
-    constructor <init>(kotlin/Int) // dev.kord.common.entity/InteractionType.<init>|<init>(kotlin.Int){}[0]
-
     final val type // dev.kord.common.entity/InteractionType.type|{}type[0]
         final fun <get-type>(): kotlin/Int // dev.kord.common.entity/InteractionType.type.<get-type>|<get-type>(){}[0]
 
@@ -8281,8 +8201,6 @@ sealed class dev.kord.common.entity/InteractionType { // dev.kord.common.entity/
 }
 
 sealed class dev.kord.common.entity/InviteTargetType { // dev.kord.common.entity/InviteTargetType|null[0]
-    constructor <init>(kotlin/Int) // dev.kord.common.entity/InviteTargetType.<init>|<init>(kotlin.Int){}[0]
-
     final val value // dev.kord.common.entity/InviteTargetType.value|{}value[0]
         final fun <get-value>(): kotlin/Int // dev.kord.common.entity/InviteTargetType.value.<get-value>|<get-value>(){}[0]
 
@@ -8306,8 +8224,6 @@ sealed class dev.kord.common.entity/InviteTargetType { // dev.kord.common.entity
 }
 
 sealed class dev.kord.common.entity/MFALevel { // dev.kord.common.entity/MFALevel|null[0]
-    constructor <init>(kotlin/Int) // dev.kord.common.entity/MFALevel.<init>|<init>(kotlin.Int){}[0]
-
     final val value // dev.kord.common.entity/MFALevel.value|{}value[0]
         final fun <get-value>(): kotlin/Int // dev.kord.common.entity/MFALevel.value.<get-value>|<get-value>(){}[0]
 
@@ -8331,8 +8247,6 @@ sealed class dev.kord.common.entity/MFALevel { // dev.kord.common.entity/MFALeve
 }
 
 sealed class dev.kord.common.entity/MessageActivityType { // dev.kord.common.entity/MessageActivityType|null[0]
-    constructor <init>(kotlin/Int) // dev.kord.common.entity/MessageActivityType.<init>|<init>(kotlin.Int){}[0]
-
     final val value // dev.kord.common.entity/MessageActivityType.value|{}value[0]
         final fun <get-value>(): kotlin/Int // dev.kord.common.entity/MessageActivityType.value.<get-value>|<get-value>(){}[0]
 
@@ -8360,8 +8274,6 @@ sealed class dev.kord.common.entity/MessageActivityType { // dev.kord.common.ent
 }
 
 sealed class dev.kord.common.entity/MessageFlag { // dev.kord.common.entity/MessageFlag|null[0]
-    constructor <init>(kotlin/Int) // dev.kord.common.entity/MessageFlag.<init>|<init>(kotlin.Int){}[0]
-
     final val code // dev.kord.common.entity/MessageFlag.code|{}code[0]
         final fun <get-code>(): kotlin/Int // dev.kord.common.entity/MessageFlag.code.<get-code>|<get-code>(){}[0]
     final val shift // dev.kord.common.entity/MessageFlag.shift|{}shift[0]
@@ -8406,8 +8318,6 @@ sealed class dev.kord.common.entity/MessageFlag { // dev.kord.common.entity/Mess
 }
 
 sealed class dev.kord.common.entity/MessageStickerType { // dev.kord.common.entity/MessageStickerType|null[0]
-    constructor <init>(kotlin/Int) // dev.kord.common.entity/MessageStickerType.<init>|<init>(kotlin.Int){}[0]
-
     final val value // dev.kord.common.entity/MessageStickerType.value|{}value[0]
         final fun <get-value>(): kotlin/Int // dev.kord.common.entity/MessageStickerType.value.<get-value>|<get-value>(){}[0]
 
@@ -8435,8 +8345,6 @@ sealed class dev.kord.common.entity/MessageStickerType { // dev.kord.common.enti
 }
 
 sealed class dev.kord.common.entity/MessageType { // dev.kord.common.entity/MessageType|null[0]
-    constructor <init>(kotlin/Int) // dev.kord.common.entity/MessageType.<init>|<init>(kotlin.Int){}[0]
-
     final val code // dev.kord.common.entity/MessageType.code|{}code[0]
         final fun <get-code>(): kotlin/Int // dev.kord.common.entity/MessageType.code.<get-code>|<get-code>(){}[0]
 
@@ -8518,8 +8426,6 @@ sealed class dev.kord.common.entity/MessageType { // dev.kord.common.entity/Mess
 }
 
 sealed class dev.kord.common.entity/NsfwLevel { // dev.kord.common.entity/NsfwLevel|null[0]
-    constructor <init>(kotlin/Int) // dev.kord.common.entity/NsfwLevel.<init>|<init>(kotlin.Int){}[0]
-
     final val value // dev.kord.common.entity/NsfwLevel.value|{}value[0]
         final fun <get-value>(): kotlin/Int // dev.kord.common.entity/NsfwLevel.value.<get-value>|<get-value>(){}[0]
 
@@ -8547,8 +8453,6 @@ sealed class dev.kord.common.entity/NsfwLevel { // dev.kord.common.entity/NsfwLe
 }
 
 sealed class dev.kord.common.entity/OnboardingMode { // dev.kord.common.entity/OnboardingMode|null[0]
-    constructor <init>(kotlin/Int) // dev.kord.common.entity/OnboardingMode.<init>|<init>(kotlin.Int){}[0]
-
     final val value // dev.kord.common.entity/OnboardingMode.value|{}value[0]
         final fun <get-value>(): kotlin/Int // dev.kord.common.entity/OnboardingMode.value.<get-value>|<get-value>(){}[0]
 
@@ -8572,8 +8476,6 @@ sealed class dev.kord.common.entity/OnboardingMode { // dev.kord.common.entity/O
 }
 
 sealed class dev.kord.common.entity/OnboardingPromptType { // dev.kord.common.entity/OnboardingPromptType|null[0]
-    constructor <init>(kotlin/Int) // dev.kord.common.entity/OnboardingPromptType.<init>|<init>(kotlin.Int){}[0]
-
     final val value // dev.kord.common.entity/OnboardingPromptType.value|{}value[0]
         final fun <get-value>(): kotlin/Int // dev.kord.common.entity/OnboardingPromptType.value.<get-value>|<get-value>(){}[0]
 
@@ -8597,8 +8499,6 @@ sealed class dev.kord.common.entity/OnboardingPromptType { // dev.kord.common.en
 }
 
 sealed class dev.kord.common.entity/Option { // dev.kord.common.entity/Option|null[0]
-    constructor <init>() // dev.kord.common.entity/Option.<init>|<init>(){}[0]
-
     abstract val name // dev.kord.common.entity/Option.name|{}name[0]
         abstract fun <get-name>(): kotlin/String // dev.kord.common.entity/Option.name.<get-name>|<get-name>(){}[0]
     abstract val type // dev.kord.common.entity/Option.type|{}type[0]
@@ -8610,8 +8510,6 @@ sealed class dev.kord.common.entity/Option { // dev.kord.common.entity/Option|nu
 }
 
 sealed class dev.kord.common.entity/OverwriteType { // dev.kord.common.entity/OverwriteType|null[0]
-    constructor <init>(kotlin/Int) // dev.kord.common.entity/OverwriteType.<init>|<init>(kotlin.Int){}[0]
-
     final val value // dev.kord.common.entity/OverwriteType.value|{}value[0]
         final fun <get-value>(): kotlin/Int // dev.kord.common.entity/OverwriteType.value.<get-value>|<get-value>(){}[0]
 
@@ -8635,8 +8533,6 @@ sealed class dev.kord.common.entity/OverwriteType { // dev.kord.common.entity/Ov
 }
 
 sealed class dev.kord.common.entity/Permission { // dev.kord.common.entity/Permission|null[0]
-    constructor <init>(kotlin/Int) // dev.kord.common.entity/Permission.<init>|<init>(kotlin.Int){}[0]
-
     final val code // dev.kord.common.entity/Permission.code|{}code[0]
         final fun <get-code>(): dev.kord.common/DiscordBitSet // dev.kord.common.entity/Permission.code.<get-code>|<get-code>(){}[0]
     final val shift // dev.kord.common.entity/Permission.shift|{}shift[0]
@@ -8753,8 +8649,6 @@ sealed class dev.kord.common.entity/Permission { // dev.kord.common.entity/Permi
 }
 
 sealed class dev.kord.common.entity/PollLayoutType { // dev.kord.common.entity/PollLayoutType|null[0]
-    constructor <init>(kotlin/Int) // dev.kord.common.entity/PollLayoutType.<init>|<init>(kotlin.Int){}[0]
-
     final val value // dev.kord.common.entity/PollLayoutType.value|{}value[0]
         final fun <get-value>(): kotlin/Int // dev.kord.common.entity/PollLayoutType.value.<get-value>|<get-value>(){}[0]
 
@@ -8776,8 +8670,6 @@ sealed class dev.kord.common.entity/PollLayoutType { // dev.kord.common.entity/P
 }
 
 sealed class dev.kord.common.entity/PremiumTier { // dev.kord.common.entity/PremiumTier|null[0]
-    constructor <init>(kotlin/Int) // dev.kord.common.entity/PremiumTier.<init>|<init>(kotlin.Int){}[0]
-
     final val value // dev.kord.common.entity/PremiumTier.value|{}value[0]
         final fun <get-value>(): kotlin/Int // dev.kord.common.entity/PremiumTier.value.<get-value>|<get-value>(){}[0]
 
@@ -8805,8 +8697,6 @@ sealed class dev.kord.common.entity/PremiumTier { // dev.kord.common.entity/Prem
 }
 
 sealed class dev.kord.common.entity/PresenceStatus { // dev.kord.common.entity/PresenceStatus|null[0]
-    constructor <init>(kotlin/String) // dev.kord.common.entity/PresenceStatus.<init>|<init>(kotlin.String){}[0]
-
     final val value // dev.kord.common.entity/PresenceStatus.value|{}value[0]
         final fun <get-value>(): kotlin/String // dev.kord.common.entity/PresenceStatus.value.<get-value>|<get-value>(){}[0]
 
@@ -8836,8 +8726,6 @@ sealed class dev.kord.common.entity/PresenceStatus { // dev.kord.common.entity/P
 }
 
 sealed class dev.kord.common.entity/RoleFlag { // dev.kord.common.entity/RoleFlag|null[0]
-    constructor <init>(kotlin/Int) // dev.kord.common.entity/RoleFlag.<init>|<init>(kotlin.Int){}[0]
-
     final val shift // dev.kord.common.entity/RoleFlag.shift|{}shift[0]
         final fun <get-shift>(): kotlin/Int // dev.kord.common.entity/RoleFlag.shift.<get-shift>|<get-shift>(){}[0]
     final val value // dev.kord.common.entity/RoleFlag.value|{}value[0]
@@ -8862,8 +8750,6 @@ sealed class dev.kord.common.entity/RoleFlag { // dev.kord.common.entity/RoleFla
 }
 
 sealed class dev.kord.common.entity/ScheduledEntityType { // dev.kord.common.entity/ScheduledEntityType|null[0]
-    constructor <init>(kotlin/Int) // dev.kord.common.entity/ScheduledEntityType.<init>|<init>(kotlin.Int){}[0]
-
     final val value // dev.kord.common.entity/ScheduledEntityType.value|{}value[0]
         final fun <get-value>(): kotlin/Int // dev.kord.common.entity/ScheduledEntityType.value.<get-value>|<get-value>(){}[0]
 
@@ -8889,8 +8775,6 @@ sealed class dev.kord.common.entity/ScheduledEntityType { // dev.kord.common.ent
 }
 
 sealed class dev.kord.common.entity/SelectDefaultValueType { // dev.kord.common.entity/SelectDefaultValueType|null[0]
-    constructor <init>(kotlin/String) // dev.kord.common.entity/SelectDefaultValueType.<init>|<init>(kotlin.String){}[0]
-
     final val value // dev.kord.common.entity/SelectDefaultValueType.value|{}value[0]
         final fun <get-value>(): kotlin/String // dev.kord.common.entity/SelectDefaultValueType.value.<get-value>|<get-value>(){}[0]
 
@@ -8916,8 +8800,6 @@ sealed class dev.kord.common.entity/SelectDefaultValueType { // dev.kord.common.
 }
 
 sealed class dev.kord.common.entity/SortOrderType { // dev.kord.common.entity/SortOrderType|null[0]
-    constructor <init>(kotlin/Int) // dev.kord.common.entity/SortOrderType.<init>|<init>(kotlin.Int){}[0]
-
     final val value // dev.kord.common.entity/SortOrderType.value|{}value[0]
         final fun <get-value>(): kotlin/Int // dev.kord.common.entity/SortOrderType.value.<get-value>|<get-value>(){}[0]
 
@@ -8941,8 +8823,6 @@ sealed class dev.kord.common.entity/SortOrderType { // dev.kord.common.entity/So
 }
 
 sealed class dev.kord.common.entity/StageInstancePrivacyLevel { // dev.kord.common.entity/StageInstancePrivacyLevel|null[0]
-    constructor <init>(kotlin/Int) // dev.kord.common.entity/StageInstancePrivacyLevel.<init>|<init>(kotlin.Int){}[0]
-
     final val value // dev.kord.common.entity/StageInstancePrivacyLevel.value|{}value[0]
         final fun <get-value>(): kotlin/Int // dev.kord.common.entity/StageInstancePrivacyLevel.value.<get-value>|<get-value>(){}[0]
 
@@ -8966,8 +8846,6 @@ sealed class dev.kord.common.entity/StageInstancePrivacyLevel { // dev.kord.comm
 }
 
 sealed class dev.kord.common.entity/SystemChannelFlag { // dev.kord.common.entity/SystemChannelFlag|null[0]
-    constructor <init>(kotlin/Int) // dev.kord.common.entity/SystemChannelFlag.<init>|<init>(kotlin.Int){}[0]
-
     final val code // dev.kord.common.entity/SystemChannelFlag.code|{}code[0]
         final fun <get-code>(): kotlin/Int // dev.kord.common.entity/SystemChannelFlag.code.<get-code>|<get-code>(){}[0]
     final val shift // dev.kord.common.entity/SystemChannelFlag.shift|{}shift[0]
@@ -9002,8 +8880,6 @@ sealed class dev.kord.common.entity/SystemChannelFlag { // dev.kord.common.entit
 }
 
 sealed class dev.kord.common.entity/TeamMemberRole { // dev.kord.common.entity/TeamMemberRole|null[0]
-    constructor <init>(kotlin/String) // dev.kord.common.entity/TeamMemberRole.<init>|<init>(kotlin.String){}[0]
-
     final val value // dev.kord.common.entity/TeamMemberRole.value|{}value[0]
         final fun <get-value>(): kotlin/String // dev.kord.common.entity/TeamMemberRole.value.<get-value>|<get-value>(){}[0]
 
@@ -9029,8 +8905,6 @@ sealed class dev.kord.common.entity/TeamMemberRole { // dev.kord.common.entity/T
 }
 
 sealed class dev.kord.common.entity/TeamMembershipState { // dev.kord.common.entity/TeamMembershipState|null[0]
-    constructor <init>(kotlin/Int) // dev.kord.common.entity/TeamMembershipState.<init>|<init>(kotlin.Int){}[0]
-
     final val value // dev.kord.common.entity/TeamMembershipState.value|{}value[0]
         final fun <get-value>(): kotlin/Int // dev.kord.common.entity/TeamMembershipState.value.<get-value>|<get-value>(){}[0]
 
@@ -9054,8 +8928,6 @@ sealed class dev.kord.common.entity/TeamMembershipState { // dev.kord.common.ent
 }
 
 sealed class dev.kord.common.entity/TextInputStyle { // dev.kord.common.entity/TextInputStyle|null[0]
-    constructor <init>(kotlin/Int) // dev.kord.common.entity/TextInputStyle.<init>|<init>(kotlin.Int){}[0]
-
     final val value // dev.kord.common.entity/TextInputStyle.value|{}value[0]
         final fun <get-value>(): kotlin/Int // dev.kord.common.entity/TextInputStyle.value.<get-value>|<get-value>(){}[0]
 
@@ -9079,8 +8951,6 @@ sealed class dev.kord.common.entity/TextInputStyle { // dev.kord.common.entity/T
 }
 
 sealed class dev.kord.common.entity/UserFlag { // dev.kord.common.entity/UserFlag|null[0]
-    constructor <init>(kotlin/Int) // dev.kord.common.entity/UserFlag.<init>|<init>(kotlin.Int){}[0]
-
     final val code // dev.kord.common.entity/UserFlag.code|{}code[0]
         final fun <get-code>(): kotlin/Int // dev.kord.common.entity/UserFlag.code.<get-code>|<get-code>(){}[0]
     final val shift // dev.kord.common.entity/UserFlag.shift|{}shift[0]
@@ -9133,8 +9003,6 @@ sealed class dev.kord.common.entity/UserFlag { // dev.kord.common.entity/UserFla
 }
 
 sealed class dev.kord.common.entity/UserPremium { // dev.kord.common.entity/UserPremium|null[0]
-    constructor <init>(kotlin/Int) // dev.kord.common.entity/UserPremium.<init>|<init>(kotlin.Int){}[0]
-
     final val value // dev.kord.common.entity/UserPremium.value|{}value[0]
         final fun <get-value>(): kotlin/Int // dev.kord.common.entity/UserPremium.value.<get-value>|<get-value>(){}[0]
 
@@ -9162,8 +9030,6 @@ sealed class dev.kord.common.entity/UserPremium { // dev.kord.common.entity/User
 }
 
 sealed class dev.kord.common.entity/VerificationLevel { // dev.kord.common.entity/VerificationLevel|null[0]
-    constructor <init>(kotlin/Int) // dev.kord.common.entity/VerificationLevel.<init>|<init>(kotlin.Int){}[0]
-
     final val value // dev.kord.common.entity/VerificationLevel.value|{}value[0]
         final fun <get-value>(): kotlin/Int // dev.kord.common.entity/VerificationLevel.value.<get-value>|<get-value>(){}[0]
 
@@ -9193,8 +9059,6 @@ sealed class dev.kord.common.entity/VerificationLevel { // dev.kord.common.entit
 }
 
 sealed class dev.kord.common.entity/VideoQualityMode { // dev.kord.common.entity/VideoQualityMode|null[0]
-    constructor <init>(kotlin/Int) // dev.kord.common.entity/VideoQualityMode.<init>|<init>(kotlin.Int){}[0]
-
     final val value // dev.kord.common.entity/VideoQualityMode.value|{}value[0]
         final fun <get-value>(): kotlin/Int // dev.kord.common.entity/VideoQualityMode.value.<get-value>|<get-value>(){}[0]
 
@@ -9218,8 +9082,6 @@ sealed class dev.kord.common.entity/VideoQualityMode { // dev.kord.common.entity
 }
 
 sealed class dev.kord.common.entity/WebhookType { // dev.kord.common.entity/WebhookType|null[0]
-    constructor <init>(kotlin/Int) // dev.kord.common.entity/WebhookType.<init>|<init>(kotlin.Int){}[0]
-
     final val value // dev.kord.common.entity/WebhookType.value|{}value[0]
         final fun <get-value>(): kotlin/Int // dev.kord.common.entity/WebhookType.value.<get-value>|<get-value>(){}[0]
 
@@ -9245,8 +9107,6 @@ sealed class dev.kord.common.entity/WebhookType { // dev.kord.common.entity/Webh
 }
 
 sealed class dev.kord.common.serialization/DurationAsLongSerializer : kotlinx.serialization/KSerializer<kotlin.time/Duration> { // dev.kord.common.serialization/DurationAsLongSerializer|null[0]
-    constructor <init>(kotlin.time/DurationUnit, kotlin/String) // dev.kord.common.serialization/DurationAsLongSerializer.<init>|<init>(kotlin.time.DurationUnit;kotlin.String){}[0]
-
     final val descriptor // dev.kord.common.serialization/DurationAsLongSerializer.descriptor|{}descriptor[0]
         final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // dev.kord.common.serialization/DurationAsLongSerializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
     final val unit // dev.kord.common.serialization/DurationAsLongSerializer.unit|{}unit[0]

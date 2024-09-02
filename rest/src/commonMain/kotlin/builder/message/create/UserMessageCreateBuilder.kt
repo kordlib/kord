@@ -8,7 +8,6 @@ import dev.kord.common.entity.optional.*
 import dev.kord.common.entity.optional.delegate.delegate
 import dev.kord.rest.builder.RequestBuilder
 import dev.kord.rest.builder.message.AllowedMentionsBuilder
-import dev.kord.rest.builder.message.allowedMentions
 import dev.kord.rest.builder.message.buildMessageFlags
 import dev.kord.rest.json.request.MessageCreateRequest
 import dev.kord.rest.json.request.MultipartMessageCreateRequest
@@ -24,6 +23,15 @@ public class UserMessageCreateBuilder : AbstractMessageCreateBuilder(), RequestB
 
     /** A value that can be used to verify a message was sent (up to 25 characters). */
     public var nonce: String? by ::_nonce.delegate()
+
+    private var _enforceNonce: OptionalBoolean = OptionalBoolean.Missing
+
+    /**
+     * If `true` and [nonce] is present, it will be checked for uniqueness in the past few minutes.
+     * If another message was created by the same author with the same nonce,
+     * that message will be returned and no new message will be created.
+     */
+    public var enforceNonce: Boolean? by ::_enforceNonce.delegate()
 
     private var _messageReference: OptionalSnowflake = OptionalSnowflake.Missing
 
@@ -68,7 +76,8 @@ public class UserMessageCreateBuilder : AbstractMessageCreateBuilder(), RequestB
             stickerIds = _stickerIds.mapCopy(),
             attachments = _attachments.mapList { it.toRequest() },
             flags = buildMessageFlags(flags, suppressEmbeds, suppressNotifications),
-            poll = _poll
+            enforceNonce = _enforceNonce,
+            poll = _poll,
         ),
         files = files.toList(),
     )

@@ -24,7 +24,9 @@ public data class MessageCreateRequest(
     val stickerIds: Optional<List<Snowflake>> = Optional.Missing(),
     val attachments: Optional<List<AttachmentRequest>> = Optional.Missing(),
     val flags: Optional<MessageFlags> = Optional.Missing(),
-    val poll: Optional<CreatablePoll> = Optional.Missing()
+    @SerialName("enforce_nonce")
+    val enforceNonce: OptionalBoolean = OptionalBoolean.Missing,
+    val poll: Optional<CreatablePoll> = Optional.Missing(),
 )
 
 public data class MultipartMessageCreateRequest(
@@ -113,7 +115,7 @@ public data class ForumThreadMessageRequest(
     val stickerIds: Optional<List<Snowflake>> = Optional.Missing(),
     val attachments: Optional<List<AttachmentRequest>> = Optional.Missing(),
     val flags: Optional<MessageFlags> = Optional.Missing(),
-    val poll: Optional<CreatablePoll> = Optional.Missing()
+    val poll: Optional<CreatablePoll> = Optional.Missing(),
 )
 
 public data class MultipartForumThreadMessageCreateRequest(
