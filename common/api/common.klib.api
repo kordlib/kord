@@ -4205,7 +4205,7 @@ final class dev.kord.common.entity/DiscordPinsUpdateData { // dev.kord.common.en
 }
 
 final class dev.kord.common.entity/DiscordPoll { // dev.kord.common.entity/DiscordPoll|null[0]
-    constructor <init>(dev.kord.common.entity/DiscordPoll.Media, kotlin.collections/List<dev.kord.common.entity/DiscordPoll.Answer>, kotlinx.datetime/Instant?, kotlin/Boolean, dev.kord.common.entity/PollLayoutType, dev.kord.common.entity/DiscordPoll.Results?) // dev.kord.common.entity/DiscordPoll.<init>|<init>(dev.kord.common.entity.DiscordPoll.Media;kotlin.collections.List<dev.kord.common.entity.DiscordPoll.Answer>;kotlinx.datetime.Instant?;kotlin.Boolean;dev.kord.common.entity.PollLayoutType;dev.kord.common.entity.DiscordPoll.Results?){}[0]
+    constructor <init>(dev.kord.common.entity/DiscordPoll.Media, kotlin.collections/List<dev.kord.common.entity/DiscordPoll.Answer>, kotlinx.datetime/Instant?, kotlin/Boolean, dev.kord.common.entity/PollLayoutType, dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordPoll.Results> = ...) // dev.kord.common.entity/DiscordPoll.<init>|<init>(dev.kord.common.entity.DiscordPoll.Media;kotlin.collections.List<dev.kord.common.entity.DiscordPoll.Answer>;kotlinx.datetime.Instant?;kotlin.Boolean;dev.kord.common.entity.PollLayoutType;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.DiscordPoll.Results>){}[0]
 
     final val allowMultiselect // dev.kord.common.entity/DiscordPoll.allowMultiselect|{}allowMultiselect[0]
         final fun <get-allowMultiselect>(): kotlin/Boolean // dev.kord.common.entity/DiscordPoll.allowMultiselect.<get-allowMultiselect>|<get-allowMultiselect>(){}[0]
@@ -4218,15 +4218,15 @@ final class dev.kord.common.entity/DiscordPoll { // dev.kord.common.entity/Disco
     final val question // dev.kord.common.entity/DiscordPoll.question|{}question[0]
         final fun <get-question>(): dev.kord.common.entity/DiscordPoll.Media // dev.kord.common.entity/DiscordPoll.question.<get-question>|<get-question>(){}[0]
     final val results // dev.kord.common.entity/DiscordPoll.results|{}results[0]
-        final fun <get-results>(): dev.kord.common.entity/DiscordPoll.Results? // dev.kord.common.entity/DiscordPoll.results.<get-results>|<get-results>(){}[0]
+        final fun <get-results>(): dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordPoll.Results> // dev.kord.common.entity/DiscordPoll.results.<get-results>|<get-results>(){}[0]
 
     final fun component1(): dev.kord.common.entity/DiscordPoll.Media // dev.kord.common.entity/DiscordPoll.component1|component1(){}[0]
     final fun component2(): kotlin.collections/List<dev.kord.common.entity/DiscordPoll.Answer> // dev.kord.common.entity/DiscordPoll.component2|component2(){}[0]
     final fun component3(): kotlinx.datetime/Instant? // dev.kord.common.entity/DiscordPoll.component3|component3(){}[0]
     final fun component4(): kotlin/Boolean // dev.kord.common.entity/DiscordPoll.component4|component4(){}[0]
     final fun component5(): dev.kord.common.entity/PollLayoutType // dev.kord.common.entity/DiscordPoll.component5|component5(){}[0]
-    final fun component6(): dev.kord.common.entity/DiscordPoll.Results? // dev.kord.common.entity/DiscordPoll.component6|component6(){}[0]
-    final fun copy(dev.kord.common.entity/DiscordPoll.Media = ..., kotlin.collections/List<dev.kord.common.entity/DiscordPoll.Answer> = ..., kotlinx.datetime/Instant? = ..., kotlin/Boolean = ..., dev.kord.common.entity/PollLayoutType = ..., dev.kord.common.entity/DiscordPoll.Results? = ...): dev.kord.common.entity/DiscordPoll // dev.kord.common.entity/DiscordPoll.copy|copy(dev.kord.common.entity.DiscordPoll.Media;kotlin.collections.List<dev.kord.common.entity.DiscordPoll.Answer>;kotlinx.datetime.Instant?;kotlin.Boolean;dev.kord.common.entity.PollLayoutType;dev.kord.common.entity.DiscordPoll.Results?){}[0]
+    final fun component6(): dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordPoll.Results> // dev.kord.common.entity/DiscordPoll.component6|component6(){}[0]
+    final fun copy(dev.kord.common.entity/DiscordPoll.Media = ..., kotlin.collections/List<dev.kord.common.entity/DiscordPoll.Answer> = ..., kotlinx.datetime/Instant? = ..., kotlin/Boolean = ..., dev.kord.common.entity/PollLayoutType = ..., dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordPoll.Results> = ...): dev.kord.common.entity/DiscordPoll // dev.kord.common.entity/DiscordPoll.copy|copy(dev.kord.common.entity.DiscordPoll.Media;kotlin.collections.List<dev.kord.common.entity.DiscordPoll.Answer>;kotlinx.datetime.Instant?;kotlin.Boolean;dev.kord.common.entity.PollLayoutType;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.DiscordPoll.Results>){}[0]
     final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.common.entity/DiscordPoll.equals|equals(kotlin.Any?){}[0]
     final fun hashCode(): kotlin/Int // dev.kord.common.entity/DiscordPoll.hashCode|hashCode(){}[0]
     final fun toString(): kotlin/String // dev.kord.common.entity/DiscordPoll.toString|toString(){}[0]
