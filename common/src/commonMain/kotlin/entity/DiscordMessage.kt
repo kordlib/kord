@@ -124,9 +124,9 @@
 @file:Generate(
     INT_KORD_ENUM, name = "PollLayoutType",
     docUrl = "https://discord.com/developers/docs/resources/poll#layout-type",
-    entries =  [
-        Entry("DEFAULT", intValue = 1, kDoc = "The, uhm, default layout type.")
-    ]
+    entries = [
+        Entry("Default", intValue = 1, kDoc = "The, uhm, default layout type."),
+    ],
 )
 
 package dev.kord.common.entity

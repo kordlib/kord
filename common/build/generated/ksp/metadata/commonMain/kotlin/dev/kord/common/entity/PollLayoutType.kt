@@ -45,7 +45,7 @@ public sealed class PollLayoutType(
     /**
      * The, uhm, default layout type.
      */
-    public object DEFAULT : PollLayoutType(1)
+    public object Default : PollLayoutType(1)
 
     internal object Serializer : KSerializer<PollLayoutType> {
         override val descriptor: SerialDescriptor =
@@ -65,7 +65,7 @@ public sealed class PollLayoutType(
          */
         public val entries: List<PollLayoutType> by lazy(mode = PUBLICATION) {
             listOf(
-                DEFAULT,
+                Default,
             )
         }
 
@@ -74,7 +74,7 @@ public sealed class PollLayoutType(
          * specified [value].
          */
         public fun from(`value`: Int): PollLayoutType = when (value) {
-            1 -> DEFAULT
+            1 -> Default
             else -> Unknown(value)
         }
     }

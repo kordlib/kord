@@ -8110,8 +8110,8 @@ public final class dev/kord/common/entity/PollLayoutType$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
-public final class dev/kord/common/entity/PollLayoutType$DEFAULT : dev/kord/common/entity/PollLayoutType {
-	public static final field INSTANCE Ldev/kord/common/entity/PollLayoutType$DEFAULT;
+public final class dev/kord/common/entity/PollLayoutType$Default : dev/kord/common/entity/PollLayoutType {
+	public static final field INSTANCE Ldev/kord/common/entity/PollLayoutType$Default;
 }
 
 public final class dev/kord/common/entity/PollLayoutType$Unknown : dev/kord/common/entity/PollLayoutType {

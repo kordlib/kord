@@ -8666,7 +8666,7 @@ sealed class dev.kord.common.entity/PollLayoutType { // dev.kord.common.entity/P
         final fun serializer(): kotlinx.serialization/KSerializer<dev.kord.common.entity/PollLayoutType> // dev.kord.common.entity/PollLayoutType.Companion.serializer|serializer(){}[0]
     }
 
-    final object DEFAULT : dev.kord.common.entity/PollLayoutType // dev.kord.common.entity/PollLayoutType.DEFAULT|null[0]
+    final object Default : dev.kord.common.entity/PollLayoutType // dev.kord.common.entity/PollLayoutType.Default|null[0]
 }
 
 sealed class dev.kord.common.entity/PremiumTier { // dev.kord.common.entity/PremiumTier|null[0]

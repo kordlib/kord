@@ -33,7 +33,7 @@ public class PollBuilder : RequestBuilder<CreatablePoll> {
     internal var _allowMultiselect: Optional<Boolean> = Optional.Missing()
     public var allowMultiselect: Boolean? by ::_allowMultiselect.delegate()
 
-    public var layoutType: PollLayoutType = PollLayoutType.DEFAULT
+    public var layoutType: PollLayoutType = PollLayoutType.Default
 
     /**
      * Sets the polls [Duration] to [duration].
