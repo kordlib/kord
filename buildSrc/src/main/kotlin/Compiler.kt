@@ -19,7 +19,7 @@ object Jvm {
 fun KotlinCommonCompilerOptions.applyKordCompilerOptions() {
     allWarningsAsErrors = true
     progressiveMode = true
-    freeCompilerArgs.addAll("-Xexpect-actual-classes", "-Xdont-warn-on-error-suppression")
+    freeCompilerArgs.add("-Xexpect-actual-classes")
 }
 
 internal fun NamedDomainObjectSet<KotlinSourceSet>.applyKordTestOptIns() {

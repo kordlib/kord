@@ -2253,11 +2253,6 @@ public final class dev/kord/rest/builder/message/create/MessageCreateBuilder$Def
 }
 
 public final class dev/kord/rest/builder/message/create/MessageCreateBuilderKt {
-	public static final synthetic fun actionRow (Ldev/kord/rest/builder/message/create/MessageCreateBuilder;Lkotlin/jvm/functions/Function1;)V
-	public static final synthetic fun allowedMentions (Ldev/kord/rest/builder/message/create/MessageCreateBuilder;Lkotlin/jvm/functions/Function1;)V
-	public static synthetic fun allowedMentions$default (Ldev/kord/rest/builder/message/create/MessageCreateBuilder;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
-	public static final synthetic fun embed (Ldev/kord/rest/builder/message/create/MessageCreateBuilder;Lkotlin/jvm/functions/Function1;)V
-	public static final synthetic fun messageFlags (Ldev/kord/rest/builder/message/create/MessageCreateBuilder;Lkotlin/jvm/functions/Function1;)V
 	public static final fun poll (Ldev/kord/rest/builder/message/create/MessageCreateBuilder;Lkotlin/jvm/functions/Function1;)V
 }
 
