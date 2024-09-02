@@ -764,9 +764,9 @@ public data class DiscordPoll(
          *
          * To compensate for this, after a poll is finished there is a background job which performs a final,
          * accurate tally of votes.
-         * This tally has concluded once [dev.kord.common.entity.Poll.Results.isFinalized] is `true`.
+         * This tally has concluded once [dev.kord.common.entity.DiscordPoll.Results.isFinalized] is `true`.
          *
-         * If [dev.kord.common.entity.Poll.Results.answerCounts] does not contain an entry for a particular answer,
+         * If [dev.kord.common.entity.DiscordPoll.Results.answerCounts] does not contain an entry for a particular answer,
          * then there are no votes for that answer.
          *
          * @property id the [Answer.answerId]
