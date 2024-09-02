@@ -1,7 +1,6 @@
 package dev.kord.core.rest
 
 import dev.kord.common.Color
-import dev.kord.common.annotation.KordUnsafe
 import dev.kord.common.entity.*
 import dev.kord.core.Kord
 import dev.kord.core.behavior.*
@@ -537,7 +536,6 @@ class RestServiceTest {
 
     }
 
-    @OptIn(KordUnsafe::class)
     @Test
     @Order(29)
     fun `poll in channel`() = runTest {

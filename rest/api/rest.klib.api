@@ -6074,6 +6074,34 @@ final class dev.kord.rest.json.request/WebhookModifyRequest { // dev.kord.rest.j
     }
 }
 
+final class dev.kord.rest.json.response/AnswerVotersGetResponse { // dev.kord.rest.json.response/AnswerVotersGetResponse|null[0]
+    constructor <init>(kotlin.collections/List<dev.kord.common.entity/DiscordUser>) // dev.kord.rest.json.response/AnswerVotersGetResponse.<init>|<init>(kotlin.collections.List<dev.kord.common.entity.DiscordUser>){}[0]
+
+    final val users // dev.kord.rest.json.response/AnswerVotersGetResponse.users|{}users[0]
+        final fun <get-users>(): kotlin.collections/List<dev.kord.common.entity/DiscordUser> // dev.kord.rest.json.response/AnswerVotersGetResponse.users.<get-users>|<get-users>(){}[0]
+
+    final fun component1(): kotlin.collections/List<dev.kord.common.entity/DiscordUser> // dev.kord.rest.json.response/AnswerVotersGetResponse.component1|component1(){}[0]
+    final fun copy(kotlin.collections/List<dev.kord.common.entity/DiscordUser> = ...): dev.kord.rest.json.response/AnswerVotersGetResponse // dev.kord.rest.json.response/AnswerVotersGetResponse.copy|copy(kotlin.collections.List<dev.kord.common.entity.DiscordUser>){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.json.response/AnswerVotersGetResponse.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.rest.json.response/AnswerVotersGetResponse.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // dev.kord.rest.json.response/AnswerVotersGetResponse.toString|toString(){}[0]
+
+    final object $serializer : kotlinx.serialization.internal/GeneratedSerializer<dev.kord.rest.json.response/AnswerVotersGetResponse> { // dev.kord.rest.json.response/AnswerVotersGetResponse.$serializer|null[0]
+        final val descriptor // dev.kord.rest.json.response/AnswerVotersGetResponse.$serializer.descriptor|{}descriptor[0]
+            final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // dev.kord.rest.json.response/AnswerVotersGetResponse.$serializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
+
+        final fun childSerializers(): kotlin/Array<kotlinx.serialization/KSerializer<*>> // dev.kord.rest.json.response/AnswerVotersGetResponse.$serializer.childSerializers|childSerializers(){}[0]
+        final fun deserialize(kotlinx.serialization.encoding/Decoder): dev.kord.rest.json.response/AnswerVotersGetResponse // dev.kord.rest.json.response/AnswerVotersGetResponse.$serializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
+        final fun serialize(kotlinx.serialization.encoding/Encoder, dev.kord.rest.json.response/AnswerVotersGetResponse) // dev.kord.rest.json.response/AnswerVotersGetResponse.$serializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;dev.kord.rest.json.response.AnswerVotersGetResponse){}[0]
+    }
+
+    final object Companion { // dev.kord.rest.json.response/AnswerVotersGetResponse.Companion|null[0]
+        final val $childSerializers // dev.kord.rest.json.response/AnswerVotersGetResponse.Companion.$childSerializers|{}$childSerializers[0]
+
+        final fun serializer(): kotlinx.serialization/KSerializer<dev.kord.rest.json.response/AnswerVotersGetResponse> // dev.kord.rest.json.response/AnswerVotersGetResponse.Companion.serializer|serializer(){}[0]
+    }
+}
+
 final class dev.kord.rest.json.response/BanResponse { // dev.kord.rest.json.response/BanResponse|null[0]
     constructor <init>(kotlin/String?, dev.kord.common.entity/DiscordUser) // dev.kord.rest.json.response/BanResponse.<init>|<init>(kotlin.String?;dev.kord.common.entity.DiscordUser){}[0]
 
@@ -6664,7 +6692,7 @@ final class dev.kord.rest.service/ChannelService : dev.kord.rest.service/RestSer
     final suspend fun getChannelPins(dev.kord.common.entity/Snowflake): kotlin.collections/List<dev.kord.common.entity/DiscordMessage> // dev.kord.rest.service/ChannelService.getChannelPins|getChannelPins(dev.kord.common.entity.Snowflake){}[0]
     final suspend fun getMessage(dev.kord.common.entity/Snowflake, dev.kord.common.entity/Snowflake): dev.kord.common.entity/DiscordMessage // dev.kord.rest.service/ChannelService.getMessage|getMessage(dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake){}[0]
     final suspend fun getMessages(dev.kord.common.entity/Snowflake, dev.kord.rest.route/Position? = ..., kotlin/Int? = ...): kotlin.collections/List<dev.kord.common.entity/DiscordMessage> // dev.kord.rest.service/ChannelService.getMessages|getMessages(dev.kord.common.entity.Snowflake;dev.kord.rest.route.Position?;kotlin.Int?){}[0]
-    final suspend fun getPollUsersByAnswer(dev.kord.common.entity/Snowflake, dev.kord.common.entity/Snowflake, kotlin/Int, dev.kord.common.entity/Snowflake? = ..., kotlin/Int? = ...): kotlin.collections/List<dev.kord.common.entity/DiscordUser> // dev.kord.rest.service/ChannelService.getPollUsersByAnswer|getPollUsersByAnswer(dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake;kotlin.Int;dev.kord.common.entity.Snowflake?;kotlin.Int?){}[0]
+    final suspend fun getPollUsersByAnswer(dev.kord.common.entity/Snowflake, dev.kord.common.entity/Snowflake, kotlin/Int, dev.kord.common.entity/Snowflake? = ..., kotlin/Int? = ...): dev.kord.rest.json.response/AnswerVotersGetResponse // dev.kord.rest.service/ChannelService.getPollUsersByAnswer|getPollUsersByAnswer(dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake;kotlin.Int;dev.kord.common.entity.Snowflake?;kotlin.Int?){}[0]
     final suspend fun getReactions(dev.kord.common.entity/Snowflake, dev.kord.common.entity/Snowflake, kotlin/String, dev.kord.rest.route/Position.After? = ..., kotlin/Int? = ...): kotlin.collections/List<dev.kord.common.entity/DiscordUser> // dev.kord.rest.service/ChannelService.getReactions|getReactions(dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake;kotlin.String;dev.kord.rest.route.Position.After?;kotlin.Int?){}[0]
     final suspend fun joinThread(dev.kord.common.entity/Snowflake) // dev.kord.rest.service/ChannelService.joinThread|joinThread(dev.kord.common.entity.Snowflake){}[0]
     final suspend fun leaveThread(dev.kord.common.entity/Snowflake) // dev.kord.rest.service/ChannelService.leaveThread|leaveThread(dev.kord.common.entity.Snowflake){}[0]
@@ -7203,7 +7231,7 @@ sealed class <#A: kotlin/Any?> dev.kord.rest.route/Route { // dev.kord.rest.rout
 
     final object GatewayGet : dev.kord.rest.route/Route<dev.kord.rest.json.response/GatewayResponse> // dev.kord.rest.route/Route.GatewayGet|null[0]
 
-    final object GetVoteAnswer : dev.kord.rest.route/Route<kotlin.collections/List<dev.kord.common.entity/DiscordUser>> // dev.kord.rest.route/Route.GetVoteAnswer|null[0]
+    final object GetVoteAnswer : dev.kord.rest.route/Route<dev.kord.rest.json.response/AnswerVotersGetResponse> // dev.kord.rest.route/Route.GetVoteAnswer|null[0]
 
     final object GetWebhookMessage : dev.kord.rest.route/Route<dev.kord.common.entity/DiscordMessage> // dev.kord.rest.route/Route.GetWebhookMessage|null[0]
 

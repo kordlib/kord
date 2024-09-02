@@ -1,5 +1,6 @@
 package dev.kord.core.behavior
 
+import dev.kord.common.entity.Permission
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.exception.RequestException
 import dev.kord.core.Kord
@@ -226,7 +227,7 @@ public interface PollBehavior : MessageBehavior {
      * Retrieves the voters who voted for the specified [answer][answerId].
      */
     public suspend fun getAnswerVoters(answerId: Int): List<User> =
-        kord.rest.channel.getPollUsersByAnswer(channelId, id, answerId).map {
+        kord.rest.channel.getPollUsersByAnswer(channelId, id, answerId).users.map {
             val data = UserData.from(it)
 
             User(data, kord, supplier)

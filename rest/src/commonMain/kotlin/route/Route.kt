@@ -1048,10 +1048,10 @@ public sealed class Route<T>(
             DiscordMessageSticker.serializer()
         )
 
-    public object GetVoteAnswer : Route<List<DiscordUser>>(
+    public object GetVoteAnswer : Route<AnswerVotersGetResponse>(
         HttpMethod.Get,
         "/channels/$ChannelId/polls/$MessageId/answers/$PollAnswerId",
-        ListSerializer(DiscordUser.serializer())
+        AnswerVotersGetResponse.serializer(),
     )
 
     public object PostExpirePoll : Route<DiscordMessage>(

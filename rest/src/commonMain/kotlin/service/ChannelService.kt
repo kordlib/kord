@@ -8,6 +8,7 @@ import dev.kord.rest.builder.channel.thread.StartThreadWithMessageBuilder
 import dev.kord.rest.builder.message.create.UserMessageCreateBuilder
 import dev.kord.rest.builder.message.modify.UserMessageModifyBuilder
 import dev.kord.rest.json.request.*
+import dev.kord.rest.json.response.AnswerVotersGetResponse
 import dev.kord.rest.json.response.FollowedChannelResponse
 import dev.kord.rest.json.response.ListThreadsResponse
 import dev.kord.rest.request.RequestBuilder
@@ -421,7 +422,7 @@ public class ChannelService(requestHandler: RequestHandler) : RestService(reques
         answerId: Int,
         after: Snowflake? = null,
         limit: Int? = null
-    ): List<DiscordUser> = call(Route.GetVoteAnswer) {
+    ): AnswerVotersGetResponse = call(Route.GetVoteAnswer) {
         keys[Route.ChannelId] = channelId
         keys[Route.MessageId] = messageId
         keys[Route.PollAnswerId] = answerId.toString()
