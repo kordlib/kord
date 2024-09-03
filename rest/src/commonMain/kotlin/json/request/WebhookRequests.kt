@@ -1,7 +1,6 @@
 package dev.kord.rest.json.request
 
 import dev.kord.common.entity.AllowedMentions
-import dev.kord.rest.json.request.CreatablePoll
 import dev.kord.common.entity.DiscordComponent
 import dev.kord.common.entity.MessageFlags
 import dev.kord.common.entity.Snowflake
