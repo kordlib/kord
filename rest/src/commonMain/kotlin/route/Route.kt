@@ -989,6 +989,26 @@ public sealed class Route<T>(
 
 
     /*
+     * Poll:
+     * https://discord.com/developers/docs/resources/poll
+     */
+
+    public object GetVoteAnswer :
+        Route<AnswerVotersGetResponse>(
+            HttpMethod.Get,
+            "/channels/$ChannelId/polls/$MessageId/answers/$PollAnswerId",
+            AnswerVotersGetResponse.serializer(),
+        )
+
+    public object PostExpirePoll :
+        Route<DiscordMessage>(
+            HttpMethod.Post,
+            "/channels/$ChannelId/polls/$MessageId/expire",
+            DiscordMessage.serializer(),
+        )
+
+
+    /*
      * Stage Instance:
      * https://discord.com/developers/docs/resources/stage-instance
      */
@@ -1047,16 +1067,4 @@ public sealed class Route<T>(
             "/guilds/$GuildId/stickers/$StickerId",
             DiscordMessageSticker.serializer()
         )
-
-    public object GetVoteAnswer : Route<AnswerVotersGetResponse>(
-        HttpMethod.Get,
-        "/channels/$ChannelId/polls/$MessageId/answers/$PollAnswerId",
-        AnswerVotersGetResponse.serializer(),
-    )
-
-    public object PostExpirePoll : Route<DiscordMessage>(
-        HttpMethod.Post,
-        "/channels/$ChannelId/polls/$MessageId/expire",
-        DiscordMessage.serializer()
-    )
 }
