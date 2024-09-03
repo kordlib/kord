@@ -8,17 +8,20 @@ repositories {
     mavenCentral()
 }
 
+@OptIn(ExperimentalKotlinGradlePluginApi::class)
 kotlin {
-    jvm()
+    compilerOptions {
+        applyKordCommonCompilerOptions()
+    }
+
+    jvm {
+        compilerOptions {
+            applyKordJvmCompilerOptions()
+        }
+    }
     js {
         nodejs()
         useCommonJs()
-    }
-    jvmToolchain(Jvm.target)
-
-    @OptIn(ExperimentalKotlinGradlePluginApi::class)
-    compilerOptions {
-        applyKordCompilerOptions()
     }
 }
 
