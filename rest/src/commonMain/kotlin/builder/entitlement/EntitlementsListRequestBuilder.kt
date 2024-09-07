@@ -46,6 +46,12 @@ public class EntitlementsListRequestBuilder : RequestBuilder<EntitlementsListReq
         position = Position.Before(id)
     }
 
-    override fun toRequest(): EntitlementsListRequest =
-        EntitlementsListRequest(userId, skuIds, position, limit, guildId, excludeEnded)
+    override fun toRequest(): EntitlementsListRequest = EntitlementsListRequest(
+        userId = userId,
+        skuIds = skuIds.toList(),
+        position = position,
+        limit = limit,
+        guildId = guildId,
+        excludeEnded = excludeEnded,
+    )
 }
