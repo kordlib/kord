@@ -2546,6 +2546,7 @@ public final class dev/kord/rest/json/JsonErrorCode : java/lang/Enum {
 	public static final field BitrateTooHigh Ldev/kord/rest/json/JsonErrorCode;
 	public static final field BotsEndpoint Ldev/kord/rest/json/JsonErrorCode;
 	public static final field BulkDeleteOldMessage Ldev/kord/rest/json/JsonErrorCode;
+	public static final field CanOnlyDeleteSandboxEntitlements Ldev/kord/rest/json/JsonErrorCode;
 	public static final field CannotConvertBetweenPremiumAndNormalEmoji Ldev/kord/rest/json/JsonErrorCode;
 	public static final field CannotDeleteGuildSubscriptionIntegration Ldev/kord/rest/json/JsonErrorCode;
 	public static final field CannotDeleteRequiredCommunityChannel Ldev/kord/rest/json/JsonErrorCode;
@@ -2655,6 +2656,7 @@ public final class dev/kord/rest/json/JsonErrorCode : java/lang/Enum {
 	public static final field NonBotGuildInviteAccepted Ldev/kord/rest/json/JsonErrorCode;
 	public static final field OAuth2ApplicationLimit Ldev/kord/rest/json/JsonErrorCode;
 	public static final field OAuth2HasNoBot Ldev/kord/rest/json/JsonErrorCode;
+	public static final field OnlyConsumableSkusCanBeConsumed Ldev/kord/rest/json/JsonErrorCode;
 	public static final field OnlyOwner Ldev/kord/rest/json/JsonErrorCode;
 	public static final field OperationOnArchivedThread Ldev/kord/rest/json/JsonErrorCode;
 	public static final field OwnerCannotBePendingMember Ldev/kord/rest/json/JsonErrorCode;

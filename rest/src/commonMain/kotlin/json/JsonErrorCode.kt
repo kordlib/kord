@@ -307,6 +307,12 @@ public enum class JsonErrorCode(public val code: Int) {
     /** Connection has been revoked. */
     ConnectionRevoked(40012),
 
+    /** Only consumable SKUs can be consumed. */
+    OnlyConsumableSkusCanBeConsumed(40018),
+
+    /** You can only delete sandbox entitlements. */
+    CanOnlyDeleteSandboxEntitlements(40019),
+
     /** Target user is not connected to voice. */
     UserNotInVoice(40032),
 
