@@ -674,7 +674,7 @@ public interface EntitySupplier {
      * The returned flow is lazily executed, any [RequestException] will be thrown on
      * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
      */
-    public suspend fun getEntitlements(applicationId: Snowflake, request: EntitlementsListRequest): Flow<Entitlement>
+    public fun getEntitlements(applicationId: Snowflake, request: EntitlementsListRequest): Flow<Entitlement>
 
 }
 

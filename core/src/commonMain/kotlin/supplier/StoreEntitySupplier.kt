@@ -321,7 +321,7 @@ public class StoreEntitySupplier(
         return storeAndReturn(supplier.getEntitlementOrNull(applicationId, entitlementId)) { it.data }
     }
 
-    override suspend fun getEntitlements(
+    override fun getEntitlements(
         applicationId: Snowflake,
         request: EntitlementsListRequest
     ): Flow<Entitlement> = storeOnEach(supplier.getEntitlements(applicationId, request)) { it.data }

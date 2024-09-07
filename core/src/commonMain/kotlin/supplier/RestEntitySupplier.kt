@@ -659,7 +659,7 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
         }
 
     // maxBatchSize: see https://discord.com/developers/docs/monetization/entitlements#list-entitlements
-    override suspend fun getEntitlements(
+    override fun getEntitlements(
         applicationId: Snowflake,
         request: EntitlementsListRequest
     ): Flow<Entitlement> = limitedPagination(request.limit, maxBatchSize = 100) { batchSize ->

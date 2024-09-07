@@ -287,7 +287,7 @@ private class FallbackEntitySupplier(val first: EntitySupplier, val second: Enti
             entitlementId
         )
 
-    override suspend fun getEntitlements(
+    override fun getEntitlements(
         applicationId: Snowflake,
         request: EntitlementsListRequest
     ): Flow<Entitlement> = first.getEntitlements(applicationId, request)
