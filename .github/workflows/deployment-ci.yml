@@ -27,9 +27,9 @@ jobs:
         uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: 11
+          java-version: 21
       - name: Set up Gradle
-        uses: gradle/actions/setup-gradle@v3
+        uses: gradle/actions/setup-gradle@v4
       - name: Build with Gradle
         run: ./gradlew --stacktrace --info build
   release:
@@ -42,6 +42,8 @@ jobs:
       KORD_TEST_TOKEN: ${{ secrets.KORD_TEST_TOKEN }}
       NEXUS_USER: ${{ secrets.NEXUS_USER }}
       NEXUS_PASSWORD: ${{ secrets.NEXUS_PASSWORD }}
+      KORD_REPO_USER: ${{ secrets.KORD_REPO_USER }}
+      KORD_REPO_PASSWORD: ${{ secrets.KORD_REPO_PASSWORD }}
       SIGNING_KEY: ${{ secrets.signingKey }}
       SIGNING_PASSWORD: ${{ secrets.signingPassword }}
     steps:
@@ -52,9 +54,9 @@ jobs:
         uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: 11
+          java-version: 21
       - name: Set up Gradle
-        uses: gradle/actions/setup-gradle@v3
+        uses: gradle/actions/setup-gradle@v4
       - name: Build with Gradle
         run: ./gradlew --stacktrace --info build
       - name: Publish with Gradle

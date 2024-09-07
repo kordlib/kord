@@ -304,23 +304,35 @@ public data class Heartbeat(val data: Long?) : Event() {
         override fun deserialize(decoder: Decoder) = Heartbeat(decoder.decodeSerializableValue(delegate))
     }
 
-    @Deprecated("Binary compatibility, keep for some releases.", level = DeprecationLevel.HIDDEN)
+    @Deprecated(
+        "Kept for binary compatibility, this declaration will be removed in 0.18.0.",
+        level = DeprecationLevel.HIDDEN,
+    )
     public constructor(data: Long) : this(data as Long?)
 
     @Suppress("PropertyName")
-    @Deprecated("Binary compatibility, keep for some releases.", level = DeprecationLevel.HIDDEN)
+    @Deprecated(
+        "Kept for binary compatibility, this declaration will be removed in 0.18.0.",
+        level = DeprecationLevel.HIDDEN,
+    )
     @get:JvmName("getData")
     public val data_: Long
         get() = data ?: throw NullPointerException("This heartbeat request contains a null sequence number")
 
     @Suppress("FunctionName")
-    @Deprecated("Binary compatibility, keep for some releases.", level = DeprecationLevel.HIDDEN)
+    @Deprecated(
+        "Kept for binary compatibility, this declaration will be removed in 0.18.0.",
+        level = DeprecationLevel.HIDDEN,
+    )
     @JvmName("component1")
     public fun component1_(): Long =
         component1() ?: throw NullPointerException("This heartbeat request contains a null sequence number")
 
     @Suppress("FunctionName")
-    @Deprecated("Binary compatibility, keep for some releases.", level = DeprecationLevel.HIDDEN)
+    @Deprecated(
+        "Kept for binary compatibility, this declaration will be removed in 0.18.0.",
+        level = DeprecationLevel.HIDDEN,
+    )
     @JvmName("copy")
     public fun copy_(
         data: Long = this.data ?: throw NullPointerException("This heartbeat request contains a null sequence number"),
@@ -329,7 +341,8 @@ public data class Heartbeat(val data: Long?) : Event() {
     public companion object {
         @Suppress("DEPRECATION_ERROR")
         @Deprecated(
-            "Renamed to 'Companion'.",
+            "Renamed to 'Companion'. The deprecation level will be raised to HIDDEN in 0.16.0 and this declaration " +
+                "will be removed in 0.17.0.",
             ReplaceWith("Heartbeat.Companion", imports = ["dev.kord.gateway.Heartbeat"]),
             DeprecationLevel.ERROR,
         )
@@ -338,7 +351,8 @@ public data class Heartbeat(val data: Long?) : Event() {
     }
 
     @Deprecated(
-        "Renamed to 'Companion'.",
+        "Renamed to 'Companion'. The deprecation level will be raised to HIDDEN in 0.16.0 and this declaration will " +
+            "be removed in 0.17.0.",
         ReplaceWith("Heartbeat.Companion", imports = ["dev.kord.gateway.Heartbeat"]),
         DeprecationLevel.ERROR,
     )
@@ -537,7 +551,8 @@ public data class InteractionCreate(val interaction: DiscordInteraction, overrid
 
 @Deprecated(
     "This event is not supposed to be sent to bots. See https://github.com/discord/discord-api-docs/issues/3690 for " +
-        "details.",
+        "details. The deprecation level will be raised to HIDDEN in 0.16.0 and this declaration will be removed in " +
+        "0.17.0.",
     level = DeprecationLevel.ERROR,
 )
 public data class ApplicationCommandCreate(val application: DiscordApplicationCommand, override val sequence: Int?) :
@@ -546,7 +561,8 @@ public data class ApplicationCommandCreate(val application: DiscordApplicationCo
 
 @Deprecated(
     "This event is not supposed to be sent to bots. See https://github.com/discord/discord-api-docs/issues/3690 for " +
-        "details.",
+        "details. The deprecation level will be raised to HIDDEN in 0.16.0 and this declaration will be removed in " +
+        "0.17.0.",
     level = DeprecationLevel.ERROR,
 )
 public data class ApplicationCommandUpdate(val application: DiscordApplicationCommand, override val sequence: Int?) :
@@ -555,7 +571,8 @@ public data class ApplicationCommandUpdate(val application: DiscordApplicationCo
 
 @Deprecated(
     "This event is not supposed to be sent to bots. See https://github.com/discord/discord-api-docs/issues/3690 for " +
-        "details.",
+        "details. The deprecation level will be raised to HIDDEN in 0.16.0 and this declaration will be removed in " +
+        "0.17.0.",
     level = DeprecationLevel.ERROR,
 )
 public data class ApplicationCommandDelete(val application: DiscordApplicationCommand, override val sequence: Int?) :

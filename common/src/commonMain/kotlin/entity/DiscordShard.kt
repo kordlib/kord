@@ -35,7 +35,8 @@ public data class DiscordShard(val index: Int, val count: Int) {
     public companion object {
         @Suppress("DEPRECATION_ERROR")
         @Deprecated(
-            "Renamed to 'Companion'.",
+            "Renamed to 'Companion'. The deprecation level will be raised to HIDDEN in 0.16.0 and this declaration " +
+                "will be removed in 0.17.0.",
             ReplaceWith("DiscordShard.Companion", imports = ["dev.kord.common.entity.DiscordShard"]),
             DeprecationLevel.ERROR,
         )
@@ -44,7 +45,8 @@ public data class DiscordShard(val index: Int, val count: Int) {
     }
 
     @Deprecated(
-        "Renamed to 'Companion'.",
+        "Renamed to 'Companion'. The deprecation level will be raised to HIDDEN in 0.16.0 and this declaration will " +
+            "be removed in 0.17.0.",
         ReplaceWith("DiscordShard.Companion", imports = ["dev.kord.common.entity.DiscordShard"]),
         DeprecationLevel.ERROR,
     )

@@ -68,6 +68,17 @@ publishing {
                 password = getenv("NEXUS_PASSWORD")
             }
         }
+
+        if (!isRelease) {
+            maven {
+                name = "kordSnapshots"
+                url = uri("https://repo.kord.dev/snapshots")
+                credentials {
+                    username = getenv("KORD_REPO_USER")
+                    password = getenv("KORD_REPO_PASSWORD")
+                }
+            }
+        }
     }
 }
 

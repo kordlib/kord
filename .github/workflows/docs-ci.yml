@@ -23,9 +23,9 @@ jobs:
         uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: 11
+          java-version: 21
       - name: Set up Gradle
-        uses: gradle/actions/setup-gradle@v3
+        uses: gradle/actions/setup-gradle@v4
       - name: Build docs with Gradle
         run: ./gradlew --stacktrace --info dokkaHtmlMultiModule
       - name: Deploy docs to GitHub Pages
