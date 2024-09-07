@@ -62,7 +62,6 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
     private inline val application get() = kord.rest.application
 
     // monetization
-    private inline val sku get() = kord.rest.sku
     private inline val entitlement get() = kord.rest.entitlement
 
 
