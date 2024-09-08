@@ -398,9 +398,10 @@ public class Kord(
     }
 
     /**
-     * Requests to create a new [test entitlement][Entitlement] with the given [skuId], [ownerId] and [ownerType].
+     * Requests to create a new [test entitlement][Entitlement] to a [Sku] with the given [skuId] for a given [ownerId]
+     * and [ownerType]. Discord will act as though that owner has entitlement to your premium offering.
      *
-     * @throws [RestRequestException] if anything went wrong during the request.
+     * @throws RestRequestException if something went wrong during the request.
      */
     public suspend fun createTestEntitlement(
         skuId: Snowflake,
@@ -414,9 +415,21 @@ public class Kord(
         return Entitlement(data, this)
     }
 
+    /**
+     * Requests to create a new [test entitlement][Entitlement] to a [Sku] with the given [skuId] for a given [user].
+     * Discord will act as though that user has entitlement to your premium offering.
+     *
+     * @throws RestRequestException if something went wrong during the request.
+     */
     public suspend fun createTestEntitlement(skuId: Snowflake, user: UserBehavior): Entitlement =
         createTestEntitlement(skuId, user.id, EntitlementOwnerType.User)
 
+    /**
+     * Requests to create a new [test entitlement][Entitlement] to a [Sku] with the given [skuId] for a given [guild].
+     * Discord will act as though that guild has entitlement to your premium offering.
+     *
+     * @throws RestRequestException if something went wrong during the request.
+     */
     public suspend fun createTestEntitlement(skuId: Snowflake, guild: GuildBehavior): Entitlement =
         createTestEntitlement(skuId, guild.id, EntitlementOwnerType.Guild)
 
