@@ -42,8 +42,8 @@ public final class dev/kord/core/Kord : kotlinx/coroutines/CoroutineScope {
 	public final fun getDefaultSupplier ()Ldev/kord/core/supplier/EntitySupplier;
 	public final fun getEntitlement (Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun getEntitlementOrNull (Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public final fun getEntitlements (Ldev/kord/core/supplier/EntitySupplyStrategy;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static synthetic fun getEntitlements$default (Ldev/kord/core/Kord;Ldev/kord/core/supplier/EntitySupplyStrategy;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+	public final fun getEntitlements (Ldev/kord/core/supplier/EntitySupplyStrategy;Lkotlin/jvm/functions/Function1;)Lkotlinx/coroutines/flow/Flow;
+	public static synthetic fun getEntitlements$default (Ldev/kord/core/Kord;Ldev/kord/core/supplier/EntitySupplyStrategy;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lkotlinx/coroutines/flow/Flow;
 	public final fun getEvents ()Lkotlinx/coroutines/flow/SharedFlow;
 	public final fun getGateway ()Ldev/kord/core/gateway/MasterGateway;
 	public final fun getGlobalApplicationCommand (Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;

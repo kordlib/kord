@@ -384,7 +384,7 @@ public class Kord(
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
-    public suspend inline fun getEntitlements(
+    public inline fun getEntitlements(
         strategy: EntitySupplyStrategy<*> = resources.defaultStrategy,
         builder: EntitlementsListRequestBuilder.() -> Unit = {},
     ): Flow<Entitlement> {
