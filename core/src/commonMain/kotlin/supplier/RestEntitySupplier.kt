@@ -1,6 +1,7 @@
 package dev.kord.core.supplier
 
 import dev.kord.common.entity.DiscordAuditLogEntry
+import dev.kord.common.entity.DiscordEntitlement
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.common.entity.optional.optionalSnowflake
@@ -653,18 +654,18 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
     // maxBatchSize: see https://discord.com/developers/docs/resources/entitlement#list-entitlements
     override fun getEntitlements(
         applicationId: Snowflake,
-        request: EntitlementsListRequest
+        request: EntitlementsListRequest,
     ): Flow<Entitlement> = limitedPagination(request.limit, maxBatchSize = 100) { batchSize ->
-        paginateForwards(batchSize, idSelector = { it.id }) { position ->
-            entitlement.listEntitlements(
-                applicationId = applicationId,
-                request = request.copy(position = position, limit = batchSize)
-            )
-        }.map {
-            val data = EntitlementData.from(it)
-            Entitlement(data, kord)
+        val req: suspend (Position.BeforeOrAfter) -> List<DiscordEntitlement> = { position ->
+            entitlement.listEntitlements(applicationId, request.copy(position = position, limit = batchSize))
         }
-    }
+        when (val start = request.position) {
+            null, is Position.After ->
+                paginateForwards(batchSize, start = start?.value ?: Snowflake.min, idSelector = { it.id }, req)
+
+            is Position.Before -> paginateBackwards(batchSize, start.value, idSelector = { it.id }, req)
+        }
+    }.map { entitlement -> Entitlement(data = EntitlementData.from(entitlement), kord) }
 
     override fun toString(): String = "RestEntitySupplier(rest=${kord.rest})"
 }
