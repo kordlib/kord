@@ -9036,6 +9036,7 @@ public final class dev/kord/core/entity/component/ActionRowComponent : dev/kord/
 	public fun getData ()Ldev/kord/core/cache/data/ComponentData;
 	public final fun getInteractionButtons ()Ljava/util/Map;
 	public final fun getLinkButtons ()Ljava/util/List;
+	public final fun getPremiumButtons ()Ljava/util/List;
 	public final fun getSelectMenus ()Ljava/util/Map;
 	public final fun getTextInputs ()Ljava/util/Map;
 	public fun getType ()Ldev/kord/common/entity/ComponentType$ActionRow;

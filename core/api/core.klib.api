@@ -6286,6 +6286,8 @@ final class dev.kord.core.entity.component/ActionRowComponent : dev.kord.core.en
         final fun <get-interactionButtons>(): kotlin.collections/Map<kotlin/String, dev.kord.core.entity.component/ButtonComponent> // dev.kord.core.entity.component/ActionRowComponent.interactionButtons.<get-interactionButtons>|<get-interactionButtons>(){}[0]
     final val linkButtons // dev.kord.core.entity.component/ActionRowComponent.linkButtons|{}linkButtons[0]
         final fun <get-linkButtons>(): kotlin.collections/List<dev.kord.core.entity.component/ButtonComponent> // dev.kord.core.entity.component/ActionRowComponent.linkButtons.<get-linkButtons>|<get-linkButtons>(){}[0]
+    final val premiumButtons // dev.kord.core.entity.component/ActionRowComponent.premiumButtons|{}premiumButtons[0]
+        final fun <get-premiumButtons>(): kotlin.collections/List<dev.kord.core.entity.component/ButtonComponent> // dev.kord.core.entity.component/ActionRowComponent.premiumButtons.<get-premiumButtons>|<get-premiumButtons>(){}[0]
     final val selectMenus // dev.kord.core.entity.component/ActionRowComponent.selectMenus|{}selectMenus[0]
         final fun <get-selectMenus>(): kotlin.collections/Map<kotlin/String, dev.kord.core.entity.component/SelectMenuComponent> // dev.kord.core.entity.component/ActionRowComponent.selectMenus.<get-selectMenus>|<get-selectMenus>(){}[0]
     final val textInputs // dev.kord.core.entity.component/ActionRowComponent.textInputs|{}textInputs[0]
