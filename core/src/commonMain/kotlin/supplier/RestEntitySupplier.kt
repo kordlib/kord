@@ -650,13 +650,6 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
         GuildApplicationCommand(data, interaction)
     }
 
-    override suspend fun getEntitlementOrNull(applicationId: Snowflake, entitlementId: Snowflake): Entitlement? =
-        catchNotFound {
-            val response = entitlement.getEntitlement(applicationId, entitlementId)
-            val data = EntitlementData.from(response)
-            Entitlement(data, kord)
-        }
-
     // maxBatchSize: see https://discord.com/developers/docs/resources/entitlement#list-entitlements
     override fun getEntitlements(
         applicationId: Snowflake,

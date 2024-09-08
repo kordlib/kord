@@ -6716,7 +6716,6 @@ final class dev.kord.rest.service/EntitlementService : dev.kord.rest.service/Res
     final suspend fun consumeEntitlement(dev.kord.common.entity/Snowflake, dev.kord.common.entity/Snowflake) // dev.kord.rest.service/EntitlementService.consumeEntitlement|consumeEntitlement(dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake){}[0]
     final suspend fun createTestEntitlement(dev.kord.common.entity/Snowflake, dev.kord.rest.json.request/TestEntitlementCreateRequest): dev.kord.common.entity/DiscordEntitlement // dev.kord.rest.service/EntitlementService.createTestEntitlement|createTestEntitlement(dev.kord.common.entity.Snowflake;dev.kord.rest.json.request.TestEntitlementCreateRequest){}[0]
     final suspend fun deleteTestEntitlement(dev.kord.common.entity/Snowflake, dev.kord.common.entity/Snowflake) // dev.kord.rest.service/EntitlementService.deleteTestEntitlement|deleteTestEntitlement(dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake){}[0]
-    final suspend fun getEntitlement(dev.kord.common.entity/Snowflake, dev.kord.common.entity/Snowflake): dev.kord.common.entity/DiscordEntitlement // dev.kord.rest.service/EntitlementService.getEntitlement|getEntitlement(dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake){}[0]
     final suspend fun listEntitlements(dev.kord.common.entity/Snowflake, dev.kord.rest.json.request/EntitlementsListRequest): kotlin.collections/List<dev.kord.common.entity/DiscordEntitlement> // dev.kord.rest.service/EntitlementService.listEntitlements|listEntitlements(dev.kord.common.entity.Snowflake;dev.kord.rest.json.request.EntitlementsListRequest){}[0]
 }
 
@@ -7216,8 +7215,6 @@ sealed class <#A: kotlin/Any?> dev.kord.rest.route/Route { // dev.kord.rest.rout
     final object EmojiId : dev.kord.rest.route/Route.Key // dev.kord.rest.route/Route.EmojiId|null[0]
 
     final object EntitlementConsume : dev.kord.rest.route/Route<kotlin/Unit> // dev.kord.rest.route/Route.EntitlementConsume|null[0]
-
-    final object EntitlementGet : dev.kord.rest.route/Route<dev.kord.common.entity/DiscordEntitlement> // dev.kord.rest.route/Route.EntitlementGet|null[0]
 
     final object EntitlementId : dev.kord.rest.route/Route.Key // dev.kord.rest.route/Route.EntitlementId|null[0]
 

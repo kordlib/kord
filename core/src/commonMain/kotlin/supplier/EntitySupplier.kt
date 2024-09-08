@@ -652,30 +652,12 @@ public interface EntitySupplier {
             ?: EntityNotFoundException.autoModerationRuleNotFound(guildId, ruleId)
 
     /**
-     * Requests an [Entitlement] by its [id][entitlementId]. Returns `null` if it wasn't found.
-     *
-     * @throws RequestException if something went wrong during the request.
-     */
-    public suspend fun getEntitlementOrNull(applicationId: Snowflake, entitlementId: Snowflake): Entitlement?
-
-    /**
-     * Requests an [Entitlement] by its [id][entitlementId].
-     *
-     * @throws RequestException if something went wrong during the request.
-     * @throws EntityNotFoundException if the [Entitlement] wasn't found.
-     */
-    public suspend fun getEntitlement(applicationId: Snowflake, entitlementId: Snowflake): Entitlement =
-        getEntitlementOrNull(applicationId, entitlementId)
-            ?: EntityNotFoundException.entitlementNotFound(applicationId, entitlementId)
-
-    /**
      * Requests to get all [Entitlement]s for the [Application] with the given [applicationId].
      *
      * The returned flow is lazily executed, any [RequestException] will be thrown on
      * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
      */
     public fun getEntitlements(applicationId: Snowflake, request: EntitlementsListRequest): Flow<Entitlement>
-
 }
 
 

@@ -6570,10 +6570,6 @@ public final class dev/kord/rest/route/Route$EntitlementConsume : dev/kord/rest/
 	public static final field INSTANCE Ldev/kord/rest/route/Route$EntitlementConsume;
 }
 
-public final class dev/kord/rest/route/Route$EntitlementGet : dev/kord/rest/route/Route {
-	public static final field INSTANCE Ldev/kord/rest/route/Route$EntitlementGet;
-}
-
 public final class dev/kord/rest/route/Route$EntitlementId : dev/kord/rest/route/Route$Key {
 	public static final field INSTANCE Ldev/kord/rest/route/Route$EntitlementId;
 }
@@ -7368,7 +7364,6 @@ public final class dev/kord/rest/service/EntitlementService : dev/kord/rest/serv
 	public final fun consumeEntitlement (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun createTestEntitlement (Ldev/kord/common/entity/Snowflake;Ldev/kord/rest/json/request/TestEntitlementCreateRequest;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun deleteTestEntitlement (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public final fun getEntitlement (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun listEntitlements (Ldev/kord/common/entity/Snowflake;Ldev/kord/rest/json/request/EntitlementsListRequest;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 

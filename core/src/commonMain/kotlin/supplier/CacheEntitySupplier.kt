@@ -605,15 +605,6 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
             .singleOrNull()
             ?.let { AutoModerationRule(it, kord) }
 
-    override suspend fun getEntitlementOrNull(applicationId: Snowflake, entitlementId: Snowflake): Entitlement? =
-        cache
-            .query {
-                idEq(EntitlementData::id, entitlementId)
-                idEq(EntitlementData::applicationId, applicationId)
-            }
-            .singleOrNull()
-            ?.let { Entitlement(it, kord) }
-
     /**
      * Queries that use [EntitlementsListRequest.excludeEnded] may be susceptible to Clock drift as
      * the [System Clock][Clock.System] is required.

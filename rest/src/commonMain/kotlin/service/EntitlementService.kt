@@ -45,13 +45,4 @@ public class EntitlementService(requestHandler: RequestHandler) : RestService(re
         request.excludeEnded?.let { parameter("exclude_ended", it) }
         request.position?.let { parameter(it.key, it.value) }
     }
-
-    public suspend fun getEntitlement(
-        applicationId: Snowflake,
-        entitlementId: Snowflake,
-    ): DiscordEntitlement = call(Route.EntitlementGet) {
-        keys[Route.ApplicationId] = applicationId
-        keys[Route.EntitlementId] = entitlementId
-    }
-
 }

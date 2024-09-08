@@ -758,13 +758,6 @@ public sealed class Route<T>(
             ListSerializer(DiscordEntitlement.serializer())
         )
 
-    public object EntitlementGet :
-        Route<DiscordEntitlement>(
-            HttpMethod.Get,
-            "/applications/$ApplicationId/entitlements/$EntitlementId",
-            DiscordEntitlement.serializer()
-        )
-
     public object TestEntitlementCreate :
         Route<DiscordEntitlement>(
             HttpMethod.Post,

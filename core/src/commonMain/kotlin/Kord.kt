@@ -398,23 +398,6 @@ public class Kord(
     }
 
     /**
-     * Requests to get the [Entitlement] with the given [id]
-     *
-     * @throws [RequestException] if anything went wrong during the request.
-     * @throws [EntityNotFoundException] if the entitlement wasn't present.
-     */
-    public suspend fun getEntitlement(id: Snowflake): Entitlement = defaultSupplier.getEntitlement(selfId, id)
-
-    /**
-     * Requests to get the [Entitlement] with the given [id].
-     * returns null if it wasn't present.
-     *
-     * @throws [RequestException] if anything went wrong during the request.
-     */
-    public suspend fun getEntitlementOrNull(id: Snowflake): Entitlement? =
-        defaultSupplier.getEntitlementOrNull(selfId, id)
-
-    /**
      * Requests to create a new [test entitlement][Entitlement] with the given [skuId], [ownerId] and [ownerType].
      *
      * @throws [RestRequestException] if anything went wrong during the request.

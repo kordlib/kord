@@ -317,10 +317,6 @@ public class StoreEntitySupplier(
         }
     }
 
-    override suspend fun getEntitlementOrNull(applicationId: Snowflake, entitlementId: Snowflake): Entitlement? {
-        return storeAndReturn(supplier.getEntitlementOrNull(applicationId, entitlementId)) { it.data }
-    }
-
     override fun getEntitlements(
         applicationId: Snowflake,
         request: EntitlementsListRequest
