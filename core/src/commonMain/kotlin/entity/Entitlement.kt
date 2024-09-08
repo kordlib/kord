@@ -8,8 +8,6 @@ import dev.kord.core.behavior.GuildBehavior
 import dev.kord.core.behavior.UserBehavior
 import dev.kord.core.cache.data.EntitlementData
 import dev.kord.core.hash
-import dev.kord.core.supplier.EntitySupplier
-import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.rest.request.RestRequestException
 import kotlinx.datetime.Instant
 
@@ -21,8 +19,7 @@ import kotlinx.datetime.Instant
 public class Entitlement(
     public val data: EntitlementData,
     override val kord: Kord,
-    override val supplier: EntitySupplier = kord.defaultSupplier,
-) : KordEntity, Strategizable {
+) : KordEntity {
     override val id: Snowflake
         get() = data.id
 
@@ -122,9 +119,6 @@ public class Entitlement(
         kord.rest.entitlement.consumeEntitlement(applicationId, id)
     }
 
-    override fun withStrategy(strategy: EntitySupplyStrategy<*>): Entitlement =
-        Entitlement(data, kord, strategy.supply(kord))
-
     override fun hashCode(): Int = hash(id, applicationId)
 
     override fun equals(other: Any?): Boolean = when (other) {
@@ -132,7 +126,5 @@ public class Entitlement(
         else -> false
     }
 
-    override fun toString(): String {
-        return "Entitlement(data=$data, kord=$kord, supplier=$supplier)"
-    }
+    override fun toString(): String = "Entitlement(data=$data, kord=$kord)"
 }

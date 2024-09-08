@@ -6090,9 +6090,8 @@ public abstract interface class dev/kord/core/entity/Emoji {
 	public abstract fun getName ()Ljava/lang/String;
 }
 
-public final class dev/kord/core/entity/Entitlement : dev/kord/core/entity/KordEntity, dev/kord/core/entity/Strategizable {
-	public fun <init> (Ldev/kord/core/cache/data/EntitlementData;Ldev/kord/core/Kord;Ldev/kord/core/supplier/EntitySupplier;)V
-	public synthetic fun <init> (Ldev/kord/core/cache/data/EntitlementData;Ldev/kord/core/Kord;Ldev/kord/core/supplier/EntitySupplier;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+public final class dev/kord/core/entity/Entitlement : dev/kord/core/entity/KordEntity {
+	public fun <init> (Ldev/kord/core/cache/data/EntitlementData;Ldev/kord/core/Kord;)V
 	public fun compareTo (Ldev/kord/core/entity/Entity;)I
 	public synthetic fun compareTo (Ljava/lang/Object;)I
 	public final fun consume (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -6107,7 +6106,6 @@ public final class dev/kord/core/entity/Entitlement : dev/kord/core/entity/KordE
 	public fun getKord ()Ldev/kord/core/Kord;
 	public final fun getSkuId ()Ldev/kord/common/entity/Snowflake;
 	public final fun getStartsAt ()Lkotlinx/datetime/Instant;
-	public fun getSupplier ()Ldev/kord/core/supplier/EntitySupplier;
 	public final fun getType ()Ldev/kord/common/entity/EntitlementType;
 	public final fun getUser ()Ldev/kord/core/behavior/UserBehavior;
 	public final fun getUserId ()Ldev/kord/common/entity/Snowflake;
@@ -6116,8 +6114,6 @@ public final class dev/kord/core/entity/Entitlement : dev/kord/core/entity/KordE
 	public final fun isDeleted ()Z
 	public final fun isTest ()Z
 	public fun toString ()Ljava/lang/String;
-	public fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/Entitlement;
-	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/Strategizable;
 }
 
 public abstract interface class dev/kord/core/entity/Entity : java/lang/Comparable {

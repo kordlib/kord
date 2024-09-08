@@ -7377,8 +7377,8 @@ final class dev.kord.core.entity/Embed : dev.kord.core/KordObject { // dev.kord.
     }
 }
 
-final class dev.kord.core.entity/Entitlement : dev.kord.core.entity/KordEntity, dev.kord.core.entity/Strategizable { // dev.kord.core.entity/Entitlement|null[0]
-    constructor <init>(dev.kord.core.cache.data/EntitlementData, dev.kord.core/Kord, dev.kord.core.supplier/EntitySupplier = ...) // dev.kord.core.entity/Entitlement.<init>|<init>(dev.kord.core.cache.data.EntitlementData;dev.kord.core.Kord;dev.kord.core.supplier.EntitySupplier){}[0]
+final class dev.kord.core.entity/Entitlement : dev.kord.core.entity/KordEntity { // dev.kord.core.entity/Entitlement|null[0]
+    constructor <init>(dev.kord.core.cache.data/EntitlementData, dev.kord.core/Kord) // dev.kord.core.entity/Entitlement.<init>|<init>(dev.kord.core.cache.data.EntitlementData;dev.kord.core.Kord){}[0]
 
     final val applicationId // dev.kord.core.entity/Entitlement.applicationId|{}applicationId[0]
         final fun <get-applicationId>(): dev.kord.common.entity/Snowflake // dev.kord.core.entity/Entitlement.applicationId.<get-applicationId>|<get-applicationId>(){}[0]
@@ -7404,8 +7404,6 @@ final class dev.kord.core.entity/Entitlement : dev.kord.core.entity/KordEntity, 
         final fun <get-skuId>(): dev.kord.common.entity/Snowflake // dev.kord.core.entity/Entitlement.skuId.<get-skuId>|<get-skuId>(){}[0]
     final val startsAt // dev.kord.core.entity/Entitlement.startsAt|{}startsAt[0]
         final fun <get-startsAt>(): kotlinx.datetime/Instant? // dev.kord.core.entity/Entitlement.startsAt.<get-startsAt>|<get-startsAt>(){}[0]
-    final val supplier // dev.kord.core.entity/Entitlement.supplier|{}supplier[0]
-        final fun <get-supplier>(): dev.kord.core.supplier/EntitySupplier // dev.kord.core.entity/Entitlement.supplier.<get-supplier>|<get-supplier>(){}[0]
     final val type // dev.kord.core.entity/Entitlement.type|{}type[0]
         final fun <get-type>(): dev.kord.common.entity/EntitlementType // dev.kord.core.entity/Entitlement.type.<get-type>|<get-type>(){}[0]
     final val user // dev.kord.core.entity/Entitlement.user|{}user[0]
@@ -7416,7 +7414,6 @@ final class dev.kord.core.entity/Entitlement : dev.kord.core.entity/KordEntity, 
     final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.core.entity/Entitlement.equals|equals(kotlin.Any?){}[0]
     final fun hashCode(): kotlin/Int // dev.kord.core.entity/Entitlement.hashCode|hashCode(){}[0]
     final fun toString(): kotlin/String // dev.kord.core.entity/Entitlement.toString|toString(){}[0]
-    final fun withStrategy(dev.kord.core.supplier/EntitySupplyStrategy<*>): dev.kord.core.entity/Entitlement // dev.kord.core.entity/Entitlement.withStrategy|withStrategy(dev.kord.core.supplier.EntitySupplyStrategy<*>){}[0]
     final suspend fun consume() // dev.kord.core.entity/Entitlement.consume|consume(){}[0]
     final suspend fun delete() // dev.kord.core.entity/Entitlement.delete|delete(){}[0]
 }
