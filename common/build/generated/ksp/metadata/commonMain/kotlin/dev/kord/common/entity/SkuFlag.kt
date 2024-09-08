@@ -19,7 +19,7 @@ import kotlinx.serialization.encoding.Encoder
 
 /**
  * See [SkuFlag]s in the
- * [Discord Developer Documentation](https://discord.com/developers/docs/monetization/skus#sku-object-sku-flags).
+ * [Discord Developer Documentation](https://discord.com/developers/docs/resources/sku#sku-object-sku-flags).
  */
 public sealed class SkuFlag(
     /**

@@ -15,7 +15,7 @@ import kotlinx.serialization.encoding.Encoder
 
 /**
  * See [EntitlementType]s in the
- * [Discord Developer Documentation](https://discord.com/developers/docs/monetization/entitlements#entitlement-object-entitlement-types).
+ * [Discord Developer Documentation](https://discord.com/developers/docs/resources/entitlement#entitlement-object-entitlement-types).
  */
 @Serializable(with = EntitlementType.Serializer::class)
 public sealed class EntitlementType(

@@ -15,7 +15,7 @@ import kotlinx.serialization.encoding.Encoder
 
 /**
  * See [SkuType]s in the
- * [Discord Developer Documentation](https://discord.com/developers/docs/monetization/skus#sku-object-sku-types).
+ * [Discord Developer Documentation](https://discord.com/developers/docs/resources/sku#sku-object-sku-types).
  */
 @Serializable(with = SkuType.Serializer::class)
 public sealed class SkuType(

@@ -740,8 +740,8 @@ public sealed class Route<T>(
 
 
     /*
-     * Entitlements:
-     * https://discord.com/developers/docs/monetization/entitlements
+     * Entitlement:
+     * https://discord.com/developers/docs/resources/entitlement
      */
 
     public object EntitlementConsume :
@@ -781,8 +781,8 @@ public sealed class Route<T>(
 
 
     /*
-     * SKUs:
-     * https://discord.com/developers/docs/monetization/skus
+     * SKU:
+     * https://discord.com/developers/docs/resources/sku
      */
 
     public object SkusList :

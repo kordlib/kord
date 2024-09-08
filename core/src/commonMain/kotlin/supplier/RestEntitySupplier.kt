@@ -657,7 +657,7 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
             Entitlement(data, kord)
         }
 
-    // maxBatchSize: see https://discord.com/developers/docs/monetization/entitlements#list-entitlements
+    // maxBatchSize: see https://discord.com/developers/docs/resources/entitlement#list-entitlements
     override fun getEntitlements(
         applicationId: Snowflake,
         request: EntitlementsListRequest

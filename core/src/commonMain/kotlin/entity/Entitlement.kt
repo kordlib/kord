@@ -14,7 +14,7 @@ import dev.kord.rest.request.RestRequestException
 import kotlinx.datetime.Instant
 
 /**
- * An instance of a [Discord Entitlement](https://discord.com/developers/docs/monetization/entitlements#entitlement-resource).
+ * An instance of a [Discord Entitlement](https://discord.com/developers/docs/resources/entitlement).
  *
  * Entitlements represent that a [User] or [Guild] has access to a premium offering in your [Application].
  */
@@ -96,7 +96,7 @@ public class Entitlement(
      * Whether this entitlement is a test entitlement.
      */
     public val isTest: Boolean
-        // see https://discord.com/developers/docs/monetization/entitlements#entitlement-object-entitlement-structure
+        // see https://discord.com/developers/docs/resources/entitlement#entitlement-object-entitlement-structure
         get() = endsAt == null && startsAt == null
 
     /**

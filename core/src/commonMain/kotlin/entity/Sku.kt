@@ -8,7 +8,7 @@ import dev.kord.core.Kord
 import dev.kord.core.hash
 
 /**
- * An instance of a [Discord Sku](https://discord.com/developers/docs/monetization/skus).
+ * An instance of a [Discord Sku](https://discord.com/developers/docs/resources/sku).
  *
  * SKUs (or stock-keeping units) represent premium offerings that can be made available to your [Application]'s [User]s or
  * [Guild]s.

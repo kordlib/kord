@@ -1,6 +1,6 @@
 @file:Generate(
     INT_KORD_ENUM, name = "SkuType",
-    docUrl = "https://discord.com/developers/docs/monetization/skus#sku-object-sku-types",
+    docUrl = "https://discord.com/developers/docs/resources/sku#sku-object-sku-types",
     entries = [
         Entry("Durable", intValue = 2, kDoc = "A durable, one-time purchase."),
         Entry("Consumable", intValue = 3, kDoc = "A consumable, one-time purchase."),
@@ -11,7 +11,7 @@
 
 @file:Generate(
     INT_FLAGS, name = "SkuFlag",
-    docUrl = "https://discord.com/developers/docs/monetization/skus#sku-object-sku-flags",
+    docUrl = "https://discord.com/developers/docs/resources/sku#sku-object-sku-flags",
     entries = [
         Entry("Available", shift = 2, kDoc = "SKU is available for purchase."),
         Entry(
@@ -35,7 +35,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 /**
- * Represents a [Discord SKU](https://discord.com/developers/docs/monetization/skus#sku-object).
+ * Represents a [Discord SKU](https://discord.com/developers/docs/resources/sku#sku-object).
  */
 @Serializable
 public data class DiscordSku(

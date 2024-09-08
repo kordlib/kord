@@ -1,6 +1,6 @@
 @file:Generate(
     INT_KORD_ENUM, name = "EntitlementType",
-    docUrl = "https://discord.com/developers/docs/monetization/entitlements#entitlement-object-entitlement-types",
+    docUrl = "https://discord.com/developers/docs/resources/entitlement#entitlement-object-entitlement-types",
     entries = [
         Entry("Purchase", intValue = 1, kDoc = "Entitlement that was purchased by a user."),
         Entry("PremiumSubscription", intValue = 2, kDoc = "Entitlement for a Discord Nitro subscription."),
@@ -15,7 +15,7 @@
 
 @file:Generate(
     INT_KORD_ENUM, name = "EntitlementOwnerType",
-    docUrl = "https://discord.com/developers/docs/monetization/entitlements#create-test-entitlement",
+    docUrl = "https://discord.com/developers/docs/resources/entitlement#create-test-entitlement-json-params",
     entries = [
         Entry("Guild", intValue = 1, kDoc = "Entitlement is owned by a guild."),
         Entry("User", intValue = 2, kDoc = "Entitlement is owned by a user."),
@@ -35,7 +35,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 /**
- * An instance of a [Discord Entitlement](https://discord.com/developers/docs/monetization/entitlements#entitlement-object)
+ * An instance of a [Discord Entitlement](https://discord.com/developers/docs/resources/entitlement#entitlement-object)
  */
 @Serializable
 public data class DiscordEntitlement(
