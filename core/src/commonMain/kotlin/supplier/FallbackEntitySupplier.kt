@@ -280,7 +280,7 @@ private class FallbackEntitySupplier(val first: EntitySupplier, val second: Enti
 
     override fun getEntitlements(
         applicationId: Snowflake,
-        request: EntitlementsListRequest
+        request: EntitlementsListRequest,
     ): Flow<Entitlement> = first.getEntitlements(applicationId, request)
         .switchIfEmpty(second.getEntitlements(applicationId, request))
 

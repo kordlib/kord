@@ -10,5 +10,4 @@ public class SkuService(requestHandler: RequestHandler) : RestService(requestHan
     public suspend fun listSkus(applicationId: Snowflake): List<DiscordSku> = call(Route.SkusList) {
         keys[Route.ApplicationId] = applicationId
     }
-
 }

@@ -82,12 +82,12 @@ public sealed class ButtonBuilder : ActionRowComponentBuilder() {
  */
 @KordDsl
 public class PremiumButtonBuilder(
-    public var skuId: Snowflake
+    public var skuId: Snowflake,
 ) : ActionRowComponentBuilder() {
     override fun build(): DiscordChatComponent = DiscordChatComponent(
-        ComponentType.Button,
+        type = ComponentType.Button,
         style = Optional(ButtonStyle.Premium),
         skuId = skuId.optionalSnowflake(),
-        disabled = _disabled
+        disabled = _disabled,
     )
 }

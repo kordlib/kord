@@ -664,6 +664,7 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
         }
     }.map { entitlement -> Entitlement(data = EntitlementData.from(entitlement), kord) }
 
+
     override fun toString(): String = "RestEntitySupplier(rest=${kord.rest})"
 }
 

@@ -6,7 +6,7 @@
         Entry("Consumable", intValue = 3, kDoc = "A consumable, one-time purchase."),
         Entry("Subscription", intValue = 5, kDoc = "Represents a recurring subscription."),
         Entry("SubscriptionGroup", intValue = 6, kDoc = "System-generated group for each [Subscription] SKU created."),
-    ]
+    ],
 )
 
 @file:Generate(
@@ -16,13 +16,15 @@
         Entry("Available", shift = 2, kDoc = "SKU is available for purchase."),
         Entry(
             "GuildSubscription", shift = 7,
-            kDoc = "Recurring SKU that can be purchased by a user and applied to a single server. Grants access to every user in that server."
+            kDoc = "Recurring SKU that can be purchased by a user and applied to a single server. Grants access to " +
+                "every user in that server.",
         ),
         Entry(
             "UserSubscription", shift = 8,
-            kDoc = "Recurring SKU purchased by a user for themselves. Grants access to the purchasing user in every server."
+            kDoc = "Recurring SKU purchased by a user for themselves. Grants access to the purchasing user in every " +
+                "server.",
         ),
-    ]
+    ],
 )
 
 package dev.kord.common.entity

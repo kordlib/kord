@@ -613,7 +613,7 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
      */
     override fun getEntitlements(
         applicationId: Snowflake,
-        request: EntitlementsListRequest
+        request: EntitlementsListRequest,
     ): Flow<Entitlement> {
         checkLimit(request.limit)
         return cache

@@ -44,9 +44,7 @@ public sealed interface Interaction : InteractionBehavior {
      */
     public val type: InteractionType get() = data.type
 
-    /**
-     * The invoker of the interaction.
-     */
+    /** The invoker of the interaction. */
     public val user: User
 
     /**

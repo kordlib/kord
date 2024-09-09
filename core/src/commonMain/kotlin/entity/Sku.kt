@@ -52,7 +52,5 @@ public class Sku(
         else -> false
     }
 
-    override fun toString(): String {
-        return "Sku(data=$data, kord=$kord)"
-    }
+    override fun toString(): String = "Sku(data=$data, kord=$kord)"
 }

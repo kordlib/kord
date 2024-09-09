@@ -25,7 +25,7 @@
     entries = [
         Entry("Guild", intValue = 1, kDoc = "Entitlement is owned by a guild."),
         Entry("User", intValue = 2, kDoc = "Entitlement is owned by a user."),
-    ]
+    ],
 )
 
 package dev.kord.common.entity

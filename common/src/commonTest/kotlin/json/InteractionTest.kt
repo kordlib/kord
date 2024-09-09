@@ -20,13 +20,15 @@ private val perms = Permissions(
     ManageGuildExpressions,
 )
 
-val testEntitlements = listOf(DiscordEntitlement(
-    id = Snowflake.min,
-    applicationId = Snowflake.min,
-    skuId = Snowflake.min,
-    type = EntitlementType.ApplicationSubscription,
-    deleted = false
-))
+private val testEntitlements = listOf(
+    DiscordEntitlement(
+        id = Snowflake.min,
+        applicationId = Snowflake.min,
+        skuId = Snowflake.min,
+        type = EntitlementType.ApplicationSubscription,
+        deleted = false,
+    ),
+)
 
 class InteractionTest {
 

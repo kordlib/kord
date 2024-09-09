@@ -87,7 +87,6 @@ public data class GuildData(
             link(GuildData::id to EmojiData::guildId)
             link(GuildData::id to AutoModerationRuleData::guildId)
             link(GuildData::id to EntitlementData::nullableGuildId)
-
         }
 
         public fun from(entity: DiscordGuild): GuildData = with(entity) {

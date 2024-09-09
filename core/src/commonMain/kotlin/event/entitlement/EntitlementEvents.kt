@@ -15,11 +15,8 @@ public class EntitlementCreateEvent(
     override val customContext: Any?,
     override val kord: Kord
 ) : Event {
-
-    override fun toString(): String {
-        return "EntitlementCreateEvent(entitlement=$entitlement, customContext=$customContext, kord=$kord, shard=$shard)"
-    }
-
+    override fun toString(): String =
+        "EntitlementCreateEvent(entitlement=$entitlement, customContext=$customContext, kord=$kord, shard=$shard)"
 }
 
 /**
@@ -37,11 +34,8 @@ public class EntitlementUpdateEvent(
     override val customContext: Any?,
     override val kord: Kord
 ) : Event {
-
-    override fun toString(): String {
-        return "EntitlementUpdateEvent(entitlement=$entitlement, old=$old, customContext=$customContext, kord=$kord, shard=$shard)"
-    }
-
+    override fun toString(): String = "EntitlementUpdateEvent(entitlement=$entitlement, old=$old, " +
+        "customContext=$customContext, kord=$kord, shard=$shard)"
 }
 
 /**
@@ -61,7 +55,6 @@ public class EntitlementDeleteEvent(
     override val customContext: Any?,
     override val kord: Kord
 ) : Event {
-    override fun toString(): String {
-        return "EntitlementDeleteEvent(entitlement=$entitlement, customContext=$customContext, kord=$kord, shard=$shard)"
-    }
+    override fun toString(): String =
+        "EntitlementDeleteEvent(entitlement=$entitlement, customContext=$customContext, kord=$kord, shard=$shard)"
 }

@@ -29,7 +29,7 @@ public data class InteractionData(
     val appPermissions: Optional<Permissions> = Optional.Missing(),
     val locale: Optional<Locale> = Optional.Missing(),
     val guildLocale: Optional<Locale> = Optional.Missing(),
-    val entitlements: Optional<List<EntitlementData>> = Optional.Missing()
+    val entitlements: Optional<List<EntitlementData>> = Optional.Missing(),
 ) {
     public companion object {
         public fun from(interaction: DiscordInteraction): InteractionData {
@@ -54,7 +54,7 @@ public data class InteractionData(
                     appPermissions,
                     locale,
                     guildLocale,
-                    entitlements.mapList { EntitlementData.from(it) }
+                    entitlements.mapList { EntitlementData.from(it) },
                 )
             }
         }

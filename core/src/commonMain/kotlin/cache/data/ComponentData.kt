@@ -52,7 +52,7 @@ public sealed class ComponentData {
                         required = required,
                         value = value,
                         channelTypes = channelTypes,
-                        skuId = entity.skuId
+                        skuId = entity.skuId,
                     )
                 }
                 is DiscordTextInputComponent -> {

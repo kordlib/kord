@@ -825,6 +825,4 @@ class DispatchEventDeserializationTest {
         data = applicationCommand,
         json = applicationCommandJson,
     )
-
-
 }
