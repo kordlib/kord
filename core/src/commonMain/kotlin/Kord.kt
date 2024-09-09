@@ -380,7 +380,7 @@ public class Kord(
         rest.sku.listSkus(selfId).map { Sku(it, this) }
 
     /**
-     * Requests to get a list of [Entitlement]s.
+     * Requests to get all [Entitlement]s for this application.
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
@@ -398,8 +398,11 @@ public class Kord(
     }
 
     /**
-     * Requests to create a new [test entitlement][Entitlement] to a [Sku] with the given [skuId] for a given [ownerId]
-     * and [ownerType]. Discord will act as though that owner has entitlement to your premium offering.
+     * Requests to create a new [test entitlement][Entitlement] to a [Sku] with the given [skuId] for an owner with the
+     * given [ownerId] and [ownerType]. Discord will act as though that owner has entitlement to your premium offering.
+     *
+     * The returned [Entitlement] will not contain [startsAt][Entitlement.startsAt] and [endsAt][Entitlement.endsAt], as
+     * it's valid in perpetuity.
      *
      * @throws RestRequestException if something went wrong during the request.
      */
@@ -419,6 +422,9 @@ public class Kord(
      * Requests to create a new [test entitlement][Entitlement] to a [Sku] with the given [skuId] for a given [user].
      * Discord will act as though that user has entitlement to your premium offering.
      *
+     * The returned [Entitlement] will not contain [startsAt][Entitlement.startsAt] and [endsAt][Entitlement.endsAt], as
+     * it's valid in perpetuity.
+     *
      * @throws RestRequestException if something went wrong during the request.
      */
     public suspend fun createTestEntitlement(skuId: Snowflake, user: UserBehavior): Entitlement =
@@ -427,6 +433,9 @@ public class Kord(
     /**
      * Requests to create a new [test entitlement][Entitlement] to a [Sku] with the given [skuId] for a given [guild].
      * Discord will act as though that guild has entitlement to your premium offering.
+     *
+     * The returned [Entitlement] will not contain [startsAt][Entitlement.startsAt] and [endsAt][Entitlement.endsAt], as
+     * it's valid in perpetuity.
      *
      * @throws RestRequestException if something went wrong during the request.
      */
