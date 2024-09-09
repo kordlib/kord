@@ -112,12 +112,10 @@ public class Entitlement(
         kord.rest.entitlement.consumeEntitlement(applicationId, id)
     }
 
-    override fun hashCode(): Int = hash(id, applicationId)
+    override fun equals(other: Any?): Boolean =
+        other is Entitlement && this.id == other.id && this.applicationId == other.applicationId
 
-    override fun equals(other: Any?): Boolean = when (other) {
-        is Entitlement -> other.id == id && other.applicationId == applicationId
-        else -> false
-    }
+    override fun hashCode(): Int = hash(id, applicationId)
 
     override fun toString(): String = "Entitlement(data=$data, kord=$kord)"
 }
