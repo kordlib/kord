@@ -60,13 +60,13 @@ public class Entitlement(
         get() = data.deleted
 
     /**
-     * The start date at which the entitlement is valid.
+     * The start date at which the entitlement is valid. Not present when using test entitlements.
      */
     public val startsAt: Instant?
         get() = data.startsAt.value
 
     /**
-     * Date at which the entitlement is no longer valid
+     * The date at which the entitlement is no longer valid. Not present when using test entitlements.
      */
     public val endsAt: Instant?
         get() = data.endsAt.value
@@ -104,7 +104,7 @@ public class Entitlement(
     }
 
     /**
-     * For One-Time Purchase consumable SKUs, marks a given entitlement for the user as consumed.
+     * For One-Time Purchase consumable [Sku]s, marks this entitlement for the [user] as [consumed][isConsumed].
      *
      * @throws [RestRequestException] if something went wrong during the request.
      */

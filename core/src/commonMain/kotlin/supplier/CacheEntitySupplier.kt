@@ -606,8 +606,13 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
             ?.let { AutoModerationRule(it, kord) }
 
     /**
-     * Queries that use [EntitlementsListRequest.excludeEnded] may be susceptible to Clock drift as
-     * the [System Clock][Clock.System] is required.
+     * Requests to get all [Entitlement]s for the [Application] with the given [applicationId].
+     *
+     * The returned flow is lazily executed, any [RequestException] will be thrown on
+     * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
+     *
+     * Queries that use [EntitlementsListRequest.excludeEnded] may be susceptible to Clock drift as the
+     * [System Clock][Clock.System] is required.
      */
     override fun getEntitlements(
         applicationId: Snowflake,

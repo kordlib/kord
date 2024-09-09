@@ -10,8 +10,8 @@ import dev.kord.core.hash
 /**
  * An instance of a [Discord Sku](https://discord.com/developers/docs/resources/sku).
  *
- * SKUs (or stock-keeping units) represent premium offerings that can be made available to your [Application]'s [User]s or
- * [Guild]s.
+ * SKUs (or stock-keeping units) represent premium offerings that can be made available to your [Application]'s [User]s
+ * or [Guild]s.
  */
 public class Sku(
     public val data: DiscordSku,
@@ -36,7 +36,7 @@ public class Sku(
     public val name: String get() = data.name
 
     /**
-     * System-generated URL slug based on the SKU's name
+     * System-generated URL slug based on the SKU's name.
      */
     public val slug: String get() = data.slug
 

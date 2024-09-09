@@ -23,8 +23,8 @@ public class ButtonComponent(override val data: ChatComponentData) : Component {
         get() = ComponentType.Button
 
     /**
-     * The style of this button, [ButtonStyle.Link] buttons will always
-     * have a [url].
+     * The style of this button, [ButtonStyle.Link] buttons will always have a [url], [ButtonStyle.Premium] buttons will
+     * always have a [skuId].
      */
     public val style: ButtonStyle get() = data.style.value!!
 
@@ -49,8 +49,8 @@ public class ButtonComponent(override val data: ChatComponentData) : Component {
         }
 
     /**
-     * The custom identifier for any [ComponentInteractions][ButtonInteraction]
-     * this button will trigger. Present if this button is not a link button.
+     * The custom identifier for any [ComponentInteractions][ButtonInteraction] this button will trigger. Present if
+     * this button is not a link or premium button.
      */
     public val customId: String? get() = data.customId.value
 
@@ -65,7 +65,7 @@ public class ButtonComponent(override val data: ChatComponentData) : Component {
     public val disabled: Boolean get() = data.disabled.discordBoolean
 
     /**
-     * The [Sku] id of this button, if present.
+     * The ID of the [Sku] this button will prompt to purchase. Present if this button is a premium button.
      */
     public val skuId: Snowflake? get() = data.skuId.value
 

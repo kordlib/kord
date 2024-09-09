@@ -63,7 +63,7 @@ public sealed class EntitlementType(
     public object TestModePurchase : EntitlementType(4)
 
     /**
-     * Entitlement that was purchased when the [Sku][DiscordSku] was free.
+     * Entitlement that was granted when the [Sku][DiscordSku] was free.
      */
     public object FreePurchase : EntitlementType(5)
 
@@ -73,12 +73,12 @@ public sealed class EntitlementType(
     public object UserGift : EntitlementType(6)
 
     /**
-     * Entitlement that was claimed for free as a Nitro subscriber.
+     * Entitlement that was claimed by a user for free as a Nitro subscriber.
      */
     public object PremiumPurchase : EntitlementType(7)
 
     /**
-     * Entitlement was purchased as an app subscription.
+     * Entitlement that was purchased as an app subscription.
      */
     public object ApplicationSubscription : EntitlementType(8)
 

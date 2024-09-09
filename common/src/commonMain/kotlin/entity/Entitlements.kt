@@ -5,12 +5,18 @@
         Entry("Purchase", intValue = 1, kDoc = "Entitlement that was purchased by a user."),
         Entry("PremiumSubscription", intValue = 2, kDoc = "Entitlement for a Discord Nitro subscription."),
         Entry("DeveloperGift", intValue = 3, kDoc = "Entitlement that was gifted to a user by the developer."),
-        Entry("TestModePurchase", intValue = 4, kDoc = "Entitlement that was purchased by a dev in application test mode."),
-        Entry("FreePurchase", intValue = 5, kDoc = "Entitlement that was purchased when the [Sku][DiscordSku] was free."),
+        Entry(
+            "TestModePurchase", intValue = 4,
+            kDoc = "Entitlement that was purchased by a dev in application test mode.",
+        ),
+        Entry("FreePurchase", intValue = 5, kDoc = "Entitlement that was granted when the [Sku][DiscordSku] was free."),
         Entry("UserGift", intValue = 6, kDoc = "Entitlement that was gifted to a user by another user."),
-        Entry("PremiumPurchase", intValue = 7, kDoc = "Entitlement that was claimed for free as a Nitro subscriber."),
-        Entry("ApplicationSubscription", intValue = 8, kDoc = "Entitlement was purchased as an app subscription.")
-    ]
+        Entry(
+            "PremiumPurchase", intValue = 7,
+            kDoc = "Entitlement that was claimed by a user for free as a Nitro subscriber.",
+        ),
+        Entry("ApplicationSubscription", intValue = 8, kDoc = "Entitlement that was purchased as an app subscription."),
+    ],
 )
 
 @file:Generate(
@@ -35,7 +41,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 /**
- * An instance of a [Discord Entitlement](https://discord.com/developers/docs/resources/entitlement#entitlement-object)
+ * An instance of a [Discord Entitlement](https://discord.com/developers/docs/resources/entitlement#entitlement-object).
  */
 @Serializable
 public data class DiscordEntitlement(
