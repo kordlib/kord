@@ -90,14 +90,7 @@ public class Entitlement(
         get() = guildId?.let { GuildBehavior(it, kord) }
 
     /**
-     * Whether this entitlement is a test entitlement.
-     */
-    public val isTest: Boolean
-        // see https://discord.com/developers/docs/resources/entitlement#entitlement-object-entitlement-structure
-        get() = endsAt == null && startsAt == null
-
-    /**
-     * Requests to delete this currently active [test entitlement][Entitlement.isTest].
+     * Requests to delete this currently active test entitlement.
      *
      * Discord will act as though that [user][Entitlement.user] or [guild][Entitlement.guild] *no longer* has
      * entitlement to your premium offering.

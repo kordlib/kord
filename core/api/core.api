@@ -6112,7 +6112,6 @@ public final class dev/kord/core/entity/Entitlement : dev/kord/core/entity/KordE
 	public fun hashCode ()I
 	public final fun isConsumed ()Ljava/lang/Boolean;
 	public final fun isDeleted ()Z
-	public final fun isTest ()Z
 	public fun toString ()Ljava/lang/String;
 }
 

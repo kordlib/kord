@@ -7398,8 +7398,6 @@ final class dev.kord.core.entity/Entitlement : dev.kord.core.entity/KordEntity {
         final fun <get-isConsumed>(): kotlin/Boolean? // dev.kord.core.entity/Entitlement.isConsumed.<get-isConsumed>|<get-isConsumed>(){}[0]
     final val isDeleted // dev.kord.core.entity/Entitlement.isDeleted|{}isDeleted[0]
         final fun <get-isDeleted>(): kotlin/Boolean // dev.kord.core.entity/Entitlement.isDeleted.<get-isDeleted>|<get-isDeleted>(){}[0]
-    final val isTest // dev.kord.core.entity/Entitlement.isTest|{}isTest[0]
-        final fun <get-isTest>(): kotlin/Boolean // dev.kord.core.entity/Entitlement.isTest.<get-isTest>|<get-isTest>(){}[0]
     final val kord // dev.kord.core.entity/Entitlement.kord|{}kord[0]
         final fun <get-kord>(): dev.kord.core/Kord // dev.kord.core.entity/Entitlement.kord.<get-kord>|<get-kord>(){}[0]
     final val skuId // dev.kord.core.entity/Entitlement.skuId|{}skuId[0]
