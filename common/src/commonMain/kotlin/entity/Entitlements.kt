@@ -51,7 +51,7 @@ public data class DiscordEntitlement(
     @SerialName("starts_at")
     val startsAt: Optional<Instant> = Optional.Missing(),
     @SerialName("ends_at")
-    val endsAt: Optional<Instant> = Optional.Missing(),
+    val endsAt: Optional<Instant?> = Optional.Missing(),
     @SerialName("guild_id")
     val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
     val consumed: OptionalBoolean = OptionalBoolean.Missing,

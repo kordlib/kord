@@ -20,7 +20,7 @@ public data class EntitlementData(
     val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
     val userId: OptionalSnowflake = OptionalSnowflake.Missing,
     val deleted: Boolean,
-    val endsAt: Optional<Instant> = Optional.Missing(),
+    val endsAt: Optional<Instant?> = Optional.Missing(),
     val startsAt: Optional<Instant> = Optional.Missing(),
     val consumed: OptionalBoolean = OptionalBoolean.Missing,
 ) {
