@@ -374,7 +374,7 @@ public class Kord(
     /**
      * Requests to get all [Sku]s for this application.
      *
-     * @throws [RestRequestException] if anything went wrong during the request.
+     * @throws RestRequestException if something went wrong during the request.
      */
     public suspend fun getSkus(): List<Sku> =
         rest.sku.listSkus(selfId).map { Sku(it, this) }
@@ -382,7 +382,7 @@ public class Kord(
     /**
      * Requests to get all [Entitlement]s for this application.
      *
-     * @throws [RequestException] if anything went wrong during the request.
+     * @throws RequestException if something went wrong during the request.
      */
     public inline fun getEntitlements(
         strategy: EntitySupplyStrategy<*> = resources.defaultStrategy,
