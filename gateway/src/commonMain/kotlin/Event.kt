@@ -183,9 +183,13 @@ public sealed class Event {
                 "MESSAGE_REACTION_REMOVE_EMOJI" ->
                     MessageReactionRemoveEmoji(decode(DiscordRemovedEmoji.serializer()), sequence)
                 "PRESENCE_UPDATE" -> PresenceUpdate(decode(DiscordPresenceUpdate.serializer()), sequence)
-                //  Missing: Stage Instance Create, Stage Instance Update, Stage Instance Delete
+                // Missing: Stage Instance Create, Stage Instance Update, Stage Instance Delete
+                "SUBSCRIPTION_CREATE" -> SubscriptionCreate(decode(DiscordSubscription.serializer()), sequence)
+                "SUBSCRIPTION_UPDATE" -> SubscriptionUpdate(decode(DiscordSubscription.serializer()), sequence)
+                "SUBSCRIPTION_DELETE" -> SubscriptionDelete(decode(DiscordSubscription.serializer()), sequence)
                 "TYPING_START" -> TypingStart(decode(DiscordTyping.serializer()), sequence)
                 "USER_UPDATE" -> UserUpdate(decode(DiscordUser.serializer()), sequence)
+                // Missing: Voice Channel Effect Send
                 "VOICE_STATE_UPDATE" -> VoiceStateUpdate(decode(DiscordVoiceState.serializer()), sequence)
                 "VOICE_SERVER_UPDATE" -> VoiceServerUpdate(decode(DiscordVoiceServerUpdateData.serializer()), sequence)
                 "WEBHOOKS_UPDATE" -> WebhooksUpdate(decode(DiscordWebhooksUpdateData.serializer()), sequence)
@@ -654,3 +658,12 @@ public data class EntitlementCreate(val entitlement: DiscordEntitlement, overrid
 public data class EntitlementUpdate(val entitlement: DiscordEntitlement, override val sequence: Int?) : DispatchEvent()
 
 public data class EntitlementDelete(val entitlement: DiscordEntitlement, override val sequence: Int?) : DispatchEvent()
+
+public data class SubscriptionCreate(val subscription: DiscordSubscription, override val sequence: Int?) :
+    DispatchEvent()
+
+public data class SubscriptionUpdate(val subscription: DiscordSubscription, override val sequence: Int?) :
+    DispatchEvent()
+
+public data class SubscriptionDelete(val subscription: DiscordSubscription, override val sequence: Int?) :
+    DispatchEvent()

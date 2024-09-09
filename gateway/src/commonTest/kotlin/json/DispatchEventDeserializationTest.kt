@@ -158,6 +158,18 @@ class DispatchEventDeserializationTest {
     )
     private val integrationJson =
         """{"id":"0","name":"name","type":"discord","enabled":true,"account":{"id":"id","name":"name"}}"""
+    private val subscription = DiscordSubscription(
+        id = Snowflake.min,
+        userId = Snowflake.min,
+        skuIds = emptyList(),
+        entitlementIds = emptyList(),
+        currentPeriodStart = instant,
+        currentPeriodEnd = instant,
+        status = SubscriptionStatus.Active,
+        canceledAt = null,
+    )
+    private val subscriptionJson = """{"id":"0","user_id":"0","sku_ids":[],"entitlement_ids":[],""" +
+        """"current_period_start":"$instant","current_period_end":"$instant","status":0,"canceled_at":null}"""
 
 
     /*
@@ -720,6 +732,30 @@ class DispatchEventDeserializationTest {
      */
 
     @Test
+    fun test_SubscriptionCreate_deserialization() = testDispatchEventDeserialization(
+        eventName = "SUBSCRIPTION_CREATE",
+        eventConstructor = ::SubscriptionCreate,
+        data = subscription,
+        json = subscriptionJson,
+    )
+
+    @Test
+    fun test_SubscriptionUpdate_deserialization() = testDispatchEventDeserialization(
+        eventName = "SUBSCRIPTION_UPDATE",
+        eventConstructor = ::SubscriptionUpdate,
+        data = subscription,
+        json = subscriptionJson,
+    )
+
+    @Test
+    fun test_SubscriptionDelete_deserialization() = testDispatchEventDeserialization(
+        eventName = "SUBSCRIPTION_DELETE",
+        eventConstructor = ::SubscriptionDelete,
+        data = subscription,
+        json = subscriptionJson,
+    )
+
+    @Test
     fun test_TypingStart_deserialization() = testDispatchEventDeserialization(
         eventName = "TYPING_START",
         eventConstructor = ::TypingStart,
@@ -738,6 +774,11 @@ class DispatchEventDeserializationTest {
         data = user,
         json = userJson,
     )
+
+    /*
+     * Missing:
+     * - VoiceChannelEffectSend
+     */
 
     @Test
     fun test_VoiceStateUpdate_deserialization() = testDispatchEventDeserialization(

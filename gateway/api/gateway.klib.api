@@ -1885,6 +1885,54 @@ final class dev.kord.gateway/Resumed : dev.kord.gateway/DispatchEvent { // dev.k
     }
 }
 
+final class dev.kord.gateway/SubscriptionCreate : dev.kord.gateway/DispatchEvent { // dev.kord.gateway/SubscriptionCreate|null[0]
+    constructor <init>(dev.kord.common.entity/DiscordSubscription, kotlin/Int?) // dev.kord.gateway/SubscriptionCreate.<init>|<init>(dev.kord.common.entity.DiscordSubscription;kotlin.Int?){}[0]
+
+    final val sequence // dev.kord.gateway/SubscriptionCreate.sequence|{}sequence[0]
+        final fun <get-sequence>(): kotlin/Int? // dev.kord.gateway/SubscriptionCreate.sequence.<get-sequence>|<get-sequence>(){}[0]
+    final val subscription // dev.kord.gateway/SubscriptionCreate.subscription|{}subscription[0]
+        final fun <get-subscription>(): dev.kord.common.entity/DiscordSubscription // dev.kord.gateway/SubscriptionCreate.subscription.<get-subscription>|<get-subscription>(){}[0]
+
+    final fun component1(): dev.kord.common.entity/DiscordSubscription // dev.kord.gateway/SubscriptionCreate.component1|component1(){}[0]
+    final fun component2(): kotlin/Int? // dev.kord.gateway/SubscriptionCreate.component2|component2(){}[0]
+    final fun copy(dev.kord.common.entity/DiscordSubscription = ..., kotlin/Int? = ...): dev.kord.gateway/SubscriptionCreate // dev.kord.gateway/SubscriptionCreate.copy|copy(dev.kord.common.entity.DiscordSubscription;kotlin.Int?){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.gateway/SubscriptionCreate.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.gateway/SubscriptionCreate.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // dev.kord.gateway/SubscriptionCreate.toString|toString(){}[0]
+}
+
+final class dev.kord.gateway/SubscriptionDelete : dev.kord.gateway/DispatchEvent { // dev.kord.gateway/SubscriptionDelete|null[0]
+    constructor <init>(dev.kord.common.entity/DiscordSubscription, kotlin/Int?) // dev.kord.gateway/SubscriptionDelete.<init>|<init>(dev.kord.common.entity.DiscordSubscription;kotlin.Int?){}[0]
+
+    final val sequence // dev.kord.gateway/SubscriptionDelete.sequence|{}sequence[0]
+        final fun <get-sequence>(): kotlin/Int? // dev.kord.gateway/SubscriptionDelete.sequence.<get-sequence>|<get-sequence>(){}[0]
+    final val subscription // dev.kord.gateway/SubscriptionDelete.subscription|{}subscription[0]
+        final fun <get-subscription>(): dev.kord.common.entity/DiscordSubscription // dev.kord.gateway/SubscriptionDelete.subscription.<get-subscription>|<get-subscription>(){}[0]
+
+    final fun component1(): dev.kord.common.entity/DiscordSubscription // dev.kord.gateway/SubscriptionDelete.component1|component1(){}[0]
+    final fun component2(): kotlin/Int? // dev.kord.gateway/SubscriptionDelete.component2|component2(){}[0]
+    final fun copy(dev.kord.common.entity/DiscordSubscription = ..., kotlin/Int? = ...): dev.kord.gateway/SubscriptionDelete // dev.kord.gateway/SubscriptionDelete.copy|copy(dev.kord.common.entity.DiscordSubscription;kotlin.Int?){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.gateway/SubscriptionDelete.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.gateway/SubscriptionDelete.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // dev.kord.gateway/SubscriptionDelete.toString|toString(){}[0]
+}
+
+final class dev.kord.gateway/SubscriptionUpdate : dev.kord.gateway/DispatchEvent { // dev.kord.gateway/SubscriptionUpdate|null[0]
+    constructor <init>(dev.kord.common.entity/DiscordSubscription, kotlin/Int?) // dev.kord.gateway/SubscriptionUpdate.<init>|<init>(dev.kord.common.entity.DiscordSubscription;kotlin.Int?){}[0]
+
+    final val sequence // dev.kord.gateway/SubscriptionUpdate.sequence|{}sequence[0]
+        final fun <get-sequence>(): kotlin/Int? // dev.kord.gateway/SubscriptionUpdate.sequence.<get-sequence>|<get-sequence>(){}[0]
+    final val subscription // dev.kord.gateway/SubscriptionUpdate.subscription|{}subscription[0]
+        final fun <get-subscription>(): dev.kord.common.entity/DiscordSubscription // dev.kord.gateway/SubscriptionUpdate.subscription.<get-subscription>|<get-subscription>(){}[0]
+
+    final fun component1(): dev.kord.common.entity/DiscordSubscription // dev.kord.gateway/SubscriptionUpdate.component1|component1(){}[0]
+    final fun component2(): kotlin/Int? // dev.kord.gateway/SubscriptionUpdate.component2|component2(){}[0]
+    final fun copy(dev.kord.common.entity/DiscordSubscription = ..., kotlin/Int? = ...): dev.kord.gateway/SubscriptionUpdate // dev.kord.gateway/SubscriptionUpdate.copy|copy(dev.kord.common.entity.DiscordSubscription;kotlin.Int?){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.gateway/SubscriptionUpdate.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.gateway/SubscriptionUpdate.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // dev.kord.gateway/SubscriptionUpdate.toString|toString(){}[0]
+}
+
 final class dev.kord.gateway/ThreadCreate : dev.kord.gateway/DispatchEvent { // dev.kord.gateway/ThreadCreate|null[0]
     constructor <init>(dev.kord.common.entity/DiscordChannel, kotlin/Int?) // dev.kord.gateway/ThreadCreate.<init>|<init>(dev.kord.common.entity.DiscordChannel;kotlin.Int?){}[0]
 
