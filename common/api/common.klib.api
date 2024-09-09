@@ -4714,6 +4714,58 @@ final class dev.kord.common.entity/DiscordStickerPack { // dev.kord.common.entit
     }
 }
 
+final class dev.kord.common.entity/DiscordSubscription { // dev.kord.common.entity/DiscordSubscription|null[0]
+    constructor <init>(dev.kord.common.entity/Snowflake, dev.kord.common.entity/Snowflake, kotlin.collections/List<dev.kord.common.entity/Snowflake>, kotlin.collections/List<dev.kord.common.entity/Snowflake>, kotlinx.datetime/Instant, kotlinx.datetime/Instant, dev.kord.common.entity/SubscriptionStatus, kotlinx.datetime/Instant?, dev.kord.common.entity.optional/Optional<kotlin/String> = ...) // dev.kord.common.entity/DiscordSubscription.<init>|<init>(dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake;kotlin.collections.List<dev.kord.common.entity.Snowflake>;kotlin.collections.List<dev.kord.common.entity.Snowflake>;kotlinx.datetime.Instant;kotlinx.datetime.Instant;dev.kord.common.entity.SubscriptionStatus;kotlinx.datetime.Instant?;dev.kord.common.entity.optional.Optional<kotlin.String>){}[0]
+
+    final val canceledAt // dev.kord.common.entity/DiscordSubscription.canceledAt|{}canceledAt[0]
+        final fun <get-canceledAt>(): kotlinx.datetime/Instant? // dev.kord.common.entity/DiscordSubscription.canceledAt.<get-canceledAt>|<get-canceledAt>(){}[0]
+    final val country // dev.kord.common.entity/DiscordSubscription.country|{}country[0]
+        final fun <get-country>(): dev.kord.common.entity.optional/Optional<kotlin/String> // dev.kord.common.entity/DiscordSubscription.country.<get-country>|<get-country>(){}[0]
+    final val currentPeriodEnd // dev.kord.common.entity/DiscordSubscription.currentPeriodEnd|{}currentPeriodEnd[0]
+        final fun <get-currentPeriodEnd>(): kotlinx.datetime/Instant // dev.kord.common.entity/DiscordSubscription.currentPeriodEnd.<get-currentPeriodEnd>|<get-currentPeriodEnd>(){}[0]
+    final val currentPeriodStart // dev.kord.common.entity/DiscordSubscription.currentPeriodStart|{}currentPeriodStart[0]
+        final fun <get-currentPeriodStart>(): kotlinx.datetime/Instant // dev.kord.common.entity/DiscordSubscription.currentPeriodStart.<get-currentPeriodStart>|<get-currentPeriodStart>(){}[0]
+    final val entitlementIds // dev.kord.common.entity/DiscordSubscription.entitlementIds|{}entitlementIds[0]
+        final fun <get-entitlementIds>(): kotlin.collections/List<dev.kord.common.entity/Snowflake> // dev.kord.common.entity/DiscordSubscription.entitlementIds.<get-entitlementIds>|<get-entitlementIds>(){}[0]
+    final val id // dev.kord.common.entity/DiscordSubscription.id|{}id[0]
+        final fun <get-id>(): dev.kord.common.entity/Snowflake // dev.kord.common.entity/DiscordSubscription.id.<get-id>|<get-id>(){}[0]
+    final val skuIds // dev.kord.common.entity/DiscordSubscription.skuIds|{}skuIds[0]
+        final fun <get-skuIds>(): kotlin.collections/List<dev.kord.common.entity/Snowflake> // dev.kord.common.entity/DiscordSubscription.skuIds.<get-skuIds>|<get-skuIds>(){}[0]
+    final val status // dev.kord.common.entity/DiscordSubscription.status|{}status[0]
+        final fun <get-status>(): dev.kord.common.entity/SubscriptionStatus // dev.kord.common.entity/DiscordSubscription.status.<get-status>|<get-status>(){}[0]
+    final val userId // dev.kord.common.entity/DiscordSubscription.userId|{}userId[0]
+        final fun <get-userId>(): dev.kord.common.entity/Snowflake // dev.kord.common.entity/DiscordSubscription.userId.<get-userId>|<get-userId>(){}[0]
+
+    final fun component1(): dev.kord.common.entity/Snowflake // dev.kord.common.entity/DiscordSubscription.component1|component1(){}[0]
+    final fun component2(): dev.kord.common.entity/Snowflake // dev.kord.common.entity/DiscordSubscription.component2|component2(){}[0]
+    final fun component3(): kotlin.collections/List<dev.kord.common.entity/Snowflake> // dev.kord.common.entity/DiscordSubscription.component3|component3(){}[0]
+    final fun component4(): kotlin.collections/List<dev.kord.common.entity/Snowflake> // dev.kord.common.entity/DiscordSubscription.component4|component4(){}[0]
+    final fun component5(): kotlinx.datetime/Instant // dev.kord.common.entity/DiscordSubscription.component5|component5(){}[0]
+    final fun component6(): kotlinx.datetime/Instant // dev.kord.common.entity/DiscordSubscription.component6|component6(){}[0]
+    final fun component7(): dev.kord.common.entity/SubscriptionStatus // dev.kord.common.entity/DiscordSubscription.component7|component7(){}[0]
+    final fun component8(): kotlinx.datetime/Instant? // dev.kord.common.entity/DiscordSubscription.component8|component8(){}[0]
+    final fun component9(): dev.kord.common.entity.optional/Optional<kotlin/String> // dev.kord.common.entity/DiscordSubscription.component9|component9(){}[0]
+    final fun copy(dev.kord.common.entity/Snowflake = ..., dev.kord.common.entity/Snowflake = ..., kotlin.collections/List<dev.kord.common.entity/Snowflake> = ..., kotlin.collections/List<dev.kord.common.entity/Snowflake> = ..., kotlinx.datetime/Instant = ..., kotlinx.datetime/Instant = ..., dev.kord.common.entity/SubscriptionStatus = ..., kotlinx.datetime/Instant? = ..., dev.kord.common.entity.optional/Optional<kotlin/String> = ...): dev.kord.common.entity/DiscordSubscription // dev.kord.common.entity/DiscordSubscription.copy|copy(dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake;kotlin.collections.List<dev.kord.common.entity.Snowflake>;kotlin.collections.List<dev.kord.common.entity.Snowflake>;kotlinx.datetime.Instant;kotlinx.datetime.Instant;dev.kord.common.entity.SubscriptionStatus;kotlinx.datetime.Instant?;dev.kord.common.entity.optional.Optional<kotlin.String>){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.common.entity/DiscordSubscription.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.common.entity/DiscordSubscription.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // dev.kord.common.entity/DiscordSubscription.toString|toString(){}[0]
+
+    final object $serializer : kotlinx.serialization.internal/GeneratedSerializer<dev.kord.common.entity/DiscordSubscription> { // dev.kord.common.entity/DiscordSubscription.$serializer|null[0]
+        final val descriptor // dev.kord.common.entity/DiscordSubscription.$serializer.descriptor|{}descriptor[0]
+            final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // dev.kord.common.entity/DiscordSubscription.$serializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
+
+        final fun childSerializers(): kotlin/Array<kotlinx.serialization/KSerializer<*>> // dev.kord.common.entity/DiscordSubscription.$serializer.childSerializers|childSerializers(){}[0]
+        final fun deserialize(kotlinx.serialization.encoding/Decoder): dev.kord.common.entity/DiscordSubscription // dev.kord.common.entity/DiscordSubscription.$serializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
+        final fun serialize(kotlinx.serialization.encoding/Encoder, dev.kord.common.entity/DiscordSubscription) // dev.kord.common.entity/DiscordSubscription.$serializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;dev.kord.common.entity.DiscordSubscription){}[0]
+    }
+
+    final object Companion { // dev.kord.common.entity/DiscordSubscription.Companion|null[0]
+        final val $childSerializers // dev.kord.common.entity/DiscordSubscription.Companion.$childSerializers|{}$childSerializers[0]
+
+        final fun serializer(): kotlinx.serialization/KSerializer<dev.kord.common.entity/DiscordSubscription> // dev.kord.common.entity/DiscordSubscription.Companion.serializer|serializer(){}[0]
+    }
+}
+
 final class dev.kord.common.entity/DiscordTeam { // dev.kord.common.entity/DiscordTeam|null[0]
     constructor <init>(kotlin/String?, dev.kord.common.entity/Snowflake, kotlin.collections/List<dev.kord.common.entity/DiscordTeamMember>, kotlin/String, dev.kord.common.entity/Snowflake) // dev.kord.common.entity/DiscordTeam.<init>|<init>(kotlin.String?;dev.kord.common.entity.Snowflake;kotlin.collections.List<dev.kord.common.entity.DiscordTeamMember>;kotlin.String;dev.kord.common.entity.Snowflake){}[0]
 
@@ -8901,6 +8953,31 @@ sealed class dev.kord.common.entity/StageInstancePrivacyLevel { // dev.kord.comm
     final object GuildOnly : dev.kord.common.entity/StageInstancePrivacyLevel // dev.kord.common.entity/StageInstancePrivacyLevel.GuildOnly|null[0]
 
     final object Public : dev.kord.common.entity/StageInstancePrivacyLevel // dev.kord.common.entity/StageInstancePrivacyLevel.Public|null[0]
+}
+
+sealed class dev.kord.common.entity/SubscriptionStatus { // dev.kord.common.entity/SubscriptionStatus|null[0]
+    final val value // dev.kord.common.entity/SubscriptionStatus.value|{}value[0]
+        final fun <get-value>(): kotlin/Int // dev.kord.common.entity/SubscriptionStatus.value.<get-value>|<get-value>(){}[0]
+
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.common.entity/SubscriptionStatus.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.common.entity/SubscriptionStatus.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // dev.kord.common.entity/SubscriptionStatus.toString|toString(){}[0]
+
+    final class Unknown : dev.kord.common.entity/SubscriptionStatus // dev.kord.common.entity/SubscriptionStatus.Unknown|null[0]
+
+    final object Active : dev.kord.common.entity/SubscriptionStatus // dev.kord.common.entity/SubscriptionStatus.Active|null[0]
+
+    final object Companion { // dev.kord.common.entity/SubscriptionStatus.Companion|null[0]
+        final val entries // dev.kord.common.entity/SubscriptionStatus.Companion.entries|{}entries[0]
+            final fun <get-entries>(): kotlin.collections/List<dev.kord.common.entity/SubscriptionStatus> // dev.kord.common.entity/SubscriptionStatus.Companion.entries.<get-entries>|<get-entries>(){}[0]
+
+        final fun from(kotlin/Int): dev.kord.common.entity/SubscriptionStatus // dev.kord.common.entity/SubscriptionStatus.Companion.from|from(kotlin.Int){}[0]
+        final fun serializer(): kotlinx.serialization/KSerializer<dev.kord.common.entity/SubscriptionStatus> // dev.kord.common.entity/SubscriptionStatus.Companion.serializer|serializer(){}[0]
+    }
+
+    final object Ending : dev.kord.common.entity/SubscriptionStatus // dev.kord.common.entity/SubscriptionStatus.Ending|null[0]
+
+    final object Inactive : dev.kord.common.entity/SubscriptionStatus // dev.kord.common.entity/SubscriptionStatus.Inactive|null[0]
 }
 
 sealed class dev.kord.common.entity/SystemChannelFlag { // dev.kord.common.entity/SystemChannelFlag|null[0]
