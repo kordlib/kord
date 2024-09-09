@@ -617,21 +617,30 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
         return cache
             .query {
                 idEq(EntitlementData::applicationId, applicationId)
+
                 request.userId?.let { idEq(EntitlementData::userId, it) }
+
+                if (request.skuIds.isNotEmpty()) {
+                    EntitlementData::skuId `in` request.skuIds
+                }
+
+                when (val pos = request.position) {
+                    null -> {}
+                    is Position.Before -> idLt(EntitlementData::id, pos.value)
+                    is Position.After -> idGt(EntitlementData::id, pos.value)
+                }
+
                 request.guildId?.let { idEq(EntitlementData::guildId, it) }
+
+                if (request.excludeEnded == true) {
+                    val now = Clock.System.now()
+                    EntitlementData::endsAt predicate { endsAt -> endsAt.value?.let { it < now } ?: true }
+                }
             }
             .asFlow()
-            .filter {
-                val containsSku = request.skuIds.isEmpty() || it.skuId in request.skuIds
-                val excludeEnded = request.excludeEnded == true && it.hasEnded
-                containsSku && !excludeEnded && followsPosition(request.position, it.id)
-            }
             .map { Entitlement(it, kord) }
             .limit(request.limit)
     }
-
-    private val EntitlementData.hasEnded: Boolean
-        get() = endsAt.value?.let { Clock.System.now() >= it } ?: false
 
 
     override fun toString(): String = "CacheEntitySupplier(cache=$cache)"
@@ -640,13 +649,6 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
 
 private fun checkLimit(limit: Int?) {
     require(limit == null || limit > 0) { "At least 1 item should be requested, but got $limit." }
-}
-
-private fun followsPosition(position: Position?, id: Snowflake): Boolean = when (position) {
-    is Position.Before -> id < position.value
-    is Position.After -> id > position.value
-    is Position.Around -> throw UnsupportedOperationException("Around is not supported for this operation.")
-    else -> true
 }
 
 private fun <T> Flow<T>.limit(limit: Int?): Flow<T> = if (limit == null) this else take(limit)
