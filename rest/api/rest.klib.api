@@ -2900,6 +2900,24 @@ final class dev.kord.rest.builder.stage/StageInstanceModifyBuilder : dev.kord.re
     final fun toRequest(): dev.kord.rest.json.request/StageInstanceModifyRequest // dev.kord.rest.builder.stage/StageInstanceModifyBuilder.toRequest|toRequest(){}[0]
 }
 
+final class dev.kord.rest.builder.subscription/SkuSubscriptionsListRequestBuilder : dev.kord.rest.builder/RequestBuilder<dev.kord.rest.json.request/SkuSubscriptionsListRequest> { // dev.kord.rest.builder.subscription/SkuSubscriptionsListRequestBuilder|null[0]
+    constructor <init>() // dev.kord.rest.builder.subscription/SkuSubscriptionsListRequestBuilder.<init>|<init>(){}[0]
+
+    final var limit // dev.kord.rest.builder.subscription/SkuSubscriptionsListRequestBuilder.limit|{}limit[0]
+        final fun <get-limit>(): kotlin/Int? // dev.kord.rest.builder.subscription/SkuSubscriptionsListRequestBuilder.limit.<get-limit>|<get-limit>(){}[0]
+        final fun <set-limit>(kotlin/Int?) // dev.kord.rest.builder.subscription/SkuSubscriptionsListRequestBuilder.limit.<set-limit>|<set-limit>(kotlin.Int?){}[0]
+    final var position // dev.kord.rest.builder.subscription/SkuSubscriptionsListRequestBuilder.position|{}position[0]
+        final fun <get-position>(): dev.kord.rest.route/Position.BeforeOrAfter? // dev.kord.rest.builder.subscription/SkuSubscriptionsListRequestBuilder.position.<get-position>|<get-position>(){}[0]
+        final fun <set-position>(dev.kord.rest.route/Position.BeforeOrAfter?) // dev.kord.rest.builder.subscription/SkuSubscriptionsListRequestBuilder.position.<set-position>|<set-position>(dev.kord.rest.route.Position.BeforeOrAfter?){}[0]
+    final var userId // dev.kord.rest.builder.subscription/SkuSubscriptionsListRequestBuilder.userId|{}userId[0]
+        final fun <get-userId>(): dev.kord.common.entity/Snowflake? // dev.kord.rest.builder.subscription/SkuSubscriptionsListRequestBuilder.userId.<get-userId>|<get-userId>(){}[0]
+        final fun <set-userId>(dev.kord.common.entity/Snowflake?) // dev.kord.rest.builder.subscription/SkuSubscriptionsListRequestBuilder.userId.<set-userId>|<set-userId>(dev.kord.common.entity.Snowflake?){}[0]
+
+    final fun after(dev.kord.common.entity/Snowflake) // dev.kord.rest.builder.subscription/SkuSubscriptionsListRequestBuilder.after|after(dev.kord.common.entity.Snowflake){}[0]
+    final fun before(dev.kord.common.entity/Snowflake) // dev.kord.rest.builder.subscription/SkuSubscriptionsListRequestBuilder.before|before(dev.kord.common.entity.Snowflake){}[0]
+    final fun toRequest(): dev.kord.rest.json.request/SkuSubscriptionsListRequest // dev.kord.rest.builder.subscription/SkuSubscriptionsListRequestBuilder.toRequest|toRequest(){}[0]
+}
+
 final class dev.kord.rest.builder.template/GuildFromTemplateCreateBuilder : dev.kord.rest.builder/RequestBuilder<dev.kord.rest.json.request/GuildFromTemplateCreateRequest> { // dev.kord.rest.builder.template/GuildFromTemplateCreateBuilder|null[0]
     constructor <init>(kotlin/String) // dev.kord.rest.builder.template/GuildFromTemplateCreateBuilder.<init>|<init>(kotlin.String){}[0]
 
@@ -5713,6 +5731,25 @@ final class dev.kord.rest.json.request/ScheduledEventModifyRequest { // dev.kord
     }
 }
 
+final class dev.kord.rest.json.request/SkuSubscriptionsListRequest { // dev.kord.rest.json.request/SkuSubscriptionsListRequest|null[0]
+    constructor <init>(dev.kord.rest.route/Position.BeforeOrAfter? = ..., kotlin/Int? = ..., dev.kord.common.entity/Snowflake? = ...) // dev.kord.rest.json.request/SkuSubscriptionsListRequest.<init>|<init>(dev.kord.rest.route.Position.BeforeOrAfter?;kotlin.Int?;dev.kord.common.entity.Snowflake?){}[0]
+
+    final val limit // dev.kord.rest.json.request/SkuSubscriptionsListRequest.limit|{}limit[0]
+        final fun <get-limit>(): kotlin/Int? // dev.kord.rest.json.request/SkuSubscriptionsListRequest.limit.<get-limit>|<get-limit>(){}[0]
+    final val position // dev.kord.rest.json.request/SkuSubscriptionsListRequest.position|{}position[0]
+        final fun <get-position>(): dev.kord.rest.route/Position.BeforeOrAfter? // dev.kord.rest.json.request/SkuSubscriptionsListRequest.position.<get-position>|<get-position>(){}[0]
+    final val userId // dev.kord.rest.json.request/SkuSubscriptionsListRequest.userId|{}userId[0]
+        final fun <get-userId>(): dev.kord.common.entity/Snowflake? // dev.kord.rest.json.request/SkuSubscriptionsListRequest.userId.<get-userId>|<get-userId>(){}[0]
+
+    final fun component1(): dev.kord.rest.route/Position.BeforeOrAfter? // dev.kord.rest.json.request/SkuSubscriptionsListRequest.component1|component1(){}[0]
+    final fun component2(): kotlin/Int? // dev.kord.rest.json.request/SkuSubscriptionsListRequest.component2|component2(){}[0]
+    final fun component3(): dev.kord.common.entity/Snowflake? // dev.kord.rest.json.request/SkuSubscriptionsListRequest.component3|component3(){}[0]
+    final fun copy(dev.kord.rest.route/Position.BeforeOrAfter? = ..., kotlin/Int? = ..., dev.kord.common.entity/Snowflake? = ...): dev.kord.rest.json.request/SkuSubscriptionsListRequest // dev.kord.rest.json.request/SkuSubscriptionsListRequest.copy|copy(dev.kord.rest.route.Position.BeforeOrAfter?;kotlin.Int?;dev.kord.common.entity.Snowflake?){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.json.request/SkuSubscriptionsListRequest.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.rest.json.request/SkuSubscriptionsListRequest.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // dev.kord.rest.json.request/SkuSubscriptionsListRequest.toString|toString(){}[0]
+}
+
 final class dev.kord.rest.json.request/StageInstanceCreateRequest { // dev.kord.rest.json.request/StageInstanceCreateRequest|null[0]
     constructor <init>(dev.kord.common.entity/Snowflake, kotlin/String, dev.kord.common.entity.optional/Optional<dev.kord.common.entity/StageInstancePrivacyLevel> = ..., dev.kord.common.entity.optional/OptionalBoolean = ..., dev.kord.common.entity.optional/OptionalSnowflake = ...) // dev.kord.rest.json.request/StageInstanceCreateRequest.<init>|<init>(dev.kord.common.entity.Snowflake;kotlin.String;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.StageInstancePrivacyLevel>;dev.kord.common.entity.optional.OptionalBoolean;dev.kord.common.entity.optional.OptionalSnowflake){}[0]
 
@@ -6873,6 +6910,8 @@ final class dev.kord.rest.service/RestClient : dev.kord.rest.service/RestService
         final fun <get-stageInstance>(): dev.kord.rest.service/StageInstanceService // dev.kord.rest.service/RestClient.stageInstance.<get-stageInstance>|<get-stageInstance>(){}[0]
     final val sticker // dev.kord.rest.service/RestClient.sticker|{}sticker[0]
         final fun <get-sticker>(): dev.kord.rest.service/StickerService // dev.kord.rest.service/RestClient.sticker.<get-sticker>|<get-sticker>(){}[0]
+    final val subscription // dev.kord.rest.service/RestClient.subscription|{}subscription[0]
+        final fun <get-subscription>(): dev.kord.rest.service/SubscriptionService // dev.kord.rest.service/RestClient.subscription.<get-subscription>|<get-subscription>(){}[0]
     final val template // dev.kord.rest.service/RestClient.template|{}template[0]
         final fun <get-template>(): dev.kord.rest.service/TemplateService // dev.kord.rest.service/RestClient.template.<get-template>|<get-template>(){}[0]
     final val user // dev.kord.rest.service/RestClient.user|{}user[0]
@@ -6913,6 +6952,13 @@ final class dev.kord.rest.service/StickerService : dev.kord.rest.service/RestSer
     final suspend fun getSticker(dev.kord.common.entity/Snowflake): dev.kord.common.entity/DiscordMessageSticker // dev.kord.rest.service/StickerService.getSticker|getSticker(dev.kord.common.entity.Snowflake){}[0]
     final suspend fun modifyGuildSticker(dev.kord.common.entity/Snowflake, dev.kord.common.entity/Snowflake, dev.kord.rest.json.request/GuildStickerModifyRequest): dev.kord.common.entity/DiscordMessageSticker // dev.kord.rest.service/StickerService.modifyGuildSticker|modifyGuildSticker(dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake;dev.kord.rest.json.request.GuildStickerModifyRequest){}[0]
     final suspend inline fun modifyGuildSticker(dev.kord.common.entity/Snowflake, dev.kord.common.entity/Snowflake, kotlin/Function1<dev.kord.rest.builder.guild/StickerModifyBuilder, kotlin/Unit>): dev.kord.common.entity/DiscordMessageSticker // dev.kord.rest.service/StickerService.modifyGuildSticker|modifyGuildSticker(dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake;kotlin.Function1<dev.kord.rest.builder.guild.StickerModifyBuilder,kotlin.Unit>){}[0]
+}
+
+final class dev.kord.rest.service/SubscriptionService : dev.kord.rest.service/RestService { // dev.kord.rest.service/SubscriptionService|null[0]
+    constructor <init>(dev.kord.rest.request/RequestHandler) // dev.kord.rest.service/SubscriptionService.<init>|<init>(dev.kord.rest.request.RequestHandler){}[0]
+
+    final suspend fun getSkuSubscription(dev.kord.common.entity/Snowflake, dev.kord.common.entity/Snowflake): dev.kord.common.entity/DiscordSubscription // dev.kord.rest.service/SubscriptionService.getSkuSubscription|getSkuSubscription(dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake){}[0]
+    final suspend fun listSkuSubscriptions(dev.kord.common.entity/Snowflake, dev.kord.rest.json.request/SkuSubscriptionsListRequest): kotlin.collections/List<dev.kord.common.entity/DiscordSubscription> // dev.kord.rest.service/SubscriptionService.listSkuSubscriptions|listSkuSubscriptions(dev.kord.common.entity.Snowflake;dev.kord.rest.json.request.SkuSubscriptionsListRequest){}[0]
 }
 
 final class dev.kord.rest.service/TemplateService : dev.kord.rest.service/RestService { // dev.kord.rest.service/TemplateService|null[0]
@@ -7478,6 +7524,12 @@ sealed class <#A: kotlin/Any?> dev.kord.rest.route/Route { // dev.kord.rest.rout
 
     final object SelfVoiceStatePatch : dev.kord.rest.route/Route<kotlin/Unit> // dev.kord.rest.route/Route.SelfVoiceStatePatch|null[0]
 
+    final object SkuId : dev.kord.rest.route/Route.Key // dev.kord.rest.route/Route.SkuId|null[0]
+
+    final object SkuSubscriptionGet : dev.kord.rest.route/Route<dev.kord.common.entity/DiscordSubscription> // dev.kord.rest.route/Route.SkuSubscriptionGet|null[0]
+
+    final object SkuSubscriptionsList : dev.kord.rest.route/Route<kotlin.collections/List<dev.kord.common.entity/DiscordSubscription>> // dev.kord.rest.route/Route.SkuSubscriptionsList|null[0]
+
     final object SkusList : dev.kord.rest.route/Route<kotlin.collections/List<dev.kord.common.entity/DiscordSku>> // dev.kord.rest.route/Route.SkusList|null[0]
 
     final object StageInstanceDelete : dev.kord.rest.route/Route<kotlin/Unit> // dev.kord.rest.route/Route.StageInstanceDelete|null[0]
@@ -7495,6 +7547,8 @@ sealed class <#A: kotlin/Any?> dev.kord.rest.route/Route { // dev.kord.rest.rout
     final object StickerGet : dev.kord.rest.route/Route<dev.kord.common.entity/DiscordMessageSticker> // dev.kord.rest.route/Route.StickerGet|null[0]
 
     final object StickerId : dev.kord.rest.route/Route.Key // dev.kord.rest.route/Route.StickerId|null[0]
+
+    final object SubscriptionId : dev.kord.rest.route/Route.Key // dev.kord.rest.route/Route.SubscriptionId|null[0]
 
     final object TemplateCode : dev.kord.rest.route/Route.Key // dev.kord.rest.route/Route.TemplateCode|null[0]
 

@@ -31,6 +31,7 @@ public class RestClient(requestHandler: RequestHandler) : RestService(requestHan
     public val sku: SkuService = SkuService(requestHandler)
     public val stageInstance: StageInstanceService = StageInstanceService(requestHandler)
     public val sticker: StickerService = StickerService(requestHandler)
+    public val subscription: SubscriptionService = SubscriptionService(requestHandler)
     public val user: UserService = UserService(requestHandler)
     public val voice: VoiceService = VoiceService(requestHandler)
     public val webhook: WebhookService = WebhookService(requestHandler)

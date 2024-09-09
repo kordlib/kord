@@ -75,6 +75,8 @@ public sealed class Route<T>(
     public object WebhookToken : Key("{webhook.token}")
     public object TemplateCode : Key("{template.code}")
     public object EntitlementId : Key("{entitlement.id}")
+    public object SkuId : Key("{sku.id}")
+    public object SubscriptionId : Key("{subscription.id}")
     public object ApplicationId : Key("{application.id}", true)
     public object CommandId : Key("{command.id}", true)
     public object InteractionId : Key("{interaction.id}", true)
@@ -421,6 +423,26 @@ public sealed class Route<T>(
             HttpMethod.Get,
             "/applications/$ApplicationId/skus",
             ListSerializer(DiscordSku.serializer()),
+        )
+
+
+    /*
+     * Subscription:
+     * https://discord.com/developers/docs/resources/subscription
+     */
+
+    public object SkuSubscriptionsList :
+        Route<List<DiscordSubscription>>(
+            HttpMethod.Get,
+            "/skus/$SkuId/subscriptions",
+            ListSerializer(DiscordSubscription.serializer()),
+        )
+
+    public object SkuSubscriptionGet :
+        Route<DiscordSubscription>(
+            HttpMethod.Get,
+            "/skus/$SkuId/subscriptions/$SubscriptionId",
+            DiscordSubscription.serializer(),
         )
 
 

@@ -2462,6 +2462,20 @@ public final class dev/kord/rest/builder/stage/StageInstanceModifyBuilder : dev/
 	public synthetic fun toRequest ()Ljava/lang/Object;
 }
 
+public final class dev/kord/rest/builder/subscription/SkuSubscriptionsListRequestBuilder : dev/kord/rest/builder/RequestBuilder {
+	public fun <init> ()V
+	public final fun after (Ldev/kord/common/entity/Snowflake;)V
+	public final fun before (Ldev/kord/common/entity/Snowflake;)V
+	public final fun getLimit ()Ljava/lang/Integer;
+	public final fun getPosition ()Ldev/kord/rest/route/Position$BeforeOrAfter;
+	public final fun getUserId ()Ldev/kord/common/entity/Snowflake;
+	public final fun setLimit (Ljava/lang/Integer;)V
+	public final fun setPosition (Ldev/kord/rest/route/Position$BeforeOrAfter;)V
+	public final fun setUserId (Ldev/kord/common/entity/Snowflake;)V
+	public fun toRequest ()Ldev/kord/rest/json/request/SkuSubscriptionsListRequest;
+	public synthetic fun toRequest ()Ljava/lang/Object;
+}
+
 public final class dev/kord/rest/builder/template/GuildFromTemplateCreateBuilder : dev/kord/rest/builder/RequestBuilder {
 	public fun <init> (Ljava/lang/String;)V
 	public final fun getImage ()Ldev/kord/rest/Image;
@@ -5218,6 +5232,23 @@ public final class dev/kord/rest/json/request/ScheduledEventModifyRequest$Compan
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
+public final class dev/kord/rest/json/request/SkuSubscriptionsListRequest {
+	public fun <init> ()V
+	public fun <init> (Ldev/kord/rest/route/Position$BeforeOrAfter;Ljava/lang/Integer;Ldev/kord/common/entity/Snowflake;)V
+	public synthetic fun <init> (Ldev/kord/rest/route/Position$BeforeOrAfter;Ljava/lang/Integer;Ldev/kord/common/entity/Snowflake;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ldev/kord/rest/route/Position$BeforeOrAfter;
+	public final fun component2 ()Ljava/lang/Integer;
+	public final fun component3 ()Ldev/kord/common/entity/Snowflake;
+	public final fun copy (Ldev/kord/rest/route/Position$BeforeOrAfter;Ljava/lang/Integer;Ldev/kord/common/entity/Snowflake;)Ldev/kord/rest/json/request/SkuSubscriptionsListRequest;
+	public static synthetic fun copy$default (Ldev/kord/rest/json/request/SkuSubscriptionsListRequest;Ldev/kord/rest/route/Position$BeforeOrAfter;Ljava/lang/Integer;Ldev/kord/common/entity/Snowflake;ILjava/lang/Object;)Ldev/kord/rest/json/request/SkuSubscriptionsListRequest;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getLimit ()Ljava/lang/Integer;
+	public final fun getPosition ()Ldev/kord/rest/route/Position$BeforeOrAfter;
+	public final fun getUserId ()Ldev/kord/common/entity/Snowflake;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
 public final class dev/kord/rest/json/request/StageInstanceCreateRequest {
 	public static final field Companion Ldev/kord/rest/json/request/StageInstanceCreateRequest$Companion;
 	public fun <init> (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/OptionalSnowflake;)V
@@ -7102,6 +7133,18 @@ public final class dev/kord/rest/route/Route$SelfVoiceStatePatch : dev/kord/rest
 	public static final field INSTANCE Ldev/kord/rest/route/Route$SelfVoiceStatePatch;
 }
 
+public final class dev/kord/rest/route/Route$SkuId : dev/kord/rest/route/Route$Key {
+	public static final field INSTANCE Ldev/kord/rest/route/Route$SkuId;
+}
+
+public final class dev/kord/rest/route/Route$SkuSubscriptionGet : dev/kord/rest/route/Route {
+	public static final field INSTANCE Ldev/kord/rest/route/Route$SkuSubscriptionGet;
+}
+
+public final class dev/kord/rest/route/Route$SkuSubscriptionsList : dev/kord/rest/route/Route {
+	public static final field INSTANCE Ldev/kord/rest/route/Route$SkuSubscriptionsList;
+}
+
 public final class dev/kord/rest/route/Route$SkusList : dev/kord/rest/route/Route {
 	public static final field INSTANCE Ldev/kord/rest/route/Route$SkusList;
 }
@@ -7136,6 +7179,10 @@ public final class dev/kord/rest/route/Route$StickerGet : dev/kord/rest/route/Ro
 
 public final class dev/kord/rest/route/Route$StickerId : dev/kord/rest/route/Route$Key {
 	public static final field INSTANCE Ldev/kord/rest/route/Route$StickerId;
+}
+
+public final class dev/kord/rest/route/Route$SubscriptionId : dev/kord/rest/route/Route$Key {
+	public static final field INSTANCE Ldev/kord/rest/route/Route$SubscriptionId;
 }
 
 public final class dev/kord/rest/route/Route$TemplateCode : dev/kord/rest/route/Route$Key {
@@ -7563,6 +7610,7 @@ public final class dev/kord/rest/service/RestClient : dev/kord/rest/service/Rest
 	public final fun getSku ()Ldev/kord/rest/service/SkuService;
 	public final fun getStageInstance ()Ldev/kord/rest/service/StageInstanceService;
 	public final fun getSticker ()Ldev/kord/rest/service/StickerService;
+	public final fun getSubscription ()Ldev/kord/rest/service/SubscriptionService;
 	public final fun getTemplate ()Ldev/kord/rest/service/TemplateService;
 	public final fun getUser ()Ldev/kord/rest/service/UserService;
 	public final fun getVoice ()Ldev/kord/rest/service/VoiceService;
@@ -7610,6 +7658,12 @@ public final class dev/kord/rest/service/StickerService : dev/kord/rest/service/
 	public final fun getSticker (Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun modifyGuildSticker (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/rest/json/request/GuildStickerModifyRequest;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun modifyGuildSticker (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class dev/kord/rest/service/SubscriptionService : dev/kord/rest/service/RestService {
+	public fun <init> (Ldev/kord/rest/request/RequestHandler;)V
+	public final fun getSkuSubscription (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun listSkuSubscriptions (Ldev/kord/common/entity/Snowflake;Ldev/kord/rest/json/request/SkuSubscriptionsListRequest;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class dev/kord/rest/service/TemplateService : dev/kord/rest/service/RestService {
