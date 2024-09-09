@@ -46,10 +46,12 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
     private inline val interaction get() = kord.rest.interaction
 
     // resources
+    private inline val application get() = kord.rest.application
     private inline val auditLog get() = kord.rest.auditLog
     private inline val autoModeration get() = kord.rest.autoModeration
     private inline val channel get() = kord.rest.channel
     private inline val emoji get() = kord.rest.emoji
+    private inline val entitlement get() = kord.rest.entitlement
     private inline val guild get() = kord.rest.guild
     private inline val template get() = kord.rest.template
     private inline val invite get() = kord.rest.invite
@@ -58,12 +60,6 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
     private inline val user get() = kord.rest.user
     private inline val voice get() = kord.rest.voice
     private inline val webhook get() = kord.rest.webhook
-
-    // topics
-    private inline val application get() = kord.rest.application
-
-    // monetization
-    private inline val entitlement get() = kord.rest.entitlement
 
 
     // max batchSize/limit: see https://discord.com/developers/docs/resources/user#get-current-user-guilds

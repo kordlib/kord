@@ -10,8 +10,8 @@ import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import kotlinx.serialization.Serializable
 
-private val EntitlementData.nullableUserId get() = userId.value
 private val ThreadMemberData.nullableUserId get() = userId.value
+private val EntitlementData.nullableUserId get() = userId.value
 
 @Serializable
 public data class UserData(

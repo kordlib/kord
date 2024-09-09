@@ -11,12 +11,12 @@ import dev.kord.core.event.Event
 public class EntitlementCreateEvent(
     /** The [Entitlement] that was created. */
     public val entitlement: Entitlement,
+    override val kord: Kord,
     override val shard: Int,
     override val customContext: Any?,
-    override val kord: Kord
 ) : Event {
     override fun toString(): String =
-        "EntitlementCreateEvent(entitlement=$entitlement, customContext=$customContext, kord=$kord, shard=$shard)"
+        "EntitlementCreateEvent(entitlement=$entitlement, kord=$kord, shard=$shard, customContext=$customContext)"
 }
 
 /**
@@ -30,12 +30,12 @@ public class EntitlementUpdateEvent(
     public val entitlement: Entitlement,
     /** The [entitlement] as found in [cache][Kord.cache] before the update. */
     public val old: Entitlement?,
+    override val kord: Kord,
     override val shard: Int,
     override val customContext: Any?,
-    override val kord: Kord
 ) : Event {
-    override fun toString(): String = "EntitlementUpdateEvent(entitlement=$entitlement, old=$old, " +
-        "customContext=$customContext, kord=$kord, shard=$shard)"
+    override fun toString(): String = "EntitlementUpdateEvent(entitlement=$entitlement, old=$old, kord=$kord, " +
+        "shard=$shard, customContext=$customContext)"
 }
 
 /**
@@ -51,10 +51,10 @@ public class EntitlementUpdateEvent(
 public class EntitlementDeleteEvent(
     /** The [Entitlement] that was deleted. */
     public val entitlement: Entitlement,
+    override val kord: Kord,
     override val shard: Int,
     override val customContext: Any?,
-    override val kord: Kord
 ) : Event {
     override fun toString(): String =
-        "EntitlementDeleteEvent(entitlement=$entitlement, customContext=$customContext, kord=$kord, shard=$shard)"
+        "EntitlementDeleteEvent(entitlement=$entitlement, kord=$kord, shard=$shard, customContext=$customContext)"
 }

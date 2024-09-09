@@ -25,9 +25,9 @@ internal class EntitlementEventHandler : BaseGatewayEventHandler() {
     ): dev.kord.core.event.Event? = when (event) {
         is EntitlementCreate -> EntitlementCreateEvent(
             entitlement = handleEntitlement(event.entitlement, kord),
+            kord = kord,
             shard = shard,
             customContext = context?.get(),
-            kord = kord,
         )
         is EntitlementUpdate -> EntitlementUpdateEvent(
             old = kord.cache
@@ -37,16 +37,16 @@ internal class EntitlementEventHandler : BaseGatewayEventHandler() {
                 }
                 .singleOrNull()
                 ?.let { Entitlement(it, kord) },
-            shard = shard,
             entitlement = handleEntitlement(event.entitlement, kord),
-            customContext = context?.get(),
             kord = kord,
+            shard = shard,
+            customContext = context?.get(),
         )
         is EntitlementDelete -> EntitlementDeleteEvent(
             entitlement = handleDeletedEntitlement(event.entitlement, kord),
+            kord = kord,
             shard = shard,
             customContext = context?.get(),
-            kord = kord,
         )
         else -> null
     }

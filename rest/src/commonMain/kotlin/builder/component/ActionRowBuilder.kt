@@ -10,19 +10,6 @@ import kotlin.contracts.contract
 public class ActionRowBuilder : MessageComponentBuilder {
     public val components: MutableList<ActionRowComponentBuilder> = mutableListOf()
 
-    public inline fun premiumButton(
-        skuId: Snowflake,
-        builder: PremiumButtonBuilder.() -> Unit = {}
-    ) {
-        contract {
-            callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
-        }
-
-        components.add(
-            PremiumButtonBuilder(skuId).apply(builder)
-        )
-    }
-
     public inline fun interactionButton(
         style: ButtonStyle,
         customId: String,
@@ -47,6 +34,19 @@ public class ActionRowBuilder : MessageComponentBuilder {
 
         components.add(
             ButtonBuilder.LinkButtonBuilder(url).apply(builder)
+        )
+    }
+
+    public inline fun premiumButton(
+        skuId: Snowflake,
+        builder: PremiumButtonBuilder.() -> Unit = {},
+    ) {
+        contract {
+            callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+        }
+
+        components.add(
+            PremiumButtonBuilder(skuId).apply(builder)
         )
     }
 

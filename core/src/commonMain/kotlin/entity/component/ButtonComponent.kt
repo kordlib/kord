@@ -55,6 +55,11 @@ public class ButtonComponent(override val data: ChatComponentData) : Component {
     public val customId: String? get() = data.customId.value
 
     /**
+     * The ID of the [Sku] this button will prompt to purchase. Present if this button is a premium button.
+     */
+    public val skuId: Snowflake? get() = data.skuId.value
+
+    /**
      * The url the button will link to. Present if this button is a link button.
      */
     public val url: String? get() = data.url.value
@@ -63,11 +68,6 @@ public class ButtonComponent(override val data: ChatComponentData) : Component {
      * Whether this button can be clicked.
      */
     public val disabled: Boolean get() = data.disabled.discordBoolean
-
-    /**
-     * The ID of the [Sku] this button will prompt to purchase. Present if this button is a premium button.
-     */
-    public val skuId: Snowflake? get() = data.skuId.value
 
     override fun toString(): String = "ButtonComponent(data=$data)"
 

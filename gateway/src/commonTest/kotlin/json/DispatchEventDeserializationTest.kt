@@ -61,6 +61,14 @@ class DispatchEventDeserializationTest {
     private val channelJson = """{"id":"0","type":0}"""
     private val thread = DiscordChannel(id = Snowflake.min, type = ChannelType.PublicGuildThread)
     private val threadJson = """{"id":"0","type":11}"""
+    private val entitlement = DiscordEntitlement(
+        id = Snowflake.min,
+        skuId = Snowflake.min,
+        applicationId = Snowflake.min,
+        type = EntitlementType.ApplicationSubscription,
+        deleted = false,
+    )
+    private val entitlementJson = """{"id":"0","sku_id":"0","application_id":"0","type":8,"deleted":false}"""
     private val guild = DiscordGuild(
         id = Snowflake.min,
         name = "name",
@@ -317,15 +325,6 @@ class DispatchEventDeserializationTest {
         data = DiscordThreadMembersUpdate(id = Snowflake.min, guildId = Snowflake.min, memberCount = 42),
         json = """{"id":"0","guild_id":"0","member_count":42}""",
     )
-
-    private val entitlement = DiscordEntitlement(
-        id = Snowflake.min,
-        applicationId = Snowflake.min,
-        deleted = false,
-        skuId = Snowflake.min,
-        type = EntitlementType.ApplicationSubscription,
-    )
-    private val entitlementJson = """{"id":"0","application_id":"0","sku_id":"0","type":8,"deleted":false}"""
 
     @Test
     fun test_EntitlementCreate_deserialization() = testDispatchEventDeserialization(

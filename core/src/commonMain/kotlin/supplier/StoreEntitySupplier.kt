@@ -310,17 +310,17 @@ public class StoreEntitySupplier(
     override suspend fun getAutoModerationRuleOrNull(guildId: Snowflake, ruleId: Snowflake): AutoModerationRule? =
         storeAndReturn(supplier.getAutoModerationRuleOrNull(guildId, ruleId)) { it.data }
 
+    override fun getEntitlements(
+        applicationId: Snowflake,
+        request: EntitlementsListRequest,
+    ): Flow<Entitlement> = storeOnEach(supplier.getEntitlements(applicationId, request)) { it.data }
+
 
     private inline fun <T, reified R : Any> storeOnEach(source: Flow<T>, crossinline transform: (T) -> R): Flow<T> {
         return source.onEach { fetchedEntity ->
             storeAndReturn(fetchedEntity) { transform(it) }
         }
     }
-
-    override fun getEntitlements(
-        applicationId: Snowflake,
-        request: EntitlementsListRequest
-    ): Flow<Entitlement> = storeOnEach(supplier.getEntitlements(applicationId, request)) { it.data }
 
     private suspend inline fun <T, reified R : Any> storeAndReturn(value: T?, transform: (T) -> R): T? {
         if (value == null) return null

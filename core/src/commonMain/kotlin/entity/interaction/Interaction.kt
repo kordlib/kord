@@ -33,13 +33,6 @@ public sealed interface Interaction : InteractionBehavior {
     override val token: String get() = data.token
 
     /**
-     * For [monetized apps](https://discord.com/developers/docs/monetization/overview), any entitlements for the
-     * invoking user, representing access to premium [Sku]s.
-     */
-    public val entitlements: List<Entitlement>
-        get() = data.entitlements.mapList { Entitlement(it, kord) }.orEmpty()
-
-    /**
      * The type of the interaction.
      */
     public val type: InteractionType get() = data.type
@@ -63,6 +56,12 @@ public sealed interface Interaction : InteractionBehavior {
      * read-only property, always 1
      */
     public val version: Int get() = data.version
+
+    /**
+     * For [monetized apps](https://discord.com/developers/docs/monetization/overview), any [Entitlement]s for the
+     * [invoking user][user], representing access to premium [Sku]s.
+     */
+    public val entitlements: List<Entitlement> get() = data.entitlements.mapList { Entitlement(it, kord) }.orEmpty()
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): Interaction
 

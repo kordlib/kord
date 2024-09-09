@@ -3121,7 +3121,7 @@ final class dev.kord.core.cache.data/EmojiData { // dev.kord.core.cache.data/Emo
 }
 
 final class dev.kord.core.cache.data/EntitlementData { // dev.kord.core.cache.data/EntitlementData|null[0]
-    constructor <init>(dev.kord.common.entity/Snowflake, dev.kord.common.entity/Snowflake, dev.kord.common.entity/EntitlementType, dev.kord.common.entity/Snowflake, dev.kord.common.entity.optional/OptionalSnowflake = ..., dev.kord.common.entity.optional/OptionalSnowflake = ..., kotlin/Boolean, dev.kord.common.entity.optional/Optional<kotlinx.datetime/Instant?> = ..., dev.kord.common.entity.optional/Optional<kotlinx.datetime/Instant> = ..., dev.kord.common.entity.optional/OptionalBoolean = ...) // dev.kord.core.cache.data/EntitlementData.<init>|<init>(dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake;dev.kord.common.entity.EntitlementType;dev.kord.common.entity.Snowflake;dev.kord.common.entity.optional.OptionalSnowflake;dev.kord.common.entity.optional.OptionalSnowflake;kotlin.Boolean;dev.kord.common.entity.optional.Optional<kotlinx.datetime.Instant?>;dev.kord.common.entity.optional.Optional<kotlinx.datetime.Instant>;dev.kord.common.entity.optional.OptionalBoolean){}[0]
+    constructor <init>(dev.kord.common.entity/Snowflake, dev.kord.common.entity/Snowflake, dev.kord.common.entity/Snowflake, dev.kord.common.entity.optional/OptionalSnowflake = ..., dev.kord.common.entity/EntitlementType, kotlin/Boolean, dev.kord.common.entity.optional/Optional<kotlinx.datetime/Instant> = ..., dev.kord.common.entity.optional/Optional<kotlinx.datetime/Instant?> = ..., dev.kord.common.entity.optional/OptionalSnowflake = ..., dev.kord.common.entity.optional/OptionalBoolean = ...) // dev.kord.core.cache.data/EntitlementData.<init>|<init>(dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake;dev.kord.common.entity.optional.OptionalSnowflake;dev.kord.common.entity.EntitlementType;kotlin.Boolean;dev.kord.common.entity.optional.Optional<kotlinx.datetime.Instant>;dev.kord.common.entity.optional.Optional<kotlinx.datetime.Instant?>;dev.kord.common.entity.optional.OptionalSnowflake;dev.kord.common.entity.optional.OptionalBoolean){}[0]
 
     final val applicationId // dev.kord.core.cache.data/EntitlementData.applicationId|{}applicationId[0]
         final fun <get-applicationId>(): dev.kord.common.entity/Snowflake // dev.kord.core.cache.data/EntitlementData.applicationId.<get-applicationId>|<get-applicationId>(){}[0]
@@ -3147,14 +3147,14 @@ final class dev.kord.core.cache.data/EntitlementData { // dev.kord.core.cache.da
     final fun component1(): dev.kord.common.entity/Snowflake // dev.kord.core.cache.data/EntitlementData.component1|component1(){}[0]
     final fun component10(): dev.kord.common.entity.optional/OptionalBoolean // dev.kord.core.cache.data/EntitlementData.component10|component10(){}[0]
     final fun component2(): dev.kord.common.entity/Snowflake // dev.kord.core.cache.data/EntitlementData.component2|component2(){}[0]
-    final fun component3(): dev.kord.common.entity/EntitlementType // dev.kord.core.cache.data/EntitlementData.component3|component3(){}[0]
-    final fun component4(): dev.kord.common.entity/Snowflake // dev.kord.core.cache.data/EntitlementData.component4|component4(){}[0]
-    final fun component5(): dev.kord.common.entity.optional/OptionalSnowflake // dev.kord.core.cache.data/EntitlementData.component5|component5(){}[0]
-    final fun component6(): dev.kord.common.entity.optional/OptionalSnowflake // dev.kord.core.cache.data/EntitlementData.component6|component6(){}[0]
-    final fun component7(): kotlin/Boolean // dev.kord.core.cache.data/EntitlementData.component7|component7(){}[0]
+    final fun component3(): dev.kord.common.entity/Snowflake // dev.kord.core.cache.data/EntitlementData.component3|component3(){}[0]
+    final fun component4(): dev.kord.common.entity.optional/OptionalSnowflake // dev.kord.core.cache.data/EntitlementData.component4|component4(){}[0]
+    final fun component5(): dev.kord.common.entity/EntitlementType // dev.kord.core.cache.data/EntitlementData.component5|component5(){}[0]
+    final fun component6(): kotlin/Boolean // dev.kord.core.cache.data/EntitlementData.component6|component6(){}[0]
+    final fun component7(): dev.kord.common.entity.optional/Optional<kotlinx.datetime/Instant> // dev.kord.core.cache.data/EntitlementData.component7|component7(){}[0]
     final fun component8(): dev.kord.common.entity.optional/Optional<kotlinx.datetime/Instant?> // dev.kord.core.cache.data/EntitlementData.component8|component8(){}[0]
-    final fun component9(): dev.kord.common.entity.optional/Optional<kotlinx.datetime/Instant> // dev.kord.core.cache.data/EntitlementData.component9|component9(){}[0]
-    final fun copy(dev.kord.common.entity/Snowflake = ..., dev.kord.common.entity/Snowflake = ..., dev.kord.common.entity/EntitlementType = ..., dev.kord.common.entity/Snowflake = ..., dev.kord.common.entity.optional/OptionalSnowflake = ..., dev.kord.common.entity.optional/OptionalSnowflake = ..., kotlin/Boolean = ..., dev.kord.common.entity.optional/Optional<kotlinx.datetime/Instant?> = ..., dev.kord.common.entity.optional/Optional<kotlinx.datetime/Instant> = ..., dev.kord.common.entity.optional/OptionalBoolean = ...): dev.kord.core.cache.data/EntitlementData // dev.kord.core.cache.data/EntitlementData.copy|copy(dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake;dev.kord.common.entity.EntitlementType;dev.kord.common.entity.Snowflake;dev.kord.common.entity.optional.OptionalSnowflake;dev.kord.common.entity.optional.OptionalSnowflake;kotlin.Boolean;dev.kord.common.entity.optional.Optional<kotlinx.datetime.Instant?>;dev.kord.common.entity.optional.Optional<kotlinx.datetime.Instant>;dev.kord.common.entity.optional.OptionalBoolean){}[0]
+    final fun component9(): dev.kord.common.entity.optional/OptionalSnowflake // dev.kord.core.cache.data/EntitlementData.component9|component9(){}[0]
+    final fun copy(dev.kord.common.entity/Snowflake = ..., dev.kord.common.entity/Snowflake = ..., dev.kord.common.entity/Snowflake = ..., dev.kord.common.entity.optional/OptionalSnowflake = ..., dev.kord.common.entity/EntitlementType = ..., kotlin/Boolean = ..., dev.kord.common.entity.optional/Optional<kotlinx.datetime/Instant> = ..., dev.kord.common.entity.optional/Optional<kotlinx.datetime/Instant?> = ..., dev.kord.common.entity.optional/OptionalSnowflake = ..., dev.kord.common.entity.optional/OptionalBoolean = ...): dev.kord.core.cache.data/EntitlementData // dev.kord.core.cache.data/EntitlementData.copy|copy(dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake;dev.kord.common.entity.optional.OptionalSnowflake;dev.kord.common.entity.EntitlementType;kotlin.Boolean;dev.kord.common.entity.optional.Optional<kotlinx.datetime.Instant>;dev.kord.common.entity.optional.Optional<kotlinx.datetime.Instant?>;dev.kord.common.entity.optional.OptionalSnowflake;dev.kord.common.entity.optional.OptionalBoolean){}[0]
     final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.core.cache.data/EntitlementData.equals|equals(kotlin.Any?){}[0]
     final fun hashCode(): kotlin/Int // dev.kord.core.cache.data/EntitlementData.hashCode|hashCode(){}[0]
     final fun toString(): kotlin/String // dev.kord.core.cache.data/EntitlementData.toString|toString(){}[0]
@@ -9496,7 +9496,7 @@ final class dev.kord.core.event.channel/VoiceChannelUpdateEvent : dev.kord.core.
 }
 
 final class dev.kord.core.event.entitlement/EntitlementCreateEvent : dev.kord.core.event/Event { // dev.kord.core.event.entitlement/EntitlementCreateEvent|null[0]
-    constructor <init>(dev.kord.core.entity/Entitlement, kotlin/Int, kotlin/Any?, dev.kord.core/Kord) // dev.kord.core.event.entitlement/EntitlementCreateEvent.<init>|<init>(dev.kord.core.entity.Entitlement;kotlin.Int;kotlin.Any?;dev.kord.core.Kord){}[0]
+    constructor <init>(dev.kord.core.entity/Entitlement, dev.kord.core/Kord, kotlin/Int, kotlin/Any?) // dev.kord.core.event.entitlement/EntitlementCreateEvent.<init>|<init>(dev.kord.core.entity.Entitlement;dev.kord.core.Kord;kotlin.Int;kotlin.Any?){}[0]
 
     final val customContext // dev.kord.core.event.entitlement/EntitlementCreateEvent.customContext|{}customContext[0]
         final fun <get-customContext>(): kotlin/Any? // dev.kord.core.event.entitlement/EntitlementCreateEvent.customContext.<get-customContext>|<get-customContext>(){}[0]
@@ -9511,7 +9511,7 @@ final class dev.kord.core.event.entitlement/EntitlementCreateEvent : dev.kord.co
 }
 
 final class dev.kord.core.event.entitlement/EntitlementDeleteEvent : dev.kord.core.event/Event { // dev.kord.core.event.entitlement/EntitlementDeleteEvent|null[0]
-    constructor <init>(dev.kord.core.entity/Entitlement, kotlin/Int, kotlin/Any?, dev.kord.core/Kord) // dev.kord.core.event.entitlement/EntitlementDeleteEvent.<init>|<init>(dev.kord.core.entity.Entitlement;kotlin.Int;kotlin.Any?;dev.kord.core.Kord){}[0]
+    constructor <init>(dev.kord.core.entity/Entitlement, dev.kord.core/Kord, kotlin/Int, kotlin/Any?) // dev.kord.core.event.entitlement/EntitlementDeleteEvent.<init>|<init>(dev.kord.core.entity.Entitlement;dev.kord.core.Kord;kotlin.Int;kotlin.Any?){}[0]
 
     final val customContext // dev.kord.core.event.entitlement/EntitlementDeleteEvent.customContext|{}customContext[0]
         final fun <get-customContext>(): kotlin/Any? // dev.kord.core.event.entitlement/EntitlementDeleteEvent.customContext.<get-customContext>|<get-customContext>(){}[0]
@@ -9526,7 +9526,7 @@ final class dev.kord.core.event.entitlement/EntitlementDeleteEvent : dev.kord.co
 }
 
 final class dev.kord.core.event.entitlement/EntitlementUpdateEvent : dev.kord.core.event/Event { // dev.kord.core.event.entitlement/EntitlementUpdateEvent|null[0]
-    constructor <init>(dev.kord.core.entity/Entitlement, dev.kord.core.entity/Entitlement?, kotlin/Int, kotlin/Any?, dev.kord.core/Kord) // dev.kord.core.event.entitlement/EntitlementUpdateEvent.<init>|<init>(dev.kord.core.entity.Entitlement;dev.kord.core.entity.Entitlement?;kotlin.Int;kotlin.Any?;dev.kord.core.Kord){}[0]
+    constructor <init>(dev.kord.core.entity/Entitlement, dev.kord.core.entity/Entitlement?, dev.kord.core/Kord, kotlin/Int, kotlin/Any?) // dev.kord.core.event.entitlement/EntitlementUpdateEvent.<init>|<init>(dev.kord.core.entity.Entitlement;dev.kord.core.entity.Entitlement?;dev.kord.core.Kord;kotlin.Int;kotlin.Any?){}[0]
 
     final val customContext // dev.kord.core.event.entitlement/EntitlementUpdateEvent.customContext|{}customContext[0]
         final fun <get-customContext>(): kotlin/Any? // dev.kord.core.event.entitlement/EntitlementUpdateEvent.customContext.<get-customContext>|<get-customContext>(){}[0]

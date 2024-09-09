@@ -72,12 +72,6 @@ public class Entitlement(
         get() = data.endsAt.value
 
     /**
-     * For consumable items, whether the entitlement has been consumed.
-     */
-    public val isConsumed: Boolean?
-        get() = data.consumed.value
-
-    /**
      * The ID of the [Guild] that is granted access to this entitlement's [Sku].
      */
     public val guildId: Snowflake?
@@ -88,6 +82,12 @@ public class Entitlement(
      */
     public val guild: GuildBehavior?
         get() = guildId?.let { GuildBehavior(it, kord) }
+
+    /**
+     * For consumable items, whether the entitlement has been consumed.
+     */
+    public val isConsumed: Boolean?
+        get() = data.consumed.value
 
     /**
      * Requests to delete this currently active test entitlement.
