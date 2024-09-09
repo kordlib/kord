@@ -48,4 +48,3 @@ public data class UserData(
 }
 
 public fun DiscordUser.toData(): UserData = UserData.from(this)
-

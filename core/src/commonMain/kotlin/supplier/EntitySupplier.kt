@@ -475,11 +475,7 @@ public interface EntitySupplier {
         limit: Int? = null,
     ): Flow<ThreadChannel>
 
-    public fun getGuildApplicationCommands(
-        applicationId: Snowflake,
-        guildId: Snowflake,
-        withLocalizations: Boolean? = null
-    ): Flow<GuildApplicationCommand>
+    public fun getGuildApplicationCommands(applicationId: Snowflake, guildId: Snowflake, withLocalizations: Boolean? = null): Flow<GuildApplicationCommand>
 
     public suspend fun getGuildApplicationCommandOrNull(
         applicationId: Snowflake,
@@ -510,10 +506,7 @@ public interface EntitySupplier {
         getGlobalApplicationCommandOrNull(applicationId, commandId)
             ?: EntityNotFoundException.applicationCommandNotFound<GlobalApplicationCommand>(commandId)
 
-    public fun getGlobalApplicationCommands(
-        applicationId: Snowflake,
-        withLocalizations: Boolean? = null
-    ): Flow<GlobalApplicationCommand>
+    public fun getGlobalApplicationCommands(applicationId: Snowflake, withLocalizations: Boolean? = null): Flow<GlobalApplicationCommand>
 
 
     public suspend fun getApplicationCommandPermissionsOrNull(

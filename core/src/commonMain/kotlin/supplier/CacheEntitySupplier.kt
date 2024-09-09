@@ -440,10 +440,7 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
         return GlobalApplicationCommand(data, kord.rest.interaction)
     }
 
-    override fun getGlobalApplicationCommands(
-        applicationId: Snowflake,
-        withLocalizations: Boolean?
-    ): Flow<GlobalApplicationCommand> =
+    override fun getGlobalApplicationCommands(applicationId: Snowflake, withLocalizations: Boolean?): Flow<GlobalApplicationCommand> =
         cache.query {
             idEq(ApplicationCommandData::guildId, null)
             idEq(ApplicationCommandData::applicationId, applicationId)
