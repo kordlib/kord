@@ -247,7 +247,6 @@ public final class dev/kord/rest/builder/automoderation/KeywordAutoModerationRul
 
 public final class dev/kord/rest/builder/automoderation/KeywordAutoModerationRuleCreateBuilder : dev/kord/rest/builder/automoderation/AutoModerationRuleCreateBuilder, dev/kord/rest/builder/automoderation/KeywordAutoModerationRuleBuilder {
 	public fun <init> (Ljava/lang/String;Ldev/kord/common/entity/AutoModerationRuleEventType;)V
-	public synthetic fun buildTriggerMetadata ()Ldev/kord/common/entity/optional/Optional;
 	public fun getAllowedKeywords ()Ljava/util/List;
 	public fun getKeywords ()Ljava/util/List;
 	public fun getRegexPatterns ()Ljava/util/List;
@@ -274,6 +273,7 @@ public abstract interface class dev/kord/rest/builder/automoderation/KeywordPres
 	public abstract fun assignPresets (Ljava/util/List;)V
 	public abstract fun getPresets ()Ljava/util/List;
 	public abstract fun getTriggerType ()Ldev/kord/common/entity/AutoModerationRuleTriggerType$KeywordPreset;
+	public abstract fun setPresets (Ljava/util/List;)V
 }
 
 public final class dev/kord/rest/builder/automoderation/KeywordPresetAutoModerationRuleBuilder$DefaultImpls {
@@ -283,7 +283,6 @@ public final class dev/kord/rest/builder/automoderation/KeywordPresetAutoModerat
 public final class dev/kord/rest/builder/automoderation/KeywordPresetAutoModerationRuleCreateBuilder : dev/kord/rest/builder/automoderation/AutoModerationRuleCreateBuilder, dev/kord/rest/builder/automoderation/KeywordPresetAutoModerationRuleBuilder {
 	public fun <init> (Ljava/lang/String;Ldev/kord/common/entity/AutoModerationRuleEventType;)V
 	public fun assignPresets (Ljava/util/List;)V
-	public synthetic fun buildTriggerMetadata ()Ldev/kord/common/entity/optional/Optional;
 	public fun getAllowedKeywords ()Ljava/util/List;
 	public fun getPresets ()Ljava/util/List;
 	public fun getTriggerType ()Ldev/kord/common/entity/AutoModerationRuleTriggerType$KeywordPreset;
@@ -317,7 +316,6 @@ public final class dev/kord/rest/builder/automoderation/MentionSpamAutoModeratio
 
 public final class dev/kord/rest/builder/automoderation/MentionSpamAutoModerationRuleCreateBuilder : dev/kord/rest/builder/automoderation/AutoModerationRuleCreateBuilder, dev/kord/rest/builder/automoderation/MentionSpamAutoModerationRuleBuilder {
 	public fun <init> (Ljava/lang/String;Ldev/kord/common/entity/AutoModerationRuleEventType;)V
-	public synthetic fun buildTriggerMetadata ()Ldev/kord/common/entity/optional/Optional;
 	public fun getMentionLimit ()Ljava/lang/Integer;
 	public fun getMentionRaidProtectionEnabled ()Ljava/lang/Boolean;
 	public fun getTriggerType ()Ldev/kord/common/entity/AutoModerationRuleTriggerType$MentionSpam;

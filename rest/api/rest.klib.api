@@ -464,10 +464,12 @@ sealed interface dev.kord.rest.builder.automoderation/KeywordAutoModerationRuleB
 }
 
 sealed interface dev.kord.rest.builder.automoderation/KeywordPresetAutoModerationRuleBuilder : dev.kord.rest.builder.automoderation/AllowedKeywordsAutoModerationRuleBuilder { // dev.kord.rest.builder.automoderation/KeywordPresetAutoModerationRuleBuilder|null[0]
-    abstract val presets // dev.kord.rest.builder.automoderation/KeywordPresetAutoModerationRuleBuilder.presets|{}presets[0]
-        abstract fun <get-presets>(): kotlin.collections/MutableList<dev.kord.common.entity/AutoModerationRuleKeywordPresetType>? // dev.kord.rest.builder.automoderation/KeywordPresetAutoModerationRuleBuilder.presets.<get-presets>|<get-presets>(){}[0]
     open val triggerType // dev.kord.rest.builder.automoderation/KeywordPresetAutoModerationRuleBuilder.triggerType|{}triggerType[0]
         open fun <get-triggerType>(): dev.kord.common.entity/AutoModerationRuleTriggerType.KeywordPreset // dev.kord.rest.builder.automoderation/KeywordPresetAutoModerationRuleBuilder.triggerType.<get-triggerType>|<get-triggerType>(){}[0]
+
+    abstract var presets // dev.kord.rest.builder.automoderation/KeywordPresetAutoModerationRuleBuilder.presets|{}presets[0]
+        abstract fun <get-presets>(): kotlin.collections/MutableList<dev.kord.common.entity/AutoModerationRuleKeywordPresetType>? // dev.kord.rest.builder.automoderation/KeywordPresetAutoModerationRuleBuilder.presets.<get-presets>|<get-presets>(){}[0]
+        abstract fun <set-presets>(kotlin.collections/MutableList<dev.kord.common.entity/AutoModerationRuleKeywordPresetType>?) // dev.kord.rest.builder.automoderation/KeywordPresetAutoModerationRuleBuilder.presets.<set-presets>|<set-presets>(kotlin.collections.MutableList<dev.kord.common.entity.AutoModerationRuleKeywordPresetType>?){}[0]
 
     abstract fun assignPresets(kotlin.collections/MutableList<dev.kord.common.entity/AutoModerationRuleKeywordPresetType>) // dev.kord.rest.builder.automoderation/KeywordPresetAutoModerationRuleBuilder.assignPresets|assignPresets(kotlin.collections.MutableList<dev.kord.common.entity.AutoModerationRuleKeywordPresetType>){}[0]
 }
@@ -769,8 +771,8 @@ final class dev.kord.rest.builder.automoderation/KeywordPresetAutoModerationRule
         final fun <get-allowedKeywords>(): kotlin.collections/MutableList<kotlin/String>? // dev.kord.rest.builder.automoderation/KeywordPresetAutoModerationRuleCreateBuilder.allowedKeywords.<get-allowedKeywords>|<get-allowedKeywords>(){}[0]
         final fun <set-allowedKeywords>(kotlin.collections/MutableList<kotlin/String>?) // dev.kord.rest.builder.automoderation/KeywordPresetAutoModerationRuleCreateBuilder.allowedKeywords.<set-allowedKeywords>|<set-allowedKeywords>(kotlin.collections.MutableList<kotlin.String>?){}[0]
     final var presets // dev.kord.rest.builder.automoderation/KeywordPresetAutoModerationRuleCreateBuilder.presets|{}presets[0]
-        final fun <get-presets>(): kotlin.collections/MutableList<dev.kord.common.entity/AutoModerationRuleKeywordPresetType> // dev.kord.rest.builder.automoderation/KeywordPresetAutoModerationRuleCreateBuilder.presets.<get-presets>|<get-presets>(){}[0]
-        final fun <set-presets>(kotlin.collections/MutableList<dev.kord.common.entity/AutoModerationRuleKeywordPresetType>) // dev.kord.rest.builder.automoderation/KeywordPresetAutoModerationRuleCreateBuilder.presets.<set-presets>|<set-presets>(kotlin.collections.MutableList<dev.kord.common.entity.AutoModerationRuleKeywordPresetType>){}[0]
+        final fun <get-presets>(): kotlin.collections/MutableList<dev.kord.common.entity/AutoModerationRuleKeywordPresetType>? // dev.kord.rest.builder.automoderation/KeywordPresetAutoModerationRuleCreateBuilder.presets.<get-presets>|<get-presets>(){}[0]
+        final fun <set-presets>(kotlin.collections/MutableList<dev.kord.common.entity/AutoModerationRuleKeywordPresetType>?) // dev.kord.rest.builder.automoderation/KeywordPresetAutoModerationRuleCreateBuilder.presets.<set-presets>|<set-presets>(kotlin.collections.MutableList<dev.kord.common.entity.AutoModerationRuleKeywordPresetType>?){}[0]
 
     final fun assignPresets(kotlin.collections/MutableList<dev.kord.common.entity/AutoModerationRuleKeywordPresetType>) // dev.kord.rest.builder.automoderation/KeywordPresetAutoModerationRuleCreateBuilder.assignPresets|assignPresets(kotlin.collections.MutableList<dev.kord.common.entity.AutoModerationRuleKeywordPresetType>){}[0]
 }
