@@ -7123,8 +7123,6 @@ final class dev.kord.core.entity/ClientStatus { // dev.kord.core.entity/ClientSt
     final fun toString(): kotlin/String // dev.kord.core.entity/ClientStatus.toString|toString(){}[0]
 
     sealed class Client { // dev.kord.core.entity/ClientStatus.Client|null[0]
-        constructor <init>(dev.kord.common.entity/PresenceStatus) // dev.kord.core.entity/ClientStatus.Client.<init>|<init>(dev.kord.common.entity.PresenceStatus){}[0]
-
         final val status // dev.kord.core.entity/ClientStatus.Client.status|{}status[0]
             final fun <get-status>(): dev.kord.common.entity/PresenceStatus // dev.kord.core.entity/ClientStatus.Client.status.<get-status>|<get-status>(){}[0]
 
@@ -11608,9 +11606,6 @@ open class dev.kord.core.entity/User : dev.kord.core.behavior/UserBehavior { // 
 }
 
 sealed class dev.kord.core.cache.data/ComponentData { // dev.kord.core.cache.data/ComponentData|null[0]
-    constructor <init>() // dev.kord.core.cache.data/ComponentData.<init>|<init>(){}[0]
-    constructor <init>(kotlin/Int, kotlinx.serialization.internal/SerializationConstructorMarker?) // dev.kord.core.cache.data/ComponentData.<init>|<init>(kotlin.Int;kotlinx.serialization.internal.SerializationConstructorMarker?){}[0]
-
     abstract val channelTypes // dev.kord.core.cache.data/ComponentData.channelTypes|{}channelTypes[0]
         abstract fun <get-channelTypes>(): dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.common.entity/ChannelType>> // dev.kord.core.cache.data/ComponentData.channelTypes.<get-channelTypes>|<get-channelTypes>(){}[0]
     abstract val components // dev.kord.core.cache.data/ComponentData.components|{}components[0]
@@ -11654,8 +11649,6 @@ sealed class dev.kord.core.cache.data/ComponentData { // dev.kord.core.cache.dat
 }
 
 sealed class dev.kord.core.entity.automoderation/AutoModerationAction : dev.kord.core/KordObject { // dev.kord.core.entity.automoderation/AutoModerationAction|null[0]
-    constructor <init>(dev.kord.core.cache.data/AutoModerationActionData, dev.kord.core/Kord, dev.kord.common.entity/AutoModerationActionType?) // dev.kord.core.entity.automoderation/AutoModerationAction.<init>|<init>(dev.kord.core.cache.data.AutoModerationActionData;dev.kord.core.Kord;dev.kord.common.entity.AutoModerationActionType?){}[0]
-
     abstract val type // dev.kord.core.entity.automoderation/AutoModerationAction.type|{}type[0]
         abstract fun <get-type>(): dev.kord.common.entity/AutoModerationActionType // dev.kord.core.entity.automoderation/AutoModerationAction.type.<get-type>|<get-type>(){}[0]
     final val data // dev.kord.core.entity.automoderation/AutoModerationAction.data|{}data[0]
@@ -11667,8 +11660,6 @@ sealed class dev.kord.core.entity.automoderation/AutoModerationAction : dev.kord
 }
 
 sealed class dev.kord.core.entity.automoderation/AutoModerationRule : dev.kord.core.behavior.automoderation/TypedAutoModerationRuleBehavior { // dev.kord.core.entity.automoderation/AutoModerationRule|null[0]
-    constructor <init>(dev.kord.core.cache.data/AutoModerationRuleData, dev.kord.core/Kord, dev.kord.core.supplier/EntitySupplier, dev.kord.common.entity/AutoModerationRuleTriggerType?) // dev.kord.core.entity.automoderation/AutoModerationRule.<init>|<init>(dev.kord.core.cache.data.AutoModerationRuleData;dev.kord.core.Kord;dev.kord.core.supplier.EntitySupplier;dev.kord.common.entity.AutoModerationRuleTriggerType?){}[0]
-
     final val actions // dev.kord.core.entity.automoderation/AutoModerationRule.actions|{}actions[0]
         final fun <get-actions>(): kotlin.collections/List<dev.kord.core.entity.automoderation/AutoModerationAction> // dev.kord.core.entity.automoderation/AutoModerationRule.actions.<get-actions>|<get-actions>(){}[0]
     final val creator // dev.kord.core.entity.automoderation/AutoModerationRule.creator|{}creator[0]
@@ -11708,8 +11699,6 @@ sealed class dev.kord.core.entity.automoderation/AutoModerationRule : dev.kord.c
 }
 
 sealed class dev.kord.core.entity.component/SelectMenuComponent : dev.kord.core.entity.component/Component { // dev.kord.core.entity.component/SelectMenuComponent|null[0]
-    constructor <init>(dev.kord.core.cache.data/ComponentData) // dev.kord.core.entity.component/SelectMenuComponent.<init>|<init>(dev.kord.core.cache.data.ComponentData){}[0]
-
     final val customId // dev.kord.core.entity.component/SelectMenuComponent.customId|{}customId[0]
         final fun <get-customId>(): kotlin/String // dev.kord.core.entity.component/SelectMenuComponent.customId.<get-customId>|<get-customId>(){}[0]
     final val disabled // dev.kord.core.entity.component/SelectMenuComponent.disabled|{}disabled[0]
@@ -11729,8 +11718,6 @@ sealed class dev.kord.core.entity.component/SelectMenuComponent : dev.kord.core.
 }
 
 sealed class dev.kord.core.entity.interaction.followup/FollowupMessage : dev.kord.core.behavior.interaction.followup/FollowupMessageBehavior { // dev.kord.core.entity.interaction.followup/FollowupMessage|null[0]
-    constructor <init>(dev.kord.core.entity/Message) // dev.kord.core.entity.interaction.followup/FollowupMessage.<init>|<init>(dev.kord.core.entity.Message){}[0]
-
     final val message // dev.kord.core.entity.interaction.followup/FollowupMessage.message|{}message[0]
         final fun <get-message>(): dev.kord.core.entity/Message // dev.kord.core.entity.interaction.followup/FollowupMessage.message.<get-message>|<get-message>(){}[0]
     open val channelId // dev.kord.core.entity.interaction.followup/FollowupMessage.channelId|{}channelId[0]
@@ -11742,8 +11729,6 @@ sealed class dev.kord.core.entity.interaction.followup/FollowupMessage : dev.kor
 }
 
 sealed class dev.kord.core.entity.interaction.response/MessageInteractionResponse : dev.kord.core.behavior.interaction.response/MessageInteractionResponseBehavior { // dev.kord.core.entity.interaction.response/MessageInteractionResponse|null[0]
-    constructor <init>(dev.kord.core.entity/Message) // dev.kord.core.entity.interaction.response/MessageInteractionResponse.<init>|<init>(dev.kord.core.entity.Message){}[0]
-
     final val message // dev.kord.core.entity.interaction.response/MessageInteractionResponse.message|{}message[0]
         final fun <get-message>(): dev.kord.core.entity/Message // dev.kord.core.entity.interaction.response/MessageInteractionResponse.message.<get-message>|<get-message>(){}[0]
 
@@ -11751,8 +11736,6 @@ sealed class dev.kord.core.entity.interaction.response/MessageInteractionRespons
 }
 
 sealed class dev.kord.core.entity/BaseApplication : dev.kord.core.entity/KordEntity, dev.kord.core.entity/Strategizable { // dev.kord.core.entity/BaseApplication|null[0]
-    constructor <init>(dev.kord.core/Kord, dev.kord.core.supplier/EntitySupplier = ...) // dev.kord.core.entity/BaseApplication.<init>|<init>(dev.kord.core.Kord;dev.kord.core.supplier.EntitySupplier){}[0]
-
     abstract val data // dev.kord.core.entity/BaseApplication.data|{}data[0]
         abstract fun <get-data>(): dev.kord.core.cache.data/BaseApplicationData // dev.kord.core.entity/BaseApplication.data.<get-data>|<get-data>(){}[0]
     final val coverImage // dev.kord.core.entity/BaseApplication.coverImage|{}coverImage[0]
@@ -11812,8 +11795,6 @@ sealed class dev.kord.core.entity/BaseApplication : dev.kord.core.entity/KordEnt
 }
 
 sealed class dev.kord.core.entity/ReactionEmoji { // dev.kord.core.entity/ReactionEmoji|null[0]
-    constructor <init>() // dev.kord.core.entity/ReactionEmoji.<init>|<init>(){}[0]
-
     abstract val mention // dev.kord.core.entity/ReactionEmoji.mention|{}mention[0]
         abstract fun <get-mention>(): kotlin/String // dev.kord.core.entity/ReactionEmoji.mention.<get-mention>|<get-mention>(){}[0]
     abstract val name // dev.kord.core.entity/ReactionEmoji.name|{}name[0]
@@ -11868,8 +11849,6 @@ sealed class dev.kord.core.entity/ReactionEmoji { // dev.kord.core.entity/Reacti
 }
 
 sealed class dev.kord.core.event.gateway/DisconnectEvent : dev.kord.core.event.gateway/GatewayEvent { // dev.kord.core.event.gateway/DisconnectEvent|null[0]
-    constructor <init>() // dev.kord.core.event.gateway/DisconnectEvent.<init>|<init>(){}[0]
-
     final class DetachEvent : dev.kord.core.event.gateway/DisconnectEvent { // dev.kord.core.event.gateway/DisconnectEvent.DetachEvent|null[0]
         constructor <init>(dev.kord.core/Kord, kotlin/Int, kotlin/Any?) // dev.kord.core.event.gateway/DisconnectEvent.DetachEvent.<init>|<init>(dev.kord.core.Kord;kotlin.Int;kotlin.Any?){}[0]
 
@@ -11979,9 +11958,7 @@ sealed class dev.kord.core.event.gateway/DisconnectEvent : dev.kord.core.event.g
     }
 }
 
-sealed class dev.kord.core.event.gateway/GatewayEvent : dev.kord.core.event/Event { // dev.kord.core.event.gateway/GatewayEvent|null[0]
-    constructor <init>() // dev.kord.core.event.gateway/GatewayEvent.<init>|<init>(){}[0]
-}
+sealed class dev.kord.core.event.gateway/GatewayEvent : dev.kord.core.event/Event // dev.kord.core.event.gateway/GatewayEvent|null[0]
 
 final object dev.kord.core.cache.data/NotSerializable : kotlinx.serialization/KSerializer<kotlin/Any?> { // dev.kord.core.cache.data/NotSerializable|null[0]
     final val descriptor // dev.kord.core.cache.data/NotSerializable.descriptor|{}descriptor[0]

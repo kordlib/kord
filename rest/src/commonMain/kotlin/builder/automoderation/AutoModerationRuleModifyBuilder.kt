@@ -119,6 +119,12 @@ public class KeywordPresetAutoModerationRuleModifyBuilder :
     override var presets: MutableList<AutoModerationRuleKeywordPresetType>? by ::_presets.delegate()
 
     /** @suppress Use `this.presets = presets` instead. */
+    @Deprecated(
+        "Use 'this.presets = presets' instead. The deprecation level will be raised to ERROR in 0.16.0, to HIDDEN in " +
+            "0.17.0, and this declaration will be removed in 0.18.0.",
+        ReplaceWith("this.run { this@run.presets = presets }", imports = ["kotlin.run"]),
+        DeprecationLevel.WARNING,
+    )
     override fun assignPresets(presets: MutableList<AutoModerationRuleKeywordPresetType>) {
         this.presets = presets
     }

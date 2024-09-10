@@ -303,18 +303,24 @@ public sealed interface KeywordPresetAutoModerationRuleBuilder :
     override val triggerType: KeywordPreset get() = KeywordPreset
 
     /** The internally pre-defined wordsets which will be searched for in content. */
-    public val presets: MutableList<AutoModerationRuleKeywordPresetType>?
+    public var presets: MutableList<AutoModerationRuleKeywordPresetType>?
 
     /**
      * Use this to set [presets][KeywordPresetAutoModerationRuleBuilder.presets] for
      * [KeywordPresetAutoModerationRuleBuilder].
      */
+    @Deprecated(
+        "This can be replaced with 'presets', it is now a 'var'. The deprecation level will be raised to ERROR in " +
+            "0.16.0, to HIDDEN in 0.17.0, and this declaration will be removed in 0.18.0.",
+        ReplaceWith("this.run { this@run.presets = presets }", imports = ["kotlin.run"]),
+        DeprecationLevel.WARNING,
+    )
     public fun assignPresets(presets: MutableList<AutoModerationRuleKeywordPresetType>)
 }
 
 /** Add a [preset] to [presets][KeywordPresetAutoModerationRuleBuilder.presets]. */
 public fun KeywordPresetAutoModerationRuleBuilder.preset(preset: AutoModerationRuleKeywordPresetType) {
-    presets?.add(preset) ?: assignPresets(mutableListOf(preset))
+    presets?.add(preset) ?: run { presets = mutableListOf(preset) }
 }
 
 

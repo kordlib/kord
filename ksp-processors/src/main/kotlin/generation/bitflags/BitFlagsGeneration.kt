@@ -1,3 +1,5 @@
+@file:Suppress("CONTEXT_RECEIVERS_DEPRECATED")
+
 package dev.kord.ksp.generation.bitflags
 
 import com.google.devtools.ksp.symbol.KSFile
