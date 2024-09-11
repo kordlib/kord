@@ -1,10 +1,14 @@
-package dev.kord.core.entity
+package dev.kord.core.entity.monetization
 
 import dev.kord.common.entity.DiscordSku
 import dev.kord.common.entity.SkuFlags
 import dev.kord.common.entity.SkuType
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.Kord
+import dev.kord.core.entity.Application
+import dev.kord.core.entity.Guild
+import dev.kord.core.entity.KordEntity
+import dev.kord.core.entity.User
 import dev.kord.core.hash
 
 /**

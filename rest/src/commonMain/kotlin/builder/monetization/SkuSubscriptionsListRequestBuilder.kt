@@ -1,4 +1,4 @@
-package dev.kord.rest.builder.subscription
+package dev.kord.rest.builder.monetization
 
 import dev.kord.common.annotation.KordDsl
 import dev.kord.common.entity.Snowflake

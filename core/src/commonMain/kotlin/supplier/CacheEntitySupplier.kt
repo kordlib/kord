@@ -22,6 +22,7 @@ import dev.kord.core.entity.channel.TopGuildChannel
 import dev.kord.core.entity.channel.thread.ThreadChannel
 import dev.kord.core.entity.channel.thread.ThreadMember
 import dev.kord.core.entity.interaction.followup.FollowupMessage
+import dev.kord.core.entity.monetization.Entitlement
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.gateway.Gateway
 import dev.kord.rest.json.request.EntitlementsListRequest

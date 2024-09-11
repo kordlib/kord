@@ -6090,31 +6090,6 @@ public abstract interface class dev/kord/core/entity/Emoji {
 	public abstract fun getName ()Ljava/lang/String;
 }
 
-public final class dev/kord/core/entity/Entitlement : dev/kord/core/entity/KordEntity {
-	public fun <init> (Ldev/kord/core/cache/data/EntitlementData;Ldev/kord/core/Kord;)V
-	public fun compareTo (Ldev/kord/core/entity/Entity;)I
-	public synthetic fun compareTo (Ljava/lang/Object;)I
-	public final fun consume (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public final fun delete (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getApplicationId ()Ldev/kord/common/entity/Snowflake;
-	public final fun getData ()Ldev/kord/core/cache/data/EntitlementData;
-	public final fun getEndsAt ()Lkotlinx/datetime/Instant;
-	public final fun getGuild ()Ldev/kord/core/behavior/GuildBehavior;
-	public final fun getGuildId ()Ldev/kord/common/entity/Snowflake;
-	public fun getId ()Ldev/kord/common/entity/Snowflake;
-	public fun getKord ()Ldev/kord/core/Kord;
-	public final fun getSkuId ()Ldev/kord/common/entity/Snowflake;
-	public final fun getStartsAt ()Lkotlinx/datetime/Instant;
-	public final fun getType ()Ldev/kord/common/entity/EntitlementType;
-	public final fun getUser ()Ldev/kord/core/behavior/UserBehavior;
-	public final fun getUserId ()Ldev/kord/common/entity/Snowflake;
-	public fun hashCode ()I
-	public final fun isConsumed ()Ljava/lang/Boolean;
-	public final fun isDeleted ()Z
-	public fun toString ()Ljava/lang/String;
-}
-
 public abstract interface class dev/kord/core/entity/Entity : java/lang/Comparable {
 	public static final field Companion Ldev/kord/core/entity/Entity$Companion;
 	public abstract fun compareTo (Ldev/kord/core/entity/Entity;)I
@@ -7018,23 +6993,6 @@ public final class dev/kord/core/entity/RoleTags : dev/kord/core/KordObject, dev
 	public final fun isLinkedRole ()Z
 	public final fun isPremiumRole ()Z
 	public fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/Strategizable;
-}
-
-public final class dev/kord/core/entity/Sku : dev/kord/core/entity/KordEntity {
-	public fun <init> (Ldev/kord/common/entity/DiscordSku;Ldev/kord/core/Kord;)V
-	public fun compareTo (Ldev/kord/core/entity/Entity;)I
-	public synthetic fun compareTo (Ljava/lang/Object;)I
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getApplicationId ()Ldev/kord/common/entity/Snowflake;
-	public final fun getData ()Ldev/kord/common/entity/DiscordSku;
-	public final fun getFlags ()Ldev/kord/common/entity/SkuFlags;
-	public fun getId ()Ldev/kord/common/entity/Snowflake;
-	public fun getKord ()Ldev/kord/core/Kord;
-	public final fun getName ()Ljava/lang/String;
-	public final fun getSlug ()Ljava/lang/String;
-	public final fun getType ()Ldev/kord/common/entity/SkuType;
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
 }
 
 public final class dev/kord/core/entity/StageInstance : dev/kord/core/behavior/StageInstanceBehavior {
@@ -10866,6 +10824,48 @@ public final class dev/kord/core/entity/interaction/response/PublicMessageIntera
 	public fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/interaction/response/PublicMessageInteractionResponse;
 }
 
+public final class dev/kord/core/entity/monetization/Entitlement : dev/kord/core/entity/KordEntity {
+	public fun <init> (Ldev/kord/core/cache/data/EntitlementData;Ldev/kord/core/Kord;)V
+	public fun compareTo (Ldev/kord/core/entity/Entity;)I
+	public synthetic fun compareTo (Ljava/lang/Object;)I
+	public final fun consume (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun delete (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getApplicationId ()Ldev/kord/common/entity/Snowflake;
+	public final fun getData ()Ldev/kord/core/cache/data/EntitlementData;
+	public final fun getEndsAt ()Lkotlinx/datetime/Instant;
+	public final fun getGuild ()Ldev/kord/core/behavior/GuildBehavior;
+	public final fun getGuildId ()Ldev/kord/common/entity/Snowflake;
+	public fun getId ()Ldev/kord/common/entity/Snowflake;
+	public fun getKord ()Ldev/kord/core/Kord;
+	public final fun getSkuId ()Ldev/kord/common/entity/Snowflake;
+	public final fun getStartsAt ()Lkotlinx/datetime/Instant;
+	public final fun getType ()Ldev/kord/common/entity/EntitlementType;
+	public final fun getUser ()Ldev/kord/core/behavior/UserBehavior;
+	public final fun getUserId ()Ldev/kord/common/entity/Snowflake;
+	public fun hashCode ()I
+	public final fun isConsumed ()Ljava/lang/Boolean;
+	public final fun isDeleted ()Z
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class dev/kord/core/entity/monetization/Sku : dev/kord/core/entity/KordEntity {
+	public fun <init> (Ldev/kord/common/entity/DiscordSku;Ldev/kord/core/Kord;)V
+	public fun compareTo (Ldev/kord/core/entity/Entity;)I
+	public synthetic fun compareTo (Ljava/lang/Object;)I
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getApplicationId ()Ldev/kord/common/entity/Snowflake;
+	public final fun getData ()Ldev/kord/common/entity/DiscordSku;
+	public final fun getFlags ()Ldev/kord/common/entity/SkuFlags;
+	public fun getId ()Ldev/kord/common/entity/Snowflake;
+	public fun getKord ()Ldev/kord/core/Kord;
+	public final fun getName ()Ljava/lang/String;
+	public final fun getSlug ()Ljava/lang/String;
+	public final fun getType ()Ldev/kord/common/entity/SkuType;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
 public abstract interface class dev/kord/core/event/Event : dev/kord/core/KordObject {
 	public abstract fun getCustomContext ()Ljava/lang/Object;
 	public abstract fun getGateway ()Ldev/kord/gateway/Gateway;
@@ -11711,37 +11711,6 @@ public final class dev/kord/core/event/channel/thread/UnknownChannelThreadUpdate
 	public fun getKord ()Ldev/kord/core/Kord;
 	public synthetic fun getOld ()Ldev/kord/core/entity/channel/Channel;
 	public fun getOld ()Ldev/kord/core/entity/channel/thread/ThreadChannel;
-	public fun getShard ()I
-	public fun toString ()Ljava/lang/String;
-}
-
-public final class dev/kord/core/event/entitlement/EntitlementCreateEvent : dev/kord/core/event/Event {
-	public fun <init> (Ldev/kord/core/entity/Entitlement;Ldev/kord/core/Kord;ILjava/lang/Object;)V
-	public fun getCustomContext ()Ljava/lang/Object;
-	public final fun getEntitlement ()Ldev/kord/core/entity/Entitlement;
-	public fun getGateway ()Ldev/kord/gateway/Gateway;
-	public fun getKord ()Ldev/kord/core/Kord;
-	public fun getShard ()I
-	public fun toString ()Ljava/lang/String;
-}
-
-public final class dev/kord/core/event/entitlement/EntitlementDeleteEvent : dev/kord/core/event/Event {
-	public fun <init> (Ldev/kord/core/entity/Entitlement;Ldev/kord/core/Kord;ILjava/lang/Object;)V
-	public fun getCustomContext ()Ljava/lang/Object;
-	public final fun getEntitlement ()Ldev/kord/core/entity/Entitlement;
-	public fun getGateway ()Ldev/kord/gateway/Gateway;
-	public fun getKord ()Ldev/kord/core/Kord;
-	public fun getShard ()I
-	public fun toString ()Ljava/lang/String;
-}
-
-public final class dev/kord/core/event/entitlement/EntitlementUpdateEvent : dev/kord/core/event/Event {
-	public fun <init> (Ldev/kord/core/entity/Entitlement;Ldev/kord/core/entity/Entitlement;Ldev/kord/core/Kord;ILjava/lang/Object;)V
-	public fun getCustomContext ()Ljava/lang/Object;
-	public final fun getEntitlement ()Ldev/kord/core/entity/Entitlement;
-	public fun getGateway ()Ldev/kord/gateway/Gateway;
-	public fun getKord ()Ldev/kord/core/Kord;
-	public final fun getOld ()Ldev/kord/core/entity/Entitlement;
 	public fun getShard ()I
 	public fun toString ()Ljava/lang/String;
 }
@@ -13083,6 +13052,37 @@ public final class dev/kord/core/event/message/ReactionRemoveEvent : dev/kord/co
 	public fun toString ()Ljava/lang/String;
 	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/Strategizable;
 	public fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/event/message/ReactionRemoveEvent;
+}
+
+public final class dev/kord/core/event/monetization/EntitlementCreateEvent : dev/kord/core/event/Event {
+	public fun <init> (Ldev/kord/core/entity/monetization/Entitlement;Ldev/kord/core/Kord;ILjava/lang/Object;)V
+	public fun getCustomContext ()Ljava/lang/Object;
+	public final fun getEntitlement ()Ldev/kord/core/entity/monetization/Entitlement;
+	public fun getGateway ()Ldev/kord/gateway/Gateway;
+	public fun getKord ()Ldev/kord/core/Kord;
+	public fun getShard ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class dev/kord/core/event/monetization/EntitlementDeleteEvent : dev/kord/core/event/Event {
+	public fun <init> (Ldev/kord/core/entity/monetization/Entitlement;Ldev/kord/core/Kord;ILjava/lang/Object;)V
+	public fun getCustomContext ()Ljava/lang/Object;
+	public final fun getEntitlement ()Ldev/kord/core/entity/monetization/Entitlement;
+	public fun getGateway ()Ldev/kord/gateway/Gateway;
+	public fun getKord ()Ldev/kord/core/Kord;
+	public fun getShard ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class dev/kord/core/event/monetization/EntitlementUpdateEvent : dev/kord/core/event/Event {
+	public fun <init> (Ldev/kord/core/entity/monetization/Entitlement;Ldev/kord/core/entity/monetization/Entitlement;Ldev/kord/core/Kord;ILjava/lang/Object;)V
+	public fun getCustomContext ()Ljava/lang/Object;
+	public final fun getEntitlement ()Ldev/kord/core/entity/monetization/Entitlement;
+	public fun getGateway ()Ldev/kord/gateway/Gateway;
+	public fun getKord ()Ldev/kord/core/Kord;
+	public final fun getOld ()Ldev/kord/core/entity/monetization/Entitlement;
+	public fun getShard ()I
+	public fun toString ()Ljava/lang/String;
 }
 
 public final class dev/kord/core/event/role/RoleCreateEvent : dev/kord/core/entity/Strategizable, dev/kord/core/event/Event {

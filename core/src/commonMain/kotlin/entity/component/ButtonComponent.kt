@@ -6,9 +6,9 @@ import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.value
 import dev.kord.core.cache.data.ChatComponentData
 import dev.kord.core.entity.ReactionEmoji
-import dev.kord.core.entity.Sku
 import dev.kord.core.entity.interaction.ButtonInteraction
 import dev.kord.core.entity.interaction.ComponentInteraction
+import dev.kord.core.entity.monetization.Sku
 import dev.kord.core.event.interaction.InteractionCreateEvent
 
 /**

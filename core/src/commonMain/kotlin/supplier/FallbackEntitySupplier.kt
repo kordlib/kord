@@ -11,6 +11,7 @@ import dev.kord.core.entity.channel.TopGuildChannel
 import dev.kord.core.entity.channel.thread.ThreadChannel
 import dev.kord.core.entity.channel.thread.ThreadMember
 import dev.kord.core.entity.interaction.followup.FollowupMessage
+import dev.kord.core.entity.monetization.Entitlement
 import dev.kord.core.switchIfEmpty
 import dev.kord.rest.json.request.EntitlementsListRequest
 import kotlinx.coroutines.flow.Flow

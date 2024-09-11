@@ -19,6 +19,8 @@ import dev.kord.core.cache.data.UserData
 import dev.kord.core.entity.*
 import dev.kord.core.entity.application.*
 import dev.kord.core.entity.channel.Channel
+import dev.kord.core.entity.monetization.Entitlement
+import dev.kord.core.entity.monetization.Sku
 import dev.kord.core.event.Event
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.exception.KordInitializationException
@@ -30,9 +32,9 @@ import dev.kord.gateway.Gateway
 import dev.kord.gateway.builder.LoginBuilder
 import dev.kord.gateway.builder.PresenceBuilder
 import dev.kord.rest.builder.application.ApplicationRoleConnectionMetadataRecordsBuilder
-import dev.kord.rest.builder.entitlement.EntitlementsListRequestBuilder
 import dev.kord.rest.builder.guild.GuildCreateBuilder
 import dev.kord.rest.builder.interaction.*
+import dev.kord.rest.builder.monetization.EntitlementsListRequestBuilder
 import dev.kord.rest.builder.user.CurrentUserModifyBuilder
 import dev.kord.rest.json.request.TestEntitlementCreateRequest
 import dev.kord.rest.request.RestRequestException

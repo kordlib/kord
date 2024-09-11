@@ -1,4 +1,4 @@
-package dev.kord.core.entity
+package dev.kord.core.entity.monetization
 
 import dev.kord.common.entity.EntitlementType
 import dev.kord.common.entity.Snowflake
@@ -7,6 +7,10 @@ import dev.kord.core.Kord
 import dev.kord.core.behavior.GuildBehavior
 import dev.kord.core.behavior.UserBehavior
 import dev.kord.core.cache.data.EntitlementData
+import dev.kord.core.entity.Application
+import dev.kord.core.entity.Guild
+import dev.kord.core.entity.KordEntity
+import dev.kord.core.entity.User
 import dev.kord.core.hash
 import dev.kord.rest.request.RestRequestException
 import kotlinx.datetime.Instant

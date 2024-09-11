@@ -1,8 +1,8 @@
-package dev.kord.core.event.entitlement
+package dev.kord.core.event.monetization
 
 import dev.kord.core.Kord
-import dev.kord.core.entity.Entitlement
 import dev.kord.core.entity.User
+import dev.kord.core.entity.monetization.Entitlement
 import dev.kord.core.event.Event
 
 /**

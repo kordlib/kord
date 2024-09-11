@@ -9,9 +9,9 @@ import dev.kord.common.entity.optional.orEmpty
 import dev.kord.core.Kord
 import dev.kord.core.behavior.interaction.InteractionBehavior
 import dev.kord.core.cache.data.InteractionData
-import dev.kord.core.entity.Entitlement
-import dev.kord.core.entity.Sku
 import dev.kord.core.entity.User
+import dev.kord.core.entity.monetization.Entitlement
+import dev.kord.core.entity.monetization.Sku
 import dev.kord.core.supplier.EntitySupplyStrategy
 
 /**

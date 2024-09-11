@@ -7,10 +7,10 @@ import dev.kord.common.entity.DiscordEntitlement
 import dev.kord.core.Kord
 import dev.kord.core.cache.data.EntitlementData
 import dev.kord.core.cache.idEq
-import dev.kord.core.entity.Entitlement
-import dev.kord.core.event.entitlement.EntitlementCreateEvent
-import dev.kord.core.event.entitlement.EntitlementDeleteEvent
-import dev.kord.core.event.entitlement.EntitlementUpdateEvent
+import dev.kord.core.entity.monetization.Entitlement
+import dev.kord.core.event.monetization.EntitlementCreateEvent
+import dev.kord.core.event.monetization.EntitlementDeleteEvent
+import dev.kord.core.event.monetization.EntitlementUpdateEvent
 import dev.kord.gateway.EntitlementCreate
 import dev.kord.gateway.EntitlementDelete
 import dev.kord.gateway.EntitlementUpdate
