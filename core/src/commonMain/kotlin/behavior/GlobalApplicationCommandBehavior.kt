@@ -9,6 +9,7 @@ import dev.kord.rest.service.InteractionService
  * The behavior of an [Application Command](https://discord.com/developers/docs/interactions/application-commands).
  */
 public interface ApplicationCommandBehavior : Entity {
+    /** THe ID of the application. */
     public val applicationId: Snowflake
     public val service: InteractionService
 

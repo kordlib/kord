@@ -12,6 +12,11 @@ import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.core.hash
 
+/**
+ * An instance of a [Discord role](https://discord.com/developers/docs/topics/permissions#role-object)
+ *
+ * @param data The [RoleData] for the role
+ */
 public data class Role(
     val data: RoleData,
     override val kord: Kord,
@@ -24,24 +29,33 @@ public data class Role(
     override val guildId: Snowflake
         get() = data.guildId
 
+    /** The colour of the role, as a [Color] object. */
     public val color: Color get() = Color(data.color)
 
+    /** If this role is pinned in the user listing. */
     public val hoisted: Boolean get() = data.hoisted
 
     val iconHash: String? get() = data.icon.value
 
+    /** The icon of the role as an [Asset] object. */
     val icon: Asset? get() = iconHash?.let { Asset.roleIcon(id, it, kord) }
 
+    /** The unicode of the role emoji. */
     val unicodeEmoji: String? = data.unicodeEmoji.value
 
+    /** Whether an integration manages this role or not. */
     public val managed: Boolean get() = data.managed
 
+    /** Whether this role is mentionable or not. */
     public val mentionable: Boolean get() = data.mentionable
 
+    /** The name of this role. */
     public val name: String get() = data.name
 
+    /** The [Permissions] set for this role. */
     public val permissions: Permissions get() = data.permissions
 
+    /** The position of this role in the list. */
     public val rawPosition: Int get() = data.position
 
     override suspend fun asRole(): Role = this

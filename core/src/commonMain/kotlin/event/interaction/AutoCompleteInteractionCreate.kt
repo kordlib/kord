@@ -6,12 +6,12 @@ import dev.kord.core.entity.interaction.GlobalAutoCompleteInteraction
 import dev.kord.core.entity.interaction.GuildAutoCompleteInteraction
 import dev.kord.core.event.Event
 
-/** An [Event] that fires when an [AutoCompleteInteraction] is created. */
+/** The [Event] dispatched when an [AutoCompleteInteraction] is created. */
 public sealed interface AutoCompleteInteractionCreateEvent : DataInteractionCreateEvent {
     override val interaction: AutoCompleteInteraction
 }
 
-/** An [Event] that fires when a [GlobalAutoCompleteInteraction] is created. */
+/** The [Event] dispatched when a [GlobalAutoCompleteInteraction] is created. */
 public class GlobalAutoCompleteInteractionCreateEvent(
     override val kord: Kord,
     override val shard: Int,
@@ -19,7 +19,7 @@ public class GlobalAutoCompleteInteractionCreateEvent(
     override val customContext: Any?,
 ) : AutoCompleteInteractionCreateEvent
 
-/** An [Event] that fires when a [GuildAutoCompleteInteraction] is created. */
+/** The [Event] dispatched when a [GuildAutoCompleteInteraction] is created. */
 public class GuildAutoCompleteInteractionCreateEvent(
     override val kord: Kord,
     override val shard: Int,

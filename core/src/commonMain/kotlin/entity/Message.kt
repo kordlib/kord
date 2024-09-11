@@ -23,16 +23,18 @@ import dev.kord.core.entity.component.ActionRowComponent
 import dev.kord.core.entity.interaction.ActionInteraction
 import dev.kord.core.entity.interaction.followup.FollowupMessage
 import dev.kord.core.exception.EntityNotFoundException
+import dev.kord.core.hash
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.core.supplier.getChannelOf
 import dev.kord.core.supplier.getChannelOfOrNull
 import kotlinx.coroutines.flow.*
 import kotlinx.datetime.Instant
-import dev.kord.core.hash
 
 /**
  * An instance of a [Discord Message][https://discord.com/developers/docs/resources/channel#message-object].
+ *
+ * @param data The [MessageData] for the message
  */
 public class Message(
     public val data: MessageData,
@@ -44,6 +46,8 @@ public class Message(
      * An instance of [MessageInteraction](https://discord.com/developers/docs/interactions/receiving-and-responding#message-interaction-object)
      *
      * This is sent on the [Message] object when the message is a response to an [ActionInteraction].
+     *
+     * @param data The [MessageInteractionData] for the interaction
      */
     public class Interaction(
         public val data: MessageInteractionData,
@@ -139,7 +143,7 @@ public class Message(
     /**
      * The ids of [Channels][Channel] specifically mentioned in this message.
      *
-     * This collection can only contain values on crossposted messages, channels
+     * This collection can only contain values on cross-posted messages, channels
      * mentioned inside the same guild will not be present.
      */
     public val mentionedChannelIds: Set<Snowflake> get() = data.mentionedChannels.orEmpty().map { it }.toSet()
@@ -147,7 +151,7 @@ public class Message(
     /**
      * The [Channels][ChannelBehavior] specifically mentioned in this message.
      *
-     * This collection can only contain values on crossposted messages, channels
+     * This collection can only contain values on cross-posted messages, channels
      * mentioned inside the same guild will not be present.
      */
     public val mentionedChannelBehaviors: Set<ChannelBehavior>
@@ -173,7 +177,7 @@ public class Message(
     public val referencedMessage: Message? get() = data.referencedMessage.value?.let { Message(it, kord) }
 
     /**
-     * reference data sent with crossposted messages and replies.
+     * reference data sent with cross-posted messages and replies.
      *
      * This field is only returned for messages with [MessageType.Reply].
      * If the message is a reply but the [referencedMessage] field is not present,
@@ -186,11 +190,11 @@ public class Message(
     /**
      * The [Channels][Channel] specifically mentioned in this message.
      *
-     * This property will only emit values on crossposted messages, channels
+     * This property will only emit values on cross-posted messages, channels
      * mentioned inside the same guild will not be present.
      *
      * This request uses state [data] to resolve the entities belonging to the flow,
-     * as such it can't guarantee an up to date representation if the [data] is outdated.
+     * as such it can't guarantee an up-to-date representation if the [data] is outdated.
      *
      * The returned flow is lazily executed, any [RequestException] will be thrown on
      * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.

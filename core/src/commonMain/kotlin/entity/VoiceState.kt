@@ -13,6 +13,11 @@ import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.core.supplier.getChannelOfOrNull
 import kotlinx.datetime.Instant
 
+/**
+ * Used to represent a user's voice connection status.
+ *
+ * @param data The [VoiceStateData] for the state
+ */
 public class VoiceState(
     public val data: VoiceStateData,
     override val kord: Kord,

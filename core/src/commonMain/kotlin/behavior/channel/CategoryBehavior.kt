@@ -126,6 +126,9 @@ public suspend fun CategoryBehavior.edit(builder: CategoryModifyBuilder.() -> Un
 /**
  * Requests to create a new text channel with this category as parent.
  *
+ * @param name The name of the text channel
+ * @param builder The [TextChannelCreateBuilder] for the channel
+ *
  * @return The created [TextChannel].
  *
  * @throws [RestRequestException] if something went wrong during the request.
@@ -150,6 +153,9 @@ public suspend inline fun CategoryBehavior.createTextChannel(
 /**
  * Requests to create a new voice channel with this category as parent.
  *
+ * @param name The name of the voice channel
+ * @param builder The [VoiceChannelCreateBuilder] for the channel
+ *
  * @return The created [VoiceChannel].
  *
  * @throws [RestRequestException] if something went wrong during the request.
@@ -173,6 +179,9 @@ public suspend inline fun CategoryBehavior.createVoiceChannel(
 /**
  * Requests to create a new news channel with this category as parent.
  *
+ * @param name The name of the news channel
+ * @param builder The [NewsChannelCreateBuilder] for the channel
+ *
  * @return The created [NewsChannel].
  *
  * @throws [RestRequestException] if something went wrong during the request.
@@ -195,6 +204,9 @@ public suspend inline fun CategoryBehavior.createNewsChannel(
 
 /**
  * Requests to create a new stage channel with this category as parent.
+ *
+ * @param name The name of the new stage channel
+ * @param builder The [StageChannelCreateBuilder] for the channel
  *
  * @return The created [StageChannel].
  *

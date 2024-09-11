@@ -62,13 +62,16 @@ public class Kord(
     private val interceptor: GatewayEventInterceptor,
 ) : CoroutineScope {
 
+    /**
+     * Returns a [Flow] of Nitro [StickerPack]s
+     */
     public val nitroStickerPacks: Flow<StickerPack>
         get() = defaultSupplier.getNitroStickerPacks()
 
 
     /**
      * The default supplier, obtained through Kord's [resources] and configured through [KordBuilder.defaultStrategy].
-     * By default a strategy from [EntitySupplyStrategy.rest].
+     * By default, a strategy from [EntitySupplyStrategy.rest].
      *
      * All [strategizable][Strategizable] [entities][KordEntity] created through this instance will use this supplier by default.
      */
@@ -99,9 +102,15 @@ public class Kord(
 
     override val coroutineContext: CoroutineContext = SupervisorJob() + dispatcher
 
+    /**
+     * Returns a [Flow] of [Region]s know to the bot.
+     */
     public val regions: Flow<Region>
         get() = defaultSupplier.regions
 
+    /**
+     * Returns a [Flow] of [Guild]s know to the bot.
+     */
     public val guilds: Flow<Guild>
         get() = defaultSupplier.guilds
 
@@ -148,6 +157,12 @@ public class Kord(
 
     public fun <T : EntitySupplier> with(strategy: EntitySupplyStrategy<T>): T = strategy.supply(this)
 
+    /**
+     * Requests to get the information of the current application using the [EntitySupplyStrategy.rest] supplier.
+     *
+     * Entities will be fetched from Discord directly, ignoring any cached values.
+     * @throws RestRequestException when the request failed.
+     */
     public suspend fun getApplicationInfo(): Application = with(EntitySupplyStrategy.rest).getApplicationInfo()
 
     /**
@@ -366,6 +381,11 @@ public class Kord(
     ): Invite? = with(EntitySupplyStrategy.rest).getInviteOrNull(code, withCounts, withExpiration, scheduledEventId)
 
 
+    /**
+     * Gets a [Sticker] from its [id].
+     *
+     * @return [EntityNotFoundException.stickerNotFound] if the sticker is not found
+     */
     public suspend fun getSticker(id: Snowflake): Sticker = defaultSupplier.getSticker(id)
 
 
@@ -426,11 +446,23 @@ public class Kord(
         }
     }
 
-
+    /**
+     * Gets the [GlobalApplicationCommand]s for this bot.
+     *
+     * @param withLocalizations Whether to get the commands with localisations or not. Defaults to `null`
+     * @return a [Flow] of [GlobalApplicationCommand]s for this bot.
+     */
     public fun getGlobalApplicationCommands(withLocalizations: Boolean? = null): Flow<GlobalApplicationCommand> {
         return defaultSupplier.getGlobalApplicationCommands(resources.applicationId, withLocalizations)
     }
 
+    /**
+     * Gets the [GuildApplicationCommand]s for a given [guildId].
+     *
+     * @param guildId The ID of the guild to get the commands for
+     * @param withLocalizations Whether to get the commands with localizations or not. Defaults to `null`
+     * @return a [Flow] of [GuildApplicationCommand]s for the given [guildId].
+     */
     public fun getGuildApplicationCommands(
         guildId: Snowflake,
         withLocalizations: Boolean? = null,
@@ -438,11 +470,24 @@ public class Kord(
         return defaultSupplier.getGuildApplicationCommands(resources.applicationId, guildId, withLocalizations)
     }
 
+    /**
+     * Gets a [GuildApplicationCommand] based on the [guildId] and [commandId].
+     *
+     * @param guildId The ID of the guild to get the command for
+     * @param commandId The ID of the command to get
+     * @return The [GuildApplicationCommand] or [EntityNotFoundException.applicationCommandNotFound] if it was not found.
+     */
     public suspend fun getGuildApplicationCommand(guildId: Snowflake, commandId: Snowflake): GuildApplicationCommand {
         return defaultSupplier.getGuildApplicationCommand(resources.applicationId, guildId, commandId)
     }
 
-
+    /**
+     * Gets a [GuildApplicationCommand] based on the [guildId] and [commandId].
+     *
+     * @param guildId The ID of the guild to get the command from
+     * @param commandId The ID of the command to get
+     * @return The [GuildApplicationCommand] or `null` if it was not found.
+     */
     public suspend fun getGuildApplicationCommandOrNull(
         guildId: Snowflake,
         commandId: Snowflake
@@ -450,7 +495,13 @@ public class Kord(
         return defaultSupplier.getGuildApplicationCommandOrNull(resources.applicationId, guildId, commandId)
     }
 
-
+    /**
+     * Gets a Guild application command of type [T], based on the [guildId] and [commandId]
+     *
+     * @param guildId The ID the guild to get the command from
+     * @param commandId The ID of the command to get
+     * @return The command of type [T] or [EntityNotFoundException.applicationCommandNotFound] if it was not found.
+     */
     public suspend inline fun <reified T : GuildApplicationCommand> getGuildApplicationCommandOf(
         guildId: Snowflake,
         commandId: Snowflake
@@ -458,7 +509,13 @@ public class Kord(
         return defaultSupplier.getGuildApplicationCommandOf(resources.applicationId, guildId, commandId)
     }
 
-
+    /**
+     * Gets a Guild application command of type [T], based on the [guildId] and [commandId]
+     *
+     * @param guildId The ID the guild to get the command from
+     * @param commandId The ID of the command to get
+     * @return The command of type [T] or `null` if it was not found.
+     */
     public suspend inline fun <reified T : GuildApplicationCommand> getGuildApplicationCommandOfOrNull(
         guildId: Snowflake,
         commandId: Snowflake
@@ -466,27 +523,55 @@ public class Kord(
         return defaultSupplier.getGuildApplicationCommandOfOrNull(resources.applicationId, guildId, commandId)
     }
 
-
+    /**
+     * Gets a [GlobalApplicationCommand] based off the [commandId].
+     *
+     * @param commandId The ID of the command to get.
+     * @return The [GlobalApplicationCommand] or [EntityNotFoundException.applicationCommandNotFound] if it was not found.
+     */
     public suspend fun getGlobalApplicationCommand(commandId: Snowflake): GlobalApplicationCommand {
         return defaultSupplier.getGlobalApplicationCommand(resources.applicationId, commandId)
     }
 
-
+    /**
+     * Gets a [GlobalApplicationCommand] based off the [commandId].
+     *
+     * @param commandId The ID of the command to get.
+     * @return The [GlobalApplicationCommand] or `null` if it was not found.
+     */
     public suspend fun getGlobalApplicationCommandOrNull(commandId: Snowflake): GlobalApplicationCommand? {
         return defaultSupplier.getGlobalApplicationCommandOrNull(resources.applicationId, commandId)
     }
 
-
+    /**
+     * Gets a Global application command of type [T] based off the [commandId].
+     *
+     * @param commandId The ID of the command to get.
+     * @return The application command of type [T] or [EntityNotFoundException.applicationCommandNotFound] if it was not found.
+     */
     public suspend fun <T> getGlobalApplicationCommandOf(commandId: Snowflake): T {
         return defaultSupplier.getGlobalApplicationCommandOf(resources.applicationId, commandId)
     }
 
-
+    /**
+     * Gets a Global application command of type [T] based off the [commandId].
+     *
+     * @param commandId The ID of the command to get.
+     * @return The application command of type [T] or `null` if it was not found.
+     */
     public suspend fun <T> getGlobalApplicationCommandOfOrNull(commandId: Snowflake): T? {
         return defaultSupplier.getGlobalApplicationCommandOfOrNull(resources.applicationId, commandId)
     }
 
 
+    /**
+     * Creates a [GlobalChatInputCommand] for this bot.
+     *
+     * @param name The command name
+     * @param description The command description
+     * @param builder A [GlobalChatInputCreateBuilder] to modify the command.
+     * @return The [GlobalChatInputCommand] for the bot.
+     */
     public suspend inline fun createGlobalChatInputCommand(
         name: String,
         description: String,
@@ -503,6 +588,13 @@ public class Kord(
         return GlobalChatInputCommand(data, rest.interaction)
     }
 
+    /**
+     * Creates a [GlobalMessageCommand] for this bot.
+     *
+     * @param name The command name
+     * @param builder A [GlobalMessageCommandCreateBuilder] to modify the command.
+     * @return The [GlobalMessageCommand] for the bot.
+     */
     public suspend inline fun createGlobalMessageCommand(
         name: String,
         builder: GlobalMessageCommandCreateBuilder.() -> Unit = {},
@@ -514,6 +606,13 @@ public class Kord(
         return GlobalMessageCommand(data, rest.interaction)
     }
 
+    /**
+     * Creates a [GlobalUserCommand] for this bot.
+     *
+     * @param name The command name
+     * @param builder A [GlobalUserCommandCreateBuilder] to modify the command.
+     * @return The [GlobalUserCommand] for the bot.
+     */
     public suspend inline fun createGlobalUserCommand(
         name: String,
         builder: GlobalUserCommandCreateBuilder.() -> Unit = {},
@@ -525,7 +624,12 @@ public class Kord(
         return GlobalUserCommand(data, rest.interaction)
     }
 
-
+    /**
+     * Creates multiple [GlobalApplicationCommand]s.
+     *
+     * @param builder A [GlobalMultiApplicationCommandBuilder] to create the commands in.
+     * @return A [Flow] of [GlobalApplicationCommand]s for the bot.
+     */
     public suspend inline fun createGlobalApplicationCommands(
         builder: GlobalMultiApplicationCommandBuilder.() -> Unit,
     ): Flow<GlobalApplicationCommand> {
@@ -540,6 +644,16 @@ public class Kord(
         }
     }
 
+    /**
+     * Creates a [GuildChatInputCommand] for a given [guildId]
+     *
+     * @param guildId The ID of the guild to create the command
+     * @param name The name of the command
+     * @param description The description of the command
+     * @param builder A [ChatInputCreateBuilder] to modify the command
+     *
+     * @return a [GuildChatInputCommand] object for the command
+     */
     public suspend inline fun createGuildChatInputCommand(
         guildId: Snowflake,
         name: String,
@@ -560,6 +674,15 @@ public class Kord(
     }
 
 
+    /**
+     * Creates a [GuildMessageCommand] for a given [guildId]
+     *
+     * @param guildId The ID of the guild to create the command
+     * @param name The name of the command
+     * @param builder A [MessageCommandCreateBuilder] to modify the command
+     *
+     * @return a [GuildMessageCommand] object for the command
+     */
     public suspend inline fun createGuildMessageCommand(
         guildId: Snowflake,
         name: String,
@@ -576,6 +699,15 @@ public class Kord(
         return GuildMessageCommand(data, rest.interaction)
     }
 
+    /**
+     * Creates a [GuildUserCommand] for a given [guildId]
+     *
+     * @param guildId The ID of the guild to create the command
+     * @param name The name of the command
+     * @param builder A [UserCommandCreateBuilder] to modify the command
+     *
+     * @return a [GuildUserCommand] object for the command
+     */
     public suspend inline fun createGuildUserCommand(
         guildId: Snowflake,
         name: String,
@@ -593,7 +725,12 @@ public class Kord(
         return GuildUserCommand(data, rest.interaction)
     }
 
-
+    /**
+     * Creates multiple [GuildApplicationCommand]s.
+     *
+     * @param builder A [GuildMultiApplicationCommandBuilder] to create the commands in.
+     * @return A [Flow] of [GuildApplicationCommand]s for the bot.
+     */
     public suspend inline fun createGuildApplicationCommands(
         guildId: Snowflake,
         builder: GuildMultiApplicationCommandBuilder.() -> Unit,

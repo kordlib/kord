@@ -33,6 +33,8 @@ import kotlin.time.Duration
 
 /**
  * An instance of a [Discord Guild](https://discord.com/developers/docs/resources/guild).
+ *
+ * @param data The [GuildData] for the guild
  */
 public class Guild(
     public val data: GuildData,

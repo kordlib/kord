@@ -3,6 +3,9 @@ package dev.kord.core.entity
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.cache.data.RemovedReactionData
 
+/**
+ * An instance of an emoji that is used for reactions.
+ */
 public sealed class ReactionEmoji {
     /**
      * Format used in HTTP queries.
@@ -14,9 +17,15 @@ public sealed class ReactionEmoji {
      */
     public abstract val name: String
 
-
+    /** The mention string for the Reaction Emoji. */
     public abstract val mention: String
 
+    /**
+     * A custom representation of a reaction emoji
+     *
+     * @param id The ID of the reaction emoji
+     * @param isAnimated Whether the emoji is animated or not
+     */
     public data class Custom(val id: Snowflake, override val name: String, val isAnimated: Boolean) : ReactionEmoji() {
 
         override val urlFormat: String
@@ -29,6 +38,9 @@ public sealed class ReactionEmoji {
         override fun toString(): String = "Custom(id=$id, name=$name, isAnimated=$isAnimated)"
     }
 
+    /**
+     * A unicode representation of a reaction emoji.
+     */
     public data class Unicode(override val name: String) : ReactionEmoji() {
         override val urlFormat: String get() = name
         override val mention: String get() = name

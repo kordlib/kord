@@ -7,6 +7,11 @@ import dev.kord.core.cache.data.AutoModerationActionData
 import dev.kord.gateway.DiscordAutoModerationActionExecution
 import kotlinx.serialization.Serializable
 
+/**
+ * The data for the event dispatched when an auto-moderation action is executed.
+ *
+ * See [Auto moderation action execution](https://discord.com/developers/docs/topics/gateway-events#auto-moderation-action-execution)
+ */
 @Serializable
 public data class AutoModerationActionExecutionEventData(
     val guildId: Snowflake,

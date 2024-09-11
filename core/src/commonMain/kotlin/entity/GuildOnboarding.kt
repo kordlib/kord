@@ -20,6 +20,8 @@ import kotlinx.coroutines.flow.filter
 /**
  * Represents the [onboarding](https://support.discord.com/hc/en-us/articles/11074987197975-Community-Onboarding-FAQ)
  * flow for a [Guild].
+ *
+ * @param data The [DiscordGuildOnboarding] for the onbaording
  */
 public class GuildOnboarding(
     public val data: DiscordGuildOnboarding,

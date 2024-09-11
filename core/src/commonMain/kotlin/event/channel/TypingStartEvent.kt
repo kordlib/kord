@@ -19,6 +19,13 @@ import dev.kord.core.supplier.getChannelOf
 import dev.kord.core.supplier.getChannelOfOrNull
 import kotlinx.datetime.Instant
 
+/**
+ * The event that is dispatched when a user starts typing in a channel.
+ *
+ * @property data The data associated with the event
+ *
+ * See [Typing Start](https://discord.com/developers/docs/topics/gateway-events#typing-start)
+ */
 public class TypingStartEvent(
     public val data: TypingStartEventData,
     override val kord: Kord,
@@ -27,18 +34,39 @@ public class TypingStartEvent(
     override val supplier: EntitySupplier = kord.defaultSupplier,
 ) : Event, Strategizable {
 
+    /**
+     * The ID of the channel that triggered the event.
+     */
     public val channelId: Snowflake get() = data.channelId
 
+    /**
+     * The ID of the user that triggered the event.
+     */
     public val userId: Snowflake get() = data.userId
 
+    /**
+     * The ID of the guild that triggered the event.
+     */
     public val guildId: Snowflake? get() = data.guildId.value
 
+    /**
+     * The [Instant] this event was triggered.
+     */
     public val started: Instant get() = data.timestamp
 
+    /**
+     * The channel that triggered the event.
+     */
     public val channel: MessageChannelBehavior get() = MessageChannelBehavior(channelId, kord)
 
+    /**
+     * The [Guild][GuildBehavior] that triggered the event.
+     */
     public val guild: GuildBehavior? get() = guildId?.let { GuildBehavior(it, kord) }
 
+    /**
+     * The [User][UserBehavior] that triggered the event.
+     */
     public val user: UserBehavior get() = UserBehavior(userId, kord)
 
     /**

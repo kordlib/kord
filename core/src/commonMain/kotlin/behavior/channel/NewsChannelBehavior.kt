@@ -37,7 +37,7 @@ public interface NewsChannelBehavior : TopGuildMessageChannelBehavior, ThreadPar
         get() = super.activeThreads.filterIsInstance()
 
     /**
-     * Requests to get the this behavior as a [NewsChannel].
+     * Requests to get this behavior as a [NewsChannel].
      *
      * @throws [RequestException] if something went wrong during the request.
      * @throws [EntityNotFoundException] if the channel wasn't present.
@@ -82,6 +82,16 @@ public interface NewsChannelBehavior : TopGuildMessageChannelBehavior, ThreadPar
         kord.rest.channel.followNewsChannel(id, ChannelFollowRequest(webhookChannelId = target))
     }
 
+    /**
+     * Starts a [NewsChannelThread] with a given [name] and properties provided from the [builder]
+     *
+     * @param name The name of the thread
+     * @param builder The [StartThreadBuilder] for the thread
+     *
+     * @return A [NewsChannelThread] object for the thread.
+     *
+     * @throws [RequestException] if something went wrong during the request.
+     */
     public suspend fun startPublicThread(
         name: String,
         builder: StartThreadBuilder.() -> Unit = {},
@@ -89,6 +99,17 @@ public interface NewsChannelBehavior : TopGuildMessageChannelBehavior, ThreadPar
         return unsafeStartThread(name, type = ChannelType.PublicNewsThread, builder) as NewsChannelThread
     }
 
+    /**
+     * Starts a [NewsChannelThread] with a message from a [messageId], a given [name] and properties provided from the [builder]
+     *
+     * @param messageId The ID of the message that starts the thread
+     * @param name The name of the thread
+     * @param builder The [StartThreadWithMessageBuilder] for the thread
+     *
+     * @return A [NewsChannelThread] object for the thread.
+     *
+     * @throws [RequestException] if something went wrong during the request.
+     */
     public suspend fun startPublicThreadWithMessage(
         messageId: Snowflake,
         name: String,

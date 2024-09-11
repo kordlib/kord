@@ -4,6 +4,13 @@ import dev.kord.core.Kord
 import dev.kord.core.entity.application.*
 import dev.kord.core.event.Event
 
+/**
+ * The event dispatched when an Application command is deleted.
+ *
+ * See [Application command create](https://discord.com/developers/docs/interactions/application-commands#create-global-application-command)
+ *
+ * @property command The [GuildApplicationCommand] being deleted
+ */
 
 @Deprecated(
     "This event is not supposed to be sent to bots. See https://github.com/discord/discord-api-docs/issues/3690 for " +
@@ -15,6 +22,11 @@ public sealed interface ApplicationCommandDeleteEvent : Event {
     public val command: GuildApplicationCommand
 }
 
+/**
+ * The event dispatched when a chat input command is deleted.
+ *
+ * @see ApplicationCommandDeleteEvent
+ */
 @Suppress("DEPRECATION_ERROR")
 @Deprecated(
     "This event is not supposed to be sent to bots. See https://github.com/discord/discord-api-docs/issues/3690 for " +
@@ -29,6 +41,11 @@ public class ChatInputCommandDeleteEvent(
     override val customContext: Any?,
 ) : ApplicationCommandDeleteEvent
 
+/**
+ * The event dispatched when a user command is deleted.
+ *
+ * @see ApplicationCommandDeleteEvent
+ */
 
 @Suppress("DEPRECATION_ERROR")
 @Deprecated(
@@ -44,6 +61,11 @@ public class UserCommandDeleteEvent(
     override val customContext: Any?,
 ) : ApplicationCommandDeleteEvent
 
+/**
+ * The event dispatched when a message command is deleted.
+ *
+ * @see ApplicationCommandDeleteEvent
+ */
 
 @Suppress("DEPRECATION_ERROR")
 @Deprecated(
@@ -59,6 +81,11 @@ public class MessageCommandDeleteEvent(
     override val customContext: Any?,
 ) : ApplicationCommandDeleteEvent
 
+/**
+ * The event dispatched when an unknown application command is deleted.
+ *
+ * @see ApplicationCommandDeleteEvent
+ */
 
 @Suppress("DEPRECATION_ERROR")
 @Deprecated(

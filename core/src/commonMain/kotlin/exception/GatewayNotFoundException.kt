@@ -2,6 +2,9 @@ package dev.kord.core.exception
 
 import dev.kord.common.entity.Snowflake
 
+/**
+ * Thrown when a Gateway cannot be found.
+ */
 public class GatewayNotFoundException : Exception {
     public constructor(message: String) : super(message)
     public constructor(cause: Throwable) : super(cause)

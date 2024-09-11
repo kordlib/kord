@@ -5,6 +5,16 @@ import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.gateway.builder.Shards
 import io.ktor.client.*
 
+/**
+ * The resources for the Kord Instance.
+ *
+ * @param token The Bots token
+ * @param applicationId The ID of the application
+ * @param shards The [Shards] for the application
+ * @param maxConcurrency The maximum concurrency for the bot. Can be obtained by calling the `Route.GatewayBotGet` endpoint.
+ * @param httpClient The [HttpClient] the client is connected through
+ * @param defaultStrategy The default [EntitySupplyStrategy] for the client.
+ */
 public class ClientResources(
     public val token: String,
     public val applicationId: Snowflake,

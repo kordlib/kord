@@ -1,12 +1,14 @@
 package dev.kord.core.behavior.interaction
 
 import dev.kord.common.entity.Snowflake
+import dev.kord.common.exception.RequestException
 import dev.kord.core.Kord
 import dev.kord.core.behavior.GuildBehavior
 import dev.kord.core.behavior.channel.GuildMessageChannelBehavior
 import dev.kord.core.entity.Guild
 import dev.kord.core.entity.channel.GuildMessageChannel
 import dev.kord.core.entity.interaction.GuildInteraction
+import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.core.supplier.getChannelOf
@@ -24,8 +26,19 @@ public interface GuildInteractionBehavior : InteractionBehavior {
     override val channel: GuildMessageChannelBehavior
         get() = GuildMessageChannelBehavior(guildId, channelId, kord)
 
+    /**
+     * Requests the [Guild] for the interaction, returns `null` when the guild isn't present.
+     *
+     * @throws RequestException if something went wrong while retrieving the guild.
+     */
     public suspend fun getGuildOrNull(): Guild? = supplier.getGuildOrNull(guildId)
 
+    /**
+     * Requests the [Guild] for the interaction.
+     *
+     * @throws RequestException if something went wrong while retrieving the guild.
+     * @throws EntityNotFoundException if the guild is null.
+     */
     public suspend fun getGuild(): Guild = supplier.getGuild(guildId)
 
     override suspend fun getChannel(): GuildMessageChannel = supplier.getChannelOf(channelId)

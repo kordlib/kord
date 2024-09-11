@@ -22,7 +22,7 @@ import kotlin.contracts.contract
 public interface VoiceChannelBehavior : TopGuildMessageChannelBehavior, BaseVoiceChannelBehavior {
 
     /**
-     * Requests to get the this behavior as a [VoiceChannel].
+     * Requests to get this behavior as a [VoiceChannel].
      *
      * @throws [RequestException] if anything went wrong during the request.
      * @throws [EntityNotFoundException] if the channel wasn't present.

@@ -15,7 +15,9 @@ import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 
 /**
- * Sent when an invite is deleted.
+ * The event dispatched when an invite is deleted.
+ *
+ * See [Invite Delete](https://discord.com/developers/docs/topics/gateway-events#invite-delete)
  */
 public class InviteDeleteEvent(
     public val data: InviteDeleteData,
@@ -60,7 +62,7 @@ public class InviteDeleteEvent(
 
     /**
      * Requests to get the [Channel] this invite is for,
-     * returns null if the channel isn't present.
+     * returns `null` if the channel isn't present.
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
@@ -68,7 +70,7 @@ public class InviteDeleteEvent(
 
     /**
      * Requests to get the [Guild] of the invite.
-     * returns null if the guild isn't present, or if invite does not target a guild.
+     * returns `null` if the guild isn't present, or if invite does not target a guild.
      *
      * @throws [RequestException] if anything went wrong during the request.
      */

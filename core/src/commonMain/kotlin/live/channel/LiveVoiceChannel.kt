@@ -13,17 +13,36 @@ import dev.kord.core.live.exception.LiveCancellationException
 import dev.kord.core.live.on
 import kotlinx.coroutines.*
 
+/**
+ * Returns a [LiveVoiceChannel] for a given [VoiceChannel].
+ *
+ * @param coroutineScope The [CoroutineScope] to create the [LiveChannel] with
+ * @return the created [LiveVoiceChannel]
+ */
 @KordPreview
 public fun VoiceChannel.live(
     coroutineScope: CoroutineScope = kord + SupervisorJob(kord.coroutineContext.job)
 ): LiveVoiceChannel = LiveVoiceChannel(this, coroutineScope)
 
+/**
+ * Returns a [LiveVoiceChannel] for a given [VoiceChannel] with configuration.
+ *
+ * @param coroutineScope The [CoroutineScope] to create the [LiveChannel] with
+ * @param block The [LiveVoiceChannel] configuration
+ * @return the created [LiveVoiceChannel]
+ */
 @KordPreview
 public inline fun VoiceChannel.live(
     coroutineScope: CoroutineScope = kord + SupervisorJob(kord.coroutineContext.job),
     block: LiveVoiceChannel.() -> Unit
 ): LiveVoiceChannel = this.live(coroutineScope).apply(block)
 
+/**
+ * Invokes the consumer for this entity with [block] for the given [CoroutineScope]
+ *
+ * @param scope The [CoroutineScope] to invoke the consumer with
+ * @param block The configuration for the consumer
+ */
 @KordPreview
 public fun LiveVoiceChannel.onUpdate(
     scope: CoroutineScope = this,
@@ -31,6 +50,12 @@ public fun LiveVoiceChannel.onUpdate(
 ): Job =
     on(scope = scope, consumer = block)
 
+/**
+ * A live entity for a [VoiceChannel]
+ *
+ * @property channel The [VoiceChannel] to get a live object for
+ * @property coroutineScope The [CoroutineScope] to create the [LiveChannel] with
+ */
 @KordPreview
 public class LiveVoiceChannel(
     channel: VoiceChannel,

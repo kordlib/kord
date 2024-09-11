@@ -28,10 +28,13 @@ public val User.effectiveName: String get() = globalName ?: username
 
 /**
  * An instance of a [Discord User](https://discord.com/developers/docs/resources/user#user-object).
+ *
+ * @param data The [UserData] for the discord user
  */
 public open class User(
     public val data: UserData,
-    override val kord: Kord, override val supplier: EntitySupplier = kord.defaultSupplier,
+    override val kord: Kord,
+    override val supplier: EntitySupplier = kord.defaultSupplier,
 ) : UserBehavior {
 
     override val id: Snowflake
@@ -41,12 +44,15 @@ public open class User(
      * Returns true if the user is the same as the bot.
      */
     public val isSelf: Boolean get() = id == kord.selfId
-   
+
     public val avatarHash: String? get() = data.avatar
 
     /** The avatar of this user as an [Asset]. */
     public val avatar: Asset? get() = avatarHash?.let { Asset.userAvatar(data.id, it, kord) }
 
+    /**
+     * The default avatar for the user as [Asset] object.
+     */
     public val defaultAvatar: Asset
         get() =
             if (migratedToNewUsernameSystem) Asset.defaultUserAvatar(userId = id, kord)
@@ -105,6 +111,9 @@ public open class User(
      */
     public val isBot: Boolean get() = data.bot.discordBoolean
 
+    /**
+     * The user's banner color as a [Color] object
+     */
     public val accentColor: Color? get() = data.accentColor?.let { Color(it) }
 
     public val bannerHash: String? get() = data.banner

@@ -7,9 +7,14 @@ import dev.kord.core.cache.data.ReactionData
 
 /**
  * An instance of a [Discord Reaction](https://discord.com/developers/docs/resources/channel#reaction-object).
+ *
+ * @param data The [ReactionData] for the reaction.
  */
 public class Reaction(public val data: ReactionData, override val kord: Kord) : KordObject {
 
+    /**
+     * The ID of the reaction emoji.
+     */
     public val id: Snowflake? get() = data.emojiId
 
     /**

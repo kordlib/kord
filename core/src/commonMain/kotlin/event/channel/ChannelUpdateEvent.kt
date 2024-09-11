@@ -4,7 +4,13 @@ import dev.kord.core.Kord
 import dev.kord.core.entity.channel.*
 import dev.kord.core.event.Event
 
-
+/**
+ * The event dispatched when a [Channel] is updated.
+ *
+ * The [old][old] [Channel] may be null unless it has been stored in the cache.
+ *
+ * See [Channel Update](https://discord.com/developers/docs/topics/gateway-events#channel-update)
+ */
 public interface ChannelUpdateEvent : Event {
     public val channel: Channel
     public val old: Channel?
@@ -12,6 +18,13 @@ public interface ChannelUpdateEvent : Event {
         get() = channel.kord
 }
 
+/**
+ * The event dispatched when a [Category] is updated.
+ *
+ * The [old][old] [Category] may be null unless it has been stored in the cache.
+ *
+ * See [Channel Update](https://discord.com/developers/docs/topics/gateway-events#channel-update)
+ */
 public class CategoryUpdateEvent(
     override val channel: Category,
     override val old: Category?,
@@ -23,6 +36,13 @@ public class CategoryUpdateEvent(
     }
 }
 
+/**
+ * The event dispatched when a [DmChannel] is updated.
+ *
+ * The [old][old] [DmChannel] may be null unless it has been stored in the cache.
+ *
+ * See [Channel Update](https://discord.com/developers/docs/topics/gateway-events#channel-update)
+ */
 public class DMChannelUpdateEvent(
     override val channel: DmChannel,
     override val old: DmChannel?,
@@ -34,6 +54,15 @@ public class DMChannelUpdateEvent(
     }
 }
 
+/**
+ * The event dispatched when a [NewsChannel] is updated.
+ *
+ * The [NewsChannel] may have been turned into [TextChannel].
+ *
+ * The [old][old] [NewsChannel] may be null unless it has been stored in the cache.
+ *
+ * See [Channel Update](https://discord.com/developers/docs/topics/gateway-events#channel-update)
+ */
 public class NewsChannelUpdateEvent(
     override val channel: NewsChannel,
     override val old: NewsChannel?,
@@ -45,6 +74,15 @@ public class NewsChannelUpdateEvent(
     }
 }
 
+/**
+ * The event dispatched when a [TextChannel] is updated.
+ *
+ * The [TextChannel] may have been turned into a [NewsChannel].
+ *
+ * The [old][old] [TextChannel] may be null unless it has been stored in the cache.
+ *
+ * See [Channel Update](https://discord.com/developers/docs/topics/gateway-events#channel-update)
+ */
 public class TextChannelUpdateEvent(
     override val channel: TextChannel,
     override val old: TextChannel?,
@@ -56,6 +94,13 @@ public class TextChannelUpdateEvent(
     }
 }
 
+/**
+ * The event dispatched when a [VoiceChannel] is updated.
+ *
+ * The [old] [VoiceChannel] may be null unless it has been stored in the cache.
+ *
+ * See [Channel Update](https://discord.com/developers/docs/topics/gateway-events#channel-update)
+ */
 public class VoiceChannelUpdateEvent(
     override val channel: VoiceChannel,
     override val old: VoiceChannel?,
@@ -67,7 +112,13 @@ public class VoiceChannelUpdateEvent(
     }
 }
 
-
+/**
+ * The event dispatched when a [StageChannel] is updated.
+ *
+ * The [old] [StageChannel] may be null unless it has been stored in the cache.
+ *
+ * See [Channel Update](https://discord.com/developers/docs/topics/gateway-events#channel-update)
+ */
 public class StageChannelUpdateEvent(
     override val channel: StageChannel,
     override val old: StageChannel?,
@@ -79,6 +130,13 @@ public class StageChannelUpdateEvent(
     }
 }
 
+/**
+ * The event dispatched when a [ForumChannel] is updated.
+ *
+ * The [old] [ForumChannel] may be null unless it has been stored in the cache.
+ *
+ * See [Channel Update](https://discord.com/developers/docs/topics/gateway-events#channel-update)
+ */
 public class ForumChannelUpdateEvent(
     override val channel: ForumChannel,
     override val old: ForumChannel?,
@@ -90,6 +148,13 @@ public class ForumChannelUpdateEvent(
     }
 }
 
+/**
+ * The event dispatched when a [MediaChannel] is updated.
+ *
+ * The [old] [MediaChannel] may be null unless it has been stored in the cache.
+ *
+ * See [Channel Update](https://discord.com/developers/docs/topics/gateway-events#channel-update)
+ */
 public class MediaChannelUpdateEvent(
     override val channel: MediaChannel,
     override val old: MediaChannel?,
@@ -100,6 +165,13 @@ public class MediaChannelUpdateEvent(
         "MediaChannelUpdateEvent(channel=$channel, old=$old, shard=$shard, customContext=$customContext)"
 }
 
+/**
+ * The event dispatched when an Unknown [Channel] is updated.
+ *
+ * The [old] Unknown [Channel] may be null unless it has been stored in the cache.
+ *
+ * See [Channel Update](https://discord.com/developers/docs/topics/gateway-events#channel-update)
+ */
 public class UnknownChannelUpdateEvent(
     override val channel: Channel,
     override val old: Channel?,

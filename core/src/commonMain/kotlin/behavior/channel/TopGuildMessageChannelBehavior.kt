@@ -18,7 +18,7 @@ import dev.kord.core.supplier.EntitySupplyStrategy
 public interface TopGuildMessageChannelBehavior : CategorizableChannelBehavior, GuildMessageChannelBehavior {
 
     /**
-     * Requests to get the this behavior as a [TopGuildMessageChannel].
+     * Requests to get this behavior as a [TopGuildMessageChannel].
      *
      * @throws [RequestException] if something went wrong during the request.
      * @throws [EntityNotFoundException] if the channel wasn't present.
