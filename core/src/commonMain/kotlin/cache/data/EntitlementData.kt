@@ -27,7 +27,7 @@ public data class EntitlementData(
     public companion object {
         public val description: DataDescription<EntitlementData, Snowflake> = description(EntitlementData::id)
 
-        public fun from(entity: DiscordEntitlement): EntitlementData = with(entity) {
+        public fun from(entitlement: DiscordEntitlement): EntitlementData = with(entitlement) {
             EntitlementData(
                 id = id,
                 skuId = skuId,
