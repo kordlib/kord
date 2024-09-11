@@ -612,10 +612,7 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
      * Queries that use [EntitlementsListRequest.excludeEnded] may be susceptible to Clock drift as the
      * [System Clock][Clock.System] is required.
      */
-    override fun getEntitlements(
-        applicationId: Snowflake,
-        request: EntitlementsListRequest,
-    ): Flow<Entitlement> {
+    override fun getEntitlements(applicationId: Snowflake, request: EntitlementsListRequest): Flow<Entitlement> {
         checkLimit(request.limit)
         return cache
             .query {

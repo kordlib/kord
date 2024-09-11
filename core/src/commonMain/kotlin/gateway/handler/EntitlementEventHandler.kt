@@ -17,6 +17,7 @@ import dev.kord.gateway.EntitlementUpdate
 import dev.kord.gateway.Event
 
 internal class EntitlementEventHandler : BaseGatewayEventHandler() {
+
     override suspend fun handle(
         event: Event,
         shard: Int,
