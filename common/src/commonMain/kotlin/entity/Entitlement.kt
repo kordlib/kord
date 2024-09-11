@@ -9,7 +9,7 @@
             "TestModePurchase", intValue = 4,
             kDoc = "Entitlement that was purchased by a dev in application test mode.",
         ),
-        Entry("FreePurchase", intValue = 5, kDoc = "Entitlement that was granted when the [Sku][DiscordSku] was free."),
+        Entry("FreePurchase", intValue = 5, kDoc = "Entitlement that was granted when the [SKU][DiscordSku] was free."),
         Entry("UserGift", intValue = 6, kDoc = "Entitlement that was gifted to a user by another user."),
         Entry(
             "PremiumPurchase", intValue = 7,

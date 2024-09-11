@@ -16,7 +16,7 @@ import dev.kord.rest.request.RestRequestException
 import kotlinx.datetime.Instant
 
 /**
- * An instance of a [Discord Entitlement](https://discord.com/developers/docs/resources/entitlement).
+ * An instance of an [Entitlement](https://discord.com/developers/docs/resources/entitlement).
  *
  * Entitlements represent that a [User] or [Guild] has access to a premium offering in your [Application].
  */
@@ -52,7 +52,7 @@ public class Entitlement(
         get() = userId?.let { UserBehavior(it, kord) }
 
     /**
-     * The [type of entitlement][EntitlementType].
+     * The type of this entitlement.
      */
     public val type: EntitlementType
         get() = data.type
@@ -64,13 +64,17 @@ public class Entitlement(
         get() = data.deleted
 
     /**
-     * The start date at which the entitlement is valid. Not present when using test entitlements.
+     * The start date at which this entitlement is valid.
+     *
+     * Not present when using test entitlements.
      */
     public val startsAt: Instant?
         get() = data.startsAt.value
 
     /**
-     * The date at which the entitlement is no longer valid. Not present when using test entitlements.
+     * The date at which this entitlement is no longer valid.
+     *
+     * Not present when using test entitlements.
      */
     public val endsAt: Instant?
         get() = data.endsAt.value
@@ -88,7 +92,7 @@ public class Entitlement(
         get() = guildId?.let { GuildBehavior(it, kord) }
 
     /**
-     * For consumable items, whether the entitlement has been consumed.
+     * For consumable items, whether this entitlement has been consumed.
      */
     public val isConsumed: Boolean?
         get() = data.consumed.value
@@ -101,7 +105,7 @@ public class Entitlement(
      *
      * This request will fail if this is not a test entitlement.
      *
-     * @throws [RestRequestException] if something went wrong during the request.
+     * @throws RestRequestException if something went wrong during the request.
      */
     public suspend fun delete() {
         kord.rest.entitlement.deleteTestEntitlement(applicationId, id)
@@ -110,7 +114,7 @@ public class Entitlement(
     /**
      * For One-Time Purchase consumable [Sku]s, marks this entitlement for the [user] as [consumed][isConsumed].
      *
-     * @throws [RestRequestException] if something went wrong during the request.
+     * @throws RestRequestException if something went wrong during the request.
      */
     public suspend fun consume() {
         kord.rest.entitlement.consumeEntitlement(applicationId, id)

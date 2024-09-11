@@ -63,7 +63,7 @@ public sealed class EntitlementType(
     public object TestModePurchase : EntitlementType(4)
 
     /**
-     * Entitlement that was granted when the [Sku][DiscordSku] was free.
+     * Entitlement that was granted when the [SKU][DiscordSku] was free.
      */
     public object FreePurchase : EntitlementType(5)
 

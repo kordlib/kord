@@ -12,7 +12,7 @@ import dev.kord.core.entity.User
 import dev.kord.core.hash
 
 /**
- * An instance of a [Discord Sku](https://discord.com/developers/docs/resources/sku).
+ * An instance of an [SKU](https://discord.com/developers/docs/resources/sku).
  *
  * SKUs (or stock-keeping units) represent premium offerings that can be made available to your [Application]'s [User]s
  * or [Guild]s.
@@ -35,12 +35,12 @@ public class Sku(
     public val applicationId: Snowflake get() = data.applicationId
 
     /**
-     * Customer-facing name of the premium offering.
+     * The customer-facing name of this premium offering.
      */
     public val name: String get() = data.name
 
     /**
-     * System-generated URL slug based on the SKU's name.
+     * A system-generated URL slug based on this SKU's name.
      */
     public val slug: String get() = data.slug
 

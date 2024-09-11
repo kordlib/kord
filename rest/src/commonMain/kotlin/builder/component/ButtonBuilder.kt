@@ -76,9 +76,9 @@ public sealed class ButtonBuilder : ActionRowComponentBuilder() {
 
 
 /**
- * A button that prompts the user to purchase a [Sku][DiscordSku].
+ * A button that prompts the user to purchase an [SKU][DiscordSku].
  *
- * @param skuId The ID of the [Sku][DiscordSku] to prompt for purchase when clicked.
+ * @param skuId The ID of the [SKU][DiscordSku] to prompt for purchase when clicked.
  */
 @KordDsl
 public class PremiumButtonBuilder(
