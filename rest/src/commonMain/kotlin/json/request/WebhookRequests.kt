@@ -39,6 +39,7 @@ public data class WebhookExecuteRequest(
     val threadName: Optional<String> = Optional.Missing(),
     @SerialName("applied_tags")
     val appliedTags: Optional<List<Snowflake>> = Optional.Missing(),
+    val poll: Optional<CreatablePoll> = Optional.Missing()
 )
 
 public data class MultiPartWebhookExecuteRequest(

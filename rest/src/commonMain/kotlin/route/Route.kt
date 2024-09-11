@@ -81,6 +81,7 @@ public sealed class Route<T>(
     public object ScheduledEventId : Key("{event.id}", true)
     public object StickerId : Key("{sticker.id}")
     public object AutoModerationRuleId : Key("{auto_moderation_rule.id}")
+    public object PollAnswerId : Key("{poll.answer.id}")
 
 
     protected constructor(
@@ -984,6 +985,26 @@ public sealed class Route<T>(
             "/webhooks/$ApplicationId/$InteractionToken/messages/$MessageId",
             NoStrategy,
             requiresAuthorizationHeader = false,
+        )
+
+
+    /*
+     * Poll:
+     * https://discord.com/developers/docs/resources/poll
+     */
+
+    public object GetVoteAnswer :
+        Route<AnswerVotersGetResponse>(
+            HttpMethod.Get,
+            "/channels/$ChannelId/polls/$MessageId/answers/$PollAnswerId",
+            AnswerVotersGetResponse.serializer(),
+        )
+
+    public object PostExpirePoll :
+        Route<DiscordMessage>(
+            HttpMethod.Post,
+            "/channels/$ChannelId/polls/$MessageId/expire",
+            DiscordMessage.serializer(),
         )
 
 

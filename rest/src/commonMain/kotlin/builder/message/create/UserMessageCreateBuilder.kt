@@ -70,7 +70,6 @@ public class UserMessageCreateBuilder : AbstractMessageCreateBuilder(), RequestB
             messageReference = when (val id = _messageReference) {
                 is OptionalSnowflake.Value ->
                     Optional.Value(DiscordMessageReference(id = id, failIfNotExists = _failIfNotExists))
-
                 is OptionalSnowflake.Missing -> Optional.Missing()
             },
             components = _components.mapList { it.build() },
@@ -78,6 +77,7 @@ public class UserMessageCreateBuilder : AbstractMessageCreateBuilder(), RequestB
             attachments = _attachments.mapList { it.toRequest() },
             flags = buildMessageFlags(flags, suppressEmbeds, suppressNotifications),
             enforceNonce = _enforceNonce,
+            poll = _poll,
         ),
         files = files.toList(),
     )

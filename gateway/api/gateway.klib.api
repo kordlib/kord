@@ -1562,6 +1562,76 @@ final class dev.kord.gateway/MessageDeleteBulk : dev.kord.gateway/DispatchEvent 
     final fun toString(): kotlin/String // dev.kord.gateway/MessageDeleteBulk.toString|toString(){}[0]
 }
 
+final class dev.kord.gateway/MessagePollEventData { // dev.kord.gateway/MessagePollEventData|null[0]
+    constructor <init>(dev.kord.common.entity/Snowflake, dev.kord.common.entity/Snowflake, dev.kord.common.entity/Snowflake, dev.kord.common.entity.optional/OptionalSnowflake = ..., kotlin/Int) // dev.kord.gateway/MessagePollEventData.<init>|<init>(dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake;dev.kord.common.entity.optional.OptionalSnowflake;kotlin.Int){}[0]
+
+    final val answerId // dev.kord.gateway/MessagePollEventData.answerId|{}answerId[0]
+        final fun <get-answerId>(): kotlin/Int // dev.kord.gateway/MessagePollEventData.answerId.<get-answerId>|<get-answerId>(){}[0]
+    final val channelId // dev.kord.gateway/MessagePollEventData.channelId|{}channelId[0]
+        final fun <get-channelId>(): dev.kord.common.entity/Snowflake // dev.kord.gateway/MessagePollEventData.channelId.<get-channelId>|<get-channelId>(){}[0]
+    final val guildId // dev.kord.gateway/MessagePollEventData.guildId|{}guildId[0]
+        final fun <get-guildId>(): dev.kord.common.entity.optional/OptionalSnowflake // dev.kord.gateway/MessagePollEventData.guildId.<get-guildId>|<get-guildId>(){}[0]
+    final val messageId // dev.kord.gateway/MessagePollEventData.messageId|{}messageId[0]
+        final fun <get-messageId>(): dev.kord.common.entity/Snowflake // dev.kord.gateway/MessagePollEventData.messageId.<get-messageId>|<get-messageId>(){}[0]
+    final val userId // dev.kord.gateway/MessagePollEventData.userId|{}userId[0]
+        final fun <get-userId>(): dev.kord.common.entity/Snowflake // dev.kord.gateway/MessagePollEventData.userId.<get-userId>|<get-userId>(){}[0]
+
+    final fun component1(): dev.kord.common.entity/Snowflake // dev.kord.gateway/MessagePollEventData.component1|component1(){}[0]
+    final fun component2(): dev.kord.common.entity/Snowflake // dev.kord.gateway/MessagePollEventData.component2|component2(){}[0]
+    final fun component3(): dev.kord.common.entity/Snowflake // dev.kord.gateway/MessagePollEventData.component3|component3(){}[0]
+    final fun component4(): dev.kord.common.entity.optional/OptionalSnowflake // dev.kord.gateway/MessagePollEventData.component4|component4(){}[0]
+    final fun component5(): kotlin/Int // dev.kord.gateway/MessagePollEventData.component5|component5(){}[0]
+    final fun copy(dev.kord.common.entity/Snowflake = ..., dev.kord.common.entity/Snowflake = ..., dev.kord.common.entity/Snowflake = ..., dev.kord.common.entity.optional/OptionalSnowflake = ..., kotlin/Int = ...): dev.kord.gateway/MessagePollEventData // dev.kord.gateway/MessagePollEventData.copy|copy(dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake;dev.kord.common.entity.optional.OptionalSnowflake;kotlin.Int){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.gateway/MessagePollEventData.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.gateway/MessagePollEventData.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // dev.kord.gateway/MessagePollEventData.toString|toString(){}[0]
+
+    final object $serializer : kotlinx.serialization.internal/GeneratedSerializer<dev.kord.gateway/MessagePollEventData> { // dev.kord.gateway/MessagePollEventData.$serializer|null[0]
+        final val descriptor // dev.kord.gateway/MessagePollEventData.$serializer.descriptor|{}descriptor[0]
+            final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // dev.kord.gateway/MessagePollEventData.$serializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
+
+        final fun childSerializers(): kotlin/Array<kotlinx.serialization/KSerializer<*>> // dev.kord.gateway/MessagePollEventData.$serializer.childSerializers|childSerializers(){}[0]
+        final fun deserialize(kotlinx.serialization.encoding/Decoder): dev.kord.gateway/MessagePollEventData // dev.kord.gateway/MessagePollEventData.$serializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
+        final fun serialize(kotlinx.serialization.encoding/Encoder, dev.kord.gateway/MessagePollEventData) // dev.kord.gateway/MessagePollEventData.$serializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;dev.kord.gateway.MessagePollEventData){}[0]
+    }
+
+    final object Companion { // dev.kord.gateway/MessagePollEventData.Companion|null[0]
+        final fun serializer(): kotlinx.serialization/KSerializer<dev.kord.gateway/MessagePollEventData> // dev.kord.gateway/MessagePollEventData.Companion.serializer|serializer(){}[0]
+    }
+}
+
+final class dev.kord.gateway/MessagePollVoteAdd : dev.kord.gateway/DispatchEvent { // dev.kord.gateway/MessagePollVoteAdd|null[0]
+    constructor <init>(dev.kord.gateway/MessagePollEventData, kotlin/Int?) // dev.kord.gateway/MessagePollVoteAdd.<init>|<init>(dev.kord.gateway.MessagePollEventData;kotlin.Int?){}[0]
+
+    final val data // dev.kord.gateway/MessagePollVoteAdd.data|{}data[0]
+        final fun <get-data>(): dev.kord.gateway/MessagePollEventData // dev.kord.gateway/MessagePollVoteAdd.data.<get-data>|<get-data>(){}[0]
+    final val sequence // dev.kord.gateway/MessagePollVoteAdd.sequence|{}sequence[0]
+        final fun <get-sequence>(): kotlin/Int? // dev.kord.gateway/MessagePollVoteAdd.sequence.<get-sequence>|<get-sequence>(){}[0]
+
+    final fun component1(): dev.kord.gateway/MessagePollEventData // dev.kord.gateway/MessagePollVoteAdd.component1|component1(){}[0]
+    final fun component2(): kotlin/Int? // dev.kord.gateway/MessagePollVoteAdd.component2|component2(){}[0]
+    final fun copy(dev.kord.gateway/MessagePollEventData = ..., kotlin/Int? = ...): dev.kord.gateway/MessagePollVoteAdd // dev.kord.gateway/MessagePollVoteAdd.copy|copy(dev.kord.gateway.MessagePollEventData;kotlin.Int?){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.gateway/MessagePollVoteAdd.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.gateway/MessagePollVoteAdd.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // dev.kord.gateway/MessagePollVoteAdd.toString|toString(){}[0]
+}
+
+final class dev.kord.gateway/MessagePollVoteRemove : dev.kord.gateway/DispatchEvent { // dev.kord.gateway/MessagePollVoteRemove|null[0]
+    constructor <init>(dev.kord.gateway/MessagePollEventData, kotlin/Int?) // dev.kord.gateway/MessagePollVoteRemove.<init>|<init>(dev.kord.gateway.MessagePollEventData;kotlin.Int?){}[0]
+
+    final val data // dev.kord.gateway/MessagePollVoteRemove.data|{}data[0]
+        final fun <get-data>(): dev.kord.gateway/MessagePollEventData // dev.kord.gateway/MessagePollVoteRemove.data.<get-data>|<get-data>(){}[0]
+    final val sequence // dev.kord.gateway/MessagePollVoteRemove.sequence|{}sequence[0]
+        final fun <get-sequence>(): kotlin/Int? // dev.kord.gateway/MessagePollVoteRemove.sequence.<get-sequence>|<get-sequence>(){}[0]
+
+    final fun component1(): dev.kord.gateway/MessagePollEventData // dev.kord.gateway/MessagePollVoteRemove.component1|component1(){}[0]
+    final fun component2(): kotlin/Int? // dev.kord.gateway/MessagePollVoteRemove.component2|component2(){}[0]
+    final fun copy(dev.kord.gateway/MessagePollEventData = ..., kotlin/Int? = ...): dev.kord.gateway/MessagePollVoteRemove // dev.kord.gateway/MessagePollVoteRemove.copy|copy(dev.kord.gateway.MessagePollEventData;kotlin.Int?){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.gateway/MessagePollVoteRemove.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.gateway/MessagePollVoteRemove.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // dev.kord.gateway/MessagePollVoteRemove.toString|toString(){}[0]
+}
+
 final class dev.kord.gateway/MessageReactionAdd : dev.kord.gateway/DispatchEvent { // dev.kord.gateway/MessageReactionAdd|null[0]
     constructor <init>(dev.kord.common.entity/MessageReactionAddData, kotlin/Int?) // dev.kord.gateway/MessageReactionAdd.<init>|<init>(dev.kord.common.entity.MessageReactionAddData;kotlin.Int?){}[0]
 
