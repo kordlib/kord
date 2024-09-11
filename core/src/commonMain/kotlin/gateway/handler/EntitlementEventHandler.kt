@@ -52,18 +52,17 @@ internal class EntitlementEventHandler : BaseGatewayEventHandler() {
         else -> null
     }
 
-    private suspend fun handleDeletedEntitlement(entity: DiscordEntitlement, kord: Kord): Entitlement {
-        val entitlement = Entitlement(EntitlementData.from(entity), kord)
+    private suspend fun handleDeletedEntitlement(entitlement: DiscordEntitlement, kord: Kord): Entitlement {
         kord.cache.remove {
             idEq(EntitlementData::id, entitlement.id)
             idEq(EntitlementData::applicationId, entitlement.applicationId)
         }
-        return entitlement
+        return Entitlement(EntitlementData.from(entitlement), kord)
     }
 
-    private suspend fun handleEntitlement(entity: DiscordEntitlement, kord: Kord): Entitlement {
-        val entitlement = Entitlement(EntitlementData.from(entity), kord)
-        kord.cache.put(entitlement.data)
-        return entitlement
+    private suspend fun handleEntitlement(entitlement: DiscordEntitlement, kord: Kord): Entitlement {
+        val data = EntitlementData.from(entitlement)
+        kord.cache.put(data)
+        return Entitlement(data, kord)
     }
 }
