@@ -47,7 +47,7 @@ mapping of the Voice API on Kotlin/JVM
 | [core-voice](core-voice) | [core-voice](https://kordlib.github.io/kord/core-voice) | `kord-core-voice`¹ | ✅   | ✅           | ✅²     |
 
 ¹ These artifacts only supports Gradle Version 5.3 or higher, for older Gradle versions and Maven please append `-jvm`  
-² Currently not on Windows(MinGW) targets, see #69  
+² Currently not on Windows(MinGW) targets, see #69
 
 ## Installation
 

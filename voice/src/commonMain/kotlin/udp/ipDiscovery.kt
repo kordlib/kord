@@ -3,7 +3,6 @@ package dev.kord.voice.udp
 import dev.kord.voice.io.mutableCursor
 import dev.kord.voice.io.view
 import io.github.oshai.kotlinlogging.KotlinLogging
-import io.ktor.utils.io.core.*
 import kotlinx.io.readByteArray
 import kotlinx.io.readUShort
 

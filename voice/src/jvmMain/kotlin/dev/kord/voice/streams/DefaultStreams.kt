@@ -1,4 +1,5 @@
 @file:JvmName("DefaultStreamsJvm")
+
 package dev.kord.voice.streams
 
 import com.iwebpp.crypto.TweetNaclFast

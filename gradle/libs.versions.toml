@@ -37,6 +37,7 @@ buildconfig = "5.4.0" # https://github.com/gmazzo/gradle-buildconfig-plugin
 kord-gradle-tools = "1.6.2" # https://github.com/kordlib/gradle-tools/blob/main/build.gradle.kts#L10
 maven-publish-plugin = "0.29.0" # https://github.com/vanniktech/gradle-maven-publish-plugin
 
+
 [libraries]
 
 # cache

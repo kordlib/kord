@@ -1,6 +1,5 @@
 package dev.kord.voice.udp
 
-import dev.kord.common.annotation.KordVoice
 import dev.kord.voice.io.ByteArrayView
 import io.ktor.utils.io.core.*
 import js.typedarrays.toUint8Array

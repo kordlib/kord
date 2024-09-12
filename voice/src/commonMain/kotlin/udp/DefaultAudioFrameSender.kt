@@ -6,7 +6,6 @@ import dev.kord.voice.AudioProvider
 import dev.kord.voice.FrameInterceptor
 import dev.kord.voice.encryption.strategies.NonceStrategy
 import io.github.oshai.kotlinlogging.KotlinLogging
-import io.ktor.utils.io.core.*
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.*
