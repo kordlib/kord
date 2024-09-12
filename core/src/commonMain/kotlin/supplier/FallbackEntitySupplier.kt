@@ -290,5 +290,6 @@ private class FallbackEntitySupplier(val first: EntitySupplier, val second: Enti
     override suspend fun getSubscriptionOrNull(skuId: Snowflake, subscriptionId: Snowflake): Subscription? =
         first.getSubscriptionOrNull(skuId, subscriptionId) ?: second.getSubscriptionOrNull(skuId, subscriptionId)
 
+
     override fun toString(): String = "FallbackEntitySupplier(first=$first, second=$second)"
 }
