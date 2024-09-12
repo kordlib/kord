@@ -3,6 +3,7 @@ package dev.kord.common.json
 import dev.kord.common.entity.*
 import dev.kord.common.entity.Permission.*
 import dev.kord.common.readFile
+import dev.kord.test.IgnoreOnSimulatorPlatforms
 import kotlinx.coroutines.test.runTest
 import kotlinx.datetime.Instant
 import kotlinx.serialization.json.Json
@@ -12,6 +13,7 @@ import kotlin.time.Duration.Companion.seconds
 
 private suspend fun file(name: String): String = readFile("guild", name)
 
+@IgnoreOnSimulatorPlatforms
 class GuildTest {
 
     @Test

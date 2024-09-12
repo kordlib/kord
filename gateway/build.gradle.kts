@@ -14,9 +14,6 @@ kotlin {
 
                 implementation(libs.kotlin.logging)
 
-                // TODO remove when gatewayOnLogger and mu.KLogger.error() are removed
-                implementation(libs.kotlin.logging.old)
-
                 compileOnly(projects.kspAnnotations)
             }
         }

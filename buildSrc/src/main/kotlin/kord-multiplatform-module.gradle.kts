@@ -1,6 +1,7 @@
 import org.jetbrains.dokka.gradle.AbstractDokkaLeafTask
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.targets.js.testing.KotlinJsTest
+import org.jetbrains.kotlin.gradle.targets.native.tasks.KotlinNativeTest
 
 plugins {
     org.jetbrains.kotlin.multiplatform
@@ -25,31 +26,26 @@ apiValidation {
 
 @OptIn(ExperimentalKotlinGradlePluginApi::class)
 kotlin {
-    explicitApi()
-    compilerOptions {
-        applyKordCommonCompilerOptions()
-        optIn.addAll(kordOptIns)
-    }
+    applyDefaultHierarchyTemplate {
+        common {
+            group("nonJvm") {
+                withNative()
+                withJs()
+            }
 
-    jvm {
-        compilerOptions {
-            applyKordJvmCompilerOptions()
-        }
-    }
-    js {
-        nodejs {
-            testTask {
-                useMocha {
-                    // disable timeouts, some tests are too slow for default 2-second timeout:
-                    // https://mochajs.org/#-timeout-ms-t-ms
-                    timeout = "0"
-                }
+            group("nonJs") {
+                withNative()
+                withJvm()
             }
         }
-        useCommonJs()
     }
 
-    applyDefaultHierarchyTemplate()
+    targets()
+    explicitApi()
+    compilerOptions {
+        optIn.addAll(kordOptIns)
+        applyKordCommonCompilerOptions()
+    }
 
     sourceSets {
         applyKordTestOptIns()
@@ -61,12 +57,6 @@ kotlin {
             dependencies {
                 implementation(project(":test-kit"))
             }
-        }
-        val nonJvmMain by creating {
-            dependsOn(commonMain.get())
-        }
-        jsMain {
-            dependsOn(nonJvmMain)
         }
     }
 }
@@ -80,9 +70,22 @@ tasks {
         environment("PROJECT_ROOT", rootProject.projectDir.absolutePath)
     }
 
-    for (task in listOf("compileKotlinJvm", "compileKotlinJs", "jvmSourcesJar", "jsSourcesJar")) {
-        named(task) {
-            dependsOn("kspCommonMainKotlinMetadata")
+    withType<KotlinNativeTest>().configureEach {
+        environment("PROJECT_ROOT", rootProject.projectDir.absolutePath)
+    }
+
+    withType<JavaCompile>().configureEach {
+        options.release = KORD_JVM_TARGET
+    }
+
+    afterEvaluate {
+        val compilationTasks = kotlin.targets.flatMap {
+            listOf("compileKotlin${it.name.replaceFirstChar(Char::titlecase)}", "${it.name}SourcesJar")
+        }
+        for (task in compilationTasks) {
+            named(task) {
+                dependsOn("kspCommonMainKotlinMetadata")
+            }
         }
     }
 
@@ -96,4 +99,6 @@ tasks {
         applyKordDokkaOptions()
         dependsOn("kspCommonMainKotlinMetadata")
     }
+
+    disableLinuxLinkTestTasksOnWindows()
 }
