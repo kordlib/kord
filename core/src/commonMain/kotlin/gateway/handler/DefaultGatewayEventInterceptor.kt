@@ -42,6 +42,7 @@ public class DefaultGatewayEventInterceptor @KordPreview public constructor(
         InteractionEventHandler(),
         LifeCycleEventHandler(),
         MessageEventHandler(),
+        SubscriptionEventHandler(),
         ThreadEventHandler(),
         UnknownEventHandler(),
         UserEventHandler(),

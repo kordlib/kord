@@ -4,16 +4,12 @@ import dev.kord.cache.api.DataCache
 import dev.kord.common.annotation.KordExperimental
 import dev.kord.common.annotation.KordUnsafe
 import dev.kord.common.entity.DiscordShard
-import dev.kord.common.entity.EntitlementOwnerType
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.exception.RequestException
-import dev.kord.core.behavior.GuildBehavior
-import dev.kord.core.behavior.UserBehavior
 import dev.kord.core.builder.kord.KordBuilder
 import dev.kord.core.builder.kord.KordProxyBuilder
 import dev.kord.core.builder.kord.KordRestOnlyBuilder
 import dev.kord.core.cache.data.ApplicationCommandData
-import dev.kord.core.cache.data.EntitlementData
 import dev.kord.core.cache.data.GuildData
 import dev.kord.core.cache.data.UserData
 import dev.kord.core.entity.*
@@ -36,7 +32,6 @@ import dev.kord.rest.builder.guild.GuildCreateBuilder
 import dev.kord.rest.builder.interaction.*
 import dev.kord.rest.builder.monetization.EntitlementsListRequestBuilder
 import dev.kord.rest.builder.user.CurrentUserModifyBuilder
-import dev.kord.rest.json.request.TestEntitlementCreateRequest
 import dev.kord.rest.request.RestRequestException
 import dev.kord.rest.service.RestClient
 import io.github.oshai.kotlinlogging.KotlinLogging
@@ -378,8 +373,7 @@ public class Kord(
      *
      * @throws RestRequestException if something went wrong during the request.
      */
-    public suspend fun getSkus(): List<Sku> =
-        rest.sku.listSkus(selfId).map { Sku(it, this) }
+    public suspend fun getSkus(): List<Sku> = rest.sku.listSkus(selfId).map { Sku(it, this) }
 
     /**
      * Requests to get all [Entitlement]s for this application.
@@ -391,58 +385,10 @@ public class Kord(
         builder: EntitlementsListRequestBuilder.() -> Unit = {},
     ): Flow<Entitlement> {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-
-        val request = EntitlementsListRequestBuilder()
-            .apply(builder)
-            .toRequest()
-
+        val request = EntitlementsListRequestBuilder().apply(builder).toRequest()
         return strategy.supply(this).getEntitlements(selfId, request)
     }
 
-    /**
-     * Requests to create a new [test entitlement][Entitlement] to a [Sku] with the given [skuId] for an owner with the
-     * given [ownerId] and [ownerType]. Discord will act as though that owner has entitlement to your premium offering.
-     *
-     * The returned [Entitlement] will not contain [startsAt][Entitlement.startsAt] and [endsAt][Entitlement.endsAt], as
-     * it's valid in perpetuity.
-     *
-     * @throws RestRequestException if something went wrong during the request.
-     */
-    public suspend fun createTestEntitlement(
-        skuId: Snowflake,
-        ownerId: Snowflake,
-        ownerType: EntitlementOwnerType,
-    ): Entitlement {
-        val response =
-            rest.entitlement.createTestEntitlement(selfId, TestEntitlementCreateRequest(skuId, ownerId, ownerType))
-        val data = EntitlementData.from(response)
-
-        return Entitlement(data, this)
-    }
-
-    /**
-     * Requests to create a new [test entitlement][Entitlement] to a [Sku] with the given [skuId] for a given [user].
-     * Discord will act as though that user has entitlement to your premium offering.
-     *
-     * The returned [Entitlement] will not contain [startsAt][Entitlement.startsAt] and [endsAt][Entitlement.endsAt], as
-     * it's valid in perpetuity.
-     *
-     * @throws RestRequestException if something went wrong during the request.
-     */
-    public suspend fun createTestEntitlement(skuId: Snowflake, user: UserBehavior): Entitlement =
-        createTestEntitlement(skuId, user.id, EntitlementOwnerType.User)
-
-    /**
-     * Requests to create a new [test entitlement][Entitlement] to a [Sku] with the given [skuId] for a given [guild].
-     * Discord will act as though that guild has entitlement to your premium offering.
-     *
-     * The returned [Entitlement] will not contain [startsAt][Entitlement.startsAt] and [endsAt][Entitlement.endsAt], as
-     * it's valid in perpetuity.
-     *
-     * @throws RestRequestException if something went wrong during the request.
-     */
-    public suspend fun createTestEntitlement(skuId: Snowflake, guild: GuildBehavior): Entitlement =
-        createTestEntitlement(skuId, guild.id, EntitlementOwnerType.Guild)
 
     public suspend fun getSticker(id: Snowflake): Sticker = defaultSupplier.getSticker(id)
 

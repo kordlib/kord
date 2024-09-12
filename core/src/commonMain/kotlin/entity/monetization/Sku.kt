@@ -5,11 +5,13 @@ import dev.kord.common.entity.SkuFlags
 import dev.kord.common.entity.SkuType
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.Kord
+import dev.kord.core.behavior.monetization.SkuBehavior
 import dev.kord.core.entity.Application
 import dev.kord.core.entity.Guild
-import dev.kord.core.entity.KordEntity
 import dev.kord.core.entity.User
 import dev.kord.core.hash
+import dev.kord.core.supplier.EntitySupplier
+import dev.kord.core.supplier.EntitySupplyStrategy
 
 /**
  * An instance of an [SKU](https://discord.com/developers/docs/resources/sku).
@@ -20,7 +22,8 @@ import dev.kord.core.hash
 public class Sku(
     public val data: DiscordSku,
     override val kord: Kord,
-) : KordEntity {
+    override val supplier: EntitySupplier = kord.defaultSupplier,
+) : SkuBehavior {
     override val id: Snowflake
         get() = data.id
 
@@ -29,10 +32,7 @@ public class Sku(
      */
     public val type: SkuType get() = data.type
 
-    /**
-     * The ID of the [Application] this SKU is for.
-     */
-    public val applicationId: Snowflake get() = data.applicationId
+    override val applicationId: Snowflake get() = data.applicationId
 
     /**
      * The customer-facing name of this premium offering.
@@ -49,8 +49,10 @@ public class Sku(
      */
     public val flags: SkuFlags get() = data.flags
 
+    override fun withStrategy(strategy: EntitySupplyStrategy<*>): Sku = Sku(data, kord, strategy.supply(kord))
+
     override fun equals(other: Any?): Boolean =
-        other is Sku && this.id == other.id && this.applicationId == other.applicationId
+        other is SkuBehavior && this.id == other.id && this.applicationId == other.applicationId
 
     override fun hashCode(): Int = hash(id, applicationId)
 

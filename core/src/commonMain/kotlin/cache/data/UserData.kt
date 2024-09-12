@@ -34,6 +34,7 @@ public data class UserData(
             link(UserData::id to VoiceStateData::userId)
             link(UserData::id to PresenceData::userId)
             link(UserData::id to EntitlementData::nullableUserId)
+            link(UserData::id to SubscriptionData::userId)
         }
 
         public fun from(entity: DiscordUser): UserData = with(entity) {

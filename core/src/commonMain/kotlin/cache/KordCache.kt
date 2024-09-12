@@ -123,6 +123,10 @@ public class KordCacheBuilder {
     public fun entitlements(generator: Generator<EntitlementData, Snowflake>): Unit =
         forDescription(EntitlementData.description, generator)
 
+    /** Configures the caching for [SubscriptionData]. */
+    public fun subscriptions(generator: Generator<SubscriptionData, Snowflake>): Unit =
+        forDescription(SubscriptionData.description, generator)
+
     public fun build(): DataCache = DelegatingDataCache(EntrySupplier.invoke { cache, description ->
         val generator = descriptionGenerators[description] ?: defaultGenerator
         generator(cache, description)

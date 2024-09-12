@@ -14,7 +14,9 @@ import dev.kord.core.entity.channel.thread.ThreadChannel
 import dev.kord.core.entity.channel.thread.ThreadMember
 import dev.kord.core.entity.interaction.followup.FollowupMessage
 import dev.kord.core.entity.monetization.Entitlement
+import dev.kord.core.entity.monetization.Subscription
 import dev.kord.rest.json.request.EntitlementsListRequest
+import dev.kord.rest.json.request.SkuSubscriptionsListRequest
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.onEach
 import kotlinx.datetime.Instant
@@ -313,6 +315,12 @@ public class StoreEntitySupplier(
 
     override fun getEntitlements(applicationId: Snowflake, request: EntitlementsListRequest): Flow<Entitlement> =
         storeOnEach(supplier.getEntitlements(applicationId, request)) { it.data }
+
+    override fun getSubscriptions(skuId: Snowflake, request: SkuSubscriptionsListRequest): Flow<Subscription> =
+        storeOnEach(supplier.getSubscriptions(skuId, request)) { it.data }
+
+    override suspend fun getSubscriptionOrNull(skuId: Snowflake, subscriptionId: Snowflake): Subscription? =
+        storeAndReturn(supplier.getSubscriptionOrNull(skuId, subscriptionId)) { it.data }
 
 
     private inline fun <T, reified R : Any> storeOnEach(source: Flow<T>, crossinline transform: (T) -> R): Flow<T> {

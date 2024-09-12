@@ -29,6 +29,7 @@ public suspend fun DataCache.registerKordData(): Unit = register(
     StickerData.description,
     AutoModerationRuleData.description,
     EntitlementData.description,
+    SubscriptionData.description,
 )
 
 /**
@@ -52,6 +53,7 @@ internal suspend fun DataCache.removeKordData() {
     query<StickerData>().remove()
     query<AutoModerationRuleData>().remove()
     query<EntitlementData>().remove()
+    query<SubscriptionData>().remove()
 }
 
 /**

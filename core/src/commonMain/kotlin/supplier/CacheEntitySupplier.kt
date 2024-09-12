@@ -23,9 +23,11 @@ import dev.kord.core.entity.channel.thread.ThreadChannel
 import dev.kord.core.entity.channel.thread.ThreadMember
 import dev.kord.core.entity.interaction.followup.FollowupMessage
 import dev.kord.core.entity.monetization.Entitlement
+import dev.kord.core.entity.monetization.Subscription
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.gateway.Gateway
 import dev.kord.rest.json.request.EntitlementsListRequest
+import dev.kord.rest.json.request.SkuSubscriptionsListRequest
 import dev.kord.rest.route.Position
 import kotlinx.coroutines.flow.*
 import kotlinx.datetime.Clock
@@ -641,6 +643,34 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
             .map { Entitlement(it, kord) }
             .limit(request.limit)
     }
+
+    override fun getSubscriptions(skuId: Snowflake, request: SkuSubscriptionsListRequest): Flow<Subscription> {
+        checkLimit(request.limit)
+        return cache
+            .query {
+                SubscriptionData::skuIds predicate { skuIds -> skuId in skuIds }
+
+                when (val pos = request.position) {
+                    null -> {}
+                    is Position.Before -> idLt(SubscriptionData::id, pos.value)
+                    is Position.After -> idGt(SubscriptionData::id, pos.value)
+                }
+
+                request.userId?.let { idEq(SubscriptionData::userId, it) }
+            }
+            .asFlow()
+            .map { Subscription(it, kord) }
+            .limit(request.limit)
+    }
+
+    override suspend fun getSubscriptionOrNull(skuId: Snowflake, subscriptionId: Snowflake): Subscription? =
+        cache
+            .query {
+                idEq(SubscriptionData::id, subscriptionId)
+                SubscriptionData::skuIds predicate { skuIds -> skuId in skuIds }
+            }
+            .singleOrNull()
+            ?.let { Subscription(it, kord) }
 
 
     override fun toString(): String = "CacheEntitySupplier(cache=$cache)"

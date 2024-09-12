@@ -2,6 +2,7 @@ package dev.kord.core.supplier
 
 import dev.kord.common.entity.DiscordAuditLogEntry
 import dev.kord.common.entity.DiscordEntitlement
+import dev.kord.common.entity.DiscordSubscription
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.common.entity.optional.optionalSnowflake
@@ -18,6 +19,7 @@ import dev.kord.core.entity.channel.thread.ThreadChannel
 import dev.kord.core.entity.channel.thread.ThreadMember
 import dev.kord.core.entity.interaction.followup.FollowupMessage
 import dev.kord.core.entity.monetization.Entitlement
+import dev.kord.core.entity.monetization.Subscription
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.rest.builder.auditlog.AuditLogGetRequestBuilder
 import dev.kord.rest.json.request.*
@@ -58,6 +60,7 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
     private inline val invite get() = kord.rest.invite
     private inline val stageInstance get() = kord.rest.stageInstance
     private inline val sticker get() = kord.rest.sticker
+    private inline val subscription get() = kord.rest.subscription
     private inline val user get() = kord.rest.user
     private inline val voice get() = kord.rest.voice
     private inline val webhook get() = kord.rest.webhook
@@ -660,6 +663,29 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
             is Position.Before -> paginateBackwards(batchSize, start.value, idSelector = { it.id }, req)
         }
     }.map { entitlement -> Entitlement(data = EntitlementData.from(entitlement), kord) }
+
+    // maxBatchSize: see https://discord.com/developers/docs/resources/subscription#list-sku-subscriptions
+    override fun getSubscriptions(
+        skuId: Snowflake,
+        request: SkuSubscriptionsListRequest,
+    ): Flow<Subscription> = limitedPagination(request.limit, maxBatchSize = 100) { batchSize ->
+        val req: suspend (Position.BeforeOrAfter) -> List<DiscordSubscription> = { position ->
+            subscription.listSkuSubscriptions(skuId, request.copy(position = position, limit = batchSize))
+        }
+        when (val start = request.position) {
+            null, is Position.After ->
+                paginateForwards(batchSize, start = start?.value ?: Snowflake.min, idSelector = { it.id }, req)
+
+            is Position.Before -> paginateBackwards(batchSize, start.value, idSelector = { it.id }, req)
+        }
+    }.map { subscription -> Subscription(data = SubscriptionData.from(subscription), kord) }
+
+    override suspend fun getSubscriptionOrNull(skuId: Snowflake, subscriptionId: Snowflake): Subscription? =
+        catchNotFound {
+            val response = subscription.getSkuSubscription(skuId, subscriptionId)
+            val data = SubscriptionData.from(response)
+            Subscription(data, kord)
+        }
 
 
     override fun toString(): String = "RestEntitySupplier(rest=${kord.rest})"
