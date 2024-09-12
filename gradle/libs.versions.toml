@@ -11,7 +11,6 @@ kord-cache = "0.5.4" # https://github.com/kordlib/cache
 # implementation dependencies
 kotlinx-io = "0.5.1" # https://github.com/Kotlin/kotlinx-io
 kotlin-logging = "7.0.0" # https://github.com/oshai/kotlin-logging
-kotlin-logging-old = "3.0.5" # TODO remove after dependency is removed in rest, gateway, voice and core
 slf4j = "2.0.16" # https://www.slf4j.org
 kotlin-node = "20.14.10-pre.800" # https://github.com/JetBrains/kotlin-wrappers
 bignum = "0.3.10" # https://github.com/ionspin/kotlin-multiplatform-bignum
