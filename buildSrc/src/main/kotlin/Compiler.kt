@@ -14,13 +14,13 @@ val kordOptIns = listOf(
     "dev.kord.common.annotation.KordVoice",
 )
 
-internal fun KotlinCommonCompilerOptions.applyKordCommonCompilerOptions() {
+fun KotlinCommonCompilerOptions.applyKordCommonCompilerOptions() {
     allWarningsAsErrors = true
     progressiveMode = true
-    freeCompilerArgs.add("-Xexpect-actual-classes")
+    freeCompilerArgs.addAll("-Xexpect-actual-classes", "-Xexpect-actual-classes")
 }
 
-internal const val KORD_JVM_TARGET = 8
+const val KORD_JVM_TARGET = 8
 
 internal fun KotlinJvmCompilerOptions.applyKordJvmCompilerOptions() {
     applyKordCommonCompilerOptions()

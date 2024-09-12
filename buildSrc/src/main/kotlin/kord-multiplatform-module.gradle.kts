@@ -1,6 +1,7 @@
 import org.jetbrains.dokka.gradle.AbstractDokkaLeafTask
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.targets.js.testing.KotlinJsTest
+import org.jetbrains.kotlin.gradle.targets.native.tasks.KotlinNativeTest
 
 plugins {
     org.jetbrains.kotlin.multiplatform
@@ -41,10 +42,9 @@ kotlin {
 
     targets()
     explicitApi()
-    jvmToolchain(Jvm.target)
     compilerOptions {
-        applyKordCompilerOptions()
         optIn.addAll(kordOptIns)
+        applyKordCommonCompilerOptions()
     }
 
     sourceSets {
@@ -72,6 +72,10 @@ tasks {
 
     withType<KotlinNativeTest>().configureEach {
         environment("PROJECT_ROOT", rootProject.projectDir.absolutePath)
+    }
+
+    withType<JavaCompile>().configureEach {
+        options.release = KORD_JVM_TARGET
     }
 
     afterEvaluate {

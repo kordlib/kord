@@ -1,3 +1,4 @@
+import org.jetbrains.kotlin.konan.target.Family
 import java.lang.System.getenv
 import java.util.Base64
 
@@ -17,7 +18,7 @@ mavenPublishing {
     signAllPublications()
 
     if (plugins.hasPlugin("org.jetbrains.kotlin.multiplatform")) {
-        configure(KotlinMultiplatform(javadocJar = JavadocJar.Dokka("dokkaHtml")))
+//        configure(KotlinMultipla(javadocJar = JavadocJar.Dokka("dokkaHtml")))
     }
 
     pom {
@@ -56,16 +57,7 @@ mavenPublishing {
     }
 
     repositories {
-        maven {
-            url = uri(if (isRelease) Repo.releasesUrl else Repo.snapshotsUrl)
-
-            credentials {
-                username = getenv("NEXUS_USER")
-                password = getenv("NEXUS_PASSWORD")
-            }
-        }
-
-        if (!isRelease) {
+        if (true) {
             maven {
                 name = "kordSnapshots"
                 url = uri("https://repo.kord.dev/snapshots")

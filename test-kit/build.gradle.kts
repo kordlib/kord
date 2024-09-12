@@ -41,4 +41,14 @@ kotlin {
             }
         }
     }
+
+    compilerOptions {
+        applyKordCommonCompilerOptions()
+    }
+}
+
+tasks {
+    withType<JavaCompile>().configureEach {
+        options.release = KORD_JVM_TARGET
+    }
 }

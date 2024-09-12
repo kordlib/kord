@@ -5,7 +5,11 @@ import org.jetbrains.kotlin.konan.target.HostManager
 
 @OptIn(ExperimentalKotlinGradlePluginApi::class)
 fun KotlinMultiplatformExtension.targets() {
-    jvm()
+    jvm {
+        compilerOptions {
+            applyKordJvmCompilerOptions()
+        }
+    }
 
     js {
         nodejs {
@@ -38,10 +42,6 @@ fun KotlinMultiplatformExtension.targets() {
     tvosX64()
     tvosArm64()
     tvosSimulatorArm64()
-
-    compilerOptions {
-        applyKordCompilerOptions()
-    }
 }
 
 // There are issues with linking the linux variant on windows.

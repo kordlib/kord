@@ -1029,8 +1029,6 @@ final value class dev.kord.voice/AudioFrame { // dev.kord.voice/AudioFrame|null[
 }
 
 sealed class dev.kord.voice.gateway/Close : dev.kord.voice.gateway/VoiceEvent { // dev.kord.voice.gateway/Close|null[0]
-    constructor <init>() // dev.kord.voice.gateway/Close.<init>|<init>(){}[0]
-
     final class DiscordClose : dev.kord.voice.gateway/Close { // dev.kord.voice.gateway/Close.DiscordClose|null[0]
         constructor <init>(dev.kord.voice.gateway/VoiceGatewayCloseCode, kotlin/Boolean) // dev.kord.voice.gateway/Close.DiscordClose.<init>|<init>(dev.kord.voice.gateway.VoiceGatewayCloseCode;kotlin.Boolean){}[0]
 
@@ -1057,8 +1055,6 @@ sealed class dev.kord.voice.gateway/Close : dev.kord.voice.gateway/VoiceEvent { 
 }
 
 sealed class dev.kord.voice.gateway/Command { // dev.kord.voice.gateway/Command|null[0]
-    constructor <init>() // dev.kord.voice.gateway/Command.<init>|<init>(){}[0]
-
     final object SerializationStrategy : kotlinx.serialization/SerializationStrategy<dev.kord.voice.gateway/Command> { // dev.kord.voice.gateway/Command.SerializationStrategy|null[0]
         final val descriptor // dev.kord.voice.gateway/Command.SerializationStrategy.descriptor|{}descriptor[0]
             final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // dev.kord.voice.gateway/Command.SerializationStrategy.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
@@ -1068,8 +1064,6 @@ sealed class dev.kord.voice.gateway/Command { // dev.kord.voice.gateway/Command|
 }
 
 sealed class dev.kord.voice.gateway/VoiceEvent { // dev.kord.voice.gateway/VoiceEvent|null[0]
-    constructor <init>() // dev.kord.voice.gateway/VoiceEvent.<init>|<init>(){}[0]
-
     final object DeserializationStrategy : kotlinx.serialization/DeserializationStrategy<dev.kord.voice.gateway/VoiceEvent?> { // dev.kord.voice.gateway/VoiceEvent.DeserializationStrategy|null[0]
         final val descriptor // dev.kord.voice.gateway/VoiceEvent.DeserializationStrategy.descriptor|{}descriptor[0]
             final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // dev.kord.voice.gateway/VoiceEvent.DeserializationStrategy.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
@@ -1079,8 +1073,6 @@ sealed class dev.kord.voice.gateway/VoiceEvent { // dev.kord.voice.gateway/Voice
 }
 
 sealed class dev.kord.voice.gateway/VoiceGatewayCloseCode { // dev.kord.voice.gateway/VoiceGatewayCloseCode|null[0]
-    constructor <init>(kotlin/Int) // dev.kord.voice.gateway/VoiceGatewayCloseCode.<init>|<init>(kotlin.Int){}[0]
-
     final val code // dev.kord.voice.gateway/VoiceGatewayCloseCode.code|{}code[0]
         final fun <get-code>(): kotlin/Int // dev.kord.voice.gateway/VoiceGatewayCloseCode.code.<get-code>|<get-code>(){}[0]
 
@@ -1118,8 +1110,6 @@ sealed class dev.kord.voice.gateway/VoiceGatewayCloseCode { // dev.kord.voice.ga
 }
 
 sealed class dev.kord.voice.udp/PayloadType { // dev.kord.voice.udp/PayloadType|null[0]
-    constructor <init>(kotlin/Byte) // dev.kord.voice.udp/PayloadType.<init>|<init>(kotlin.Byte){}[0]
-
     final val raw // dev.kord.voice.udp/PayloadType.raw|{}raw[0]
         final fun <get-raw>(): kotlin/Byte // dev.kord.voice.udp/PayloadType.raw.<get-raw>|<get-raw>(){}[0]
 
@@ -1139,8 +1129,6 @@ sealed class dev.kord.voice.udp/PayloadType { // dev.kord.voice.udp/PayloadType|
 }
 
 sealed class dev.kord.voice/EncryptionMode { // dev.kord.voice/EncryptionMode|null[0]
-    constructor <init>(kotlin/String) // dev.kord.voice/EncryptionMode.<init>|<init>(kotlin.String){}[0]
-
     final val value // dev.kord.voice/EncryptionMode.value|{}value[0]
         final fun <get-value>(): kotlin/String // dev.kord.voice/EncryptionMode.value.<get-value>|<get-value>(){}[0]
 
@@ -1166,8 +1154,6 @@ sealed class dev.kord.voice/EncryptionMode { // dev.kord.voice/EncryptionMode|nu
 }
 
 sealed class dev.kord.voice/SpeakingFlag { // dev.kord.voice/SpeakingFlag|null[0]
-    constructor <init>(kotlin/Int) // dev.kord.voice/SpeakingFlag.<init>|<init>(kotlin.Int){}[0]
-
     final val code // dev.kord.voice/SpeakingFlag.code|{}code[0]
         final fun <get-code>(): kotlin/Int // dev.kord.voice/SpeakingFlag.code.<get-code>|<get-code>(){}[0]
     final val shift // dev.kord.voice/SpeakingFlag.shift|{}shift[0]

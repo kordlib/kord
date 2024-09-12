@@ -10,8 +10,18 @@ plugins {
     `kord-publishing`
 }
 
+kotlin {
+    targets()
+}
+
 tasks.withType<AbstractDokkaLeafTask>().configureEach {
     dokkaSourceSets.configureEach {
         suppress = true
+    }
+}
+
+tasks {
+    withType<JavaCompile>().configureEach {
+        options.release = KORD_JVM_TARGET
     }
 }
