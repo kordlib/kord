@@ -7,7 +7,8 @@ import dev.kord.core.event.Event
 
 @Deprecated(
     "This event is not supposed to be sent to bots. See https://github.com/discord/discord-api-docs/issues/3690 for " +
-        "details.",
+        "details. The deprecation level will be raised to HIDDEN in 0.16.0 and this declaration will be removed in " +
+        "0.17.0.",
     level = DeprecationLevel.ERROR,
 )
 public sealed interface ApplicationCommandCreateEvent : Event {
@@ -17,7 +18,8 @@ public sealed interface ApplicationCommandCreateEvent : Event {
 @Suppress("DEPRECATION_ERROR")
 @Deprecated(
     "This event is not supposed to be sent to bots. See https://github.com/discord/discord-api-docs/issues/3690 for " +
-        "details.",
+        "details. The deprecation level will be raised to HIDDEN in 0.16.0 and this declaration will be removed in " +
+        "0.17.0.",
     level = DeprecationLevel.ERROR,
 )
 public class ChatInputCommandCreateEvent(
@@ -31,7 +33,8 @@ public class ChatInputCommandCreateEvent(
 @Suppress("DEPRECATION_ERROR")
 @Deprecated(
     "This event is not supposed to be sent to bots. See https://github.com/discord/discord-api-docs/issues/3690 for " +
-        "details.",
+        "details. The deprecation level will be raised to HIDDEN in 0.16.0 and this declaration will be removed in " +
+        "0.17.0.",
     level = DeprecationLevel.ERROR,
 )
 public class UserCommandCreateEvent(
@@ -45,7 +48,8 @@ public class UserCommandCreateEvent(
 @Suppress("DEPRECATION_ERROR")
 @Deprecated(
     "This event is not supposed to be sent to bots. See https://github.com/discord/discord-api-docs/issues/3690 for " +
-        "details.",
+        "details. The deprecation level will be raised to HIDDEN in 0.16.0 and this declaration will be removed in " +
+        "0.17.0.",
     level = DeprecationLevel.ERROR,
 )
 public class MessageCommandCreateEvent(
@@ -59,7 +63,8 @@ public class MessageCommandCreateEvent(
 @Suppress("DEPRECATION_ERROR")
 @Deprecated(
     "This event is not supposed to be sent to bots. See https://github.com/discord/discord-api-docs/issues/3690 for " +
-        "details.",
+        "details. The deprecation level will be raised to HIDDEN in 0.16.0 and this declaration will be removed in " +
+        "0.17.0.",
     level = DeprecationLevel.ERROR,
 )
 public class UnknownApplicationCommandCreateEvent(

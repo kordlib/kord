@@ -1,37 +1,38 @@
 [versions]
 
 # api dependencies
-kotlin = "2.0.0" # https://github.com/JetBrains/kotlin
-ktor = "3.0.0-beta-2" # https://github.com/ktorio/ktor
+kotlin = "2.0.20" # https://github.com/JetBrains/kotlin
+ktor = "3.0.0-rc-1" # https://github.com/ktorio/ktor
 kotlinx-coroutines = "1.8.1" # https://github.com/Kotlin/kotlinx.coroutines
-kotlinx-serialization = "1.7.1" # https://github.com/Kotlin/kotlinx.serialization
-kotlinx-datetime = "0.6.0" # https://github.com/Kotlin/kotlinx-datetime
+kotlinx-serialization = "1.7.2" # https://github.com/Kotlin/kotlinx.serialization
+kotlinx-datetime = "0.6.1" # https://github.com/Kotlin/kotlinx-datetime
 kord-cache = "0.5.4" # https://github.com/kordlib/cache
 
 # implementation dependencies
 kotlinx-io = "0.5.1" # https://github.com/Kotlin/kotlinx-io
 kotlin-logging = "7.0.0" # https://github.com/oshai/kotlin-logging
-slf4j = "2.0.13" # https://www.slf4j.org
-kotlin-node = "20.14.10-pre.773" # https://github.com/JetBrains/kotlin-wrappers
+kotlin-logging-old = "3.0.5" # TODO remove after dependency is removed in rest, gateway, voice and core
+slf4j = "2.0.16" # https://www.slf4j.org
+kotlin-node = "20.14.10-pre.800" # https://github.com/JetBrains/kotlin-wrappers
 bignum = "0.3.10" # https://github.com/ionspin/kotlin-multiplatform-bignum
-stately = "2.0.7" # https://github.com/touchlab/Stately
+stately = "2.1.0" # https://github.com/touchlab/Stately
 fastZlib = "2.0.1" # https://github.com/timotejroiko/fast-zlib
 sodium = "0.9.2" # https://github.com/ionspin/kotlin-multiplatform-libsodium
 
 # code generation
-ksp = "2.0.0-1.0.23" # https://github.com/google/ksp
+ksp = "2.0.20-1.0.24" # https://github.com/google/ksp
 kotlinpoet = "1.18.1" # https://github.com/square/kotlinpoet
 
 # tests
-junit-jupiter = "5.10.3" # https://github.com/junit-team/junit5
-junit-platform = "1.10.3"
-mockk = "1.13.11" # https://github.com/mockk/mockk
+junit-jupiter = "5.11.0" # https://github.com/junit-team/junit5
+junit-platform = "1.11.0"
+mockk = "1.13.12" # https://github.com/mockk/mockk
 kbson = "0.4.0" # https://github.com/mongodb/kbson
 
 # plugins
 dokka = "1.9.20" # https://github.com/Kotlin/dokka
 kotlinx-atomicfu = "0.25.0" # https://github.com/Kotlin/kotlinx-atomicfu
-binary-compatibility-validator = "0.15.1" # https://github.com/Kotlin/binary-compatibility-validator
+binary-compatibility-validator = "0.16.3" # https://github.com/Kotlin/binary-compatibility-validator
 buildconfig = "5.4.0" # https://github.com/gmazzo/gradle-buildconfig-plugin
 kord-gradle-tools = "1.6.2" # https://github.com/kordlib/gradle-tools/blob/main/build.gradle.kts#L10
 maven-publish-plugin = "0.29.0" # https://github.com/vanniktech/gradle-maven-publish-plugin
@@ -84,7 +85,7 @@ kotlin-test-js = { module = "org.jetbrains.kotlin:kotlin-test-js", version.ref =
 kotlin-test-junit5 = { module = "org.jetbrains.kotlin:kotlin-test-junit5", version.ref = "kotlin" }
 junit-jupiter-api = { module = "org.junit.jupiter:junit-jupiter-api", version.ref = "junit-jupiter" }
 junit-jupiter-engine = { module = "org.junit.jupiter:junit-jupiter-engine", version.ref = "junit-jupiter" }
-junit-platform-launcher = { module = "org.junit.platform:junit-platform-launcher", version = "junit-platform" }
+junit-platform-launcher = { module = "org.junit.platform:junit-platform-launcher", version.ref = "junit-platform" }
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 slf4j-simple = { module = "org.slf4j:slf4j-simple", version.ref = "slf4j" }
 kbson = { module = "org.mongodb.kbson:kbson", version.ref = "kbson" }

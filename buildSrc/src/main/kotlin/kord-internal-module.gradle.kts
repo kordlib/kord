@@ -8,8 +8,13 @@ repositories {
 }
 
 kotlin {
-    jvmToolchain(Jvm.target)
     compilerOptions {
-        applyKordCompilerOptions()
+        applyKordJvmCompilerOptions()
+    }
+}
+
+tasks {
+    withType<JavaCompile>().configureEach {
+        options.release = KORD_JVM_TARGET
     }
 }

@@ -27,8 +27,9 @@ kotlin {
                 implementation(libs.kotlin.node)
                 implementation(npm("fast-zlib", libs.versions.fastZlib.get()))
 
-                // workaround for https://youtrack.jetbrains.com/issue/KT-43500
-                // (intended to be compileOnly in commonMain only)
+                // workaround for https://youtrack.jetbrains.com/issue/KT-43500 /
+                // https://youtrack.jetbrains.com/issue/KT-64109#focus=Comments-27-10064206.0-0 /
+                // https://youtrack.jetbrains.com/issue/KT-61096 (intended to be compileOnly in commonMain only)
                 implementation(projects.kspAnnotations)
             }
         }

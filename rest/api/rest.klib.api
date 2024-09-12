@@ -460,10 +460,12 @@ sealed interface dev.kord.rest.builder.automoderation/KeywordAutoModerationRuleB
 }
 
 sealed interface dev.kord.rest.builder.automoderation/KeywordPresetAutoModerationRuleBuilder : dev.kord.rest.builder.automoderation/AllowedKeywordsAutoModerationRuleBuilder { // dev.kord.rest.builder.automoderation/KeywordPresetAutoModerationRuleBuilder|null[0]
-    abstract val presets // dev.kord.rest.builder.automoderation/KeywordPresetAutoModerationRuleBuilder.presets|{}presets[0]
-        abstract fun <get-presets>(): kotlin.collections/MutableList<dev.kord.common.entity/AutoModerationRuleKeywordPresetType>? // dev.kord.rest.builder.automoderation/KeywordPresetAutoModerationRuleBuilder.presets.<get-presets>|<get-presets>(){}[0]
     open val triggerType // dev.kord.rest.builder.automoderation/KeywordPresetAutoModerationRuleBuilder.triggerType|{}triggerType[0]
         open fun <get-triggerType>(): dev.kord.common.entity/AutoModerationRuleTriggerType.KeywordPreset // dev.kord.rest.builder.automoderation/KeywordPresetAutoModerationRuleBuilder.triggerType.<get-triggerType>|<get-triggerType>(){}[0]
+
+    abstract var presets // dev.kord.rest.builder.automoderation/KeywordPresetAutoModerationRuleBuilder.presets|{}presets[0]
+        abstract fun <get-presets>(): kotlin.collections/MutableList<dev.kord.common.entity/AutoModerationRuleKeywordPresetType>? // dev.kord.rest.builder.automoderation/KeywordPresetAutoModerationRuleBuilder.presets.<get-presets>|<get-presets>(){}[0]
+        abstract fun <set-presets>(kotlin.collections/MutableList<dev.kord.common.entity/AutoModerationRuleKeywordPresetType>?) // dev.kord.rest.builder.automoderation/KeywordPresetAutoModerationRuleBuilder.presets.<set-presets>|<set-presets>(kotlin.collections.MutableList<dev.kord.common.entity.AutoModerationRuleKeywordPresetType>?){}[0]
 
     abstract fun assignPresets(kotlin.collections/MutableList<dev.kord.common.entity/AutoModerationRuleKeywordPresetType>) // dev.kord.rest.builder.automoderation/KeywordPresetAutoModerationRuleBuilder.assignPresets|assignPresets(kotlin.collections.MutableList<dev.kord.common.entity.AutoModerationRuleKeywordPresetType>){}[0]
 }
@@ -765,8 +767,8 @@ final class dev.kord.rest.builder.automoderation/KeywordPresetAutoModerationRule
         final fun <get-allowedKeywords>(): kotlin.collections/MutableList<kotlin/String>? // dev.kord.rest.builder.automoderation/KeywordPresetAutoModerationRuleCreateBuilder.allowedKeywords.<get-allowedKeywords>|<get-allowedKeywords>(){}[0]
         final fun <set-allowedKeywords>(kotlin.collections/MutableList<kotlin/String>?) // dev.kord.rest.builder.automoderation/KeywordPresetAutoModerationRuleCreateBuilder.allowedKeywords.<set-allowedKeywords>|<set-allowedKeywords>(kotlin.collections.MutableList<kotlin.String>?){}[0]
     final var presets // dev.kord.rest.builder.automoderation/KeywordPresetAutoModerationRuleCreateBuilder.presets|{}presets[0]
-        final fun <get-presets>(): kotlin.collections/MutableList<dev.kord.common.entity/AutoModerationRuleKeywordPresetType> // dev.kord.rest.builder.automoderation/KeywordPresetAutoModerationRuleCreateBuilder.presets.<get-presets>|<get-presets>(){}[0]
-        final fun <set-presets>(kotlin.collections/MutableList<dev.kord.common.entity/AutoModerationRuleKeywordPresetType>) // dev.kord.rest.builder.automoderation/KeywordPresetAutoModerationRuleCreateBuilder.presets.<set-presets>|<set-presets>(kotlin.collections.MutableList<dev.kord.common.entity.AutoModerationRuleKeywordPresetType>){}[0]
+        final fun <get-presets>(): kotlin.collections/MutableList<dev.kord.common.entity/AutoModerationRuleKeywordPresetType>? // dev.kord.rest.builder.automoderation/KeywordPresetAutoModerationRuleCreateBuilder.presets.<get-presets>|<get-presets>(){}[0]
+        final fun <set-presets>(kotlin.collections/MutableList<dev.kord.common.entity/AutoModerationRuleKeywordPresetType>?) // dev.kord.rest.builder.automoderation/KeywordPresetAutoModerationRuleCreateBuilder.presets.<set-presets>|<set-presets>(kotlin.collections.MutableList<dev.kord.common.entity.AutoModerationRuleKeywordPresetType>?){}[0]
 
     final fun assignPresets(kotlin.collections/MutableList<dev.kord.common.entity/AutoModerationRuleKeywordPresetType>) // dev.kord.rest.builder.automoderation/KeywordPresetAutoModerationRuleCreateBuilder.assignPresets|assignPresets(kotlin.collections.MutableList<dev.kord.common.entity.AutoModerationRuleKeywordPresetType>){}[0]
 }
@@ -2479,6 +2481,9 @@ final class dev.kord.rest.builder.message.create/UpdateMessageInteractionRespons
 final class dev.kord.rest.builder.message.create/UserMessageCreateBuilder : dev.kord.rest.builder.message.create/AbstractMessageCreateBuilder, dev.kord.rest.builder/RequestBuilder<dev.kord.rest.json.request/MultipartMessageCreateRequest> { // dev.kord.rest.builder.message.create/UserMessageCreateBuilder|null[0]
     constructor <init>() // dev.kord.rest.builder.message.create/UserMessageCreateBuilder.<init>|<init>(){}[0]
 
+    final var enforceNonce // dev.kord.rest.builder.message.create/UserMessageCreateBuilder.enforceNonce|{}enforceNonce[0]
+        final fun <get-enforceNonce>(): kotlin/Boolean? // dev.kord.rest.builder.message.create/UserMessageCreateBuilder.enforceNonce.<get-enforceNonce>|<get-enforceNonce>(){}[0]
+        final fun <set-enforceNonce>(kotlin/Boolean?) // dev.kord.rest.builder.message.create/UserMessageCreateBuilder.enforceNonce.<set-enforceNonce>|<set-enforceNonce>(kotlin.Boolean?){}[0]
     final var failIfNotExists // dev.kord.rest.builder.message.create/UserMessageCreateBuilder.failIfNotExists|{}failIfNotExists[0]
         final fun <get-failIfNotExists>(): kotlin/Boolean? // dev.kord.rest.builder.message.create/UserMessageCreateBuilder.failIfNotExists.<get-failIfNotExists>|<get-failIfNotExists>(){}[0]
         final fun <set-failIfNotExists>(kotlin/Boolean?) // dev.kord.rest.builder.message.create/UserMessageCreateBuilder.failIfNotExists.<set-failIfNotExists>|<set-failIfNotExists>(kotlin.Boolean?){}[0]
@@ -5197,7 +5202,7 @@ final class dev.kord.rest.json.request/ListThreadsByTimestampRequest { // dev.ko
 }
 
 final class dev.kord.rest.json.request/MessageCreateRequest { // dev.kord.rest.json.request/MessageCreateRequest|null[0]
-    constructor <init>(dev.kord.common.entity.optional/Optional<kotlin/String> = ..., dev.kord.common.entity.optional/Optional<kotlin/String> = ..., dev.kord.common.entity.optional/OptionalBoolean = ..., dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.rest.json.request/EmbedRequest>> = ..., dev.kord.common.entity.optional/Optional<dev.kord.common.entity/AllowedMentions> = ..., dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordMessageReference> = ..., dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.common.entity/DiscordComponent>> = ..., dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.common.entity/Snowflake>> = ..., dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.rest.json.request/AttachmentRequest>> = ..., dev.kord.common.entity.optional/Optional<dev.kord.common.entity/MessageFlags> = ...) // dev.kord.rest.json.request/MessageCreateRequest.<init>|<init>(dev.kord.common.entity.optional.Optional<kotlin.String>;dev.kord.common.entity.optional.Optional<kotlin.String>;dev.kord.common.entity.optional.OptionalBoolean;dev.kord.common.entity.optional.Optional<kotlin.collections.List<dev.kord.rest.json.request.EmbedRequest>>;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.AllowedMentions>;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.DiscordMessageReference>;dev.kord.common.entity.optional.Optional<kotlin.collections.List<dev.kord.common.entity.DiscordComponent>>;dev.kord.common.entity.optional.Optional<kotlin.collections.List<dev.kord.common.entity.Snowflake>>;dev.kord.common.entity.optional.Optional<kotlin.collections.List<dev.kord.rest.json.request.AttachmentRequest>>;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.MessageFlags>){}[0]
+    constructor <init>(dev.kord.common.entity.optional/Optional<kotlin/String> = ..., dev.kord.common.entity.optional/Optional<kotlin/String> = ..., dev.kord.common.entity.optional/OptionalBoolean = ..., dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.rest.json.request/EmbedRequest>> = ..., dev.kord.common.entity.optional/Optional<dev.kord.common.entity/AllowedMentions> = ..., dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordMessageReference> = ..., dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.common.entity/DiscordComponent>> = ..., dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.common.entity/Snowflake>> = ..., dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.rest.json.request/AttachmentRequest>> = ..., dev.kord.common.entity.optional/Optional<dev.kord.common.entity/MessageFlags> = ..., dev.kord.common.entity.optional/OptionalBoolean = ...) // dev.kord.rest.json.request/MessageCreateRequest.<init>|<init>(dev.kord.common.entity.optional.Optional<kotlin.String>;dev.kord.common.entity.optional.Optional<kotlin.String>;dev.kord.common.entity.optional.OptionalBoolean;dev.kord.common.entity.optional.Optional<kotlin.collections.List<dev.kord.rest.json.request.EmbedRequest>>;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.AllowedMentions>;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.DiscordMessageReference>;dev.kord.common.entity.optional.Optional<kotlin.collections.List<dev.kord.common.entity.DiscordComponent>>;dev.kord.common.entity.optional.Optional<kotlin.collections.List<dev.kord.common.entity.Snowflake>>;dev.kord.common.entity.optional.Optional<kotlin.collections.List<dev.kord.rest.json.request.AttachmentRequest>>;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.MessageFlags>;dev.kord.common.entity.optional.OptionalBoolean){}[0]
 
     final val allowedMentions // dev.kord.rest.json.request/MessageCreateRequest.allowedMentions|{}allowedMentions[0]
         final fun <get-allowedMentions>(): dev.kord.common.entity.optional/Optional<dev.kord.common.entity/AllowedMentions> // dev.kord.rest.json.request/MessageCreateRequest.allowedMentions.<get-allowedMentions>|<get-allowedMentions>(){}[0]
@@ -5209,6 +5214,8 @@ final class dev.kord.rest.json.request/MessageCreateRequest { // dev.kord.rest.j
         final fun <get-content>(): dev.kord.common.entity.optional/Optional<kotlin/String> // dev.kord.rest.json.request/MessageCreateRequest.content.<get-content>|<get-content>(){}[0]
     final val embeds // dev.kord.rest.json.request/MessageCreateRequest.embeds|{}embeds[0]
         final fun <get-embeds>(): dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.rest.json.request/EmbedRequest>> // dev.kord.rest.json.request/MessageCreateRequest.embeds.<get-embeds>|<get-embeds>(){}[0]
+    final val enforceNonce // dev.kord.rest.json.request/MessageCreateRequest.enforceNonce|{}enforceNonce[0]
+        final fun <get-enforceNonce>(): dev.kord.common.entity.optional/OptionalBoolean // dev.kord.rest.json.request/MessageCreateRequest.enforceNonce.<get-enforceNonce>|<get-enforceNonce>(){}[0]
     final val flags // dev.kord.rest.json.request/MessageCreateRequest.flags|{}flags[0]
         final fun <get-flags>(): dev.kord.common.entity.optional/Optional<dev.kord.common.entity/MessageFlags> // dev.kord.rest.json.request/MessageCreateRequest.flags.<get-flags>|<get-flags>(){}[0]
     final val messageReference // dev.kord.rest.json.request/MessageCreateRequest.messageReference|{}messageReference[0]
@@ -5222,6 +5229,7 @@ final class dev.kord.rest.json.request/MessageCreateRequest { // dev.kord.rest.j
 
     final fun component1(): dev.kord.common.entity.optional/Optional<kotlin/String> // dev.kord.rest.json.request/MessageCreateRequest.component1|component1(){}[0]
     final fun component10(): dev.kord.common.entity.optional/Optional<dev.kord.common.entity/MessageFlags> // dev.kord.rest.json.request/MessageCreateRequest.component10|component10(){}[0]
+    final fun component11(): dev.kord.common.entity.optional/OptionalBoolean // dev.kord.rest.json.request/MessageCreateRequest.component11|component11(){}[0]
     final fun component2(): dev.kord.common.entity.optional/Optional<kotlin/String> // dev.kord.rest.json.request/MessageCreateRequest.component2|component2(){}[0]
     final fun component3(): dev.kord.common.entity.optional/OptionalBoolean // dev.kord.rest.json.request/MessageCreateRequest.component3|component3(){}[0]
     final fun component4(): dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.rest.json.request/EmbedRequest>> // dev.kord.rest.json.request/MessageCreateRequest.component4|component4(){}[0]
@@ -5230,7 +5238,7 @@ final class dev.kord.rest.json.request/MessageCreateRequest { // dev.kord.rest.j
     final fun component7(): dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.common.entity/DiscordComponent>> // dev.kord.rest.json.request/MessageCreateRequest.component7|component7(){}[0]
     final fun component8(): dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.common.entity/Snowflake>> // dev.kord.rest.json.request/MessageCreateRequest.component8|component8(){}[0]
     final fun component9(): dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.rest.json.request/AttachmentRequest>> // dev.kord.rest.json.request/MessageCreateRequest.component9|component9(){}[0]
-    final fun copy(dev.kord.common.entity.optional/Optional<kotlin/String> = ..., dev.kord.common.entity.optional/Optional<kotlin/String> = ..., dev.kord.common.entity.optional/OptionalBoolean = ..., dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.rest.json.request/EmbedRequest>> = ..., dev.kord.common.entity.optional/Optional<dev.kord.common.entity/AllowedMentions> = ..., dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordMessageReference> = ..., dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.common.entity/DiscordComponent>> = ..., dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.common.entity/Snowflake>> = ..., dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.rest.json.request/AttachmentRequest>> = ..., dev.kord.common.entity.optional/Optional<dev.kord.common.entity/MessageFlags> = ...): dev.kord.rest.json.request/MessageCreateRequest // dev.kord.rest.json.request/MessageCreateRequest.copy|copy(dev.kord.common.entity.optional.Optional<kotlin.String>;dev.kord.common.entity.optional.Optional<kotlin.String>;dev.kord.common.entity.optional.OptionalBoolean;dev.kord.common.entity.optional.Optional<kotlin.collections.List<dev.kord.rest.json.request.EmbedRequest>>;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.AllowedMentions>;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.DiscordMessageReference>;dev.kord.common.entity.optional.Optional<kotlin.collections.List<dev.kord.common.entity.DiscordComponent>>;dev.kord.common.entity.optional.Optional<kotlin.collections.List<dev.kord.common.entity.Snowflake>>;dev.kord.common.entity.optional.Optional<kotlin.collections.List<dev.kord.rest.json.request.AttachmentRequest>>;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.MessageFlags>){}[0]
+    final fun copy(dev.kord.common.entity.optional/Optional<kotlin/String> = ..., dev.kord.common.entity.optional/Optional<kotlin/String> = ..., dev.kord.common.entity.optional/OptionalBoolean = ..., dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.rest.json.request/EmbedRequest>> = ..., dev.kord.common.entity.optional/Optional<dev.kord.common.entity/AllowedMentions> = ..., dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordMessageReference> = ..., dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.common.entity/DiscordComponent>> = ..., dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.common.entity/Snowflake>> = ..., dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.rest.json.request/AttachmentRequest>> = ..., dev.kord.common.entity.optional/Optional<dev.kord.common.entity/MessageFlags> = ..., dev.kord.common.entity.optional/OptionalBoolean = ...): dev.kord.rest.json.request/MessageCreateRequest // dev.kord.rest.json.request/MessageCreateRequest.copy|copy(dev.kord.common.entity.optional.Optional<kotlin.String>;dev.kord.common.entity.optional.Optional<kotlin.String>;dev.kord.common.entity.optional.OptionalBoolean;dev.kord.common.entity.optional.Optional<kotlin.collections.List<dev.kord.rest.json.request.EmbedRequest>>;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.AllowedMentions>;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.DiscordMessageReference>;dev.kord.common.entity.optional.Optional<kotlin.collections.List<dev.kord.common.entity.DiscordComponent>>;dev.kord.common.entity.optional.Optional<kotlin.collections.List<dev.kord.common.entity.Snowflake>>;dev.kord.common.entity.optional.Optional<kotlin.collections.List<dev.kord.rest.json.request.AttachmentRequest>>;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.MessageFlags>;dev.kord.common.entity.optional.OptionalBoolean){}[0]
     final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.json.request/MessageCreateRequest.equals|equals(kotlin.Any?){}[0]
     final fun hashCode(): kotlin/Int // dev.kord.rest.json.request/MessageCreateRequest.hashCode|hashCode(){}[0]
     final fun toString(): kotlin/String // dev.kord.rest.json.request/MessageCreateRequest.toString|toString(){}[0]
@@ -6871,9 +6879,6 @@ final class dev.kord.rest/Image { // dev.kord.rest/Image|null[0]
     }
 
     sealed class Format { // dev.kord.rest/Image.Format|null[0]
-        constructor <init>(kotlin.collections/List<kotlin/String>) // dev.kord.rest/Image.Format.<init>|<init>(kotlin.collections.List<kotlin.String>){}[0]
-        constructor <init>(kotlin/Array<out kotlin/String>...) // dev.kord.rest/Image.Format.<init>|<init>(kotlin.Array<out|kotlin.String>...){}[0]
-
         final val extension // dev.kord.rest/Image.Format.extension|{}extension[0]
             final fun <get-extension>(): kotlin/String // dev.kord.rest/Image.Format.extension.<get-extension>|<get-extension>(){}[0]
         final val extensions // dev.kord.rest/Image.Format.extensions|{}extensions[0]
@@ -6964,8 +6969,6 @@ final value class dev.kord.rest.ratelimit/Total { // dev.kord.rest.ratelimit/Tot
 }
 
 sealed class <#A: kotlin/Any, #B: kotlin/Any?> dev.kord.rest.request/Request { // dev.kord.rest.request/Request|null[0]
-    constructor <init>(kotlin/String = ...) // dev.kord.rest.request/Request.<init>|<init>(kotlin.String){}[0]
-
     abstract val body // dev.kord.rest.request/Request.body|{}body[0]
         abstract fun <get-body>(): dev.kord.rest.request/RequestBody<#A>? // dev.kord.rest.request/Request.body.<get-body>|<get-body>(){}[0]
     abstract val files // dev.kord.rest.request/Request.files|{}files[0]
@@ -6985,8 +6988,6 @@ sealed class <#A: kotlin/Any, #B: kotlin/Any?> dev.kord.rest.request/Request { /
 }
 
 sealed class <#A: kotlin/Any?, #B: dev.kord.common.entity/Choice> dev.kord.rest.builder.interaction/BaseChoiceBuilder : dev.kord.rest.builder.interaction/OptionsBuilder { // dev.kord.rest.builder.interaction/BaseChoiceBuilder|null[0]
-    constructor <init>(kotlin/String, kotlin/String, dev.kord.common.entity/ApplicationCommandOptionType) // dev.kord.rest.builder.interaction/BaseChoiceBuilder.<init>|<init>(kotlin.String;kotlin.String;dev.kord.common.entity.ApplicationCommandOptionType){}[0]
-
     final var choices // dev.kord.rest.builder.interaction/BaseChoiceBuilder.choices|{}choices[0]
         final fun <get-choices>(): kotlin.collections/MutableList<#B>? // dev.kord.rest.builder.interaction/BaseChoiceBuilder.choices.<get-choices>|<get-choices>(){}[0]
         final fun <set-choices>(kotlin.collections/MutableList<#B>?) // dev.kord.rest.builder.interaction/BaseChoiceBuilder.choices.<set-choices>|<set-choices>(kotlin.collections.MutableList<1:1>?){}[0]
@@ -6997,9 +6998,6 @@ sealed class <#A: kotlin/Any?, #B: dev.kord.common.entity/Choice> dev.kord.rest.
 }
 
 sealed class <#A: kotlin/Any?> dev.kord.rest.route/Route { // dev.kord.rest.route/Route|null[0]
-    constructor <init>(io.ktor.http/HttpMethod, kotlin/String, dev.kord.rest.route/ResponseMapper<#A>, kotlin/Boolean = ...) // dev.kord.rest.route/Route.<init>|<init>(io.ktor.http.HttpMethod;kotlin.String;dev.kord.rest.route.ResponseMapper<1:0>;kotlin.Boolean){}[0]
-    constructor <init>(io.ktor.http/HttpMethod, kotlin/String, kotlinx.serialization/DeserializationStrategy<#A>, kotlin/Boolean = ...) // dev.kord.rest.route/Route.<init>|<init>(io.ktor.http.HttpMethod;kotlin.String;kotlinx.serialization.DeserializationStrategy<1:0>;kotlin.Boolean){}[0]
-
     final val mapper // dev.kord.rest.route/Route.mapper|{}mapper[0]
         final fun <get-mapper>(): dev.kord.rest.route/ResponseMapper<#A> // dev.kord.rest.route/Route.mapper.<get-mapper>|<get-mapper>(){}[0]
     final val method // dev.kord.rest.route/Route.method|{}method[0]
@@ -7413,8 +7411,6 @@ sealed class <#A: kotlin/Any?> dev.kord.rest.route/Route { // dev.kord.rest.rout
 }
 
 sealed class <#A: kotlin/Number, #B: dev.kord.common.entity/Choice> dev.kord.rest.builder.interaction/NumericOptionBuilder : dev.kord.rest.builder.interaction/BaseChoiceBuilder<#A, #B> { // dev.kord.rest.builder.interaction/NumericOptionBuilder|null[0]
-    constructor <init>(kotlin/String, kotlin/String, dev.kord.common.entity/ApplicationCommandOptionType) // dev.kord.rest.builder.interaction/NumericOptionBuilder.<init>|<init>(kotlin.String;kotlin.String;dev.kord.common.entity.ApplicationCommandOptionType){}[0]
-
     final var maxValue // dev.kord.rest.builder.interaction/NumericOptionBuilder.maxValue|{}maxValue[0]
         final fun <get-maxValue>(): #A? // dev.kord.rest.builder.interaction/NumericOptionBuilder.maxValue.<get-maxValue>|<get-maxValue>(){}[0]
         final fun <set-maxValue>(#A?) // dev.kord.rest.builder.interaction/NumericOptionBuilder.maxValue.<set-maxValue>|<set-maxValue>(1:0?){}[0]
@@ -7426,8 +7422,6 @@ sealed class <#A: kotlin/Number, #B: dev.kord.common.entity/Choice> dev.kord.res
 }
 
 sealed class dev.kord.rest.builder.automoderation/AutoModerationActionBuilder : dev.kord.rest.builder/RequestBuilder<dev.kord.common.entity/DiscordAutoModerationAction> { // dev.kord.rest.builder.automoderation/AutoModerationActionBuilder|null[0]
-    constructor <init>() // dev.kord.rest.builder.automoderation/AutoModerationActionBuilder.<init>|<init>(){}[0]
-
     abstract val type // dev.kord.rest.builder.automoderation/AutoModerationActionBuilder.type|{}type[0]
         abstract fun <get-type>(): dev.kord.common.entity/AutoModerationActionType // dev.kord.rest.builder.automoderation/AutoModerationActionBuilder.type.<get-type>|<get-type>(){}[0]
 
@@ -7436,8 +7430,6 @@ sealed class dev.kord.rest.builder.automoderation/AutoModerationActionBuilder : 
 }
 
 sealed class dev.kord.rest.builder.automoderation/AutoModerationRuleCreateBuilder : dev.kord.rest.builder.automoderation/TypedAutoModerationRuleBuilder, dev.kord.rest.builder/AuditRequestBuilder<dev.kord.rest.json.request/AutoModerationRuleCreateRequest> { // dev.kord.rest.builder.automoderation/AutoModerationRuleCreateBuilder|null[0]
-    constructor <init>(kotlin/String, dev.kord.common.entity/AutoModerationRuleEventType) // dev.kord.rest.builder.automoderation/AutoModerationRuleCreateBuilder.<init>|<init>(kotlin.String;dev.kord.common.entity.AutoModerationRuleEventType){}[0]
-
     final var actions // dev.kord.rest.builder.automoderation/AutoModerationRuleCreateBuilder.actions|{}actions[0]
         final fun <get-actions>(): kotlin.collections/MutableList<dev.kord.rest.builder.automoderation/AutoModerationActionBuilder> // dev.kord.rest.builder.automoderation/AutoModerationRuleCreateBuilder.actions.<get-actions>|<get-actions>(){}[0]
         final fun <set-actions>(kotlin.collections/MutableList<dev.kord.rest.builder.automoderation/AutoModerationActionBuilder>) // dev.kord.rest.builder.automoderation/AutoModerationRuleCreateBuilder.actions.<set-actions>|<set-actions>(kotlin.collections.MutableList<dev.kord.rest.builder.automoderation.AutoModerationActionBuilder>){}[0]
@@ -7468,8 +7460,6 @@ sealed class dev.kord.rest.builder.automoderation/AutoModerationRuleCreateBuilde
 }
 
 sealed class dev.kord.rest.builder.automoderation/AutoModerationRuleModifyBuilder : dev.kord.rest.builder.automoderation/AutoModerationRuleBuilder, dev.kord.rest.builder/AuditRequestBuilder<dev.kord.rest.json.request/AutoModerationRuleModifyRequest> { // dev.kord.rest.builder.automoderation/AutoModerationRuleModifyBuilder|null[0]
-    constructor <init>() // dev.kord.rest.builder.automoderation/AutoModerationRuleModifyBuilder.<init>|<init>(){}[0]
-
     final var actions // dev.kord.rest.builder.automoderation/AutoModerationRuleModifyBuilder.actions|{}actions[0]
         final fun <get-actions>(): kotlin.collections/MutableList<dev.kord.rest.builder.automoderation/AutoModerationActionBuilder>? // dev.kord.rest.builder.automoderation/AutoModerationRuleModifyBuilder.actions.<get-actions>|<get-actions>(){}[0]
         final fun <set-actions>(kotlin.collections/MutableList<dev.kord.rest.builder.automoderation/AutoModerationActionBuilder>?) // dev.kord.rest.builder.automoderation/AutoModerationRuleModifyBuilder.actions.<set-actions>|<set-actions>(kotlin.collections.MutableList<dev.kord.rest.builder.automoderation.AutoModerationActionBuilder>?){}[0]
@@ -7500,8 +7490,6 @@ sealed class dev.kord.rest.builder.automoderation/AutoModerationRuleModifyBuilde
 }
 
 sealed class dev.kord.rest.builder.component/ActionRowComponentBuilder : dev.kord.rest.builder.component/ComponentBuilder { // dev.kord.rest.builder.component/ActionRowComponentBuilder|null[0]
-    constructor <init>() // dev.kord.rest.builder.component/ActionRowComponentBuilder.<init>|<init>(){}[0]
-
     final var _disabled // dev.kord.rest.builder.component/ActionRowComponentBuilder._disabled|{}_disabled[0]
         final fun <get-_disabled>(): dev.kord.common.entity.optional/OptionalBoolean // dev.kord.rest.builder.component/ActionRowComponentBuilder._disabled.<get-_disabled>|<get-_disabled>(){}[0]
     final var disabled // dev.kord.rest.builder.component/ActionRowComponentBuilder.disabled|{}disabled[0]
@@ -7510,8 +7498,6 @@ sealed class dev.kord.rest.builder.component/ActionRowComponentBuilder : dev.kor
 }
 
 sealed class dev.kord.rest.builder.component/ButtonBuilder : dev.kord.rest.builder.component/ActionRowComponentBuilder { // dev.kord.rest.builder.component/ButtonBuilder|null[0]
-    constructor <init>() // dev.kord.rest.builder.component/ButtonBuilder.<init>|<init>(){}[0]
-
     final var _emoji // dev.kord.rest.builder.component/ButtonBuilder._emoji|{}_emoji[0]
         final fun <get-_emoji>(): dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordPartialEmoji> // dev.kord.rest.builder.component/ButtonBuilder._emoji.<get-_emoji>|<get-_emoji>(){}[0]
     final var _label // dev.kord.rest.builder.component/ButtonBuilder._label|{}_label[0]
@@ -7550,8 +7536,6 @@ sealed class dev.kord.rest.builder.component/ButtonBuilder : dev.kord.rest.build
 }
 
 sealed class dev.kord.rest.builder.component/SelectMenuBuilder : dev.kord.rest.builder.component/ActionRowComponentBuilder { // dev.kord.rest.builder.component/SelectMenuBuilder|null[0]
-    constructor <init>(kotlin/String) // dev.kord.rest.builder.component/SelectMenuBuilder.<init>|<init>(kotlin.String){}[0]
-
     abstract val type // dev.kord.rest.builder.component/SelectMenuBuilder.type|{}type[0]
         abstract fun <get-type>(): dev.kord.common.entity/ComponentType // dev.kord.rest.builder.component/SelectMenuBuilder.type.<get-type>|<get-type>(){}[0]
 
@@ -7572,8 +7556,6 @@ sealed class dev.kord.rest.builder.component/SelectMenuBuilder : dev.kord.rest.b
 }
 
 sealed class dev.kord.rest.builder.interaction/BaseCommandOptionBuilder : dev.kord.rest.builder.interaction/OptionsBuilder { // dev.kord.rest.builder.interaction/BaseCommandOptionBuilder|null[0]
-    constructor <init>(kotlin/String, kotlin/String, dev.kord.common.entity/ApplicationCommandOptionType) // dev.kord.rest.builder.interaction/BaseCommandOptionBuilder.<init>|<init>(kotlin.String;kotlin.String;dev.kord.common.entity.ApplicationCommandOptionType){}[0]
-
     final var options // dev.kord.rest.builder.interaction/BaseCommandOptionBuilder.options|{}options[0]
         final fun <get-options>(): kotlin.collections/MutableList<dev.kord.rest.builder.interaction/OptionsBuilder>? // dev.kord.rest.builder.interaction/BaseCommandOptionBuilder.options.<get-options>|<get-options>(){}[0]
         final fun <set-options>(kotlin.collections/MutableList<dev.kord.rest.builder.interaction/OptionsBuilder>?) // dev.kord.rest.builder.interaction/BaseCommandOptionBuilder.options.<set-options>|<set-options>(kotlin.collections.MutableList<dev.kord.rest.builder.interaction.OptionsBuilder>?){}[0]
@@ -7582,8 +7564,6 @@ sealed class dev.kord.rest.builder.interaction/BaseCommandOptionBuilder : dev.ko
 }
 
 sealed class dev.kord.rest.builder.interaction/MultiApplicationCommandBuilder { // dev.kord.rest.builder.interaction/MultiApplicationCommandBuilder|null[0]
-    constructor <init>() // dev.kord.rest.builder.interaction/MultiApplicationCommandBuilder.<init>|<init>(){}[0]
-
     final val commands // dev.kord.rest.builder.interaction/MultiApplicationCommandBuilder.commands|{}commands[0]
         final fun <get-commands>(): kotlin.collections/MutableList<dev.kord.rest.builder.interaction/ApplicationCommandCreateBuilder> // dev.kord.rest.builder.interaction/MultiApplicationCommandBuilder.commands.<get-commands>|<get-commands>(){}[0]
 
@@ -7591,8 +7571,6 @@ sealed class dev.kord.rest.builder.interaction/MultiApplicationCommandBuilder { 
 }
 
 sealed class dev.kord.rest.builder.interaction/OptionsBuilder : dev.kord.rest.builder.interaction/LocalizedDescriptionCreateBuilder, dev.kord.rest.builder.interaction/LocalizedNameCreateBuilder, dev.kord.rest.builder/RequestBuilder<dev.kord.common.entity/ApplicationCommandOption> { // dev.kord.rest.builder.interaction/OptionsBuilder|null[0]
-    constructor <init>(kotlin/String, kotlin/String, dev.kord.common.entity/ApplicationCommandOptionType) // dev.kord.rest.builder.interaction/OptionsBuilder.<init>|<init>(kotlin.String;kotlin.String;dev.kord.common.entity.ApplicationCommandOptionType){}[0]
-
     final val type // dev.kord.rest.builder.interaction/OptionsBuilder.type|{}type[0]
         final fun <get-type>(): dev.kord.common.entity/ApplicationCommandOptionType // dev.kord.rest.builder.interaction/OptionsBuilder.type.<get-type>|<get-type>(){}[0]
 
@@ -7622,8 +7600,6 @@ sealed class dev.kord.rest.builder.interaction/OptionsBuilder : dev.kord.rest.bu
 }
 
 sealed class dev.kord.rest.builder.message.create/AbstractMessageCreateBuilder : dev.kord.rest.builder.message.create/MessageCreateBuilder { // dev.kord.rest.builder.message.create/AbstractMessageCreateBuilder|null[0]
-    constructor <init>() // dev.kord.rest.builder.message.create/AbstractMessageCreateBuilder.<init>|<init>(){}[0]
-
     final val files // dev.kord.rest.builder.message.create/AbstractMessageCreateBuilder.files|{}files[0]
         final fun <get-files>(): kotlin.collections/MutableList<dev.kord.rest/NamedFile> // dev.kord.rest.builder.message.create/AbstractMessageCreateBuilder.files.<get-files>|<get-files>(){}[0]
 
@@ -7657,8 +7633,6 @@ sealed class dev.kord.rest.builder.message.create/AbstractMessageCreateBuilder :
 }
 
 sealed class dev.kord.rest.builder.message.modify/AbstractMessageModifyBuilder : dev.kord.rest.builder.message.modify/MessageModifyBuilder { // dev.kord.rest.builder.message.modify/AbstractMessageModifyBuilder|null[0]
-    constructor <init>() // dev.kord.rest.builder.message.modify/AbstractMessageModifyBuilder.<init>|<init>(){}[0]
-
     final val files // dev.kord.rest.builder.message.modify/AbstractMessageModifyBuilder.files|{}files[0]
         final fun <get-files>(): kotlin.collections/MutableList<dev.kord.rest/NamedFile> // dev.kord.rest.builder.message.modify/AbstractMessageModifyBuilder.files.<get-files>|<get-files>(){}[0]
 
@@ -7686,8 +7660,6 @@ sealed class dev.kord.rest.builder.message.modify/AbstractMessageModifyBuilder :
 }
 
 sealed class dev.kord.rest.ratelimit/RequestResponse { // dev.kord.rest.ratelimit/RequestResponse|null[0]
-    constructor <init>() // dev.kord.rest.ratelimit/RequestResponse.<init>|<init>(){}[0]
-
     abstract val bucketKey // dev.kord.rest.ratelimit/RequestResponse.bucketKey|{}bucketKey[0]
         abstract fun <get-bucketKey>(): dev.kord.rest.ratelimit/BucketKey? // dev.kord.rest.ratelimit/RequestResponse.bucketKey.<get-bucketKey>|<get-bucketKey>(){}[0]
     abstract val rateLimit // dev.kord.rest.ratelimit/RequestResponse.rateLimit|{}rateLimit[0]
@@ -7765,8 +7737,6 @@ sealed class dev.kord.rest.ratelimit/RequestResponse { // dev.kord.rest.ratelimi
 }
 
 sealed class dev.kord.rest.request/RequestIdentifier { // dev.kord.rest.request/RequestIdentifier|null[0]
-    constructor <init>() // dev.kord.rest.request/RequestIdentifier.<init>|<init>(){}[0]
-
     final class MajorParamIdentifier : dev.kord.rest.request/RequestIdentifier { // dev.kord.rest.request/RequestIdentifier.MajorParamIdentifier|null[0]
         constructor <init>(dev.kord.rest.route/Route<*>, kotlin/String) // dev.kord.rest.request/RequestIdentifier.MajorParamIdentifier.<init>|<init>(dev.kord.rest.route.Route<*>;kotlin.String){}[0]
 

@@ -109,7 +109,8 @@ public data class Speaking(
 public object Resumed : VoiceEvent() {
     @Deprecated(
         "'Resumed' is no longer serializable, deserialize it with 'VoiceEvent.DeserializationStrategy' instead. " +
-            "Deprecated without a replacement.",
+            "Deprecated without a replacement. The deprecation level will be raised to HIDDEN in 0.16.0 and this " +
+            "declaration will be removed in 0.17.0.",
         level = DeprecationLevel.ERROR,
     )
     public fun serializer(): KSerializer<Resumed> = Serializer

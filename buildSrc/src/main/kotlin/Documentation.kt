@@ -11,7 +11,7 @@ fun AbstractDokkaLeafTask.applyKordDokkaOptions() {
 
     dokkaSourceSets.configureEach {
 
-        jdkVersion = Jvm.target
+        jdkVersion = 22
 
         suppressGeneratedFiles = false
 

@@ -247,7 +247,6 @@ public final class dev/kord/rest/builder/automoderation/KeywordAutoModerationRul
 
 public final class dev/kord/rest/builder/automoderation/KeywordAutoModerationRuleCreateBuilder : dev/kord/rest/builder/automoderation/AutoModerationRuleCreateBuilder, dev/kord/rest/builder/automoderation/KeywordAutoModerationRuleBuilder {
 	public fun <init> (Ljava/lang/String;Ldev/kord/common/entity/AutoModerationRuleEventType;)V
-	public synthetic fun buildTriggerMetadata ()Ldev/kord/common/entity/optional/Optional;
 	public fun getAllowedKeywords ()Ljava/util/List;
 	public fun getKeywords ()Ljava/util/List;
 	public fun getRegexPatterns ()Ljava/util/List;
@@ -274,6 +273,7 @@ public abstract interface class dev/kord/rest/builder/automoderation/KeywordPres
 	public abstract fun assignPresets (Ljava/util/List;)V
 	public abstract fun getPresets ()Ljava/util/List;
 	public abstract fun getTriggerType ()Ldev/kord/common/entity/AutoModerationRuleTriggerType$KeywordPreset;
+	public abstract fun setPresets (Ljava/util/List;)V
 }
 
 public final class dev/kord/rest/builder/automoderation/KeywordPresetAutoModerationRuleBuilder$DefaultImpls {
@@ -283,7 +283,6 @@ public final class dev/kord/rest/builder/automoderation/KeywordPresetAutoModerat
 public final class dev/kord/rest/builder/automoderation/KeywordPresetAutoModerationRuleCreateBuilder : dev/kord/rest/builder/automoderation/AutoModerationRuleCreateBuilder, dev/kord/rest/builder/automoderation/KeywordPresetAutoModerationRuleBuilder {
 	public fun <init> (Ljava/lang/String;Ldev/kord/common/entity/AutoModerationRuleEventType;)V
 	public fun assignPresets (Ljava/util/List;)V
-	public synthetic fun buildTriggerMetadata ()Ldev/kord/common/entity/optional/Optional;
 	public fun getAllowedKeywords ()Ljava/util/List;
 	public fun getPresets ()Ljava/util/List;
 	public fun getTriggerType ()Ldev/kord/common/entity/AutoModerationRuleTriggerType$KeywordPreset;
@@ -317,7 +316,6 @@ public final class dev/kord/rest/builder/automoderation/MentionSpamAutoModeratio
 
 public final class dev/kord/rest/builder/automoderation/MentionSpamAutoModerationRuleCreateBuilder : dev/kord/rest/builder/automoderation/AutoModerationRuleCreateBuilder, dev/kord/rest/builder/automoderation/MentionSpamAutoModerationRuleBuilder {
 	public fun <init> (Ljava/lang/String;Ldev/kord/common/entity/AutoModerationRuleEventType;)V
-	public synthetic fun buildTriggerMetadata ()Ldev/kord/common/entity/optional/Optional;
 	public fun getMentionLimit ()Ljava/lang/Integer;
 	public fun getMentionRaidProtectionEnabled ()Ljava/lang/Boolean;
 	public fun getTriggerType ()Ldev/kord/common/entity/AutoModerationRuleTriggerType$MentionSpam;
@@ -2229,10 +2227,12 @@ public final class dev/kord/rest/builder/message/create/UpdateMessageInteraction
 
 public final class dev/kord/rest/builder/message/create/UserMessageCreateBuilder : dev/kord/rest/builder/message/create/AbstractMessageCreateBuilder, dev/kord/rest/builder/RequestBuilder {
 	public fun <init> ()V
+	public final fun getEnforceNonce ()Ljava/lang/Boolean;
 	public final fun getFailIfNotExists ()Ljava/lang/Boolean;
 	public final fun getMessageReference ()Ldev/kord/common/entity/Snowflake;
 	public final fun getNonce ()Ljava/lang/String;
 	public final fun getStickerIds ()Ljava/util/List;
+	public final fun setEnforceNonce (Ljava/lang/Boolean;)V
 	public final fun setFailIfNotExists (Ljava/lang/Boolean;)V
 	public final fun setMessageReference (Ldev/kord/common/entity/Snowflake;)V
 	public final fun setNonce (Ljava/lang/String;)V
@@ -4773,10 +4773,11 @@ public final class dev/kord/rest/json/request/ListThreadsByTimestampRequest {
 public final class dev/kord/rest/json/request/MessageCreateRequest {
 	public static final field Companion Ldev/kord/rest/json/request/MessageCreateRequest$Companion;
 	public fun <init> ()V
-	public fun <init> (Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;)V
-	public synthetic fun <init> (Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;)V
+	public synthetic fun <init> (Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ldev/kord/common/entity/optional/Optional;
 	public final fun component10 ()Ldev/kord/common/entity/optional/Optional;
+	public final fun component11 ()Ldev/kord/common/entity/optional/OptionalBoolean;
 	public final fun component2 ()Ldev/kord/common/entity/optional/Optional;
 	public final fun component3 ()Ldev/kord/common/entity/optional/OptionalBoolean;
 	public final fun component4 ()Ldev/kord/common/entity/optional/Optional;
@@ -4785,14 +4786,15 @@ public final class dev/kord/rest/json/request/MessageCreateRequest {
 	public final fun component7 ()Ldev/kord/common/entity/optional/Optional;
 	public final fun component8 ()Ldev/kord/common/entity/optional/Optional;
 	public final fun component9 ()Ldev/kord/common/entity/optional/Optional;
-	public final fun copy (Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;)Ldev/kord/rest/json/request/MessageCreateRequest;
-	public static synthetic fun copy$default (Ldev/kord/rest/json/request/MessageCreateRequest;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;ILjava/lang/Object;)Ldev/kord/rest/json/request/MessageCreateRequest;
+	public final fun copy (Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;)Ldev/kord/rest/json/request/MessageCreateRequest;
+	public static synthetic fun copy$default (Ldev/kord/rest/json/request/MessageCreateRequest;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;ILjava/lang/Object;)Ldev/kord/rest/json/request/MessageCreateRequest;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getAllowedMentions ()Ldev/kord/common/entity/optional/Optional;
 	public final fun getAttachments ()Ldev/kord/common/entity/optional/Optional;
 	public final fun getComponents ()Ldev/kord/common/entity/optional/Optional;
 	public final fun getContent ()Ldev/kord/common/entity/optional/Optional;
 	public final fun getEmbeds ()Ldev/kord/common/entity/optional/Optional;
+	public final fun getEnforceNonce ()Ldev/kord/common/entity/optional/OptionalBoolean;
 	public final fun getFlags ()Ldev/kord/common/entity/optional/Optional;
 	public final fun getMessageReference ()Ldev/kord/common/entity/optional/Optional;
 	public final fun getNonce ()Ldev/kord/common/entity/optional/Optional;

@@ -26,7 +26,10 @@ public class LoginBuilder {
         this.intents = Intents(builder)
     }
 
-    @Deprecated("Binary compatibility, keep for some releases.", level = DeprecationLevel.HIDDEN)
+    @Deprecated(
+        "Kept for binary compatibility, this declaration will be removed in 0.17.0.",
+        level = DeprecationLevel.HIDDEN,
+    )
     public inline fun intents0(builder: Intents.Builder.() -> Unit) {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
         intents(builder)

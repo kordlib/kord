@@ -1,6 +1,5 @@
-import com.vanniktech.maven.publish.JavadocJar
-import com.vanniktech.maven.publish.KotlinMultiplatform
-import org.jetbrains.kotlin.konan.target.Family
+import java.lang.System.getenv
+import java.util.Base64
 
 plugins {
     id("com.vanniktech.maven.publish.base")
@@ -53,6 +52,28 @@ mavenPublishing {
             connection = "scm:git:ssh://github.com/kordlib/kord.git"
             developerConnection = "scm:git:ssh://git@github.com:kordlib/kord.git"
             url = Library.projectUrl
+        }
+    }
+
+    repositories {
+        maven {
+            url = uri(if (isRelease) Repo.releasesUrl else Repo.snapshotsUrl)
+
+            credentials {
+                username = getenv("NEXUS_USER")
+                password = getenv("NEXUS_PASSWORD")
+            }
+        }
+
+        if (!isRelease) {
+            maven {
+                name = "kordSnapshots"
+                url = uri("https://repo.kord.dev/snapshots")
+                credentials {
+                    username = getenv("KORD_REPO_USER")
+                    password = getenv("KORD_REPO_PASSWORD")
+                }
+            }
         }
     }
 }
