@@ -102,7 +102,7 @@ public inline fun SkuBehavior.getSubscriptions(
 ): Flow<Subscription> {
     contract { callsInPlace(builder, EXACTLY_ONCE) }
     val request = SkuSubscriptionsListRequestBuilder().apply(builder).toRequest()
-    return supplier.getSubscriptions(this.id, request)
+    return supplier.getSubscriptions(skuId = this.id, request)
 }
 
 internal class SkuBehaviorImpl(
