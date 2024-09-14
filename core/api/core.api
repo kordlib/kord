@@ -2130,8 +2130,8 @@ public final class dev/kord/core/behavior/interaction/response/PublicMessageInte
 
 public abstract interface class dev/kord/core/behavior/monetization/SkuBehavior : dev/kord/core/entity/KordEntity, dev/kord/core/entity/Strategizable {
 	public abstract fun createTestEntitlement (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/EntitlementOwnerType;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public abstract fun createTestEntitlement (Ldev/kord/common/entity/Snowflake;Ldev/kord/core/behavior/GuildBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public abstract fun createTestEntitlement (Ldev/kord/common/entity/Snowflake;Ldev/kord/core/behavior/UserBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun createTestEntitlement (Ldev/kord/core/behavior/GuildBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun createTestEntitlement (Ldev/kord/core/behavior/UserBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun getApplicationId ()Ldev/kord/common/entity/Snowflake;
 	public abstract fun getSubscription (Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun getSubscriptionOrNull (Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -2141,8 +2141,8 @@ public abstract interface class dev/kord/core/behavior/monetization/SkuBehavior 
 public final class dev/kord/core/behavior/monetization/SkuBehavior$DefaultImpls {
 	public static fun compareTo (Ldev/kord/core/behavior/monetization/SkuBehavior;Ldev/kord/core/entity/Entity;)I
 	public static fun createTestEntitlement (Ldev/kord/core/behavior/monetization/SkuBehavior;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/EntitlementOwnerType;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static fun createTestEntitlement (Ldev/kord/core/behavior/monetization/SkuBehavior;Ldev/kord/common/entity/Snowflake;Ldev/kord/core/behavior/GuildBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static fun createTestEntitlement (Ldev/kord/core/behavior/monetization/SkuBehavior;Ldev/kord/common/entity/Snowflake;Ldev/kord/core/behavior/UserBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static fun createTestEntitlement (Ldev/kord/core/behavior/monetization/SkuBehavior;Ldev/kord/core/behavior/GuildBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static fun createTestEntitlement (Ldev/kord/core/behavior/monetization/SkuBehavior;Ldev/kord/core/behavior/UserBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun getSubscription (Ldev/kord/core/behavior/monetization/SkuBehavior;Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun getSubscriptionOrNull (Ldev/kord/core/behavior/monetization/SkuBehavior;Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
@@ -10924,8 +10924,8 @@ public final class dev/kord/core/entity/monetization/Sku : dev/kord/core/behavio
 	public fun compareTo (Ldev/kord/core/entity/Entity;)I
 	public synthetic fun compareTo (Ljava/lang/Object;)I
 	public fun createTestEntitlement (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/EntitlementOwnerType;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun createTestEntitlement (Ldev/kord/common/entity/Snowflake;Ldev/kord/core/behavior/GuildBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun createTestEntitlement (Ldev/kord/common/entity/Snowflake;Ldev/kord/core/behavior/UserBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun createTestEntitlement (Ldev/kord/core/behavior/GuildBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun createTestEntitlement (Ldev/kord/core/behavior/UserBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun equals (Ljava/lang/Object;)Z
 	public fun getApplicationId ()Ldev/kord/common/entity/Snowflake;
 	public final fun getData ()Ldev/kord/common/entity/DiscordSku;

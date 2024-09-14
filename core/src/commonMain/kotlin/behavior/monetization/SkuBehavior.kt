@@ -59,7 +59,7 @@ public interface SkuBehavior : KordEntity, Strategizable {
     public suspend fun createTestEntitlement(ownerId: Snowflake, ownerType: EntitlementOwnerType): Entitlement {
         val response = kord.rest.entitlement.createTestEntitlement(
             applicationId,
-            TestEntitlementCreateRequest(this.id, ownerId, ownerType),
+            TestEntitlementCreateRequest(skuId = this.id, ownerId, ownerType),
         )
         return Entitlement(EntitlementData.from(response), kord)
     }
@@ -73,7 +73,7 @@ public interface SkuBehavior : KordEntity, Strategizable {
      *
      * @throws RestRequestException if something went wrong during the request.
      */
-    public suspend fun createTestEntitlement(skuId: Snowflake, user: UserBehavior): Entitlement =
+    public suspend fun createTestEntitlement(user: UserBehavior): Entitlement =
         createTestEntitlement(user.id, EntitlementOwnerType.User)
 
     /**
@@ -85,7 +85,7 @@ public interface SkuBehavior : KordEntity, Strategizable {
      *
      * @throws RestRequestException if something went wrong during the request.
      */
-    public suspend fun createTestEntitlement(skuId: Snowflake, guild: GuildBehavior): Entitlement =
+    public suspend fun createTestEntitlement(guild: GuildBehavior): Entitlement =
         createTestEntitlement(guild.id, EntitlementOwnerType.Guild)
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): SkuBehavior
