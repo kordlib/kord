@@ -14,7 +14,7 @@ import kotlinx.datetime.Instant
  * An instance of a [Subscription](https://discord.com/developers/docs/resources/subscription).
  *
  * Subscriptions represent a [User] making recurring payments for at least one [Sku] over an ongoing period. Successful
- * payments grant the [User] access to entitlements associated with the [Sku].
+ * payments grant the [User] access to [Entitlement]s associated with the [Sku].
  */
 public class Subscription(
     public val data: SubscriptionData,
