@@ -36,7 +36,7 @@ public interface SkuBehavior : KordEntity, Strategizable {
      * @throws RequestException if something went wrong during the request.
      */
     public suspend fun getSubscriptionOrNull(subscriptionId: Snowflake): Subscription? =
-        supplier.getSubscriptionOrNull(this.id, subscriptionId)
+        supplier.getSubscriptionOrNull(skuId = this.id, subscriptionId)
 
     /**
      * Requests a [Subscription] containing this SKU by its [id][subscriptionId].
@@ -45,7 +45,7 @@ public interface SkuBehavior : KordEntity, Strategizable {
      * @throws EntityNotFoundException if the [Subscription] wasn't found.
      */
     public suspend fun getSubscription(subscriptionId: Snowflake): Subscription =
-        supplier.getSubscription(this.id, subscriptionId)
+        supplier.getSubscription(skuId = this.id, subscriptionId)
 
     /**
      * Requests to create a new [test entitlement][Entitlement] to this SKU for an owner with the given [ownerId] and
