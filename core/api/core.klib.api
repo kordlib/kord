@@ -7037,6 +7037,8 @@ final class dev.kord.core.entity.monetization/Subscription : dev.kord.core.entit
         final fun <get-kord>(): dev.kord.core/Kord // dev.kord.core.entity.monetization/Subscription.kord.<get-kord>|<get-kord>(){}[0]
     final val skuIds // dev.kord.core.entity.monetization/Subscription.skuIds|{}skuIds[0]
         final fun <get-skuIds>(): kotlin.collections/List<dev.kord.common.entity/Snowflake> // dev.kord.core.entity.monetization/Subscription.skuIds.<get-skuIds>|<get-skuIds>(){}[0]
+    final val skus // dev.kord.core.entity.monetization/Subscription.skus|{}skus[0]
+        final fun <get-skus>(): kotlin.collections/List<dev.kord.core.behavior.monetization/SkuBehavior> // dev.kord.core.entity.monetization/Subscription.skus.<get-skus>|<get-skus>(){}[0]
     final val startsAt // dev.kord.core.entity.monetization/Subscription.startsAt|{}startsAt[0]
         final fun <get-startsAt>(): kotlinx.datetime/Instant // dev.kord.core.entity.monetization/Subscription.startsAt.<get-startsAt>|<get-startsAt>(){}[0]
     final val status // dev.kord.core.entity.monetization/Subscription.status|{}status[0]

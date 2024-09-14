@@ -10959,6 +10959,7 @@ public final class dev/kord/core/entity/monetization/Subscription : dev/kord/cor
 	public fun getId ()Ldev/kord/common/entity/Snowflake;
 	public fun getKord ()Ldev/kord/core/Kord;
 	public final fun getSkuIds ()Ljava/util/List;
+	public final fun getSkus ()Ljava/util/List;
 	public final fun getStartsAt ()Lkotlinx/datetime/Instant;
 	public final fun getStatus ()Ldev/kord/common/entity/SubscriptionStatus;
 	public final fun getUser ()Ldev/kord/core/behavior/UserBehavior;

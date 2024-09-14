@@ -4,6 +4,8 @@ import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.SubscriptionStatus
 import dev.kord.core.Kord
 import dev.kord.core.behavior.UserBehavior
+import dev.kord.core.behavior.monetization.SkuBehavior
+import dev.kord.core.behavior.monetization.SkuBehaviorImpl
 import dev.kord.core.cache.data.SubscriptionData
 import dev.kord.core.entity.KordEntity
 import dev.kord.core.entity.User
@@ -30,6 +32,10 @@ public class Subscription(
 
     /** The list of IDs of the [Sku]s subscribed to. */
     public val skuIds: List<Snowflake> get() = data.skuIds
+
+    /** The list of behaviors of the [Sku]s subscribed to. */
+    public val skus: List<SkuBehavior>
+        get() = skuIds.map { skuId -> SkuBehaviorImpl(applicationId = kord.selfId, id = skuId, kord) }
 
     /** The list of IDs of the [Entitlement]s granted for this subscription. */
     public val entitlementIds: List<Snowflake> get() = data.entitlementIds
