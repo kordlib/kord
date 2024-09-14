@@ -42,12 +42,12 @@ public sealed class SkuType(
     ) : SkuType(value)
 
     /**
-     * A durable, one-time purchase.
+     * A durable one-time purchase.
      */
     public object Durable : SkuType(2)
 
     /**
-     * A consumable, one-time purchase.
+     * A consumable one-time purchase.
      */
     public object Consumable : SkuType(3)
 
@@ -57,7 +57,7 @@ public sealed class SkuType(
     public object Subscription : SkuType(5)
 
     /**
-     * System-generated group for each [Subscription] SKU created.
+     * System-generated group for each [Subscription][Subscription] [SKU][DiscordSku] created.
      */
     public object SubscriptionGroup : SkuType(6)
 

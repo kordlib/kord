@@ -2,10 +2,13 @@
     INT_KORD_ENUM, name = "SkuType",
     docUrl = "https://discord.com/developers/docs/resources/sku#sku-object-sku-types",
     entries = [
-        Entry("Durable", intValue = 2, kDoc = "A durable, one-time purchase."),
-        Entry("Consumable", intValue = 3, kDoc = "A consumable, one-time purchase."),
+        Entry("Durable", intValue = 2, kDoc = "A durable one-time purchase."),
+        Entry("Consumable", intValue = 3, kDoc = "A consumable one-time purchase."),
         Entry("Subscription", intValue = 5, kDoc = "Represents a recurring subscription."),
-        Entry("SubscriptionGroup", intValue = 6, kDoc = "System-generated group for each [Subscription] SKU created."),
+        Entry(
+            "SubscriptionGroup", intValue = 6,
+            kDoc = "System-generated group for each [Subscription][Subscription] [SKU][DiscordSku] created.",
+        ),
     ],
 )
 
