@@ -109,8 +109,7 @@ public class Entitlement(
     /**
      * Requests to delete this currently active test entitlement.
      *
-     * Discord will act as though that [user][Entitlement.user] or [guild][Entitlement.guild] *no longer* has
-     * entitlement to your premium offering.
+     * Discord will act as though that [user] or [guild] *no longer* has entitlement to your premium offering.
      *
      * This request will fail if this is not a test entitlement.
      *

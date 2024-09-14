@@ -49,7 +49,9 @@ public interface SkuBehavior : KordEntity, Strategizable {
 
     /**
      * Requests to create a new [test entitlement][Entitlement] to this SKU for an owner with the given [ownerId] and
-     * [ownerType]. Discord will act as though that owner has entitlement to your premium offering.
+     * [ownerType].
+     *
+     * Discord will act as though that owner has entitlement to your premium offering.
      *
      * The returned [Entitlement] will not contain [startsAt][Entitlement.startsAt] and [endsAt][Entitlement.endsAt], as
      * it's valid in perpetuity.
@@ -65,8 +67,9 @@ public interface SkuBehavior : KordEntity, Strategizable {
     }
 
     /**
-     * Requests to create a new [test entitlement][Entitlement] to this SKU for a given [user]. Discord will act as
-     * though that user has entitlement to your premium offering.
+     * Requests to create a new [test entitlement][Entitlement] to this SKU for a given [user].
+     *
+     * Discord will act as though that user has entitlement to your premium offering.
      *
      * The returned [Entitlement] will not contain [startsAt][Entitlement.startsAt] and [endsAt][Entitlement.endsAt], as
      * it's valid in perpetuity.
@@ -77,8 +80,9 @@ public interface SkuBehavior : KordEntity, Strategizable {
         createTestEntitlement(user.id, EntitlementOwnerType.User)
 
     /**
-     * Requests to create a new [test entitlement][Entitlement] to this SKU for a given [guild]. Discord will act as
-     * though that guild has entitlement to your premium offering.
+     * Requests to create a new [test entitlement][Entitlement] to this SKU for a given [guild].
+     *
+     * Discord will act as though that guild has entitlement to your premium offering.
      *
      * The returned [Entitlement] will not contain [startsAt][Entitlement.startsAt] and [endsAt][Entitlement.endsAt], as
      * it's valid in perpetuity.
