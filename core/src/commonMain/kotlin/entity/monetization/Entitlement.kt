@@ -98,6 +98,15 @@ public class Entitlement(
         get() = data.consumed.value
 
     /**
+     * For One-Time Purchase consumable [Sku]s, marks this entitlement for the [user] as [consumed][isConsumed].
+     *
+     * @throws RestRequestException if something went wrong during the request.
+     */
+    public suspend fun consume() {
+        kord.rest.entitlement.consumeEntitlement(applicationId, id)
+    }
+
+    /**
      * Requests to delete this currently active test entitlement.
      *
      * Discord will act as though that [user][Entitlement.user] or [guild][Entitlement.guild] *no longer* has
@@ -109,15 +118,6 @@ public class Entitlement(
      */
     public suspend fun delete() {
         kord.rest.entitlement.deleteTestEntitlement(applicationId, id)
-    }
-
-    /**
-     * For One-Time Purchase consumable [Sku]s, marks this entitlement for the [user] as [consumed][isConsumed].
-     *
-     * @throws RestRequestException if something went wrong during the request.
-     */
-    public suspend fun consume() {
-        kord.rest.entitlement.consumeEntitlement(applicationId, id)
     }
 
     override fun equals(other: Any?): Boolean =
