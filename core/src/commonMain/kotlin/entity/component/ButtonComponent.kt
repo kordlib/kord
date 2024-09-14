@@ -24,7 +24,7 @@ public class ButtonComponent(override val data: ChatComponentData) : Component {
 
     /**
      * The style of this button, [ButtonStyle.Link] buttons will always have a [url], [ButtonStyle.Premium] buttons will
-     * always have a [skuId].
+     * always have an [skuId].
      */
     public val style: ButtonStyle get() = data.style.value!!
 
