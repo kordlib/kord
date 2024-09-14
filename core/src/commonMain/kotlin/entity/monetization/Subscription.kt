@@ -28,10 +28,10 @@ public class Subscription(
     /** The behavior of the [User] who is subscribed. */
     public val user: UserBehavior get() = UserBehavior(userId, kord)
 
-    /** The list of [Sku]s subscribed to. */
+    /** The list of IDs of the [Sku]s subscribed to. */
     public val skuIds: List<Snowflake> get() = data.skuIds
 
-    /** The list of [Entitlement]s granted for this subscription. */
+    /** The list of IDs of the [Entitlement]s granted for this subscription. */
     public val entitlementIds: List<Snowflake> get() = data.entitlementIds
 
     /** The start date of the current subscription period. */
