@@ -19,6 +19,7 @@ dev.kord.core.behavior.channel.threads
 dev.kord.core.behavior.interaction
 dev.kord.core.behavior.interaction.followup
 dev.kord.core.behavior.interaction.response
+dev.kord.core.behavior.monetization
 dev.kord.core.builder.components
 dev.kord.core.builder.kord
 dev.kord.core.cache
@@ -32,6 +33,7 @@ dev.kord.core.entity.component
 dev.kord.core.entity.interaction
 dev.kord.core.entity.interaction.followup
 dev.kord.core.entity.interaction.response
+dev.kord.core.entity.monetization
 dev.kord.core.event
 dev.kord.core.event.automoderation
 dev.kord.core.event.automoderation.data
@@ -42,6 +44,7 @@ dev.kord.core.event.gateway
 dev.kord.core.event.guild
 dev.kord.core.event.interaction
 dev.kord.core.event.message
+dev.kord.core.event.monetization
 dev.kord.core.event.role
 dev.kord.core.event.user
 dev.kord.core.exception
@@ -75,6 +78,7 @@ dev.kord.rest.builder.member
 dev.kord.rest.builder.message
 dev.kord.rest.builder.message.create
 dev.kord.rest.builder.message.modify
+dev.kord.rest.builder.monetization
 dev.kord.rest.builder.role
 dev.kord.rest.builder.scheduled_events
 dev.kord.rest.builder.stage
