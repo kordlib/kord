@@ -23,6 +23,7 @@
         Entry("Success", intValue = 3, kDoc = "Green."),
         Entry("Danger", intValue = 4, kDoc = "Red."),
         Entry("Link", intValue = 5, kDoc = "Grey, navigates to a URL."),
+        Entry("Premium", intValue = 6, kDoc = "Blurple, prompts to purchase a premium offering."),
     ],
 )
 
@@ -41,6 +42,7 @@ package dev.kord.common.entity
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalInt
+import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.ksp.Generate
 import dev.kord.ksp.Generate.EntityType.INT_KORD_ENUM
 import dev.kord.ksp.Generate.Entry
@@ -135,6 +137,8 @@ public data class DiscordChatComponent(
      override val value: Optional<String> = Optional.Missing(),
      @SerialName("channel_types")
      override val channelTypes: Optional<List<ChannelType>> = Optional.Missing(),
+     @SerialName("sku_id")
+     val skuId: OptionalSnowflake = OptionalSnowflake.Missing,
 ) : DiscordComponent()
 
 @Serializable
