@@ -16,6 +16,7 @@ final enum class dev.kord.rest.json/JsonErrorCode : kotlin/Enum<dev.kord.rest.js
     enum entry BitrateTooHigh // dev.kord.rest.json/JsonErrorCode.BitrateTooHigh|null[0]
     enum entry BotsEndpoint // dev.kord.rest.json/JsonErrorCode.BotsEndpoint|null[0]
     enum entry BulkDeleteOldMessage // dev.kord.rest.json/JsonErrorCode.BulkDeleteOldMessage|null[0]
+    enum entry CanOnlyDeleteSandboxEntitlements // dev.kord.rest.json/JsonErrorCode.CanOnlyDeleteSandboxEntitlements|null[0]
     enum entry CannotConvertBetweenPremiumAndNormalEmoji // dev.kord.rest.json/JsonErrorCode.CannotConvertBetweenPremiumAndNormalEmoji|null[0]
     enum entry CannotDeleteGuildSubscriptionIntegration // dev.kord.rest.json/JsonErrorCode.CannotDeleteGuildSubscriptionIntegration|null[0]
     enum entry CannotDeleteRequiredCommunityChannel // dev.kord.rest.json/JsonErrorCode.CannotDeleteRequiredCommunityChannel|null[0]
@@ -43,6 +44,7 @@ final enum class dev.kord.rest.json/JsonErrorCode : kotlin/Enum<dev.kord.rest.js
     enum entry CommunityServerChannelMustBeTextChannel // dev.kord.rest.json/JsonErrorCode.CommunityServerChannelMustBeTextChannel|null[0]
     enum entry ConnectionRevoked // dev.kord.rest.json/JsonErrorCode.ConnectionRevoked|null[0]
     enum entry DisallowedName // dev.kord.rest.json/JsonErrorCode.DisallowedName|null[0]
+    enum entry EntitlementAlreadyGranted // dev.kord.rest.json/JsonErrorCode.EntitlementAlreadyGranted|null[0]
     enum entry EntityOfEventDifferentFromEventEntity // dev.kord.rest.json/JsonErrorCode.EntityOfEventDifferentFromEventEntity|null[0]
     enum entry FailedToCreateStage // dev.kord.rest.json/JsonErrorCode.FailedToCreateStage|null[0]
     enum entry FailedToResizeAssetBelowMaximumSize // dev.kord.rest.json/JsonErrorCode.FailedToResizeAssetBelowMaximumSize|null[0]
@@ -70,6 +72,7 @@ final enum class dev.kord.rest.json/JsonErrorCode : kotlin/Enum<dev.kord.rest.js
     enum entry InvalidRecipients // dev.kord.rest.json/JsonErrorCode.InvalidRecipients|null[0]
     enum entry InvalidRequestOrigin // dev.kord.rest.json/JsonErrorCode.InvalidRequestOrigin|null[0]
     enum entry InvalidRole // dev.kord.rest.json/JsonErrorCode.InvalidRole|null[0]
+    enum entry InvalidSku // dev.kord.rest.json/JsonErrorCode.InvalidSku|null[0]
     enum entry InvalidStickerFrameRate // dev.kord.rest.json/JsonErrorCode.InvalidStickerFrameRate|null[0]
     enum entry InvalidStickerSent // dev.kord.rest.json/JsonErrorCode.InvalidStickerSent|null[0]
     enum entry InvalidThreadNotificationSettings // dev.kord.rest.json/JsonErrorCode.InvalidThreadNotificationSettings|null[0]
@@ -122,6 +125,7 @@ final enum class dev.kord.rest.json/JsonErrorCode : kotlin/Enum<dev.kord.rest.js
     enum entry NonBotGuildInviteAccepted // dev.kord.rest.json/JsonErrorCode.NonBotGuildInviteAccepted|null[0]
     enum entry OAuth2ApplicationLimit // dev.kord.rest.json/JsonErrorCode.OAuth2ApplicationLimit|null[0]
     enum entry OAuth2HasNoBot // dev.kord.rest.json/JsonErrorCode.OAuth2HasNoBot|null[0]
+    enum entry OnlyConsumableSkusCanBeConsumed // dev.kord.rest.json/JsonErrorCode.OnlyConsumableSkusCanBeConsumed|null[0]
     enum entry OnlyOwner // dev.kord.rest.json/JsonErrorCode.OnlyOwner|null[0]
     enum entry OperationOnArchivedThread // dev.kord.rest.json/JsonErrorCode.OperationOnArchivedThread|null[0]
     enum entry OwnerCannotBePendingMember // dev.kord.rest.json/JsonErrorCode.OwnerCannotBePendingMember|null[0]
@@ -1675,6 +1679,7 @@ final class dev.kord.rest.builder.component/ActionRowBuilder : dev.kord.rest.bui
     final inline fun interactionButton(dev.kord.common.entity/ButtonStyle, kotlin/String, kotlin/Function1<dev.kord.rest.builder.component/ButtonBuilder.InteractionButtonBuilder, kotlin/Unit>) // dev.kord.rest.builder.component/ActionRowBuilder.interactionButton|interactionButton(dev.kord.common.entity.ButtonStyle;kotlin.String;kotlin.Function1<dev.kord.rest.builder.component.ButtonBuilder.InteractionButtonBuilder,kotlin.Unit>){}[0]
     final inline fun linkButton(kotlin/String, kotlin/Function1<dev.kord.rest.builder.component/ButtonBuilder.LinkButtonBuilder, kotlin/Unit>) // dev.kord.rest.builder.component/ActionRowBuilder.linkButton|linkButton(kotlin.String;kotlin.Function1<dev.kord.rest.builder.component.ButtonBuilder.LinkButtonBuilder,kotlin.Unit>){}[0]
     final inline fun mentionableSelect(kotlin/String, kotlin/Function1<dev.kord.rest.builder.component/MentionableSelectBuilder, kotlin/Unit> = ...) // dev.kord.rest.builder.component/ActionRowBuilder.mentionableSelect|mentionableSelect(kotlin.String;kotlin.Function1<dev.kord.rest.builder.component.MentionableSelectBuilder,kotlin.Unit>){}[0]
+    final inline fun premiumButton(dev.kord.common.entity/Snowflake, kotlin/Function1<dev.kord.rest.builder.component/PremiumButtonBuilder, kotlin/Unit> = ...) // dev.kord.rest.builder.component/ActionRowBuilder.premiumButton|premiumButton(dev.kord.common.entity.Snowflake;kotlin.Function1<dev.kord.rest.builder.component.PremiumButtonBuilder,kotlin.Unit>){}[0]
     final inline fun roleSelect(kotlin/String, kotlin/Function1<dev.kord.rest.builder.component/RoleSelectBuilder, kotlin/Unit> = ...) // dev.kord.rest.builder.component/ActionRowBuilder.roleSelect|roleSelect(kotlin.String;kotlin.Function1<dev.kord.rest.builder.component.RoleSelectBuilder,kotlin.Unit>){}[0]
     final inline fun stringSelect(kotlin/String, kotlin/Function1<dev.kord.rest.builder.component/StringSelectBuilder, kotlin/Unit>) // dev.kord.rest.builder.component/ActionRowBuilder.stringSelect|stringSelect(kotlin.String;kotlin.Function1<dev.kord.rest.builder.component.StringSelectBuilder,kotlin.Unit>){}[0]
     final inline fun textInput(dev.kord.common.entity/TextInputStyle, kotlin/String, kotlin/String, kotlin/Function1<dev.kord.rest.builder.component/TextInputBuilder, kotlin/Unit> = ...) // dev.kord.rest.builder.component/ActionRowBuilder.textInput|textInput(dev.kord.common.entity.TextInputStyle;kotlin.String;kotlin.String;kotlin.Function1<dev.kord.rest.builder.component.TextInputBuilder,kotlin.Unit>){}[0]
@@ -1699,6 +1704,16 @@ final class dev.kord.rest.builder.component/MentionableSelectBuilder : dev.kord.
         final fun <get-defaultRoles>(): kotlin.collections/MutableList<dev.kord.common.entity/Snowflake> // dev.kord.rest.builder.component/MentionableSelectBuilder.defaultRoles.<get-defaultRoles>|<get-defaultRoles>(){}[0]
     final val defaultUsers // dev.kord.rest.builder.component/MentionableSelectBuilder.defaultUsers|{}defaultUsers[0]
         final fun <get-defaultUsers>(): kotlin.collections/MutableList<dev.kord.common.entity/Snowflake> // dev.kord.rest.builder.component/MentionableSelectBuilder.defaultUsers.<get-defaultUsers>|<get-defaultUsers>(){}[0]
+}
+
+final class dev.kord.rest.builder.component/PremiumButtonBuilder : dev.kord.rest.builder.component/ActionRowComponentBuilder { // dev.kord.rest.builder.component/PremiumButtonBuilder|null[0]
+    constructor <init>(dev.kord.common.entity/Snowflake) // dev.kord.rest.builder.component/PremiumButtonBuilder.<init>|<init>(dev.kord.common.entity.Snowflake){}[0]
+
+    final var skuId // dev.kord.rest.builder.component/PremiumButtonBuilder.skuId|{}skuId[0]
+        final fun <get-skuId>(): dev.kord.common.entity/Snowflake // dev.kord.rest.builder.component/PremiumButtonBuilder.skuId.<get-skuId>|<get-skuId>(){}[0]
+        final fun <set-skuId>(dev.kord.common.entity/Snowflake) // dev.kord.rest.builder.component/PremiumButtonBuilder.skuId.<set-skuId>|<set-skuId>(dev.kord.common.entity.Snowflake){}[0]
+
+    final fun build(): dev.kord.common.entity/DiscordChatComponent // dev.kord.rest.builder.component/PremiumButtonBuilder.build|build(){}[0]
 }
 
 final class dev.kord.rest.builder.component/RoleSelectBuilder : dev.kord.rest.builder.component/SelectMenuBuilder { // dev.kord.rest.builder.component/RoleSelectBuilder|null[0]
@@ -2747,6 +2762,51 @@ final class dev.kord.rest.builder.message/EmbedBuilder : dev.kord.rest.builder/R
         final const val total // dev.kord.rest.builder.message/EmbedBuilder.Limits.total|{}total[0]
             final fun <get-total>(): kotlin/Int // dev.kord.rest.builder.message/EmbedBuilder.Limits.total.<get-total>|<get-total>(){}[0]
     }
+}
+
+final class dev.kord.rest.builder.monetization/EntitlementsListRequestBuilder : dev.kord.rest.builder/RequestBuilder<dev.kord.rest.json.request/EntitlementsListRequest> { // dev.kord.rest.builder.monetization/EntitlementsListRequestBuilder|null[0]
+    constructor <init>() // dev.kord.rest.builder.monetization/EntitlementsListRequestBuilder.<init>|<init>(){}[0]
+
+    final var excludeEnded // dev.kord.rest.builder.monetization/EntitlementsListRequestBuilder.excludeEnded|{}excludeEnded[0]
+        final fun <get-excludeEnded>(): kotlin/Boolean? // dev.kord.rest.builder.monetization/EntitlementsListRequestBuilder.excludeEnded.<get-excludeEnded>|<get-excludeEnded>(){}[0]
+        final fun <set-excludeEnded>(kotlin/Boolean?) // dev.kord.rest.builder.monetization/EntitlementsListRequestBuilder.excludeEnded.<set-excludeEnded>|<set-excludeEnded>(kotlin.Boolean?){}[0]
+    final var guildId // dev.kord.rest.builder.monetization/EntitlementsListRequestBuilder.guildId|{}guildId[0]
+        final fun <get-guildId>(): dev.kord.common.entity/Snowflake? // dev.kord.rest.builder.monetization/EntitlementsListRequestBuilder.guildId.<get-guildId>|<get-guildId>(){}[0]
+        final fun <set-guildId>(dev.kord.common.entity/Snowflake?) // dev.kord.rest.builder.monetization/EntitlementsListRequestBuilder.guildId.<set-guildId>|<set-guildId>(dev.kord.common.entity.Snowflake?){}[0]
+    final var limit // dev.kord.rest.builder.monetization/EntitlementsListRequestBuilder.limit|{}limit[0]
+        final fun <get-limit>(): kotlin/Int? // dev.kord.rest.builder.monetization/EntitlementsListRequestBuilder.limit.<get-limit>|<get-limit>(){}[0]
+        final fun <set-limit>(kotlin/Int?) // dev.kord.rest.builder.monetization/EntitlementsListRequestBuilder.limit.<set-limit>|<set-limit>(kotlin.Int?){}[0]
+    final var position // dev.kord.rest.builder.monetization/EntitlementsListRequestBuilder.position|{}position[0]
+        final fun <get-position>(): dev.kord.rest.route/Position.BeforeOrAfter? // dev.kord.rest.builder.monetization/EntitlementsListRequestBuilder.position.<get-position>|<get-position>(){}[0]
+        final fun <set-position>(dev.kord.rest.route/Position.BeforeOrAfter?) // dev.kord.rest.builder.monetization/EntitlementsListRequestBuilder.position.<set-position>|<set-position>(dev.kord.rest.route.Position.BeforeOrAfter?){}[0]
+    final var skuIds // dev.kord.rest.builder.monetization/EntitlementsListRequestBuilder.skuIds|{}skuIds[0]
+        final fun <get-skuIds>(): kotlin.collections/MutableList<dev.kord.common.entity/Snowflake> // dev.kord.rest.builder.monetization/EntitlementsListRequestBuilder.skuIds.<get-skuIds>|<get-skuIds>(){}[0]
+        final fun <set-skuIds>(kotlin.collections/MutableList<dev.kord.common.entity/Snowflake>) // dev.kord.rest.builder.monetization/EntitlementsListRequestBuilder.skuIds.<set-skuIds>|<set-skuIds>(kotlin.collections.MutableList<dev.kord.common.entity.Snowflake>){}[0]
+    final var userId // dev.kord.rest.builder.monetization/EntitlementsListRequestBuilder.userId|{}userId[0]
+        final fun <get-userId>(): dev.kord.common.entity/Snowflake? // dev.kord.rest.builder.monetization/EntitlementsListRequestBuilder.userId.<get-userId>|<get-userId>(){}[0]
+        final fun <set-userId>(dev.kord.common.entity/Snowflake?) // dev.kord.rest.builder.monetization/EntitlementsListRequestBuilder.userId.<set-userId>|<set-userId>(dev.kord.common.entity.Snowflake?){}[0]
+
+    final fun after(dev.kord.common.entity/Snowflake) // dev.kord.rest.builder.monetization/EntitlementsListRequestBuilder.after|after(dev.kord.common.entity.Snowflake){}[0]
+    final fun before(dev.kord.common.entity/Snowflake) // dev.kord.rest.builder.monetization/EntitlementsListRequestBuilder.before|before(dev.kord.common.entity.Snowflake){}[0]
+    final fun toRequest(): dev.kord.rest.json.request/EntitlementsListRequest // dev.kord.rest.builder.monetization/EntitlementsListRequestBuilder.toRequest|toRequest(){}[0]
+}
+
+final class dev.kord.rest.builder.monetization/SkuSubscriptionsListRequestBuilder : dev.kord.rest.builder/RequestBuilder<dev.kord.rest.json.request/SkuSubscriptionsListRequest> { // dev.kord.rest.builder.monetization/SkuSubscriptionsListRequestBuilder|null[0]
+    constructor <init>() // dev.kord.rest.builder.monetization/SkuSubscriptionsListRequestBuilder.<init>|<init>(){}[0]
+
+    final var limit // dev.kord.rest.builder.monetization/SkuSubscriptionsListRequestBuilder.limit|{}limit[0]
+        final fun <get-limit>(): kotlin/Int? // dev.kord.rest.builder.monetization/SkuSubscriptionsListRequestBuilder.limit.<get-limit>|<get-limit>(){}[0]
+        final fun <set-limit>(kotlin/Int?) // dev.kord.rest.builder.monetization/SkuSubscriptionsListRequestBuilder.limit.<set-limit>|<set-limit>(kotlin.Int?){}[0]
+    final var position // dev.kord.rest.builder.monetization/SkuSubscriptionsListRequestBuilder.position|{}position[0]
+        final fun <get-position>(): dev.kord.rest.route/Position.BeforeOrAfter? // dev.kord.rest.builder.monetization/SkuSubscriptionsListRequestBuilder.position.<get-position>|<get-position>(){}[0]
+        final fun <set-position>(dev.kord.rest.route/Position.BeforeOrAfter?) // dev.kord.rest.builder.monetization/SkuSubscriptionsListRequestBuilder.position.<set-position>|<set-position>(dev.kord.rest.route.Position.BeforeOrAfter?){}[0]
+    final var userId // dev.kord.rest.builder.monetization/SkuSubscriptionsListRequestBuilder.userId|{}userId[0]
+        final fun <get-userId>(): dev.kord.common.entity/Snowflake? // dev.kord.rest.builder.monetization/SkuSubscriptionsListRequestBuilder.userId.<get-userId>|<get-userId>(){}[0]
+        final fun <set-userId>(dev.kord.common.entity/Snowflake?) // dev.kord.rest.builder.monetization/SkuSubscriptionsListRequestBuilder.userId.<set-userId>|<set-userId>(dev.kord.common.entity.Snowflake?){}[0]
+
+    final fun after(dev.kord.common.entity/Snowflake) // dev.kord.rest.builder.monetization/SkuSubscriptionsListRequestBuilder.after|after(dev.kord.common.entity.Snowflake){}[0]
+    final fun before(dev.kord.common.entity/Snowflake) // dev.kord.rest.builder.monetization/SkuSubscriptionsListRequestBuilder.before|before(dev.kord.common.entity.Snowflake){}[0]
+    final fun toRequest(): dev.kord.rest.json.request/SkuSubscriptionsListRequest // dev.kord.rest.builder.monetization/SkuSubscriptionsListRequestBuilder.toRequest|toRequest(){}[0]
 }
 
 final class dev.kord.rest.builder.role/RoleCreateBuilder : dev.kord.rest.builder/AuditRequestBuilder<dev.kord.rest.json.request/GuildRoleCreateRequest> { // dev.kord.rest.builder.role/RoleCreateBuilder|null[0]
@@ -3946,6 +4006,34 @@ final class dev.kord.rest.json.request/EmojiModifyRequest { // dev.kord.rest.jso
 
         final fun serializer(): kotlinx.serialization/KSerializer<dev.kord.rest.json.request/EmojiModifyRequest> // dev.kord.rest.json.request/EmojiModifyRequest.Companion.serializer|serializer(){}[0]
     }
+}
+
+final class dev.kord.rest.json.request/EntitlementsListRequest { // dev.kord.rest.json.request/EntitlementsListRequest|null[0]
+    constructor <init>(dev.kord.common.entity/Snowflake? = ..., kotlin.collections/List<dev.kord.common.entity/Snowflake> = ..., dev.kord.rest.route/Position.BeforeOrAfter? = ..., kotlin/Int? = ..., dev.kord.common.entity/Snowflake? = ..., kotlin/Boolean? = ...) // dev.kord.rest.json.request/EntitlementsListRequest.<init>|<init>(dev.kord.common.entity.Snowflake?;kotlin.collections.List<dev.kord.common.entity.Snowflake>;dev.kord.rest.route.Position.BeforeOrAfter?;kotlin.Int?;dev.kord.common.entity.Snowflake?;kotlin.Boolean?){}[0]
+
+    final val excludeEnded // dev.kord.rest.json.request/EntitlementsListRequest.excludeEnded|{}excludeEnded[0]
+        final fun <get-excludeEnded>(): kotlin/Boolean? // dev.kord.rest.json.request/EntitlementsListRequest.excludeEnded.<get-excludeEnded>|<get-excludeEnded>(){}[0]
+    final val guildId // dev.kord.rest.json.request/EntitlementsListRequest.guildId|{}guildId[0]
+        final fun <get-guildId>(): dev.kord.common.entity/Snowflake? // dev.kord.rest.json.request/EntitlementsListRequest.guildId.<get-guildId>|<get-guildId>(){}[0]
+    final val limit // dev.kord.rest.json.request/EntitlementsListRequest.limit|{}limit[0]
+        final fun <get-limit>(): kotlin/Int? // dev.kord.rest.json.request/EntitlementsListRequest.limit.<get-limit>|<get-limit>(){}[0]
+    final val position // dev.kord.rest.json.request/EntitlementsListRequest.position|{}position[0]
+        final fun <get-position>(): dev.kord.rest.route/Position.BeforeOrAfter? // dev.kord.rest.json.request/EntitlementsListRequest.position.<get-position>|<get-position>(){}[0]
+    final val skuIds // dev.kord.rest.json.request/EntitlementsListRequest.skuIds|{}skuIds[0]
+        final fun <get-skuIds>(): kotlin.collections/List<dev.kord.common.entity/Snowflake> // dev.kord.rest.json.request/EntitlementsListRequest.skuIds.<get-skuIds>|<get-skuIds>(){}[0]
+    final val userId // dev.kord.rest.json.request/EntitlementsListRequest.userId|{}userId[0]
+        final fun <get-userId>(): dev.kord.common.entity/Snowflake? // dev.kord.rest.json.request/EntitlementsListRequest.userId.<get-userId>|<get-userId>(){}[0]
+
+    final fun component1(): dev.kord.common.entity/Snowflake? // dev.kord.rest.json.request/EntitlementsListRequest.component1|component1(){}[0]
+    final fun component2(): kotlin.collections/List<dev.kord.common.entity/Snowflake> // dev.kord.rest.json.request/EntitlementsListRequest.component2|component2(){}[0]
+    final fun component3(): dev.kord.rest.route/Position.BeforeOrAfter? // dev.kord.rest.json.request/EntitlementsListRequest.component3|component3(){}[0]
+    final fun component4(): kotlin/Int? // dev.kord.rest.json.request/EntitlementsListRequest.component4|component4(){}[0]
+    final fun component5(): dev.kord.common.entity/Snowflake? // dev.kord.rest.json.request/EntitlementsListRequest.component5|component5(){}[0]
+    final fun component6(): kotlin/Boolean? // dev.kord.rest.json.request/EntitlementsListRequest.component6|component6(){}[0]
+    final fun copy(dev.kord.common.entity/Snowflake? = ..., kotlin.collections/List<dev.kord.common.entity/Snowflake> = ..., dev.kord.rest.route/Position.BeforeOrAfter? = ..., kotlin/Int? = ..., dev.kord.common.entity/Snowflake? = ..., kotlin/Boolean? = ...): dev.kord.rest.json.request/EntitlementsListRequest // dev.kord.rest.json.request/EntitlementsListRequest.copy|copy(dev.kord.common.entity.Snowflake?;kotlin.collections.List<dev.kord.common.entity.Snowflake>;dev.kord.rest.route.Position.BeforeOrAfter?;kotlin.Int?;dev.kord.common.entity.Snowflake?;kotlin.Boolean?){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.json.request/EntitlementsListRequest.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.rest.json.request/EntitlementsListRequest.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // dev.kord.rest.json.request/EntitlementsListRequest.toString|toString(){}[0]
 }
 
 final class dev.kord.rest.json.request/FollowupMessageCreateRequest { // dev.kord.rest.json.request/FollowupMessageCreateRequest|null[0]
@@ -5689,6 +5777,25 @@ final class dev.kord.rest.json.request/ScheduledEventModifyRequest { // dev.kord
     }
 }
 
+final class dev.kord.rest.json.request/SkuSubscriptionsListRequest { // dev.kord.rest.json.request/SkuSubscriptionsListRequest|null[0]
+    constructor <init>(dev.kord.rest.route/Position.BeforeOrAfter? = ..., kotlin/Int? = ..., dev.kord.common.entity/Snowflake? = ...) // dev.kord.rest.json.request/SkuSubscriptionsListRequest.<init>|<init>(dev.kord.rest.route.Position.BeforeOrAfter?;kotlin.Int?;dev.kord.common.entity.Snowflake?){}[0]
+
+    final val limit // dev.kord.rest.json.request/SkuSubscriptionsListRequest.limit|{}limit[0]
+        final fun <get-limit>(): kotlin/Int? // dev.kord.rest.json.request/SkuSubscriptionsListRequest.limit.<get-limit>|<get-limit>(){}[0]
+    final val position // dev.kord.rest.json.request/SkuSubscriptionsListRequest.position|{}position[0]
+        final fun <get-position>(): dev.kord.rest.route/Position.BeforeOrAfter? // dev.kord.rest.json.request/SkuSubscriptionsListRequest.position.<get-position>|<get-position>(){}[0]
+    final val userId // dev.kord.rest.json.request/SkuSubscriptionsListRequest.userId|{}userId[0]
+        final fun <get-userId>(): dev.kord.common.entity/Snowflake? // dev.kord.rest.json.request/SkuSubscriptionsListRequest.userId.<get-userId>|<get-userId>(){}[0]
+
+    final fun component1(): dev.kord.rest.route/Position.BeforeOrAfter? // dev.kord.rest.json.request/SkuSubscriptionsListRequest.component1|component1(){}[0]
+    final fun component2(): kotlin/Int? // dev.kord.rest.json.request/SkuSubscriptionsListRequest.component2|component2(){}[0]
+    final fun component3(): dev.kord.common.entity/Snowflake? // dev.kord.rest.json.request/SkuSubscriptionsListRequest.component3|component3(){}[0]
+    final fun copy(dev.kord.rest.route/Position.BeforeOrAfter? = ..., kotlin/Int? = ..., dev.kord.common.entity/Snowflake? = ...): dev.kord.rest.json.request/SkuSubscriptionsListRequest // dev.kord.rest.json.request/SkuSubscriptionsListRequest.copy|copy(dev.kord.rest.route.Position.BeforeOrAfter?;kotlin.Int?;dev.kord.common.entity.Snowflake?){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.json.request/SkuSubscriptionsListRequest.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.rest.json.request/SkuSubscriptionsListRequest.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // dev.kord.rest.json.request/SkuSubscriptionsListRequest.toString|toString(){}[0]
+}
+
 final class dev.kord.rest.json.request/StageInstanceCreateRequest { // dev.kord.rest.json.request/StageInstanceCreateRequest|null[0]
     constructor <init>(dev.kord.common.entity/Snowflake, kotlin/String, dev.kord.common.entity.optional/Optional<dev.kord.common.entity/StageInstancePrivacyLevel> = ..., dev.kord.common.entity.optional/OptionalBoolean = ..., dev.kord.common.entity.optional/OptionalSnowflake = ...) // dev.kord.rest.json.request/StageInstanceCreateRequest.<init>|<init>(dev.kord.common.entity.Snowflake;kotlin.String;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.StageInstancePrivacyLevel>;dev.kord.common.entity.optional.OptionalBoolean;dev.kord.common.entity.optional.OptionalSnowflake){}[0]
 
@@ -5803,6 +5910,38 @@ final class dev.kord.rest.json.request/StartThreadRequest { // dev.kord.rest.jso
         final val $childSerializers // dev.kord.rest.json.request/StartThreadRequest.Companion.$childSerializers|{}$childSerializers[0]
 
         final fun serializer(): kotlinx.serialization/KSerializer<dev.kord.rest.json.request/StartThreadRequest> // dev.kord.rest.json.request/StartThreadRequest.Companion.serializer|serializer(){}[0]
+    }
+}
+
+final class dev.kord.rest.json.request/TestEntitlementCreateRequest { // dev.kord.rest.json.request/TestEntitlementCreateRequest|null[0]
+    constructor <init>(dev.kord.common.entity/Snowflake, dev.kord.common.entity/Snowflake, dev.kord.common.entity/EntitlementOwnerType) // dev.kord.rest.json.request/TestEntitlementCreateRequest.<init>|<init>(dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake;dev.kord.common.entity.EntitlementOwnerType){}[0]
+
+    final val ownerId // dev.kord.rest.json.request/TestEntitlementCreateRequest.ownerId|{}ownerId[0]
+        final fun <get-ownerId>(): dev.kord.common.entity/Snowflake // dev.kord.rest.json.request/TestEntitlementCreateRequest.ownerId.<get-ownerId>|<get-ownerId>(){}[0]
+    final val ownerType // dev.kord.rest.json.request/TestEntitlementCreateRequest.ownerType|{}ownerType[0]
+        final fun <get-ownerType>(): dev.kord.common.entity/EntitlementOwnerType // dev.kord.rest.json.request/TestEntitlementCreateRequest.ownerType.<get-ownerType>|<get-ownerType>(){}[0]
+    final val skuId // dev.kord.rest.json.request/TestEntitlementCreateRequest.skuId|{}skuId[0]
+        final fun <get-skuId>(): dev.kord.common.entity/Snowflake // dev.kord.rest.json.request/TestEntitlementCreateRequest.skuId.<get-skuId>|<get-skuId>(){}[0]
+
+    final fun component1(): dev.kord.common.entity/Snowflake // dev.kord.rest.json.request/TestEntitlementCreateRequest.component1|component1(){}[0]
+    final fun component2(): dev.kord.common.entity/Snowflake // dev.kord.rest.json.request/TestEntitlementCreateRequest.component2|component2(){}[0]
+    final fun component3(): dev.kord.common.entity/EntitlementOwnerType // dev.kord.rest.json.request/TestEntitlementCreateRequest.component3|component3(){}[0]
+    final fun copy(dev.kord.common.entity/Snowflake = ..., dev.kord.common.entity/Snowflake = ..., dev.kord.common.entity/EntitlementOwnerType = ...): dev.kord.rest.json.request/TestEntitlementCreateRequest // dev.kord.rest.json.request/TestEntitlementCreateRequest.copy|copy(dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake;dev.kord.common.entity.EntitlementOwnerType){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.json.request/TestEntitlementCreateRequest.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.rest.json.request/TestEntitlementCreateRequest.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // dev.kord.rest.json.request/TestEntitlementCreateRequest.toString|toString(){}[0]
+
+    final object $serializer : kotlinx.serialization.internal/GeneratedSerializer<dev.kord.rest.json.request/TestEntitlementCreateRequest> { // dev.kord.rest.json.request/TestEntitlementCreateRequest.$serializer|null[0]
+        final val descriptor // dev.kord.rest.json.request/TestEntitlementCreateRequest.$serializer.descriptor|{}descriptor[0]
+            final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // dev.kord.rest.json.request/TestEntitlementCreateRequest.$serializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
+
+        final fun childSerializers(): kotlin/Array<kotlinx.serialization/KSerializer<*>> // dev.kord.rest.json.request/TestEntitlementCreateRequest.$serializer.childSerializers|childSerializers(){}[0]
+        final fun deserialize(kotlinx.serialization.encoding/Decoder): dev.kord.rest.json.request/TestEntitlementCreateRequest // dev.kord.rest.json.request/TestEntitlementCreateRequest.$serializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
+        final fun serialize(kotlinx.serialization.encoding/Encoder, dev.kord.rest.json.request/TestEntitlementCreateRequest) // dev.kord.rest.json.request/TestEntitlementCreateRequest.$serializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;dev.kord.rest.json.request.TestEntitlementCreateRequest){}[0]
+    }
+
+    final object Companion { // dev.kord.rest.json.request/TestEntitlementCreateRequest.Companion|null[0]
+        final fun serializer(): kotlinx.serialization/KSerializer<dev.kord.rest.json.request/TestEntitlementCreateRequest> // dev.kord.rest.json.request/TestEntitlementCreateRequest.Companion.serializer|serializer(){}[0]
     }
 }
 
@@ -6656,6 +6795,15 @@ final class dev.kord.rest.service/EmojiService : dev.kord.rest.service/RestServi
     final suspend inline fun modifyEmoji(dev.kord.common.entity/Snowflake, dev.kord.common.entity/Snowflake, kotlin/Function1<dev.kord.rest.builder.guild/EmojiModifyBuilder, kotlin/Unit>): dev.kord.common.entity/DiscordEmoji // dev.kord.rest.service/EmojiService.modifyEmoji|modifyEmoji(dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake;kotlin.Function1<dev.kord.rest.builder.guild.EmojiModifyBuilder,kotlin.Unit>){}[0]
 }
 
+final class dev.kord.rest.service/EntitlementService : dev.kord.rest.service/RestService { // dev.kord.rest.service/EntitlementService|null[0]
+    constructor <init>(dev.kord.rest.request/RequestHandler) // dev.kord.rest.service/EntitlementService.<init>|<init>(dev.kord.rest.request.RequestHandler){}[0]
+
+    final suspend fun consumeEntitlement(dev.kord.common.entity/Snowflake, dev.kord.common.entity/Snowflake) // dev.kord.rest.service/EntitlementService.consumeEntitlement|consumeEntitlement(dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake){}[0]
+    final suspend fun createTestEntitlement(dev.kord.common.entity/Snowflake, dev.kord.rest.json.request/TestEntitlementCreateRequest): dev.kord.common.entity/DiscordEntitlement // dev.kord.rest.service/EntitlementService.createTestEntitlement|createTestEntitlement(dev.kord.common.entity.Snowflake;dev.kord.rest.json.request.TestEntitlementCreateRequest){}[0]
+    final suspend fun deleteTestEntitlement(dev.kord.common.entity/Snowflake, dev.kord.common.entity/Snowflake) // dev.kord.rest.service/EntitlementService.deleteTestEntitlement|deleteTestEntitlement(dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake){}[0]
+    final suspend fun listEntitlements(dev.kord.common.entity/Snowflake, dev.kord.rest.json.request/EntitlementsListRequest): kotlin.collections/List<dev.kord.common.entity/DiscordEntitlement> // dev.kord.rest.service/EntitlementService.listEntitlements|listEntitlements(dev.kord.common.entity.Snowflake;dev.kord.rest.json.request.EntitlementsListRequest){}[0]
+}
+
 final class dev.kord.rest.service/GuildService : dev.kord.rest.service/RestService { // dev.kord.rest.service/GuildService|null[0]
     constructor <init>(dev.kord.rest.request/RequestHandler) // dev.kord.rest.service/GuildService.<init>|<init>(dev.kord.rest.request.RequestHandler){}[0]
 
@@ -6796,16 +6944,22 @@ final class dev.kord.rest.service/RestClient : dev.kord.rest.service/RestService
         final fun <get-channel>(): dev.kord.rest.service/ChannelService // dev.kord.rest.service/RestClient.channel.<get-channel>|<get-channel>(){}[0]
     final val emoji // dev.kord.rest.service/RestClient.emoji|{}emoji[0]
         final fun <get-emoji>(): dev.kord.rest.service/EmojiService // dev.kord.rest.service/RestClient.emoji.<get-emoji>|<get-emoji>(){}[0]
+    final val entitlement // dev.kord.rest.service/RestClient.entitlement|{}entitlement[0]
+        final fun <get-entitlement>(): dev.kord.rest.service/EntitlementService // dev.kord.rest.service/RestClient.entitlement.<get-entitlement>|<get-entitlement>(){}[0]
     final val guild // dev.kord.rest.service/RestClient.guild|{}guild[0]
         final fun <get-guild>(): dev.kord.rest.service/GuildService // dev.kord.rest.service/RestClient.guild.<get-guild>|<get-guild>(){}[0]
     final val interaction // dev.kord.rest.service/RestClient.interaction|{}interaction[0]
         final fun <get-interaction>(): dev.kord.rest.service/InteractionService // dev.kord.rest.service/RestClient.interaction.<get-interaction>|<get-interaction>(){}[0]
     final val invite // dev.kord.rest.service/RestClient.invite|{}invite[0]
         final fun <get-invite>(): dev.kord.rest.service/InviteService // dev.kord.rest.service/RestClient.invite.<get-invite>|<get-invite>(){}[0]
+    final val sku // dev.kord.rest.service/RestClient.sku|{}sku[0]
+        final fun <get-sku>(): dev.kord.rest.service/SkuService // dev.kord.rest.service/RestClient.sku.<get-sku>|<get-sku>(){}[0]
     final val stageInstance // dev.kord.rest.service/RestClient.stageInstance|{}stageInstance[0]
         final fun <get-stageInstance>(): dev.kord.rest.service/StageInstanceService // dev.kord.rest.service/RestClient.stageInstance.<get-stageInstance>|<get-stageInstance>(){}[0]
     final val sticker // dev.kord.rest.service/RestClient.sticker|{}sticker[0]
         final fun <get-sticker>(): dev.kord.rest.service/StickerService // dev.kord.rest.service/RestClient.sticker.<get-sticker>|<get-sticker>(){}[0]
+    final val subscription // dev.kord.rest.service/RestClient.subscription|{}subscription[0]
+        final fun <get-subscription>(): dev.kord.rest.service/SubscriptionService // dev.kord.rest.service/RestClient.subscription.<get-subscription>|<get-subscription>(){}[0]
     final val template // dev.kord.rest.service/RestClient.template|{}template[0]
         final fun <get-template>(): dev.kord.rest.service/TemplateService // dev.kord.rest.service/RestClient.template.<get-template>|<get-template>(){}[0]
     final val user // dev.kord.rest.service/RestClient.user|{}user[0]
@@ -6816,6 +6970,12 @@ final class dev.kord.rest.service/RestClient : dev.kord.rest.service/RestService
         final fun <get-webhook>(): dev.kord.rest.service/WebhookService // dev.kord.rest.service/RestClient.webhook.<get-webhook>|<get-webhook>(){}[0]
 
     final suspend inline fun <#A1: kotlin/Any?> unsafe(dev.kord.rest.route/Route<#A1>, kotlin/Function1<dev.kord.rest.request/RequestBuilder<#A1>, kotlin/Unit>): #A1 // dev.kord.rest.service/RestClient.unsafe|unsafe(dev.kord.rest.route.Route<0:0>;kotlin.Function1<dev.kord.rest.request.RequestBuilder<0:0>,kotlin.Unit>){0§<kotlin.Any?>}[0]
+}
+
+final class dev.kord.rest.service/SkuService : dev.kord.rest.service/RestService { // dev.kord.rest.service/SkuService|null[0]
+    constructor <init>(dev.kord.rest.request/RequestHandler) // dev.kord.rest.service/SkuService.<init>|<init>(dev.kord.rest.request.RequestHandler){}[0]
+
+    final suspend fun listSkus(dev.kord.common.entity/Snowflake): kotlin.collections/List<dev.kord.common.entity/DiscordSku> // dev.kord.rest.service/SkuService.listSkus|listSkus(dev.kord.common.entity.Snowflake){}[0]
 }
 
 final class dev.kord.rest.service/StageInstanceService : dev.kord.rest.service/RestService { // dev.kord.rest.service/StageInstanceService|null[0]
@@ -6840,6 +7000,13 @@ final class dev.kord.rest.service/StickerService : dev.kord.rest.service/RestSer
     final suspend fun getSticker(dev.kord.common.entity/Snowflake): dev.kord.common.entity/DiscordMessageSticker // dev.kord.rest.service/StickerService.getSticker|getSticker(dev.kord.common.entity.Snowflake){}[0]
     final suspend fun modifyGuildSticker(dev.kord.common.entity/Snowflake, dev.kord.common.entity/Snowflake, dev.kord.rest.json.request/GuildStickerModifyRequest): dev.kord.common.entity/DiscordMessageSticker // dev.kord.rest.service/StickerService.modifyGuildSticker|modifyGuildSticker(dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake;dev.kord.rest.json.request.GuildStickerModifyRequest){}[0]
     final suspend inline fun modifyGuildSticker(dev.kord.common.entity/Snowflake, dev.kord.common.entity/Snowflake, kotlin/Function1<dev.kord.rest.builder.guild/StickerModifyBuilder, kotlin/Unit>): dev.kord.common.entity/DiscordMessageSticker // dev.kord.rest.service/StickerService.modifyGuildSticker|modifyGuildSticker(dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake;kotlin.Function1<dev.kord.rest.builder.guild.StickerModifyBuilder,kotlin.Unit>){}[0]
+}
+
+final class dev.kord.rest.service/SubscriptionService : dev.kord.rest.service/RestService { // dev.kord.rest.service/SubscriptionService|null[0]
+    constructor <init>(dev.kord.rest.request/RequestHandler) // dev.kord.rest.service/SubscriptionService.<init>|<init>(dev.kord.rest.request.RequestHandler){}[0]
+
+    final suspend fun getSkuSubscription(dev.kord.common.entity/Snowflake, dev.kord.common.entity/Snowflake): dev.kord.common.entity/DiscordSubscription // dev.kord.rest.service/SubscriptionService.getSkuSubscription|getSkuSubscription(dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake){}[0]
+    final suspend fun listSkuSubscriptions(dev.kord.common.entity/Snowflake, dev.kord.rest.json.request/SkuSubscriptionsListRequest): kotlin.collections/List<dev.kord.common.entity/DiscordSubscription> // dev.kord.rest.service/SubscriptionService.listSkuSubscriptions|listSkuSubscriptions(dev.kord.common.entity.Snowflake;dev.kord.rest.json.request.SkuSubscriptionsListRequest){}[0]
 }
 
 final class dev.kord.rest.service/TemplateService : dev.kord.rest.service/RestService { // dev.kord.rest.service/TemplateService|null[0]
@@ -7141,6 +7308,12 @@ sealed class <#A: kotlin/Any?> dev.kord.rest.route/Route { // dev.kord.rest.rout
 
     final object EmojiId : dev.kord.rest.route/Route.Key // dev.kord.rest.route/Route.EmojiId|null[0]
 
+    final object EntitlementConsume : dev.kord.rest.route/Route<kotlin/Unit> // dev.kord.rest.route/Route.EntitlementConsume|null[0]
+
+    final object EntitlementId : dev.kord.rest.route/Route.Key // dev.kord.rest.route/Route.EntitlementId|null[0]
+
+    final object EntitlementsList : dev.kord.rest.route/Route<kotlin.collections/List<dev.kord.common.entity/DiscordEntitlement>> // dev.kord.rest.route/Route.EntitlementsList|null[0]
+
     final object ExecuteGithubWebhookPost : dev.kord.rest.route/Route<kotlin/Unit> // dev.kord.rest.route/Route.ExecuteGithubWebhookPost|null[0]
 
     final object ExecuteSlackWebhookPost : dev.kord.rest.route/Route<kotlin/Unit> // dev.kord.rest.route/Route.ExecuteSlackWebhookPost|null[0]
@@ -7399,6 +7572,14 @@ sealed class <#A: kotlin/Any?> dev.kord.rest.route/Route { // dev.kord.rest.rout
 
     final object SelfVoiceStatePatch : dev.kord.rest.route/Route<kotlin/Unit> // dev.kord.rest.route/Route.SelfVoiceStatePatch|null[0]
 
+    final object SkuId : dev.kord.rest.route/Route.Key // dev.kord.rest.route/Route.SkuId|null[0]
+
+    final object SkuSubscriptionGet : dev.kord.rest.route/Route<dev.kord.common.entity/DiscordSubscription> // dev.kord.rest.route/Route.SkuSubscriptionGet|null[0]
+
+    final object SkuSubscriptionsList : dev.kord.rest.route/Route<kotlin.collections/List<dev.kord.common.entity/DiscordSubscription>> // dev.kord.rest.route/Route.SkuSubscriptionsList|null[0]
+
+    final object SkusList : dev.kord.rest.route/Route<kotlin.collections/List<dev.kord.common.entity/DiscordSku>> // dev.kord.rest.route/Route.SkusList|null[0]
+
     final object StageInstanceDelete : dev.kord.rest.route/Route<kotlin/Unit> // dev.kord.rest.route/Route.StageInstanceDelete|null[0]
 
     final object StageInstanceGet : dev.kord.rest.route/Route<dev.kord.common.entity/DiscordStageInstance> // dev.kord.rest.route/Route.StageInstanceGet|null[0]
@@ -7415,6 +7596,8 @@ sealed class <#A: kotlin/Any?> dev.kord.rest.route/Route { // dev.kord.rest.rout
 
     final object StickerId : dev.kord.rest.route/Route.Key // dev.kord.rest.route/Route.StickerId|null[0]
 
+    final object SubscriptionId : dev.kord.rest.route/Route.Key // dev.kord.rest.route/Route.SubscriptionId|null[0]
+
     final object TemplateCode : dev.kord.rest.route/Route.Key // dev.kord.rest.route/Route.TemplateCode|null[0]
 
     final object TemplateDelete : dev.kord.rest.route/Route<dev.kord.common.entity/DiscordTemplate> // dev.kord.rest.route/Route.TemplateDelete|null[0]
@@ -7424,6 +7607,10 @@ sealed class <#A: kotlin/Any?> dev.kord.rest.route/Route { // dev.kord.rest.rout
     final object TemplatePatch : dev.kord.rest.route/Route<dev.kord.common.entity/DiscordTemplate> // dev.kord.rest.route/Route.TemplatePatch|null[0]
 
     final object TemplateSyncPut : dev.kord.rest.route/Route<dev.kord.common.entity/DiscordTemplate> // dev.kord.rest.route/Route.TemplateSyncPut|null[0]
+
+    final object TestEntitlementCreate : dev.kord.rest.route/Route<dev.kord.common.entity/DiscordEntitlement> // dev.kord.rest.route/Route.TestEntitlementCreate|null[0]
+
+    final object TestEntitlementDelete : dev.kord.rest.route/Route<kotlin/Unit> // dev.kord.rest.route/Route.TestEntitlementDelete|null[0]
 
     final object ThreadMembersGet : dev.kord.rest.route/Route<kotlin.collections/List<dev.kord.common.entity/DiscordThreadMember>> // dev.kord.rest.route/Route.ThreadMembersGet|null[0]
 

@@ -134,7 +134,9 @@ public sealed class Event {
                 "THREAD_MEMBER_UPDATE" -> ThreadMemberUpdate(decode(DiscordThreadMember.serializer()), sequence)
                 "THREAD_MEMBERS_UPDATE" ->
                     ThreadMembersUpdate(decode(DiscordThreadMembersUpdate.serializer()), sequence)
-                // Missing: Entitlement Create, Entitlement Update, Entitlement Delete
+                "ENTITLEMENT_CREATE" -> EntitlementCreate(decode(DiscordEntitlement.serializer()), sequence)
+                "ENTITLEMENT_UPDATE" -> EntitlementUpdate(decode(DiscordEntitlement.serializer()), sequence)
+                "ENTITLEMENT_DELETE" -> EntitlementDelete(decode(DiscordEntitlement.serializer()), sequence)
                 "GUILD_CREATE" -> GuildCreate(decode(DiscordGuild.serializer()), sequence)
                 "GUILD_UPDATE" -> GuildUpdate(decode(DiscordGuild.serializer()), sequence)
                 "GUILD_DELETE" -> GuildDelete(decode(DiscordUnavailableGuild.serializer()), sequence)
@@ -181,9 +183,13 @@ public sealed class Event {
                 "MESSAGE_REACTION_REMOVE_EMOJI" ->
                     MessageReactionRemoveEmoji(decode(DiscordRemovedEmoji.serializer()), sequence)
                 "PRESENCE_UPDATE" -> PresenceUpdate(decode(DiscordPresenceUpdate.serializer()), sequence)
-                //  Missing: Stage Instance Create, Stage Instance Update, Stage Instance Delete
+                // Missing: Stage Instance Create, Stage Instance Update, Stage Instance Delete
+                "SUBSCRIPTION_CREATE" -> SubscriptionCreate(decode(DiscordSubscription.serializer()), sequence)
+                "SUBSCRIPTION_UPDATE" -> SubscriptionUpdate(decode(DiscordSubscription.serializer()), sequence)
+                "SUBSCRIPTION_DELETE" -> SubscriptionDelete(decode(DiscordSubscription.serializer()), sequence)
                 "TYPING_START" -> TypingStart(decode(DiscordTyping.serializer()), sequence)
                 "USER_UPDATE" -> UserUpdate(decode(DiscordUser.serializer()), sequence)
+                // Missing: Voice Channel Effect Send
                 "VOICE_STATE_UPDATE" -> VoiceStateUpdate(decode(DiscordVoiceState.serializer()), sequence)
                 "VOICE_SERVER_UPDATE" -> VoiceServerUpdate(decode(DiscordVoiceServerUpdateData.serializer()), sequence)
                 "WEBHOOKS_UPDATE" -> WebhooksUpdate(decode(DiscordWebhooksUpdateData.serializer()), sequence)
@@ -646,3 +652,18 @@ public data class DiscordThreadMembersUpdate(
     @SerialName("removed_member_ids")
     val removedMemberIds: Optional<List<Snowflake>> = Optional.Missing()
 )
+
+public data class EntitlementCreate(val entitlement: DiscordEntitlement, override val sequence: Int?) : DispatchEvent()
+
+public data class EntitlementUpdate(val entitlement: DiscordEntitlement, override val sequence: Int?) : DispatchEvent()
+
+public data class EntitlementDelete(val entitlement: DiscordEntitlement, override val sequence: Int?) : DispatchEvent()
+
+public data class SubscriptionCreate(val subscription: DiscordSubscription, override val sequence: Int?) :
+    DispatchEvent()
+
+public data class SubscriptionUpdate(val subscription: DiscordSubscription, override val sequence: Int?) :
+    DispatchEvent()
+
+public data class SubscriptionDelete(val subscription: DiscordSubscription, override val sequence: Int?) :
+    DispatchEvent()

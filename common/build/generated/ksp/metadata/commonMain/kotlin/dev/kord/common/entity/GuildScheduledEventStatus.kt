@@ -14,7 +14,7 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 /**
- * See [GuildScheduledEventStatus]s in the
+ * See [GuildScheduledEventStatus]es in the
  * [Discord Developer Documentation](https://discord.com/developers/docs/resources/guild-scheduled-event#guild-scheduled-event-object-guild-scheduled-event-status).
  */
 @Serializable(with = GuildScheduledEventStatus.Serializer::class)
@@ -36,7 +36,7 @@ public sealed class GuildScheduledEventStatus(
     /**
      * An unknown [GuildScheduledEventStatus].
      *
-     * This is used as a fallback for [GuildScheduledEventStatus]s that haven't been added to Kord
+     * This is used as a fallback for [GuildScheduledEventStatus]es that haven't been added to Kord
      * yet.
      */
     public class Unknown internal constructor(
@@ -66,7 +66,7 @@ public sealed class GuildScheduledEventStatus(
 
     public companion object {
         /**
-         * A [List] of all known [GuildScheduledEventStatus]s.
+         * A [List] of all known [GuildScheduledEventStatus]es.
          */
         public val entries: List<GuildScheduledEventStatus> by lazy(mode = PUBLICATION) {
             listOf(

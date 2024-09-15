@@ -581,6 +581,45 @@ public abstract class dev/kord/gateway/DispatchEvent : dev/kord/gateway/Event {
 	public abstract fun getSequence ()Ljava/lang/Integer;
 }
 
+public final class dev/kord/gateway/EntitlementCreate : dev/kord/gateway/DispatchEvent {
+	public fun <init> (Ldev/kord/common/entity/DiscordEntitlement;Ljava/lang/Integer;)V
+	public final fun component1 ()Ldev/kord/common/entity/DiscordEntitlement;
+	public final fun component2 ()Ljava/lang/Integer;
+	public final fun copy (Ldev/kord/common/entity/DiscordEntitlement;Ljava/lang/Integer;)Ldev/kord/gateway/EntitlementCreate;
+	public static synthetic fun copy$default (Ldev/kord/gateway/EntitlementCreate;Ldev/kord/common/entity/DiscordEntitlement;Ljava/lang/Integer;ILjava/lang/Object;)Ldev/kord/gateway/EntitlementCreate;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getEntitlement ()Ldev/kord/common/entity/DiscordEntitlement;
+	public fun getSequence ()Ljava/lang/Integer;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class dev/kord/gateway/EntitlementDelete : dev/kord/gateway/DispatchEvent {
+	public fun <init> (Ldev/kord/common/entity/DiscordEntitlement;Ljava/lang/Integer;)V
+	public final fun component1 ()Ldev/kord/common/entity/DiscordEntitlement;
+	public final fun component2 ()Ljava/lang/Integer;
+	public final fun copy (Ldev/kord/common/entity/DiscordEntitlement;Ljava/lang/Integer;)Ldev/kord/gateway/EntitlementDelete;
+	public static synthetic fun copy$default (Ldev/kord/gateway/EntitlementDelete;Ldev/kord/common/entity/DiscordEntitlement;Ljava/lang/Integer;ILjava/lang/Object;)Ldev/kord/gateway/EntitlementDelete;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getEntitlement ()Ldev/kord/common/entity/DiscordEntitlement;
+	public fun getSequence ()Ljava/lang/Integer;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class dev/kord/gateway/EntitlementUpdate : dev/kord/gateway/DispatchEvent {
+	public fun <init> (Ldev/kord/common/entity/DiscordEntitlement;Ljava/lang/Integer;)V
+	public final fun component1 ()Ldev/kord/common/entity/DiscordEntitlement;
+	public final fun component2 ()Ljava/lang/Integer;
+	public final fun copy (Ldev/kord/common/entity/DiscordEntitlement;Ljava/lang/Integer;)Ldev/kord/gateway/EntitlementUpdate;
+	public static synthetic fun copy$default (Ldev/kord/gateway/EntitlementUpdate;Ldev/kord/common/entity/DiscordEntitlement;Ljava/lang/Integer;ILjava/lang/Object;)Ldev/kord/gateway/EntitlementUpdate;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getEntitlement ()Ldev/kord/common/entity/DiscordEntitlement;
+	public fun getSequence ()Ljava/lang/Integer;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
 public abstract class dev/kord/gateway/Event {
 }
 
@@ -1684,6 +1723,45 @@ public synthetic class dev/kord/gateway/Resumed$$serializer : kotlinx/serializat
 
 public final class dev/kord/gateway/Resumed$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class dev/kord/gateway/SubscriptionCreate : dev/kord/gateway/DispatchEvent {
+	public fun <init> (Ldev/kord/common/entity/DiscordSubscription;Ljava/lang/Integer;)V
+	public final fun component1 ()Ldev/kord/common/entity/DiscordSubscription;
+	public final fun component2 ()Ljava/lang/Integer;
+	public final fun copy (Ldev/kord/common/entity/DiscordSubscription;Ljava/lang/Integer;)Ldev/kord/gateway/SubscriptionCreate;
+	public static synthetic fun copy$default (Ldev/kord/gateway/SubscriptionCreate;Ldev/kord/common/entity/DiscordSubscription;Ljava/lang/Integer;ILjava/lang/Object;)Ldev/kord/gateway/SubscriptionCreate;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun getSequence ()Ljava/lang/Integer;
+	public final fun getSubscription ()Ldev/kord/common/entity/DiscordSubscription;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class dev/kord/gateway/SubscriptionDelete : dev/kord/gateway/DispatchEvent {
+	public fun <init> (Ldev/kord/common/entity/DiscordSubscription;Ljava/lang/Integer;)V
+	public final fun component1 ()Ldev/kord/common/entity/DiscordSubscription;
+	public final fun component2 ()Ljava/lang/Integer;
+	public final fun copy (Ldev/kord/common/entity/DiscordSubscription;Ljava/lang/Integer;)Ldev/kord/gateway/SubscriptionDelete;
+	public static synthetic fun copy$default (Ldev/kord/gateway/SubscriptionDelete;Ldev/kord/common/entity/DiscordSubscription;Ljava/lang/Integer;ILjava/lang/Object;)Ldev/kord/gateway/SubscriptionDelete;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun getSequence ()Ljava/lang/Integer;
+	public final fun getSubscription ()Ldev/kord/common/entity/DiscordSubscription;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class dev/kord/gateway/SubscriptionUpdate : dev/kord/gateway/DispatchEvent {
+	public fun <init> (Ldev/kord/common/entity/DiscordSubscription;Ljava/lang/Integer;)V
+	public final fun component1 ()Ldev/kord/common/entity/DiscordSubscription;
+	public final fun component2 ()Ljava/lang/Integer;
+	public final fun copy (Ldev/kord/common/entity/DiscordSubscription;Ljava/lang/Integer;)Ldev/kord/gateway/SubscriptionUpdate;
+	public static synthetic fun copy$default (Ldev/kord/gateway/SubscriptionUpdate;Ldev/kord/common/entity/DiscordSubscription;Ljava/lang/Integer;ILjava/lang/Object;)Ldev/kord/gateway/SubscriptionUpdate;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun getSequence ()Ljava/lang/Integer;
+	public final fun getSubscription ()Ldev/kord/common/entity/DiscordSubscription;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
 }
 
 public final class dev/kord/gateway/ThreadCreate : dev/kord/gateway/DispatchEvent {

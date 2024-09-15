@@ -11,7 +11,11 @@ import dev.kord.core.entity.channel.TopGuildChannel
 import dev.kord.core.entity.channel.thread.ThreadChannel
 import dev.kord.core.entity.channel.thread.ThreadMember
 import dev.kord.core.entity.interaction.followup.FollowupMessage
+import dev.kord.core.entity.monetization.Entitlement
+import dev.kord.core.entity.monetization.Subscription
 import dev.kord.core.switchIfEmpty
+import dev.kord.rest.json.request.EntitlementsListRequest
+import dev.kord.rest.json.request.SkuSubscriptionsListRequest
 import kotlinx.coroutines.flow.Flow
 import kotlinx.datetime.Instant
 
@@ -276,6 +280,15 @@ private class FallbackEntitySupplier(val first: EntitySupplier, val second: Enti
 
     override suspend fun getAutoModerationRuleOrNull(guildId: Snowflake, ruleId: Snowflake): AutoModerationRule? =
         first.getAutoModerationRuleOrNull(guildId, ruleId) ?: second.getAutoModerationRuleOrNull(guildId, ruleId)
+
+    override fun getEntitlements(applicationId: Snowflake, request: EntitlementsListRequest): Flow<Entitlement> =
+        first.getEntitlements(applicationId, request).switchIfEmpty(second.getEntitlements(applicationId, request))
+
+    override fun getSubscriptions(skuId: Snowflake, request: SkuSubscriptionsListRequest): Flow<Subscription> =
+        first.getSubscriptions(skuId, request).switchIfEmpty(second.getSubscriptions(skuId, request))
+
+    override suspend fun getSubscriptionOrNull(skuId: Snowflake, subscriptionId: Snowflake): Subscription? =
+        first.getSubscriptionOrNull(skuId, subscriptionId) ?: second.getSubscriptionOrNull(skuId, subscriptionId)
 
 
     override fun toString(): String = "FallbackEntitySupplier(first=$first, second=$second)"

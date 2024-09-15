@@ -3,12 +3,10 @@
 package dev.kord.rest.builder.component
 
 import dev.kord.common.annotation.KordDsl
-import dev.kord.common.entity.ButtonStyle
-import dev.kord.common.entity.ComponentType
-import dev.kord.common.entity.DiscordChatComponent
-import dev.kord.common.entity.DiscordPartialEmoji
+import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.delegate.delegate
+import dev.kord.common.entity.optional.optionalSnowflake
 
 @KordDsl
 public sealed class ButtonBuilder : ActionRowComponentBuilder() {
@@ -74,4 +72,22 @@ public sealed class ButtonBuilder : ActionRowComponentBuilder() {
             _disabled,
         )
     }
+}
+
+
+/**
+ * A button that prompts the user to purchase an [SKU][DiscordSku].
+ *
+ * @param skuId The ID of the [SKU][DiscordSku] to prompt for purchase when clicked.
+ */
+@KordDsl
+public class PremiumButtonBuilder(
+    public var skuId: Snowflake,
+) : ActionRowComponentBuilder() {
+    override fun build(): DiscordChatComponent = DiscordChatComponent(
+        type = ComponentType.Button,
+        style = Optional(ButtonStyle.Premium),
+        skuId = skuId.optionalSnowflake(),
+        disabled = _disabled,
+    )
 }
