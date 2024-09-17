@@ -6,14 +6,12 @@ import dev.kord.common.entity.Permissions
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.put
-import kotlin.js.JsName
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class PermissionsTest {
 
     @Test
-    @JsName("test1")
     fun `adding permissions together does not swallow the universe`() {
         Permission.entries.fold(Permissions()) { acc, permission ->
             acc + permission
@@ -21,7 +19,6 @@ class PermissionsTest {
     }
 
     @Test
-    @JsName("test3")
     fun `permissions serialization test`() {
         val expected = buildJsonObject {
             put("id", "12323232")

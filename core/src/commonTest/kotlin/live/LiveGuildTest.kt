@@ -14,7 +14,6 @@ import kotlinx.coroutines.job
 import kotlinx.coroutines.test.runTest
 import kotlinx.datetime.Instant
 import kotlinx.serialization.json.JsonObject
-import kotlin.js.JsName
 import kotlin.test.BeforeTest
 import kotlin.test.Ignore
 import kotlin.test.Test
@@ -54,7 +53,6 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
     }
 
     @Test
-    @JsName("test1")
     fun `Check onEmojisUpdate is called when event is received`() {
         countdownContext(1) {
             live.onEmojisUpdate {
@@ -75,7 +73,6 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
     }
 
     @Test
-    @JsName("test2")
     fun `Check onIntegrationsUpdate is called when event is received`() {
         countdownContext(1) {
             live.onIntegrationsUpdate {
@@ -95,7 +92,6 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
     }
 
     @Test
-    @JsName("test3")
     fun `Check onBanAdd is called when event is received`() {
         countdownContext(1) {
             live.onBanAdd {
@@ -120,7 +116,6 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
     }
 
     @Test
-    @JsName("test4")
     fun `Check onBanRemove is called when event is received`() {
         countdownContext(1) {
             live.onBanRemove {
@@ -145,7 +140,6 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
     }
 
     @Test
-    @JsName("test5")
     fun `Check onPresenceUpdate is called when event is received`() {
         countdownContext(1) {
             live.onPresenceUpdate {
@@ -172,7 +166,6 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
     }
 
     @Test
-    @JsName("test6")
     fun `Check onVoiceServerUpdate is called when event is received`() {
         countdownContext(1) {
             live.onVoiceServerUpdate {
@@ -194,7 +187,6 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
     }
 
     @Test
-    @JsName("test7")
     fun `Check onVoiceStateUpdate is called when event is received`() {
         countdownContext(1) {
             live.onVoiceStateUpdate {
@@ -224,7 +216,6 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
     }
 
     @Test
-    @JsName("test8")
     fun `Check onWebhookUpdate is called when event is received`() {
         countdownContext(1) {
             live.onWebhookUpdate {
@@ -245,7 +236,6 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
     }
 
     @Test
-    @JsName("test9")
     fun `Check onRoleCreate is called when event is received`() {
         countdownContext(1) {
             live.onRoleCreate {
@@ -278,7 +268,6 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
     }
 
     @Test
-    @JsName("test10")
     fun `Check onRoleUpdate is called when event is received`() {
         countdownContext(1) {
             live.onRoleUpdate {
@@ -311,7 +300,6 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
     }
 
     @Test
-    @JsName("test11")
     fun `Check onRoleDelete is called when event is received`() {
         countdownContext(1) {
             live.onRoleDelete {
@@ -332,7 +320,6 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
     }
 
     @Test
-    @JsName("test12")
     fun `Check onMemberJoin is called when event is received`() {
         countdownContext(1) {
             live.onMemberJoin {
@@ -364,7 +351,6 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
     }
 
     @Test
-    @JsName("test13")
     fun `Check onMemberUpdate is called when event is received`() {
         countdownContext(1) {
             live.onMemberUpdate {
@@ -392,7 +378,6 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
     }
 
     @Test
-    @JsName("test14")
     fun `Check onMemberLeave is called when event is received`() {
         countdownContext(1) {
             live.onMemberLeave {
@@ -417,7 +402,6 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
     }
 
     @Test
-    @JsName("test15")
     fun `Check onReactionAdd is called when event is received`() {
         countdownContext(1) {
             val emojiExpected = ReactionEmoji.Unicode("\uD83D\uDC28")
@@ -443,7 +427,6 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
     }
 
     @Test
-    @JsName("test16")
     fun `Check onReactionAdd with specific reaction is called when event is received`() {
         countdownContext(1) {
             val emojiExpected = ReactionEmoji.Unicode("\uD83D\uDC28")
@@ -473,7 +456,6 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
     }
 
     @Test
-    @JsName("test17")
     fun `Check onReactionRemove is called when event is received`() {
         countdownContext(1) {
             val emojiExpected = ReactionEmoji.Unicode("\uD83D\uDC28")
@@ -500,7 +482,6 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
     }
 
     @Test
-    @JsName("test18")
     fun `Check onReactionRemove with specific reaction is called when event is received`() {
         countdownContext(1) {
             val emojiExpected = ReactionEmoji.Unicode("\uD83D\uDC28")
@@ -530,7 +511,6 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
     }
 
     @Test
-    @JsName("test19")
     fun `Check onReactionRemoveAll is called when event is received`() {
         countdownContext(1) {
             live.onReactionRemoveAll {
@@ -552,7 +532,6 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
     }
 
     @Test
-    @JsName("test20")
     fun `Check onMessageCreate is called when event is received`() {
         countdownContext(1) {
             live.onMessageCreate {
@@ -590,7 +569,6 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
     }
 
     @Test
-    @JsName("test21")
     fun `Check onMessageUpdate is called when event is received`() {
         countdownContext(1) {
             live.onMessageUpdate {
@@ -612,7 +590,6 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
     }
 
     @Test
-    @JsName("test22")
     fun `Check onMessageDelete is called when event is received`() {
         countdownContext(1) {
             live.onMessageDelete {
@@ -634,7 +611,6 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
     }
 
     @Test
-    @JsName("test23")
     fun `Check onChannelCreate is called when event is received`() {
         countdownContext(1) {
             live.onChannelCreate {
@@ -656,7 +632,6 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
     }
 
     @Test
-    @JsName("test24")
     fun `Check onChannelUpdate is called when event is received`() {
         countdownContext(1) {
             live.onChannelUpdate {
@@ -678,7 +653,6 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
     }
 
     @Test
-    @JsName("test25")
     fun `Check onChannelDelete is called when event is received`() {
         countdownContext(1) {
             live.onChannelDelete {
@@ -700,7 +674,6 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
     }
 
     @Test
-    @JsName("test26")
     fun `Check onGuildCreate is called when event is received`() {
         countdownContext(1) {
             live.onGuildCreate {
@@ -746,7 +719,6 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
     }
 
     @Test
-    @JsName("test27")
     fun `Check onGuildUpdate is called when event is received`() {
         countdownContext(1) {
             live.onGuildUpdate {
@@ -792,7 +764,6 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
     }
 
     @Test
-    @JsName("test28")
     fun `Check if live entity is completed when event the guild delete event is received`()  {
         countdownContext(1) {
             live.coroutineContext.job.invokeOnCompletion {

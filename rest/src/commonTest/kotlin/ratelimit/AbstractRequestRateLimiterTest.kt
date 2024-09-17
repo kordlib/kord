@@ -10,7 +10,6 @@ import kotlinx.coroutines.withTimeout
 import kotlinx.coroutines.withTimeoutOrNull
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
-import kotlin.js.JsName
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.time.Duration.Companion.seconds
@@ -86,7 +85,6 @@ abstract class AbstractRequestRateLimiterTest {
     }
 
     @Test
-    @JsName("test1")
     fun `concurrent requests on the same route are handled sequentially`() = runTest {
         val clock = TestClock(instant, this)
         val rateLimiter = newRequestRateLimiter(clock)
@@ -104,7 +102,6 @@ abstract class AbstractRequestRateLimiterTest {
     }
 
     @Test
-    @JsName("test2")
     fun `a RequestRateLimiter will suspend for rate limited requests with the same identifier`() = runTest {
         val clock = TestClock(instant, this)
         val rateLimiter = newRequestRateLimiter(clock)
@@ -116,7 +113,6 @@ abstract class AbstractRequestRateLimiterTest {
     }
 
     @Test
-    @JsName("test3")
     fun `a RequestRateLimiter will suspend for rate limited requests with the same bucket`() = runTest {
         val clock = TestClock(instant, this)
         val rateLimiter = newRequestRateLimiter(clock)
@@ -129,7 +125,6 @@ abstract class AbstractRequestRateLimiterTest {
     }
 
     @Test
-    @JsName("test4")
     fun `a RequestRateLimiter will not suspend for rate limited requests that don't share an identifier`() = runTest {
         val clock = TestClock(instant, this)
         val rateLimiter = newRequestRateLimiter(clock)
@@ -142,7 +137,6 @@ abstract class AbstractRequestRateLimiterTest {
     }
 
     @Test
-    @JsName("test5")
     fun `an exception during the handling won't lock the handler`() = runTest {
         val clock = TestClock(instant, this)
         val rateLimiter = newRequestRateLimiter(clock)
@@ -169,7 +163,6 @@ abstract class AbstractRequestRateLimiterTest {
     }
 
     @Test
-    @JsName("test6")
     fun `REGRESSION a RequestRateLimiter encountering a non 429 error response will not throw`() = runTest {
         val clock = TestClock(instant, this)
         val rateLimiter = newRequestRateLimiter(clock)

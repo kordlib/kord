@@ -26,7 +26,6 @@ import kotlinx.coroutines.test.runTest
 import kotlinx.datetime.Clock
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.EmptyCoroutineContext
-import kotlin.js.JsName
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.time.Duration
@@ -63,7 +62,6 @@ class KordEventDropTest {
     )
 
     @Test
-    @JsName("test1")
     fun `hammering the gateway does not drop core events`() = runTest {
         val amount = 1_000
 

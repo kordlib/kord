@@ -3,14 +3,12 @@ package dev.kord.core
 import dev.kord.common.entity.Snowflake
 import kotlinx.coroutines.flow.count
 import kotlinx.coroutines.test.runTest
-import kotlin.js.JsName
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
 internal class UtilKtTest {
 
     @Test
-    @JsName("test1")
     fun `paginate forwards selects the right id`() = runTest {
 
         val flow = paginateForwards(start = Snowflake(0u), batchSize = 100, idSelector = { it }) {
@@ -29,7 +27,6 @@ internal class UtilKtTest {
     }
 
     @Test
-    @JsName("test2")
     fun `paginate backwards selects the right id`() = runTest {
 
         val flow = paginateBackwards(start = Snowflake(1000u), batchSize = 100, idSelector = { it }) {

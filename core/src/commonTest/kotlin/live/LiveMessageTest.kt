@@ -15,7 +15,6 @@ import dev.kord.gateway.*
 import kotlinx.coroutines.job
 import kotlinx.coroutines.test.runTest
 import kotlinx.datetime.Instant
-import kotlin.js.JsName
 import kotlin.test.*
 
 @Ignore
@@ -55,7 +54,6 @@ class LiveMessageTest : AbstractLiveEntityTest<LiveMessage>() {
     }
 
     @Test
-    @JsName("test1")
     fun `Check onReactionAdd is called when event is received`() {
         countdownContext(1) {
             val emojiExpected = ReactionEmoji.Unicode("\uD83D\uDC28")
@@ -81,7 +79,6 @@ class LiveMessageTest : AbstractLiveEntityTest<LiveMessage>() {
     }
 
     @Test
-    @JsName("test2")
     fun `Check onReactionAdd with specific reaction is called when event is received`() {
         countdownContext(1) {
             val emojiExpected = ReactionEmoji.Unicode("\uD83D\uDC28")
@@ -110,7 +107,6 @@ class LiveMessageTest : AbstractLiveEntityTest<LiveMessage>() {
     }
 
     @Test
-    @JsName("test3")
     fun `Check onReactionRemove is called when event is received`() {
         countdownContext(1) {
             val emojiExpected = ReactionEmoji.Unicode("\uD83D\uDC28")
@@ -136,7 +132,6 @@ class LiveMessageTest : AbstractLiveEntityTest<LiveMessage>() {
     }
 
     @Test
-    @JsName("test4")
     fun `Check onReactionRemove with specific reaction is called when event is received`() {
         countdownContext(1) {
             val emojiExpected = ReactionEmoji.Unicode("\uD83D\uDC28")
@@ -165,7 +160,6 @@ class LiveMessageTest : AbstractLiveEntityTest<LiveMessage>() {
     }
 
     @Test
-    @JsName("test5")
     fun `Check onReactionRemoveAll is called when event is received`() {
         countdownContext(1) {
             live.onReactionRemoveAll {
@@ -186,7 +180,6 @@ class LiveMessageTest : AbstractLiveEntityTest<LiveMessage>() {
     }
 
     @Test
-    @JsName("test6")
     fun `Check onUpdate is called when event is received`() {
         countdownContext(1) {
             live.onUpdate {
@@ -207,7 +200,6 @@ class LiveMessageTest : AbstractLiveEntityTest<LiveMessage>() {
     }
 
     @Test
-    @JsName("test7")
     fun `Check if live entity is completed when event the message delete event is received`() {
         countdownContext(1) {
             live.coroutineContext.job.invokeOnCompletion {
@@ -232,7 +224,6 @@ class LiveMessageTest : AbstractLiveEntityTest<LiveMessage>() {
     }
 
     @Test
-    @JsName("test8")
     fun `Check if live entity is completed when event the bulk delete event is received`() {
         countdownContext(1) {
             live.coroutineContext.job.invokeOnCompletion {
@@ -257,7 +248,6 @@ class LiveMessageTest : AbstractLiveEntityTest<LiveMessage>() {
     }
 
     @Test
-    @JsName("test9")
     fun `Check if live entity is completed when event the channel delete event is received`() {
         countdownContext(1) {
             live.coroutineContext.job.invokeOnCompletion {
@@ -282,7 +272,6 @@ class LiveMessageTest : AbstractLiveEntityTest<LiveMessage>() {
     }
 
     @Test
-    @JsName("test10")
     fun `Check if live entity is completed when event the guild delete event is received`() {
         countdownContext(1) {
             live.coroutineContext.job.invokeOnCompletion {

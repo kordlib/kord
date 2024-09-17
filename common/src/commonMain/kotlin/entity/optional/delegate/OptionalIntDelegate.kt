@@ -3,13 +3,11 @@ package dev.kord.common.entity.optional.delegate
 import dev.kord.common.entity.optional.OptionalInt
 import dev.kord.common.entity.optional.optionalInt
 import dev.kord.common.entity.optional.value
-import kotlin.js.JsName
 import kotlin.jvm.JvmName
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KMutableProperty0
 import kotlin.reflect.KProperty
 
-@JsName("intDelegate")
 public fun KMutableProperty0<OptionalInt>.delegate(): ReadWriteProperty<Any?, Int?> = object : ReadWriteProperty<Any?, Int?> {
 
     override fun getValue(thisRef: Any?, property: KProperty<*>): Int? {

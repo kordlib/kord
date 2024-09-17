@@ -16,7 +16,6 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.job
 import kotlinx.coroutines.test.runTest
-import kotlin.js.JsName
 import kotlin.test.*
 import kotlin.time.Duration.Companion.milliseconds
 
@@ -56,7 +55,6 @@ class LiveKordEntityTest : AbstractLiveEntityTest<LiveKordEntityTest.LiveEntityM
     }
 
     @Test
-    @JsName("test1")
     fun `Shutdown entity cancel the lifecycle`() {
         assertTrue(live.isActive)
         live.shutDown()
@@ -64,7 +62,6 @@ class LiveKordEntityTest : AbstractLiveEntityTest<LiveKordEntityTest.LiveEntityM
     }
 
     @Test
-    @JsName("test2")
     fun `Children job are cancelled when the live entity is shut down`() {
         val job = live.on<Event> { }
         assertTrue(job.isActive)
@@ -75,7 +72,6 @@ class LiveKordEntityTest : AbstractLiveEntityTest<LiveKordEntityTest.LiveEntityM
     }
 
     @Test
-    @JsName("test3")
     fun `Shutdown entity without listening events`() {
         countdownContext(1) {
             live.coroutineContext.job.invokeOnCompletion {
@@ -88,7 +84,6 @@ class LiveKordEntityTest : AbstractLiveEntityTest<LiveKordEntityTest.LiveEntityM
     }
 
     @Test
-    @JsName("test4")
     fun `Entity can retrieve the event causing the completion`() {
         countdownContext(1, 10000.milliseconds) {
             val emojiExpected = ReactionEmoji.Unicode("\uD83D\uDC28")
@@ -118,7 +113,6 @@ class LiveKordEntityTest : AbstractLiveEntityTest<LiveKordEntityTest.LiveEntityM
     }
 
     @Test
-    @JsName("test5")
     fun `Check if the filter and update are executed`() {
         // The update function is called once time (increment counter) and BanAddEvent is managed (increment counter)
         countdownContext(2) {
@@ -161,7 +155,6 @@ class LiveKordEntityTest : AbstractLiveEntityTest<LiveKordEntityTest.LiveEntityM
     }
 
     @Test
-    @JsName("test6")
     fun `Check the entity is cancelled when kord is cancelled`() = runTest {
         val job = live.on<BanAddEvent> {
             error("Never called")

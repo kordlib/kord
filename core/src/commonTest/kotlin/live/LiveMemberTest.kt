@@ -17,7 +17,6 @@ import dev.kord.gateway.GuildMemberUpdate
 import kotlinx.coroutines.job
 import kotlinx.coroutines.test.runTest
 import kotlinx.datetime.Instant
-import kotlin.js.JsName
 import kotlin.test.BeforeTest
 import kotlin.test.Ignore
 import kotlin.test.Test
@@ -51,7 +50,6 @@ class LiveMemberTest : AbstractLiveEntityTest<LiveMember>() {
     }
 
     @Test
-    @JsName("test1")
     fun `Check onUpdate is called when event is received`() {
         countdownContext(1) {
             live.onUpdate {
@@ -79,7 +77,6 @@ class LiveMemberTest : AbstractLiveEntityTest<LiveMember>() {
     }
 
     @Test
-    @JsName("test2")
     fun `Check onLeave is called when event is received`() {
         countdownContext(1) {
             live.coroutineContext.job.invokeOnCompletion {
@@ -108,7 +105,6 @@ class LiveMemberTest : AbstractLiveEntityTest<LiveMember>() {
     }
 
     @Test
-    @JsName("test3")
     fun `Check if live entity is completed when the member is banned`() {
         countdownContext(1) {
             live.coroutineContext.job.invokeOnCompletion {
@@ -137,7 +133,6 @@ class LiveMemberTest : AbstractLiveEntityTest<LiveMember>() {
     }
 
     @Test
-    @JsName("test4")
     fun `Check if live entity is completed when the guild is deleted`() {
         countdownContext(1) {
             live.coroutineContext.job.invokeOnCompletion {

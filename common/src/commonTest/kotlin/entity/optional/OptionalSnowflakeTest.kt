@@ -3,10 +3,11 @@ package dev.kord.common.entity.optional
 import dev.kord.common.entity.Snowflake
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.SerializationException
-import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
-import kotlin.js.JsName
-import kotlin.test.*
+import kotlin.test.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertFailsWith
+import kotlin.test.assertIs
 
 internal class OptionalSnowflakeTest {
 
@@ -15,7 +16,6 @@ internal class OptionalSnowflakeTest {
     class EmptyOptionalEntity(val value: OptionalSnowflake = OptionalSnowflake.Missing)
 
     @Test
-    @JsName("test1")
     fun `deserializing nothing in optional assigns Missing`() {
         //language=json
         val json = """{}"""
@@ -31,7 +31,6 @@ internal class OptionalSnowflakeTest {
     class NullOptionalEntity(val value: OptionalSnowflake = OptionalSnowflake.Missing)
 
     @Test
-    @JsName("test2")
     fun `deserializing null in optional throws SerializationException`() {
         //language=json
         val json = """{ "value":null }"""
@@ -46,7 +45,6 @@ internal class OptionalSnowflakeTest {
     class ValueOptionalEntity(val value: OptionalSnowflake = OptionalSnowflake.Missing)
 
     @Test
-    @JsName("test3")
     fun `deserializing value in optional assigns Value`() {
         //language=test
         val json = """{ "value":5 }"""

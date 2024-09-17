@@ -16,14 +16,12 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.test.runTest
-import kotlin.js.JsName
 import kotlin.test.Test
 
 internal class CacheEntitySupplierTest {
 
     @Test
     @OptIn(KordUnsafe::class)
-    @JsName("test1")
     fun `cache does not throw when accessing unregistered entities`() = runTest {
         val kord = Kord(
             ClientResources("", Snowflake(0u), Shards(0), maxConcurrency = 1, HttpClient(), EntitySupplyStrategy.cache),

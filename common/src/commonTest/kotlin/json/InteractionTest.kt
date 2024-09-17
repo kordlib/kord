@@ -6,7 +6,6 @@ import dev.kord.common.entity.optional.orEmpty
 import dev.kord.common.readFile
 import kotlinx.coroutines.test.runTest
 import kotlinx.serialization.json.Json
-import kotlin.js.JsName
 import kotlin.test.Test
 import kotlin.test.assertIs
 
@@ -37,7 +36,6 @@ class InteractionTest {
     }
 
     @Test
-    @JsName("test1")
     fun `group command can be deserialized`() = runTest {
         val text = file("groupsubcommand")
 
@@ -66,7 +64,6 @@ class InteractionTest {
     }
 
     @Test
-    @JsName("test2")
     fun `subcommand  can be deserialized`() = runTest {
         val text = file("subcommand")
 
@@ -94,7 +91,6 @@ class InteractionTest {
 
 
     @Test
-    @JsName("test3")
     fun `root  can be deserialized`() = runTest {
         val text = file("rootcommand")
 
@@ -119,7 +115,6 @@ class InteractionTest {
     }
 
     @Test
-    @JsName("test4")
     fun `slash command permissions can be serialized`() = runTest {
         val text = file("slash_command_permissions_update")
 
@@ -139,7 +134,6 @@ class InteractionTest {
     }
 
     @Test
-    @JsName("test5")
     fun `select menu can be deserialized`() = runTest {
         val text = file("selectmenu")
 

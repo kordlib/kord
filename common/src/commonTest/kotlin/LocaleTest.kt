@@ -2,7 +2,6 @@ package dev.kord.common
 
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
-import kotlin.js.JsName
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -51,7 +50,6 @@ class LocaleTest {
 
 
     @Test
-    @JsName("test1")
     fun `all documented Locales can be deserialized`() {
         all.forEach { (string, locale) ->
             assertEquals(expected = locale, actual = Json.decodeFromString("\"$string\""))
@@ -59,7 +57,6 @@ class LocaleTest {
     }
 
     @Test
-    @JsName("test2")
     fun `all documented Locales can be serialized`() {
         all.forEach { (string, locale) ->
             assertEquals(expected = "\"$string\"", actual = Json.encodeToString(locale))

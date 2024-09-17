@@ -16,7 +16,6 @@ import kotlinx.coroutines.test.runTest
 import kotlinx.datetime.Clock
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
-import kotlin.js.JsName
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
@@ -51,7 +50,6 @@ private val mockMessage = DiscordMessage(
 
 class MessageRequests {
     @Test
-    @JsName("test1")
     fun `attachment channel is read and closed lazily`() = runTest {
 
         val mockEngine = MockEngine { request ->

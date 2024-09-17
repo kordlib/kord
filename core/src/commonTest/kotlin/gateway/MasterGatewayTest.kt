@@ -9,7 +9,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.EmptyCoroutineContext
-import kotlin.js.JsName
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.time.Duration
@@ -18,7 +17,6 @@ import kotlin.time.Duration.Companion.milliseconds
 internal class DefaultMasterGatewayTest {
 
     @Test
-    @JsName("test1")
     fun `Gateway takes ping of single child`() {
         val dummy = DummyGateway()
         val ping = 150.milliseconds
@@ -33,7 +31,6 @@ internal class DefaultMasterGatewayTest {
     }
 
     @Test
-    @JsName("test2")
     fun `Gateway takes ping average of multiple children`() {
         val dummy1 = DummyGateway()
         val dummy2 = DummyGateway()
@@ -51,7 +48,6 @@ internal class DefaultMasterGatewayTest {
     }
 
     @Test
-    @JsName("test3")
     fun `Gateway returns null ping when no gateway pings`(){
 
         val dummy = DummyGateway()

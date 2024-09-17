@@ -12,7 +12,6 @@ import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.MissingFieldException
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonNull
-import kotlin.js.JsName
 import kotlin.random.Random
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -24,7 +23,6 @@ private suspend fun file(name: String): String = readFile("event", name)
 class SerializationTest {
 
     @Test
-    @JsName("test1")
     fun `HeartbeatACK Event serialization`() = runTest {
         val event = Json.decodeFromString(Event.DeserializationStrategy, file("ack"))
         event shouldBe HeartbeatACK
@@ -32,7 +30,6 @@ class SerializationTest {
 
 
     @Test
-    @JsName("test2")
     fun `Hello Event serialization`() = runTest {
         val event = Json.decodeFromString(Event.DeserializationStrategy, file("hello")) as Hello
         with(event) {
@@ -42,7 +39,6 @@ class SerializationTest {
 
 
     @Test
-    @JsName("test3")
     fun `Reconnect Event serialization`() = runTest {
         val event = Json.decodeFromString(Event.DeserializationStrategy, file("reconnect"))
         event shouldBe Reconnect
@@ -50,7 +46,6 @@ class SerializationTest {
 
 
     @Test
-    @JsName("test4")
     fun `Ready Event serialization`() = runTest {
         val event = Json.decodeFromString(Event.DeserializationStrategy, file("ready")) as Ready
         with(event.data) {
@@ -83,14 +78,12 @@ class SerializationTest {
     }
 
     @Test
-    @JsName("test5")
     fun `Resumed Event serialization`() = runTest {
         Json.decodeFromString(Event.DeserializationStrategy, file("resumed")) as Resumed
     }
 
 
     @Test
-    @JsName("test6")
     fun `InvalidSession command serialization`() = runTest {
         val event = Json.decodeFromString(Event.DeserializationStrategy, file("invalid")) as InvalidSession
         with(event) { resumable shouldBe false }
@@ -98,7 +91,6 @@ class SerializationTest {
 
 
     @Test
-    @JsName("test7")
     fun `ChannelPinsUpdate Event serialization`() = runTest {
         val event = Json.decodeFromString(Event.DeserializationStrategy, file("channelpinsupdate")) as ChannelPinsUpdate
         with(event.pins) {
@@ -111,7 +103,6 @@ class SerializationTest {
 
 
     @Test
-    @JsName("test8")
     fun `ChannelCreate Event serialization`() = runTest {
         val event = Json.decodeFromString(Event.DeserializationStrategy, file("channelcreate")) as ChannelCreate
         with(event.channel) {
@@ -131,7 +122,6 @@ class SerializationTest {
 
 
     @Test
-    @JsName("test9")
     fun `ChannelUpdate Event serialization`() = runTest {
         val event = Json.decodeFromString(Event.DeserializationStrategy, file("channelupdate")) as ChannelUpdate
         with(event.channel) {
@@ -150,7 +140,6 @@ class SerializationTest {
     }
 
     @Test
-    @JsName("test10")
     fun `ChannelDelete Event serialization`() = runTest {
         val event = Json.decodeFromString(Event.DeserializationStrategy, file("channeldelete")) as ChannelDelete
         with(event.channel) {

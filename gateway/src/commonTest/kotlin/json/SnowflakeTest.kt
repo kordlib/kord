@@ -5,7 +5,6 @@ import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.*
-import kotlin.js.JsName
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -15,7 +14,6 @@ class SnowflakeTest {
     private data class SnowflakeContainer(val snowflake: Snowflake)
 
     @Test
-    @JsName("test1")
     fun `Deserialization of Snowflake as String completes successfully`() {
         val value = "1337"
         val json = buildJsonObject {
@@ -27,7 +25,6 @@ class SnowflakeTest {
     }
 
     @Test
-    @JsName("test2")
     fun `Deserialization of Snowflake as large String completes successfully`() {
         val value = Snowflake.validValues.last.toString()
         val json = buildJsonObject {
@@ -39,7 +36,6 @@ class SnowflakeTest {
     }
 
     @Test
-    @JsName("test3")
     fun `Deserialization of Snowflake as Number completes successfully`() {
         val value = 1337L
         val json = buildJsonObject {
@@ -51,7 +47,6 @@ class SnowflakeTest {
     }
 
     @Test
-    @JsName("test4")
     fun `Deserialization of Snowflake as large Number completes successfully`() {
         val value = Snowflake.validValues.last
         val json = buildJsonObject {
@@ -64,7 +59,6 @@ class SnowflakeTest {
     }
 
     @Test
-    @JsName("test5")
     fun `Reserialization of Snowflake completes successfully`() {
         val json = buildJsonObject { put("snowflake", 1337L) }
 

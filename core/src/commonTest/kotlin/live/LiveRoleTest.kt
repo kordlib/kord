@@ -13,7 +13,6 @@ import dev.kord.gateway.GuildRoleDelete
 import dev.kord.gateway.GuildRoleUpdate
 import kotlinx.coroutines.job
 import kotlinx.coroutines.test.runTest
-import kotlin.js.JsName
 import kotlin.test.BeforeTest
 import kotlin.test.Ignore
 import kotlin.test.Test
@@ -49,7 +48,6 @@ class LiveRoleTest : AbstractLiveEntityTest<LiveRole>() {
     }
 
     @Test
-    @JsName("test1")
     fun `Check onUpdate is called when event is received`() {
         countdownContext(1) {
             live.onUpdate {
@@ -82,7 +80,6 @@ class LiveRoleTest : AbstractLiveEntityTest<LiveRole>() {
     }
 
     @Test
-    @JsName("test2")
     fun `Check if live entity is completed when the role is deleted`() {
         countdownContext(1) {
             live.coroutineContext.job.invokeOnCompletion {
@@ -107,7 +104,6 @@ class LiveRoleTest : AbstractLiveEntityTest<LiveRole>() {
     }
 
     @Test
-    @JsName("test3")
     fun `Check if live entity is completed when the guild is deleted`() {
         countdownContext(1) {
             live.coroutineContext.job.invokeOnCompletion {

@@ -9,7 +9,6 @@ import dev.kord.core.entity.channel.VoiceChannel
 import dev.kord.core.randomId
 import dev.kord.gateway.ChannelUpdate
 import kotlinx.coroutines.test.runTest
-import kotlin.js.JsName
 import kotlin.test.BeforeTest
 import kotlin.test.Ignore
 import kotlin.test.Test
@@ -35,7 +34,6 @@ class LiveVoiceChannelTest : LiveChannelTest<LiveVoiceChannel>() {
     }
 
     @Test
-    @JsName("test21")
     fun `Check onUpdate is called when event is received`() {
         countdownContext(1) {
             live.onUpdate {

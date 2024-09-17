@@ -2,7 +2,6 @@ package dev.kord.common.serialization
 
 import kotlinx.serialization.SerializationException
 import kotlinx.serialization.json.Json
-import kotlin.js.JsName
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
@@ -43,20 +42,17 @@ abstract class DurationAsLongSerializerTest(
 
 
     @Test
-    @JsName("test1")
     fun `zero Duration can be serialized`() {
         assertEquals(expected = "0", actual = serialize(Duration.ZERO))
     }
 
     @Test
-    @JsName("test2")
     fun `zero Duration can be deserialized`() {
         assertEquals(expected = Duration.ZERO, actual = deserialize("0"))
     }
 
 
     @Test
-    @JsName("test3")
     fun `infinite Durations cannot be serialized`() {
         assertFailsWith<SerializationException> { serialize(Duration.INFINITE) }
         assertFailsWith<SerializationException> { serialize(-Duration.INFINITE) }
@@ -64,45 +60,38 @@ abstract class DurationAsLongSerializerTest(
 
 
     @Test
-    @JsName("test4")
     fun `positive Duration can be serialized`() {
         assertEquals(expected = json, actual = serialize(duration))
     }
 
     @Test
-    @JsName("test5")
     fun `positive Duration can be rounded and serialized`() {
         assertEquals(expected = json, actual = serialize(durationToRound))
     }
 
     @Test
-    @JsName("test6")
     fun `positive Duration can be deserialized`() {
         assertEquals(expected = duration, actual = deserialize(json))
     }
 
 
     @Test
-    @JsName("test7")
     fun `negative Duration can be serialized`() {
         assertEquals(expected = "-$json", actual = serialize(-duration))
     }
 
     @Test
-    @JsName("test8")
     fun `negative Duration can be rounded and serialized`() {
         assertEquals(expected = "-$json", actual = serialize(-durationToRound))
     }
 
     @Test
-    @JsName("test9")
     fun `negative Duration can be deserialized`() {
         assertEquals(expected = -duration, actual = deserialize("-$json"))
     }
 
 
     @Test
-    @JsName("test10")
     fun `positive Duration that would overflow in target unit cannot be serialized`() {
         if (durationThatWouldOverflowInTargetUnit != null) assertFailsWith<SerializationException> {
             serialize(durationThatWouldOverflowInTargetUnit)
@@ -110,7 +99,6 @@ abstract class DurationAsLongSerializerTest(
     }
 
     @Test
-    @JsName("test11")
     fun `negative Duration that would overflow in target unit cannot be serialized`() {
         if (durationThatWouldOverflowInTargetUnit != null) assertFailsWith<SerializationException> {
             serialize(-durationThatWouldOverflowInTargetUnit)
@@ -119,13 +107,11 @@ abstract class DurationAsLongSerializerTest(
 
 
     @Test
-    @JsName("test12")
     fun `large positive Duration gets deserialized as Infinity`() {
         if (largeJson != null) assertEquals(expected = Duration.INFINITE, deserialize(largeJson))
     }
 
     @Test
-    @JsName("test13")
     fun `large negative Duration gets deserialized as -Infinity`() {
         if (largeJson != null) assertEquals(expected = -Duration.INFINITE, deserialize("-$largeJson"))
     }

@@ -14,7 +14,6 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.test.runTest
-import kotlin.js.JsName
 import kotlin.test.Ignore
 import kotlin.test.Test
 import kotlin.time.Duration.Companion.seconds
@@ -22,7 +21,6 @@ import kotlin.time.Duration.Companion.seconds
 class DefaultGatewayTest {
     @OptIn(DelicateCoroutinesApi::class)
     @Test
-    @JsName("test1")
     @Ignore
     fun `default gateway functions correctly`() = runTest {
         val token = getEnv("KORD_TEST_TOKEN") ?: error("Missing env variable KORD_TEST_TOKEN")

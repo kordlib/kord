@@ -2,7 +2,6 @@ package dev.kord.common.entity
 
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
-import kotlin.js.JsName
 import kotlin.test.*
 import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.nanoseconds
@@ -10,54 +9,46 @@ import kotlin.time.Duration.Companion.nanoseconds
 class SnowflakeTest {
 
     @Test
-    @JsName("test1")
     fun `min Snowflake's timestamp is equal to discordEpoch`() {
         assertEquals(Snowflake.discordEpoch, Snowflake.min.timestamp)
     }
 
     @Test
-    @JsName("test2")
     fun `max Snowflake's timestamp is equal to endOfTime`() {
         assertEquals(Snowflake.endOfTime, Snowflake.max.timestamp)
     }
 
     @Test
-    @JsName("test3")
     fun `Snowflake created from ULong MIN_VALUE has timestamp equal to discordEpoch`() {
         val snowflake = Snowflake(ULong.MIN_VALUE)
         assertEquals(Snowflake.discordEpoch, snowflake.timestamp)
     }
 
     @Test
-    @JsName("test4")
     fun `Snowflake created from ULong MAX_VALUE has timestamp equal to endOfTime`() {
         val snowflake = Snowflake(ULong.MAX_VALUE)
         assertEquals(Snowflake.endOfTime, snowflake.timestamp)
     }
 
     @Test
-    @JsName("test5")
     fun `Snowflake created from Long MIN_VALUE has timestamp equal to discordEpoch`() {
         val snowflake = Snowflake(Long.MIN_VALUE)
         assertEquals(Snowflake.discordEpoch, snowflake.timestamp)
     }
 
     @Test
-    @JsName("test6")
     fun `Snowflake created from instant far in the past has timestamp equal to discordEpoch`() {
         val snowflake = Snowflake(Instant.DISTANT_PAST)
         assertEquals(Snowflake.discordEpoch, snowflake.timestamp)
     }
 
     @Test
-    @JsName("test7")
     fun `Snowflake created from instant far in the future has timestamp equal to endOfTime`() {
         val snowflake = Snowflake(Instant.DISTANT_FUTURE)
         assertEquals(Snowflake.endOfTime, snowflake.timestamp)
     }
 
     @Test
-    @JsName("test8")
     fun `Snowflake's timestamp calculates an Instant close to the Instant the Snowflake was created from`() {
         val instant = Clock.System.now()
         val snowflake = Snowflake(instant)
@@ -70,19 +61,16 @@ class SnowflakeTest {
     }
 
     @Test
-    @JsName("test9")
     fun `min Snowflake's timeMark has passed`() {
         assertTrue(Snowflake.min.timeMark.hasPassedNow())
     }
 
     @Test
-    @JsName("test10")
     fun `max Snowflake's timeMark has not passed`() {
         assertFalse(Snowflake.max.timeMark.hasPassedNow())
     }
 
     @Test
-    @JsName("test11")
     fun `Snowflake can be destructured`() {
         val snowflake = Snowflake(0b110010110111_10111_01101_101100111101_u)
         val (timestamp, worker, process, increment) = snowflake
@@ -99,7 +87,6 @@ class SnowflakeTest {
     }
 
     @Test
-    @JsName("test12")
     fun `Snowflakes are compared correctly`() {
         //                      timestamp  worker  process  increment
         //                        vvv        vvv    vvv         vvv

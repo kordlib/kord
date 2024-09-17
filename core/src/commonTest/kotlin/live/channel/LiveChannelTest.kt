@@ -15,7 +15,6 @@ import dev.kord.gateway.ChannelDelete
 import dev.kord.gateway.GuildDelete
 import kotlinx.coroutines.job
 import kotlinx.coroutines.test.runTest
-import kotlin.js.JsName
 import kotlin.reflect.KClass
 import kotlin.test.Ignore
 import kotlin.test.Test
@@ -27,7 +26,6 @@ abstract class LiveChannelTest<LIVE : LiveChannel> : AbstractLiveEntityTest<LIVE
     protected abstract val channelId: Snowflake
 
     @Test
-    @JsName("test41")
     fun `Check type of live entity corresponds to the channel type`() = runTest {
         val data = ChannelData(
             id = randomId(),
@@ -45,7 +43,6 @@ abstract class LiveChannelTest<LIVE : LiveChannel> : AbstractLiveEntityTest<LIVE
     }
 
     @Test
-    @JsName("test2")
     fun `Check if live entity is completed when event the category delete event is received`() {
         countdownContext(1) {
             live.coroutineContext.job.invokeOnCompletion {
@@ -70,7 +67,6 @@ abstract class LiveChannelTest<LIVE : LiveChannel> : AbstractLiveEntityTest<LIVE
     }
 
     @Test
-    @JsName("test3")
     fun `Check if live entity is completed when event the guild delete event is received`() {
         countdownContext(1) {
             live.coroutineContext.job.invokeOnCompletion {

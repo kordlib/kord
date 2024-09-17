@@ -5,7 +5,6 @@ import dev.kord.common.readFile
 import kotlinx.coroutines.test.runTest
 import kotlinx.datetime.Instant
 import kotlinx.serialization.json.Json
-import kotlin.js.JsName
 import kotlin.test.Test
 
 private suspend fun file(name: String): String = readFile("voice", name)
@@ -13,7 +12,6 @@ private suspend fun file(name: String): String = readFile("voice", name)
 class VoiceStateTest {
 
     @Test
-    @JsName("test1")
     fun `VoiceState serialization`() = runTest {
         val state = Json.decodeFromString(DiscordVoiceState.serializer(), file("voicestate"))
 

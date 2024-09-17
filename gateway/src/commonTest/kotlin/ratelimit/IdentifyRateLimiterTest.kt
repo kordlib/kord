@@ -9,14 +9,16 @@ import dev.kord.gateway.GatewayCloseCode.Unknown
 import dev.kord.gateway.InvalidSession
 import dev.kord.gateway.Ready
 import dev.kord.gateway.ReadyData
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CompletableDeferred
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.flow.SharingStarted.Companion.Eagerly
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.currentTime
 import kotlinx.coroutines.test.runTest
 import kotlin.coroutines.ContinuationInterceptor
-import kotlin.js.JsName
 import kotlin.random.Random
 import kotlin.random.nextInt
 import kotlin.test.Test
@@ -54,7 +56,6 @@ private val CLOSE = DiscordClose(closeCode = Unknown, recoverable = true)
 class IdentifyRateLimiterTest {
 
     @Test
-    @JsName("test1")
     fun `IdentifyRateLimiter throws IAEs`() = runTest {
         assertFailsWith<IllegalArgumentException> { IdentifyRateLimiter(maxConcurrency = 0) }
         assertFailsWith<IllegalArgumentException> { IdentifyRateLimiter(maxConcurrency = -1) }
@@ -138,32 +139,26 @@ class IdentifyRateLimiterTest {
 
     // probably the most common case
     @Test
-    @JsName("test2")
     fun `single shard`() = testRateLimiter(shardIds = listOf(0), maxConcurrency = 1, expectedBuckets = 1)
 
     // https://discord.com/developers/docs/topics/gateway#sharding-max-concurrency
     @Test
-    @JsName("test3")
     fun `example 1`() = testRateLimiter(shardIds = 0..15, maxConcurrency = 16, expectedBuckets = 1)
 
     // https://discord.com/developers/docs/topics/gateway#sharding-max-concurrency
     @Test
-    @JsName("test4")
     fun `example 2`() = testRateLimiter(shardIds = 0..31, maxConcurrency = 16, expectedBuckets = 2)
 
     // https://discord.com/channels/613425648685547541/697489244649816084/1021565107949551676
     @Test
-    @JsName("test5")
     fun `example 2 but without shards 15-30`() =
         testRateLimiter(shardIds = (0..14) + 31, maxConcurrency = 16, expectedBuckets = 1)
 
     // https://discord.com/channels/556525343595298817/1021384687337353216
     @Test
-    @JsName("test6")
     fun `Schlaubi's case`() = testRateLimiter(shardIds = 0..14, maxConcurrency = 1, expectedBuckets = 15)
 
     @Test
-    @JsName("test7")
     fun `randomly distributed shards`() = testRateLimiter(
         shardIds = listOf(0, 4, 5, 10, 23),
         maxConcurrency = 2,
@@ -172,7 +167,6 @@ class IdentifyRateLimiterTest {
 
 
     @Test
-    @JsName("test8")
     fun `IdentifyRateLimiter timeouts unresponsive gateways`() = runTest {
         val rateLimiter = IdentifyRateLimiter(
             maxConcurrency = 1,

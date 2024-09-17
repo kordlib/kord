@@ -5,16 +5,14 @@ import dev.kord.common.entity.optional.value
 import dev.kord.common.readFile
 import kotlinx.coroutines.test.runTest
 import kotlinx.serialization.json.Json
-import kotlin.js.JsName
-import kotlin.time.Duration.Companion.seconds
 import kotlin.test.Test
+import kotlin.time.Duration.Companion.seconds
 
 private suspend fun file(name: String): String = readFile("channel", name)
 
 class ChannelTest {
 
     @Test
-    @JsName("test1")
     fun `DMChannel serialization`() = runTest {
         val channel = Json.decodeFromString(DiscordChannel.serializer(), file("dmchannel"))
 
@@ -36,7 +34,6 @@ class ChannelTest {
 
 
     @Test
-    @JsName("test2")
     fun `ChannelCategory serialization`() = runTest {
         val channel = Json.decodeFromString(DiscordChannel.serializer(), file("channelcategory"))
 
@@ -53,7 +50,6 @@ class ChannelTest {
 
 
     @Test
-    @JsName("test3")
     fun `GroupDMChannel serialization`() = runTest {
         val channel = Json.decodeFromString(DiscordChannel.serializer(), file("groupdmchannel"))
 
@@ -84,7 +80,6 @@ class ChannelTest {
 
 
     @Test
-    @JsName("test4")
     fun `GuildNewChannel serialization`() = runTest {
         val channel = Json.decodeFromString(DiscordChannel.serializer(), file("guildnewschannel"))
 
@@ -104,7 +99,6 @@ class ChannelTest {
 
 
     @Test
-    @JsName("test5")
     fun `GuildTextChannel serialization`() = runTest {
         val channel = Json.decodeFromString(DiscordChannel.serializer(), file("guildtextchannel"))
 
@@ -125,7 +119,6 @@ class ChannelTest {
 
 
     @Test
-    @JsName("test6")
     fun `GuildVoiceChannel serialization`() = runTest {
         val channel = Json.decodeFromString(DiscordChannel.serializer(), file("guildvoicechannel"))
 

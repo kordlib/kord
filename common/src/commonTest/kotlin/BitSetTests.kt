@@ -4,14 +4,12 @@ import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.encodeToJsonElement
-import kotlin.js.JsName
 import kotlin.random.Random
 import kotlin.random.nextLong
 import kotlin.test.*
 
 class BitSetTests {
     @Test
-    @JsName("test1")
     fun `a contains b and c`() {
         val a = DiscordBitSet(0b111)
         val b = DiscordBitSet(0b101)
@@ -21,7 +19,6 @@ class BitSetTests {
     }
 
     @Test
-    @JsName("test2")
     fun `a and b are equal and have the same hashCode`() {
         val a = DiscordBitSet(0b111, 0)
         val b = DiscordBitSet(0b111)
@@ -30,7 +27,6 @@ class BitSetTests {
     }
 
     @Test
-    @JsName("test3")
     fun `a does not equal b`() {
         val a = DiscordBitSet(0b111, 0)
         val b = DiscordBitSet(0b111, 0b1)
@@ -38,7 +34,6 @@ class BitSetTests {
     }
 
     @Test
-    @JsName("test4")
     fun `get bits`() {
         val a = DiscordBitSet(0b101, 0)
         assertTrue(a[0])
@@ -52,7 +47,6 @@ class BitSetTests {
     }
 
     @Test
-    @JsName("test5")
     fun `set bits`() {
         val a = EmptyBitSet()
         for (i in 0..64) a[i] = true
@@ -68,14 +62,12 @@ class BitSetTests {
     }
 
     @Test
-    @JsName("test6")
     fun `get a bit out of range`() {
         val a = DiscordBitSet(0b101, 0)
         assertFalse(a[10000])
     }
 
     @Test
-    @JsName("test7")
     fun `add and remove a bit`() {
         val a = DiscordBitSet(0b101, 0)
         a.add(DiscordBitSet(0b111))
@@ -85,7 +77,6 @@ class BitSetTests {
     }
 
     @Test
-    @JsName("test8")
     fun `remove a bit`() {
         val a = DiscordBitSet(0b101, 0)
         a.remove(DiscordBitSet(0b111))
@@ -93,7 +84,6 @@ class BitSetTests {
     }
 
     @Test
-    @JsName("test9")
     fun `binary works`() {
         assertEquals("0", DiscordBitSet().binary)
         assertEquals("0", DiscordBitSet(0).binary)

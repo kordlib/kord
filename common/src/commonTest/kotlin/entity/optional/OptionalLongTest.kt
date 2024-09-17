@@ -2,10 +2,11 @@ package dev.kord.common.entity.optional
 
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.SerializationException
-import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
-import kotlin.js.JsName
-import kotlin.test.*
+import kotlin.test.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertFailsWith
+import kotlin.test.assertIs
 
 internal class OptionalLongTest {
 
@@ -13,7 +14,6 @@ internal class OptionalLongTest {
     class EmptyOptionalEntity(val value: OptionalLong = OptionalLong.Missing)
 
     @Test
-    @JsName("test1")
     fun `deserializing nothing in optional assigns Missing`() {
         //language=json
         val json = """{}"""
@@ -29,7 +29,6 @@ internal class OptionalLongTest {
     class NullOptionalEntity(val value: OptionalLong = OptionalLong.Missing)
 
     @Test
-    @JsName("test2")
     fun `deserializing null in optional throws SerializationException`() {
         //language=json
         val json = """{ "value":null }"""
@@ -45,7 +44,6 @@ internal class OptionalLongTest {
     class ValueOptionalEntity(val value: OptionalLong = OptionalLong.Missing)
 
     @Test
-    @JsName("test3")
     fun `deserializing value in optional assigns Value`() {
         //language=json
         val json = """{ "value":5 }"""

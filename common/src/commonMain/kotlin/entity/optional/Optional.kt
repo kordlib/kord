@@ -9,7 +9,6 @@ import kotlinx.serialization.SerializationException
 import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
-import kotlin.js.JsName
 import kotlin.jvm.JvmName
 
 /**
@@ -145,7 +144,6 @@ public sealed class Optional<out T> {
          * Returns an [Optional] that is either [value] on a non-null [value], or [Null] on `null`.
          */
         @JvmName("invokeNullable")
-        @JsName("invokeNullable")
         public operator fun <T : Any> invoke(value: T?): Optional<T?> = when (value) {
             null -> Null()
             else -> Value(value)
@@ -265,7 +263,6 @@ public inline fun <E : Any, T : Any> Optional<E>.flatMap(mapper: (E) -> Optional
 
 @Suppress("UNCHECKED_CAST")
 @JvmName("mapNullableOptional")
-@JsName("mapNullableOptional")
 public inline fun <E : Any, T : Any> Optional<E?>.map(mapper: (E) -> T): Optional<T?> = when (this) {
     is Missing, is Null<*> -> this as Optional<T>
     is Value -> Value(mapper(value!!))
@@ -299,7 +296,6 @@ public inline fun <E : Any> Optional<E>.mapSnowflake(mapper: (E) -> Snowflake): 
 }
 
 @JvmName("mapNullableSnowflake")
-@JsName("mapNullableSnowflake")
 public inline fun <E : Any> Optional<E?>.mapSnowflake(mapper: (E) -> Snowflake): OptionalSnowflake = when (this) {
     is Missing, is Null<*> -> OptionalSnowflake.Missing
     is Value -> OptionalSnowflake.Value(mapper(value!!))

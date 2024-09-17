@@ -5,7 +5,6 @@ import dev.kord.common.entity.Snowflake
 import dev.kord.common.readFile
 import kotlinx.coroutines.test.runTest
 import kotlinx.serialization.json.Json
-import kotlin.js.JsName
 import kotlin.test.Test
 
 private suspend fun file(name: String): String = readFile("emoji", name)
@@ -13,7 +12,6 @@ private suspend fun file(name: String): String = readFile("emoji", name)
 class EmojiTest {
 
     @Test
-    @JsName("test1")
     fun `Custom Emoji serialization`() = runTest {
         val emoji = Json.decodeFromString(DiscordEmoji.serializer(), file("customemoji"))
 
@@ -24,7 +22,6 @@ class EmojiTest {
     }
 
     @Test
-    @JsName("test2")
     fun `Standard Emoji serialization`() = runTest {
         val emoji = Json.decodeFromString(DiscordEmoji.serializer(), file("standardemoji"))
 
@@ -35,7 +32,6 @@ class EmojiTest {
     }
 
     @Test
-    @JsName("test3")
     fun `Emoji serialization`() = runTest {
         val emoji = Json.decodeFromString(DiscordEmoji.serializer(), file("emoji"))
 

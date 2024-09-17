@@ -6,7 +6,6 @@ import dev.kord.common.readFile
 import kotlinx.coroutines.test.runTest
 import kotlinx.datetime.Instant
 import kotlinx.serialization.json.Json
-import kotlin.js.JsName
 import kotlin.test.Test
 import kotlin.time.Duration.Companion.seconds
 
@@ -15,7 +14,6 @@ private suspend fun file(name: String): String = readFile("guild", name)
 class GuildTest {
 
     @Test
-    @JsName("test1")
     fun `Guild serialization`() = runTest {
         val guild = Json.decodeFromString(DiscordGuild.serializer(), file("guild"))
 
@@ -68,7 +66,6 @@ class GuildTest {
     }
 
     @Test
-    @JsName("test2")
     fun `UnavailableGuild serialization`() = runTest {
         val guild = Json.decodeFromString(DiscordUnavailableGuild.serializer(), file("unavailableguild"))
 
@@ -80,7 +77,6 @@ class GuildTest {
     }
 
     @Test
-    @JsName("test3")
     fun `GuildMember serialization`() = runTest {
         val member = Json.decodeFromString(DiscordGuildMember.serializer(), file("guildmember"))
 
@@ -95,7 +91,6 @@ class GuildTest {
     }
 
     @Test
-    @JsName("test4")
     fun `PartialGuild serialization`() = runTest {
         val guild = Json.decodeFromString(DiscordPartialGuild.serializer(), file("partialguild"))
 

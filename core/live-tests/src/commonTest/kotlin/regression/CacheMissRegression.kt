@@ -31,7 +31,6 @@ import kotlinx.serialization.SerializationStrategy
 import kotlinx.serialization.json.Json
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.EmptyCoroutineContext
-import kotlin.js.JsName
 import kotlin.test.Test
 import kotlin.test.assertFailsWith
 import kotlin.time.Duration
@@ -106,7 +105,6 @@ class CrashingHandler(private val client: HttpClient, override val token: String
 class CacheMissingRegressions {
 
     @Test
-    @JsName("test1")
     fun `if data not in cache explode`() = runTest {
         withKord { kord ->
             val id = 5uL
@@ -115,7 +113,6 @@ class CacheMissingRegressions {
     }
 
     @Test
-    @JsName("test2")
     fun `if data in cache don't fetch from rest`() = runTest {
         withKord { kord ->
             val id = Snowflake(5uL)

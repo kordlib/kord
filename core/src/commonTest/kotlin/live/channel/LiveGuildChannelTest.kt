@@ -12,7 +12,6 @@ import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.gateway.ChannelUpdate
 import kotlinx.coroutines.test.runTest
-import kotlin.js.JsName
 import kotlin.test.BeforeTest
 import kotlin.test.Ignore
 import kotlin.test.Test
@@ -48,7 +47,6 @@ class LiveGuildChannelTest : LiveChannelTest<LiveGuildChannel>() {
     }
 
     @Test
-    @JsName("test11")
     fun `Check onUpdate is called when event is received`() {
         countdownContext(1) {
             live.onUpdate {

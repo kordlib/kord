@@ -11,7 +11,6 @@ import dev.kord.common.entity.optional.optionalInt
 import dev.kord.gateway.*
 import kotlinx.datetime.Instant
 import kotlinx.serialization.json.*
-import kotlin.js.JsName
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -19,7 +18,6 @@ private val json = Json { encodeDefaults = false }
 
 class CommandTest {
     @Test
-    @JsName("test1")
     fun `Resume command serialization`() {
         val token = "token"
         val sessionId = "session"
@@ -41,7 +39,6 @@ class CommandTest {
 
 
     @Test
-    @JsName("test2")
     fun `Heartbeat command serialization`() {
         val interval = 1337
 
@@ -57,7 +54,6 @@ class CommandTest {
 
 
     @Test
-    @JsName("test3")
     @OptIn(PrivilegedIntent::class)
     fun `RequestGuildMembers command serialization`() {
         val guildId = "1337"
@@ -83,7 +79,6 @@ class CommandTest {
 
 
     @Test
-    @JsName("test4")
     fun `UpdateVoiceState command serialization`() {
         val guildId = "1337"
         val channelId = "420"
@@ -110,7 +105,6 @@ class CommandTest {
 
 
     @Test
-    @JsName("test5")
     fun `UpdateState command serialization`() {
         val since = 1242518400L
         val activities = listOf<DiscordBotActivity>()
@@ -138,7 +132,6 @@ class CommandTest {
 
     @OptIn(PrivilegedIntent::class)
     @Test
-    @JsName("test6")
     fun `Identify command serialization`() {
         val token = "test"
         val properties = IdentifyProperties("os", "browser", "device")

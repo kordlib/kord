@@ -7,7 +7,6 @@ import dev.kord.core.entity.User
 import dev.kord.core.randomId
 import dev.kord.gateway.UserUpdate
 import kotlinx.coroutines.test.runTest
-import kotlin.js.JsName
 import kotlin.test.BeforeTest
 import kotlin.test.Ignore
 import kotlin.test.Test
@@ -32,7 +31,6 @@ class LiveUserTest : AbstractLiveEntityTest<LiveUser>() {
     }
 
     @Test
-    @JsName("test1")
     fun `Check onUpdate is called when event is received`() {
         countdownContext(1) {
             live.onUpdate {

@@ -8,7 +8,6 @@ import io.ktor.http.*
 import io.ktor.util.*
 import io.ktor.utils.io.*
 import kotlinx.coroutines.test.runTest
-import kotlin.js.JsName
 import kotlin.test.Test
 
 expect class StackTraceElement
@@ -18,7 +17,6 @@ internal expect fun RecoveredStackTrace.validate(expected: StackTraceElement)
 class StackTraceRecoveryTest {
 
     @Test
-    @JsName("test1")
     fun `test stack trace recovery`() = runTest {
         val mockEngine = MockEngine {
             respond(

@@ -2,7 +2,6 @@ package dev.kord.common.ratelimit
 
 import kotlinx.coroutines.test.currentTime
 import kotlinx.coroutines.test.runTest
-import kotlin.js.JsName
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -27,7 +26,6 @@ abstract class AbstractIntervalRateLimiterTest {
     }
 
     @Test
-    @JsName("test1")
     fun `an interval rate limiter does not accept illegal arguments`() {
 
         fun assertIAE(limit: Int, interval: Duration) {
@@ -42,7 +40,6 @@ abstract class AbstractIntervalRateLimiterTest {
     }
 
     @Test
-    @JsName("test2")
     fun `an interval rate limiter does not ratelimit when under limit`() = runTest {
         repeat(limit) { rateLimiter.consume() }
 
@@ -50,7 +47,6 @@ abstract class AbstractIntervalRateLimiterTest {
     }
 
     @Test
-    @JsName("test3")
     fun `an interval rate limiter does ratelimit when over limit`() = runTest {
         repeat(limit + 1) { rateLimiter.consume() }
 

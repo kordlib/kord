@@ -1,11 +1,12 @@
 package dev.kord.common.json
 
-import dev.kord.common.entity.*
+import dev.kord.common.entity.DiscordMessage
+import dev.kord.common.entity.MessageFlag
+import dev.kord.common.entity.MessageFlags
 import dev.kord.common.readFile
 import kotlinx.coroutines.test.runTest
 import kotlinx.datetime.Instant
 import kotlinx.serialization.json.Json
-import kotlin.js.JsName
 import kotlin.test.Test
 
 private suspend fun file(name: String): String = readFile("message", name)
@@ -13,7 +14,6 @@ private suspend fun file(name: String): String = readFile("message", name)
 class MessageTest {
 
     @Test
-    @JsName("test1")
     fun `Message serialization`() = runTest {
         val message: DiscordMessage = Json.decodeFromString(DiscordMessage.serializer(), file("message"))
 
@@ -52,7 +52,6 @@ class MessageTest {
     }
 
     @Test
-    @JsName("test2")
     fun `User serialization`() = runTest {
         val message = Json.decodeFromString(DiscordMessage.serializer(), file("crossposted"))
 
