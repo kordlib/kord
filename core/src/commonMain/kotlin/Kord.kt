@@ -15,6 +15,8 @@ import dev.kord.core.cache.data.UserData
 import dev.kord.core.entity.*
 import dev.kord.core.entity.application.*
 import dev.kord.core.entity.channel.Channel
+import dev.kord.core.entity.monetization.Entitlement
+import dev.kord.core.entity.monetization.Sku
 import dev.kord.core.event.Event
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.exception.KordInitializationException
@@ -28,6 +30,7 @@ import dev.kord.gateway.builder.PresenceBuilder
 import dev.kord.rest.builder.application.ApplicationRoleConnectionMetadataRecordsBuilder
 import dev.kord.rest.builder.guild.GuildCreateBuilder
 import dev.kord.rest.builder.interaction.*
+import dev.kord.rest.builder.monetization.EntitlementsListRequestBuilder
 import dev.kord.rest.builder.user.CurrentUserModifyBuilder
 import dev.kord.rest.request.RestRequestException
 import dev.kord.rest.service.RestClient
@@ -364,6 +367,27 @@ public class Kord(
         withExpiration: Boolean = true,
         scheduledEventId: Snowflake? = null,
     ): Invite? = with(EntitySupplyStrategy.rest).getInviteOrNull(code, withCounts, withExpiration, scheduledEventId)
+
+    /**
+     * Requests to get all [Sku]s for this application.
+     *
+     * @throws RestRequestException if something went wrong during the request.
+     */
+    public suspend fun getSkus(): List<Sku> = rest.sku.listSkus(selfId).map { Sku(it, this) }
+
+    /**
+     * Requests to get all [Entitlement]s for this application.
+     *
+     * @throws RequestException if something went wrong during the request.
+     */
+    public inline fun getEntitlements(
+        strategy: EntitySupplyStrategy<*> = resources.defaultStrategy,
+        builder: EntitlementsListRequestBuilder.() -> Unit = {},
+    ): Flow<Entitlement> {
+        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+        val request = EntitlementsListRequestBuilder().apply(builder).toRequest()
+        return strategy.supply(this).getEntitlements(selfId, request)
+    }
 
 
     public suspend fun getSticker(id: Snowflake): Sticker = defaultSupplier.getSticker(id)

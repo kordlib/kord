@@ -11,6 +11,8 @@ import dev.kord.core.behavior.channel.threads.ThreadChannelBehavior
 import dev.kord.core.behavior.channel.threads.ThreadParentChannelBehavior
 import dev.kord.core.behavior.interaction.ApplicationCommandInteractionBehavior
 import dev.kord.core.behavior.interaction.ComponentInteractionBehavior
+import dev.kord.core.behavior.monetization.SkuBehavior
+import dev.kord.core.behavior.monetization.SkuBehaviorImpl
 import dev.kord.rest.service.InteractionService
 
 /**
@@ -45,6 +47,9 @@ public class Unsafe(private val kord: Kord) {
         guildId: Snowflake,
         ruleId: Snowflake,
     ): MentionSpamAutoModerationRuleBehavior = MentionSpamAutoModerationRuleBehaviorImpl(guildId, ruleId, kord)
+
+    public fun sku(skuId: Snowflake, applicationId: Snowflake = kord.selfId): SkuBehavior =
+        SkuBehaviorImpl(applicationId, skuId, kord)
 
     public fun message(channelId: Snowflake, messageId: Snowflake): MessageBehavior =
         MessageBehavior(channelId = channelId, messageId = messageId, kord = kord)

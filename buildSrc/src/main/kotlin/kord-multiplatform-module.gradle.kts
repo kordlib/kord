@@ -25,10 +25,19 @@ apiValidation {
     applyKordBCVOptions()
 }
 
+@OptIn(ExperimentalKotlinGradlePluginApi::class)
 kotlin {
     explicitApi()
+    compilerOptions {
+        applyKordCommonCompilerOptions()
+        optIn.addAll(kordOptIns)
+    }
 
-    jvm()
+    jvm {
+        compilerOptions {
+            applyKordJvmCompilerOptions()
+        }
+    }
     js {
         nodejs {
             testTask {
@@ -40,13 +49,6 @@ kotlin {
             }
         }
         useCommonJs()
-    }
-    jvmToolchain(Jvm.target)
-
-    @OptIn(ExperimentalKotlinGradlePluginApi::class)
-    compilerOptions {
-        applyKordCompilerOptions()
-        optIn.addAll(kordOptIns)
     }
 
     applyDefaultHierarchyTemplate()

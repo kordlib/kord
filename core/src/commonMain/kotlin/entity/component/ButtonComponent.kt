@@ -2,11 +2,13 @@ package dev.kord.core.entity.component
 
 import dev.kord.common.entity.ButtonStyle
 import dev.kord.common.entity.ComponentType
+import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.value
 import dev.kord.core.cache.data.ChatComponentData
 import dev.kord.core.entity.ReactionEmoji
 import dev.kord.core.entity.interaction.ButtonInteraction
 import dev.kord.core.entity.interaction.ComponentInteraction
+import dev.kord.core.entity.monetization.Sku
 import dev.kord.core.event.interaction.InteractionCreateEvent
 
 /**
@@ -21,8 +23,8 @@ public class ButtonComponent(override val data: ChatComponentData) : Component {
         get() = ComponentType.Button
 
     /**
-     * The style of this button, [ButtonStyle.Link] buttons will always
-     * have a [url].
+     * The style of this button, [ButtonStyle.Link] buttons will always have a [url], [ButtonStyle.Premium] buttons will
+     * always have an [skuId].
      */
     public val style: ButtonStyle get() = data.style.value!!
 
@@ -47,10 +49,15 @@ public class ButtonComponent(override val data: ChatComponentData) : Component {
         }
 
     /**
-     * The custom identifier for any [ComponentInteractions][ButtonInteraction]
-     * this button will trigger. Present if this button is not a link button.
+     * The custom identifier for any [ComponentInteractions][ButtonInteraction] this button will trigger. Present if
+     * this button is not a link or premium button.
      */
     public val customId: String? get() = data.customId.value
+
+    /**
+     * The ID of the [Sku] this button will prompt to purchase. Present if this button is a premium button.
+     */
+    public val skuId: Snowflake? get() = data.skuId.value
 
     /**
      * The url the button will link to. Present if this button is a link button.

@@ -20,6 +20,16 @@ private val perms = Permissions(
     ManageGuildExpressions,
 )
 
+private val testEntitlements = listOf(
+    DiscordEntitlement(
+        id = Snowflake.min,
+        applicationId = Snowflake.min,
+        skuId = Snowflake.min,
+        type = EntitlementType.ApplicationSubscription,
+        deleted = false,
+    ),
+)
+
 class InteractionTest {
 
     val json = Json {
@@ -51,6 +61,7 @@ class InteractionTest {
             arg.name shouldBe "testint"
             arg.value shouldBe 1L
             appPermissions shouldBe perms
+            entitlements shouldBe testEntitlements
         }
     }
 
@@ -77,6 +88,7 @@ class InteractionTest {
             arg.name shouldBe "testint"
             arg.value shouldBe 1L
             appPermissions shouldBe perms
+            entitlements shouldBe testEntitlements
         }
     }
 
@@ -102,6 +114,7 @@ class InteractionTest {
             arg.name shouldBe "testint"
             arg.value shouldBe 1L
             appPermissions shouldBe perms
+            entitlements shouldBe testEntitlements
         }
     }
 
@@ -142,6 +155,7 @@ class InteractionTest {
             guildId shouldBe "772904309264089089"
             id shouldBe "847587388497854464"
             appPermissions shouldBe perms
+            entitlements shouldBe testEntitlements
         }
     }
 

@@ -26,11 +26,8 @@ apiValidation {
 
 kotlin {
     explicitApi()
-
-    jvmToolchain(Jvm.target)
-
     compilerOptions {
-        applyKordCompilerOptions()
+        applyKordJvmCompilerOptions()
         optIn.addAll(kordOptIns)
     }
 
@@ -46,6 +43,10 @@ tasks {
 
     withType<AbstractDokkaLeafTask>().configureEach {
         applyKordDokkaOptions()
+    }
+
+    withType<JavaCompile>().configureEach {
+        options.release = KORD_JVM_TARGET
     }
 }
 

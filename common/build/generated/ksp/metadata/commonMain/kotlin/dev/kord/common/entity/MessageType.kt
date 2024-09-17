@@ -103,6 +103,8 @@ public sealed class MessageType(
 
     public object GuildApplicationPremiumSubscription : MessageType(32)
 
+    public object PurchaseNotification : MessageType(44)
+
     internal object Serializer : KSerializer<MessageType> {
         override val descriptor: SerialDescriptor =
                 PrimitiveSerialDescriptor("dev.kord.common.entity.MessageType", PrimitiveKind.INT)
@@ -151,6 +153,7 @@ public sealed class MessageType(
                 StageSpeaker,
                 StageTopic,
                 GuildApplicationPremiumSubscription,
+                PurchaseNotification,
             )
         }
 
@@ -190,6 +193,7 @@ public sealed class MessageType(
             29 -> StageSpeaker
             31 -> StageTopic
             32 -> GuildApplicationPremiumSubscription
+            44 -> PurchaseNotification
             else -> Unknown(code)
         }
     }
