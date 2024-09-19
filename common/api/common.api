@@ -1420,6 +1420,10 @@ public abstract class dev/kord/common/entity/AutoModerationActionType {
 	public final fun toString ()Ljava/lang/String;
 }
 
+public final class dev/kord/common/entity/AutoModerationActionType$BlockMemberInteraction : dev/kord/common/entity/AutoModerationActionType {
+	public static final field INSTANCE Ldev/kord/common/entity/AutoModerationActionType$BlockMemberInteraction;
+}
+
 public final class dev/kord/common/entity/AutoModerationActionType$BlockMessage : dev/kord/common/entity/AutoModerationActionType {
 	public static final field INSTANCE Ldev/kord/common/entity/AutoModerationActionType$BlockMessage;
 }
@@ -1454,6 +1458,10 @@ public final class dev/kord/common/entity/AutoModerationRuleEventType$Companion 
 	public final fun from (I)Ldev/kord/common/entity/AutoModerationRuleEventType;
 	public final fun getEntries ()Ljava/util/List;
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class dev/kord/common/entity/AutoModerationRuleEventType$MemberUpdate : dev/kord/common/entity/AutoModerationRuleEventType {
+	public static final field INSTANCE Ldev/kord/common/entity/AutoModerationRuleEventType$MemberUpdate;
 }
 
 public final class dev/kord/common/entity/AutoModerationRuleEventType$MessageSend : dev/kord/common/entity/AutoModerationRuleEventType {
@@ -1514,6 +1522,10 @@ public final class dev/kord/common/entity/AutoModerationRuleTriggerType$Keyword 
 
 public final class dev/kord/common/entity/AutoModerationRuleTriggerType$KeywordPreset : dev/kord/common/entity/AutoModerationRuleTriggerType {
 	public static final field INSTANCE Ldev/kord/common/entity/AutoModerationRuleTriggerType$KeywordPreset;
+}
+
+public final class dev/kord/common/entity/AutoModerationRuleTriggerType$MemberProfile : dev/kord/common/entity/AutoModerationRuleTriggerType {
+	public static final field INSTANCE Ldev/kord/common/entity/AutoModerationRuleTriggerType$MemberProfile;
 }
 
 public final class dev/kord/common/entity/AutoModerationRuleTriggerType$MentionSpam : dev/kord/common/entity/AutoModerationRuleTriggerType {

@@ -134,6 +134,7 @@ public final class dev/kord/core/Unsafe {
 	public final fun keywordAutoModerationRule (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;)Ldev/kord/core/behavior/automoderation/KeywordAutoModerationRuleBehavior;
 	public final fun keywordPresetAutoModerationRule (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;)Ldev/kord/core/behavior/automoderation/KeywordPresetAutoModerationRuleBehavior;
 	public final fun member (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;)Ldev/kord/core/behavior/MemberBehavior;
+	public final fun memberProfileAutoModerationRule (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;)Ldev/kord/core/behavior/automoderation/MemberProfileAutoModerationRuleBehavior;
 	public final fun mentionSpamAutoModerationRule (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;)Ldev/kord/core/behavior/automoderation/MentionSpamAutoModerationRuleBehavior;
 	public final fun message (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;)Ldev/kord/core/behavior/MessageBehavior;
 	public final fun messageChannel (Ldev/kord/common/entity/Snowflake;)Ldev/kord/core/behavior/channel/MessageChannelBehavior;
@@ -400,6 +401,8 @@ public final class dev/kord/core/behavior/GuildBehaviorKt {
 	public static synthetic fun createKeywordPresetAutoModerationRule$default (Ldev/kord/core/behavior/GuildBehavior;Ljava/lang/String;Ldev/kord/common/entity/AutoModerationRuleEventType;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public static final fun createMediaChannel (Ldev/kord/core/behavior/GuildBehavior;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static synthetic fun createMediaChannel$default (Ldev/kord/core/behavior/GuildBehavior;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+	public static final fun createMemberProfileAutoModerationRule (Ldev/kord/core/behavior/GuildBehavior;Ljava/lang/String;Ldev/kord/common/entity/AutoModerationRuleEventType;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static synthetic fun createMemberProfileAutoModerationRule$default (Ldev/kord/core/behavior/GuildBehavior;Ljava/lang/String;Ldev/kord/common/entity/AutoModerationRuleEventType;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public static final fun createMentionSpamAutoModerationRule (Ldev/kord/core/behavior/GuildBehavior;Ljava/lang/String;Ldev/kord/common/entity/AutoModerationRuleEventType;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static synthetic fun createMentionSpamAutoModerationRule$default (Ldev/kord/core/behavior/GuildBehavior;Ljava/lang/String;Ldev/kord/common/entity/AutoModerationRuleEventType;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public static final fun createMessageCommand (Ldev/kord/core/behavior/GuildBehavior;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -884,6 +887,7 @@ public final class dev/kord/core/behavior/automoderation/AutoModerationRuleBehav
 	public static final fun edit (Ldev/kord/core/behavior/automoderation/AutoModerationRuleBehavior;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static final fun edit (Ldev/kord/core/behavior/automoderation/KeywordAutoModerationRuleBehavior;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static final fun edit (Ldev/kord/core/behavior/automoderation/KeywordPresetAutoModerationRuleBehavior;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static final fun edit (Ldev/kord/core/behavior/automoderation/MemberProfileAutoModerationRuleBehavior;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static final fun edit (Ldev/kord/core/behavior/automoderation/MentionSpamAutoModerationRuleBehavior;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static final fun edit (Ldev/kord/core/behavior/automoderation/SpamAutoModerationRuleBehavior;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
@@ -922,6 +926,24 @@ public final class dev/kord/core/behavior/automoderation/KeywordPresetAutoModera
 	public static fun getGuild (Ldev/kord/core/behavior/automoderation/KeywordPresetAutoModerationRuleBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun getGuildOrNull (Ldev/kord/core/behavior/automoderation/KeywordPresetAutoModerationRuleBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun getTriggerType (Ldev/kord/core/behavior/automoderation/KeywordPresetAutoModerationRuleBehavior;)Ldev/kord/common/entity/AutoModerationRuleTriggerType$KeywordPreset;
+}
+
+public abstract interface class dev/kord/core/behavior/automoderation/MemberProfileAutoModerationRuleBehavior : dev/kord/core/behavior/automoderation/TypedAutoModerationRuleBehavior {
+	public abstract fun asAutoModerationRule (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun asAutoModerationRuleOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun getTriggerType ()Ldev/kord/common/entity/AutoModerationRuleTriggerType$MemberProfile;
+	public abstract fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/automoderation/MemberProfileAutoModerationRuleBehavior;
+}
+
+public final class dev/kord/core/behavior/automoderation/MemberProfileAutoModerationRuleBehavior$DefaultImpls {
+	public static fun asAutoModerationRule (Ldev/kord/core/behavior/automoderation/MemberProfileAutoModerationRuleBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static fun asAutoModerationRuleOrNull (Ldev/kord/core/behavior/automoderation/MemberProfileAutoModerationRuleBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static fun compareTo (Ldev/kord/core/behavior/automoderation/MemberProfileAutoModerationRuleBehavior;Ldev/kord/core/entity/Entity;)I
+	public static fun delete (Ldev/kord/core/behavior/automoderation/MemberProfileAutoModerationRuleBehavior;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static fun getGuild (Ldev/kord/core/behavior/automoderation/MemberProfileAutoModerationRuleBehavior;)Ldev/kord/core/behavior/GuildBehavior;
+	public static fun getGuild (Ldev/kord/core/behavior/automoderation/MemberProfileAutoModerationRuleBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static fun getGuildOrNull (Ldev/kord/core/behavior/automoderation/MemberProfileAutoModerationRuleBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static fun getTriggerType (Ldev/kord/core/behavior/automoderation/MemberProfileAutoModerationRuleBehavior;)Ldev/kord/common/entity/AutoModerationRuleTriggerType$MemberProfile;
 }
 
 public abstract interface class dev/kord/core/behavior/automoderation/MentionSpamAutoModerationRuleBehavior : dev/kord/core/behavior/automoderation/TypedAutoModerationRuleBehavior {
@@ -7714,6 +7736,13 @@ public final class dev/kord/core/entity/automoderation/AutoModerationRuleKt {
 	public static synthetic fun AutoModerationRule$default (Ldev/kord/core/cache/data/AutoModerationRuleData;Ldev/kord/core/Kord;Ldev/kord/core/supplier/EntitySupplier;ILjava/lang/Object;)Ldev/kord/core/entity/automoderation/AutoModerationRule;
 }
 
+public final class dev/kord/core/entity/automoderation/BlockMemberInteractionAutoModerationAction : dev/kord/core/entity/automoderation/AutoModerationAction {
+	public fun <init> (Ldev/kord/core/cache/data/AutoModerationActionData;Ldev/kord/core/Kord;)V
+	public fun getType ()Ldev/kord/common/entity/AutoModerationActionType$BlockMemberInteraction;
+	public synthetic fun getType ()Ldev/kord/common/entity/AutoModerationActionType;
+	public fun toString ()Ljava/lang/String;
+}
+
 public final class dev/kord/core/entity/automoderation/BlockMessageAutoModerationAction : dev/kord/core/entity/automoderation/AutoModerationAction {
 	public fun <init> (Ldev/kord/core/cache/data/AutoModerationActionData;Ldev/kord/core/Kord;)V
 	public final fun getCustomMessage ()Ljava/lang/String;
@@ -7755,6 +7784,24 @@ public final class dev/kord/core/entity/automoderation/KeywordPresetAutoModerati
 	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/Strategizable;
 	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/automoderation/AutoModerationRule;
 	public fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/automoderation/KeywordPresetAutoModerationRule;
+}
+
+public final class dev/kord/core/entity/automoderation/MemberProfileAutoModerationRule : dev/kord/core/entity/automoderation/AutoModerationRule, dev/kord/core/behavior/automoderation/MemberProfileAutoModerationRuleBehavior {
+	public fun <init> (Ldev/kord/core/cache/data/AutoModerationRuleData;Ldev/kord/core/Kord;Ldev/kord/core/supplier/EntitySupplier;)V
+	public fun asAutoModerationRule (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun asAutoModerationRuleOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun getAllowedKeywords ()Ljava/util/List;
+	public final fun getKeywords ()Ljava/util/List;
+	public final fun getRegexPatterns ()Ljava/util/List;
+	public fun getTriggerType ()Ldev/kord/common/entity/AutoModerationRuleTriggerType$MemberProfile;
+	public synthetic fun getTriggerType ()Ldev/kord/common/entity/AutoModerationRuleTriggerType;
+	public fun toString ()Ljava/lang/String;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/automoderation/AutoModerationRuleBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/automoderation/MemberProfileAutoModerationRuleBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/automoderation/TypedAutoModerationRuleBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/Strategizable;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/automoderation/AutoModerationRule;
+	public fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/automoderation/MemberProfileAutoModerationRule;
 }
 
 public final class dev/kord/core/entity/automoderation/MentionSpamAutoModerationRule : dev/kord/core/entity/automoderation/AutoModerationRule, dev/kord/core/behavior/automoderation/MentionSpamAutoModerationRuleBehavior {
