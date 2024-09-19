@@ -1,5 +1,3 @@
-import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
-
 plugins {
     org.jetbrains.kotlin.multiplatform
 }
@@ -10,7 +8,6 @@ repositories {
     mavenLocal()
 }
 
-@OptIn(ExperimentalKotlinGradlePluginApi::class)
 kotlin {
     compilerOptions {
         applyKordCommonCompilerOptions()
