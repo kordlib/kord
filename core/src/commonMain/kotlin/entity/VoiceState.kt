@@ -60,7 +60,8 @@ public class VoiceState(
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
-    public suspend fun getChannelOrNull(): BaseVoiceChannelBehavior? = channelId?.let { supplier.getChannelOfOrNull(it) }
+    public suspend fun getChannelOrNull(): BaseVoiceChannelBehavior? =
+        channelId?.let { supplier.getChannelOrNull(it) as? BaseVoiceChannelBehavior }
 
 
     /**
