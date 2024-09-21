@@ -40,6 +40,7 @@ import kotlinx.coroutines.flow.*
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 import kotlin.coroutines.CoroutineContext
+import kotlin.jvm.JvmName
 import kotlinx.coroutines.channels.Channel as CoroutineChannel
 
 @Deprecated("Use your own logger instead. This declaration will be removed in 0.16.0.", level = DeprecationLevel.HIDDEN)
@@ -501,11 +502,41 @@ public class Kord(
     }
 
 
+    @JvmName("getGlobalApplicationCommandOfJvmInlineReplacement")
+    public suspend inline fun <reified T : GlobalApplicationCommand> getGlobalApplicationCommandOf(
+        commandId: Snowflake,
+    ): T = defaultSupplier.getGlobalApplicationCommandOf(resources.applicationId, commandId)
+
+
+    @JvmName("getGlobalApplicationCommandOfOrNullJvmInlineReplacement")
+    public suspend inline fun <reified T : GlobalApplicationCommand> getGlobalApplicationCommandOfOrNull(
+        commandId: Snowflake,
+    ): T? = defaultSupplier.getGlobalApplicationCommandOfOrNull(resources.applicationId, commandId)
+
+
+    @Suppress("TYPE_INTERSECTION_AS_REIFIED_WARNING")
+    @Deprecated(
+        "This function has bad semantics: the type argument for T is effectively ignored. It no longer compiles " +
+            "without a 'TYPE_INTERSECTION_AS_REIFIED_WARNING' since Kotlin 2.1.0 " +
+            "(https://youtrack.jetbrains.com/issue/KT-52469). The replacement function has a proper bounded reified " +
+            "type parameter that is actually used. This declaration is kept for binary compatibility, it will be " +
+            "removed in 0.18.0. The replacement function should then be migrated away from using @JvmName.",
+        level = DeprecationLevel.HIDDEN,
+    )
     public suspend fun <T> getGlobalApplicationCommandOf(commandId: Snowflake): T {
         return defaultSupplier.getGlobalApplicationCommandOf(resources.applicationId, commandId)
     }
 
 
+    @Suppress("TYPE_INTERSECTION_AS_REIFIED_WARNING")
+    @Deprecated(
+        "This function has bad semantics: the type argument for T is effectively ignored. It no longer compiles " +
+            "without a 'TYPE_INTERSECTION_AS_REIFIED_WARNING' since Kotlin 2.1.0 " +
+            "(https://youtrack.jetbrains.com/issue/KT-52469). The replacement function has a proper bounded reified " +
+            "type parameter that is actually used. This declaration is kept for binary compatibility, it will be " +
+            "removed in 0.18.0. The replacement function should then be migrated away from using @JvmName.",
+        level = DeprecationLevel.HIDDEN,
+    )
     public suspend fun <T> getGlobalApplicationCommandOfOrNull(commandId: Snowflake): T? {
         return defaultSupplier.getGlobalApplicationCommandOfOrNull(resources.applicationId, commandId)
     }
