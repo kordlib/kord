@@ -162,18 +162,27 @@ public final class dev/kord/rest/builder/automoderation/AutoModerationRuleBuilde
 	public static final fun allowKeyword (Ldev/kord/rest/builder/automoderation/AllowedKeywordsAutoModerationRuleBuilder;Ljava/lang/String;)V
 	public static final fun allowPrefixKeyword (Ldev/kord/rest/builder/automoderation/AllowedKeywordsAutoModerationRuleBuilder;Ljava/lang/String;)V
 	public static final fun allowSuffixKeyword (Ldev/kord/rest/builder/automoderation/AllowedKeywordsAutoModerationRuleBuilder;Ljava/lang/String;)V
-	public static final fun anywhereKeyword (Ldev/kord/rest/builder/automoderation/KeywordAutoModerationRuleBuilder;Ljava/lang/String;)V
+	public static final fun anywhereKeyword (Ldev/kord/rest/builder/automoderation/FilteredKeywordsAutoModerationRuleBuilder;Ljava/lang/String;)V
+	public static final synthetic fun anywhereKeyword (Ldev/kord/rest/builder/automoderation/KeywordAutoModerationRuleBuilder;Ljava/lang/String;)V
+	public static final fun blockMemberInteraction (Ldev/kord/rest/builder/automoderation/MemberProfileAutoModerationRuleBuilder;Lkotlin/jvm/functions/Function1;)V
+	public static synthetic fun blockMemberInteraction$default (Ldev/kord/rest/builder/automoderation/MemberProfileAutoModerationRuleBuilder;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
 	public static final fun blockMessage (Ldev/kord/rest/builder/automoderation/AutoModerationRuleBuilder;Lkotlin/jvm/functions/Function1;)V
+	public static final fun blockMessage (Ldev/kord/rest/builder/automoderation/BlockMessageAutoModerationRuleBuilder;Lkotlin/jvm/functions/Function1;)V
 	public static synthetic fun blockMessage$default (Ldev/kord/rest/builder/automoderation/AutoModerationRuleBuilder;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
+	public static synthetic fun blockMessage$default (Ldev/kord/rest/builder/automoderation/BlockMessageAutoModerationRuleBuilder;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
 	public static final fun exemptChannel (Ldev/kord/rest/builder/automoderation/AutoModerationRuleBuilder;Ldev/kord/common/entity/Snowflake;)V
 	public static final fun exemptRole (Ldev/kord/rest/builder/automoderation/AutoModerationRuleBuilder;Ldev/kord/common/entity/Snowflake;)V
-	public static final fun keyword (Ldev/kord/rest/builder/automoderation/KeywordAutoModerationRuleBuilder;Ljava/lang/String;)V
-	public static final fun prefixKeyword (Ldev/kord/rest/builder/automoderation/KeywordAutoModerationRuleBuilder;Ljava/lang/String;)V
+	public static final fun keyword (Ldev/kord/rest/builder/automoderation/FilteredKeywordsAutoModerationRuleBuilder;Ljava/lang/String;)V
+	public static final synthetic fun keyword (Ldev/kord/rest/builder/automoderation/KeywordAutoModerationRuleBuilder;Ljava/lang/String;)V
+	public static final fun prefixKeyword (Ldev/kord/rest/builder/automoderation/FilteredKeywordsAutoModerationRuleBuilder;Ljava/lang/String;)V
+	public static final synthetic fun prefixKeyword (Ldev/kord/rest/builder/automoderation/KeywordAutoModerationRuleBuilder;Ljava/lang/String;)V
 	public static final fun preset (Ldev/kord/rest/builder/automoderation/KeywordPresetAutoModerationRuleBuilder;Ldev/kord/common/entity/AutoModerationRuleKeywordPresetType;)V
-	public static final fun regexPattern (Ldev/kord/rest/builder/automoderation/KeywordAutoModerationRuleBuilder;Ljava/lang/String;)V
+	public static final fun regexPattern (Ldev/kord/rest/builder/automoderation/FilteredKeywordsAutoModerationRuleBuilder;Ljava/lang/String;)V
+	public static final synthetic fun regexPattern (Ldev/kord/rest/builder/automoderation/KeywordAutoModerationRuleBuilder;Ljava/lang/String;)V
 	public static final fun sendAlertMessage (Ldev/kord/rest/builder/automoderation/AutoModerationRuleBuilder;Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;)V
 	public static synthetic fun sendAlertMessage$default (Ldev/kord/rest/builder/automoderation/AutoModerationRuleBuilder;Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
-	public static final fun suffixKeyword (Ldev/kord/rest/builder/automoderation/KeywordAutoModerationRuleBuilder;Ljava/lang/String;)V
+	public static final fun suffixKeyword (Ldev/kord/rest/builder/automoderation/FilteredKeywordsAutoModerationRuleBuilder;Ljava/lang/String;)V
+	public static final synthetic fun suffixKeyword (Ldev/kord/rest/builder/automoderation/KeywordAutoModerationRuleBuilder;Ljava/lang/String;)V
 	public static final fun timeout-8Mi8wO0 (Ldev/kord/rest/builder/automoderation/TimeoutAutoModerationRuleBuilder;JLkotlin/jvm/functions/Function1;)V
 	public static synthetic fun timeout-8Mi8wO0$default (Ldev/kord/rest/builder/automoderation/TimeoutAutoModerationRuleBuilder;JLkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
 }
@@ -225,6 +234,12 @@ public abstract class dev/kord/rest/builder/automoderation/AutoModerationRuleMod
 	public synthetic fun toRequest ()Ljava/lang/Object;
 }
 
+public final class dev/kord/rest/builder/automoderation/BlockMemberInteractionAutoModerationActionBuilder : dev/kord/rest/builder/automoderation/AutoModerationActionBuilder {
+	public fun <init> ()V
+	public fun getType ()Ldev/kord/common/entity/AutoModerationActionType$BlockMemberInteraction;
+	public synthetic fun getType ()Ldev/kord/common/entity/AutoModerationActionType;
+}
+
 public final class dev/kord/rest/builder/automoderation/BlockMessageAutoModerationActionBuilder : dev/kord/rest/builder/automoderation/AutoModerationActionBuilder {
 	public fun <init> ()V
 	public final fun getCustomMessage ()Ljava/lang/String;
@@ -233,12 +248,18 @@ public final class dev/kord/rest/builder/automoderation/BlockMessageAutoModerati
 	public final fun setCustomMessage (Ljava/lang/String;)V
 }
 
-public abstract interface class dev/kord/rest/builder/automoderation/KeywordAutoModerationRuleBuilder : dev/kord/rest/builder/automoderation/AllowedKeywordsAutoModerationRuleBuilder, dev/kord/rest/builder/automoderation/TimeoutAutoModerationRuleBuilder {
+public abstract interface class dev/kord/rest/builder/automoderation/BlockMessageAutoModerationRuleBuilder : dev/kord/rest/builder/automoderation/TypedAutoModerationRuleBuilder {
+}
+
+public abstract interface class dev/kord/rest/builder/automoderation/FilteredKeywordsAutoModerationRuleBuilder : dev/kord/rest/builder/automoderation/TypedAutoModerationRuleBuilder {
 	public abstract fun getKeywords ()Ljava/util/List;
 	public abstract fun getRegexPatterns ()Ljava/util/List;
-	public abstract fun getTriggerType ()Ldev/kord/common/entity/AutoModerationRuleTriggerType$Keyword;
 	public abstract fun setKeywords (Ljava/util/List;)V
 	public abstract fun setRegexPatterns (Ljava/util/List;)V
+}
+
+public abstract interface class dev/kord/rest/builder/automoderation/KeywordAutoModerationRuleBuilder : dev/kord/rest/builder/automoderation/AllowedKeywordsAutoModerationRuleBuilder, dev/kord/rest/builder/automoderation/BlockMessageAutoModerationRuleBuilder, dev/kord/rest/builder/automoderation/FilteredKeywordsAutoModerationRuleBuilder, dev/kord/rest/builder/automoderation/TimeoutAutoModerationRuleBuilder {
+	public abstract fun getTriggerType ()Ldev/kord/common/entity/AutoModerationRuleTriggerType$Keyword;
 }
 
 public final class dev/kord/rest/builder/automoderation/KeywordAutoModerationRuleBuilder$DefaultImpls {
@@ -269,7 +290,7 @@ public final class dev/kord/rest/builder/automoderation/KeywordAutoModerationRul
 	public fun setRegexPatterns (Ljava/util/List;)V
 }
 
-public abstract interface class dev/kord/rest/builder/automoderation/KeywordPresetAutoModerationRuleBuilder : dev/kord/rest/builder/automoderation/AllowedKeywordsAutoModerationRuleBuilder {
+public abstract interface class dev/kord/rest/builder/automoderation/KeywordPresetAutoModerationRuleBuilder : dev/kord/rest/builder/automoderation/AllowedKeywordsAutoModerationRuleBuilder, dev/kord/rest/builder/automoderation/BlockMessageAutoModerationRuleBuilder {
 	public abstract fun assignPresets (Ljava/util/List;)V
 	public abstract fun getPresets ()Ljava/util/List;
 	public abstract fun getTriggerType ()Ldev/kord/common/entity/AutoModerationRuleTriggerType$KeywordPreset;
@@ -302,7 +323,39 @@ public final class dev/kord/rest/builder/automoderation/KeywordPresetAutoModerat
 	public fun setPresets (Ljava/util/List;)V
 }
 
-public abstract interface class dev/kord/rest/builder/automoderation/MentionSpamAutoModerationRuleBuilder : dev/kord/rest/builder/automoderation/TimeoutAutoModerationRuleBuilder {
+public abstract interface class dev/kord/rest/builder/automoderation/MemberProfileAutoModerationRuleBuilder : dev/kord/rest/builder/automoderation/AllowedKeywordsAutoModerationRuleBuilder, dev/kord/rest/builder/automoderation/FilteredKeywordsAutoModerationRuleBuilder {
+	public abstract fun getTriggerType ()Ldev/kord/common/entity/AutoModerationRuleTriggerType$MemberProfile;
+}
+
+public final class dev/kord/rest/builder/automoderation/MemberProfileAutoModerationRuleBuilder$DefaultImpls {
+	public static fun getTriggerType (Ldev/kord/rest/builder/automoderation/MemberProfileAutoModerationRuleBuilder;)Ldev/kord/common/entity/AutoModerationRuleTriggerType$MemberProfile;
+}
+
+public final class dev/kord/rest/builder/automoderation/MemberProfileAutoModerationRuleCreateBuilder : dev/kord/rest/builder/automoderation/AutoModerationRuleCreateBuilder, dev/kord/rest/builder/automoderation/MemberProfileAutoModerationRuleBuilder {
+	public fun <init> (Ljava/lang/String;Ldev/kord/common/entity/AutoModerationRuleEventType;)V
+	public fun getAllowedKeywords ()Ljava/util/List;
+	public fun getKeywords ()Ljava/util/List;
+	public fun getRegexPatterns ()Ljava/util/List;
+	public fun getTriggerType ()Ldev/kord/common/entity/AutoModerationRuleTriggerType$MemberProfile;
+	public synthetic fun getTriggerType ()Ldev/kord/common/entity/AutoModerationRuleTriggerType;
+	public fun setAllowedKeywords (Ljava/util/List;)V
+	public fun setKeywords (Ljava/util/List;)V
+	public fun setRegexPatterns (Ljava/util/List;)V
+}
+
+public final class dev/kord/rest/builder/automoderation/MemberProfileAutoModerationRuleModifyBuilder : dev/kord/rest/builder/automoderation/AutoModerationRuleModifyBuilder, dev/kord/rest/builder/automoderation/MemberProfileAutoModerationRuleBuilder {
+	public fun <init> ()V
+	public fun getAllowedKeywords ()Ljava/util/List;
+	public fun getKeywords ()Ljava/util/List;
+	public fun getRegexPatterns ()Ljava/util/List;
+	public fun getTriggerType ()Ldev/kord/common/entity/AutoModerationRuleTriggerType$MemberProfile;
+	public synthetic fun getTriggerType ()Ldev/kord/common/entity/AutoModerationRuleTriggerType;
+	public fun setAllowedKeywords (Ljava/util/List;)V
+	public fun setKeywords (Ljava/util/List;)V
+	public fun setRegexPatterns (Ljava/util/List;)V
+}
+
+public abstract interface class dev/kord/rest/builder/automoderation/MentionSpamAutoModerationRuleBuilder : dev/kord/rest/builder/automoderation/BlockMessageAutoModerationRuleBuilder, dev/kord/rest/builder/automoderation/TimeoutAutoModerationRuleBuilder {
 	public abstract fun getMentionLimit ()Ljava/lang/Integer;
 	public abstract fun getMentionRaidProtectionEnabled ()Ljava/lang/Boolean;
 	public abstract fun getTriggerType ()Ldev/kord/common/entity/AutoModerationRuleTriggerType$MentionSpam;
@@ -343,7 +396,7 @@ public final class dev/kord/rest/builder/automoderation/SendAlertMessageAutoMode
 	public final fun setChannelId (Ldev/kord/common/entity/Snowflake;)V
 }
 
-public abstract interface class dev/kord/rest/builder/automoderation/SpamAutoModerationRuleBuilder : dev/kord/rest/builder/automoderation/TypedAutoModerationRuleBuilder {
+public abstract interface class dev/kord/rest/builder/automoderation/SpamAutoModerationRuleBuilder : dev/kord/rest/builder/automoderation/BlockMessageAutoModerationRuleBuilder {
 	public abstract fun getTriggerType ()Ldev/kord/common/entity/AutoModerationRuleTriggerType$Spam;
 }
 
@@ -7295,6 +7348,7 @@ public final class dev/kord/rest/service/AutoModerationService : dev/kord/rest/s
 	public static synthetic fun createAutoModerationRule$default (Ldev/kord/rest/service/AutoModerationService;Ldev/kord/common/entity/Snowflake;Ldev/kord/rest/json/request/AutoModerationRuleCreateRequest;Ljava/lang/String;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public final fun createKeywordAutoModerationRule (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/common/entity/AutoModerationRuleEventType;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun createKeywordPresetAutoModerationRule (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/common/entity/AutoModerationRuleEventType;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun createMemberProfileAutoModerationRule (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/common/entity/AutoModerationRuleEventType;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun createMentionSpamAutoModerationRule (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/common/entity/AutoModerationRuleEventType;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun createSpamAutoModerationRule (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/common/entity/AutoModerationRuleEventType;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun deleteAutoModerationRule (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -7305,6 +7359,7 @@ public final class dev/kord/rest/service/AutoModerationService : dev/kord/rest/s
 	public static synthetic fun modifyAutoModerationRule$default (Ldev/kord/rest/service/AutoModerationService;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/rest/json/request/AutoModerationRuleModifyRequest;Ljava/lang/String;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public final fun modifyKeywordAutoModerationRule (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun modifyKeywordPresetAutoModerationRule (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun modifyMemberProfileAutoModerationRule (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun modifyMentionSpamAutoModerationRule (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun modifySpamAutoModerationRule (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun modifyUntypedAutoModerationRule (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;

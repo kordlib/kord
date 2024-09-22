@@ -34,6 +34,7 @@ internal fun AutoModerationAction(data: AutoModerationActionData, kord: Kord) = 
     BlockMessage -> BlockMessageAutoModerationAction(data, kord)
     SendAlertMessage -> SendAlertMessageAutoModerationAction(data, kord)
     Timeout -> TimeoutAutoModerationAction(data, kord)
+    BlockMemberInteraction -> BlockMemberInteractionAutoModerationAction(data, kord)
     is Unknown -> UnknownAutoModerationAction(data, kord)
 }
 
@@ -77,6 +78,17 @@ public class TimeoutAutoModerationAction(
     public val duration: Duration get() = data.metadata.value!!.durationSeconds.value!!
 
     override fun toString(): String = "TimeoutAutoModerationAction(data=$data)"
+}
+
+/** An [AutoModerationAction] of type [BlockMemberInteraction]. */
+public class BlockMemberInteractionAutoModerationAction(
+    data: AutoModerationActionData,
+    kord: Kord,
+) : AutoModerationAction(data, kord, expectedActionType = BlockMemberInteraction) {
+
+    override val type: BlockMemberInteraction get() = BlockMemberInteraction
+
+    override fun toString(): String = "BlockMemberInteractionAutoModerationAction(data=$data)"
 }
 
 /** An [AutoModerationAction] of type [Unknown]. */
