@@ -30,7 +30,8 @@ public data class InteractionData(
     val locale: Optional<Locale> = Optional.Missing(),
     val guildLocale: Optional<Locale> = Optional.Missing(),
     val authorizingIntegrationOwners: Map<ApplicationIntegrationType, Snowflake>,
-    val context: Optional<InteractionContextType> = Optional.Missing()
+    val context: Optional<InteractionContextType> = Optional.Missing(),
+    val entitlements: Optional<List<EntitlementData>> = Optional.Missing(),
 ) {
     public companion object {
         public fun from(interaction: DiscordInteraction): InteractionData {
@@ -56,7 +57,8 @@ public data class InteractionData(
                     locale,
                     guildLocale,
                     authorizingIntegrationOwners,
-                    context
+                    context,
+                    entitlements.mapList { EntitlementData.from(it) },
                 )
             }
         }

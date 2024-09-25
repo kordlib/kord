@@ -11,6 +11,7 @@ import dev.kord.common.entity.optional.OptionalBoolean
 import kotlinx.serialization.Serializable
 
 private val ThreadMemberData.nullableUserId get() = userId.value
+private val EntitlementData.nullableUserId get() = userId.value
 
 @Serializable
 public data class UserData(
@@ -32,6 +33,8 @@ public data class UserData(
             link(UserData::id to ThreadMemberData::nullableUserId)
             link(UserData::id to VoiceStateData::userId)
             link(UserData::id to PresenceData::userId)
+            link(UserData::id to EntitlementData::nullableUserId)
+            link(UserData::id to SubscriptionData::userId)
         }
 
         public fun from(entity: DiscordUser): UserData = with(entity) {

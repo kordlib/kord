@@ -53,7 +53,7 @@ public sealed class ApplicationIntegrationType(
     /**
      * App is installable to users
      */
-    public object UserInstall : ApplicationIntegrationType(0)
+    public object UserInstall : ApplicationIntegrationType(1)
 
     internal object Serializer : KSerializer<ApplicationIntegrationType> {
         override val descriptor: SerialDescriptor =
@@ -75,6 +75,7 @@ public sealed class ApplicationIntegrationType(
         public val entries: List<ApplicationIntegrationType> by lazy(mode = PUBLICATION) {
             listOf(
                 GuildInstall,
+                UserInstall,
             )
         }
 
@@ -84,6 +85,7 @@ public sealed class ApplicationIntegrationType(
          */
         public fun from(`value`: Int): ApplicationIntegrationType = when (value) {
             0 -> GuildInstall
+            1 -> UserInstall
             else -> Unknown(value)
         }
     }

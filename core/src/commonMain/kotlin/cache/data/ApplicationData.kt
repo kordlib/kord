@@ -53,7 +53,7 @@ public data class ApplicationData(
     override val flags: Optional<ApplicationFlags> = Optional.Missing(),
     override val tags: Optional<List<String>> = Optional.Missing(),
     override val installParams: Optional<InstallParams> = Optional.Missing(),
-    val integrationTypesConfig: Optional<Map<ApplicationIntegrationType, InstallParams>> = Optional.Missing(),
+    val integrationTypesConfig: Optional<Map<ApplicationIntegrationType, ApplicationIntegrationTypeConfig>> = Optional.Missing(),
     override val customInstallUrl: Optional<String> = Optional.Missing(),
     override val roleConnectionsVerificationUrl: Optional<String?> = Optional.Missing(),
 ) : BaseApplicationData {

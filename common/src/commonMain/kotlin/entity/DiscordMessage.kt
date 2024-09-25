@@ -33,6 +33,7 @@
         Entry("StageSpeaker", intValue = 29),
         Entry("StageTopic", intValue = 31),
         Entry("GuildApplicationPremiumSubscription", intValue = 32),
+        Entry("PurchaseNotification", intValue = 44),
     ],
 )
 

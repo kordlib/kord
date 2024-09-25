@@ -2,6 +2,7 @@ package dev.kord.core.entity
 
 import dev.kord.common.entity.ApplicationFlags
 import dev.kord.common.entity.ApplicationIntegrationType
+import dev.kord.common.entity.ApplicationIntegrationTypeConfig
 import dev.kord.common.entity.InstallParams
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.orEmpty
@@ -114,7 +115,7 @@ public class Application(
 
     public override val guild: PartialGuild? get() = data.guild.unwrap { PartialGuild(it, kord, supplier) }
 
-    public val integrationTypesConfig: Map<ApplicationIntegrationType, InstallParams>? get() = data.integrationTypesConfig.value
+    public val integrationTypesConfig: Map<ApplicationIntegrationType, ApplicationIntegrationTypeConfig>? get() = data.integrationTypesConfig.value
 
     /**
      * Returns a new [Application] with the given [strategy].

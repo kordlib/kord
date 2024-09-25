@@ -104,5 +104,8 @@ public class EntityNotFoundException : Exception {
 
         public inline fun autoModerationRuleNotFound(guildId: Snowflake, ruleId: Snowflake): Nothing =
             guildEntityNotFound("Auto Moderation Rule", guildId, ruleId)
+
+        public inline fun subscriptionNotFound(skuId: Snowflake, subscriptionId: Snowflake): Nothing =
+            throw EntityNotFoundException("Subscription with id $subscriptionId for SKU with id $skuId was not found.")
     }
 }
