@@ -4,9 +4,7 @@ import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.common.entity.optional.map
-import dev.kord.common.entity.optional.mapNullable
 import dev.kord.common.entity.optional.mapSnowflake
-import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 public sealed interface BaseApplicationData {

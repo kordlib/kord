@@ -2,7 +2,6 @@ package dev.kord.core.cache.data
 
 import dev.kord.common.entity.DiscordInteractionMetadata
 import dev.kord.common.entity.DiscordMessageInteraction
-import dev.kord.common.entity.DiscordUser
 import dev.kord.common.entity.IntegrationOwners
 import dev.kord.common.entity.InteractionType
 import dev.kord.common.entity.Snowflake

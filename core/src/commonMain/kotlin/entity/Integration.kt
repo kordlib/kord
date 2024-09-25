@@ -2,7 +2,6 @@ package dev.kord.core.entity
 
 import dev.kord.common.entity.IntegrationExpireBehavior
 import dev.kord.common.entity.Snowflake
-import dev.kord.common.entity.optional.value
 import dev.kord.common.exception.RequestException
 import dev.kord.core.Kord
 import dev.kord.core.behavior.GuildBehavior

@@ -1,7 +1,6 @@
 package dev.kord.rest.builder.channel
 
 import dev.kord.common.annotation.KordDsl
-import dev.kord.common.entity.ApplicationFlag
 import dev.kord.common.entity.InviteTargetType
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.*
