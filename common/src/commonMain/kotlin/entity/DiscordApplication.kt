@@ -128,7 +128,7 @@ public data class DiscordApplication(
     @SerialName("install_params")
     override val installParams: Optional<InstallParams> = Optional.Missing(),
     @SerialName("integration_types_config")
-    val integrationTypesConfig: Optional<Map<ApplicationIntegrationType, InstallParams>> = Optional.Missing(),
+    val integrationTypesConfig: Optional<Map<ApplicationIntegrationType, ApplicationIntegrationTypeConfig>> = Optional.Missing(),
     @SerialName("custom_install_url")
     override val customInstallUrl: Optional<String> = Optional.Missing(),
     @SerialName("role_connections_verification_url")
@@ -178,4 +178,11 @@ public data class InstallParams(
     val scopes: List<String>,
     /** The permissions to request for the bot role. */
     val permissions: Permissions,
+)
+
+@Serializable
+public data class ApplicationIntegrationTypeConfig(
+    /** Install params for each installation context's default in-app authorization link */
+    @SerialName("oauth2_install_params")
+    val oauth2InstallParams: InstallParams
 )
