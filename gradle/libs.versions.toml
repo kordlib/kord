@@ -28,7 +28,7 @@ mockk = "1.13.12" # https://github.com/mockk/mockk
 kbson = "0.4.0" # https://github.com/mongodb/kbson
 
 # plugins
-dokka = "1.9.20" # https://github.com/Kotlin/dokka
+dokka = "2.0.0-Beta" # https://github.com/Kotlin/dokka
 kotlinx-atomicfu = "0.25.0" # https://github.com/Kotlin/kotlinx-atomicfu
 binary-compatibility-validator = "0.16.3" # https://github.com/Kotlin/binary-compatibility-validator
 buildconfig = "5.4.0" # https://github.com/gmazzo/gradle-buildconfig-plugin
@@ -85,7 +85,7 @@ slf4j-simple = { module = "org.slf4j:slf4j-simple", version.ref = "slf4j" }
 kbson = { module = "org.mongodb.kbson:kbson", version.ref = "kbson" }
 
 # actually plugins, not libraries, but used is 'buildSrc/build.gradle.kts' as implementation dependencies:
-# https://docs.gradle.org/current/userguide/custom_plugins.html#applying_external_plugins_in_precompiled_script_plugins
+# https://docs.gradle.org/current/userguide/implementing_gradle_plugins_precompiled.html#sec:applying_external_plugins
 kotlin-jvm-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 kotlin-serialization-plugin = { module = "org.jetbrains.kotlin:kotlin-serialization", version.ref = "kotlin" }
 dokka-plugin = { module = "org.jetbrains.dokka:dokka-gradle-plugin", version.ref = "dokka" }

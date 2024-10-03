@@ -1,4 +1,3 @@
-import org.jetbrains.dokka.gradle.AbstractDokkaLeafTask
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.targets.js.testing.KotlinJsTest
 
@@ -71,6 +70,10 @@ kotlin {
     }
 }
 
+dokka {
+    applyKordDokkaOptions(project)
+}
+
 tasks {
     withType<Test>().configureEach {
         useJUnitPlatform()
@@ -80,7 +83,14 @@ tasks {
         environment("PROJECT_ROOT", rootProject.projectDir.absolutePath)
     }
 
-    for (task in listOf("compileKotlinJvm", "compileKotlinJs", "jvmSourcesJar", "jsSourcesJar")) {
+    for (task in listOf(
+        "compileKotlinJvm",
+        "compileKotlinJs",
+        "jvmSourcesJar",
+        "jsSourcesJar",
+        "dokkaGenerateModuleHtml",
+        "dokkaGeneratePublicationHtml",
+    )) {
         named(task) {
             dependsOn("kspCommonMainKotlinMetadata")
         }
@@ -90,10 +100,5 @@ tasks {
         named("sourcesJar") {
             dependsOn("kspCommonMainKotlinMetadata")
         }
-    }
-
-    withType<AbstractDokkaLeafTask>().configureEach {
-        applyKordDokkaOptions()
-        dependsOn("kspCommonMainKotlinMetadata")
     }
 }
