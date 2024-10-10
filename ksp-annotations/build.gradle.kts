@@ -1,5 +1,3 @@
-import org.jetbrains.dokka.gradle.AbstractDokkaLeafTask
-
 plugins {
     `kord-internal-multiplatform-module`
 
@@ -10,7 +8,7 @@ plugins {
     `kord-publishing`
 }
 
-tasks.withType<AbstractDokkaLeafTask>().configureEach {
+dokka {
     dokkaSourceSets.configureEach {
         suppress = true
     }
