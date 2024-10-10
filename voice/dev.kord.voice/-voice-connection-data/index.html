@@ -25,11 +25,13 @@
 <link href="../../../styles/prism.css" rel="Stylesheet">
 <link href="../../../styles/logo-styles.css" rel="Stylesheet">
 <link href="../../../styles/font-jb-sans-auto.css" rel="Stylesheet">
+<link href="../../../ui-kit/ui-kit.min.css" rel="Stylesheet">
 <script type="text/javascript" src="../../../scripts/clipboard.js" async></script>
 <script type="text/javascript" src="../../../scripts/navigation-loader.js" async></script>
 <script type="text/javascript" src="../../../scripts/platform-content-handler.js" async></script>
 <script type="text/javascript" src="../../../scripts/main.js" defer></script>
 <script type="text/javascript" src="../../../scripts/prism.js" async></script>
+<script type="text/javascript" src="../../../ui-kit/ui-kit.min.js" async></script>
 <script type="text/javascript" src="../../../scripts/symbol-parameters-wrapper_deferred.js" defer></script></head>
 <body>
     <div class="root">
@@ -45,7 +47,7 @@
             </div>
         </div>
         <div class="filter-section" id="filter-section">
-                <button class="platform-tag platform-selector jvm-like" data-active="" data-filter=":voice:dokkaHtmlPartial/main">jvm</button>
+                <button class="platform-tag platform-selector jvm-like" data-active="" data-filter=":voice/main">jvm</button>
         </div>
     </div>
     <div class="navigation-controls">
@@ -58,28 +60,28 @@
                 <div class="sidebar--inner" id="sideMenu"></div>
             </div>
             <div id="main">
-<div class="main-content" data-page-type="classlike" id="content" pageids="kord-voice::dev.kord.voice/VoiceConnectionData///PointingToDeclaration//634246632">
+<div class="main-content" data-page-type="classlike" id="content" pageids="kord-voice::dev.kord.voice/VoiceConnectionData///PointingToDeclaration//-1325077728">
   <div class="breadcrumbs"><a href="../../index.html">kord-voice</a><span class="delimiter">/</span><a href="../index.html">dev.kord.voice</a><span class="delimiter">/</span><span class="current">VoiceConnectionData</span></div>
   <div class="cover ">
     <h1 class="cover"><span>Voice</span><wbr><span>Connection</span><wbr><span><span>Data</span></span></h1>
-    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":voice:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">data </span><span class="token keyword">class </span><a href="index.html">VoiceConnectionData</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">val </span>selfId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>guildId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>sessionId<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="clearfix"><span class="floating-right">(<a href="https://github.com/kordlib/kord/blob/59630f25bd470eedd0fbf0efdc54f963117e29e9/voice/src/main/kotlin/VoiceConnection.kt#L28">source</a>)</span></span></div><p class="paragraph">Data that represents a <a href="../-voice-connection/index.html">VoiceConnection</a>, these will never change during the lifetime of a <a href="../-voice-connection/index.html">VoiceConnection</a>.</p><h4 class="">Parameters</h4><div class="table"><div class="table-row" data-filterable-current=":voice:dokkaHtmlPartial/main" data-filterable-set=":voice:dokkaHtmlPartial/main"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><u><span>self</span><wbr><span><span>Id</span></span></u></div></span></div><div><div class="title"><p class="paragraph">the id of the bot connecting to a voice channel.</p></div></div></div></div><div class="table-row" data-filterable-current=":voice:dokkaHtmlPartial/main" data-filterable-set=":voice:dokkaHtmlPartial/main"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><u><span>guild</span><wbr><span><span>Id</span></span></u></div></span></div><div><div class="title"><p class="paragraph">the id of the guild that the bot is connecting to.</p></div></div></div></div><div class="table-row" data-filterable-current=":voice:dokkaHtmlPartial/main" data-filterable-set=":voice:dokkaHtmlPartial/main"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><u><span>session</span><wbr><span><span>Id</span></span></u></div></span></div><div><div class="title"><p class="paragraph">the id of the current voice session, given by Discord.</p></div></div></div></div></div></div></div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":voice/main"><div class="symbol monospace"><span class="token keyword">data </span><span class="token keyword">class </span><a href="index.html">VoiceConnectionData</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">val </span>selfId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>guildId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>sessionId<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="clearfix"><span class="floating-right">(<a href="https://github.com/kordlib/kord/blob/3ef564ccdaa1659ff04305d76ee33756e47cd1e0/voice/src/main/kotlin/VoiceConnection.kt#L28">source</a>)</span></span></div><p class="paragraph">Data that represents a <a href="../-voice-connection/index.html">VoiceConnection</a>, these will never change during the lifetime of a <a href="../-voice-connection/index.html">VoiceConnection</a>.</p><h4 class="">Parameters</h4><div class="table"><div class="table-row" data-filterable-current=":voice/main" data-filterable-set=":voice/main"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><u><span>self</span><wbr><span><span>Id</span></span></u></div></span></div><div><div class="title"><p class="paragraph">the id of the bot connecting to a voice channel.</p></div></div></div></div><div class="table-row" data-filterable-current=":voice/main" data-filterable-set=":voice/main"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><u><span>guild</span><wbr><span><span>Id</span></span></u></div></span></div><div><div class="title"><p class="paragraph">the id of the guild that the bot is connecting to.</p></div></div></div></div><div class="table-row" data-filterable-current=":voice/main" data-filterable-set=":voice/main"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><u><span>session</span><wbr><span><span>Id</span></span></u></div></span></div><div><div class="title"><p class="paragraph">the id of the current voice session, given by Discord.</p></div></div></div></div></div></div></div>
   </div>
   <div class="tabbedcontent">
     <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="CONSTRUCTOR,TYPE,PROPERTY,FUNCTION">Members</button></div>
     <div class="tabs-section-body">
       <div data-togglable="CONSTRUCTOR">
         <h2 class="">Constructors</h2>
-        <div class="table"><a data-name="-1855714352%2FConstructors%2F634246632" anchor-label="VoiceConnectionData" id="-1855714352%2FConstructors%2F634246632" data-filterable-set=":voice:dokkaHtmlPartial/main"></a>
-          <div class="table-row" data-togglable="CONSTRUCTOR" data-filterable-current=":voice:dokkaHtmlPartial/main" data-filterable-set=":voice:dokkaHtmlPartial/main">
+        <div class="table"><a data-name="-1855714352%2FConstructors%2F-1325077728" anchor-label="VoiceConnectionData" id="-1855714352%2FConstructors%2F-1325077728" data-filterable-set=":voice/main"></a>
+          <div class="table-row" data-togglable="CONSTRUCTOR" data-filterable-current=":voice/main" data-filterable-set=":voice/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-voice-connection-data.html"><span>Voice</span><wbr><span>Connection</span><wbr><span><span>Data</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1855714352%2FConstructors%2F634246632"></span>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1855714352%2FConstructors%2F-1325077728"></span>
                     <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":voice:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">constructor</span><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">selfId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter ">guildId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter ">sessionId<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":voice/main"><div class="symbol monospace"><span class="token keyword">constructor</span><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">selfId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter ">guildId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter ">sessionId<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span></div></div></div>
                 </div>
               </div>
             </div>
@@ -88,47 +90,47 @@
       </div>
       <div data-togglable="PROPERTY">
         <h2 class="">Properties</h2>
-        <div class="table"><a data-name="-271178144%2FProperties%2F634246632" anchor-label="guildId" id="-271178144%2FProperties%2F634246632" data-filterable-set=":voice:dokkaHtmlPartial/main"></a>
-          <div class="table-row" data-filterable-current=":voice:dokkaHtmlPartial/main" data-filterable-set=":voice:dokkaHtmlPartial/main">
+        <div class="table"><a data-name="-271178144%2FProperties%2F-1325077728" anchor-label="guildId" id="-271178144%2FProperties%2F-1325077728" data-filterable-set=":voice/main"></a>
+          <div class="table-row" data-filterable-current=":voice/main" data-filterable-set=":voice/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="guild-id.html"><span>guild</span><wbr><span><span>Id</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-271178144%2FProperties%2F634246632"></span>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-271178144%2FProperties%2F-1325077728"></span>
                     <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":voice:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">val </span><a href="guild-id.html">guildId</a><span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":voice/main"><div class="symbol monospace"><span class="token keyword">val </span><a href="guild-id.html">guildId</a><span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a></div></div></div>
                 </div>
               </div>
             </div>
           </div>
-<a data-name="-215624027%2FProperties%2F634246632" anchor-label="selfId" id="-215624027%2FProperties%2F634246632" data-filterable-set=":voice:dokkaHtmlPartial/main"></a>
-          <div class="table-row" data-filterable-current=":voice:dokkaHtmlPartial/main" data-filterable-set=":voice:dokkaHtmlPartial/main">
+<a data-name="-215624027%2FProperties%2F-1325077728" anchor-label="selfId" id="-215624027%2FProperties%2F-1325077728" data-filterable-set=":voice/main"></a>
+          <div class="table-row" data-filterable-current=":voice/main" data-filterable-set=":voice/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="self-id.html"><span>self</span><wbr><span><span>Id</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-215624027%2FProperties%2F634246632"></span>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-215624027%2FProperties%2F-1325077728"></span>
                     <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":voice:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">val </span><a href="self-id.html">selfId</a><span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":voice/main"><div class="symbol monospace"><span class="token keyword">val </span><a href="self-id.html">selfId</a><span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a></div></div></div>
                 </div>
               </div>
             </div>
           </div>
-<a data-name="-320257635%2FProperties%2F634246632" anchor-label="sessionId" id="-320257635%2FProperties%2F634246632" data-filterable-set=":voice:dokkaHtmlPartial/main"></a>
-          <div class="table-row" data-filterable-current=":voice:dokkaHtmlPartial/main" data-filterable-set=":voice:dokkaHtmlPartial/main">
+<a data-name="-320257635%2FProperties%2F-1325077728" anchor-label="sessionId" id="-320257635%2FProperties%2F-1325077728" data-filterable-set=":voice/main"></a>
+          <div class="table-row" data-filterable-current=":voice/main" data-filterable-set=":voice/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="session-id.html"><span>session</span><wbr><span><span>Id</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-320257635%2FProperties%2F634246632"></span>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-320257635%2FProperties%2F-1325077728"></span>
                     <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":voice:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">val </span><a href="session-id.html">sessionId</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":voice/main"><div class="symbol monospace"><span class="token keyword">val </span><a href="session-id.html">sessionId</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></div></div></div>
                 </div>
               </div>
             </div>
@@ -138,12 +140,18 @@
     </div>
   </div>
 </div>
-      <div class="footer">
-        <span class="go-to-top-icon"><a href="#content" id="go-to-top-link"></a></span><span>© 2024 Copyright</span><span class="pull-right"><span>Generated by </span><a href="https://github.com/Kotlin/dokka"><span>dokka</span><span class="padded-icon"></span></a></span>
-      </div>
+    <div class="footer">
+        <a href="#content" id="go-to-top-link" class="footer--button footer--button_go-to-top"></a>
+        <span>© 2024 Copyright</span>
+        <span class="pull-right">
+            <span>Generated by </span>
+            <a class="footer--link footer--link_external" href="https://github.com/Kotlin/dokka">
+                <span>dokka</span>
+            </a>
+        </span>
+    </div>
             </div>
         </div>
     </div>
 </body>
 </html>
-
