@@ -1,7 +1,6 @@
 package dev.kord.core.behavior.interaction
 
 import dev.kord.common.annotation.KordUnsafe
-import dev.kord.common.entity.MessageFlag
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.Kord
 import dev.kord.core.behavior.interaction.response.*

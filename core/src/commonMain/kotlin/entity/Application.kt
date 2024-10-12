@@ -1,9 +1,12 @@
 package dev.kord.core.entity
 
 import dev.kord.common.entity.ApplicationFlags
+import dev.kord.common.entity.ApplicationIntegrationType
+import dev.kord.common.entity.ApplicationIntegrationTypeConfig
 import dev.kord.common.entity.InstallParams
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.orEmpty
+import dev.kord.common.entity.optional.unwrap
 import dev.kord.core.Kord
 import dev.kord.core.behavior.GuildBehavior
 import dev.kord.core.behavior.UserBehavior
@@ -11,9 +14,9 @@ import dev.kord.core.cache.data.ApplicationData
 import dev.kord.core.cache.data.BaseApplicationData
 import dev.kord.core.cache.data.PartialApplicationData
 import dev.kord.core.event.guild.InviteCreateEvent
+import dev.kord.core.hash
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
-import dev.kord.core.hash
 
 public sealed class BaseApplication(
     final override val kord: Kord,
@@ -48,7 +51,7 @@ public sealed class BaseApplication(
 
     public val guildId: Snowflake? get() = data.guildId.value
 
-    public val guild: GuildBehavior? get() = guildId?.let { GuildBehavior(it, kord) }
+    public open val guild: GuildBehavior? get() = guildId?.let { GuildBehavior(it, kord) }
 
     public val primarySkuId: Snowflake? get() = data.primarySkuId.value
 
@@ -107,6 +110,12 @@ public class Application(
     public val teamId: Snowflake? get() = data.team?.id
 
     public val team: Team? get() = data.team?.let { Team(it, kord) }
+
+    public val bot: User? get() = data.bot.unwrap { User(it, kord, supplier) }
+
+    public override val guild: PartialGuild? get() = data.guild.unwrap { PartialGuild(it, kord, supplier) }
+
+    public val integrationTypesConfig: Map<ApplicationIntegrationType, ApplicationIntegrationTypeConfig>? get() = data.integrationTypesConfig.value
 
     /**
      * Returns a new [Application] with the given [strategy].
