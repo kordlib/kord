@@ -1232,7 +1232,7 @@ public final class dev/kord/voice/udp/RTPPacket$Builder {
 }
 
 public final class dev/kord/voice/udp/RTPPacket$Companion {
-	public final fun fromPacket (Lio/ktor/utils/io/core/ByteReadPacket;)Ldev/kord/voice/udp/RTPPacket;
+	public final fun fromPacket (Lkotlinx/io/Source;)Ldev/kord/voice/udp/RTPPacket;
 }
 
 public final class dev/kord/voice/udp/RTPPacketKt {

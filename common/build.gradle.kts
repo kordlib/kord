@@ -23,7 +23,6 @@ kotlin {
         }
         nonJvmMain {
             dependencies {
-                implementation(libs.ktor.utils)
                 implementation(libs.bignum)
                 implementation(libs.stately.collections)
             }
