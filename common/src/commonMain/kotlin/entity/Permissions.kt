@@ -112,9 +112,9 @@ public val Permissions.Companion.ALL: Permissions get() = ALL_PERMISSIONS
 
 @Suppress("UnusedReceiverParameter", "DEPRECATION_ERROR")
 @Deprecated(
-    "'Permissions.NewCompanion' was renamed to 'Permissions.Companion'. Use 'Permissions.Companion.ALL' instead. The " +
-        "deprecation level will be raised to HIDDEN in 0.16.0 and this declaration will be removed in 0.17.0.",
+    "'Permissions.NewCompanion' was renamed to 'Permissions.Companion'. Use 'Permissions.Companion.ALL' instead. " +
+        "This declaration will be removed in 0.17.0.",
     ReplaceWith("Permissions.ALL", imports = ["dev.kord.common.entity.Permissions", "dev.kord.common.entity.ALL"]),
-    DeprecationLevel.ERROR,
+    DeprecationLevel.HIDDEN,
 )
 public val Permissions.NewCompanion.ALL: Permissions get() = ALL_PERMISSIONS

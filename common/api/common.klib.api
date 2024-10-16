@@ -6516,14 +6516,6 @@ final class dev.kord.common/Locale { // dev.kord.common/Locale|null[0]
         final fun fromString(kotlin/String): dev.kord.common/Locale // dev.kord.common/Locale.Companion.fromString|fromString(kotlin.String){}[0]
         final fun serializer(): kotlinx.serialization/KSerializer<dev.kord.common/Locale> // dev.kord.common/Locale.Companion.serializer|serializer(){}[0]
     }
-
-    final object Serializer : kotlinx.serialization/KSerializer<dev.kord.common/Locale> { // dev.kord.common/Locale.Serializer|null[0]
-        final val descriptor // dev.kord.common/Locale.Serializer.descriptor|{}descriptor[0]
-            final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // dev.kord.common/Locale.Serializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
-
-        final fun deserialize(kotlinx.serialization.encoding/Decoder): dev.kord.common/Locale // dev.kord.common/Locale.Serializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
-        final fun serialize(kotlinx.serialization.encoding/Encoder, dev.kord.common/Locale) // dev.kord.common/Locale.Serializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;dev.kord.common.Locale){}[0]
-    }
 }
 
 sealed class <#A: kotlin/Any?> dev.kord.common.entity/AuditLogChangeKey { // dev.kord.common.entity/AuditLogChangeKey|null[0]
@@ -7329,9 +7321,7 @@ sealed class dev.kord.common.entity/ArchiveDuration { // dev.kord.common.entity/
     final fun hashCode(): kotlin/Int // dev.kord.common.entity/ArchiveDuration.hashCode|hashCode(){}[0]
     final fun toString(): kotlin/String // dev.kord.common.entity/ArchiveDuration.toString|toString(){}[0]
 
-    final class Unknown : dev.kord.common.entity/ArchiveDuration { // dev.kord.common.entity/ArchiveDuration.Unknown|null[0]
-        constructor <init>(kotlin.time/Duration) // dev.kord.common.entity/ArchiveDuration.Unknown.<init>|<init>(kotlin.time.Duration){}[0]
-    }
+    final class Unknown : dev.kord.common.entity/ArchiveDuration // dev.kord.common.entity/ArchiveDuration.Unknown|null[0]
 
     final object Companion { // dev.kord.common.entity/ArchiveDuration.Companion|null[0]
         final val entries // dev.kord.common.entity/ArchiveDuration.Companion.entries|{}entries[0]
@@ -9293,14 +9283,6 @@ final object dev.kord.common.serialization/InstantInEpochSecondsSerializer : kot
 
     final fun deserialize(kotlinx.serialization.encoding/Decoder): kotlinx.datetime/Instant // dev.kord.common.serialization/InstantInEpochSecondsSerializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
     final fun serialize(kotlinx.serialization.encoding/Encoder, kotlinx.datetime/Instant) // dev.kord.common.serialization/InstantInEpochSecondsSerializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;kotlinx.datetime.Instant){}[0]
-}
-
-final object dev.kord.common/DiscordBitSetSerializer : kotlinx.serialization/KSerializer<dev.kord.common/DiscordBitSet> { // dev.kord.common/DiscordBitSetSerializer|null[0]
-    final val descriptor // dev.kord.common/DiscordBitSetSerializer.descriptor|{}descriptor[0]
-        final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // dev.kord.common/DiscordBitSetSerializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
-
-    final fun deserialize(kotlinx.serialization.encoding/Decoder): dev.kord.common/DiscordBitSet // dev.kord.common/DiscordBitSetSerializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
-    final fun serialize(kotlinx.serialization.encoding/Encoder, dev.kord.common/DiscordBitSet) // dev.kord.common/DiscordBitSetSerializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;dev.kord.common.DiscordBitSet){}[0]
 }
 
 final object dev.kord.common/KordConfiguration { // dev.kord.common/KordConfiguration|null[0]

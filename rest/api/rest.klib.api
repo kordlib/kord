@@ -8003,7 +8003,6 @@ sealed class dev.kord.rest.request/RequestIdentifier { // dev.kord.rest.request/
 final object dev.kord.rest.route/DiscordCdn { // dev.kord.rest.route/DiscordCdn|null[0]
     final fun applicationCover(dev.kord.common.entity/Snowflake, kotlin/String): dev.kord.rest.route/CdnUrl // dev.kord.rest.route/DiscordCdn.applicationCover|applicationCover(dev.kord.common.entity.Snowflake;kotlin.String){}[0]
     final fun applicationIcon(dev.kord.common.entity/Snowflake, kotlin/String): dev.kord.rest.route/CdnUrl // dev.kord.rest.route/DiscordCdn.applicationIcon|applicationIcon(dev.kord.common.entity.Snowflake;kotlin.String){}[0]
-    final fun defaultAvatar(kotlin/Int): dev.kord.rest.route/CdnUrl // dev.kord.rest.route/DiscordCdn.defaultAvatar|defaultAvatar(kotlin.Int){}[0]
     final fun defaultUserAvatar(dev.kord.common.entity/Snowflake): dev.kord.rest.route/CdnUrl // dev.kord.rest.route/DiscordCdn.defaultUserAvatar|defaultUserAvatar(dev.kord.common.entity.Snowflake){}[0]
     final fun defaultUserAvatar(kotlin/Int): dev.kord.rest.route/CdnUrl // dev.kord.rest.route/DiscordCdn.defaultUserAvatar|defaultUserAvatar(kotlin.Int){}[0]
     final fun emoji(dev.kord.common.entity/Snowflake): dev.kord.rest.route/CdnUrl // dev.kord.rest.route/DiscordCdn.emoji|emoji(dev.kord.common.entity.Snowflake){}[0]

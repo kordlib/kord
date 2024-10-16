@@ -345,20 +345,18 @@ public data class Heartbeat(val data: Long?) : Event() {
     public companion object {
         @Suppress("DEPRECATION_ERROR")
         @Deprecated(
-            "Renamed to 'Companion'. The deprecation level will be raised to HIDDEN in 0.16.0 and this declaration " +
-                "will be removed in 0.17.0.",
+            "Renamed to 'Companion'. This declaration will be removed in 0.17.0.",
             ReplaceWith("Heartbeat.Companion", imports = ["dev.kord.gateway.Heartbeat"]),
-            DeprecationLevel.ERROR,
+            DeprecationLevel.HIDDEN,
         )
         @JvmField
         public val NewCompanion: NewCompanion = NewCompanion()
     }
 
     @Deprecated(
-        "Renamed to 'Companion'. The deprecation level will be raised to HIDDEN in 0.16.0 and this declaration will " +
-            "be removed in 0.17.0.",
+        "Renamed to 'Companion'. This declaration will be removed in 0.17.0.",
         ReplaceWith("Heartbeat.Companion", imports = ["dev.kord.gateway.Heartbeat"]),
-        DeprecationLevel.ERROR,
+        DeprecationLevel.HIDDEN,
     )
     public class NewCompanion internal constructor() {
         public fun serializer(): KSerializer<Heartbeat> = Heartbeat.serializer()
@@ -555,9 +553,8 @@ public data class InteractionCreate(val interaction: DiscordInteraction, overrid
 
 @Deprecated(
     "This event is not supposed to be sent to bots. See https://github.com/discord/discord-api-docs/issues/3690 for " +
-        "details. The deprecation level will be raised to HIDDEN in 0.16.0 and this declaration will be removed in " +
-        "0.17.0.",
-    level = DeprecationLevel.ERROR,
+        "details. This declaration will be removed in 0.17.0.",
+    level = DeprecationLevel.HIDDEN,
 )
 public data class ApplicationCommandCreate(val application: DiscordApplicationCommand, override val sequence: Int?) :
     DispatchEvent()
@@ -565,9 +562,8 @@ public data class ApplicationCommandCreate(val application: DiscordApplicationCo
 
 @Deprecated(
     "This event is not supposed to be sent to bots. See https://github.com/discord/discord-api-docs/issues/3690 for " +
-        "details. The deprecation level will be raised to HIDDEN in 0.16.0 and this declaration will be removed in " +
-        "0.17.0.",
-    level = DeprecationLevel.ERROR,
+        "details. This declaration will be removed in 0.17.0.",
+    level = DeprecationLevel.HIDDEN,
 )
 public data class ApplicationCommandUpdate(val application: DiscordApplicationCommand, override val sequence: Int?) :
     DispatchEvent()
@@ -575,9 +571,8 @@ public data class ApplicationCommandUpdate(val application: DiscordApplicationCo
 
 @Deprecated(
     "This event is not supposed to be sent to bots. See https://github.com/discord/discord-api-docs/issues/3690 for " +
-        "details. The deprecation level will be raised to HIDDEN in 0.16.0 and this declaration will be removed in " +
-        "0.17.0.",
-    level = DeprecationLevel.ERROR,
+        "details. This declaration will be removed in 0.17.0.",
+    level = DeprecationLevel.HIDDEN,
 )
 public data class ApplicationCommandDelete(val application: DiscordApplicationCommand, override val sequence: Int?) :
     DispatchEvent()
