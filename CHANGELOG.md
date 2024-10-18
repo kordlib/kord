@@ -1,3 +1,44 @@
+# 0.15.0
+
+## Additions
+
+* Add `User.isSelf` (by @Taubsie in #950)
+* Publish snapshots to https://repo.kord.dev/snapshots (#961)
+* Document deprecation cycle of deprecated declarations (#969)
+* Add `UserMessageCreateBuilder.enforceNonce` (by @DRSchlaubi in #971)
+* Implement Monetization (by @viztea in #932)
+* Add `MemberProfileAutoModerationRule` (#974)
+
+## Changes
+
+* Bump `DeprecationLevel`s after 0.14.0 (#944)
+* Update Auto Moderation builders (#979)
+* Link to JDK 23 in Dokka output (#980)
+
+## Fixes
+
+* Fix deserialization of members (by @NoComment1105 in #955)
+* Fix deserialization of `Heartbeat` events (#957)
+* Fix `getMemberOrNull` and `getGuildMembers` caching only user data (by @Galarzaa90 in #964)
+* Fix misuse of reified type parameters (#981)
+
+## Dependencies
+
+Updated in #942, #954, #958, #975, #976, and #986 (not including dependencies only needed for developing Kord)
+
+* Kotlin 1.9.24 -> 2.0.21
+* Ktor 2.3.11 -> 3.0.0
+* kotlinx.coroutines 1.8.1 -> 1.9.0
+* kotlinx.serialization 1.6.3 -> 1.7.3
+* kotlinx-datetime 0.6.0 -> 0.6.1
+* kord-cache 0.4.0 -> 0.5.4
+* kotlin-logging 6.0.9 -> 7.0.0
+* SLF4J 2.0.13 -> 2.0.16
+* kotlin-node 20.11.30-pre.751 -> 22.5.4-pre.818
+* kotlin-multiplatform-bignum 0.3.9 -> 0.3.10
+* Stately 2.0.7 -> 2.1.0
+* AtomicFU 0.24.0 -> 0.25.0
+
 # 0.14.0
 
 ## Additions
@@ -30,7 +71,7 @@ Updated in #920, #929 and #943
 * kotlinx-datetime 0.5.0 -> 0.6.0
 * kotlin-logging 6.0.1 -> 6.0.9
 * SLF4J 2.0.9 -> 2.0.13
-* kotlin-node 18.16.12-pre.619 -> 20.11.5-pre.751
+* kotlin-node 18.16.12-pre.619 -> 20.11.30-pre.751
 * kotlin-multiplatform-bignum 0.3.8 -> 0.3.9
 * Stately 2.0.6 -> 2.0.7
 * KSP 1.9.21-1.0.16 -> 1.9.24-1.0.20

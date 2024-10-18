@@ -1,5 +1,3 @@
-import org.jetbrains.dokka.gradle.AbstractDokkaLeafTask
-
 plugins {
     org.jetbrains.kotlin.jvm
     org.jetbrains.kotlin.plugin.serialization
@@ -36,13 +34,13 @@ kotlin {
     }
 }
 
+dokka {
+    applyKordDokkaOptions(project)
+}
+
 tasks {
     withType<Test>().configureEach {
         useJUnitPlatform()
-    }
-
-    withType<AbstractDokkaLeafTask>().configureEach {
-        applyKordDokkaOptions()
     }
 
     withType<JavaCompile>().configureEach {
