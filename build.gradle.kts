@@ -5,7 +5,6 @@ plugins {
 repositories {
     mavenCentral()
     maven("https://maven.pkg.jetbrains.space/kotlin/p/kotlin/bootstrap")
-    mavenLocal()
 }
 
 group = Library.group
