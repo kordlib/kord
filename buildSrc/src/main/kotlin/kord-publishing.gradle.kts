@@ -1,9 +1,10 @@
+import org.jetbrains.kotlin.konan.target.Family
 import java.lang.System.getenv
 import java.util.Base64
 
 plugins {
-    `maven-publish`
-    signing
+    id("com.vanniktech.maven.publish.base")
+    dev.kord.`gradle-tools`
 }
 
 fun MavenPublication.registerDokkaJar() =
@@ -13,63 +14,57 @@ fun MavenPublication.registerDokkaJar() =
         from(tasks.named("dokkaGeneratePublicationHtml"))
     }
 
-publishing {
-    publications {
-        withType<MavenPublication>().configureEach {
-            if (project.name != "bom") artifact(registerDokkaJar())
+kord {
+    publicationName = "mavenCentral"
+    metadataHost = Family.OSX
+}
 
-            groupId = Library.group
-            artifactId = "kord-$artifactId"
-            version = libraryVersion
+mavenPublishing {
+    coordinates(Library.group, "kord-${project.name}")
+    publishToMavenCentral()
+    signAllPublications()
 
-            pom {
-                name = Library.name
-                description = Library.description
-                url = Library.projectUrl
+    if (plugins.hasPlugin("org.jetbrains.kotlin.multiplatform")) {
+//        configure(KotlinMultipla(javadocJar = JavadocJar.Dokka("dokkaHtml")))
+    }
 
-                organization {
-                    name = "Kord"
-                    url = "https://github.com/kordlib"
-                }
+    pom {
+        name = Library.name
+        description = Library.description
+        url = Library.projectUrl
 
-                developers {
-                    developer {
-                        name = "The Kord Team"
-                    }
-                }
+        organization {
+            name = "Kord"
+            url = "https://github.com/kordlib"
+        }
 
-                issueManagement {
-                    system = "GitHub"
-                    url = "https://github.com/kordlib/kord/issues"
-                }
-
-                licenses {
-                    license {
-                        name = "MIT"
-                        url = "https://opensource.org/licenses/MIT"
-                    }
-                }
-
-                scm {
-                    connection = "scm:git:ssh://github.com/kordlib/kord.git"
-                    developerConnection = "scm:git:ssh://git@github.com:kordlib/kord.git"
-                    url = Library.projectUrl
-                }
+        developers {
+            developer {
+                name = "The Kord Team"
             }
+        }
+
+        issueManagement {
+            system = "GitHub"
+            url = "https://github.com/kordlib/kord/issues"
+        }
+
+        licenses {
+            license {
+                name = "MIT"
+                url = "https://opensource.org/licenses/MIT"
+            }
+        }
+
+        scm {
+            connection = "scm:git:ssh://github.com/kordlib/kord.git"
+            developerConnection = "scm:git:ssh://git@github.com:kordlib/kord.git"
+            url = Library.projectUrl
         }
     }
 
     repositories {
-        maven {
-            url = uri(if (isRelease) Repo.releasesUrl else Repo.snapshotsUrl)
-
-            credentials {
-                username = getenv("NEXUS_USER")
-                password = getenv("NEXUS_PASSWORD")
-            }
-        }
-
-        if (!isRelease) {
+        if (true) {
             maven {
                 name = "kordSnapshots"
                 url = uri("https://repo.kord.dev/snapshots")
@@ -80,11 +75,4 @@ publishing {
             }
         }
     }
-}
-
-signing {
-    val secretKey = getenv("SIGNING_KEY")?.let { String(Base64.getDecoder().decode(it)) }
-    val password = getenv("SIGNING_PASSWORD")
-    useInMemoryPgpKeys(secretKey, password)
-    sign(publishing.publications)
 }

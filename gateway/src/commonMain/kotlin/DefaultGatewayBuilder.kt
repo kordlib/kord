@@ -8,9 +8,7 @@ import dev.kord.gateway.ratelimit.IdentifyRateLimiter
 import dev.kord.gateway.retry.LinearRetry
 import dev.kord.gateway.retry.Retry
 import io.ktor.client.*
-import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.plugins.websocket.*
-import io.ktor.serialization.kotlinx.json.*
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -29,9 +27,6 @@ public class DefaultGatewayBuilder {
     public fun build(): DefaultGateway {
         val client = client ?: HttpClient(httpEngine()) {
             install(WebSockets)
-            install(ContentNegotiation) {
-                json()
-            }
         }
         val retry = reconnectRetry ?: LinearRetry(2.seconds, 20.seconds, 10)
         val sendRateLimiter = sendRateLimiter ?: IntervalRateLimiter(limit = 120, interval = 60.seconds)
