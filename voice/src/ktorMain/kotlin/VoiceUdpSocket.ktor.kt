@@ -19,15 +19,14 @@ public actual val GlobalVoiceUdpSocket: VoiceUdpSocket = object : VoiceUdpSocket
     private val socketScope =
         CoroutineScope(Dispatchers.Default + SupervisorJob() + CoroutineName("kord-voice-global-socket"))
 
-    private val socket = aSocket(SelectorManager(socketScope.coroutineContext)).udp().bind()
+    private val socket = socketScope.async {
+        aSocket(SelectorManager(socketScope.coroutineContext)).udp().bind()
+    }
 
     private val incoming: MutableSharedFlow<Datagram> = MutableSharedFlow()
 
     init {
-        socket.incoming
-            .consumeAsFlow()
-            .onEach { incoming.emit(it) }
-            .launchIn(socketScope)
+        socketScope.launch { incoming.emitAll(socket.await().incoming) }
     }
 
     override fun all(address: SocketAddress): Flow<Source> {
@@ -38,7 +37,7 @@ public actual val GlobalVoiceUdpSocket: VoiceUdpSocket = object : VoiceUdpSocket
 
     override suspend fun send(address: SocketAddress, packet: ByteArrayView) {
         val brp = ByteReadPacket(packet.data, packet.dataStart, packet.viewSize)
-        socket.send(KtorDatagram(brp, address))
+        socket.await().send(KtorDatagram(brp, address))
     }
 
     override suspend fun stop() {

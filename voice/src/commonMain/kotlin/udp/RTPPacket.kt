@@ -5,6 +5,10 @@ import dev.kord.voice.io.MutableByteArrayCursor
 import dev.kord.voice.io.mutableCursor
 import dev.kord.voice.io.view
 import io.ktor.utils.io.core.*
+import kotlinx.io.Source
+import kotlinx.io.readByteArray
+import kotlinx.io.readUInt
+import kotlinx.io.readUShort
 import kotlin.experimental.and
 
 internal const val RTP_HEADER_LENGTH = 12

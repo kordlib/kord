@@ -1,6 +1,7 @@
 import org.jetbrains.dokka.gradle.AbstractDokkaLeafTask
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.targets.js.testing.KotlinJsTest
+import org.jetbrains.kotlin.gradle.targets.native.tasks.KotlinNativeTest
 
 plugins {
     org.jetbrains.kotlin.multiplatform
@@ -81,14 +82,14 @@ tasks {
         options.release = KORD_JVM_TARGET
     }
 
+    val compilationTasks = kotlin.targets.flatMap {
+        listOf("compileKotlin${it.name.replaceFirstChar(Char::titlecase)}", "${it.name}SourcesJar")
+    }
+
     for (task in listOf(
-        "compileKotlinJvm",
-        "compileKotlinJs",
-        "jvmSourcesJar",
-        "jsSourcesJar",
         "dokkaGenerateModuleHtml",
         "dokkaGeneratePublicationHtml",
-    )) {
+    ) + compilationTasks) {
         named(task) {
             dependsOn("kspCommonMainKotlinMetadata")
         }
@@ -98,11 +99,6 @@ tasks {
         named("sourcesJar") {
             dependsOn("kspCommonMainKotlinMetadata")
         }
-    }
-
-    withType<AbstractDokkaLeafTask>().configureEach {
-        applyKordDokkaOptions()
-        dependsOn("kspCommonMainKotlinMetadata")
     }
 
     disableLinuxLinkTestTasksOnWindows()

@@ -13,11 +13,11 @@ kotlin {
                 withJvm()
                 withApple()
                 withLinux()
+                withMingw()
             }
 
             group("nonKtor") {
                 withJs()
-                withMingw()
             }
         }
     }
