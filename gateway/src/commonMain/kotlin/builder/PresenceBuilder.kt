@@ -38,6 +38,11 @@ public class PresenceBuilder {
     public fun competing(name: String) {
         game = DiscordBotActivity(name, ActivityType.Competing)
     }
+    
+    public fun custom(name: String) {
+        game = DiscordBotActivity(name, ActivityType.Custom)
+    }
+    
 
     private fun buildGame(): DiscordBotActivity? {
         val game = game
