@@ -8,7 +8,7 @@ import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.Optional
 import dev.kord.rest.json.readFile
 import dev.kord.rest.service.ChannelService
-import dev.kord.test.IgnoreOnSimulatorPlatforms
+import dev.kord.test.Platform
 import io.ktor.client.*
 import io.ktor.client.engine.mock.*
 import io.ktor.client.request.forms.*
@@ -63,7 +63,7 @@ class MessageRequests {
 
         val channelService = ChannelService(KtorRequestHandler(client = HttpClient(mockEngine), token = ""))
 
-        val fileChannel = readFile("images/kord.png")
+        val fileChannel = readFile("images/kord.png").counted()
 
         with(fileChannel) {
             assertFalse(isClosedForRead)

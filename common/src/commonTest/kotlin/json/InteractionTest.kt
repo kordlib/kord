@@ -4,7 +4,6 @@ import dev.kord.common.entity.*
 import dev.kord.common.entity.Permission.*
 import dev.kord.common.entity.optional.orEmpty
 import dev.kord.common.readFile
-import dev.kord.test.IgnoreOnSimulatorPlatforms
 import kotlinx.coroutines.test.runTest
 import kotlinx.serialization.json.Json
 import kotlin.js.JsName
@@ -19,6 +18,16 @@ private val perms = Permissions(
     AttachFiles, ReadMessageHistory, MentionEveryone, UseExternalEmojis, ViewGuildInsights, Connect, Speak, MuteMembers,
     DeafenMembers, MoveMembers, UseVAD, ChangeNickname, ManageNicknames, ManageRoles, ManageWebhooks,
     ManageGuildExpressions,
+)
+
+private val testEntitlements = listOf(
+    DiscordEntitlement(
+        id = Snowflake.min,
+        applicationId = Snowflake.min,
+        skuId = Snowflake.min,
+        type = EntitlementType.ApplicationSubscription,
+        deleted = false,
+    ),
 )
 
 @IgnoreOnSimulatorPlatforms
@@ -53,6 +62,7 @@ class InteractionTest {
             arg.name shouldBe "testint"
             arg.value shouldBe 1L
             appPermissions shouldBe perms
+            entitlements shouldBe testEntitlements
         }
     }
 
@@ -79,6 +89,7 @@ class InteractionTest {
             arg.name shouldBe "testint"
             arg.value shouldBe 1L
             appPermissions shouldBe perms
+            entitlements shouldBe testEntitlements
         }
     }
 
@@ -104,6 +115,7 @@ class InteractionTest {
             arg.name shouldBe "testint"
             arg.value shouldBe 1L
             appPermissions shouldBe perms
+            entitlements shouldBe testEntitlements
         }
     }
 
@@ -144,6 +156,7 @@ class InteractionTest {
             guildId shouldBe "772904309264089089"
             id shouldBe "847587388497854464"
             appPermissions shouldBe perms
+            entitlements shouldBe testEntitlements
         }
     }
 

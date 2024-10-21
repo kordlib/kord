@@ -1,33 +1,45 @@
-import dev.kord.gradle.tools.util.commitHash
 import org.gradle.kotlin.dsl.assign
 import org.jetbrains.dokka.gradle.AbstractDokkaLeafTask
 import java.net.URI
 
-fun AbstractDokkaLeafTask.applyKordDokkaOptions() {
+internal fun DokkaExtension.applyKordDokkaOptions(project: Project) {
+
+    // Dokka runs out of memory with the default maxHeapSize when ProcessIsolation is used
+    (dokkaGeneratorIsolation.get() as? ProcessIsolation)?.maxHeapSize = "1g"
 
     moduleName = "kord-${project.name}"
 
-    failOnWarning = true
+    dokkaPublications.configureEach {
+        failOnWarning = true
+    }
 
     dokkaSourceSets.configureEach {
 
-        jdkVersion = 22
+        jdkVersion = 23
 
         suppressGeneratedFiles = false
 
         sourceLink {
             localDirectory = project.projectDir
-            remoteUrl = URI("https://github.com/kordlib/kord/blob/${project.commitHash}/${project.name}").toURL()
+            remoteUrl("https://github.com/kordlib/kord/blob/${project.commitHash}/${project.name}")
             remoteLineSuffix = "#L"
         }
 
-        externalDocumentationLink("https://kotlinlang.org/api/kotlinx.coroutines/")
-        externalDocumentationLink("https://kotlinlang.org/api/kotlinx.serialization/")
-        externalDocumentationLink(
-            url = "https://kotlinlang.org/api/kotlinx-datetime/",
-            packageListUrl = "https://kotlinlang.org/api/kotlinx-datetime/kotlinx-datetime/package-list",
-        )
-        externalDocumentationLink("https://api.ktor.io/")
+        externalDocumentationLinks {
+            register("kotlinx.coroutines") {
+                url("https://kotlinlang.org/api/kotlinx.coroutines/")
+            }
+            register("kotlinx.serialization") {
+                url("https://kotlinlang.org/api/kotlinx.serialization/")
+            }
+            register("kotlinx-datetime") {
+                url("https://kotlinlang.org/api/kotlinx-datetime/")
+                packageListUrl("https://kotlinlang.org/api/kotlinx-datetime/kotlinx-datetime/package-list")
+            }
+            register("Ktor") {
+                url("https://api.ktor.io/")
+            }
+        }
 
         // don't list `TweetNaclFast` in docs
         perPackageOption {

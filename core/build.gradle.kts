@@ -39,9 +39,3 @@ apiValidation {
     // https://github.com/Kotlin/binary-compatibility-validator/issues/88
     ignoredProjects += "live-tests"
 }
-
-tasks {
-    dokkaHtmlMultiModule {
-        enabled = false
-    }
-}

@@ -50,6 +50,11 @@ public sealed class AutoModerationRuleEventType(
      */
     public object MessageSend : AutoModerationRuleEventType(1)
 
+    /**
+     * When a member edits their profile.
+     */
+    public object MemberUpdate : AutoModerationRuleEventType(2)
+
     internal object Serializer : KSerializer<AutoModerationRuleEventType> {
         override val descriptor: SerialDescriptor =
                 PrimitiveSerialDescriptor("dev.kord.common.entity.AutoModerationRuleEventType",
@@ -70,6 +75,7 @@ public sealed class AutoModerationRuleEventType(
         public val entries: List<AutoModerationRuleEventType> by lazy(mode = PUBLICATION) {
             listOf(
                 MessageSend,
+                MemberUpdate,
             )
         }
 
@@ -79,6 +85,7 @@ public sealed class AutoModerationRuleEventType(
          */
         public fun from(`value`: Int): AutoModerationRuleEventType = when (value) {
             1 -> MessageSend
+            2 -> MemberUpdate
             else -> Unknown(value)
         }
     }

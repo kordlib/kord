@@ -1,7 +1,6 @@
 import org.jetbrains.dokka.gradle.AbstractDokkaLeafTask
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.targets.js.testing.KotlinJsTest
-import org.jetbrains.kotlin.gradle.targets.native.tasks.KotlinNativeTest
 
 plugins {
     org.jetbrains.kotlin.multiplatform
@@ -61,6 +60,10 @@ kotlin {
     }
 }
 
+dokka {
+    applyKordDokkaOptions(project)
+}
+
 tasks {
     withType<Test>().configureEach {
         useJUnitPlatform()
@@ -78,14 +81,16 @@ tasks {
         options.release = KORD_JVM_TARGET
     }
 
-    afterEvaluate {
-        val compilationTasks = kotlin.targets.flatMap {
-            listOf("compileKotlin${it.name.replaceFirstChar(Char::titlecase)}", "${it.name}SourcesJar")
-        }
-        for (task in compilationTasks) {
-            named(task) {
-                dependsOn("kspCommonMainKotlinMetadata")
-            }
+    for (task in listOf(
+        "compileKotlinJvm",
+        "compileKotlinJs",
+        "jvmSourcesJar",
+        "jsSourcesJar",
+        "dokkaGenerateModuleHtml",
+        "dokkaGeneratePublicationHtml",
+    )) {
+        named(task) {
+            dependsOn("kspCommonMainKotlinMetadata")
         }
     }
 

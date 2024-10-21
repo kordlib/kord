@@ -14,7 +14,7 @@ kotlin {
     targets()
 }
 
-tasks.withType<AbstractDokkaLeafTask>().configureEach {
+dokka {
     dokkaSourceSets.configureEach {
         suppress = true
     }

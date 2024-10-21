@@ -1,4 +1,3 @@
-import org.jetbrains.kotlin.konan.target.Family
 import java.lang.System.getenv
 import java.util.Base64
 
@@ -6,6 +5,13 @@ plugins {
     id("com.vanniktech.maven.publish.base")
     dev.kord.`gradle-tools`
 }
+
+fun MavenPublication.registerDokkaJar() =
+    tasks.register<Jar>("${name}DokkaJar") {
+        archiveClassifier = "javadoc"
+        destinationDirectory = destinationDirectory.get().dir(name)
+        from(tasks.named("dokkaGeneratePublicationHtml"))
+    }
 
 kord {
     publicationName = "mavenCentral"

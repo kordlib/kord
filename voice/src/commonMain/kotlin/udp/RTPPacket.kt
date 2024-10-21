@@ -5,9 +5,6 @@ import dev.kord.voice.io.MutableByteArrayCursor
 import dev.kord.voice.io.mutableCursor
 import dev.kord.voice.io.view
 import io.ktor.utils.io.core.*
-import kotlinx.io.Source
-import kotlinx.io.readByteArray
-import kotlinx.io.readUInt
 import kotlin.experimental.and
 
 internal const val RTP_HEADER_LENGTH = 12
@@ -42,7 +39,7 @@ public data class RTPPacket(
         internal const val VERSION = 2
 
         public fun fromPacket(packet: Source): RTPPacket? = with(packet) base@{
-            if (remaining <= 13) return@base null
+            if (!request(byteCount = 14)) return@base null
 
             /*
              * first byte | bit table
@@ -75,12 +72,12 @@ public data class RTPPacket(
                 payloadType = this and 0x7F
             }
 
-            val sequence = readShort().toUShort()
-            val timestamp = readInt().toUInt()
-            val ssrc = readInt().toUInt()
+            val sequence = readUShort()
+            val timestamp = readUInt()
+            val ssrc = readUInt()
 
             // each csrc takes up 4 bytes, plus more data is required
-            if (remaining <= csrcCount * 4 + 1) return@base null
+            if (!request(byteCount = csrcCount * 4L + 2)) return@base null
             val csrcIdentifiers = UIntArray(csrcCount.toInt()) { readUInt() }
 
             val payload = readByteArray().view()

@@ -142,3 +142,28 @@ public class MentionSpamAutoModerationRuleCreateBuilder(
             mentionRaidProtectionEnabled = _mentionRaidProtectionEnabled,
         ).optional()
 }
+
+/** A [MemberProfileAutoModerationRuleBuilder] for building [AutoModerationRuleCreateRequest]s. */
+@KordDsl
+public class MemberProfileAutoModerationRuleCreateBuilder(
+    name: String,
+    eventType: AutoModerationRuleEventType,
+) : AutoModerationRuleCreateBuilder(name, eventType), MemberProfileAutoModerationRuleBuilder {
+
+    private var _keywords: Optional<MutableList<String>> = Optional.Missing()
+    override var keywords: MutableList<String>? by ::_keywords.delegate()
+
+    private var _regexPatterns: Optional<MutableList<String>> = Optional.Missing()
+    override var regexPatterns: MutableList<String>? by ::_regexPatterns.delegate()
+
+    private var _allowedKeywords: Optional<MutableList<String>> = Optional.Missing()
+    override var allowedKeywords: MutableList<String>? by ::_allowedKeywords.delegate()
+
+    // triggerMetadata is required for MemberProfile rules
+    override fun buildTriggerMetadata(): Optional<DiscordAutoModerationRuleTriggerMetadata> =
+        DiscordAutoModerationRuleTriggerMetadata(
+            keywordFilter = _keywords.mapCopy(),
+            regexPatterns = _regexPatterns.mapCopy(),
+            allowList = _allowedKeywords.mapCopy(),
+        ).optional()
+}

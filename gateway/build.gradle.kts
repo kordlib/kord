@@ -10,7 +10,6 @@ kotlin {
                 api(projects.common)
 
                 api(libs.bundles.ktor.client.serialization)
-                api(libs.ktor.client.websockets)
 
                 implementation(libs.kotlin.logging)
 

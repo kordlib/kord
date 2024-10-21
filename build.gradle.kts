@@ -1,5 +1,5 @@
 plugins {
-    org.jetbrains.dokka // for dokkaHtmlMultiModule task
+    org.jetbrains.dokka // for dokkaGeneratePublicationHtml task
 }
 
 allprojects {
@@ -12,3 +12,12 @@ allprojects {
 }
 
 group = Library.group
+
+dependencies {
+    dokka(projects.common)
+    dokka(projects.core)
+    dokka(projects.coreVoice)
+    dokka(projects.gateway)
+    dokka(projects.rest)
+    dokka(projects.voice)
+}

@@ -170,6 +170,35 @@ public class MentionSpamAutoModerationRuleModifyBuilder :
     }
 }
 
+/** A [MemberProfileAutoModerationRuleBuilder] for building [AutoModerationRuleModifyRequest]s. */
+@KordDsl
+public class MemberProfileAutoModerationRuleModifyBuilder :
+    AutoModerationRuleModifyBuilder(),
+    MemberProfileAutoModerationRuleBuilder {
+
+    private var _keywords: Optional<MutableList<String>> = Optional.Missing()
+    override var keywords: MutableList<String>? by ::_keywords.delegate()
+
+    private var _regexPatterns: Optional<MutableList<String>> = Optional.Missing()
+    override var regexPatterns: MutableList<String>? by ::_regexPatterns.delegate()
+
+    private var _allowedKeywords: Optional<MutableList<String>> = Optional.Missing()
+    override var allowedKeywords: MutableList<String>? by ::_allowedKeywords.delegate()
+
+    override fun buildTriggerMetadata(): Optional<DiscordAutoModerationRuleTriggerMetadata> {
+        val keywords = _keywords
+        val regexPatterns = _regexPatterns
+        val allowedKeywords = _allowedKeywords
+        return ifAnyPresent(keywords, regexPatterns, allowedKeywords) {
+            DiscordAutoModerationRuleTriggerMetadata(
+                keywordFilter = keywords.mapCopy(),
+                regexPatterns = regexPatterns.mapCopy(),
+                allowList = allowedKeywords.mapCopy(),
+            )
+        }
+    }
+}
+
 private inline fun <T : Any> ifAnyPresent(vararg optionals: Optional<*>, block: () -> T): Optional<T> {
     contract { callsInPlace(block, AT_MOST_ONCE) }
 

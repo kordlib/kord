@@ -1701,7 +1701,7 @@ final class dev.kord.common.entity/DiscordChannel { // dev.kord.common.entity/Di
 }
 
 final class dev.kord.common.entity/DiscordChatComponent : dev.kord.common.entity/DiscordComponent { // dev.kord.common.entity/DiscordChatComponent|null[0]
-    constructor <init>(dev.kord.common.entity/ComponentType, dev.kord.common.entity.optional/Optional<dev.kord.common.entity/ButtonStyle> = ..., dev.kord.common.entity.optional/Optional<kotlin/String> = ..., dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordPartialEmoji> = ..., dev.kord.common.entity.optional/Optional<kotlin/String> = ..., dev.kord.common.entity.optional/Optional<kotlin/String> = ..., dev.kord.common.entity.optional/OptionalBoolean = ..., dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.common.entity/DiscordComponent>> = ..., dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.common.entity/DiscordSelectOption>> = ..., dev.kord.common.entity.optional/Optional<kotlin/String> = ..., dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.common.entity/DiscordSelectDefaultValue>> = ..., dev.kord.common.entity.optional/OptionalInt = ..., dev.kord.common.entity.optional/OptionalInt = ..., dev.kord.common.entity.optional/OptionalInt = ..., dev.kord.common.entity.optional/OptionalInt = ..., dev.kord.common.entity.optional/OptionalBoolean = ..., dev.kord.common.entity.optional/Optional<kotlin/String> = ..., dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.common.entity/ChannelType>> = ...) // dev.kord.common.entity/DiscordChatComponent.<init>|<init>(dev.kord.common.entity.ComponentType;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.ButtonStyle>;dev.kord.common.entity.optional.Optional<kotlin.String>;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.DiscordPartialEmoji>;dev.kord.common.entity.optional.Optional<kotlin.String>;dev.kord.common.entity.optional.Optional<kotlin.String>;dev.kord.common.entity.optional.OptionalBoolean;dev.kord.common.entity.optional.Optional<kotlin.collections.List<dev.kord.common.entity.DiscordComponent>>;dev.kord.common.entity.optional.Optional<kotlin.collections.List<dev.kord.common.entity.DiscordSelectOption>>;dev.kord.common.entity.optional.Optional<kotlin.String>;dev.kord.common.entity.optional.Optional<kotlin.collections.List<dev.kord.common.entity.DiscordSelectDefaultValue>>;dev.kord.common.entity.optional.OptionalInt;dev.kord.common.entity.optional.OptionalInt;dev.kord.common.entity.optional.OptionalInt;dev.kord.common.entity.optional.OptionalInt;dev.kord.common.entity.optional.OptionalBoolean;dev.kord.common.entity.optional.Optional<kotlin.String>;dev.kord.common.entity.optional.Optional<kotlin.collections.List<dev.kord.common.entity.ChannelType>>){}[0]
+    constructor <init>(dev.kord.common.entity/ComponentType, dev.kord.common.entity.optional/Optional<dev.kord.common.entity/ButtonStyle> = ..., dev.kord.common.entity.optional/Optional<kotlin/String> = ..., dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordPartialEmoji> = ..., dev.kord.common.entity.optional/Optional<kotlin/String> = ..., dev.kord.common.entity.optional/Optional<kotlin/String> = ..., dev.kord.common.entity.optional/OptionalBoolean = ..., dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.common.entity/DiscordComponent>> = ..., dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.common.entity/DiscordSelectOption>> = ..., dev.kord.common.entity.optional/Optional<kotlin/String> = ..., dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.common.entity/DiscordSelectDefaultValue>> = ..., dev.kord.common.entity.optional/OptionalInt = ..., dev.kord.common.entity.optional/OptionalInt = ..., dev.kord.common.entity.optional/OptionalInt = ..., dev.kord.common.entity.optional/OptionalInt = ..., dev.kord.common.entity.optional/OptionalBoolean = ..., dev.kord.common.entity.optional/Optional<kotlin/String> = ..., dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.common.entity/ChannelType>> = ..., dev.kord.common.entity.optional/OptionalSnowflake = ...) // dev.kord.common.entity/DiscordChatComponent.<init>|<init>(dev.kord.common.entity.ComponentType;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.ButtonStyle>;dev.kord.common.entity.optional.Optional<kotlin.String>;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.DiscordPartialEmoji>;dev.kord.common.entity.optional.Optional<kotlin.String>;dev.kord.common.entity.optional.Optional<kotlin.String>;dev.kord.common.entity.optional.OptionalBoolean;dev.kord.common.entity.optional.Optional<kotlin.collections.List<dev.kord.common.entity.DiscordComponent>>;dev.kord.common.entity.optional.Optional<kotlin.collections.List<dev.kord.common.entity.DiscordSelectOption>>;dev.kord.common.entity.optional.Optional<kotlin.String>;dev.kord.common.entity.optional.Optional<kotlin.collections.List<dev.kord.common.entity.DiscordSelectDefaultValue>>;dev.kord.common.entity.optional.OptionalInt;dev.kord.common.entity.optional.OptionalInt;dev.kord.common.entity.optional.OptionalInt;dev.kord.common.entity.optional.OptionalInt;dev.kord.common.entity.optional.OptionalBoolean;dev.kord.common.entity.optional.Optional<kotlin.String>;dev.kord.common.entity.optional.Optional<kotlin.collections.List<dev.kord.common.entity.ChannelType>>;dev.kord.common.entity.optional.OptionalSnowflake){}[0]
 
     final val channelTypes // dev.kord.common.entity/DiscordChatComponent.channelTypes|{}channelTypes[0]
         final fun <get-channelTypes>(): dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.common.entity/ChannelType>> // dev.kord.common.entity/DiscordChatComponent.channelTypes.<get-channelTypes>|<get-channelTypes>(){}[0]
@@ -1731,6 +1731,8 @@ final class dev.kord.common.entity/DiscordChatComponent : dev.kord.common.entity
         final fun <get-placeholder>(): dev.kord.common.entity.optional/Optional<kotlin/String> // dev.kord.common.entity/DiscordChatComponent.placeholder.<get-placeholder>|<get-placeholder>(){}[0]
     final val required // dev.kord.common.entity/DiscordChatComponent.required|{}required[0]
         final fun <get-required>(): dev.kord.common.entity.optional/OptionalBoolean // dev.kord.common.entity/DiscordChatComponent.required.<get-required>|<get-required>(){}[0]
+    final val skuId // dev.kord.common.entity/DiscordChatComponent.skuId|{}skuId[0]
+        final fun <get-skuId>(): dev.kord.common.entity.optional/OptionalSnowflake // dev.kord.common.entity/DiscordChatComponent.skuId.<get-skuId>|<get-skuId>(){}[0]
     final val style // dev.kord.common.entity/DiscordChatComponent.style|{}style[0]
         final fun <get-style>(): dev.kord.common.entity.optional/Optional<dev.kord.common.entity/ButtonStyle> // dev.kord.common.entity/DiscordChatComponent.style.<get-style>|<get-style>(){}[0]
     final val type // dev.kord.common.entity/DiscordChatComponent.type|{}type[0]
@@ -1750,6 +1752,7 @@ final class dev.kord.common.entity/DiscordChatComponent : dev.kord.common.entity
     final fun component16(): dev.kord.common.entity.optional/OptionalBoolean // dev.kord.common.entity/DiscordChatComponent.component16|component16(){}[0]
     final fun component17(): dev.kord.common.entity.optional/Optional<kotlin/String> // dev.kord.common.entity/DiscordChatComponent.component17|component17(){}[0]
     final fun component18(): dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.common.entity/ChannelType>> // dev.kord.common.entity/DiscordChatComponent.component18|component18(){}[0]
+    final fun component19(): dev.kord.common.entity.optional/OptionalSnowflake // dev.kord.common.entity/DiscordChatComponent.component19|component19(){}[0]
     final fun component2(): dev.kord.common.entity.optional/Optional<dev.kord.common.entity/ButtonStyle> // dev.kord.common.entity/DiscordChatComponent.component2|component2(){}[0]
     final fun component3(): dev.kord.common.entity.optional/Optional<kotlin/String> // dev.kord.common.entity/DiscordChatComponent.component3|component3(){}[0]
     final fun component4(): dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordPartialEmoji> // dev.kord.common.entity/DiscordChatComponent.component4|component4(){}[0]
@@ -1758,7 +1761,7 @@ final class dev.kord.common.entity/DiscordChatComponent : dev.kord.common.entity
     final fun component7(): dev.kord.common.entity.optional/OptionalBoolean // dev.kord.common.entity/DiscordChatComponent.component7|component7(){}[0]
     final fun component8(): dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.common.entity/DiscordComponent>> // dev.kord.common.entity/DiscordChatComponent.component8|component8(){}[0]
     final fun component9(): dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.common.entity/DiscordSelectOption>> // dev.kord.common.entity/DiscordChatComponent.component9|component9(){}[0]
-    final fun copy(dev.kord.common.entity/ComponentType = ..., dev.kord.common.entity.optional/Optional<dev.kord.common.entity/ButtonStyle> = ..., dev.kord.common.entity.optional/Optional<kotlin/String> = ..., dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordPartialEmoji> = ..., dev.kord.common.entity.optional/Optional<kotlin/String> = ..., dev.kord.common.entity.optional/Optional<kotlin/String> = ..., dev.kord.common.entity.optional/OptionalBoolean = ..., dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.common.entity/DiscordComponent>> = ..., dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.common.entity/DiscordSelectOption>> = ..., dev.kord.common.entity.optional/Optional<kotlin/String> = ..., dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.common.entity/DiscordSelectDefaultValue>> = ..., dev.kord.common.entity.optional/OptionalInt = ..., dev.kord.common.entity.optional/OptionalInt = ..., dev.kord.common.entity.optional/OptionalInt = ..., dev.kord.common.entity.optional/OptionalInt = ..., dev.kord.common.entity.optional/OptionalBoolean = ..., dev.kord.common.entity.optional/Optional<kotlin/String> = ..., dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.common.entity/ChannelType>> = ...): dev.kord.common.entity/DiscordChatComponent // dev.kord.common.entity/DiscordChatComponent.copy|copy(dev.kord.common.entity.ComponentType;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.ButtonStyle>;dev.kord.common.entity.optional.Optional<kotlin.String>;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.DiscordPartialEmoji>;dev.kord.common.entity.optional.Optional<kotlin.String>;dev.kord.common.entity.optional.Optional<kotlin.String>;dev.kord.common.entity.optional.OptionalBoolean;dev.kord.common.entity.optional.Optional<kotlin.collections.List<dev.kord.common.entity.DiscordComponent>>;dev.kord.common.entity.optional.Optional<kotlin.collections.List<dev.kord.common.entity.DiscordSelectOption>>;dev.kord.common.entity.optional.Optional<kotlin.String>;dev.kord.common.entity.optional.Optional<kotlin.collections.List<dev.kord.common.entity.DiscordSelectDefaultValue>>;dev.kord.common.entity.optional.OptionalInt;dev.kord.common.entity.optional.OptionalInt;dev.kord.common.entity.optional.OptionalInt;dev.kord.common.entity.optional.OptionalInt;dev.kord.common.entity.optional.OptionalBoolean;dev.kord.common.entity.optional.Optional<kotlin.String>;dev.kord.common.entity.optional.Optional<kotlin.collections.List<dev.kord.common.entity.ChannelType>>){}[0]
+    final fun copy(dev.kord.common.entity/ComponentType = ..., dev.kord.common.entity.optional/Optional<dev.kord.common.entity/ButtonStyle> = ..., dev.kord.common.entity.optional/Optional<kotlin/String> = ..., dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordPartialEmoji> = ..., dev.kord.common.entity.optional/Optional<kotlin/String> = ..., dev.kord.common.entity.optional/Optional<kotlin/String> = ..., dev.kord.common.entity.optional/OptionalBoolean = ..., dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.common.entity/DiscordComponent>> = ..., dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.common.entity/DiscordSelectOption>> = ..., dev.kord.common.entity.optional/Optional<kotlin/String> = ..., dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.common.entity/DiscordSelectDefaultValue>> = ..., dev.kord.common.entity.optional/OptionalInt = ..., dev.kord.common.entity.optional/OptionalInt = ..., dev.kord.common.entity.optional/OptionalInt = ..., dev.kord.common.entity.optional/OptionalInt = ..., dev.kord.common.entity.optional/OptionalBoolean = ..., dev.kord.common.entity.optional/Optional<kotlin/String> = ..., dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.common.entity/ChannelType>> = ..., dev.kord.common.entity.optional/OptionalSnowflake = ...): dev.kord.common.entity/DiscordChatComponent // dev.kord.common.entity/DiscordChatComponent.copy|copy(dev.kord.common.entity.ComponentType;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.ButtonStyle>;dev.kord.common.entity.optional.Optional<kotlin.String>;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.DiscordPartialEmoji>;dev.kord.common.entity.optional.Optional<kotlin.String>;dev.kord.common.entity.optional.Optional<kotlin.String>;dev.kord.common.entity.optional.OptionalBoolean;dev.kord.common.entity.optional.Optional<kotlin.collections.List<dev.kord.common.entity.DiscordComponent>>;dev.kord.common.entity.optional.Optional<kotlin.collections.List<dev.kord.common.entity.DiscordSelectOption>>;dev.kord.common.entity.optional.Optional<kotlin.String>;dev.kord.common.entity.optional.Optional<kotlin.collections.List<dev.kord.common.entity.DiscordSelectDefaultValue>>;dev.kord.common.entity.optional.OptionalInt;dev.kord.common.entity.optional.OptionalInt;dev.kord.common.entity.optional.OptionalInt;dev.kord.common.entity.optional.OptionalInt;dev.kord.common.entity.optional.OptionalBoolean;dev.kord.common.entity.optional.Optional<kotlin.String>;dev.kord.common.entity.optional.Optional<kotlin.collections.List<dev.kord.common.entity.ChannelType>>;dev.kord.common.entity.optional.OptionalSnowflake){}[0]
     final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.common.entity/DiscordChatComponent.equals|equals(kotlin.Any?){}[0]
     final fun hashCode(): kotlin/Int // dev.kord.common.entity/DiscordChatComponent.hashCode|hashCode(){}[0]
     final fun toString(): kotlin/String // dev.kord.common.entity/DiscordChatComponent.toString|toString(){}[0]
@@ -2246,6 +2249,61 @@ final class dev.kord.common.entity/DiscordEmoji { // dev.kord.common.entity/Disc
         final val $childSerializers // dev.kord.common.entity/DiscordEmoji.Companion.$childSerializers|{}$childSerializers[0]
 
         final fun serializer(): kotlinx.serialization/KSerializer<dev.kord.common.entity/DiscordEmoji> // dev.kord.common.entity/DiscordEmoji.Companion.serializer|serializer(){}[0]
+    }
+}
+
+final class dev.kord.common.entity/DiscordEntitlement { // dev.kord.common.entity/DiscordEntitlement|null[0]
+    constructor <init>(dev.kord.common.entity/Snowflake, dev.kord.common.entity/Snowflake, dev.kord.common.entity/Snowflake, dev.kord.common.entity.optional/OptionalSnowflake = ..., dev.kord.common.entity/EntitlementType, kotlin/Boolean, dev.kord.common.entity.optional/Optional<kotlinx.datetime/Instant> = ..., dev.kord.common.entity.optional/Optional<kotlinx.datetime/Instant?> = ..., dev.kord.common.entity.optional/OptionalSnowflake = ..., dev.kord.common.entity.optional/OptionalBoolean = ...) // dev.kord.common.entity/DiscordEntitlement.<init>|<init>(dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake;dev.kord.common.entity.optional.OptionalSnowflake;dev.kord.common.entity.EntitlementType;kotlin.Boolean;dev.kord.common.entity.optional.Optional<kotlinx.datetime.Instant>;dev.kord.common.entity.optional.Optional<kotlinx.datetime.Instant?>;dev.kord.common.entity.optional.OptionalSnowflake;dev.kord.common.entity.optional.OptionalBoolean){}[0]
+
+    final val applicationId // dev.kord.common.entity/DiscordEntitlement.applicationId|{}applicationId[0]
+        final fun <get-applicationId>(): dev.kord.common.entity/Snowflake // dev.kord.common.entity/DiscordEntitlement.applicationId.<get-applicationId>|<get-applicationId>(){}[0]
+    final val consumed // dev.kord.common.entity/DiscordEntitlement.consumed|{}consumed[0]
+        final fun <get-consumed>(): dev.kord.common.entity.optional/OptionalBoolean // dev.kord.common.entity/DiscordEntitlement.consumed.<get-consumed>|<get-consumed>(){}[0]
+    final val deleted // dev.kord.common.entity/DiscordEntitlement.deleted|{}deleted[0]
+        final fun <get-deleted>(): kotlin/Boolean // dev.kord.common.entity/DiscordEntitlement.deleted.<get-deleted>|<get-deleted>(){}[0]
+    final val endsAt // dev.kord.common.entity/DiscordEntitlement.endsAt|{}endsAt[0]
+        final fun <get-endsAt>(): dev.kord.common.entity.optional/Optional<kotlinx.datetime/Instant?> // dev.kord.common.entity/DiscordEntitlement.endsAt.<get-endsAt>|<get-endsAt>(){}[0]
+    final val guildId // dev.kord.common.entity/DiscordEntitlement.guildId|{}guildId[0]
+        final fun <get-guildId>(): dev.kord.common.entity.optional/OptionalSnowflake // dev.kord.common.entity/DiscordEntitlement.guildId.<get-guildId>|<get-guildId>(){}[0]
+    final val id // dev.kord.common.entity/DiscordEntitlement.id|{}id[0]
+        final fun <get-id>(): dev.kord.common.entity/Snowflake // dev.kord.common.entity/DiscordEntitlement.id.<get-id>|<get-id>(){}[0]
+    final val skuId // dev.kord.common.entity/DiscordEntitlement.skuId|{}skuId[0]
+        final fun <get-skuId>(): dev.kord.common.entity/Snowflake // dev.kord.common.entity/DiscordEntitlement.skuId.<get-skuId>|<get-skuId>(){}[0]
+    final val startsAt // dev.kord.common.entity/DiscordEntitlement.startsAt|{}startsAt[0]
+        final fun <get-startsAt>(): dev.kord.common.entity.optional/Optional<kotlinx.datetime/Instant> // dev.kord.common.entity/DiscordEntitlement.startsAt.<get-startsAt>|<get-startsAt>(){}[0]
+    final val type // dev.kord.common.entity/DiscordEntitlement.type|{}type[0]
+        final fun <get-type>(): dev.kord.common.entity/EntitlementType // dev.kord.common.entity/DiscordEntitlement.type.<get-type>|<get-type>(){}[0]
+    final val userId // dev.kord.common.entity/DiscordEntitlement.userId|{}userId[0]
+        final fun <get-userId>(): dev.kord.common.entity.optional/OptionalSnowflake // dev.kord.common.entity/DiscordEntitlement.userId.<get-userId>|<get-userId>(){}[0]
+
+    final fun component1(): dev.kord.common.entity/Snowflake // dev.kord.common.entity/DiscordEntitlement.component1|component1(){}[0]
+    final fun component10(): dev.kord.common.entity.optional/OptionalBoolean // dev.kord.common.entity/DiscordEntitlement.component10|component10(){}[0]
+    final fun component2(): dev.kord.common.entity/Snowflake // dev.kord.common.entity/DiscordEntitlement.component2|component2(){}[0]
+    final fun component3(): dev.kord.common.entity/Snowflake // dev.kord.common.entity/DiscordEntitlement.component3|component3(){}[0]
+    final fun component4(): dev.kord.common.entity.optional/OptionalSnowflake // dev.kord.common.entity/DiscordEntitlement.component4|component4(){}[0]
+    final fun component5(): dev.kord.common.entity/EntitlementType // dev.kord.common.entity/DiscordEntitlement.component5|component5(){}[0]
+    final fun component6(): kotlin/Boolean // dev.kord.common.entity/DiscordEntitlement.component6|component6(){}[0]
+    final fun component7(): dev.kord.common.entity.optional/Optional<kotlinx.datetime/Instant> // dev.kord.common.entity/DiscordEntitlement.component7|component7(){}[0]
+    final fun component8(): dev.kord.common.entity.optional/Optional<kotlinx.datetime/Instant?> // dev.kord.common.entity/DiscordEntitlement.component8|component8(){}[0]
+    final fun component9(): dev.kord.common.entity.optional/OptionalSnowflake // dev.kord.common.entity/DiscordEntitlement.component9|component9(){}[0]
+    final fun copy(dev.kord.common.entity/Snowflake = ..., dev.kord.common.entity/Snowflake = ..., dev.kord.common.entity/Snowflake = ..., dev.kord.common.entity.optional/OptionalSnowflake = ..., dev.kord.common.entity/EntitlementType = ..., kotlin/Boolean = ..., dev.kord.common.entity.optional/Optional<kotlinx.datetime/Instant> = ..., dev.kord.common.entity.optional/Optional<kotlinx.datetime/Instant?> = ..., dev.kord.common.entity.optional/OptionalSnowflake = ..., dev.kord.common.entity.optional/OptionalBoolean = ...): dev.kord.common.entity/DiscordEntitlement // dev.kord.common.entity/DiscordEntitlement.copy|copy(dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake;dev.kord.common.entity.optional.OptionalSnowflake;dev.kord.common.entity.EntitlementType;kotlin.Boolean;dev.kord.common.entity.optional.Optional<kotlinx.datetime.Instant>;dev.kord.common.entity.optional.Optional<kotlinx.datetime.Instant?>;dev.kord.common.entity.optional.OptionalSnowflake;dev.kord.common.entity.optional.OptionalBoolean){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.common.entity/DiscordEntitlement.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.common.entity/DiscordEntitlement.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // dev.kord.common.entity/DiscordEntitlement.toString|toString(){}[0]
+
+    final object $serializer : kotlinx.serialization.internal/GeneratedSerializer<dev.kord.common.entity/DiscordEntitlement> { // dev.kord.common.entity/DiscordEntitlement.$serializer|null[0]
+        final val descriptor // dev.kord.common.entity/DiscordEntitlement.$serializer.descriptor|{}descriptor[0]
+            final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // dev.kord.common.entity/DiscordEntitlement.$serializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
+
+        final fun childSerializers(): kotlin/Array<kotlinx.serialization/KSerializer<*>> // dev.kord.common.entity/DiscordEntitlement.$serializer.childSerializers|childSerializers(){}[0]
+        final fun deserialize(kotlinx.serialization.encoding/Decoder): dev.kord.common.entity/DiscordEntitlement // dev.kord.common.entity/DiscordEntitlement.$serializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
+        final fun serialize(kotlinx.serialization.encoding/Encoder, dev.kord.common.entity/DiscordEntitlement) // dev.kord.common.entity/DiscordEntitlement.$serializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;dev.kord.common.entity.DiscordEntitlement){}[0]
+    }
+
+    final object Companion { // dev.kord.common.entity/DiscordEntitlement.Companion|null[0]
+        final val $childSerializers // dev.kord.common.entity/DiscordEntitlement.Companion.$childSerializers|{}$childSerializers[0]
+
+        final fun serializer(): kotlinx.serialization/KSerializer<dev.kord.common.entity/DiscordEntitlement> // dev.kord.common.entity/DiscordEntitlement.Companion.serializer|serializer(){}[0]
     }
 }
 
@@ -3011,7 +3069,7 @@ final class dev.kord.common.entity/DiscordIntegrationsAccount { // dev.kord.comm
 }
 
 final class dev.kord.common.entity/DiscordInteraction { // dev.kord.common.entity/DiscordInteraction|null[0]
-    constructor <init>(dev.kord.common.entity/Snowflake, dev.kord.common.entity/Snowflake, dev.kord.common.entity/InteractionType, dev.kord.common.entity/InteractionCallbackData, dev.kord.common.entity.optional/OptionalSnowflake = ..., dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordChannel> = ..., dev.kord.common.entity.optional/OptionalSnowflake = ..., dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordInteractionGuildMember> = ..., dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordUser> = ..., kotlin/String, kotlin/Int, dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordMessage> = ..., dev.kord.common.entity.optional/Optional<dev.kord.common.entity/Permissions> = ..., dev.kord.common.entity.optional/Optional<dev.kord.common/Locale> = ..., dev.kord.common.entity.optional/Optional<dev.kord.common/Locale> = ...) // dev.kord.common.entity/DiscordInteraction.<init>|<init>(dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake;dev.kord.common.entity.InteractionType;dev.kord.common.entity.InteractionCallbackData;dev.kord.common.entity.optional.OptionalSnowflake;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.DiscordChannel>;dev.kord.common.entity.optional.OptionalSnowflake;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.DiscordInteractionGuildMember>;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.DiscordUser>;kotlin.String;kotlin.Int;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.DiscordMessage>;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.Permissions>;dev.kord.common.entity.optional.Optional<dev.kord.common.Locale>;dev.kord.common.entity.optional.Optional<dev.kord.common.Locale>){}[0]
+    constructor <init>(dev.kord.common.entity/Snowflake, dev.kord.common.entity/Snowflake, dev.kord.common.entity/InteractionType, dev.kord.common.entity/InteractionCallbackData, dev.kord.common.entity.optional/OptionalSnowflake = ..., dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordChannel> = ..., dev.kord.common.entity.optional/OptionalSnowflake = ..., dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordInteractionGuildMember> = ..., dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordUser> = ..., kotlin/String, kotlin/Int, dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordMessage> = ..., dev.kord.common.entity.optional/Optional<dev.kord.common.entity/Permissions> = ..., dev.kord.common.entity.optional/Optional<dev.kord.common/Locale> = ..., dev.kord.common.entity.optional/Optional<dev.kord.common/Locale> = ..., dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.common.entity/DiscordEntitlement>> = ...) // dev.kord.common.entity/DiscordInteraction.<init>|<init>(dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake;dev.kord.common.entity.InteractionType;dev.kord.common.entity.InteractionCallbackData;dev.kord.common.entity.optional.OptionalSnowflake;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.DiscordChannel>;dev.kord.common.entity.optional.OptionalSnowflake;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.DiscordInteractionGuildMember>;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.DiscordUser>;kotlin.String;kotlin.Int;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.DiscordMessage>;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.Permissions>;dev.kord.common.entity.optional.Optional<dev.kord.common.Locale>;dev.kord.common.entity.optional.Optional<dev.kord.common.Locale>;dev.kord.common.entity.optional.Optional<kotlin.collections.List<dev.kord.common.entity.DiscordEntitlement>>){}[0]
 
     final val appPermissions // dev.kord.common.entity/DiscordInteraction.appPermissions|{}appPermissions[0]
         final fun <get-appPermissions>(): dev.kord.common.entity.optional/Optional<dev.kord.common.entity/Permissions> // dev.kord.common.entity/DiscordInteraction.appPermissions.<get-appPermissions>|<get-appPermissions>(){}[0]
@@ -3023,6 +3081,8 @@ final class dev.kord.common.entity/DiscordInteraction { // dev.kord.common.entit
         final fun <get-channelId>(): dev.kord.common.entity.optional/OptionalSnowflake // dev.kord.common.entity/DiscordInteraction.channelId.<get-channelId>|<get-channelId>(){}[0]
     final val data // dev.kord.common.entity/DiscordInteraction.data|{}data[0]
         final fun <get-data>(): dev.kord.common.entity/InteractionCallbackData // dev.kord.common.entity/DiscordInteraction.data.<get-data>|<get-data>(){}[0]
+    final val entitlements // dev.kord.common.entity/DiscordInteraction.entitlements|{}entitlements[0]
+        final fun <get-entitlements>(): dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.common.entity/DiscordEntitlement>> // dev.kord.common.entity/DiscordInteraction.entitlements.<get-entitlements>|<get-entitlements>(){}[0]
     final val guildId // dev.kord.common.entity/DiscordInteraction.guildId|{}guildId[0]
         final fun <get-guildId>(): dev.kord.common.entity.optional/OptionalSnowflake // dev.kord.common.entity/DiscordInteraction.guildId.<get-guildId>|<get-guildId>(){}[0]
     final val guildLocale // dev.kord.common.entity/DiscordInteraction.guildLocale|{}guildLocale[0]
@@ -3051,6 +3111,7 @@ final class dev.kord.common.entity/DiscordInteraction { // dev.kord.common.entit
     final fun component13(): dev.kord.common.entity.optional/Optional<dev.kord.common.entity/Permissions> // dev.kord.common.entity/DiscordInteraction.component13|component13(){}[0]
     final fun component14(): dev.kord.common.entity.optional/Optional<dev.kord.common/Locale> // dev.kord.common.entity/DiscordInteraction.component14|component14(){}[0]
     final fun component15(): dev.kord.common.entity.optional/Optional<dev.kord.common/Locale> // dev.kord.common.entity/DiscordInteraction.component15|component15(){}[0]
+    final fun component16(): dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.common.entity/DiscordEntitlement>> // dev.kord.common.entity/DiscordInteraction.component16|component16(){}[0]
     final fun component2(): dev.kord.common.entity/Snowflake // dev.kord.common.entity/DiscordInteraction.component2|component2(){}[0]
     final fun component3(): dev.kord.common.entity/InteractionType // dev.kord.common.entity/DiscordInteraction.component3|component3(){}[0]
     final fun component4(): dev.kord.common.entity/InteractionCallbackData // dev.kord.common.entity/DiscordInteraction.component4|component4(){}[0]
@@ -3059,7 +3120,7 @@ final class dev.kord.common.entity/DiscordInteraction { // dev.kord.common.entit
     final fun component7(): dev.kord.common.entity.optional/OptionalSnowflake // dev.kord.common.entity/DiscordInteraction.component7|component7(){}[0]
     final fun component8(): dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordInteractionGuildMember> // dev.kord.common.entity/DiscordInteraction.component8|component8(){}[0]
     final fun component9(): dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordUser> // dev.kord.common.entity/DiscordInteraction.component9|component9(){}[0]
-    final fun copy(dev.kord.common.entity/Snowflake = ..., dev.kord.common.entity/Snowflake = ..., dev.kord.common.entity/InteractionType = ..., dev.kord.common.entity/InteractionCallbackData = ..., dev.kord.common.entity.optional/OptionalSnowflake = ..., dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordChannel> = ..., dev.kord.common.entity.optional/OptionalSnowflake = ..., dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordInteractionGuildMember> = ..., dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordUser> = ..., kotlin/String = ..., kotlin/Int = ..., dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordMessage> = ..., dev.kord.common.entity.optional/Optional<dev.kord.common.entity/Permissions> = ..., dev.kord.common.entity.optional/Optional<dev.kord.common/Locale> = ..., dev.kord.common.entity.optional/Optional<dev.kord.common/Locale> = ...): dev.kord.common.entity/DiscordInteraction // dev.kord.common.entity/DiscordInteraction.copy|copy(dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake;dev.kord.common.entity.InteractionType;dev.kord.common.entity.InteractionCallbackData;dev.kord.common.entity.optional.OptionalSnowflake;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.DiscordChannel>;dev.kord.common.entity.optional.OptionalSnowflake;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.DiscordInteractionGuildMember>;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.DiscordUser>;kotlin.String;kotlin.Int;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.DiscordMessage>;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.Permissions>;dev.kord.common.entity.optional.Optional<dev.kord.common.Locale>;dev.kord.common.entity.optional.Optional<dev.kord.common.Locale>){}[0]
+    final fun copy(dev.kord.common.entity/Snowflake = ..., dev.kord.common.entity/Snowflake = ..., dev.kord.common.entity/InteractionType = ..., dev.kord.common.entity/InteractionCallbackData = ..., dev.kord.common.entity.optional/OptionalSnowflake = ..., dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordChannel> = ..., dev.kord.common.entity.optional/OptionalSnowflake = ..., dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordInteractionGuildMember> = ..., dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordUser> = ..., kotlin/String = ..., kotlin/Int = ..., dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordMessage> = ..., dev.kord.common.entity.optional/Optional<dev.kord.common.entity/Permissions> = ..., dev.kord.common.entity.optional/Optional<dev.kord.common/Locale> = ..., dev.kord.common.entity.optional/Optional<dev.kord.common/Locale> = ..., dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.common.entity/DiscordEntitlement>> = ...): dev.kord.common.entity/DiscordInteraction // dev.kord.common.entity/DiscordInteraction.copy|copy(dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake;dev.kord.common.entity.InteractionType;dev.kord.common.entity.InteractionCallbackData;dev.kord.common.entity.optional.OptionalSnowflake;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.DiscordChannel>;dev.kord.common.entity.optional.OptionalSnowflake;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.DiscordInteractionGuildMember>;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.DiscordUser>;kotlin.String;kotlin.Int;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.DiscordMessage>;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.Permissions>;dev.kord.common.entity.optional.Optional<dev.kord.common.Locale>;dev.kord.common.entity.optional.Optional<dev.kord.common.Locale>;dev.kord.common.entity.optional.Optional<kotlin.collections.List<dev.kord.common.entity.DiscordEntitlement>>){}[0]
     final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.common.entity/DiscordInteraction.equals|equals(kotlin.Any?){}[0]
     final fun hashCode(): kotlin/Int // dev.kord.common.entity/DiscordInteraction.hashCode|hashCode(){}[0]
     final fun toString(): kotlin/String // dev.kord.common.entity/DiscordInteraction.toString|toString(){}[0]
@@ -4490,6 +4551,47 @@ final class dev.kord.common.entity/DiscordShard { // dev.kord.common.entity/Disc
     }
 }
 
+final class dev.kord.common.entity/DiscordSku { // dev.kord.common.entity/DiscordSku|null[0]
+    constructor <init>(dev.kord.common.entity/Snowflake, dev.kord.common.entity/SkuType, dev.kord.common.entity/Snowflake, kotlin/String, kotlin/String, dev.kord.common.entity/SkuFlags) // dev.kord.common.entity/DiscordSku.<init>|<init>(dev.kord.common.entity.Snowflake;dev.kord.common.entity.SkuType;dev.kord.common.entity.Snowflake;kotlin.String;kotlin.String;dev.kord.common.entity.SkuFlags){}[0]
+
+    final val applicationId // dev.kord.common.entity/DiscordSku.applicationId|{}applicationId[0]
+        final fun <get-applicationId>(): dev.kord.common.entity/Snowflake // dev.kord.common.entity/DiscordSku.applicationId.<get-applicationId>|<get-applicationId>(){}[0]
+    final val flags // dev.kord.common.entity/DiscordSku.flags|{}flags[0]
+        final fun <get-flags>(): dev.kord.common.entity/SkuFlags // dev.kord.common.entity/DiscordSku.flags.<get-flags>|<get-flags>(){}[0]
+    final val id // dev.kord.common.entity/DiscordSku.id|{}id[0]
+        final fun <get-id>(): dev.kord.common.entity/Snowflake // dev.kord.common.entity/DiscordSku.id.<get-id>|<get-id>(){}[0]
+    final val name // dev.kord.common.entity/DiscordSku.name|{}name[0]
+        final fun <get-name>(): kotlin/String // dev.kord.common.entity/DiscordSku.name.<get-name>|<get-name>(){}[0]
+    final val slug // dev.kord.common.entity/DiscordSku.slug|{}slug[0]
+        final fun <get-slug>(): kotlin/String // dev.kord.common.entity/DiscordSku.slug.<get-slug>|<get-slug>(){}[0]
+    final val type // dev.kord.common.entity/DiscordSku.type|{}type[0]
+        final fun <get-type>(): dev.kord.common.entity/SkuType // dev.kord.common.entity/DiscordSku.type.<get-type>|<get-type>(){}[0]
+
+    final fun component1(): dev.kord.common.entity/Snowflake // dev.kord.common.entity/DiscordSku.component1|component1(){}[0]
+    final fun component2(): dev.kord.common.entity/SkuType // dev.kord.common.entity/DiscordSku.component2|component2(){}[0]
+    final fun component3(): dev.kord.common.entity/Snowflake // dev.kord.common.entity/DiscordSku.component3|component3(){}[0]
+    final fun component4(): kotlin/String // dev.kord.common.entity/DiscordSku.component4|component4(){}[0]
+    final fun component5(): kotlin/String // dev.kord.common.entity/DiscordSku.component5|component5(){}[0]
+    final fun component6(): dev.kord.common.entity/SkuFlags // dev.kord.common.entity/DiscordSku.component6|component6(){}[0]
+    final fun copy(dev.kord.common.entity/Snowflake = ..., dev.kord.common.entity/SkuType = ..., dev.kord.common.entity/Snowflake = ..., kotlin/String = ..., kotlin/String = ..., dev.kord.common.entity/SkuFlags = ...): dev.kord.common.entity/DiscordSku // dev.kord.common.entity/DiscordSku.copy|copy(dev.kord.common.entity.Snowflake;dev.kord.common.entity.SkuType;dev.kord.common.entity.Snowflake;kotlin.String;kotlin.String;dev.kord.common.entity.SkuFlags){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.common.entity/DiscordSku.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.common.entity/DiscordSku.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // dev.kord.common.entity/DiscordSku.toString|toString(){}[0]
+
+    final object $serializer : kotlinx.serialization.internal/GeneratedSerializer<dev.kord.common.entity/DiscordSku> { // dev.kord.common.entity/DiscordSku.$serializer|null[0]
+        final val descriptor // dev.kord.common.entity/DiscordSku.$serializer.descriptor|{}descriptor[0]
+            final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // dev.kord.common.entity/DiscordSku.$serializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
+
+        final fun childSerializers(): kotlin/Array<kotlinx.serialization/KSerializer<*>> // dev.kord.common.entity/DiscordSku.$serializer.childSerializers|childSerializers(){}[0]
+        final fun deserialize(kotlinx.serialization.encoding/Decoder): dev.kord.common.entity/DiscordSku // dev.kord.common.entity/DiscordSku.$serializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
+        final fun serialize(kotlinx.serialization.encoding/Encoder, dev.kord.common.entity/DiscordSku) // dev.kord.common.entity/DiscordSku.$serializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;dev.kord.common.entity.DiscordSku){}[0]
+    }
+
+    final object Companion { // dev.kord.common.entity/DiscordSku.Companion|null[0]
+        final fun serializer(): kotlinx.serialization/KSerializer<dev.kord.common.entity/DiscordSku> // dev.kord.common.entity/DiscordSku.Companion.serializer|serializer(){}[0]
+    }
+}
+
 final class dev.kord.common.entity/DiscordStageInstance { // dev.kord.common.entity/DiscordStageInstance|null[0]
     constructor <init>(dev.kord.common.entity/Snowflake, dev.kord.common.entity/Snowflake, dev.kord.common.entity/Snowflake, kotlin/String, dev.kord.common.entity/StageInstancePrivacyLevel, kotlin/Boolean, dev.kord.common.entity/Snowflake?) // dev.kord.common.entity/DiscordStageInstance.<init>|<init>(dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake;kotlin.String;dev.kord.common.entity.StageInstancePrivacyLevel;kotlin.Boolean;dev.kord.common.entity.Snowflake?){}[0]
 
@@ -4609,6 +4711,58 @@ final class dev.kord.common.entity/DiscordStickerPack { // dev.kord.common.entit
         final val $childSerializers // dev.kord.common.entity/DiscordStickerPack.Companion.$childSerializers|{}$childSerializers[0]
 
         final fun serializer(): kotlinx.serialization/KSerializer<dev.kord.common.entity/DiscordStickerPack> // dev.kord.common.entity/DiscordStickerPack.Companion.serializer|serializer(){}[0]
+    }
+}
+
+final class dev.kord.common.entity/DiscordSubscription { // dev.kord.common.entity/DiscordSubscription|null[0]
+    constructor <init>(dev.kord.common.entity/Snowflake, dev.kord.common.entity/Snowflake, kotlin.collections/List<dev.kord.common.entity/Snowflake>, kotlin.collections/List<dev.kord.common.entity/Snowflake>, kotlinx.datetime/Instant, kotlinx.datetime/Instant, dev.kord.common.entity/SubscriptionStatus, kotlinx.datetime/Instant?, dev.kord.common.entity.optional/Optional<kotlin/String> = ...) // dev.kord.common.entity/DiscordSubscription.<init>|<init>(dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake;kotlin.collections.List<dev.kord.common.entity.Snowflake>;kotlin.collections.List<dev.kord.common.entity.Snowflake>;kotlinx.datetime.Instant;kotlinx.datetime.Instant;dev.kord.common.entity.SubscriptionStatus;kotlinx.datetime.Instant?;dev.kord.common.entity.optional.Optional<kotlin.String>){}[0]
+
+    final val canceledAt // dev.kord.common.entity/DiscordSubscription.canceledAt|{}canceledAt[0]
+        final fun <get-canceledAt>(): kotlinx.datetime/Instant? // dev.kord.common.entity/DiscordSubscription.canceledAt.<get-canceledAt>|<get-canceledAt>(){}[0]
+    final val country // dev.kord.common.entity/DiscordSubscription.country|{}country[0]
+        final fun <get-country>(): dev.kord.common.entity.optional/Optional<kotlin/String> // dev.kord.common.entity/DiscordSubscription.country.<get-country>|<get-country>(){}[0]
+    final val currentPeriodEnd // dev.kord.common.entity/DiscordSubscription.currentPeriodEnd|{}currentPeriodEnd[0]
+        final fun <get-currentPeriodEnd>(): kotlinx.datetime/Instant // dev.kord.common.entity/DiscordSubscription.currentPeriodEnd.<get-currentPeriodEnd>|<get-currentPeriodEnd>(){}[0]
+    final val currentPeriodStart // dev.kord.common.entity/DiscordSubscription.currentPeriodStart|{}currentPeriodStart[0]
+        final fun <get-currentPeriodStart>(): kotlinx.datetime/Instant // dev.kord.common.entity/DiscordSubscription.currentPeriodStart.<get-currentPeriodStart>|<get-currentPeriodStart>(){}[0]
+    final val entitlementIds // dev.kord.common.entity/DiscordSubscription.entitlementIds|{}entitlementIds[0]
+        final fun <get-entitlementIds>(): kotlin.collections/List<dev.kord.common.entity/Snowflake> // dev.kord.common.entity/DiscordSubscription.entitlementIds.<get-entitlementIds>|<get-entitlementIds>(){}[0]
+    final val id // dev.kord.common.entity/DiscordSubscription.id|{}id[0]
+        final fun <get-id>(): dev.kord.common.entity/Snowflake // dev.kord.common.entity/DiscordSubscription.id.<get-id>|<get-id>(){}[0]
+    final val skuIds // dev.kord.common.entity/DiscordSubscription.skuIds|{}skuIds[0]
+        final fun <get-skuIds>(): kotlin.collections/List<dev.kord.common.entity/Snowflake> // dev.kord.common.entity/DiscordSubscription.skuIds.<get-skuIds>|<get-skuIds>(){}[0]
+    final val status // dev.kord.common.entity/DiscordSubscription.status|{}status[0]
+        final fun <get-status>(): dev.kord.common.entity/SubscriptionStatus // dev.kord.common.entity/DiscordSubscription.status.<get-status>|<get-status>(){}[0]
+    final val userId // dev.kord.common.entity/DiscordSubscription.userId|{}userId[0]
+        final fun <get-userId>(): dev.kord.common.entity/Snowflake // dev.kord.common.entity/DiscordSubscription.userId.<get-userId>|<get-userId>(){}[0]
+
+    final fun component1(): dev.kord.common.entity/Snowflake // dev.kord.common.entity/DiscordSubscription.component1|component1(){}[0]
+    final fun component2(): dev.kord.common.entity/Snowflake // dev.kord.common.entity/DiscordSubscription.component2|component2(){}[0]
+    final fun component3(): kotlin.collections/List<dev.kord.common.entity/Snowflake> // dev.kord.common.entity/DiscordSubscription.component3|component3(){}[0]
+    final fun component4(): kotlin.collections/List<dev.kord.common.entity/Snowflake> // dev.kord.common.entity/DiscordSubscription.component4|component4(){}[0]
+    final fun component5(): kotlinx.datetime/Instant // dev.kord.common.entity/DiscordSubscription.component5|component5(){}[0]
+    final fun component6(): kotlinx.datetime/Instant // dev.kord.common.entity/DiscordSubscription.component6|component6(){}[0]
+    final fun component7(): dev.kord.common.entity/SubscriptionStatus // dev.kord.common.entity/DiscordSubscription.component7|component7(){}[0]
+    final fun component8(): kotlinx.datetime/Instant? // dev.kord.common.entity/DiscordSubscription.component8|component8(){}[0]
+    final fun component9(): dev.kord.common.entity.optional/Optional<kotlin/String> // dev.kord.common.entity/DiscordSubscription.component9|component9(){}[0]
+    final fun copy(dev.kord.common.entity/Snowflake = ..., dev.kord.common.entity/Snowflake = ..., kotlin.collections/List<dev.kord.common.entity/Snowflake> = ..., kotlin.collections/List<dev.kord.common.entity/Snowflake> = ..., kotlinx.datetime/Instant = ..., kotlinx.datetime/Instant = ..., dev.kord.common.entity/SubscriptionStatus = ..., kotlinx.datetime/Instant? = ..., dev.kord.common.entity.optional/Optional<kotlin/String> = ...): dev.kord.common.entity/DiscordSubscription // dev.kord.common.entity/DiscordSubscription.copy|copy(dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake;kotlin.collections.List<dev.kord.common.entity.Snowflake>;kotlin.collections.List<dev.kord.common.entity.Snowflake>;kotlinx.datetime.Instant;kotlinx.datetime.Instant;dev.kord.common.entity.SubscriptionStatus;kotlinx.datetime.Instant?;dev.kord.common.entity.optional.Optional<kotlin.String>){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.common.entity/DiscordSubscription.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.common.entity/DiscordSubscription.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // dev.kord.common.entity/DiscordSubscription.toString|toString(){}[0]
+
+    final object $serializer : kotlinx.serialization.internal/GeneratedSerializer<dev.kord.common.entity/DiscordSubscription> { // dev.kord.common.entity/DiscordSubscription.$serializer|null[0]
+        final val descriptor // dev.kord.common.entity/DiscordSubscription.$serializer.descriptor|{}descriptor[0]
+            final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // dev.kord.common.entity/DiscordSubscription.$serializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
+
+        final fun childSerializers(): kotlin/Array<kotlinx.serialization/KSerializer<*>> // dev.kord.common.entity/DiscordSubscription.$serializer.childSerializers|childSerializers(){}[0]
+        final fun deserialize(kotlinx.serialization.encoding/Decoder): dev.kord.common.entity/DiscordSubscription // dev.kord.common.entity/DiscordSubscription.$serializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
+        final fun serialize(kotlinx.serialization.encoding/Encoder, dev.kord.common.entity/DiscordSubscription) // dev.kord.common.entity/DiscordSubscription.$serializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;dev.kord.common.entity.DiscordSubscription){}[0]
+    }
+
+    final object Companion { // dev.kord.common.entity/DiscordSubscription.Companion|null[0]
+        final val $childSerializers // dev.kord.common.entity/DiscordSubscription.Companion.$childSerializers|{}$childSerializers[0]
+
+        final fun serializer(): kotlinx.serialization/KSerializer<dev.kord.common.entity/DiscordSubscription> // dev.kord.common.entity/DiscordSubscription.Companion.serializer|serializer(){}[0]
     }
 }
 
@@ -6043,6 +6197,38 @@ final class dev.kord.common.entity/RoleSubscription { // dev.kord.common.entity/
     }
 }
 
+final class dev.kord.common.entity/SkuFlags { // dev.kord.common.entity/SkuFlags|null[0]
+    final val value // dev.kord.common.entity/SkuFlags.value|{}value[0]
+        final fun <get-value>(): kotlin/Int // dev.kord.common.entity/SkuFlags.value.<get-value>|<get-value>(){}[0]
+    final val values // dev.kord.common.entity/SkuFlags.values|{}values[0]
+        final fun <get-values>(): kotlin.collections/Set<dev.kord.common.entity/SkuFlag> // dev.kord.common.entity/SkuFlags.values.<get-values>|<get-values>(){}[0]
+
+    final fun contains(dev.kord.common.entity/SkuFlag): kotlin/Boolean // dev.kord.common.entity/SkuFlags.contains|contains(dev.kord.common.entity.SkuFlag){}[0]
+    final fun contains(dev.kord.common.entity/SkuFlags): kotlin/Boolean // dev.kord.common.entity/SkuFlags.contains|contains(dev.kord.common.entity.SkuFlags){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.common.entity/SkuFlags.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.common.entity/SkuFlags.hashCode|hashCode(){}[0]
+    final fun minus(dev.kord.common.entity/SkuFlag): dev.kord.common.entity/SkuFlags // dev.kord.common.entity/SkuFlags.minus|minus(dev.kord.common.entity.SkuFlag){}[0]
+    final fun minus(dev.kord.common.entity/SkuFlags): dev.kord.common.entity/SkuFlags // dev.kord.common.entity/SkuFlags.minus|minus(dev.kord.common.entity.SkuFlags){}[0]
+    final fun plus(dev.kord.common.entity/SkuFlag): dev.kord.common.entity/SkuFlags // dev.kord.common.entity/SkuFlags.plus|plus(dev.kord.common.entity.SkuFlag){}[0]
+    final fun plus(dev.kord.common.entity/SkuFlags): dev.kord.common.entity/SkuFlags // dev.kord.common.entity/SkuFlags.plus|plus(dev.kord.common.entity.SkuFlags){}[0]
+    final fun toString(): kotlin/String // dev.kord.common.entity/SkuFlags.toString|toString(){}[0]
+    final inline fun copy(kotlin/Function1<dev.kord.common.entity/SkuFlags.Builder, kotlin/Unit>): dev.kord.common.entity/SkuFlags // dev.kord.common.entity/SkuFlags.copy|copy(kotlin.Function1<dev.kord.common.entity.SkuFlags.Builder,kotlin.Unit>){}[0]
+
+    final class Builder { // dev.kord.common.entity/SkuFlags.Builder|null[0]
+        constructor <init>(kotlin/Int = ...) // dev.kord.common.entity/SkuFlags.Builder.<init>|<init>(kotlin.Int){}[0]
+
+        final fun (dev.kord.common.entity/SkuFlag).unaryMinus() // dev.kord.common.entity/SkuFlags.Builder.unaryMinus|unaryMinus@dev.kord.common.entity.SkuFlag(){}[0]
+        final fun (dev.kord.common.entity/SkuFlag).unaryPlus() // dev.kord.common.entity/SkuFlags.Builder.unaryPlus|unaryPlus@dev.kord.common.entity.SkuFlag(){}[0]
+        final fun (dev.kord.common.entity/SkuFlags).unaryMinus() // dev.kord.common.entity/SkuFlags.Builder.unaryMinus|unaryMinus@dev.kord.common.entity.SkuFlags(){}[0]
+        final fun (dev.kord.common.entity/SkuFlags).unaryPlus() // dev.kord.common.entity/SkuFlags.Builder.unaryPlus|unaryPlus@dev.kord.common.entity.SkuFlags(){}[0]
+        final fun build(): dev.kord.common.entity/SkuFlags // dev.kord.common.entity/SkuFlags.Builder.build|build(){}[0]
+    }
+
+    final object Companion { // dev.kord.common.entity/SkuFlags.Companion|null[0]
+        final fun serializer(): kotlinx.serialization/KSerializer<dev.kord.common.entity/SkuFlags> // dev.kord.common.entity/SkuFlags.Companion.serializer|serializer(){}[0]
+    }
+}
+
 final class dev.kord.common.entity/Snowflake : kotlin/Comparable<dev.kord.common.entity/Snowflake> { // dev.kord.common.entity/Snowflake|null[0]
     constructor <init>(kotlin/String) // dev.kord.common.entity/Snowflake.<init>|<init>(kotlin.String){}[0]
     constructor <init>(kotlin/ULong) // dev.kord.common.entity/Snowflake.<init>|<init>(kotlin.ULong){}[0]
@@ -7329,6 +7515,8 @@ sealed class dev.kord.common.entity/AutoModerationActionType { // dev.kord.commo
 
     final class Unknown : dev.kord.common.entity/AutoModerationActionType // dev.kord.common.entity/AutoModerationActionType.Unknown|null[0]
 
+    final object BlockMemberInteraction : dev.kord.common.entity/AutoModerationActionType // dev.kord.common.entity/AutoModerationActionType.BlockMemberInteraction|null[0]
+
     final object BlockMessage : dev.kord.common.entity/AutoModerationActionType // dev.kord.common.entity/AutoModerationActionType.BlockMessage|null[0]
 
     final object Companion { // dev.kord.common.entity/AutoModerationActionType.Companion|null[0]
@@ -7361,6 +7549,8 @@ sealed class dev.kord.common.entity/AutoModerationRuleEventType { // dev.kord.co
         final fun from(kotlin/Int): dev.kord.common.entity/AutoModerationRuleEventType // dev.kord.common.entity/AutoModerationRuleEventType.Companion.from|from(kotlin.Int){}[0]
         final fun serializer(): kotlinx.serialization/KSerializer<dev.kord.common.entity/AutoModerationRuleEventType> // dev.kord.common.entity/AutoModerationRuleEventType.Companion.serializer|serializer(){}[0]
     }
+
+    final object MemberUpdate : dev.kord.common.entity/AutoModerationRuleEventType // dev.kord.common.entity/AutoModerationRuleEventType.MemberUpdate|null[0]
 
     final object MessageSend : dev.kord.common.entity/AutoModerationRuleEventType // dev.kord.common.entity/AutoModerationRuleEventType.MessageSend|null[0]
 }
@@ -7412,6 +7602,8 @@ sealed class dev.kord.common.entity/AutoModerationRuleTriggerType { // dev.kord.
 
     final object KeywordPreset : dev.kord.common.entity/AutoModerationRuleTriggerType // dev.kord.common.entity/AutoModerationRuleTriggerType.KeywordPreset|null[0]
 
+    final object MemberProfile : dev.kord.common.entity/AutoModerationRuleTriggerType // dev.kord.common.entity/AutoModerationRuleTriggerType.MemberProfile|null[0]
+
     final object MentionSpam : dev.kord.common.entity/AutoModerationRuleTriggerType // dev.kord.common.entity/AutoModerationRuleTriggerType.MentionSpam|null[0]
 
     final object Spam : dev.kord.common.entity/AutoModerationRuleTriggerType // dev.kord.common.entity/AutoModerationRuleTriggerType.Spam|null[0]
@@ -7438,6 +7630,8 @@ sealed class dev.kord.common.entity/ButtonStyle { // dev.kord.common.entity/Butt
     final object Danger : dev.kord.common.entity/ButtonStyle // dev.kord.common.entity/ButtonStyle.Danger|null[0]
 
     final object Link : dev.kord.common.entity/ButtonStyle // dev.kord.common.entity/ButtonStyle.Link|null[0]
+
+    final object Premium : dev.kord.common.entity/ButtonStyle // dev.kord.common.entity/ButtonStyle.Premium|null[0]
 
     final object Primary : dev.kord.common.entity/ButtonStyle // dev.kord.common.entity/ButtonStyle.Primary|null[0]
 
@@ -7740,6 +7934,64 @@ sealed class dev.kord.common.entity/EmbedType { // dev.kord.common.entity/EmbedT
     final object Rich : dev.kord.common.entity/EmbedType // dev.kord.common.entity/EmbedType.Rich|null[0]
 
     final object Video : dev.kord.common.entity/EmbedType // dev.kord.common.entity/EmbedType.Video|null[0]
+}
+
+sealed class dev.kord.common.entity/EntitlementOwnerType { // dev.kord.common.entity/EntitlementOwnerType|null[0]
+    final val value // dev.kord.common.entity/EntitlementOwnerType.value|{}value[0]
+        final fun <get-value>(): kotlin/Int // dev.kord.common.entity/EntitlementOwnerType.value.<get-value>|<get-value>(){}[0]
+
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.common.entity/EntitlementOwnerType.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.common.entity/EntitlementOwnerType.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // dev.kord.common.entity/EntitlementOwnerType.toString|toString(){}[0]
+
+    final class Unknown : dev.kord.common.entity/EntitlementOwnerType // dev.kord.common.entity/EntitlementOwnerType.Unknown|null[0]
+
+    final object Companion { // dev.kord.common.entity/EntitlementOwnerType.Companion|null[0]
+        final val entries // dev.kord.common.entity/EntitlementOwnerType.Companion.entries|{}entries[0]
+            final fun <get-entries>(): kotlin.collections/List<dev.kord.common.entity/EntitlementOwnerType> // dev.kord.common.entity/EntitlementOwnerType.Companion.entries.<get-entries>|<get-entries>(){}[0]
+
+        final fun from(kotlin/Int): dev.kord.common.entity/EntitlementOwnerType // dev.kord.common.entity/EntitlementOwnerType.Companion.from|from(kotlin.Int){}[0]
+        final fun serializer(): kotlinx.serialization/KSerializer<dev.kord.common.entity/EntitlementOwnerType> // dev.kord.common.entity/EntitlementOwnerType.Companion.serializer|serializer(){}[0]
+    }
+
+    final object Guild : dev.kord.common.entity/EntitlementOwnerType // dev.kord.common.entity/EntitlementOwnerType.Guild|null[0]
+
+    final object User : dev.kord.common.entity/EntitlementOwnerType // dev.kord.common.entity/EntitlementOwnerType.User|null[0]
+}
+
+sealed class dev.kord.common.entity/EntitlementType { // dev.kord.common.entity/EntitlementType|null[0]
+    final val value // dev.kord.common.entity/EntitlementType.value|{}value[0]
+        final fun <get-value>(): kotlin/Int // dev.kord.common.entity/EntitlementType.value.<get-value>|<get-value>(){}[0]
+
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.common.entity/EntitlementType.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.common.entity/EntitlementType.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // dev.kord.common.entity/EntitlementType.toString|toString(){}[0]
+
+    final class Unknown : dev.kord.common.entity/EntitlementType // dev.kord.common.entity/EntitlementType.Unknown|null[0]
+
+    final object ApplicationSubscription : dev.kord.common.entity/EntitlementType // dev.kord.common.entity/EntitlementType.ApplicationSubscription|null[0]
+
+    final object Companion { // dev.kord.common.entity/EntitlementType.Companion|null[0]
+        final val entries // dev.kord.common.entity/EntitlementType.Companion.entries|{}entries[0]
+            final fun <get-entries>(): kotlin.collections/List<dev.kord.common.entity/EntitlementType> // dev.kord.common.entity/EntitlementType.Companion.entries.<get-entries>|<get-entries>(){}[0]
+
+        final fun from(kotlin/Int): dev.kord.common.entity/EntitlementType // dev.kord.common.entity/EntitlementType.Companion.from|from(kotlin.Int){}[0]
+        final fun serializer(): kotlinx.serialization/KSerializer<dev.kord.common.entity/EntitlementType> // dev.kord.common.entity/EntitlementType.Companion.serializer|serializer(){}[0]
+    }
+
+    final object DeveloperGift : dev.kord.common.entity/EntitlementType // dev.kord.common.entity/EntitlementType.DeveloperGift|null[0]
+
+    final object FreePurchase : dev.kord.common.entity/EntitlementType // dev.kord.common.entity/EntitlementType.FreePurchase|null[0]
+
+    final object PremiumPurchase : dev.kord.common.entity/EntitlementType // dev.kord.common.entity/EntitlementType.PremiumPurchase|null[0]
+
+    final object PremiumSubscription : dev.kord.common.entity/EntitlementType // dev.kord.common.entity/EntitlementType.PremiumSubscription|null[0]
+
+    final object Purchase : dev.kord.common.entity/EntitlementType // dev.kord.common.entity/EntitlementType.Purchase|null[0]
+
+    final object TestModePurchase : dev.kord.common.entity/EntitlementType // dev.kord.common.entity/EntitlementType.TestModePurchase|null[0]
+
+    final object UserGift : dev.kord.common.entity/EntitlementType // dev.kord.common.entity/EntitlementType.UserGift|null[0]
 }
 
 sealed class dev.kord.common.entity/ExplicitContentFilter { // dev.kord.common.entity/ExplicitContentFilter|null[0]
@@ -8230,6 +8482,8 @@ sealed class dev.kord.common.entity/MessageType { // dev.kord.common.entity/Mess
 
     final object InteractionPremiumUpsell : dev.kord.common.entity/MessageType // dev.kord.common.entity/MessageType.InteractionPremiumUpsell|null[0]
 
+    final object PurchaseNotification : dev.kord.common.entity/MessageType // dev.kord.common.entity/MessageType.PurchaseNotification|null[0]
+
     final object RecipientAdd : dev.kord.common.entity/MessageType // dev.kord.common.entity/MessageType.RecipientAdd|null[0]
 
     final object RecipientRemove : dev.kord.common.entity/MessageType // dev.kord.common.entity/MessageType.RecipientRemove|null[0]
@@ -8606,6 +8860,61 @@ sealed class dev.kord.common.entity/SelectDefaultValueType { // dev.kord.common.
     final object User : dev.kord.common.entity/SelectDefaultValueType // dev.kord.common.entity/SelectDefaultValueType.User|null[0]
 }
 
+sealed class dev.kord.common.entity/SkuFlag { // dev.kord.common.entity/SkuFlag|null[0]
+    final val shift // dev.kord.common.entity/SkuFlag.shift|{}shift[0]
+        final fun <get-shift>(): kotlin/Int // dev.kord.common.entity/SkuFlag.shift.<get-shift>|<get-shift>(){}[0]
+    final val value // dev.kord.common.entity/SkuFlag.value|{}value[0]
+        final fun <get-value>(): kotlin/Int // dev.kord.common.entity/SkuFlag.value.<get-value>|<get-value>(){}[0]
+
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.common.entity/SkuFlag.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.common.entity/SkuFlag.hashCode|hashCode(){}[0]
+    final fun plus(dev.kord.common.entity/SkuFlag): dev.kord.common.entity/SkuFlags // dev.kord.common.entity/SkuFlag.plus|plus(dev.kord.common.entity.SkuFlag){}[0]
+    final fun plus(dev.kord.common.entity/SkuFlags): dev.kord.common.entity/SkuFlags // dev.kord.common.entity/SkuFlag.plus|plus(dev.kord.common.entity.SkuFlags){}[0]
+    final fun toString(): kotlin/String // dev.kord.common.entity/SkuFlag.toString|toString(){}[0]
+
+    final class Unknown : dev.kord.common.entity/SkuFlag // dev.kord.common.entity/SkuFlag.Unknown|null[0]
+
+    final object Available : dev.kord.common.entity/SkuFlag // dev.kord.common.entity/SkuFlag.Available|null[0]
+
+    final object Companion { // dev.kord.common.entity/SkuFlag.Companion|null[0]
+        final val entries // dev.kord.common.entity/SkuFlag.Companion.entries|{}entries[0]
+            final fun <get-entries>(): kotlin.collections/List<dev.kord.common.entity/SkuFlag> // dev.kord.common.entity/SkuFlag.Companion.entries.<get-entries>|<get-entries>(){}[0]
+
+        final fun fromShift(kotlin/Int): dev.kord.common.entity/SkuFlag // dev.kord.common.entity/SkuFlag.Companion.fromShift|fromShift(kotlin.Int){}[0]
+    }
+
+    final object GuildSubscription : dev.kord.common.entity/SkuFlag // dev.kord.common.entity/SkuFlag.GuildSubscription|null[0]
+
+    final object UserSubscription : dev.kord.common.entity/SkuFlag // dev.kord.common.entity/SkuFlag.UserSubscription|null[0]
+}
+
+sealed class dev.kord.common.entity/SkuType { // dev.kord.common.entity/SkuType|null[0]
+    final val value // dev.kord.common.entity/SkuType.value|{}value[0]
+        final fun <get-value>(): kotlin/Int // dev.kord.common.entity/SkuType.value.<get-value>|<get-value>(){}[0]
+
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.common.entity/SkuType.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.common.entity/SkuType.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // dev.kord.common.entity/SkuType.toString|toString(){}[0]
+
+    final class Unknown : dev.kord.common.entity/SkuType // dev.kord.common.entity/SkuType.Unknown|null[0]
+
+    final object Companion { // dev.kord.common.entity/SkuType.Companion|null[0]
+        final val entries // dev.kord.common.entity/SkuType.Companion.entries|{}entries[0]
+            final fun <get-entries>(): kotlin.collections/List<dev.kord.common.entity/SkuType> // dev.kord.common.entity/SkuType.Companion.entries.<get-entries>|<get-entries>(){}[0]
+
+        final fun from(kotlin/Int): dev.kord.common.entity/SkuType // dev.kord.common.entity/SkuType.Companion.from|from(kotlin.Int){}[0]
+        final fun serializer(): kotlinx.serialization/KSerializer<dev.kord.common.entity/SkuType> // dev.kord.common.entity/SkuType.Companion.serializer|serializer(){}[0]
+    }
+
+    final object Consumable : dev.kord.common.entity/SkuType // dev.kord.common.entity/SkuType.Consumable|null[0]
+
+    final object Durable : dev.kord.common.entity/SkuType // dev.kord.common.entity/SkuType.Durable|null[0]
+
+    final object Subscription : dev.kord.common.entity/SkuType // dev.kord.common.entity/SkuType.Subscription|null[0]
+
+    final object SubscriptionGroup : dev.kord.common.entity/SkuType // dev.kord.common.entity/SkuType.SubscriptionGroup|null[0]
+}
+
 sealed class dev.kord.common.entity/SortOrderType { // dev.kord.common.entity/SortOrderType|null[0]
     final val value // dev.kord.common.entity/SortOrderType.value|{}value[0]
         final fun <get-value>(): kotlin/Int // dev.kord.common.entity/SortOrderType.value.<get-value>|<get-value>(){}[0]
@@ -8650,6 +8959,31 @@ sealed class dev.kord.common.entity/StageInstancePrivacyLevel { // dev.kord.comm
     final object GuildOnly : dev.kord.common.entity/StageInstancePrivacyLevel // dev.kord.common.entity/StageInstancePrivacyLevel.GuildOnly|null[0]
 
     final object Public : dev.kord.common.entity/StageInstancePrivacyLevel // dev.kord.common.entity/StageInstancePrivacyLevel.Public|null[0]
+}
+
+sealed class dev.kord.common.entity/SubscriptionStatus { // dev.kord.common.entity/SubscriptionStatus|null[0]
+    final val value // dev.kord.common.entity/SubscriptionStatus.value|{}value[0]
+        final fun <get-value>(): kotlin/Int // dev.kord.common.entity/SubscriptionStatus.value.<get-value>|<get-value>(){}[0]
+
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.common.entity/SubscriptionStatus.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.common.entity/SubscriptionStatus.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // dev.kord.common.entity/SubscriptionStatus.toString|toString(){}[0]
+
+    final class Unknown : dev.kord.common.entity/SubscriptionStatus // dev.kord.common.entity/SubscriptionStatus.Unknown|null[0]
+
+    final object Active : dev.kord.common.entity/SubscriptionStatus // dev.kord.common.entity/SubscriptionStatus.Active|null[0]
+
+    final object Companion { // dev.kord.common.entity/SubscriptionStatus.Companion|null[0]
+        final val entries // dev.kord.common.entity/SubscriptionStatus.Companion.entries|{}entries[0]
+            final fun <get-entries>(): kotlin.collections/List<dev.kord.common.entity/SubscriptionStatus> // dev.kord.common.entity/SubscriptionStatus.Companion.entries.<get-entries>|<get-entries>(){}[0]
+
+        final fun from(kotlin/Int): dev.kord.common.entity/SubscriptionStatus // dev.kord.common.entity/SubscriptionStatus.Companion.from|from(kotlin.Int){}[0]
+        final fun serializer(): kotlinx.serialization/KSerializer<dev.kord.common.entity/SubscriptionStatus> // dev.kord.common.entity/SubscriptionStatus.Companion.serializer|serializer(){}[0]
+    }
+
+    final object Ending : dev.kord.common.entity/SubscriptionStatus // dev.kord.common.entity/SubscriptionStatus.Ending|null[0]
+
+    final object Inactive : dev.kord.common.entity/SubscriptionStatus // dev.kord.common.entity/SubscriptionStatus.Inactive|null[0]
 }
 
 sealed class dev.kord.common.entity/SystemChannelFlag { // dev.kord.common.entity/SystemChannelFlag|null[0]
@@ -9076,6 +9410,10 @@ final fun dev.kord.common.entity/RoleFlags(kotlin.collections/Iterable<dev.kord.
 final fun dev.kord.common.entity/RoleFlags(kotlin.collections/Iterable<dev.kord.common.entity/RoleFlags>): dev.kord.common.entity/RoleFlags // dev.kord.common.entity/RoleFlags|RoleFlags(kotlin.collections.Iterable<dev.kord.common.entity.RoleFlags>){}[0]
 final fun dev.kord.common.entity/RoleFlags(kotlin/Array<out dev.kord.common.entity/RoleFlag>...): dev.kord.common.entity/RoleFlags // dev.kord.common.entity/RoleFlags|RoleFlags(kotlin.Array<out|dev.kord.common.entity.RoleFlag>...){}[0]
 final fun dev.kord.common.entity/RoleFlags(kotlin/Array<out dev.kord.common.entity/RoleFlags>...): dev.kord.common.entity/RoleFlags // dev.kord.common.entity/RoleFlags|RoleFlags(kotlin.Array<out|dev.kord.common.entity.RoleFlags>...){}[0]
+final fun dev.kord.common.entity/SkuFlags(kotlin.collections/Iterable<dev.kord.common.entity/SkuFlag>): dev.kord.common.entity/SkuFlags // dev.kord.common.entity/SkuFlags|SkuFlags(kotlin.collections.Iterable<dev.kord.common.entity.SkuFlag>){}[0]
+final fun dev.kord.common.entity/SkuFlags(kotlin.collections/Iterable<dev.kord.common.entity/SkuFlags>): dev.kord.common.entity/SkuFlags // dev.kord.common.entity/SkuFlags|SkuFlags(kotlin.collections.Iterable<dev.kord.common.entity.SkuFlags>){}[0]
+final fun dev.kord.common.entity/SkuFlags(kotlin/Array<out dev.kord.common.entity/SkuFlag>...): dev.kord.common.entity/SkuFlags // dev.kord.common.entity/SkuFlags|SkuFlags(kotlin.Array<out|dev.kord.common.entity.SkuFlag>...){}[0]
+final fun dev.kord.common.entity/SkuFlags(kotlin/Array<out dev.kord.common.entity/SkuFlags>...): dev.kord.common.entity/SkuFlags // dev.kord.common.entity/SkuFlags|SkuFlags(kotlin.Array<out|dev.kord.common.entity.SkuFlags>...){}[0]
 final fun dev.kord.common.entity/Snowflake(kotlin/Long): dev.kord.common.entity/Snowflake // dev.kord.common.entity/Snowflake|Snowflake(kotlin.Long){}[0]
 final fun dev.kord.common.entity/SystemChannelFlags(kotlin.collections/Iterable<dev.kord.common.entity/SystemChannelFlag>): dev.kord.common.entity/SystemChannelFlags // dev.kord.common.entity/SystemChannelFlags|SystemChannelFlags(kotlin.collections.Iterable<dev.kord.common.entity.SystemChannelFlag>){}[0]
 final fun dev.kord.common.entity/SystemChannelFlags(kotlin.collections/Iterable<dev.kord.common.entity/SystemChannelFlags>): dev.kord.common.entity/SystemChannelFlags // dev.kord.common.entity/SystemChannelFlags|SystemChannelFlags(kotlin.collections.Iterable<dev.kord.common.entity.SystemChannelFlags>){}[0]
@@ -9116,6 +9454,7 @@ final inline fun dev.kord.common.entity/MessageFlags(kotlin/Function1<dev.kord.c
 final inline fun dev.kord.common.entity/Permissions(kotlin/Function1<dev.kord.common.entity/Permissions.Builder, kotlin/Unit> = ...): dev.kord.common.entity/Permissions // dev.kord.common.entity/Permissions|Permissions(kotlin.Function1<dev.kord.common.entity.Permissions.Builder,kotlin.Unit>){}[0]
 final inline fun dev.kord.common.entity/Permissions0(kotlin/Function1<dev.kord.common.entity/Permissions.Builder, kotlin/Unit> = ...): dev.kord.common.entity/Permissions // dev.kord.common.entity/Permissions0|Permissions0(kotlin.Function1<dev.kord.common.entity.Permissions.Builder,kotlin.Unit>){}[0]
 final inline fun dev.kord.common.entity/RoleFlags(kotlin/Function1<dev.kord.common.entity/RoleFlags.Builder, kotlin/Unit> = ...): dev.kord.common.entity/RoleFlags // dev.kord.common.entity/RoleFlags|RoleFlags(kotlin.Function1<dev.kord.common.entity.RoleFlags.Builder,kotlin.Unit>){}[0]
+final inline fun dev.kord.common.entity/SkuFlags(kotlin/Function1<dev.kord.common.entity/SkuFlags.Builder, kotlin/Unit> = ...): dev.kord.common.entity/SkuFlags // dev.kord.common.entity/SkuFlags|SkuFlags(kotlin.Function1<dev.kord.common.entity.SkuFlags.Builder,kotlin.Unit>){}[0]
 final inline fun dev.kord.common.entity/SystemChannelFlags(kotlin/Function1<dev.kord.common.entity/SystemChannelFlags.Builder, kotlin/Unit> = ...): dev.kord.common.entity/SystemChannelFlags // dev.kord.common.entity/SystemChannelFlags|SystemChannelFlags(kotlin.Function1<dev.kord.common.entity.SystemChannelFlags.Builder,kotlin.Unit>){}[0]
 final inline fun dev.kord.common.entity/UserFlags(kotlin/Function1<dev.kord.common.entity/UserFlags.Builder, kotlin/Unit> = ...): dev.kord.common.entity/UserFlags // dev.kord.common.entity/UserFlags|UserFlags(kotlin.Function1<dev.kord.common.entity.UserFlags.Builder,kotlin.Unit>){}[0]
 final suspend inline fun <#A: kotlin/Any?> (dev.kord.common.ratelimit/RateLimiter).dev.kord.common.ratelimit/consume(kotlin/Function0<#A>): #A // dev.kord.common.ratelimit/consume|consume@dev.kord.common.ratelimit.RateLimiter(kotlin.Function0<0:0>){0§<kotlin.Any?>}[0]
