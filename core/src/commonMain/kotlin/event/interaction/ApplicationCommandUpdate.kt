@@ -7,9 +7,8 @@ import dev.kord.core.event.Event
 
 @Deprecated(
     "This event is not supposed to be sent to bots. See https://github.com/discord/discord-api-docs/issues/3690 for " +
-        "details. The deprecation level will be raised to HIDDEN in 0.16.0 and this declaration will be removed in " +
-        "0.17.0.",
-    level = DeprecationLevel.ERROR,
+        "details. This declaration will be removed in 0.17.0.",
+    level = DeprecationLevel.HIDDEN,
 )
 public sealed interface ApplicationCommandUpdateEvent : Event {
     public val command: GuildApplicationCommand
@@ -18,9 +17,8 @@ public sealed interface ApplicationCommandUpdateEvent : Event {
 @Suppress("DEPRECATION_ERROR")
 @Deprecated(
     "This event is not supposed to be sent to bots. See https://github.com/discord/discord-api-docs/issues/3690 for " +
-        "details. The deprecation level will be raised to HIDDEN in 0.16.0 and this declaration will be removed in " +
-        "0.17.0.",
-    level = DeprecationLevel.ERROR,
+        "details. This declaration will be removed in 0.17.0.",
+    level = DeprecationLevel.HIDDEN,
 )
 public class ChatInputCommandUpdateEvent(
     override val command: GuildChatInputCommand,
@@ -33,9 +31,8 @@ public class ChatInputCommandUpdateEvent(
 @Suppress("DEPRECATION_ERROR")
 @Deprecated(
     "This event is not supposed to be sent to bots. See https://github.com/discord/discord-api-docs/issues/3690 for " +
-        "details. The deprecation level will be raised to HIDDEN in 0.16.0 and this declaration will be removed in " +
-        "0.17.0.",
-    level = DeprecationLevel.ERROR,
+        "details. This declaration will be removed in 0.17.0.",
+    level = DeprecationLevel.HIDDEN,
 )
 public class UserCommandUpdateEvent(
     override val command: GuildUserCommand,
@@ -48,9 +45,8 @@ public class UserCommandUpdateEvent(
 @Suppress("DEPRECATION_ERROR")
 @Deprecated(
     "This event is not supposed to be sent to bots. See https://github.com/discord/discord-api-docs/issues/3690 for " +
-        "details. The deprecation level will be raised to HIDDEN in 0.16.0 and this declaration will be removed in " +
-        "0.17.0.",
-    level = DeprecationLevel.ERROR,
+        "details. This declaration will be removed in 0.17.0.",
+    level = DeprecationLevel.HIDDEN,
 )
 public class MessageCommandUpdateEvent(
     override val command: GuildMessageCommand,
@@ -62,9 +58,8 @@ public class MessageCommandUpdateEvent(
 @Suppress("DEPRECATION_ERROR")
 @Deprecated(
     "This event is not supposed to be sent to bots. See https://github.com/discord/discord-api-docs/issues/3690 for " +
-        "details. The deprecation level will be raised to HIDDEN in 0.16.0 and this declaration will be removed in " +
-        "0.17.0.",
-    level = DeprecationLevel.ERROR,
+        "details. This declaration will be removed in 0.17.0.",
+    level = DeprecationLevel.HIDDEN,
 )
 public class UnknownApplicationCommandUpdateEvent(
     override val command: UnknownGuildApplicationCommand,

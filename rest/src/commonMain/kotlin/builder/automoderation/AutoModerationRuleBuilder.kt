@@ -310,10 +310,10 @@ public sealed interface KeywordPresetAutoModerationRuleBuilder :
      * [KeywordPresetAutoModerationRuleBuilder].
      */
     @Deprecated(
-        "This can be replaced with 'presets', it is now a 'var'. The deprecation level will be raised to ERROR in " +
-            "0.16.0, to HIDDEN in 0.17.0, and this declaration will be removed in 0.18.0.",
+        "This can be replaced with 'presets', it is now a 'var'. The deprecation level will be raised to HIDDEN in " +
+            "0.17.0 and this declaration will be removed in 0.18.0.",
         ReplaceWith("this.run { this@run.presets = presets }", imports = ["kotlin.run"]),
-        DeprecationLevel.WARNING,
+        DeprecationLevel.ERROR,
     )
     public fun assignPresets(presets: MutableList<AutoModerationRuleKeywordPresetType>)
 }
@@ -364,8 +364,8 @@ public inline fun MemberProfileAutoModerationRuleBuilder.blockMemberInteraction(
 @Deprecated(
     "Not all Auto Moderation Rules can have a 'BlockMessage' action (e.g. 'MemberProfile' rules can't), so this " +
         "extension function is deprecated for 'AutoModerationRuleBuilder'. Use the extension function on " +
-        "'BlockMessageAutoModerationRuleBuilder' instead. The deprecation level will be raised to ERROR in 0.16.0, " +
-        "to HIDDEN in 0.17.0, and this declaration will be removed in 0.18.0.",
+        "'BlockMessageAutoModerationRuleBuilder' instead. The deprecation level will be raised to HIDDEN in 0.17.0 " +
+        "and this declaration will be removed in 0.18.0.",
     ReplaceWith(
         "(this as? BlockMessageAutoModerationRuleBuilder)?.blockMessage { builder() } ?: Unit",
         imports = [
@@ -373,7 +373,7 @@ public inline fun MemberProfileAutoModerationRuleBuilder.blockMemberInteraction(
             "dev.kord.rest.builder.automoderation.blockMessage", "kotlin.Unit",
         ],
     ),
-    DeprecationLevel.WARNING,
+    DeprecationLevel.ERROR,
 )
 public inline fun AutoModerationRuleBuilder.blockMessage(
     builder: BlockMessageAutoModerationActionBuilder.() -> Unit = {},

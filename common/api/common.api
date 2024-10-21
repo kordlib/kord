@@ -49,15 +49,6 @@ public final class dev/kord/common/DiscordBitSetKt {
 	public static final fun EmptyBitSet ()Ldev/kord/common/DiscordBitSet;
 }
 
-public final class dev/kord/common/DiscordBitSetSerializer : kotlinx/serialization/KSerializer {
-	public static final field INSTANCE Ldev/kord/common/DiscordBitSetSerializer;
-	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/common/DiscordBitSet;
-	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
-	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/common/DiscordBitSet;)V
-	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-}
-
 public final class dev/kord/common/DiscordTimestampKt {
 	public static final fun toMessageFormat (Lkotlinx/datetime/Instant;Ldev/kord/common/DiscordTimestampStyle;)Ljava/lang/String;
 	public static synthetic fun toMessageFormat$default (Lkotlinx/datetime/Instant;Ldev/kord/common/DiscordTimestampStyle;ILjava/lang/Object;)Ljava/lang/String;
@@ -147,15 +138,6 @@ public final class dev/kord/common/Locale$Companion {
 	public final fun getUKRAINIAN ()Ldev/kord/common/Locale;
 	public final fun getVIETNAMESE ()Ldev/kord/common/Locale;
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
-}
-
-public final class dev/kord/common/Locale$Serializer : kotlinx/serialization/KSerializer {
-	public static final field INSTANCE Ldev/kord/common/Locale$Serializer;
-	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/common/Locale;
-	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
-	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/common/Locale;)V
-	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
 }
 
 public final class dev/kord/common/LocaleKt {
@@ -775,7 +757,6 @@ public final class dev/kord/common/entity/ArchiveDuration$ThreeDays : dev/kord/c
 }
 
 public final class dev/kord/common/entity/ArchiveDuration$Unknown : dev/kord/common/entity/ArchiveDuration {
-	public synthetic fun <init> (JLkotlin/jvm/internal/DefaultConstructorMarker;)V
 }
 
 public final class dev/kord/common/entity/ArchiveDuration$Week : dev/kord/common/entity/ArchiveDuration {
@@ -8158,7 +8139,7 @@ public final class dev/kord/common/entity/Permissions$NewCompanion {
 
 public final class dev/kord/common/entity/PermissionsKt {
 	public static final fun getALL (Ldev/kord/common/entity/Permissions$Companion;)Ldev/kord/common/entity/Permissions;
-	public static final fun getALL (Ldev/kord/common/entity/Permissions$NewCompanion;)Ldev/kord/common/entity/Permissions;
+	public static final synthetic fun getALL (Ldev/kord/common/entity/Permissions$NewCompanion;)Ldev/kord/common/entity/Permissions;
 }
 
 public abstract class dev/kord/common/entity/PremiumTier {

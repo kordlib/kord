@@ -15,9 +15,6 @@ kotlin {
                 api(libs.kord.cache.map)
 
                 implementation(libs.kotlin.logging)
-
-                // TODO remove when kordLogger is removed
-                implementation(libs.kotlin.logging.old)
             }
         }
         jvmMain {
