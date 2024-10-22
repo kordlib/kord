@@ -4,6 +4,7 @@ import dev.kord.cache.api.DataCache
 import dev.kord.common.annotation.KordExperimental
 import dev.kord.common.annotation.KordUnsafe
 import dev.kord.common.entity.DiscordShard
+import dev.kord.common.entity.EntryPointCommandHandlerType
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.exception.RequestException
 import dev.kord.core.builder.kord.KordBuilder
@@ -645,6 +646,46 @@ public class Kord(
         return GuildUserCommand(data, rest.interaction)
     }
 
+    public suspend inline fun createGuildEntryPointCommand(
+        guildId: Snowflake,
+        name: String,
+        description: String,
+        handler: EntryPointCommandHandlerType,
+        builder: EntryPointCreateBuilder.() -> Unit = {},
+    ): GuildEntryPointCommand {
+        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+        val response = rest.interaction.createGuildEntryPointCommand(
+            resources.applicationId,
+            guildId,
+            name,
+            description,
+            handler,
+            builder
+        )
+
+        val data = ApplicationCommandData.from(response)
+        return GuildEntryPointCommand(data, rest.interaction)
+    }
+
+
+    public suspend inline fun createGlobalEntryPointCommand(
+        name: String,
+        description: String,
+        handler: EntryPointCommandHandlerType,
+        builder: EntryPointCreateBuilder.() -> Unit = {},
+    ): GlobalEntryPointCommand {
+        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+        val response = rest.interaction.createGlobalEntryPointCommand(
+            resources.applicationId,
+            name,
+            description,
+            handler,
+            builder
+        )
+
+        val data = ApplicationCommandData.from(response)
+        return GlobalEntryPointCommand(data, rest.interaction)
+    }
 
     public suspend inline fun createGuildApplicationCommands(
         guildId: Snowflake,
@@ -661,6 +702,7 @@ public class Kord(
             }
         }
     }
+
 }
 
 /**

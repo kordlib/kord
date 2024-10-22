@@ -84,6 +84,8 @@ internal class MessageCommandCreateBuilderImpl(override var name: String) : Glob
             defaultMemberPermissions = state.defaultMemberPermissions,
             defaultPermission = @Suppress("DEPRECATION") state.defaultPermission,
             nsfw = state.nsfw,
+            integrationTypes = state.integrationTypes,
+            contexts = state.contexts,
         )
     }
 }

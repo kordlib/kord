@@ -1,6 +1,7 @@
 package dev.kord.rest.builder.interaction
 
 import dev.kord.common.annotation.KordDsl
+import dev.kord.common.entity.EntryPointCommandHandlerType
 import dev.kord.rest.json.request.ApplicationCommandCreateRequest
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
@@ -13,6 +14,7 @@ public sealed class MultiApplicationCommandBuilder {
         return commands.map { it.toRequest() }
     }
 }
+
 public inline fun MultiApplicationCommandBuilder.input(
     name: String,
     description: String,
@@ -30,10 +32,14 @@ public inline fun MultiApplicationCommandBuilder.message(
     commands += MessageCommandCreateBuilderImpl(name).apply(builder)
 }
 
-
 public inline fun MultiApplicationCommandBuilder.user(name: String, builder: UserCommandCreateBuilder.() -> Unit = {}) {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     commands += UserCommandCreateBuilderImpl(name).apply(builder)
+}
+
+public inline fun MultiApplicationCommandBuilder.entryPoint(name: String, description: String, handler: EntryPointCommandHandlerType, builder: EntryPointCreateBuilder.() -> Unit) {
+    contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+    commands += EntryPointCreateBuilderImpl(name, description, handler).apply(builder)
 }
 
 @KordDsl
@@ -53,6 +59,11 @@ public class GlobalMultiApplicationCommandBuilder : MultiApplicationCommandBuild
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
         commands += UserCommandCreateBuilderImpl(name).apply(builder)
     }
+
+    public inline fun MultiApplicationCommandBuilder.entryPoint(name: String, description: String, handler: EntryPointCommandHandlerType, builder: GlobalEntryPointCreateBuilder.() -> Unit = {}) {
+        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+        commands += EntryPointCreateBuilderImpl(name, description, handler).apply(builder)
+    }
 }
 
 @KordDsl
@@ -71,5 +82,10 @@ public class GuildMultiApplicationCommandBuilder : MultiApplicationCommandBuilde
     public inline fun user(name: String, builder: UserCommandCreateBuilder.() -> Unit = {}) {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
         commands += UserCommandCreateBuilderImpl(name).apply(builder)
+    }
+
+    public inline fun MultiApplicationCommandBuilder.entryPoint(name: String, description: String, handler: EntryPointCommandHandlerType, builder: EntryPointCreateBuilder.() -> Unit) {
+        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+        commands += EntryPointCreateBuilderImpl(name, description, handler).apply(builder)
     }
 }

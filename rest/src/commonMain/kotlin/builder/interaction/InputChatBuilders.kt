@@ -172,6 +172,8 @@ internal class ChatInputCreateBuilderImpl(
             state.dmPermission,
             @Suppress("DEPRECATION") state.defaultPermission,
             nsfw = state.nsfw,
+            integrationTypes = state.integrationTypes,
+            contexts = state.contexts,
         )
 
     }

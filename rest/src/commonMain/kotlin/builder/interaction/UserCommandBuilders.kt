@@ -79,6 +79,8 @@ internal class UserCommandCreateBuilderImpl(override var name: String) : GlobalU
             dmPermission = state.dmPermission,
             defaultPermission = @Suppress("DEPRECATION") state.defaultPermission,
             nsfw = state.nsfw,
+            integrationTypes = state.integrationTypes,
+            contexts = state.contexts,
         )
     }
 }
