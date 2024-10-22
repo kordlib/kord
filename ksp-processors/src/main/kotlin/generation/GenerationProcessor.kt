@@ -4,12 +4,12 @@ import com.google.devtools.ksp.processing.*
 import com.google.devtools.ksp.symbol.KSAnnotated
 import com.google.devtools.ksp.symbol.KSFile
 import com.squareup.kotlinpoet.ksp.writeTo
+import dev.kord.codegen.ksp.getSymbolsWithAnnotation
+import dev.kord.codegen.ksp.isOfType
 import dev.kord.ksp.Generate
 import dev.kord.ksp.generation.bitflags.generateFileSpec
 import dev.kord.ksp.generation.kordenum.generateFileSpec
 import dev.kord.ksp.getAnnotationsByType
-import dev.kord.ksp.getSymbolsWithAnnotation
-import dev.kord.ksp.isOfType
 
 /** [SymbolProcessorProvider] for [GenerationProcessor]. */
 class GenerationProcessorProvider : SymbolProcessorProvider {
