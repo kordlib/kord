@@ -440,12 +440,20 @@ abstract interface dev.kord.core.behavior/ChatInputCommandBehavior : dev.kord.co
     abstract suspend fun edit(kotlin.coroutines/SuspendFunction1<dev.kord.rest.builder.interaction/ChatInputModifyBuilder, kotlin/Unit>): dev.kord.core.entity.application/ChatInputCommandCommand // dev.kord.core.behavior/ChatInputCommandBehavior.edit|edit(kotlin.coroutines.SuspendFunction1<dev.kord.rest.builder.interaction.ChatInputModifyBuilder,kotlin.Unit>){}[0]
 }
 
+abstract interface dev.kord.core.behavior/EntryPointCommandBehavior : dev.kord.core.behavior/ApplicationCommandBehavior { // dev.kord.core.behavior/EntryPointCommandBehavior|null[0]
+    abstract suspend fun edit(kotlin.coroutines/SuspendFunction1<dev.kord.rest.builder.interaction/EntryPointModifyBuilder, kotlin/Unit>): dev.kord.core.entity.application/EntryPointCommand // dev.kord.core.behavior/EntryPointCommandBehavior.edit|edit(kotlin.coroutines.SuspendFunction1<dev.kord.rest.builder.interaction.EntryPointModifyBuilder,kotlin.Unit>){}[0]
+}
+
 abstract interface dev.kord.core.behavior/GlobalApplicationCommandBehavior : dev.kord.core.behavior/ApplicationCommandBehavior { // dev.kord.core.behavior/GlobalApplicationCommandBehavior|null[0]
     open suspend fun delete() // dev.kord.core.behavior/GlobalApplicationCommandBehavior.delete|delete(){}[0]
 }
 
 abstract interface dev.kord.core.behavior/GlobalChatInputCommandBehavior : dev.kord.core.behavior/ChatInputCommandBehavior, dev.kord.core.behavior/GlobalApplicationCommandBehavior { // dev.kord.core.behavior/GlobalChatInputCommandBehavior|null[0]
     open suspend fun edit(kotlin.coroutines/SuspendFunction1<dev.kord.rest.builder.interaction/ChatInputModifyBuilder, kotlin/Unit>): dev.kord.core.entity.application/GlobalChatInputCommand // dev.kord.core.behavior/GlobalChatInputCommandBehavior.edit|edit(kotlin.coroutines.SuspendFunction1<dev.kord.rest.builder.interaction.ChatInputModifyBuilder,kotlin.Unit>){}[0]
+}
+
+abstract interface dev.kord.core.behavior/GlobalEntryPointCommandBehavior : dev.kord.core.behavior/EntryPointCommandBehavior, dev.kord.core.behavior/GlobalApplicationCommandBehavior { // dev.kord.core.behavior/GlobalEntryPointCommandBehavior|null[0]
+    open suspend fun edit(kotlin.coroutines/SuspendFunction1<dev.kord.rest.builder.interaction/EntryPointModifyBuilder, kotlin/Unit>): dev.kord.core.entity.application/GlobalEntryPointCommand // dev.kord.core.behavior/GlobalEntryPointCommandBehavior.edit|edit(kotlin.coroutines.SuspendFunction1<dev.kord.rest.builder.interaction.EntryPointModifyBuilder,kotlin.Unit>){}[0]
 }
 
 abstract interface dev.kord.core.behavior/GlobalMessageCommandBehavior : dev.kord.core.behavior/GlobalApplicationCommandBehavior, dev.kord.core.behavior/MessageCommandBehavior { // dev.kord.core.behavior/GlobalMessageCommandBehavior|null[0]
@@ -562,6 +570,10 @@ abstract interface dev.kord.core.behavior/GuildEmojiBehavior : dev.kord.core.ent
 
     open fun withStrategy(dev.kord.core.supplier/EntitySupplyStrategy<*>): dev.kord.core.behavior/GuildEmojiBehavior // dev.kord.core.behavior/GuildEmojiBehavior.withStrategy|withStrategy(dev.kord.core.supplier.EntitySupplyStrategy<*>){}[0]
     open suspend fun delete(kotlin/String? = ...) // dev.kord.core.behavior/GuildEmojiBehavior.delete|delete(kotlin.String?){}[0]
+}
+
+abstract interface dev.kord.core.behavior/GuildEntryPointCommandBehavior : dev.kord.core.behavior/EntryPointCommandBehavior, dev.kord.core.behavior/GuildApplicationCommandBehavior { // dev.kord.core.behavior/GuildEntryPointCommandBehavior|null[0]
+    open suspend fun edit(kotlin.coroutines/SuspendFunction1<dev.kord.rest.builder.interaction/EntryPointModifyBuilder, kotlin/Unit>): dev.kord.core.entity.application/GuildEntryPointCommand // dev.kord.core.behavior/GuildEntryPointCommandBehavior.edit|edit(kotlin.coroutines.SuspendFunction1<dev.kord.rest.builder.interaction.EntryPointModifyBuilder,kotlin.Unit>){}[0]
 }
 
 abstract interface dev.kord.core.behavior/GuildMessageCommandBehavior : dev.kord.core.behavior/GuildApplicationCommandBehavior, dev.kord.core.behavior/MessageCommandBehavior { // dev.kord.core.behavior/GuildMessageCommandBehavior|null[0]
@@ -733,6 +745,8 @@ abstract interface dev.kord.core.behavior/WebhookBehavior : dev.kord.core.entity
     open suspend fun getMessage(kotlin/String, dev.kord.common.entity/Snowflake, dev.kord.common.entity/Snowflake? = ...): dev.kord.core.entity/Message // dev.kord.core.behavior/WebhookBehavior.getMessage|getMessage(kotlin.String;dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake?){}[0]
     open suspend fun getMessageOrNull(kotlin/String, dev.kord.common.entity/Snowflake, dev.kord.common.entity/Snowflake? = ...): dev.kord.core.entity/Message? // dev.kord.core.behavior/WebhookBehavior.getMessageOrNull|getMessageOrNull(kotlin.String;dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake?){}[0]
 }
+
+abstract interface dev.kord.core.entity.application/EntryPointCommand : dev.kord.core.behavior/EntryPointCommandBehavior, dev.kord.core.entity.application/ApplicationCommand // dev.kord.core.entity.application/EntryPointCommand|null[0]
 
 abstract interface dev.kord.core.entity.application/GlobalApplicationCommand : dev.kord.core.behavior/GlobalApplicationCommandBehavior, dev.kord.core.entity.application/ApplicationCommand { // dev.kord.core.entity.application/GlobalApplicationCommand|null[0]
     open val dmPermission // dev.kord.core.entity.application/GlobalApplicationCommand.dmPermission|{}dmPermission[0]
@@ -1082,6 +1096,7 @@ sealed interface dev.kord.core.behavior.interaction.response/InteractionResponse
     abstract fun withStrategy(dev.kord.core.supplier/EntitySupplyStrategy<*>): dev.kord.core.behavior.interaction.response/InteractionResponseBehavior // dev.kord.core.behavior.interaction.response/InteractionResponseBehavior.withStrategy|withStrategy(dev.kord.core.supplier.EntitySupplyStrategy<*>){}[0]
     open suspend fun getFollowupMessage(dev.kord.common.entity/Snowflake): dev.kord.core.entity.interaction.followup/FollowupMessage // dev.kord.core.behavior.interaction.response/InteractionResponseBehavior.getFollowupMessage|getFollowupMessage(dev.kord.common.entity.Snowflake){}[0]
     open suspend fun getFollowupMessageOrNull(dev.kord.common.entity/Snowflake): dev.kord.core.entity.interaction.followup/FollowupMessage? // dev.kord.core.behavior.interaction.response/InteractionResponseBehavior.getFollowupMessageOrNull|getFollowupMessageOrNull(dev.kord.common.entity.Snowflake){}[0]
+    open suspend fun openActivity() // dev.kord.core.behavior.interaction.response/InteractionResponseBehavior.openActivity|openActivity(){}[0]
 }
 
 sealed interface dev.kord.core.behavior.interaction.response/PublicInteractionResponseBehavior : dev.kord.core.behavior.interaction.response/InteractionResponseBehavior { // dev.kord.core.behavior.interaction.response/PublicInteractionResponseBehavior|null[0]
@@ -5919,6 +5934,15 @@ final class dev.kord.core.entity.application/GlobalChatInputCommand : dev.kord.c
         final fun <get-service>(): dev.kord.rest.service/InteractionService // dev.kord.core.entity.application/GlobalChatInputCommand.service.<get-service>|<get-service>(){}[0]
 }
 
+final class dev.kord.core.entity.application/GlobalEntryPointCommand : dev.kord.core.behavior/GlobalEntryPointCommandBehavior, dev.kord.core.entity.application/EntryPointCommand, dev.kord.core.entity.application/GlobalApplicationCommand { // dev.kord.core.entity.application/GlobalEntryPointCommand|null[0]
+    constructor <init>(dev.kord.core.cache.data/ApplicationCommandData, dev.kord.rest.service/InteractionService) // dev.kord.core.entity.application/GlobalEntryPointCommand.<init>|<init>(dev.kord.core.cache.data.ApplicationCommandData;dev.kord.rest.service.InteractionService){}[0]
+
+    final val data // dev.kord.core.entity.application/GlobalEntryPointCommand.data|{}data[0]
+        final fun <get-data>(): dev.kord.core.cache.data/ApplicationCommandData // dev.kord.core.entity.application/GlobalEntryPointCommand.data.<get-data>|<get-data>(){}[0]
+    final val service // dev.kord.core.entity.application/GlobalEntryPointCommand.service|{}service[0]
+        final fun <get-service>(): dev.kord.rest.service/InteractionService // dev.kord.core.entity.application/GlobalEntryPointCommand.service.<get-service>|<get-service>(){}[0]
+}
+
 final class dev.kord.core.entity.application/GlobalMessageCommand : dev.kord.core.behavior/GlobalMessageCommandBehavior, dev.kord.core.entity.application/GlobalApplicationCommand, dev.kord.core.entity.application/MessageCommand { // dev.kord.core.entity.application/GlobalMessageCommand|null[0]
     constructor <init>(dev.kord.core.cache.data/ApplicationCommandData, dev.kord.rest.service/InteractionService) // dev.kord.core.entity.application/GlobalMessageCommand.<init>|<init>(dev.kord.core.cache.data.ApplicationCommandData;dev.kord.rest.service.InteractionService){}[0]
 
@@ -5959,6 +5983,17 @@ final class dev.kord.core.entity.application/GuildChatInputCommand : dev.kord.co
         final fun <get-guildId>(): dev.kord.common.entity/Snowflake // dev.kord.core.entity.application/GuildChatInputCommand.guildId.<get-guildId>|<get-guildId>(){}[0]
     final val service // dev.kord.core.entity.application/GuildChatInputCommand.service|{}service[0]
         final fun <get-service>(): dev.kord.rest.service/InteractionService // dev.kord.core.entity.application/GuildChatInputCommand.service.<get-service>|<get-service>(){}[0]
+}
+
+final class dev.kord.core.entity.application/GuildEntryPointCommand : dev.kord.core.behavior/GuildEntryPointCommandBehavior, dev.kord.core.entity.application/EntryPointCommand, dev.kord.core.entity.application/GuildApplicationCommand { // dev.kord.core.entity.application/GuildEntryPointCommand|null[0]
+    constructor <init>(dev.kord.core.cache.data/ApplicationCommandData, dev.kord.rest.service/InteractionService) // dev.kord.core.entity.application/GuildEntryPointCommand.<init>|<init>(dev.kord.core.cache.data.ApplicationCommandData;dev.kord.rest.service.InteractionService){}[0]
+
+    final val data // dev.kord.core.entity.application/GuildEntryPointCommand.data|{}data[0]
+        final fun <get-data>(): dev.kord.core.cache.data/ApplicationCommandData // dev.kord.core.entity.application/GuildEntryPointCommand.data.<get-data>|<get-data>(){}[0]
+    final val guildId // dev.kord.core.entity.application/GuildEntryPointCommand.guildId|{}guildId[0]
+        final fun <get-guildId>(): dev.kord.common.entity/Snowflake // dev.kord.core.entity.application/GuildEntryPointCommand.guildId.<get-guildId>|<get-guildId>(){}[0]
+    final val service // dev.kord.core.entity.application/GuildEntryPointCommand.service|{}service[0]
+        final fun <get-service>(): dev.kord.rest.service/InteractionService // dev.kord.core.entity.application/GuildEntryPointCommand.service.<get-service>|<get-service>(){}[0]
 }
 
 final class dev.kord.core.entity.application/GuildMessageCommand : dev.kord.core.behavior/GuildMessageCommandBehavior, dev.kord.core.entity.application/GuildApplicationCommand, dev.kord.core.entity.application/MessageCommand { // dev.kord.core.entity.application/GuildMessageCommand|null[0]
@@ -11838,11 +11873,13 @@ final class dev.kord.core/Kord : kotlinx.coroutines/CoroutineScope { // dev.kord
     final suspend inline fun <#A1: reified dev.kord.core.entity.channel/Channel> getChannelOf(dev.kord.common.entity/Snowflake, dev.kord.core.supplier/EntitySupplyStrategy<*> = ...): #A1? // dev.kord.core/Kord.getChannelOf|getChannelOf(dev.kord.common.entity.Snowflake;dev.kord.core.supplier.EntitySupplyStrategy<*>){0§<dev.kord.core.entity.channel.Channel>}[0]
     final suspend inline fun createGlobalApplicationCommands(kotlin/Function1<dev.kord.rest.builder.interaction/GlobalMultiApplicationCommandBuilder, kotlin/Unit>): kotlinx.coroutines.flow/Flow<dev.kord.core.entity.application/GlobalApplicationCommand> // dev.kord.core/Kord.createGlobalApplicationCommands|createGlobalApplicationCommands(kotlin.Function1<dev.kord.rest.builder.interaction.GlobalMultiApplicationCommandBuilder,kotlin.Unit>){}[0]
     final suspend inline fun createGlobalChatInputCommand(kotlin/String, kotlin/String, kotlin/Function1<dev.kord.rest.builder.interaction/GlobalChatInputCreateBuilder, kotlin/Unit> = ...): dev.kord.core.entity.application/GlobalChatInputCommand // dev.kord.core/Kord.createGlobalChatInputCommand|createGlobalChatInputCommand(kotlin.String;kotlin.String;kotlin.Function1<dev.kord.rest.builder.interaction.GlobalChatInputCreateBuilder,kotlin.Unit>){}[0]
+    final suspend inline fun createGlobalEntryPointCommand(kotlin/String, kotlin/String, dev.kord.common.entity/EntryPointCommandHandlerType, kotlin/Function1<dev.kord.rest.builder.interaction/EntryPointCreateBuilder, kotlin/Unit> = ...): dev.kord.core.entity.application/GlobalEntryPointCommand // dev.kord.core/Kord.createGlobalEntryPointCommand|createGlobalEntryPointCommand(kotlin.String;kotlin.String;dev.kord.common.entity.EntryPointCommandHandlerType;kotlin.Function1<dev.kord.rest.builder.interaction.EntryPointCreateBuilder,kotlin.Unit>){}[0]
     final suspend inline fun createGlobalMessageCommand(kotlin/String, kotlin/Function1<dev.kord.rest.builder.interaction/GlobalMessageCommandCreateBuilder, kotlin/Unit> = ...): dev.kord.core.entity.application/GlobalMessageCommand // dev.kord.core/Kord.createGlobalMessageCommand|createGlobalMessageCommand(kotlin.String;kotlin.Function1<dev.kord.rest.builder.interaction.GlobalMessageCommandCreateBuilder,kotlin.Unit>){}[0]
     final suspend inline fun createGlobalUserCommand(kotlin/String, kotlin/Function1<dev.kord.rest.builder.interaction/GlobalUserCommandCreateBuilder, kotlin/Unit> = ...): dev.kord.core.entity.application/GlobalUserCommand // dev.kord.core/Kord.createGlobalUserCommand|createGlobalUserCommand(kotlin.String;kotlin.Function1<dev.kord.rest.builder.interaction.GlobalUserCommandCreateBuilder,kotlin.Unit>){}[0]
     final suspend inline fun createGuild(kotlin/String, kotlin/Function1<dev.kord.rest.builder.guild/GuildCreateBuilder, kotlin/Unit>): dev.kord.core.entity/Guild // dev.kord.core/Kord.createGuild|createGuild(kotlin.String;kotlin.Function1<dev.kord.rest.builder.guild.GuildCreateBuilder,kotlin.Unit>){}[0]
     final suspend inline fun createGuildApplicationCommands(dev.kord.common.entity/Snowflake, kotlin/Function1<dev.kord.rest.builder.interaction/GuildMultiApplicationCommandBuilder, kotlin/Unit>): kotlinx.coroutines.flow/Flow<dev.kord.core.entity.application/GuildApplicationCommand> // dev.kord.core/Kord.createGuildApplicationCommands|createGuildApplicationCommands(dev.kord.common.entity.Snowflake;kotlin.Function1<dev.kord.rest.builder.interaction.GuildMultiApplicationCommandBuilder,kotlin.Unit>){}[0]
     final suspend inline fun createGuildChatInputCommand(dev.kord.common.entity/Snowflake, kotlin/String, kotlin/String, kotlin/Function1<dev.kord.rest.builder.interaction/ChatInputCreateBuilder, kotlin/Unit> = ...): dev.kord.core.entity.application/GuildChatInputCommand // dev.kord.core/Kord.createGuildChatInputCommand|createGuildChatInputCommand(dev.kord.common.entity.Snowflake;kotlin.String;kotlin.String;kotlin.Function1<dev.kord.rest.builder.interaction.ChatInputCreateBuilder,kotlin.Unit>){}[0]
+    final suspend inline fun createGuildEntryPointCommand(dev.kord.common.entity/Snowflake, kotlin/String, kotlin/String, dev.kord.common.entity/EntryPointCommandHandlerType, kotlin/Function1<dev.kord.rest.builder.interaction/EntryPointCreateBuilder, kotlin/Unit> = ...): dev.kord.core.entity.application/GuildEntryPointCommand // dev.kord.core/Kord.createGuildEntryPointCommand|createGuildEntryPointCommand(dev.kord.common.entity.Snowflake;kotlin.String;kotlin.String;dev.kord.common.entity.EntryPointCommandHandlerType;kotlin.Function1<dev.kord.rest.builder.interaction.EntryPointCreateBuilder,kotlin.Unit>){}[0]
     final suspend inline fun createGuildMessageCommand(dev.kord.common.entity/Snowflake, kotlin/String, kotlin/Function1<dev.kord.rest.builder.interaction/MessageCommandCreateBuilder, kotlin/Unit> = ...): dev.kord.core.entity.application/GuildMessageCommand // dev.kord.core/Kord.createGuildMessageCommand|createGuildMessageCommand(dev.kord.common.entity.Snowflake;kotlin.String;kotlin.Function1<dev.kord.rest.builder.interaction.MessageCommandCreateBuilder,kotlin.Unit>){}[0]
     final suspend inline fun createGuildUserCommand(dev.kord.common.entity/Snowflake, kotlin/String, kotlin/Function1<dev.kord.rest.builder.interaction/UserCommandCreateBuilder, kotlin/Unit> = ...): dev.kord.core.entity.application/GuildUserCommand // dev.kord.core/Kord.createGuildUserCommand|createGuildUserCommand(dev.kord.common.entity.Snowflake;kotlin.String;kotlin.Function1<dev.kord.rest.builder.interaction.UserCommandCreateBuilder,kotlin.Unit>){}[0]
     final suspend inline fun editPresence(kotlin/Function1<dev.kord.gateway.builder/PresenceBuilder, kotlin/Unit>) // dev.kord.core/Kord.editPresence|editPresence(kotlin.Function1<dev.kord.gateway.builder.PresenceBuilder,kotlin.Unit>){}[0]

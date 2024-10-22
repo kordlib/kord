@@ -7372,6 +7372,8 @@ sealed class dev.kord.common.entity/ApplicationCommandType { // dev.kord.common.
 
     final object Message : dev.kord.common.entity/ApplicationCommandType // dev.kord.common.entity/ApplicationCommandType.Message|null[0]
 
+    final object PrimaryEntryPoint : dev.kord.common.entity/ApplicationCommandType // dev.kord.common.entity/ApplicationCommandType.PrimaryEntryPoint|null[0]
+
     final object User : dev.kord.common.entity/ApplicationCommandType // dev.kord.common.entity/ApplicationCommandType.User|null[0]
 }
 
@@ -8146,6 +8148,29 @@ sealed class dev.kord.common.entity/EntitlementType { // dev.kord.common.entity/
     final object UserGift : dev.kord.common.entity/EntitlementType // dev.kord.common.entity/EntitlementType.UserGift|null[0]
 }
 
+sealed class dev.kord.common.entity/EntryPointCommandHandlerType { // dev.kord.common.entity/EntryPointCommandHandlerType|null[0]
+    final val value // dev.kord.common.entity/EntryPointCommandHandlerType.value|{}value[0]
+        final fun <get-value>(): kotlin/Int // dev.kord.common.entity/EntryPointCommandHandlerType.value.<get-value>|<get-value>(){}[0]
+
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.common.entity/EntryPointCommandHandlerType.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.common.entity/EntryPointCommandHandlerType.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // dev.kord.common.entity/EntryPointCommandHandlerType.toString|toString(){}[0]
+
+    final class Unknown : dev.kord.common.entity/EntryPointCommandHandlerType // dev.kord.common.entity/EntryPointCommandHandlerType.Unknown|null[0]
+
+    final object AppHandler : dev.kord.common.entity/EntryPointCommandHandlerType // dev.kord.common.entity/EntryPointCommandHandlerType.AppHandler|null[0]
+
+    final object Companion { // dev.kord.common.entity/EntryPointCommandHandlerType.Companion|null[0]
+        final val entries // dev.kord.common.entity/EntryPointCommandHandlerType.Companion.entries|{}entries[0]
+            final fun <get-entries>(): kotlin.collections/List<dev.kord.common.entity/EntryPointCommandHandlerType> // dev.kord.common.entity/EntryPointCommandHandlerType.Companion.entries.<get-entries>|<get-entries>(){}[0]
+
+        final fun from(kotlin/Int): dev.kord.common.entity/EntryPointCommandHandlerType // dev.kord.common.entity/EntryPointCommandHandlerType.Companion.from|from(kotlin.Int){}[0]
+        final fun serializer(): kotlinx.serialization/KSerializer<dev.kord.common.entity/EntryPointCommandHandlerType> // dev.kord.common.entity/EntryPointCommandHandlerType.Companion.serializer|serializer(){}[0]
+    }
+
+    final object DiscordLaunchActivity : dev.kord.common.entity/EntryPointCommandHandlerType // dev.kord.common.entity/EntryPointCommandHandlerType.DiscordLaunchActivity|null[0]
+}
+
 sealed class dev.kord.common.entity/ExplicitContentFilter { // dev.kord.common.entity/ExplicitContentFilter|null[0]
     final val value // dev.kord.common.entity/ExplicitContentFilter.value|{}value[0]
         final fun <get-value>(): kotlin/Int // dev.kord.common.entity/ExplicitContentFilter.value.<get-value>|<get-value>(){}[0]
@@ -8420,6 +8445,8 @@ sealed class dev.kord.common.entity/InteractionResponseType { // dev.kord.common
     final object DeferredChannelMessageWithSource : dev.kord.common.entity/InteractionResponseType // dev.kord.common.entity/InteractionResponseType.DeferredChannelMessageWithSource|null[0]
 
     final object DeferredUpdateMessage : dev.kord.common.entity/InteractionResponseType // dev.kord.common.entity/InteractionResponseType.DeferredUpdateMessage|null[0]
+
+    final object LaunchActivity : dev.kord.common.entity/InteractionResponseType // dev.kord.common.entity/InteractionResponseType.LaunchActivity|null[0]
 
     final object Modal : dev.kord.common.entity/InteractionResponseType // dev.kord.common.entity/InteractionResponseType.Modal|null[0]
 
