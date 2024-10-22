@@ -1,7 +1,13 @@
+@file:Suppress("CONTEXT_RECEIVERS_DEPRECATED")
+
 package dev.kord.ksp.generation.bitflags
 
-import com.squareup.kotlinpoet.*
+import com.squareup.kotlinpoet.DelicateKotlinPoetApi
 import com.squareup.kotlinpoet.KModifier.*
+import com.squareup.kotlinpoet.LambdaTypeName
+import com.squareup.kotlinpoet.TypeName
+import com.squareup.kotlinpoet.TypeSpec
+import com.squareup.kotlinpoet.UNIT
 import dev.kord.codegen.kotlinpoet.addAnnotation
 import dev.kord.codegen.kotlinpoet.addFunction
 import dev.kord.codegen.kotlinpoet.returns
@@ -81,7 +87,12 @@ internal fun TypeSpec.Builder.addCopy() = addFunction("copy") {
 context(BitFlags, GenerationContext)
 internal fun TypeSpec.Builder.addCopy0() = addFunction("copy0") {
     @OptIn(DelicateKotlinPoetApi::class)
-    addAnnotation(Deprecated("Binary compatibility, keep for some releases.", level = DeprecationLevel.HIDDEN))
+    addAnnotation(
+        Deprecated(
+            "Kept for binary compatibility, this declaration will be removed in 0.17.0.",
+            level = DeprecationLevel.HIDDEN,
+        )
+    )
     addModifiers(PUBLIC, INLINE)
     addParameter("builder", type = LambdaTypeName.get(receiver = builderCN, returnType = UNIT))
     returns(collectionCN)

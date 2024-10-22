@@ -1,4 +1,3 @@
-import org.jetbrains.dokka.gradle.AbstractDokkaLeafTask
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.targets.js.testing.KotlinJsTest
 
@@ -13,6 +12,7 @@ plugins {
 
 repositories {
     mavenCentral()
+    maven("https://oss.sonatype.org/content/repositories/snapshots")
 }
 
 dependencies {
@@ -23,10 +23,19 @@ apiValidation {
     applyKordBCVOptions()
 }
 
+@OptIn(ExperimentalKotlinGradlePluginApi::class)
 kotlin {
     explicitApi()
+    compilerOptions {
+        applyKordCommonCompilerOptions()
+        optIn.addAll(kordOptIns)
+    }
 
-    jvm()
+    jvm {
+        compilerOptions {
+            applyKordJvmCompilerOptions()
+        }
+    }
     js {
         nodejs {
             testTask {
@@ -38,13 +47,6 @@ kotlin {
             }
         }
         useCommonJs()
-    }
-    jvmToolchain(Jvm.target)
-
-    @OptIn(ExperimentalKotlinGradlePluginApi::class)
-    compilerOptions {
-        applyKordCompilerOptions()
-        optIn.addAll(kordOptIns)
     }
 
     applyDefaultHierarchyTemplate()
@@ -69,6 +71,10 @@ kotlin {
     }
 }
 
+dokka {
+    applyKordDokkaOptions(project)
+}
+
 tasks {
     withType<Test>().configureEach {
         useJUnitPlatform()
@@ -78,7 +84,14 @@ tasks {
         environment("PROJECT_ROOT", rootProject.projectDir.absolutePath)
     }
 
-    for (task in listOf("compileKotlinJvm", "compileKotlinJs", "jvmSourcesJar", "jsSourcesJar")) {
+    for (task in listOf(
+        "compileKotlinJvm",
+        "compileKotlinJs",
+        "jvmSourcesJar",
+        "jsSourcesJar",
+        "dokkaGenerateModuleHtml",
+        "dokkaGeneratePublicationHtml",
+    )) {
         named(task) {
             dependsOn("kspCommonMainKotlinMetadata")
         }
@@ -88,10 +101,5 @@ tasks {
         named("sourcesJar") {
             dependsOn("kspCommonMainKotlinMetadata")
         }
-    }
-
-    withType<AbstractDokkaLeafTask>().configureEach {
-        applyKordDokkaOptions()
-        dependsOn("kspCommonMainKotlinMetadata")
     }
 }

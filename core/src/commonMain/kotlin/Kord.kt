@@ -15,6 +15,8 @@ import dev.kord.core.cache.data.UserData
 import dev.kord.core.entity.*
 import dev.kord.core.entity.application.*
 import dev.kord.core.entity.channel.Channel
+import dev.kord.core.entity.monetization.Entitlement
+import dev.kord.core.entity.monetization.Sku
 import dev.kord.core.event.Event
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.exception.KordInitializationException
@@ -28,6 +30,7 @@ import dev.kord.gateway.builder.PresenceBuilder
 import dev.kord.rest.builder.application.ApplicationRoleConnectionMetadataRecordsBuilder
 import dev.kord.rest.builder.guild.GuildCreateBuilder
 import dev.kord.rest.builder.interaction.*
+import dev.kord.rest.builder.monetization.EntitlementsListRequestBuilder
 import dev.kord.rest.builder.user.CurrentUserModifyBuilder
 import dev.kord.rest.request.RestRequestException
 import dev.kord.rest.service.RestClient
@@ -37,10 +40,8 @@ import kotlinx.coroutines.flow.*
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 import kotlin.coroutines.CoroutineContext
+import kotlin.jvm.JvmName
 import kotlinx.coroutines.channels.Channel as CoroutineChannel
-
-@Deprecated("Use your own logger instead, this will be removed in the future.", level = DeprecationLevel.HIDDEN)
-public val kordLogger: mu.KLogger = mu.KotlinLogging.logger { }
 
 private val logger = KotlinLogging.logger { }
 
@@ -365,6 +366,27 @@ public class Kord(
         scheduledEventId: Snowflake? = null,
     ): Invite? = with(EntitySupplyStrategy.rest).getInviteOrNull(code, withCounts, withExpiration, scheduledEventId)
 
+    /**
+     * Requests to get all [Sku]s for this application.
+     *
+     * @throws RestRequestException if something went wrong during the request.
+     */
+    public suspend fun getSkus(): List<Sku> = rest.sku.listSkus(selfId).map { Sku(it, this) }
+
+    /**
+     * Requests to get all [Entitlement]s for this application.
+     *
+     * @throws RequestException if something went wrong during the request.
+     */
+    public inline fun getEntitlements(
+        strategy: EntitySupplyStrategy<*> = resources.defaultStrategy,
+        builder: EntitlementsListRequestBuilder.() -> Unit = {},
+    ): Flow<Entitlement> {
+        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+        val request = EntitlementsListRequestBuilder().apply(builder).toRequest()
+        return strategy.supply(this).getEntitlements(selfId, request)
+    }
+
 
     public suspend fun getSticker(id: Snowflake): Sticker = defaultSupplier.getSticker(id)
 
@@ -477,11 +499,41 @@ public class Kord(
     }
 
 
+    @JvmName("getGlobalApplicationCommandOfJvmInlineReplacement")
+    public suspend inline fun <reified T : GlobalApplicationCommand> getGlobalApplicationCommandOf(
+        commandId: Snowflake,
+    ): T = defaultSupplier.getGlobalApplicationCommandOf(resources.applicationId, commandId)
+
+
+    @JvmName("getGlobalApplicationCommandOfOrNullJvmInlineReplacement")
+    public suspend inline fun <reified T : GlobalApplicationCommand> getGlobalApplicationCommandOfOrNull(
+        commandId: Snowflake,
+    ): T? = defaultSupplier.getGlobalApplicationCommandOfOrNull(resources.applicationId, commandId)
+
+
+    @Suppress("TYPE_INTERSECTION_AS_REIFIED_WARNING")
+    @Deprecated(
+        "This function has bad semantics: the type argument for T is effectively ignored. It no longer compiles " +
+            "without a 'TYPE_INTERSECTION_AS_REIFIED_WARNING' since Kotlin 2.1.0 " +
+            "(https://youtrack.jetbrains.com/issue/KT-52469). The replacement function has a proper bounded reified " +
+            "type parameter that is actually used. This declaration is kept for binary compatibility, it will be " +
+            "removed in 0.18.0. The replacement function should then be migrated away from using @JvmName.",
+        level = DeprecationLevel.HIDDEN,
+    )
     public suspend fun <T> getGlobalApplicationCommandOf(commandId: Snowflake): T {
         return defaultSupplier.getGlobalApplicationCommandOf(resources.applicationId, commandId)
     }
 
 
+    @Suppress("TYPE_INTERSECTION_AS_REIFIED_WARNING")
+    @Deprecated(
+        "This function has bad semantics: the type argument for T is effectively ignored. It no longer compiles " +
+            "without a 'TYPE_INTERSECTION_AS_REIFIED_WARNING' since Kotlin 2.1.0 " +
+            "(https://youtrack.jetbrains.com/issue/KT-52469). The replacement function has a proper bounded reified " +
+            "type parameter that is actually used. This declaration is kept for binary compatibility, it will be " +
+            "removed in 0.18.0. The replacement function should then be migrated away from using @JvmName.",
+        level = DeprecationLevel.HIDDEN,
+    )
     public suspend fun <T> getGlobalApplicationCommandOfOrNull(commandId: Snowflake): T? {
         return defaultSupplier.getGlobalApplicationCommandOfOrNull(resources.applicationId, commandId)
     }

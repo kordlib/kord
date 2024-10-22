@@ -124,19 +124,19 @@ processIncomingAudio(connection.streams.incomingAudioFrames)
 
 ## Installation
 
-Replace `{version}` with the latest version number on maven central.
+See the root [README](../README.md#installation) for more information.
 
-[![Download](https://img.shields.io/maven-central/v/dev.kord/kord-voice.svg?color=fb5502&label=Kord&logoColor=05c1fd&style=for-the-badge)](https://search.maven.org/search?q=g:%22dev.kord%22%20AND%20a:%22kord-voice%22)
+### Gradle (Kotlin)
 
-### Gradle (groovy)
-```groovy
+```kotlin
 dependencies {
     implementation("dev.kord:kord-voice:{version}")
 }
 ```
 
-### Gradle (kotlin)
-```kotlin
+### Gradle (Groovy)
+
+```groovy
 dependencies {
     implementation("dev.kord:kord-voice:{version}")
 }
@@ -144,7 +144,6 @@ dependencies {
 
 ### Maven
 
-##### Kord Snapshots Repository (Optional):
 ```xml
 <dependency>
     <groupId>dev.kord</groupId>

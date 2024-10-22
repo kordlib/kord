@@ -307,6 +307,12 @@ public enum class JsonErrorCode(public val code: Int) {
     /** Connection has been revoked. */
     ConnectionRevoked(40012),
 
+    /** Only consumable SKUs can be consumed. */
+    OnlyConsumableSkusCanBeConsumed(40018),
+
+    /** You can only delete sandbox entitlements. */
+    CanOnlyDeleteSandboxEntitlements(40019),
+
     /** Target user is not connected to voice. */
     UserNotInVoice(40032),
 
@@ -336,6 +342,9 @@ public enum class JsonErrorCode(public val code: Int) {
 
     /** A tag is required to create a forum post in this channel. */
     TagRequired(40067),
+
+    /** An entitlement has already been granted for this resource. */
+    EntitlementAlreadyGranted(40074),
 
     /** Missing access. */
     MissingAccess(50001),
@@ -446,6 +455,9 @@ public enum class JsonErrorCode(public val code: Int) {
 
     /** Invalid Guild. */
     InvalidGuild(50055),
+
+    /** Invalid SKU. */
+    InvalidSku(50057),
 
     /** Invalid request origin. */
     InvalidRequestOrigin(50067),

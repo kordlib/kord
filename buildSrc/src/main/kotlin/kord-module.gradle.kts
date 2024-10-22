@@ -1,5 +1,3 @@
-import org.jetbrains.dokka.gradle.AbstractDokkaLeafTask
-
 plugins {
     org.jetbrains.kotlin.jvm
     org.jetbrains.kotlin.plugin.serialization
@@ -12,6 +10,7 @@ plugins {
 
 repositories {
     mavenCentral()
+    maven("https://oss.sonatype.org/content/repositories/snapshots")
 }
 
 dependencies {
@@ -24,11 +23,8 @@ apiValidation {
 
 kotlin {
     explicitApi()
-
-    jvmToolchain(Jvm.target)
-
     compilerOptions {
-        applyKordCompilerOptions()
+        applyKordJvmCompilerOptions()
         optIn.addAll(kordOptIns)
     }
 
@@ -37,13 +33,17 @@ kotlin {
     }
 }
 
+dokka {
+    applyKordDokkaOptions(project)
+}
+
 tasks {
     withType<Test>().configureEach {
         useJUnitPlatform()
     }
 
-    withType<AbstractDokkaLeafTask>().configureEach {
-        applyKordDokkaOptions()
+    withType<JavaCompile>().configureEach {
+        options.release = KORD_JVM_TARGET
     }
 }
 

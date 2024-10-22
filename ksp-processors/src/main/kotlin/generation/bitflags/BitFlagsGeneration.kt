@@ -1,10 +1,11 @@
+@file:Suppress("CONTEXT_RECEIVERS_DEPRECATED")
+
 package dev.kord.ksp.generation.bitflags
 
 import com.google.devtools.ksp.symbol.KSFile
-import com.squareup.kotlinpoet.ClassName
+import com.squareup.kotlinpoet.*
 import com.squareup.kotlinpoet.KModifier.*
 import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
-import com.squareup.kotlinpoet.SET
 import com.squareup.kotlinpoet.ksp.addOriginatingKSFile
 import dev.kord.codegen.kotlinpoet.addAnnotation
 import dev.kord.codegen.kotlinpoet.addClass
@@ -114,6 +115,7 @@ internal fun BitFlags.generateFileSpec(originatingFile: KSFile) = fileSpecForGen
                                 addStatement("shift++")
                             }
                         }
+
                         BIT_SET -> withControlFlow("for·(shift·in·0..<$valueName.size)") {
                             addStatement("if·($valueName[shift])·add(%T.fromShift(shift))", entityCN)
                         }

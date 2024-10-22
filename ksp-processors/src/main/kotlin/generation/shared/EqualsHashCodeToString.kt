@@ -1,3 +1,5 @@
+@file:Suppress("CONTEXT_RECEIVERS_DEPRECATED")
+
 package dev.kord.ksp.generation.shared
 
 import com.squareup.kotlinpoet.ClassName
@@ -5,8 +7,8 @@ import com.squareup.kotlinpoet.KModifier.FINAL
 import com.squareup.kotlinpoet.KModifier.OVERRIDE
 import com.squareup.kotlinpoet.TypeSpec
 import dev.kord.codegen.kotlinpoet.addFunction
-import dev.kord.codegen.kotlinpoet.returns
 import dev.kord.codegen.kotlinpoet.addParameter
+import dev.kord.codegen.kotlinpoet.returns
 import dev.kord.ksp.generation.GenerationEntity
 
 internal fun TypeSpec.Builder.addEqualsAndHashCodeBasedOnClassAndSingleProperty(

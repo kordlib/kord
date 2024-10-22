@@ -1,13 +1,11 @@
+@file:Suppress("CONTEXT_RECEIVERS_DEPRECATED")
+
 package dev.kord.ksp.generation.bitflags
 
 import com.squareup.kotlinpoet.ClassName
 import com.squareup.kotlinpoet.KModifier.*
 import com.squareup.kotlinpoet.TypeSpec
-import dev.kord.codegen.kotlinpoet.addClass
-import dev.kord.codegen.kotlinpoet.addFunction
-import dev.kord.codegen.kotlinpoet.addParameter
-import dev.kord.codegen.kotlinpoet.addProperty
-import dev.kord.codegen.kotlinpoet.primaryConstructor
+import dev.kord.codegen.kotlinpoet.*
 import dev.kord.ksp.generation.GenerationEntity.BitFlags
 import dev.kord.ksp.generation.GenerationEntity.BitFlags.ValueType.BIT_SET
 import dev.kord.ksp.generation.GenerationEntity.BitFlags.ValueType.INT

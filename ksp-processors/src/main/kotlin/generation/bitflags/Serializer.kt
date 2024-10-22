@@ -1,3 +1,5 @@
+@file:Suppress("CONTEXT_RECEIVERS_DEPRECATED")
+
 package dev.kord.ksp.generation.bitflags
 
 import com.squareup.kotlinpoet.KModifier.OVERRIDE
@@ -7,8 +9,8 @@ import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
 import com.squareup.kotlinpoet.TypeSpec
 import dev.kord.codegen.kotlinpoet.addFunction
 import dev.kord.codegen.kotlinpoet.addObject
-import dev.kord.codegen.kotlinpoet.addParameter
 import dev.kord.codegen.kotlinpoet.addProperty
+import dev.kord.codegen.kotlinpoet.addParameter
 import dev.kord.ksp.generation.GenerationEntity.BitFlags
 import dev.kord.ksp.generation.GenerationEntity.BitFlags.ValueType.BIT_SET
 import dev.kord.ksp.generation.GenerationEntity.BitFlags.ValueType.INT

@@ -228,17 +228,7 @@ public sealed class ArchiveDuration(
      *
      * This is used as a fallback for [ArchiveDuration]s that haven't been added to Kord yet.
      */
-    public class Unknown internal constructor(
-        duration: Duration,
-        @Suppress("UNUSED_PARAMETER") unused: Nothing?,
-    ) : ArchiveDuration(duration) {
-        @Deprecated(
-            "Replaced by 'ArchiveDuration.from()'.",
-            ReplaceWith("ArchiveDuration.from(duration)", imports = ["dev.kord.common.entity.ArchiveDuration"]),
-            DeprecationLevel.HIDDEN,
-        )
-        public constructor(duration: Duration) : this(duration, unused = null)
-    }
+    public class Unknown internal constructor(duration: Duration) : ArchiveDuration(duration)
 
     public object Hour : ArchiveDuration(60.minutes)
     public object Day : ArchiveDuration(1440.minutes)
@@ -265,7 +255,7 @@ public sealed class ArchiveDuration(
          * Returns an instance of [ArchiveDuration] with [ArchiveDuration.duration] equal to the specified [duration].
          */
         public fun from(duration: Duration): ArchiveDuration =
-            entriesByDuration[duration] ?: Unknown(duration, unused = null)
+            entriesByDuration[duration] ?: Unknown(duration)
     }
 }
 

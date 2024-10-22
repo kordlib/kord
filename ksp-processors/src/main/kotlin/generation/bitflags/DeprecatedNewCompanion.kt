@@ -1,3 +1,5 @@
+@file:Suppress("CONTEXT_RECEIVERS_DEPRECATED")
+
 package dev.kord.ksp.generation.bitflags
 
 import com.squareup.kotlinpoet.DelicateKotlinPoetApi
@@ -16,14 +18,14 @@ import dev.kord.ksp.generation.shared.GenerationContext
 import dev.kord.ksp.generation.shared.K_SERIALIZER
 
 // TODO bump LEVEL and remove this file eventually
-private val LEVEL = DeprecationLevel.ERROR
+private val LEVEL = DeprecationLevel.HIDDEN
 
 context(BitFlags, GenerationContext)
 @OptIn(DelicateKotlinPoetApi::class)
 internal fun TypeSpec.Builder.addDeprecatedNewCompanion() {
     val newCompanion = collectionCN.nestedClass("NewCompanion")
     val deprecated = Deprecated(
-        "Renamed to 'Companion'.",
+        "Renamed to 'Companion'. This declaration will be removed in 0.17.0.",
         ReplaceWith("${collectionCN.simpleName}.Companion", imports = arrayOf(collectionCN.canonicalName)),
         LEVEL,
     )

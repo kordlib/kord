@@ -4,12 +4,12 @@ import com.google.devtools.ksp.processing.*
 import com.google.devtools.ksp.symbol.KSAnnotated
 import com.google.devtools.ksp.symbol.KSFile
 import com.squareup.kotlinpoet.ksp.writeTo
-import dev.kord.codegen.ksp.getAnnotationsOfType
 import dev.kord.codegen.ksp.getSymbolsWithAnnotation
 import dev.kord.codegen.ksp.isOfType
 import dev.kord.ksp.Generate
 import dev.kord.ksp.generation.bitflags.generateFileSpec
 import dev.kord.ksp.generation.kordenum.generateFileSpec
+import dev.kord.ksp.getAnnotationsByType
 
 /** [SymbolProcessorProvider] for [GenerationProcessor]. */
 class GenerationProcessorProvider : SymbolProcessorProvider {
@@ -33,7 +33,7 @@ private class GenerationProcessor(
     }
 
     private fun processFile(file: KSFile) {
-        val generates = file.getAnnotationsOfType<Generate>()
+        val generates = file.getAnnotationsByType<Generate>()
         val annotations = file.annotations.filter { it.isOfType<Generate>() }
         (generates zip annotations)
             .mapNotNull { (generate, annotation) -> generate.toGenerationEntityOrNull(logger, annotation) }
