@@ -10,7 +10,7 @@ fun MavenPublication.registerDokkaJar() =
     tasks.register<Jar>("${name}DokkaJar") {
         archiveClassifier = "javadoc"
         destinationDirectory = destinationDirectory.get().dir(name)
-        from(tasks.named("dokkaHtml"))
+        from(tasks.named("dokkaGeneratePublicationHtml"))
     }
 
 publishing {

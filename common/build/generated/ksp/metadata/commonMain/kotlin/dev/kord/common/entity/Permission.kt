@@ -628,9 +628,8 @@ public class Permissions internal constructor(
     public companion object {
         @Suppress(names = arrayOf("DEPRECATION_ERROR"))
         @Deprecated(
-            level = DeprecationLevel.ERROR,
-            message =
-                    "Renamed to 'Companion'. The deprecation level will be raised to HIDDEN in 0.16.0 and this declaration will be removed in 0.17.0.",
+            level = DeprecationLevel.HIDDEN,
+            message = "Renamed to 'Companion'. This declaration will be removed in 0.17.0.",
             replaceWith = ReplaceWith(expression = "Permissions.Companion", imports =
                         arrayOf("dev.kord.common.entity.Permissions")),
         )
@@ -639,9 +638,8 @@ public class Permissions internal constructor(
     }
 
     @Deprecated(
-        level = DeprecationLevel.ERROR,
-        message =
-                "Renamed to 'Companion'. The deprecation level will be raised to HIDDEN in 0.16.0 and this declaration will be removed in 0.17.0.",
+        level = DeprecationLevel.HIDDEN,
+        message = "Renamed to 'Companion'. This declaration will be removed in 0.17.0.",
         replaceWith = ReplaceWith(expression = "Permissions.Companion", imports =
                     arrayOf("dev.kord.common.entity.Permissions")),
     )
