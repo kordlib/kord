@@ -8,7 +8,23 @@
             "Message", intValue = 3,
             kDoc = "A UI-based command that shows up when you right-click or tap on a message.",
         ),
+        Entry(
+            "PrimaryEntryPoint", intValue = 4,
+            kDoc = "A UI-based command that represents the primary way to invoke an app's [Activity](https://discord.com/developers/docs/activities/overview)"
+        )
     ],
+)
+
+@file:Generate(
+    INT_KORD_ENUM, name = "EntryPointCommandHandlerType",
+    docUrl = "https://discord.com/developers/docs/interactions/application-commands#application-command-object-entry-point-command-handler-types",
+    entries = [
+        Entry("AppHandler", intValue = 1, kDoc = "The app handles the interaction using an interaction token"),
+        Entry(
+            "DiscordLaunchActivity", intValue = 2,
+            kDoc = "Discord handles the interaction by launching an Activity and sending a follow-up message without coordinating with the app"
+        )
+    ]
 )
 
 @file:Generate(
@@ -62,6 +78,7 @@
             kDoc = "Respond to an autocomplete interaction with suggested choices.",
         ),
         Entry("Modal", intValue = 9, kDoc = "Respond to an interaction with a popup modal."),
+        Entry("LaunchActivity", intValue = 12, kDoc = "\tLaunch the Activity associated with the app. Only available for apps with Activities enabled")
     ],
 )
 
