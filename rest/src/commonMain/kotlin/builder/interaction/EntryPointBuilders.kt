@@ -8,6 +8,7 @@ import dev.kord.common.entity.EntryPointCommandHandlerType
 import dev.kord.common.entity.InteractionContextType
 import dev.kord.common.entity.Permissions
 import dev.kord.common.entity.optional.Optional
+import dev.kord.common.entity.optional.Optional.Companion.missingOnEmpty
 import dev.kord.common.entity.optional.delegate.delegate
 import dev.kord.common.entity.optional.mapList
 import dev.kord.rest.json.request.ApplicationCommandCreateRequest
@@ -67,8 +68,8 @@ internal class EntryPointCreateBuilderImpl(
             state.dmPermission,
             @Suppress("DEPRECATION") state.defaultPermission,
             nsfw = state.nsfw,
-            integrationTypes = state.integrationTypes,
-            contexts = state.contexts,
+            integrationTypes = state.integrationTypes.missingOnEmpty(),
+            contexts = state.contexts.missingOnEmpty(),
             handler = Optional.Value(handler)
         )
     }

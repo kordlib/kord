@@ -6,6 +6,7 @@ import dev.kord.common.entity.ApplicationCommandType
 import dev.kord.common.entity.ApplicationIntegrationType
 import dev.kord.common.entity.InteractionContextType
 import dev.kord.common.entity.Permissions
+import dev.kord.common.entity.optional.Optional.Companion.missingOnEmpty
 import dev.kord.common.entity.optional.delegate.delegate
 import dev.kord.rest.json.request.ApplicationCommandCreateRequest
 import dev.kord.rest.json.request.ApplicationCommandModifyRequest
@@ -79,8 +80,8 @@ internal class UserCommandCreateBuilderImpl(override var name: String) : GlobalU
             dmPermission = state.dmPermission,
             defaultPermission = @Suppress("DEPRECATION") state.defaultPermission,
             nsfw = state.nsfw,
-            integrationTypes = state.integrationTypes,
-            contexts = state.contexts,
+            integrationTypes = state.integrationTypes.missingOnEmpty(),
+            contexts = state.contexts.missingOnEmpty(),
         )
     }
 }
