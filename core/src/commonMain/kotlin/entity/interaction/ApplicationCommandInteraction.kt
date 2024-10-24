@@ -56,6 +56,7 @@ public fun GlobalApplicationCommandInteraction(
         ApplicationCommandType.Message -> GlobalMessageCommandInteraction(data, kord, supplier)
         is ApplicationCommandType.Unknown -> error("Unknown application command type ${type.value}")
         null -> error("No application command type was provided")
+        else -> error("Got unexpected command type: ${data.type}")
     }
 }
 
@@ -78,5 +79,6 @@ public fun GuildApplicationCommandInteraction(
         ApplicationCommandType.Message -> GuildMessageCommandInteraction(data, kord, supplier)
         is ApplicationCommandType.Unknown -> error("Unknown application command type ${type.value}")
         null -> error("No application command type was provided")
+        else -> error("Got unexpected command type: ${data.type}")
     }
 }

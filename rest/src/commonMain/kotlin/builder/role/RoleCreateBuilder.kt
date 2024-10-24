@@ -2,7 +2,6 @@ package dev.kord.rest.builder.role
 
 import dev.kord.common.Color
 import dev.kord.common.annotation.KordDsl
-import dev.kord.common.entity.GuildFeature
 import dev.kord.common.entity.Permissions
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean

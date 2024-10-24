@@ -1,5 +1,6 @@
 package dev.kord.core.behavior.interaction.response
 
+import dev.kord.common.entity.InteractionResponseType
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.KordObject
 import dev.kord.core.entity.Strategizable
@@ -7,6 +8,7 @@ import dev.kord.core.entity.interaction.Interaction
 import dev.kord.core.entity.interaction.followup.FollowupMessage
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.supplier.EntitySupplyStrategy
+import dev.kord.rest.json.request.InteractionResponseCreateRequest
 import dev.kord.rest.request.RestRequestException
 
 /**
@@ -43,6 +45,17 @@ public sealed interface InteractionResponseBehavior : KordObject, Strategizable 
      */
     public suspend fun getFollowupMessage(messageId: Snowflake): FollowupMessage =
         supplier.getFollowupMessage(applicationId, token, messageId)
+
+    /**
+     * Opens the [Activity](https://discord.com/developers/docs/activities/overview) of this application.
+     * **Note:** This requires activities to be enabled for this application
+     */
+    public suspend fun openActivity() {
+        kord.rest.interaction.createInteractionResponse(
+            applicationId, token,
+            InteractionResponseCreateRequest(InteractionResponseType.LaunchActivity)
+        )
+    }
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): InteractionResponseBehavior
 }
