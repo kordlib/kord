@@ -409,6 +409,7 @@ abstract interface dev.kord.core.behavior.interaction/InteractionBehavior : dev.
     abstract fun withStrategy(dev.kord.core.supplier/EntitySupplyStrategy<*>): dev.kord.core.behavior.interaction/InteractionBehavior // dev.kord.core.behavior.interaction/InteractionBehavior.withStrategy|withStrategy(dev.kord.core.supplier.EntitySupplyStrategy<*>){}[0]
     open suspend fun getChannel(): dev.kord.core.entity.channel/MessageChannel // dev.kord.core.behavior.interaction/InteractionBehavior.getChannel|getChannel(){}[0]
     open suspend fun getChannelOrNull(): dev.kord.core.entity.channel/MessageChannel? // dev.kord.core.behavior.interaction/InteractionBehavior.getChannelOrNull|getChannelOrNull(){}[0]
+    open suspend fun openActivity() // dev.kord.core.behavior.interaction/InteractionBehavior.openActivity|openActivity(){}[0]
 }
 
 abstract interface dev.kord.core.behavior.interaction/ModalParentInteractionBehavior : dev.kord.core.behavior.interaction/ActionInteractionBehavior { // dev.kord.core.behavior.interaction/ModalParentInteractionBehavior|null[0]
@@ -1096,7 +1097,6 @@ sealed interface dev.kord.core.behavior.interaction.response/InteractionResponse
     abstract fun withStrategy(dev.kord.core.supplier/EntitySupplyStrategy<*>): dev.kord.core.behavior.interaction.response/InteractionResponseBehavior // dev.kord.core.behavior.interaction.response/InteractionResponseBehavior.withStrategy|withStrategy(dev.kord.core.supplier.EntitySupplyStrategy<*>){}[0]
     open suspend fun getFollowupMessage(dev.kord.common.entity/Snowflake): dev.kord.core.entity.interaction.followup/FollowupMessage // dev.kord.core.behavior.interaction.response/InteractionResponseBehavior.getFollowupMessage|getFollowupMessage(dev.kord.common.entity.Snowflake){}[0]
     open suspend fun getFollowupMessageOrNull(dev.kord.common.entity/Snowflake): dev.kord.core.entity.interaction.followup/FollowupMessage? // dev.kord.core.behavior.interaction.response/InteractionResponseBehavior.getFollowupMessageOrNull|getFollowupMessageOrNull(dev.kord.common.entity.Snowflake){}[0]
-    open suspend fun openActivity() // dev.kord.core.behavior.interaction.response/InteractionResponseBehavior.openActivity|openActivity(){}[0]
 }
 
 sealed interface dev.kord.core.behavior.interaction.response/PublicInteractionResponseBehavior : dev.kord.core.behavior.interaction.response/InteractionResponseBehavior { // dev.kord.core.behavior.interaction.response/PublicInteractionResponseBehavior|null[0]

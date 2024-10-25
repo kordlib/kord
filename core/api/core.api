@@ -1792,6 +1792,7 @@ public final class dev/kord/core/behavior/interaction/ActionInteractionBehavior$
 	public static fun getChannelOrNull (Ldev/kord/core/behavior/interaction/ActionInteractionBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun getOriginalInteractionResponse (Ldev/kord/core/behavior/interaction/ActionInteractionBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun getOriginalInteractionResponseOrNull (Ldev/kord/core/behavior/interaction/ActionInteractionBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static fun openActivity (Ldev/kord/core/behavior/interaction/ActionInteractionBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun withStrategy (Ldev/kord/core/behavior/interaction/ActionInteractionBehavior;Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/ActionInteractionBehavior;
 }
 
@@ -1817,6 +1818,7 @@ public final class dev/kord/core/behavior/interaction/ApplicationCommandInteract
 	public static fun getChannelOrNull (Ldev/kord/core/behavior/interaction/ApplicationCommandInteractionBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun getOriginalInteractionResponse (Ldev/kord/core/behavior/interaction/ApplicationCommandInteractionBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun getOriginalInteractionResponseOrNull (Ldev/kord/core/behavior/interaction/ApplicationCommandInteractionBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static fun openActivity (Ldev/kord/core/behavior/interaction/ApplicationCommandInteractionBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun withStrategy (Ldev/kord/core/behavior/interaction/ApplicationCommandInteractionBehavior;Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/ApplicationCommandInteractionBehavior;
 }
 
@@ -1829,6 +1831,7 @@ public final class dev/kord/core/behavior/interaction/AutoCompleteInteractionBeh
 	public static fun getChannel (Ldev/kord/core/behavior/interaction/AutoCompleteInteractionBehavior;)Ldev/kord/core/behavior/channel/MessageChannelBehavior;
 	public static fun getChannel (Ldev/kord/core/behavior/interaction/AutoCompleteInteractionBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun getChannelOrNull (Ldev/kord/core/behavior/interaction/AutoCompleteInteractionBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static fun openActivity (Ldev/kord/core/behavior/interaction/AutoCompleteInteractionBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class dev/kord/core/behavior/interaction/AutoCompleteInteractionBehaviorKt {
@@ -1857,6 +1860,7 @@ public final class dev/kord/core/behavior/interaction/ComponentInteractionBehavi
 	public static fun getChannelOrNull (Ldev/kord/core/behavior/interaction/ComponentInteractionBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun getOriginalInteractionResponse (Ldev/kord/core/behavior/interaction/ComponentInteractionBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun getOriginalInteractionResponseOrNull (Ldev/kord/core/behavior/interaction/ComponentInteractionBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static fun openActivity (Ldev/kord/core/behavior/interaction/ComponentInteractionBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun withStrategy (Ldev/kord/core/behavior/interaction/ComponentInteractionBehavior;Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/ComponentInteractionBehavior;
 }
 
@@ -1876,6 +1880,7 @@ public final class dev/kord/core/behavior/interaction/DataInteractionBehavior$De
 	public static fun getChannel (Ldev/kord/core/behavior/interaction/DataInteractionBehavior;)Ldev/kord/core/behavior/channel/MessageChannelBehavior;
 	public static fun getChannel (Ldev/kord/core/behavior/interaction/DataInteractionBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun getChannelOrNull (Ldev/kord/core/behavior/interaction/DataInteractionBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static fun openActivity (Ldev/kord/core/behavior/interaction/DataInteractionBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public abstract interface class dev/kord/core/behavior/interaction/GlobalInteractionBehavior : dev/kord/core/behavior/interaction/InteractionBehavior {
@@ -1887,6 +1892,7 @@ public final class dev/kord/core/behavior/interaction/GlobalInteractionBehavior$
 	public static fun getChannel (Ldev/kord/core/behavior/interaction/GlobalInteractionBehavior;)Ldev/kord/core/behavior/channel/MessageChannelBehavior;
 	public static fun getChannel (Ldev/kord/core/behavior/interaction/GlobalInteractionBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun getChannelOrNull (Ldev/kord/core/behavior/interaction/GlobalInteractionBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static fun openActivity (Ldev/kord/core/behavior/interaction/GlobalInteractionBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public abstract interface class dev/kord/core/behavior/interaction/GuildInteractionBehavior : dev/kord/core/behavior/interaction/InteractionBehavior {
@@ -1908,6 +1914,7 @@ public final class dev/kord/core/behavior/interaction/GuildInteractionBehavior$D
 	public static fun getGuild (Ldev/kord/core/behavior/interaction/GuildInteractionBehavior;)Ldev/kord/core/behavior/GuildBehavior;
 	public static fun getGuild (Ldev/kord/core/behavior/interaction/GuildInteractionBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun getGuildOrNull (Ldev/kord/core/behavior/interaction/GuildInteractionBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static fun openActivity (Ldev/kord/core/behavior/interaction/GuildInteractionBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun withStrategy (Ldev/kord/core/behavior/interaction/GuildInteractionBehavior;Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/GuildInteractionBehavior;
 }
 
@@ -1923,6 +1930,7 @@ public abstract interface class dev/kord/core/behavior/interaction/InteractionBe
 	public abstract fun getChannelId ()Ldev/kord/common/entity/Snowflake;
 	public abstract fun getChannelOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun getToken ()Ljava/lang/String;
+	public abstract fun openActivity (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/InteractionBehavior;
 }
 
@@ -1931,6 +1939,7 @@ public final class dev/kord/core/behavior/interaction/InteractionBehavior$Defaul
 	public static fun getChannel (Ldev/kord/core/behavior/interaction/InteractionBehavior;)Ldev/kord/core/behavior/channel/MessageChannelBehavior;
 	public static fun getChannel (Ldev/kord/core/behavior/interaction/InteractionBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun getChannelOrNull (Ldev/kord/core/behavior/interaction/InteractionBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static fun openActivity (Ldev/kord/core/behavior/interaction/InteractionBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public abstract interface class dev/kord/core/behavior/interaction/ModalParentInteractionBehavior : dev/kord/core/behavior/interaction/ActionInteractionBehavior {
@@ -1948,6 +1957,7 @@ public final class dev/kord/core/behavior/interaction/ModalParentInteractionBeha
 	public static fun getChannelOrNull (Ldev/kord/core/behavior/interaction/ModalParentInteractionBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun getOriginalInteractionResponse (Ldev/kord/core/behavior/interaction/ModalParentInteractionBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun getOriginalInteractionResponseOrNull (Ldev/kord/core/behavior/interaction/ModalParentInteractionBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static fun openActivity (Ldev/kord/core/behavior/interaction/ModalParentInteractionBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class dev/kord/core/behavior/interaction/ModalParentInteractionBehaviorKt {
@@ -2027,7 +2037,6 @@ public final class dev/kord/core/behavior/interaction/response/DeferredEphemeral
 	public static fun delete (Ldev/kord/core/behavior/interaction/response/DeferredEphemeralMessageInteractionResponseBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun getFollowupMessage (Ldev/kord/core/behavior/interaction/response/DeferredEphemeralMessageInteractionResponseBehavior;Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun getFollowupMessageOrNull (Ldev/kord/core/behavior/interaction/response/DeferredEphemeralMessageInteractionResponseBehavior;Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static fun openActivity (Ldev/kord/core/behavior/interaction/response/DeferredEphemeralMessageInteractionResponseBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun withStrategy (Ldev/kord/core/behavior/interaction/response/DeferredEphemeralMessageInteractionResponseBehavior;Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/response/DeferredEphemeralMessageInteractionResponseBehavior;
 }
 
@@ -2040,7 +2049,6 @@ public final class dev/kord/core/behavior/interaction/response/DeferredMessageIn
 	public static fun delete (Ldev/kord/core/behavior/interaction/response/DeferredMessageInteractionResponseBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun getFollowupMessage (Ldev/kord/core/behavior/interaction/response/DeferredMessageInteractionResponseBehavior;Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun getFollowupMessageOrNull (Ldev/kord/core/behavior/interaction/response/DeferredMessageInteractionResponseBehavior;Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static fun openActivity (Ldev/kord/core/behavior/interaction/response/DeferredMessageInteractionResponseBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class dev/kord/core/behavior/interaction/response/DeferredMessageInteractionResponseBehaviorKt {
@@ -2055,7 +2063,6 @@ public final class dev/kord/core/behavior/interaction/response/DeferredPublicMes
 	public static fun delete (Ldev/kord/core/behavior/interaction/response/DeferredPublicMessageInteractionResponseBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun getFollowupMessage (Ldev/kord/core/behavior/interaction/response/DeferredPublicMessageInteractionResponseBehavior;Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun getFollowupMessageOrNull (Ldev/kord/core/behavior/interaction/response/DeferredPublicMessageInteractionResponseBehavior;Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static fun openActivity (Ldev/kord/core/behavior/interaction/response/DeferredPublicMessageInteractionResponseBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun withStrategy (Ldev/kord/core/behavior/interaction/response/DeferredPublicMessageInteractionResponseBehavior;Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/response/DeferredPublicMessageInteractionResponseBehavior;
 }
 
@@ -2079,7 +2086,6 @@ public abstract interface class dev/kord/core/behavior/interaction/response/Ephe
 public final class dev/kord/core/behavior/interaction/response/EphemeralInteractionResponseBehavior$DefaultImpls {
 	public static fun getFollowupMessage (Ldev/kord/core/behavior/interaction/response/EphemeralInteractionResponseBehavior;Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun getFollowupMessageOrNull (Ldev/kord/core/behavior/interaction/response/EphemeralInteractionResponseBehavior;Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static fun openActivity (Ldev/kord/core/behavior/interaction/response/EphemeralInteractionResponseBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public abstract interface class dev/kord/core/behavior/interaction/response/EphemeralMessageInteractionResponseBehavior : dev/kord/core/behavior/interaction/response/EphemeralInteractionResponseBehavior, dev/kord/core/behavior/interaction/response/MessageInteractionResponseBehavior {
@@ -2090,7 +2096,6 @@ public final class dev/kord/core/behavior/interaction/response/EphemeralMessageI
 	public static fun delete (Ldev/kord/core/behavior/interaction/response/EphemeralMessageInteractionResponseBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun getFollowupMessage (Ldev/kord/core/behavior/interaction/response/EphemeralMessageInteractionResponseBehavior;Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun getFollowupMessageOrNull (Ldev/kord/core/behavior/interaction/response/EphemeralMessageInteractionResponseBehavior;Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static fun openActivity (Ldev/kord/core/behavior/interaction/response/EphemeralMessageInteractionResponseBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun withStrategy (Ldev/kord/core/behavior/interaction/response/EphemeralMessageInteractionResponseBehavior;Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/response/EphemeralMessageInteractionResponseBehavior;
 }
 
@@ -2107,7 +2112,6 @@ public abstract interface class dev/kord/core/behavior/interaction/response/Foll
 public final class dev/kord/core/behavior/interaction/response/FollowupPermittingInteractionResponseBehavior$DefaultImpls {
 	public static fun getFollowupMessage (Ldev/kord/core/behavior/interaction/response/FollowupPermittingInteractionResponseBehavior;Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun getFollowupMessageOrNull (Ldev/kord/core/behavior/interaction/response/FollowupPermittingInteractionResponseBehavior;Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static fun openActivity (Ldev/kord/core/behavior/interaction/response/FollowupPermittingInteractionResponseBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun withStrategy (Ldev/kord/core/behavior/interaction/response/FollowupPermittingInteractionResponseBehavior;Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/response/FollowupPermittingInteractionResponseBehavior;
 }
 
@@ -2123,14 +2127,12 @@ public abstract interface class dev/kord/core/behavior/interaction/response/Inte
 	public abstract fun getFollowupMessage (Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun getFollowupMessageOrNull (Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun getToken ()Ljava/lang/String;
-	public abstract fun openActivity (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/response/InteractionResponseBehavior;
 }
 
 public final class dev/kord/core/behavior/interaction/response/InteractionResponseBehavior$DefaultImpls {
 	public static fun getFollowupMessage (Ldev/kord/core/behavior/interaction/response/InteractionResponseBehavior;Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun getFollowupMessageOrNull (Ldev/kord/core/behavior/interaction/response/InteractionResponseBehavior;Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static fun openActivity (Ldev/kord/core/behavior/interaction/response/InteractionResponseBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public abstract interface class dev/kord/core/behavior/interaction/response/MessageInteractionResponseBehavior : dev/kord/core/behavior/interaction/response/FollowupPermittingInteractionResponseBehavior {
@@ -2142,7 +2144,6 @@ public final class dev/kord/core/behavior/interaction/response/MessageInteractio
 	public static fun delete (Ldev/kord/core/behavior/interaction/response/MessageInteractionResponseBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun getFollowupMessage (Ldev/kord/core/behavior/interaction/response/MessageInteractionResponseBehavior;Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun getFollowupMessageOrNull (Ldev/kord/core/behavior/interaction/response/MessageInteractionResponseBehavior;Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static fun openActivity (Ldev/kord/core/behavior/interaction/response/MessageInteractionResponseBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class dev/kord/core/behavior/interaction/response/MessageInteractionResponseBehaviorKt {
@@ -2156,7 +2157,6 @@ public abstract interface class dev/kord/core/behavior/interaction/response/Popu
 public final class dev/kord/core/behavior/interaction/response/PopupInteractionResponseBehavior$DefaultImpls {
 	public static fun getFollowupMessage (Ldev/kord/core/behavior/interaction/response/PopupInteractionResponseBehavior;Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun getFollowupMessageOrNull (Ldev/kord/core/behavior/interaction/response/PopupInteractionResponseBehavior;Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static fun openActivity (Ldev/kord/core/behavior/interaction/response/PopupInteractionResponseBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun withStrategy (Ldev/kord/core/behavior/interaction/response/PopupInteractionResponseBehavior;Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/response/PopupInteractionResponseBehavior;
 }
 
@@ -2172,7 +2172,6 @@ public abstract interface class dev/kord/core/behavior/interaction/response/Publ
 public final class dev/kord/core/behavior/interaction/response/PublicInteractionResponseBehavior$DefaultImpls {
 	public static fun getFollowupMessage (Ldev/kord/core/behavior/interaction/response/PublicInteractionResponseBehavior;Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun getFollowupMessageOrNull (Ldev/kord/core/behavior/interaction/response/PublicInteractionResponseBehavior;Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static fun openActivity (Ldev/kord/core/behavior/interaction/response/PublicInteractionResponseBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class dev/kord/core/behavior/interaction/response/PublicMesageInteractionResponseBehaviorKt {
@@ -2189,7 +2188,6 @@ public final class dev/kord/core/behavior/interaction/response/PublicMessageInte
 	public static fun delete (Ldev/kord/core/behavior/interaction/response/PublicMessageInteractionResponseBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun getFollowupMessage (Ldev/kord/core/behavior/interaction/response/PublicMessageInteractionResponseBehavior;Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun getFollowupMessageOrNull (Ldev/kord/core/behavior/interaction/response/PublicMessageInteractionResponseBehavior;Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static fun openActivity (Ldev/kord/core/behavior/interaction/response/PublicMessageInteractionResponseBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun withStrategy (Ldev/kord/core/behavior/interaction/response/PublicMessageInteractionResponseBehavior;Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/response/PublicMessageInteractionResponseBehavior;
 }
 
@@ -9469,6 +9467,7 @@ public final class dev/kord/core/entity/interaction/ActionInteraction$DefaultImp
 	public static fun getToken (Ldev/kord/core/entity/interaction/ActionInteraction;)Ljava/lang/String;
 	public static fun getType (Ldev/kord/core/entity/interaction/ActionInteraction;)Ldev/kord/common/entity/InteractionType;
 	public static fun getVersion (Ldev/kord/core/entity/interaction/ActionInteraction;)I
+	public static fun openActivity (Ldev/kord/core/entity/interaction/ActionInteraction;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public abstract interface class dev/kord/core/entity/interaction/ApplicationCommandInteraction : dev/kord/core/behavior/interaction/ApplicationCommandInteractionBehavior, dev/kord/core/entity/interaction/ActionInteraction {
@@ -9507,6 +9506,7 @@ public final class dev/kord/core/entity/interaction/ApplicationCommandInteractio
 	public static fun getToken (Ldev/kord/core/entity/interaction/ApplicationCommandInteraction;)Ljava/lang/String;
 	public static fun getType (Ldev/kord/core/entity/interaction/ApplicationCommandInteraction;)Ldev/kord/common/entity/InteractionType;
 	public static fun getVersion (Ldev/kord/core/entity/interaction/ApplicationCommandInteraction;)I
+	public static fun openActivity (Ldev/kord/core/entity/interaction/ApplicationCommandInteraction;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class dev/kord/core/entity/interaction/ApplicationCommandInteractionKt {
@@ -9550,6 +9550,7 @@ public final class dev/kord/core/entity/interaction/AutoCompleteInteraction$Defa
 	public static fun getToken (Ldev/kord/core/entity/interaction/AutoCompleteInteraction;)Ljava/lang/String;
 	public static fun getType (Ldev/kord/core/entity/interaction/AutoCompleteInteraction;)Ldev/kord/common/entity/InteractionType;
 	public static fun getVersion (Ldev/kord/core/entity/interaction/AutoCompleteInteraction;)I
+	public static fun openActivity (Ldev/kord/core/entity/interaction/AutoCompleteInteraction;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class dev/kord/core/entity/interaction/BooleanOptionValue : dev/kord/core/entity/interaction/OptionValue {
@@ -9593,6 +9594,7 @@ public final class dev/kord/core/entity/interaction/ButtonInteraction$DefaultImp
 	public static fun getToken (Ldev/kord/core/entity/interaction/ButtonInteraction;)Ljava/lang/String;
 	public static fun getType (Ldev/kord/core/entity/interaction/ButtonInteraction;)Ldev/kord/common/entity/InteractionType;
 	public static fun getVersion (Ldev/kord/core/entity/interaction/ButtonInteraction;)I
+	public static fun openActivity (Ldev/kord/core/entity/interaction/ButtonInteraction;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class dev/kord/core/entity/interaction/ChannelOptionValue : dev/kord/core/entity/interaction/ResolvableOptionValue {
@@ -9638,6 +9640,7 @@ public final class dev/kord/core/entity/interaction/ChatInputCommandInteraction$
 	public static fun getToken (Ldev/kord/core/entity/interaction/ChatInputCommandInteraction;)Ljava/lang/String;
 	public static fun getType (Ldev/kord/core/entity/interaction/ChatInputCommandInteraction;)Ldev/kord/common/entity/InteractionType;
 	public static fun getVersion (Ldev/kord/core/entity/interaction/ChatInputCommandInteraction;)I
+	public static fun openActivity (Ldev/kord/core/entity/interaction/ChatInputCommandInteraction;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public abstract interface class dev/kord/core/entity/interaction/ComponentInteraction : dev/kord/core/behavior/interaction/ComponentInteractionBehavior, dev/kord/core/behavior/interaction/ModalParentInteractionBehavior, dev/kord/core/entity/interaction/ActionInteraction {
@@ -9675,6 +9678,7 @@ public final class dev/kord/core/entity/interaction/ComponentInteraction$Default
 	public static fun getToken (Ldev/kord/core/entity/interaction/ComponentInteraction;)Ljava/lang/String;
 	public static fun getType (Ldev/kord/core/entity/interaction/ComponentInteraction;)Ldev/kord/common/entity/InteractionType;
 	public static fun getVersion (Ldev/kord/core/entity/interaction/ComponentInteraction;)I
+	public static fun openActivity (Ldev/kord/core/entity/interaction/ComponentInteraction;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class dev/kord/core/entity/interaction/ComponentInteractionKt {
@@ -9702,6 +9706,7 @@ public final class dev/kord/core/entity/interaction/DataInteraction$DefaultImpls
 	public static fun getToken (Ldev/kord/core/entity/interaction/DataInteraction;)Ljava/lang/String;
 	public static fun getType (Ldev/kord/core/entity/interaction/DataInteraction;)Ldev/kord/common/entity/InteractionType;
 	public static fun getVersion (Ldev/kord/core/entity/interaction/DataInteraction;)I
+	public static fun openActivity (Ldev/kord/core/entity/interaction/DataInteraction;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public abstract interface class dev/kord/core/entity/interaction/GlobalApplicationCommandInteraction : dev/kord/core/entity/interaction/ApplicationCommandInteraction, dev/kord/core/entity/interaction/GlobalInteraction {
@@ -9736,6 +9741,7 @@ public final class dev/kord/core/entity/interaction/GlobalApplicationCommandInte
 	public static fun getType (Ldev/kord/core/entity/interaction/GlobalApplicationCommandInteraction;)Ldev/kord/common/entity/InteractionType;
 	public static fun getUser (Ldev/kord/core/entity/interaction/GlobalApplicationCommandInteraction;)Ldev/kord/core/entity/User;
 	public static fun getVersion (Ldev/kord/core/entity/interaction/GlobalApplicationCommandInteraction;)I
+	public static fun openActivity (Ldev/kord/core/entity/interaction/GlobalApplicationCommandInteraction;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun withStrategy (Ldev/kord/core/entity/interaction/GlobalApplicationCommandInteraction;Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/interaction/GlobalApplicationCommandInteraction;
 }
 
@@ -9766,6 +9772,7 @@ public final class dev/kord/core/entity/interaction/GlobalAutoCompleteInteractio
 	public fun getUser ()Ldev/kord/core/entity/User;
 	public fun getVersion ()I
 	public fun hashCode ()I
+	public fun openActivity (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun toString ()Ljava/lang/String;
 	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/AutoCompleteInteractionBehavior;
 	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/DataInteractionBehavior;
@@ -9816,6 +9823,7 @@ public final class dev/kord/core/entity/interaction/GlobalButtonInteraction : de
 	public fun getUser ()Ldev/kord/core/entity/User;
 	public fun getVersion ()I
 	public fun hashCode ()I
+	public fun openActivity (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun toString ()Ljava/lang/String;
 	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/ActionInteractionBehavior;
 	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/ComponentInteractionBehavior;
@@ -9868,6 +9876,7 @@ public final class dev/kord/core/entity/interaction/GlobalChatInputCommandIntera
 	public fun getUser ()Ldev/kord/core/entity/User;
 	public fun getVersion ()I
 	public fun hashCode ()I
+	public fun openActivity (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun toString ()Ljava/lang/String;
 	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/ActionInteractionBehavior;
 	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/ApplicationCommandInteractionBehavior;
@@ -9916,6 +9925,7 @@ public final class dev/kord/core/entity/interaction/GlobalComponentInteraction$D
 	public static fun getType (Ldev/kord/core/entity/interaction/GlobalComponentInteraction;)Ldev/kord/common/entity/InteractionType;
 	public static fun getUser (Ldev/kord/core/entity/interaction/GlobalComponentInteraction;)Ldev/kord/core/entity/User;
 	public static fun getVersion (Ldev/kord/core/entity/interaction/GlobalComponentInteraction;)I
+	public static fun openActivity (Ldev/kord/core/entity/interaction/GlobalComponentInteraction;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public abstract interface class dev/kord/core/entity/interaction/GlobalInteraction : dev/kord/core/behavior/interaction/GlobalInteractionBehavior, dev/kord/core/entity/interaction/Interaction {
@@ -9940,6 +9950,7 @@ public final class dev/kord/core/entity/interaction/GlobalInteraction$DefaultImp
 	public static fun getType (Ldev/kord/core/entity/interaction/GlobalInteraction;)Ldev/kord/common/entity/InteractionType;
 	public static fun getUser (Ldev/kord/core/entity/interaction/GlobalInteraction;)Ldev/kord/core/entity/User;
 	public static fun getVersion (Ldev/kord/core/entity/interaction/GlobalInteraction;)I
+	public static fun openActivity (Ldev/kord/core/entity/interaction/GlobalInteraction;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class dev/kord/core/entity/interaction/GlobalMessageCommandInteraction : dev/kord/core/entity/interaction/GlobalApplicationCommandInteraction, dev/kord/core/entity/interaction/MessageCommandInteraction {
@@ -9982,6 +9993,7 @@ public final class dev/kord/core/entity/interaction/GlobalMessageCommandInteract
 	public fun getUser ()Ldev/kord/core/entity/User;
 	public fun getVersion ()I
 	public fun hashCode ()I
+	public fun openActivity (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun toString ()Ljava/lang/String;
 	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/ActionInteractionBehavior;
 	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/ApplicationCommandInteractionBehavior;
@@ -10035,6 +10047,7 @@ public final class dev/kord/core/entity/interaction/GlobalModalSubmitInteraction
 	public fun getUser ()Ldev/kord/core/entity/User;
 	public fun getVersion ()I
 	public fun hashCode ()I
+	public fun openActivity (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun toString ()Ljava/lang/String;
 	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/ActionInteractionBehavior;
 	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/ComponentInteractionBehavior;
@@ -10087,6 +10100,7 @@ public final class dev/kord/core/entity/interaction/GlobalSelectMenuInteraction 
 	public fun getValues ()Ljava/util/List;
 	public fun getVersion ()I
 	public fun hashCode ()I
+	public fun openActivity (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun toString ()Ljava/lang/String;
 	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/ActionInteractionBehavior;
 	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/ComponentInteractionBehavior;
@@ -10143,6 +10157,7 @@ public final class dev/kord/core/entity/interaction/GlobalUserCommandInteraction
 	public fun getUsers ()Ljava/util/Map;
 	public fun getVersion ()I
 	public fun hashCode ()I
+	public fun openActivity (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun toString ()Ljava/lang/String;
 	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/ActionInteractionBehavior;
 	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/ApplicationCommandInteractionBehavior;
@@ -10219,6 +10234,7 @@ public final class dev/kord/core/entity/interaction/GuildApplicationCommandInter
 	public static fun getType (Ldev/kord/core/entity/interaction/GuildApplicationCommandInteraction;)Ldev/kord/common/entity/InteractionType;
 	public static fun getUser (Ldev/kord/core/entity/interaction/GuildApplicationCommandInteraction;)Ldev/kord/core/entity/Member;
 	public static fun getVersion (Ldev/kord/core/entity/interaction/GuildApplicationCommandInteraction;)I
+	public static fun openActivity (Ldev/kord/core/entity/interaction/GuildApplicationCommandInteraction;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun withStrategy (Ldev/kord/core/entity/interaction/GuildApplicationCommandInteraction;Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/interaction/GuildApplicationCommandInteraction;
 }
 
@@ -10257,6 +10273,7 @@ public final class dev/kord/core/entity/interaction/GuildAutoCompleteInteraction
 	public synthetic fun getUser ()Ldev/kord/core/entity/User;
 	public fun getVersion ()I
 	public fun hashCode ()I
+	public fun openActivity (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun toString ()Ljava/lang/String;
 	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/AutoCompleteInteractionBehavior;
 	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/DataInteractionBehavior;
@@ -10315,6 +10332,7 @@ public final class dev/kord/core/entity/interaction/GuildButtonInteraction : dev
 	public synthetic fun getUser ()Ldev/kord/core/entity/User;
 	public fun getVersion ()I
 	public fun hashCode ()I
+	public fun openActivity (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun toString ()Ljava/lang/String;
 	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/ActionInteractionBehavior;
 	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/ComponentInteractionBehavior;
@@ -10375,6 +10393,7 @@ public final class dev/kord/core/entity/interaction/GuildChatInputCommandInterac
 	public synthetic fun getUser ()Ldev/kord/core/entity/User;
 	public fun getVersion ()I
 	public fun hashCode ()I
+	public fun openActivity (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun toString ()Ljava/lang/String;
 	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/ActionInteractionBehavior;
 	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/ApplicationCommandInteractionBehavior;
@@ -10429,6 +10448,7 @@ public final class dev/kord/core/entity/interaction/GuildComponentInteraction$De
 	public static fun getType (Ldev/kord/core/entity/interaction/GuildComponentInteraction;)Ldev/kord/common/entity/InteractionType;
 	public static fun getUser (Ldev/kord/core/entity/interaction/GuildComponentInteraction;)Ldev/kord/core/entity/Member;
 	public static fun getVersion (Ldev/kord/core/entity/interaction/GuildComponentInteraction;)I
+	public static fun openActivity (Ldev/kord/core/entity/interaction/GuildComponentInteraction;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public abstract interface class dev/kord/core/entity/interaction/GuildInteraction : dev/kord/core/behavior/interaction/GuildInteractionBehavior, dev/kord/core/entity/interaction/Interaction {
@@ -10462,6 +10482,7 @@ public final class dev/kord/core/entity/interaction/GuildInteraction$DefaultImpl
 	public static fun getType (Ldev/kord/core/entity/interaction/GuildInteraction;)Ldev/kord/common/entity/InteractionType;
 	public static fun getUser (Ldev/kord/core/entity/interaction/GuildInteraction;)Ldev/kord/core/entity/Member;
 	public static fun getVersion (Ldev/kord/core/entity/interaction/GuildInteraction;)I
+	public static fun openActivity (Ldev/kord/core/entity/interaction/GuildInteraction;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class dev/kord/core/entity/interaction/GuildMessageCommandInteraction : dev/kord/core/entity/interaction/GuildApplicationCommandInteraction, dev/kord/core/entity/interaction/MessageCommandInteraction {
@@ -10512,6 +10533,7 @@ public final class dev/kord/core/entity/interaction/GuildMessageCommandInteracti
 	public synthetic fun getUser ()Ldev/kord/core/entity/User;
 	public fun getVersion ()I
 	public fun hashCode ()I
+	public fun openActivity (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun toString ()Ljava/lang/String;
 	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/ActionInteractionBehavior;
 	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/ApplicationCommandInteractionBehavior;
@@ -10573,6 +10595,7 @@ public final class dev/kord/core/entity/interaction/GuildModalSubmitInteraction 
 	public synthetic fun getUser ()Ldev/kord/core/entity/User;
 	public fun getVersion ()I
 	public fun hashCode ()I
+	public fun openActivity (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun toString ()Ljava/lang/String;
 	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/ActionInteractionBehavior;
 	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/ComponentInteractionBehavior;
@@ -10633,6 +10656,7 @@ public final class dev/kord/core/entity/interaction/GuildSelectMenuInteraction :
 	public fun getValues ()Ljava/util/List;
 	public fun getVersion ()I
 	public fun hashCode ()I
+	public fun openActivity (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun toString ()Ljava/lang/String;
 	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/ActionInteractionBehavior;
 	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/ComponentInteractionBehavior;
@@ -10697,6 +10721,7 @@ public final class dev/kord/core/entity/interaction/GuildUserCommandInteraction 
 	public fun getUsers ()Ljava/util/Map;
 	public fun getVersion ()I
 	public fun hashCode ()I
+	public fun openActivity (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun toString ()Ljava/lang/String;
 	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/ActionInteractionBehavior;
 	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/ApplicationCommandInteractionBehavior;
@@ -10760,6 +10785,7 @@ public final class dev/kord/core/entity/interaction/Interaction$DefaultImpls {
 	public static fun getToken (Ldev/kord/core/entity/interaction/Interaction;)Ljava/lang/String;
 	public static fun getType (Ldev/kord/core/entity/interaction/Interaction;)Ldev/kord/common/entity/InteractionType;
 	public static fun getVersion (Ldev/kord/core/entity/interaction/Interaction;)I
+	public static fun openActivity (Ldev/kord/core/entity/interaction/Interaction;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public abstract interface class dev/kord/core/entity/interaction/InteractionCommand : dev/kord/core/KordObject {
@@ -10858,6 +10884,7 @@ public final class dev/kord/core/entity/interaction/MessageCommandInteraction$De
 	public static fun getToken (Ldev/kord/core/entity/interaction/MessageCommandInteraction;)Ljava/lang/String;
 	public static fun getType (Ldev/kord/core/entity/interaction/MessageCommandInteraction;)Ldev/kord/common/entity/InteractionType;
 	public static fun getVersion (Ldev/kord/core/entity/interaction/MessageCommandInteraction;)I
+	public static fun openActivity (Ldev/kord/core/entity/interaction/MessageCommandInteraction;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public abstract interface class dev/kord/core/entity/interaction/ModalSubmitInteraction : dev/kord/core/behavior/interaction/ComponentInteractionBehavior, dev/kord/core/entity/interaction/ActionInteraction {
@@ -10896,6 +10923,7 @@ public final class dev/kord/core/entity/interaction/ModalSubmitInteraction$Defau
 	public static fun getToken (Ldev/kord/core/entity/interaction/ModalSubmitInteraction;)Ljava/lang/String;
 	public static fun getType (Ldev/kord/core/entity/interaction/ModalSubmitInteraction;)Ldev/kord/common/entity/InteractionType;
 	public static fun getVersion (Ldev/kord/core/entity/interaction/ModalSubmitInteraction;)I
+	public static fun openActivity (Ldev/kord/core/entity/interaction/ModalSubmitInteraction;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class dev/kord/core/entity/interaction/ModalSubmitInteractionKt {
@@ -11005,6 +11033,7 @@ public final class dev/kord/core/entity/interaction/SelectMenuInteraction$Defaul
 	public static fun getType (Ldev/kord/core/entity/interaction/SelectMenuInteraction;)Ldev/kord/common/entity/InteractionType;
 	public static fun getValues (Ldev/kord/core/entity/interaction/SelectMenuInteraction;)Ljava/util/List;
 	public static fun getVersion (Ldev/kord/core/entity/interaction/SelectMenuInteraction;)I
+	public static fun openActivity (Ldev/kord/core/entity/interaction/SelectMenuInteraction;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class dev/kord/core/entity/interaction/StringOptionValue : dev/kord/core/entity/interaction/OptionValue {
@@ -11077,6 +11106,7 @@ public final class dev/kord/core/entity/interaction/UserCommandInteraction$Defau
 	public static fun getType (Ldev/kord/core/entity/interaction/UserCommandInteraction;)Ldev/kord/common/entity/InteractionType;
 	public static fun getUsers (Ldev/kord/core/entity/interaction/UserCommandInteraction;)Ljava/util/Map;
 	public static fun getVersion (Ldev/kord/core/entity/interaction/UserCommandInteraction;)I
+	public static fun openActivity (Ldev/kord/core/entity/interaction/UserCommandInteraction;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public class dev/kord/core/entity/interaction/UserOptionValue : dev/kord/core/entity/interaction/ResolvableOptionValue {
@@ -11158,7 +11188,6 @@ public abstract class dev/kord/core/entity/interaction/response/MessageInteracti
 	public fun getFollowupMessage (Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getFollowupMessageOrNull (Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun getMessage ()Ldev/kord/core/entity/Message;
-	public fun openActivity (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/interaction/response/MessageInteractionResponse;
 }
 
