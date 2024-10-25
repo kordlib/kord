@@ -9339,6 +9339,7 @@ public final class dev/kord/common/entity/optional/Optional$Companion {
 	public final fun invoke ()Ldev/kord/common/entity/optional/Optional$Missing;
 	public final fun invoke (Ljava/lang/Object;)Ldev/kord/common/entity/optional/Optional$Value;
 	public final fun invokeNullable (Ljava/lang/Object;)Ldev/kord/common/entity/optional/Optional;
+	public final fun missingOnEmpty (Ldev/kord/common/entity/optional/Optional;)Ldev/kord/common/entity/optional/Optional;
 	public final fun missingOnEmpty (Ljava/util/Collection;)Ldev/kord/common/entity/optional/Optional;
 	public final fun serializer (Lkotlinx/serialization/KSerializer;)Lkotlinx/serialization/KSerializer;
 }
