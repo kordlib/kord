@@ -46,16 +46,5 @@ public sealed interface InteractionResponseBehavior : KordObject, Strategizable 
     public suspend fun getFollowupMessage(messageId: Snowflake): FollowupMessage =
         supplier.getFollowupMessage(applicationId, token, messageId)
 
-    /**
-     * Opens the [Activity](https://discord.com/developers/docs/activities/overview) of this application.
-     * **Note:** This requires activities to be enabled for this application
-     */
-    public suspend fun openActivity() {
-        kord.rest.interaction.createInteractionResponse(
-            applicationId, token,
-            InteractionResponseCreateRequest(InteractionResponseType.LaunchActivity)
-        )
-    }
-
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): InteractionResponseBehavior
 }
