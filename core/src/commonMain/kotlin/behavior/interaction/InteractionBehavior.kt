@@ -33,7 +33,7 @@ public interface InteractionBehavior : KordEntity, Strategizable {
      */
     public suspend fun openActivity() {
         kord.rest.interaction.createInteractionResponse(
-            applicationId, token,
+            id, token,
             InteractionResponseCreateRequest(InteractionResponseType.LaunchActivity)
         )
     }
