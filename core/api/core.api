@@ -15,20 +15,20 @@ public final class dev/kord/core/Kord : kotlinx/coroutines/CoroutineScope {
 	public final fun createGlobalApplicationCommands (Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun createGlobalChatInputCommand (Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static synthetic fun createGlobalChatInputCommand$default (Ldev/kord/core/Kord;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
-	public final fun createGlobalEntryPointCommand (Ljava/lang/String;Ljava/lang/String;Ldev/kord/common/entity/EntryPointCommandHandlerType;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static synthetic fun createGlobalEntryPointCommand$default (Ldev/kord/core/Kord;Ljava/lang/String;Ljava/lang/String;Ldev/kord/common/entity/EntryPointCommandHandlerType;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public final fun createGlobalMessageCommand (Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static synthetic fun createGlobalMessageCommand$default (Ldev/kord/core/Kord;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+	public final fun createGlobalPrimaryEntryPointCommand (Ljava/lang/String;Ljava/lang/String;Ldev/kord/common/entity/PrimaryEntryPointCommandHandlerType;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static synthetic fun createGlobalPrimaryEntryPointCommand$default (Ldev/kord/core/Kord;Ljava/lang/String;Ljava/lang/String;Ldev/kord/common/entity/PrimaryEntryPointCommandHandlerType;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public final fun createGlobalUserCommand (Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static synthetic fun createGlobalUserCommand$default (Ldev/kord/core/Kord;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public final fun createGuild (Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun createGuildApplicationCommands (Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun createGuildChatInputCommand (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static synthetic fun createGuildChatInputCommand$default (Ldev/kord/core/Kord;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
-	public final fun createGuildEntryPointCommand (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ljava/lang/String;Ldev/kord/common/entity/EntryPointCommandHandlerType;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static synthetic fun createGuildEntryPointCommand$default (Ldev/kord/core/Kord;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ljava/lang/String;Ldev/kord/common/entity/EntryPointCommandHandlerType;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public final fun createGuildMessageCommand (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static synthetic fun createGuildMessageCommand$default (Ldev/kord/core/Kord;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+	public final fun createGuildPrimaryEntryPointCommand (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ljava/lang/String;Ldev/kord/common/entity/PrimaryEntryPointCommandHandlerType;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static synthetic fun createGuildPrimaryEntryPointCommand$default (Ldev/kord/core/Kord;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ljava/lang/String;Ldev/kord/common/entity/PrimaryEntryPointCommandHandlerType;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public final fun createGuildUserCommand (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static synthetic fun createGuildUserCommand$default (Ldev/kord/core/Kord;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public final fun editPresence (Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -1778,6 +1778,7 @@ public abstract interface class dev/kord/core/behavior/interaction/ActionInterac
 	public abstract fun deferPublicResponseUnsafe (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun getOriginalInteractionResponse (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun getOriginalInteractionResponseOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun openActivity (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/ActionInteractionBehavior;
 }
 
@@ -1831,7 +1832,6 @@ public final class dev/kord/core/behavior/interaction/AutoCompleteInteractionBeh
 	public static fun getChannel (Ldev/kord/core/behavior/interaction/AutoCompleteInteractionBehavior;)Ldev/kord/core/behavior/channel/MessageChannelBehavior;
 	public static fun getChannel (Ldev/kord/core/behavior/interaction/AutoCompleteInteractionBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun getChannelOrNull (Ldev/kord/core/behavior/interaction/AutoCompleteInteractionBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static fun openActivity (Ldev/kord/core/behavior/interaction/AutoCompleteInteractionBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class dev/kord/core/behavior/interaction/AutoCompleteInteractionBehaviorKt {
@@ -1880,7 +1880,6 @@ public final class dev/kord/core/behavior/interaction/DataInteractionBehavior$De
 	public static fun getChannel (Ldev/kord/core/behavior/interaction/DataInteractionBehavior;)Ldev/kord/core/behavior/channel/MessageChannelBehavior;
 	public static fun getChannel (Ldev/kord/core/behavior/interaction/DataInteractionBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun getChannelOrNull (Ldev/kord/core/behavior/interaction/DataInteractionBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static fun openActivity (Ldev/kord/core/behavior/interaction/DataInteractionBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public abstract interface class dev/kord/core/behavior/interaction/GlobalInteractionBehavior : dev/kord/core/behavior/interaction/InteractionBehavior {
@@ -1892,7 +1891,6 @@ public final class dev/kord/core/behavior/interaction/GlobalInteractionBehavior$
 	public static fun getChannel (Ldev/kord/core/behavior/interaction/GlobalInteractionBehavior;)Ldev/kord/core/behavior/channel/MessageChannelBehavior;
 	public static fun getChannel (Ldev/kord/core/behavior/interaction/GlobalInteractionBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun getChannelOrNull (Ldev/kord/core/behavior/interaction/GlobalInteractionBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static fun openActivity (Ldev/kord/core/behavior/interaction/GlobalInteractionBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public abstract interface class dev/kord/core/behavior/interaction/GuildInteractionBehavior : dev/kord/core/behavior/interaction/InteractionBehavior {
@@ -1914,7 +1912,6 @@ public final class dev/kord/core/behavior/interaction/GuildInteractionBehavior$D
 	public static fun getGuild (Ldev/kord/core/behavior/interaction/GuildInteractionBehavior;)Ldev/kord/core/behavior/GuildBehavior;
 	public static fun getGuild (Ldev/kord/core/behavior/interaction/GuildInteractionBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun getGuildOrNull (Ldev/kord/core/behavior/interaction/GuildInteractionBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static fun openActivity (Ldev/kord/core/behavior/interaction/GuildInteractionBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun withStrategy (Ldev/kord/core/behavior/interaction/GuildInteractionBehavior;Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/GuildInteractionBehavior;
 }
 
@@ -1930,7 +1927,6 @@ public abstract interface class dev/kord/core/behavior/interaction/InteractionBe
 	public abstract fun getChannelId ()Ldev/kord/common/entity/Snowflake;
 	public abstract fun getChannelOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun getToken ()Ljava/lang/String;
-	public abstract fun openActivity (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/InteractionBehavior;
 }
 
@@ -1939,7 +1935,6 @@ public final class dev/kord/core/behavior/interaction/InteractionBehavior$Defaul
 	public static fun getChannel (Ldev/kord/core/behavior/interaction/InteractionBehavior;)Ldev/kord/core/behavior/channel/MessageChannelBehavior;
 	public static fun getChannel (Ldev/kord/core/behavior/interaction/InteractionBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun getChannelOrNull (Ldev/kord/core/behavior/interaction/InteractionBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static fun openActivity (Ldev/kord/core/behavior/interaction/InteractionBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public abstract interface class dev/kord/core/behavior/interaction/ModalParentInteractionBehavior : dev/kord/core/behavior/interaction/ActionInteractionBehavior {
@@ -7565,22 +7560,6 @@ public final class dev/kord/core/entity/application/ChatInputSubCommand {
 	public final fun getParameters ()Ljava/util/Map;
 }
 
-public abstract interface class dev/kord/core/entity/application/EntryPointCommand : dev/kord/core/behavior/EntryPointCommandBehavior, dev/kord/core/entity/application/ApplicationCommand {
-}
-
-public final class dev/kord/core/entity/application/EntryPointCommand$DefaultImpls {
-	public static fun compareTo (Ldev/kord/core/entity/application/EntryPointCommand;Ldev/kord/core/entity/Entity;)I
-	public static fun getApplicationId (Ldev/kord/core/entity/application/EntryPointCommand;)Ldev/kord/common/entity/Snowflake;
-	public static fun getDefaultMemberPermissions (Ldev/kord/core/entity/application/EntryPointCommand;)Ldev/kord/common/entity/Permissions;
-	public static fun getDefaultPermission (Ldev/kord/core/entity/application/EntryPointCommand;)Ljava/lang/Boolean;
-	public static fun getId (Ldev/kord/core/entity/application/EntryPointCommand;)Ldev/kord/common/entity/Snowflake;
-	public static fun getName (Ldev/kord/core/entity/application/EntryPointCommand;)Ljava/lang/String;
-	public static fun getNameLocalizations (Ldev/kord/core/entity/application/EntryPointCommand;)Ljava/util/Map;
-	public static fun getType (Ldev/kord/core/entity/application/EntryPointCommand;)Ldev/kord/common/entity/ApplicationCommandType;
-	public static fun getVersion (Ldev/kord/core/entity/application/EntryPointCommand;)Ldev/kord/common/entity/Snowflake;
-	public static fun isNsfw (Ldev/kord/core/entity/application/EntryPointCommand;)Z
-}
-
 public abstract interface class dev/kord/core/entity/application/GlobalApplicationCommand : dev/kord/core/behavior/GlobalApplicationCommandBehavior, dev/kord/core/entity/application/ApplicationCommand {
 	public abstract fun getDmPermission ()Z
 }
@@ -7624,7 +7603,7 @@ public final class dev/kord/core/entity/application/GlobalChatInputCommand : dev
 	public fun isNsfw ()Z
 }
 
-public final class dev/kord/core/entity/application/GlobalEntryPointCommand : dev/kord/core/behavior/GlobalEntryPointCommandBehavior, dev/kord/core/entity/application/EntryPointCommand, dev/kord/core/entity/application/GlobalApplicationCommand {
+public final class dev/kord/core/entity/application/GlobalMessageCommand : dev/kord/core/behavior/GlobalMessageCommandBehavior, dev/kord/core/entity/application/GlobalApplicationCommand, dev/kord/core/entity/application/MessageCommand {
 	public fun <init> (Ldev/kord/core/cache/data/ApplicationCommandData;Ldev/kord/rest/service/InteractionService;)V
 	public fun compareTo (Ldev/kord/core/entity/Entity;)I
 	public synthetic fun compareTo (Ljava/lang/Object;)I
@@ -7644,7 +7623,7 @@ public final class dev/kord/core/entity/application/GlobalEntryPointCommand : de
 	public fun isNsfw ()Z
 }
 
-public final class dev/kord/core/entity/application/GlobalMessageCommand : dev/kord/core/behavior/GlobalMessageCommandBehavior, dev/kord/core/entity/application/GlobalApplicationCommand, dev/kord/core/entity/application/MessageCommand {
+public final class dev/kord/core/entity/application/GlobalPrimaryEntryPointCommand : dev/kord/core/behavior/GlobalEntryPointCommandBehavior, dev/kord/core/entity/application/GlobalApplicationCommand, dev/kord/core/entity/application/PrimaryEntryPointCommand {
 	public fun <init> (Ldev/kord/core/cache/data/ApplicationCommandData;Ldev/kord/rest/service/InteractionService;)V
 	public fun compareTo (Ldev/kord/core/entity/Entity;)I
 	public synthetic fun compareTo (Ljava/lang/Object;)I
@@ -7733,7 +7712,7 @@ public final class dev/kord/core/entity/application/GuildChatInputCommand : dev/
 	public fun isNsfw ()Z
 }
 
-public final class dev/kord/core/entity/application/GuildEntryPointCommand : dev/kord/core/behavior/GuildEntryPointCommandBehavior, dev/kord/core/entity/application/EntryPointCommand, dev/kord/core/entity/application/GuildApplicationCommand {
+public final class dev/kord/core/entity/application/GuildMessageCommand : dev/kord/core/behavior/GuildMessageCommandBehavior, dev/kord/core/entity/application/GuildApplicationCommand, dev/kord/core/entity/application/MessageCommand {
 	public fun <init> (Ldev/kord/core/cache/data/ApplicationCommandData;Ldev/kord/rest/service/InteractionService;)V
 	public fun compareTo (Ldev/kord/core/entity/Entity;)I
 	public synthetic fun compareTo (Ljava/lang/Object;)I
@@ -7753,7 +7732,7 @@ public final class dev/kord/core/entity/application/GuildEntryPointCommand : dev
 	public fun isNsfw ()Z
 }
 
-public final class dev/kord/core/entity/application/GuildMessageCommand : dev/kord/core/behavior/GuildMessageCommandBehavior, dev/kord/core/entity/application/GuildApplicationCommand, dev/kord/core/entity/application/MessageCommand {
+public final class dev/kord/core/entity/application/GuildPrimaryEntryPointCommand : dev/kord/core/behavior/GuildEntryPointCommandBehavior, dev/kord/core/entity/application/GuildApplicationCommand, dev/kord/core/entity/application/PrimaryEntryPointCommand {
 	public fun <init> (Ldev/kord/core/cache/data/ApplicationCommandData;Ldev/kord/rest/service/InteractionService;)V
 	public fun compareTo (Ldev/kord/core/entity/Entity;)I
 	public synthetic fun compareTo (Ljava/lang/Object;)I
@@ -7807,6 +7786,22 @@ public final class dev/kord/core/entity/application/MessageCommand$DefaultImpls 
 	public static fun getType (Ldev/kord/core/entity/application/MessageCommand;)Ldev/kord/common/entity/ApplicationCommandType;
 	public static fun getVersion (Ldev/kord/core/entity/application/MessageCommand;)Ldev/kord/common/entity/Snowflake;
 	public static fun isNsfw (Ldev/kord/core/entity/application/MessageCommand;)Z
+}
+
+public abstract interface class dev/kord/core/entity/application/PrimaryEntryPointCommand : dev/kord/core/behavior/EntryPointCommandBehavior, dev/kord/core/entity/application/ApplicationCommand {
+}
+
+public final class dev/kord/core/entity/application/PrimaryEntryPointCommand$DefaultImpls {
+	public static fun compareTo (Ldev/kord/core/entity/application/PrimaryEntryPointCommand;Ldev/kord/core/entity/Entity;)I
+	public static fun getApplicationId (Ldev/kord/core/entity/application/PrimaryEntryPointCommand;)Ldev/kord/common/entity/Snowflake;
+	public static fun getDefaultMemberPermissions (Ldev/kord/core/entity/application/PrimaryEntryPointCommand;)Ldev/kord/common/entity/Permissions;
+	public static fun getDefaultPermission (Ldev/kord/core/entity/application/PrimaryEntryPointCommand;)Ljava/lang/Boolean;
+	public static fun getId (Ldev/kord/core/entity/application/PrimaryEntryPointCommand;)Ldev/kord/common/entity/Snowflake;
+	public static fun getName (Ldev/kord/core/entity/application/PrimaryEntryPointCommand;)Ljava/lang/String;
+	public static fun getNameLocalizations (Ldev/kord/core/entity/application/PrimaryEntryPointCommand;)Ljava/util/Map;
+	public static fun getType (Ldev/kord/core/entity/application/PrimaryEntryPointCommand;)Ldev/kord/common/entity/ApplicationCommandType;
+	public static fun getVersion (Ldev/kord/core/entity/application/PrimaryEntryPointCommand;)Ldev/kord/common/entity/Snowflake;
+	public static fun isNsfw (Ldev/kord/core/entity/application/PrimaryEntryPointCommand;)Z
 }
 
 public final class dev/kord/core/entity/application/UnknownGlobalApplicationCommand : dev/kord/core/entity/application/GlobalApplicationCommand {
@@ -9550,7 +9545,6 @@ public final class dev/kord/core/entity/interaction/AutoCompleteInteraction$Defa
 	public static fun getToken (Ldev/kord/core/entity/interaction/AutoCompleteInteraction;)Ljava/lang/String;
 	public static fun getType (Ldev/kord/core/entity/interaction/AutoCompleteInteraction;)Ldev/kord/common/entity/InteractionType;
 	public static fun getVersion (Ldev/kord/core/entity/interaction/AutoCompleteInteraction;)I
-	public static fun openActivity (Ldev/kord/core/entity/interaction/AutoCompleteInteraction;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class dev/kord/core/entity/interaction/BooleanOptionValue : dev/kord/core/entity/interaction/OptionValue {
@@ -9706,7 +9700,6 @@ public final class dev/kord/core/entity/interaction/DataInteraction$DefaultImpls
 	public static fun getToken (Ldev/kord/core/entity/interaction/DataInteraction;)Ljava/lang/String;
 	public static fun getType (Ldev/kord/core/entity/interaction/DataInteraction;)Ldev/kord/common/entity/InteractionType;
 	public static fun getVersion (Ldev/kord/core/entity/interaction/DataInteraction;)I
-	public static fun openActivity (Ldev/kord/core/entity/interaction/DataInteraction;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public abstract interface class dev/kord/core/entity/interaction/GlobalApplicationCommandInteraction : dev/kord/core/entity/interaction/ApplicationCommandInteraction, dev/kord/core/entity/interaction/GlobalInteraction {
@@ -9772,7 +9765,6 @@ public final class dev/kord/core/entity/interaction/GlobalAutoCompleteInteractio
 	public fun getUser ()Ldev/kord/core/entity/User;
 	public fun getVersion ()I
 	public fun hashCode ()I
-	public fun openActivity (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun toString ()Ljava/lang/String;
 	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/AutoCompleteInteractionBehavior;
 	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/DataInteractionBehavior;
@@ -9950,7 +9942,6 @@ public final class dev/kord/core/entity/interaction/GlobalInteraction$DefaultImp
 	public static fun getType (Ldev/kord/core/entity/interaction/GlobalInteraction;)Ldev/kord/common/entity/InteractionType;
 	public static fun getUser (Ldev/kord/core/entity/interaction/GlobalInteraction;)Ldev/kord/core/entity/User;
 	public static fun getVersion (Ldev/kord/core/entity/interaction/GlobalInteraction;)I
-	public static fun openActivity (Ldev/kord/core/entity/interaction/GlobalInteraction;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class dev/kord/core/entity/interaction/GlobalMessageCommandInteraction : dev/kord/core/entity/interaction/GlobalApplicationCommandInteraction, dev/kord/core/entity/interaction/MessageCommandInteraction {
@@ -10059,6 +10050,58 @@ public final class dev/kord/core/entity/interaction/GlobalModalSubmitInteraction
 	public fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/interaction/GlobalModalSubmitInteraction;
 	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/interaction/Interaction;
 	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/interaction/ModalSubmitInteraction;
+}
+
+public final class dev/kord/core/entity/interaction/GlobalPrimaryEntryPointCommandInteraction : dev/kord/core/entity/interaction/GlobalApplicationCommandInteraction, dev/kord/core/entity/interaction/PrimaryEntryPointCommandInteraction {
+	public fun <init> (Ldev/kord/core/cache/data/InteractionData;Ldev/kord/core/Kord;Ldev/kord/core/supplier/EntitySupplier;)V
+	public fun compareTo (Ldev/kord/core/entity/Entity;)I
+	public synthetic fun compareTo (Ljava/lang/Object;)I
+	public fun deferEphemeralResponse (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun deferEphemeralResponseUnsafe (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun deferPublicResponse (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun deferPublicResponseUnsafe (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun getApplicationId ()Ldev/kord/common/entity/Snowflake;
+	public fun getAuthorizingIntegrationOwners ()Ljava/util/Map;
+	public fun getChannel ()Ldev/kord/core/behavior/channel/MessageChannelBehavior;
+	public fun getChannel (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getChannelId ()Ldev/kord/common/entity/Snowflake;
+	public fun getChannelOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getContext ()Ldev/kord/common/entity/InteractionContextType;
+	public fun getData ()Ldev/kord/core/cache/data/InteractionData;
+	public fun getEntitlements ()Ljava/util/List;
+	public fun getGuildLocale ()Ldev/kord/common/Locale;
+	public fun getId ()Ldev/kord/common/entity/Snowflake;
+	public fun getInvokedCommandGuildId ()Ldev/kord/common/entity/Snowflake;
+	public fun getInvokedCommandId ()Ldev/kord/common/entity/Snowflake;
+	public fun getInvokedCommandName ()Ljava/lang/String;
+	public fun getInvokedCommandType ()Ldev/kord/common/entity/ApplicationCommandType;
+	public fun getKord ()Ldev/kord/core/Kord;
+	public fun getLocale ()Ldev/kord/common/Locale;
+	public fun getOriginalInteractionResponse (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getOriginalInteractionResponseOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getResolvedObjects ()Ldev/kord/core/entity/interaction/ResolvedObjects;
+	public fun getSupplier ()Ldev/kord/core/supplier/EntitySupplier;
+	public fun getToken ()Ljava/lang/String;
+	public fun getType ()Ldev/kord/common/entity/InteractionType;
+	public fun getUser ()Ldev/kord/core/entity/User;
+	public fun getVersion ()I
+	public fun hashCode ()I
+	public fun openActivity (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun toString ()Ljava/lang/String;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/ActionInteractionBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/ApplicationCommandInteractionBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/GlobalInteractionBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/InteractionBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/ModalParentInteractionBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/Strategizable;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/interaction/ActionInteraction;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/interaction/ApplicationCommandInteraction;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/interaction/GlobalApplicationCommandInteraction;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/interaction/GlobalInteraction;
+	public fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/interaction/GlobalPrimaryEntryPointCommandInteraction;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/interaction/Interaction;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/interaction/PrimaryEntryPointCommandInteraction;
 }
 
 public final class dev/kord/core/entity/interaction/GlobalSelectMenuInteraction : dev/kord/core/entity/interaction/GlobalComponentInteraction, dev/kord/core/entity/interaction/SelectMenuInteraction {
@@ -10273,7 +10316,6 @@ public final class dev/kord/core/entity/interaction/GuildAutoCompleteInteraction
 	public synthetic fun getUser ()Ldev/kord/core/entity/User;
 	public fun getVersion ()I
 	public fun hashCode ()I
-	public fun openActivity (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun toString ()Ljava/lang/String;
 	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/AutoCompleteInteractionBehavior;
 	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/DataInteractionBehavior;
@@ -10482,7 +10524,6 @@ public final class dev/kord/core/entity/interaction/GuildInteraction$DefaultImpl
 	public static fun getType (Ldev/kord/core/entity/interaction/GuildInteraction;)Ldev/kord/common/entity/InteractionType;
 	public static fun getUser (Ldev/kord/core/entity/interaction/GuildInteraction;)Ldev/kord/core/entity/Member;
 	public static fun getVersion (Ldev/kord/core/entity/interaction/GuildInteraction;)I
-	public static fun openActivity (Ldev/kord/core/entity/interaction/GuildInteraction;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class dev/kord/core/entity/interaction/GuildMessageCommandInteraction : dev/kord/core/entity/interaction/GuildApplicationCommandInteraction, dev/kord/core/entity/interaction/MessageCommandInteraction {
@@ -10607,6 +10648,66 @@ public final class dev/kord/core/entity/interaction/GuildModalSubmitInteraction 
 	public fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/interaction/GuildModalSubmitInteraction;
 	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/interaction/Interaction;
 	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/interaction/ModalSubmitInteraction;
+}
+
+public final class dev/kord/core/entity/interaction/GuildPrimaryEntryPointCommandInteraction : dev/kord/core/entity/interaction/GuildApplicationCommandInteraction, dev/kord/core/entity/interaction/PrimaryEntryPointCommandInteraction {
+	public fun <init> (Ldev/kord/core/cache/data/InteractionData;Ldev/kord/core/Kord;Ldev/kord/core/supplier/EntitySupplier;)V
+	public fun compareTo (Ldev/kord/core/entity/Entity;)I
+	public synthetic fun compareTo (Ljava/lang/Object;)I
+	public fun deferEphemeralResponse (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun deferEphemeralResponseUnsafe (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun deferPublicResponse (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun deferPublicResponseUnsafe (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun getAppPermissions ()Ldev/kord/common/entity/Permissions;
+	public fun getApplicationId ()Ldev/kord/common/entity/Snowflake;
+	public fun getAuthorizingIntegrationOwners ()Ljava/util/Map;
+	public fun getChannel ()Ldev/kord/core/behavior/channel/GuildMessageChannelBehavior;
+	public synthetic fun getChannel ()Ldev/kord/core/behavior/channel/MessageChannelBehavior;
+	public fun getChannel (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getChannelId ()Ldev/kord/common/entity/Snowflake;
+	public fun getChannelOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getContext ()Ldev/kord/common/entity/InteractionContextType;
+	public fun getData ()Ldev/kord/core/cache/data/InteractionData;
+	public fun getEntitlements ()Ljava/util/List;
+	public fun getGuild ()Ldev/kord/core/behavior/GuildBehavior;
+	public fun getGuild (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getGuildId ()Ldev/kord/common/entity/Snowflake;
+	public fun getGuildLocale ()Ldev/kord/common/Locale;
+	public fun getGuildOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getId ()Ldev/kord/common/entity/Snowflake;
+	public fun getInvokedCommandGuildId ()Ldev/kord/common/entity/Snowflake;
+	public fun getInvokedCommandId ()Ldev/kord/common/entity/Snowflake;
+	public fun getInvokedCommandName ()Ljava/lang/String;
+	public fun getInvokedCommandType ()Ldev/kord/common/entity/ApplicationCommandType;
+	public fun getKord ()Ldev/kord/core/Kord;
+	public fun getLocale ()Ldev/kord/common/Locale;
+	public fun getOriginalInteractionResponse (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getOriginalInteractionResponseOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getPermissions ()Ldev/kord/common/entity/Permissions;
+	public fun getResolvedObjects ()Ldev/kord/core/entity/interaction/ResolvedObjects;
+	public fun getSupplier ()Ldev/kord/core/supplier/EntitySupplier;
+	public fun getToken ()Ljava/lang/String;
+	public fun getType ()Ldev/kord/common/entity/InteractionType;
+	public fun getUser ()Ldev/kord/core/entity/Member;
+	public synthetic fun getUser ()Ldev/kord/core/entity/User;
+	public fun getVersion ()I
+	public fun hashCode ()I
+	public fun openActivity (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun toString ()Ljava/lang/String;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/ActionInteractionBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/ApplicationCommandInteractionBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/GuildInteractionBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/InteractionBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/ModalParentInteractionBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/Strategizable;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/interaction/ActionInteraction;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/interaction/ApplicationCommandInteraction;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/interaction/GuildApplicationCommandInteraction;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/interaction/GuildInteraction;
+	public fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/interaction/GuildPrimaryEntryPointCommandInteraction;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/interaction/Interaction;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/interaction/PrimaryEntryPointCommandInteraction;
 }
 
 public final class dev/kord/core/entity/interaction/GuildSelectMenuInteraction : dev/kord/core/entity/interaction/GuildComponentInteraction, dev/kord/core/entity/interaction/SelectMenuInteraction {
@@ -10785,7 +10886,6 @@ public final class dev/kord/core/entity/interaction/Interaction$DefaultImpls {
 	public static fun getToken (Ldev/kord/core/entity/interaction/Interaction;)Ljava/lang/String;
 	public static fun getType (Ldev/kord/core/entity/interaction/Interaction;)Ldev/kord/common/entity/InteractionType;
 	public static fun getVersion (Ldev/kord/core/entity/interaction/Interaction;)I
-	public static fun openActivity (Ldev/kord/core/entity/interaction/Interaction;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public abstract interface class dev/kord/core/entity/interaction/InteractionCommand : dev/kord/core/KordObject {
@@ -10946,6 +11046,40 @@ public abstract interface class dev/kord/core/entity/interaction/OptionValue {
 
 public final class dev/kord/core/entity/interaction/OptionValueKt {
 	public static final fun OptionValue (Ldev/kord/common/entity/CommandArgument;Ldev/kord/core/entity/interaction/ResolvedObjects;)Ldev/kord/core/entity/interaction/OptionValue;
+}
+
+public abstract interface class dev/kord/core/entity/interaction/PrimaryEntryPointCommandInteraction : dev/kord/core/entity/interaction/ApplicationCommandInteraction {
+	public abstract fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/interaction/PrimaryEntryPointCommandInteraction;
+}
+
+public final class dev/kord/core/entity/interaction/PrimaryEntryPointCommandInteraction$DefaultImpls {
+	public static fun compareTo (Ldev/kord/core/entity/interaction/PrimaryEntryPointCommandInteraction;Ldev/kord/core/entity/Entity;)I
+	public static fun deferEphemeralResponse (Ldev/kord/core/entity/interaction/PrimaryEntryPointCommandInteraction;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static fun deferEphemeralResponseUnsafe (Ldev/kord/core/entity/interaction/PrimaryEntryPointCommandInteraction;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static fun deferPublicResponse (Ldev/kord/core/entity/interaction/PrimaryEntryPointCommandInteraction;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static fun deferPublicResponseUnsafe (Ldev/kord/core/entity/interaction/PrimaryEntryPointCommandInteraction;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static fun getApplicationId (Ldev/kord/core/entity/interaction/PrimaryEntryPointCommandInteraction;)Ldev/kord/common/entity/Snowflake;
+	public static fun getAuthorizingIntegrationOwners (Ldev/kord/core/entity/interaction/PrimaryEntryPointCommandInteraction;)Ljava/util/Map;
+	public static fun getChannel (Ldev/kord/core/entity/interaction/PrimaryEntryPointCommandInteraction;)Ldev/kord/core/behavior/channel/MessageChannelBehavior;
+	public static fun getChannel (Ldev/kord/core/entity/interaction/PrimaryEntryPointCommandInteraction;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static fun getChannelId (Ldev/kord/core/entity/interaction/PrimaryEntryPointCommandInteraction;)Ldev/kord/common/entity/Snowflake;
+	public static fun getChannelOrNull (Ldev/kord/core/entity/interaction/PrimaryEntryPointCommandInteraction;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static fun getContext (Ldev/kord/core/entity/interaction/PrimaryEntryPointCommandInteraction;)Ldev/kord/common/entity/InteractionContextType;
+	public static fun getEntitlements (Ldev/kord/core/entity/interaction/PrimaryEntryPointCommandInteraction;)Ljava/util/List;
+	public static fun getGuildLocale (Ldev/kord/core/entity/interaction/PrimaryEntryPointCommandInteraction;)Ldev/kord/common/Locale;
+	public static fun getId (Ldev/kord/core/entity/interaction/PrimaryEntryPointCommandInteraction;)Ldev/kord/common/entity/Snowflake;
+	public static fun getInvokedCommandGuildId (Ldev/kord/core/entity/interaction/PrimaryEntryPointCommandInteraction;)Ldev/kord/common/entity/Snowflake;
+	public static fun getInvokedCommandId (Ldev/kord/core/entity/interaction/PrimaryEntryPointCommandInteraction;)Ldev/kord/common/entity/Snowflake;
+	public static fun getInvokedCommandName (Ldev/kord/core/entity/interaction/PrimaryEntryPointCommandInteraction;)Ljava/lang/String;
+	public static fun getInvokedCommandType (Ldev/kord/core/entity/interaction/PrimaryEntryPointCommandInteraction;)Ldev/kord/common/entity/ApplicationCommandType;
+	public static fun getLocale (Ldev/kord/core/entity/interaction/PrimaryEntryPointCommandInteraction;)Ldev/kord/common/Locale;
+	public static fun getOriginalInteractionResponse (Ldev/kord/core/entity/interaction/PrimaryEntryPointCommandInteraction;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static fun getOriginalInteractionResponseOrNull (Ldev/kord/core/entity/interaction/PrimaryEntryPointCommandInteraction;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static fun getResolvedObjects (Ldev/kord/core/entity/interaction/PrimaryEntryPointCommandInteraction;)Ldev/kord/core/entity/interaction/ResolvedObjects;
+	public static fun getToken (Ldev/kord/core/entity/interaction/PrimaryEntryPointCommandInteraction;)Ljava/lang/String;
+	public static fun getType (Ldev/kord/core/entity/interaction/PrimaryEntryPointCommandInteraction;)Ldev/kord/common/entity/InteractionType;
+	public static fun getVersion (Ldev/kord/core/entity/interaction/PrimaryEntryPointCommandInteraction;)I
+	public static fun openActivity (Ldev/kord/core/entity/interaction/PrimaryEntryPointCommandInteraction;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public abstract interface class dev/kord/core/entity/interaction/ResolvableOptionValue : dev/kord/core/entity/interaction/OptionValue {
@@ -13003,6 +13137,20 @@ public final class dev/kord/core/event/interaction/GlobalModalSubmitInteractionC
 	public fun getShard ()I
 }
 
+public final class dev/kord/core/event/interaction/GlobalPrimaryEntryPointCommandInteractionCreateEvent : dev/kord/core/event/interaction/GlobalApplicationCommandInteractionCreateEvent, dev/kord/core/event/interaction/PrimaryEntryPointCommandInteractionCreateEvent {
+	public fun <init> (Ldev/kord/core/entity/interaction/GlobalPrimaryEntryPointCommandInteraction;Ldev/kord/core/Kord;ILjava/lang/Object;)V
+	public fun getCustomContext ()Ljava/lang/Object;
+	public fun getGateway ()Ldev/kord/gateway/Gateway;
+	public synthetic fun getInteraction ()Ldev/kord/core/entity/interaction/ActionInteraction;
+	public synthetic fun getInteraction ()Ldev/kord/core/entity/interaction/ApplicationCommandInteraction;
+	public synthetic fun getInteraction ()Ldev/kord/core/entity/interaction/GlobalApplicationCommandInteraction;
+	public fun getInteraction ()Ldev/kord/core/entity/interaction/GlobalPrimaryEntryPointCommandInteraction;
+	public synthetic fun getInteraction ()Ldev/kord/core/entity/interaction/Interaction;
+	public synthetic fun getInteraction ()Ldev/kord/core/entity/interaction/PrimaryEntryPointCommandInteraction;
+	public fun getKord ()Ldev/kord/core/Kord;
+	public fun getShard ()I
+}
+
 public final class dev/kord/core/event/interaction/GlobalSelectMenuInteractionCreateEvent : dev/kord/core/event/interaction/GlobalComponentInteractionCreateEvent, dev/kord/core/event/interaction/SelectMenuInteractionCreateEvent {
 	public fun <init> (Ldev/kord/core/entity/interaction/GlobalSelectMenuInteraction;Ldev/kord/core/Kord;ILjava/lang/Object;)V
 	public fun getCustomContext ()Ljava/lang/Object;
@@ -13113,6 +13261,20 @@ public final class dev/kord/core/event/interaction/GuildModalSubmitInteractionCr
 	public fun getShard ()I
 }
 
+public final class dev/kord/core/event/interaction/GuildPrimaryEntryPointCommandInteractionCreateEvent : dev/kord/core/event/interaction/GuildApplicationCommandInteractionCreateEvent, dev/kord/core/event/interaction/PrimaryEntryPointCommandInteractionCreateEvent {
+	public fun <init> (Ldev/kord/core/entity/interaction/GuildPrimaryEntryPointCommandInteraction;Ldev/kord/core/Kord;ILjava/lang/Object;)V
+	public fun getCustomContext ()Ljava/lang/Object;
+	public fun getGateway ()Ldev/kord/gateway/Gateway;
+	public synthetic fun getInteraction ()Ldev/kord/core/entity/interaction/ActionInteraction;
+	public synthetic fun getInteraction ()Ldev/kord/core/entity/interaction/ApplicationCommandInteraction;
+	public synthetic fun getInteraction ()Ldev/kord/core/entity/interaction/GuildApplicationCommandInteraction;
+	public fun getInteraction ()Ldev/kord/core/entity/interaction/GuildPrimaryEntryPointCommandInteraction;
+	public synthetic fun getInteraction ()Ldev/kord/core/entity/interaction/Interaction;
+	public synthetic fun getInteraction ()Ldev/kord/core/entity/interaction/PrimaryEntryPointCommandInteraction;
+	public fun getKord ()Ldev/kord/core/Kord;
+	public fun getShard ()I
+}
+
 public final class dev/kord/core/event/interaction/GuildSelectMenuInteractionCreateEvent : dev/kord/core/event/interaction/GuildComponentInteractionCreateEvent, dev/kord/core/event/interaction/SelectMenuInteractionCreateEvent {
 	public fun <init> (Ldev/kord/core/entity/interaction/GuildSelectMenuInteraction;Ldev/kord/core/Kord;ILjava/lang/Object;)V
 	public fun getCustomContext ()Ljava/lang/Object;
@@ -13193,6 +13355,14 @@ public abstract interface class dev/kord/core/event/interaction/ModalSubmitInter
 
 public final class dev/kord/core/event/interaction/ModalSubmitInteractionCreateEvent$DefaultImpls {
 	public static fun getGateway (Ldev/kord/core/event/interaction/ModalSubmitInteractionCreateEvent;)Ldev/kord/gateway/Gateway;
+}
+
+public abstract interface class dev/kord/core/event/interaction/PrimaryEntryPointCommandInteractionCreateEvent : dev/kord/core/event/interaction/ApplicationCommandInteractionCreateEvent {
+	public abstract fun getInteraction ()Ldev/kord/core/entity/interaction/PrimaryEntryPointCommandInteraction;
+}
+
+public final class dev/kord/core/event/interaction/PrimaryEntryPointCommandInteractionCreateEvent$DefaultImpls {
+	public static fun getGateway (Ldev/kord/core/event/interaction/PrimaryEntryPointCommandInteractionCreateEvent;)Ldev/kord/gateway/Gateway;
 }
 
 public abstract interface class dev/kord/core/event/interaction/SelectMenuInteractionCreateEvent : dev/kord/core/event/interaction/ComponentInteractionCreateEvent {
