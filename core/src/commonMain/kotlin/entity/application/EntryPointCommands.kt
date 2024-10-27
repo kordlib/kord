@@ -7,17 +7,17 @@ import dev.kord.core.behavior.GuildEntryPointCommandBehavior
 import dev.kord.core.cache.data.ApplicationCommandData
 import dev.kord.rest.service.InteractionService
 
-public interface EntryPointCommand : ApplicationCommand, EntryPointCommandBehavior
+public interface PrimaryEntryPointCommand : ApplicationCommand, EntryPointCommandBehavior
 
-public class GuildEntryPointCommand(
+public class GuildPrimaryEntryPointCommand(
     override val data: ApplicationCommandData,
     override val service: InteractionService
-) : EntryPointCommand, GuildApplicationCommand, GuildEntryPointCommandBehavior {
+) : PrimaryEntryPointCommand, GuildApplicationCommand, GuildEntryPointCommandBehavior {
     override val guildId: Snowflake
         get() = data.guildId.value!!
 }
 
-public class GlobalEntryPointCommand(
+public class GlobalPrimaryEntryPointCommand(
     override val data: ApplicationCommandData,
     override val service: InteractionService
-) : EntryPointCommand, GlobalApplicationCommand, GlobalEntryPointCommandBehavior
+) : PrimaryEntryPointCommand, GlobalApplicationCommand, GlobalEntryPointCommandBehavior

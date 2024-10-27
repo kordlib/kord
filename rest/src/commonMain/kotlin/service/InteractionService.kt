@@ -477,12 +477,12 @@ public class InteractionService(requestHandler: RequestHandler) : RestService(re
         )
     }
 
-    public suspend inline fun createGuildEntryPointCommand(
+    public suspend inline fun createGuildPrimaryEntryPointCommand(
         applicationId: Snowflake,
         guildId: Snowflake,
         name: String,
         description: String,
-        handler: EntryPointCommandHandlerType,
+        handler: PrimaryEntryPointCommandHandlerType,
         builder: EntryPointCreateBuilder.() -> Unit = {}
     ): DiscordApplicationCommand {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
@@ -494,11 +494,11 @@ public class InteractionService(requestHandler: RequestHandler) : RestService(re
         )
     }
 
-    public suspend inline fun createGlobalEntryPointCommand(
+    public suspend inline fun createGlobalPrimaryEntryPointCommand(
         applicationId: Snowflake,
         name: String,
         description: String,
-        handler: EntryPointCommandHandlerType,
+        handler: PrimaryEntryPointCommandHandlerType,
         builder: EntryPointCreateBuilder.() -> Unit = {}
     ): DiscordApplicationCommand {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
@@ -556,7 +556,7 @@ public class InteractionService(requestHandler: RequestHandler) : RestService(re
         )
     }
 
-    public suspend inline fun modifyGuildEntryPointApplicationCommand(
+    public suspend inline fun modifyGuildPrimaryEntryPointApplicationCommand(
         applicationId: Snowflake,
         guildId: Snowflake,
         commandId: Snowflake,
@@ -572,7 +572,7 @@ public class InteractionService(requestHandler: RequestHandler) : RestService(re
         )
     }
 
-    public suspend inline fun modifyGlobalEntryPointApplicationCommand(
+    public suspend inline fun modifyGlobalPrimaryEntryPointApplicationCommand(
         applicationId: Snowflake,
         commandId: Snowflake,
         builder: EntryPointModifyBuilder.() -> Unit

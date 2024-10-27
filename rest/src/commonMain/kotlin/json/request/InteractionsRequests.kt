@@ -29,7 +29,7 @@ public data class ApplicationCommandCreateRequest(
     @SerialName("integration_types")
     val integrationTypes: Optional<List<ApplicationIntegrationType>> = Optional.Missing(),
     val contexts: Optional<List<InteractionContextType>?> = Optional.Missing(),
-    val handler: Optional<EntryPointCommandHandlerType> = Optional.Missing()
+    val handler: Optional<PrimaryEntryPointCommandHandlerType> = Optional.Missing()
 )
 
 @Serializable
@@ -52,7 +52,7 @@ public data class ApplicationCommandModifyRequest(
     @SerialName("integration_types")
     val integrationTypes: Optional<List<ApplicationIntegrationType>> = Optional.Missing(),
     val contexts: Optional<List<InteractionContextType>?> = Optional.Missing(),
-    val handler: Optional<EntryPointCommandHandlerType> = Optional.Missing()
+    val handler: Optional<PrimaryEntryPointCommandHandlerType> = Optional.Missing()
 )
 
 @Serializable

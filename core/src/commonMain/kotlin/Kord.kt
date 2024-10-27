@@ -4,7 +4,7 @@ import dev.kord.cache.api.DataCache
 import dev.kord.common.annotation.KordExperimental
 import dev.kord.common.annotation.KordUnsafe
 import dev.kord.common.entity.DiscordShard
-import dev.kord.common.entity.EntryPointCommandHandlerType
+import dev.kord.common.entity.PrimaryEntryPointCommandHandlerType
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.exception.RequestException
 import dev.kord.core.builder.kord.KordBuilder
@@ -646,15 +646,15 @@ public class Kord(
         return GuildUserCommand(data, rest.interaction)
     }
 
-    public suspend inline fun createGuildEntryPointCommand(
+    public suspend inline fun createGuildPrimaryEntryPointCommand(
         guildId: Snowflake,
         name: String,
         description: String,
-        handler: EntryPointCommandHandlerType,
+        handler: PrimaryEntryPointCommandHandlerType,
         builder: EntryPointCreateBuilder.() -> Unit = {},
-    ): GuildEntryPointCommand {
+    ): GuildPrimaryEntryPointCommand {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-        val response = rest.interaction.createGuildEntryPointCommand(
+        val response = rest.interaction.createGuildPrimaryEntryPointCommand(
             resources.applicationId,
             guildId,
             name,
@@ -664,18 +664,18 @@ public class Kord(
         )
 
         val data = ApplicationCommandData.from(response)
-        return GuildEntryPointCommand(data, rest.interaction)
+        return GuildPrimaryEntryPointCommand(data, rest.interaction)
     }
 
 
-    public suspend inline fun createGlobalEntryPointCommand(
+    public suspend inline fun createGlobalPrimaryEntryPointCommand(
         name: String,
         description: String,
-        handler: EntryPointCommandHandlerType,
+        handler: PrimaryEntryPointCommandHandlerType,
         builder: EntryPointCreateBuilder.() -> Unit = {},
-    ): GlobalEntryPointCommand {
+    ): GlobalPrimaryEntryPointCommand {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-        val response = rest.interaction.createGlobalEntryPointCommand(
+        val response = rest.interaction.createGlobalPrimaryEntryPointCommand(
             resources.applicationId,
             name,
             description,
@@ -684,7 +684,7 @@ public class Kord(
         )
 
         val data = ApplicationCommandData.from(response)
-        return GlobalEntryPointCommand(data, rest.interaction)
+        return GlobalPrimaryEntryPointCommand(data, rest.interaction)
     }
 
     public suspend inline fun createGuildApplicationCommands(
@@ -702,7 +702,6 @@ public class Kord(
             }
         }
     }
-
 }
 
 /**

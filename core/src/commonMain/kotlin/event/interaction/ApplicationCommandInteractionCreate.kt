@@ -1,6 +1,5 @@
 package dev.kord.core.event.interaction
 
-import dev.kord.common.annotation.KordPreview
 import dev.kord.core.Kord
 import dev.kord.core.entity.interaction.*
 import dev.kord.core.event.Event
@@ -89,22 +88,22 @@ public class GlobalChatInputCommandInteractionCreateEvent(
     override val customContext: Any?,
 ) : GlobalApplicationCommandInteractionCreateEvent, ChatInputCommandInteractionCreateEvent
 
-/** An [Event] that fires when a [PrimaryEntryPointInteraction] is created. */
+/** An [Event] that fires when a [PrimaryEntryPointCommandInteraction] is created. */
 public sealed interface PrimaryEntryPointCommandInteractionCreateEvent : ApplicationCommandInteractionCreateEvent {
-    override val interaction: PrimaryEntryPointInteraction
+    override val interaction: PrimaryEntryPointCommandInteraction
 }
 
-/** An [Event] that fires when a [GuildPrimaryEntryPointInteraction] is created. */
+/** An [Event] that fires when a [GuildPrimaryEntryPointCommandInteraction] is created. */
 public class GuildPrimaryEntryPointCommandInteractionCreateEvent(
-    override val interaction: GuildPrimaryEntryPointInteraction,
+    override val interaction: GuildPrimaryEntryPointCommandInteraction,
     override val kord: Kord,
     override val shard: Int,
     override val customContext: Any?
 ) : PrimaryEntryPointCommandInteractionCreateEvent, GuildApplicationCommandInteractionCreateEvent
 
-/** An [Event] that fires when a [GlobalPrimaryEntryPointInteraction] is created. */
+/** An [Event] that fires when a [GlobalPrimaryEntryPointCommandInteraction] is created. */
 public class GlobalPrimaryEntryPointCommandInteractionCreateEvent(
-    override val interaction: GlobalPrimaryEntryPointInteraction,
+    override val interaction: GlobalPrimaryEntryPointCommandInteraction,
     override val kord: Kord,
     override val shard: Int,
     override val customContext: Any?

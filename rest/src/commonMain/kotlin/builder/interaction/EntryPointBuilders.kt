@@ -4,7 +4,7 @@ import dev.kord.common.Locale
 import dev.kord.common.annotation.KordDsl
 import dev.kord.common.entity.ApplicationCommandType
 import dev.kord.common.entity.ApplicationIntegrationType
-import dev.kord.common.entity.EntryPointCommandHandlerType
+import dev.kord.common.entity.PrimaryEntryPointCommandHandlerType
 import dev.kord.common.entity.InteractionContextType
 import dev.kord.common.entity.Permissions
 import dev.kord.common.entity.optional.Optional
@@ -16,7 +16,7 @@ import dev.kord.rest.json.request.ApplicationCommandModifyRequest
 
 @KordDsl
 public interface EntryPointCreateBuilder : ApplicationCommandCreateBuilder, LocalizedDescriptionCreateBuilder {
-    public val handler: EntryPointCommandHandlerType?
+    public val handler: PrimaryEntryPointCommandHandlerType?
 }
 
 @KordDsl
@@ -24,7 +24,7 @@ public interface GlobalEntryPointCreateBuilder : GlobalApplicationCommandCreateB
 
 @KordDsl
 public interface EntryPointModifyBuilder : ApplicationCommandModifyBuilder, LocalizedDescriptionModifyBuilder {
-    public val handler: EntryPointCommandHandlerType?
+    public val handler: PrimaryEntryPointCommandHandlerType?
 }
 
 @KordDsl
@@ -34,7 +34,7 @@ public interface GlobalEntryPointModifyBuilder : GlobalApplicationCommandModifyB
 internal class EntryPointCreateBuilderImpl(
     override var name: String,
     override var description: String,
-    override val handler: EntryPointCommandHandlerType
+    override val handler: PrimaryEntryPointCommandHandlerType
 ) : GlobalEntryPointCreateBuilder {
     private val state = ApplicationCommandModifyStateHolder()
 
@@ -96,7 +96,7 @@ internal class EntryPointModifyBuilderImpl : GlobalEntryPointModifyBuilder, Entr
 
     override var integrationTypes: MutableList<ApplicationIntegrationType>? by state::integrationTypes.delegate()
     override var contexts: MutableList<InteractionContextType>? by state::contexts.delegate()
-    override val handler: EntryPointCommandHandlerType? by state::handler.delegate()
+    override val handler: PrimaryEntryPointCommandHandlerType? by state::handler.delegate()
 
     override fun toRequest(): ApplicationCommandModifyRequest = ApplicationCommandModifyRequest(
         state.name,

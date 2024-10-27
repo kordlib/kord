@@ -16,7 +16,7 @@
 )
 
 @file:Generate(
-    INT_KORD_ENUM, name = "EntryPointCommandHandlerType",
+    INT_KORD_ENUM, name = "PrimaryEntryPointCommandHandlerType",
     docUrl = "https://discord.com/developers/docs/interactions/application-commands#application-command-object-entry-point-command-handler-types",
     entries = [
         Entry("AppHandler", intValue = 1, kDoc = "The app handles the interaction using an interaction token"),
