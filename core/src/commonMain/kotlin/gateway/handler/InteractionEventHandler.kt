@@ -50,6 +50,8 @@ internal class InteractionEventHandler : BaseGatewayEventHandler() {
             is GuildButtonInteraction -> GuildButtonInteractionCreateEvent(interaction, kord, shard, context?.get())
             is GuildSelectMenuInteraction -> GuildSelectMenuInteractionCreateEvent(interaction, kord, shard, context?.get())
             is GuildModalSubmitInteraction -> GuildModalSubmitInteractionCreateEvent(interaction, kord, shard, context?.get())
+            is GlobalPrimaryEntryPointInteraction -> GlobalPrimaryEntryPointCommandInteractionCreateEvent(interaction, kord, shard, context?.get())
+            is GuildPrimaryEntryPointInteraction -> GuildPrimaryEntryPointCommandInteractionCreateEvent(interaction, kord, shard, context?.get())
         }
         return coreEvent
     }

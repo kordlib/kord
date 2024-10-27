@@ -1,6 +1,5 @@
 package dev.kord.core.behavior.interaction
 
-import dev.kord.common.entity.InteractionResponseType
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.behavior.channel.MessageChannelBehavior
 import dev.kord.core.entity.KordEntity
@@ -10,7 +9,6 @@ import dev.kord.core.entity.interaction.Interaction
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.core.supplier.getChannelOf
 import dev.kord.core.supplier.getChannelOfOrNull
-import dev.kord.rest.json.request.InteractionResponseCreateRequest
 
 /** The behavior of an [Interaction]. */
 public interface InteractionBehavior : KordEntity, Strategizable {
@@ -26,17 +24,6 @@ public interface InteractionBehavior : KordEntity, Strategizable {
 
     /** The behavior of the channel the interaction was sent from. */
     public val channel: MessageChannelBehavior get() = MessageChannelBehavior(channelId, kord)
-
-    /**
-     * Opens the [Activity](https://discord.com/developers/docs/activities/overview) of this application.
-     * **Note:** This requires activities to be enabled for this application
-     */
-    public suspend fun openActivity() {
-        kord.rest.interaction.createInteractionResponse(
-            id, token,
-            InteractionResponseCreateRequest(InteractionResponseType.LaunchActivity)
-        )
-    }
 
     public suspend fun getChannelOrNull(): MessageChannel? = supplier.getChannelOfOrNull(channelId)
 

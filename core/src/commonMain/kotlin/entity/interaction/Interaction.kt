@@ -102,7 +102,6 @@ public sealed interface Interaction : InteractionBehavior {
                     GlobalApplicationCommandInteraction(data, kord, strategy.supply(kord))
                 }
             }
-
             InteractionType.Ping, is InteractionType.Unknown -> error("Unsupported interaction type: $type")
         }
     }
