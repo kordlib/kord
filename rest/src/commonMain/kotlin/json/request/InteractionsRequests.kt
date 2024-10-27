@@ -49,6 +49,9 @@ public data class ApplicationCommandModifyRequest(
     @SerialName("default_permission")
     val defaultPermission: OptionalBoolean = OptionalBoolean.Missing,
     val nsfw: OptionalBoolean = OptionalBoolean.Missing,
+    @SerialName("integration_types")
+    val integrationTypes: Optional<List<ApplicationIntegrationType>> = Optional.Missing(),
+    val contexts: Optional<List<InteractionContextType>?> = Optional.Missing(),
     val handler: Optional<EntryPointCommandHandlerType> = Optional.Missing()
 )
 

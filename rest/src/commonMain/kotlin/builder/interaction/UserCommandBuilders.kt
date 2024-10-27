@@ -34,6 +34,9 @@ internal class UserCommandModifyBuilderImpl : GlobalUserCommandModifyBuilder {
 
     override var nsfw: Boolean? by state::nsfw.delegate()
 
+    override var integrationTypes: MutableList<ApplicationIntegrationType>? by state::integrationTypes.delegate()
+    override var contexts: MutableList<InteractionContextType>? by state::contexts.delegate()
+
     override fun toRequest(): ApplicationCommandModifyRequest {
         return ApplicationCommandModifyRequest(
             name = state.name,
@@ -42,6 +45,8 @@ internal class UserCommandModifyBuilderImpl : GlobalUserCommandModifyBuilder {
             defaultMemberPermissions = state.defaultMemberPermissions,
             defaultPermission = @Suppress("DEPRECATION") state.defaultPermission,
             nsfw = state.nsfw,
+            integrationTypes = state.integrationTypes.missingOnEmpty(),
+            contexts = state.contexts.missingOnEmpty(),
         )
     }
 }

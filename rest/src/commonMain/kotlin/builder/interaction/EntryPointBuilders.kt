@@ -94,6 +94,8 @@ internal class EntryPointModifyBuilderImpl : GlobalEntryPointModifyBuilder, Entr
 
     override var nsfw: Boolean? by state::nsfw.delegate()
 
+    override var integrationTypes: MutableList<ApplicationIntegrationType>? by state::integrationTypes.delegate()
+    override var contexts: MutableList<InteractionContextType>? by state::contexts.delegate()
     override val handler: EntryPointCommandHandlerType? by state::handler.delegate()
 
     override fun toRequest(): ApplicationCommandModifyRequest = ApplicationCommandModifyRequest(
@@ -104,6 +106,8 @@ internal class EntryPointModifyBuilderImpl : GlobalEntryPointModifyBuilder, Entr
         defaultMemberPermissions = state.defaultMemberPermissions,
         dmPermission = state.dmPermission,
         nsfw = state.nsfw,
+        integrationTypes = state.integrationTypes.missingOnEmpty(),
+        contexts = state.contexts.missingOnEmpty(),
         handler = state.handler
     )
 }
