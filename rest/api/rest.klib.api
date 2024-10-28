@@ -7211,6 +7211,8 @@ sealed class <#A: kotlin/Any?, #B: dev.kord.common.entity/Choice> dev.kord.rest.
 }
 
 sealed class <#A: kotlin/Any?> dev.kord.rest.route/Route { // dev.kord.rest.route/Route|null[0]
+    final val affectedByGlobalRateLimit // dev.kord.rest.route/Route.affectedByGlobalRateLimit|{}affectedByGlobalRateLimit[0]
+        final fun <get-affectedByGlobalRateLimit>(): kotlin/Boolean // dev.kord.rest.route/Route.affectedByGlobalRateLimit.<get-affectedByGlobalRateLimit>|<get-affectedByGlobalRateLimit>(){}[0]
     final val mapper // dev.kord.rest.route/Route.mapper|{}mapper[0]
         final fun <get-mapper>(): dev.kord.rest.route/ResponseMapper<#A> // dev.kord.rest.route/Route.mapper.<get-mapper>|<get-mapper>(){}[0]
     final val method // dev.kord.rest.route/Route.method|{}method[0]
