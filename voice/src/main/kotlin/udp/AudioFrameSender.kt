@@ -3,7 +3,9 @@
 package dev.kord.voice.udp
 
 import dev.kord.common.annotation.KordVoice
+import dev.kord.voice.EncryptionMode
 import dev.kord.voice.FrameInterceptorConfiguration
+import dev.kord.voice.XSalsa20_CONSTRUCTOR_DEPRECATION
 import io.ktor.network.sockets.*
 
 @KordVoice
@@ -11,8 +13,33 @@ public data class AudioFrameSenderConfiguration(
     val server: SocketAddress,
     val ssrc: UInt,
     val key: ByteArray,
-    val interceptorConfiguration: FrameInterceptorConfiguration
-)
+    val interceptorConfiguration: FrameInterceptorConfiguration,
+    val encryptionMode: EncryptionMode,
+) {
+    @Deprecated(
+        "An 'AudioFrameSenderConfiguration' instance must be created with an 'encryptionMode'. " +
+            XSalsa20_CONSTRUCTOR_DEPRECATION,
+        level = DeprecationLevel.WARNING,
+    )
+    public constructor(
+        server: SocketAddress, ssrc: UInt, key: ByteArray, interceptorConfiguration: FrameInterceptorConfiguration,
+    ) : this(
+        server = server, ssrc = ssrc, key = key, interceptorConfiguration = interceptorConfiguration,
+        encryptionMode = EncryptionMode.from("AudioFrameSenderConfiguration.encryptionMode placeholder"),
+    )
+
+    @Deprecated(
+        "Kept for binary compatibility, this function will be removed in 0.19.0.",
+        level = DeprecationLevel.HIDDEN,
+    )
+    public fun copy(
+        server: SocketAddress = this.server, ssrc: UInt = this.ssrc, key: ByteArray = this.key,
+        interceptorConfiguration: FrameInterceptorConfiguration = this.interceptorConfiguration,
+    ): AudioFrameSenderConfiguration = AudioFrameSenderConfiguration(
+        server = server, ssrc = ssrc, key = key, interceptorConfiguration = interceptorConfiguration,
+        encryptionMode = this.encryptionMode,
+    )
+}
 
 @KordVoice
 public interface AudioFrameSender {
