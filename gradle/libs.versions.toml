@@ -10,7 +10,6 @@ kord-cache = "0.5.4" # https://github.com/kordlib/cache
 
 # implementation dependencies
 kotlin-logging = "7.0.0" # https://github.com/oshai/kotlin-logging
-kotlin-logging-old = "3.0.5" # TODO remove after dependency is removed in rest, gateway, voice and core
 slf4j = "2.0.16" # https://www.slf4j.org
 kotlin-node = "22.5.4-pre.818" # https://github.com/JetBrains/kotlin-wrappers
 bignum = "0.3.10" # https://github.com/ionspin/kotlin-multiplatform-bignum
@@ -58,7 +57,6 @@ kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.
 
 # other
 kotlin-logging = { module = "io.github.oshai:kotlin-logging", version.ref = "kotlin-logging" }
-kotlin-logging-old = { module = "io.github.microutils:kotlin-logging", version.ref = "kotlin-logging-old" }
 slf4j-api = { module = "org.slf4j:slf4j-api", version.ref = "slf4j" }
 kotlin-node = { module = "org.jetbrains.kotlin-wrappers:kotlin-node", version.ref = "kotlin-node" }
 

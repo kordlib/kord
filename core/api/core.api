@@ -104,7 +104,6 @@ public final class dev/kord/core/Kord$Companion {
 public final class dev/kord/core/KordKt {
 	public static final fun Kord (Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static synthetic fun Kord$default (Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
-	public static final synthetic fun getKordLogger ()Lmu/KLogger;
 	public static final fun logCaughtThrowable (Ljava/lang/Throwable;)V
 }
 

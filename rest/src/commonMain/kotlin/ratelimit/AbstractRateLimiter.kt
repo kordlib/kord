@@ -33,7 +33,9 @@ public abstract class AbstractRateLimiter internal constructor(public val clock:
     }
 
     override suspend fun await(request: Request<*, *>): RequestToken {
-        globalSuspensionPoint.value.await()
+        if (request.route.affectedByGlobalRateLimit) {
+            globalSuspensionPoint.value.await()
+        }
         val buckets = request.buckets
         buckets.forEach { it.awaitAndLock() }
 

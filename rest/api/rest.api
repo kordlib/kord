@@ -6441,7 +6441,6 @@ public final class dev/kord/rest/route/DiscordCdn {
 	public static final field INSTANCE Ldev/kord/rest/route/DiscordCdn;
 	public final fun applicationCover (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;)Ldev/kord/rest/route/CdnUrl;
 	public final fun applicationIcon (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;)Ldev/kord/rest/route/CdnUrl;
-	public final synthetic fun defaultAvatar (I)Ldev/kord/rest/route/CdnUrl;
 	public final fun defaultUserAvatar (I)Ldev/kord/rest/route/CdnUrl;
 	public final fun defaultUserAvatar (Ldev/kord/common/entity/Snowflake;)Ldev/kord/rest/route/CdnUrl;
 	public final fun emoji (Ldev/kord/common/entity/Snowflake;)Ldev/kord/rest/route/CdnUrl;
@@ -6493,10 +6492,11 @@ public abstract interface class dev/kord/rest/route/ResponseMapper {
 
 public abstract class dev/kord/rest/route/Route {
 	public static final field Companion Ldev/kord/rest/route/Route$Companion;
-	public synthetic fun <init> (Lio/ktor/http/HttpMethod;Ljava/lang/String;Ldev/kord/rest/route/ResponseMapper;ZILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public synthetic fun <init> (Lio/ktor/http/HttpMethod;Ljava/lang/String;Ldev/kord/rest/route/ResponseMapper;ZLkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public synthetic fun <init> (Lio/ktor/http/HttpMethod;Ljava/lang/String;Lkotlinx/serialization/DeserializationStrategy;ZILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public synthetic fun <init> (Lio/ktor/http/HttpMethod;Ljava/lang/String;Lkotlinx/serialization/DeserializationStrategy;ZLkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (Lio/ktor/http/HttpMethod;Ljava/lang/String;Ldev/kord/rest/route/ResponseMapper;ZZILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (Lio/ktor/http/HttpMethod;Ljava/lang/String;Ldev/kord/rest/route/ResponseMapper;ZZLkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (Lio/ktor/http/HttpMethod;Ljava/lang/String;Lkotlinx/serialization/DeserializationStrategy;ZZILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (Lio/ktor/http/HttpMethod;Ljava/lang/String;Lkotlinx/serialization/DeserializationStrategy;ZZLkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun getAffectedByGlobalRateLimit ()Z
 	public final fun getMapper ()Ldev/kord/rest/route/ResponseMapper;
 	public final fun getMethod ()Lio/ktor/http/HttpMethod;
 	public final fun getPath ()Ljava/lang/String;
