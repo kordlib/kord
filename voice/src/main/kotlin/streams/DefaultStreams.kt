@@ -31,17 +31,10 @@ private val defaultStreamsLogger = KotlinLogging.logger { }
 
 @KordVoice
 public class DefaultStreams internal constructor(
-    gateway: VoiceGateway,
-    strategy: @Suppress("DEPRECATION") NonceStrategy?,
-    udpSocket: VoiceUdpSocket,
+    private val voiceGateway: VoiceGateway,
+    private val nonceStrategy: @Suppress("DEPRECATION") NonceStrategy?,
+    private val udp: VoiceUdpSocket,
 ) : Streams {
-    private val voiceGateway = gateway
-    private val udp = udpSocket
-    private val nonceStrategy = strategy
-
-    public constructor(voiceGateway: VoiceGateway, udp: VoiceUdpSocket) :
-        this(gateway = voiceGateway, strategy = null, udpSocket = udp)
-
     @Deprecated(
         "The 'nonceStrategy' parameter is only used for XSalsa20 Poly1305 encryption. Construct a 'DefaultStreams' " +
             "instance without a 'NonceStrategy' instead. $XSalsa20_CONSTRUCTOR_DEPRECATION",
@@ -50,15 +43,14 @@ public class DefaultStreams internal constructor(
     )
     public constructor(
         voiceGateway: VoiceGateway, udp: VoiceUdpSocket, nonceStrategy: @Suppress("DEPRECATION") NonceStrategy,
-    ) : this(gateway = voiceGateway, strategy = nonceStrategy, udpSocket = udp)
+    ) : this(voiceGateway, nonceStrategy, udp)
+
+    public constructor(voiceGateway: VoiceGateway, udp: VoiceUdpSocket) : this(voiceGateway, nonceStrategy = null, udp)
 
     internal fun CoroutineScope.listenForIncoming(
-        udp: VoiceUdpSocket,
-        key: ByteArray,
-        server: SocketAddress,
+        key: ByteArray, server: SocketAddress,
         @Suppress("LocalVariableName") _incomingAudioPackets: MutableSharedFlow<RTPPacket>,
-        nonceStrategy: @Suppress("DEPRECATION") NonceStrategy,
-        emitVoicePacket: suspend (RTPPacket) -> Unit,
+        nonceStrategy: @Suppress("DEPRECATION") NonceStrategy, emitVoicePacket: suspend (RTPPacket) -> Unit,
     ) {
         udp.incoming
             .filter { it.address == server }
@@ -92,22 +84,6 @@ public class DefaultStreams internal constructor(
             }.launchIn(this)
     }
 
-    override suspend fun listen(key: ByteArray, server: SocketAddress, encryptionMode: EncryptionMode) {
-        val decryptionDelegate = @Suppress("DEPRECATION") when (encryptionMode) {
-            EncryptionMode.AeadAes256GcmRtpSize -> NewDecryptionDelegate(AeadAes256GcmRtpSizeVoicePacketDecryptor(key))
-            EncryptionMode.AeadXChaCha20Poly1305RtpSize ->
-                NewDecryptionDelegate(AeadXChaCha20Poly1305RtpSizeVoicePacketDecryptor(key))
-            EncryptionMode.XSalsa20Poly1305 ->
-                LegacyDecryptionDelegate(key, this, nonceStrategy as? NormalNonceStrategy ?: NormalNonceStrategy())
-            EncryptionMode.XSalsa20Poly1305Lite ->
-                LegacyDecryptionDelegate(key, this, nonceStrategy as? LiteNonceStrategy ?: LiteNonceStrategy())
-            EncryptionMode.XSalsa20Poly1305Suffix ->
-                LegacyDecryptionDelegate(key, this, nonceStrategy as? SuffixNonceStrategy ?: SuffixNonceStrategy())
-            is EncryptionMode.Unknown -> throw UnsupportedOperationException("Unknown encryption mode $encryptionMode")
-        }
-        listen(decryptionDelegate, server)
-    }
-
     @Deprecated(
         "This functions always uses XSalsa20 Poly1305 encryption. Pass an explicit 'EncryptionMode' instead. A " +
             "'DefaultStreams' instance can be created without a 'NonceStrategy' in which case this function throws " +
@@ -122,6 +98,22 @@ public class DefaultStreams internal constructor(
         val strategy = nonceStrategy
             ?: throw UnsupportedOperationException("This DefaultStreams instance was created without a NonceStrategy.")
         listen(LegacyDecryptionDelegate(key, this, strategy), server)
+    }
+
+    override suspend fun listen(key: ByteArray, server: SocketAddress, encryptionMode: EncryptionMode) {
+        val decryptionDelegate = @Suppress("DEPRECATION") when (encryptionMode) {
+            EncryptionMode.AeadAes256GcmRtpSize -> NewDecryptionDelegate(AeadAes256GcmRtpSizeVoicePacketDecryptor(key))
+            EncryptionMode.AeadXChaCha20Poly1305RtpSize ->
+                NewDecryptionDelegate(AeadXChaCha20Poly1305RtpSizeVoicePacketDecryptor(key))
+            EncryptionMode.XSalsa20Poly1305 ->
+                LegacyDecryptionDelegate(key, this, nonceStrategy as? NormalNonceStrategy ?: NormalNonceStrategy())
+            EncryptionMode.XSalsa20Poly1305Lite ->
+                LegacyDecryptionDelegate(key, this, nonceStrategy as? LiteNonceStrategy ?: LiteNonceStrategy())
+            EncryptionMode.XSalsa20Poly1305Suffix ->
+                LegacyDecryptionDelegate(key, this, nonceStrategy as? SuffixNonceStrategy ?: SuffixNonceStrategy())
+            is EncryptionMode.Unknown -> throw UnsupportedOperationException("Unknown encryption mode $encryptionMode")
+        }
+        listen(decryptionDelegate, server)
     }
 
     private suspend fun listen(delegate: DecryptionDelegate, server: SocketAddress): Unit = coroutineScope {
@@ -223,7 +215,7 @@ private class LegacyDecryptionDelegate(
         audioPackets: MutableSharedFlow<RTPPacket>,
         voicePackets: MutableSharedFlow<DecryptedVoicePacket>,
     ) = with(streams) {
-        scope.listenForIncoming(udp, key, server, audioPackets, nonceStrategy) { rtpPacket ->
+        scope.listenForIncoming(key, server, audioPackets, nonceStrategy) { rtpPacket ->
             if (voicePackets.subscriptionCount.value > 0) {
                 voicePackets.emit(
                     @OptIn(ExperimentalUnsignedTypes::class)

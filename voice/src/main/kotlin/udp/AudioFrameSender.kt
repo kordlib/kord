@@ -24,8 +24,8 @@ public data class AudioFrameSenderConfiguration(
     public constructor(
         server: SocketAddress, ssrc: UInt, key: ByteArray, interceptorConfiguration: FrameInterceptorConfiguration,
     ) : this(
-        server = server, ssrc = ssrc, key = key, interceptorConfiguration = interceptorConfiguration,
-        encryptionMode = EncryptionMode.from("AudioFrameSenderConfiguration.encryptionMode placeholder"),
+        server, ssrc, key, interceptorConfiguration,
+        EncryptionMode.from("AudioFrameSenderConfiguration.encryptionMode placeholder"),
     )
 
     @Deprecated(
@@ -35,10 +35,8 @@ public data class AudioFrameSenderConfiguration(
     public fun copy(
         server: SocketAddress = this.server, ssrc: UInt = this.ssrc, key: ByteArray = this.key,
         interceptorConfiguration: FrameInterceptorConfiguration = this.interceptorConfiguration,
-    ): AudioFrameSenderConfiguration = AudioFrameSenderConfiguration(
-        server = server, ssrc = ssrc, key = key, interceptorConfiguration = interceptorConfiguration,
-        encryptionMode = this.encryptionMode,
-    )
+    ): AudioFrameSenderConfiguration =
+        AudioFrameSenderConfiguration(server, ssrc, key, interceptorConfiguration, encryptionMode)
 }
 
 @KordVoice

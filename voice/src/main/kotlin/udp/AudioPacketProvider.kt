@@ -19,6 +19,15 @@ public abstract class AudioPacketProvider internal constructor(
     public val key: ByteArray,
 ) {
     @Deprecated(
+        "The 'nonceStrategy' property is only used for XSalsa20 Poly1305 encryption. Construct an " +
+            "'AudioPacketProvider' instance without a 'nonceStrategy' instead. $XSalsa20_CONSTRUCTOR_DEPRECATION",
+        ReplaceWith("AudioPacketProvider(key)", imports = ["dev.kord.voice.udp.AudioPacketProvider"]),
+        DeprecationLevel.WARNING,
+    )
+    public constructor(key: ByteArray, nonceStrategy: @Suppress("DEPRECATION") NonceStrategy) : this(nonceStrategy, key)
+    public constructor(key: ByteArray) : this(strategy = null, key)
+
+    @Deprecated(
         "The 'nonceStrategy' property is only used for XSalsa20 Poly1305 encryption. An 'AudioPacketProvider' " +
             "instance can be created without a 'nonceStrategy' in which case this property throws an " +
             "'UnsupportedOperationException'. $XSalsa20_PROPERTY_DEPRECATION",
@@ -29,17 +38,6 @@ public abstract class AudioPacketProvider internal constructor(
             "This AudioPacketProvider instance was created without a nonceStrategy."
         )
 
-    @Deprecated(
-        "The 'nonceStrategy' property is only used for XSalsa20 Poly1305 encryption. Construct an " +
-            "'AudioPacketProvider' instance without a 'nonceStrategy' instead. $XSalsa20_CONSTRUCTOR_DEPRECATION",
-        ReplaceWith("AudioPacketProvider(key)", imports = ["dev.kord.voice.udp.AudioPacketProvider"]),
-        DeprecationLevel.WARNING,
-    )
-    public constructor(key: ByteArray, nonceStrategy: @Suppress("DEPRECATION") NonceStrategy) :
-        this(strategy = nonceStrategy, key = key)
-
-    public constructor(key: ByteArray) : this(strategy = null, key = key)
-
     public abstract fun provide(sequence: UShort, timestamp: UInt, ssrc: UInt, data: ByteArray): ByteArrayView
 }
 
@@ -47,7 +45,7 @@ private class CouldNotEncryptDataException(data: ByteArray) :
     RuntimeException("Couldn't encrypt the following data: [${data.joinToString(", ")}]")
 
 public class DefaultAudioPacketProvider internal constructor(
-    key: ByteArray, encryptionMode: EncryptionMode?, nonceStrategy: @Suppress("DEPRECATION") NonceStrategy?,
+    key: ByteArray, nonceStrategy: @Suppress("DEPRECATION") NonceStrategy?, encryptionMode: EncryptionMode?,
 ) : AudioPacketProvider(nonceStrategy, key) {
     @Deprecated(
         "The 'nonceStrategy' property is only used for XSalsa20 Poly1305 encryption. Construct a " +
@@ -60,10 +58,9 @@ public class DefaultAudioPacketProvider internal constructor(
         DeprecationLevel.WARNING,
     )
     public constructor(key: ByteArray, nonceStrategy: @Suppress("DEPRECATION") NonceStrategy) :
-        this(key = key, encryptionMode = null, nonceStrategy = nonceStrategy)
+        this(key, nonceStrategy, encryptionMode = null)
 
-    public constructor(key: ByteArray, encryptionMode: EncryptionMode) :
-        this(key = key, encryptionMode = encryptionMode, nonceStrategy = null)
+    public constructor(key: ByteArray, encryptionMode: EncryptionMode) : this(key, nonceStrategy = null, encryptionMode)
 
     private val delegate = if (nonceStrategy != null) {
         LegacyProviderDelegate(key, nonceStrategy)
