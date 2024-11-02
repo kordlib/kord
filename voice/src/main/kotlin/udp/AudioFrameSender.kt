@@ -19,7 +19,12 @@ public data class AudioFrameSenderConfiguration(
     @Deprecated(
         "An 'AudioFrameSenderConfiguration' instance must be created with an 'encryptionMode'. " +
             XSalsa20_CONSTRUCTOR_DEPRECATION,
-        level = DeprecationLevel.WARNING,
+        ReplaceWith(
+            "AudioFrameSenderConfiguration(server, ssrc, key, interceptorConfiguration, " +
+                "EncryptionMode.AeadXChaCha20Poly1305RtpSize)",
+            imports = ["dev.kord.voice.udp.AudioFrameSenderConfiguration", "dev.kord.voice.EncryptionMode"],
+        ),
+        DeprecationLevel.WARNING,
     )
     public constructor(
         server: SocketAddress, ssrc: UInt, key: ByteArray, interceptorConfiguration: FrameInterceptorConfiguration,
