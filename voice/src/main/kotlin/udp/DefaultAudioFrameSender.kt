@@ -15,8 +15,8 @@ import kotlin.random.Random
 private val audioFrameSenderLogger = KotlinLogging.logger { }
 
 @KordVoice
-public class DefaultAudioFrameSenderData private constructor(private val wrapper: Wrapper) {
-    private data class Wrapper(
+public class DefaultAudioFrameSenderData private constructor(private val data: DataHolder) {
+    private data class DataHolder(
         val udp: VoiceUdpSocket,
         val interceptor: FrameInterceptor,
         val provider: AudioProvider,
@@ -41,7 +41,7 @@ public class DefaultAudioFrameSenderData private constructor(private val wrapper
     internal constructor(
         udp: VoiceUdpSocket, interceptor: FrameInterceptor, nonceStrategy: @Suppress("DEPRECATION") NonceStrategy?,
         provider: AudioProvider,
-    ) : this(Wrapper(udp, interceptor, provider, nonceStrategy))
+    ) : this(DataHolder(udp, interceptor, provider, nonceStrategy))
 
     public constructor(udp: VoiceUdpSocket, interceptor: FrameInterceptor, provider: AudioProvider) :
         this(udp, interceptor, nonceStrategy = null, provider)
@@ -53,14 +53,14 @@ public class DefaultAudioFrameSenderData private constructor(private val wrapper
         level = DeprecationLevel.WARNING,
     )
     public val nonceStrategy: @Suppress("DEPRECATION") NonceStrategy
-        get() = wrapper.nonceStrategy ?: throw UnsupportedOperationException(
+        get() = data.nonceStrategy ?: throw UnsupportedOperationException(
             "This DefaultAudioFrameSenderData instance was created without a nonceStrategy."
         )
 
-    public val udp: VoiceUdpSocket get() = wrapper.udp
-    public val interceptor: FrameInterceptor get() = wrapper.interceptor
-    public val provider: AudioProvider get() = wrapper.provider
-    internal val strategy get() = wrapper.nonceStrategy
+    public val udp: VoiceUdpSocket get() = data.udp
+    public val interceptor: FrameInterceptor get() = data.interceptor
+    public val provider: AudioProvider get() = data.provider
+    internal val strategy get() = data.nonceStrategy
 
     @Deprecated(
         "The 'nonceStrategy' property is only used for XSalsa20 Poly1305 encryption. A 'DefaultAudioFrameSenderData' " +
@@ -69,7 +69,7 @@ public class DefaultAudioFrameSenderData private constructor(private val wrapper
         level = DeprecationLevel.WARNING,
     )
     public operator fun component4(): @Suppress("DEPRECATION") NonceStrategy =
-        wrapper.nonceStrategy ?: throw UnsupportedOperationException(
+        data.nonceStrategy ?: throw UnsupportedOperationException(
             "This DefaultAudioFrameSenderData instance was created without a nonceStrategy."
         )
 
@@ -98,8 +98,8 @@ public class DefaultAudioFrameSenderData private constructor(private val wrapper
         provider: AudioProvider = this.provider,
     ): DefaultAudioFrameSenderData = DefaultAudioFrameSenderData(udp, interceptor, strategy, provider)
 
-    override fun equals(other: Any?): Boolean = other is DefaultAudioFrameSenderData && this.wrapper == other.wrapper
-    override fun hashCode(): Int = wrapper.hashCode()
+    override fun equals(other: Any?): Boolean = other is DefaultAudioFrameSenderData && this.data == other.data
+    override fun hashCode(): Int = data.hashCode()
     override fun toString(): String = when (val ns = strategy) {
         null -> "DefaultAudioFrameSenderData(udp=$udp, interceptor=$interceptor, provider=$provider)"
         else -> "DefaultAudioFrameSenderData(udp=$udp, interceptor=$interceptor, provider=$provider, nonceStrategy=$ns)"
