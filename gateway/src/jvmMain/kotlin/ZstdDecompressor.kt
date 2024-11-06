@@ -3,7 +3,6 @@ package dev.kord.gateway
 import com.github.luben.zstd.ZstdInputStream
 import io.ktor.websocket.*
 import java.io.ByteArrayInputStream
-import java.io.InputStream
 
 internal actual fun ZstdDecompressor() = object : Decompressor {
 
@@ -11,7 +10,7 @@ internal actual fun ZstdDecompressor() = object : Decompressor {
     private val zstdStream = ZstdInputStream(input).apply { continuous = true }
 
     override fun Frame.decompress(): String {
-        input.updateDelegate(data)
+        input.update(data)
         return zstdStream.readBytes().decodeToString()
     }
 
@@ -20,14 +19,10 @@ internal actual fun ZstdDecompressor() = object : Decompressor {
     }
 }
 
-private class UpdatableByteArrayInputStream : InputStream() {
-    private var delegate: ByteArrayInputStream? = null
-
-    private val d: InputStream get() = delegate ?: error("No data available")
-
-    override fun read(): Int = d.read()
-
-    fun updateDelegate(bytes: ByteArray) {
-        delegate = ByteArrayInputStream(bytes)
+private class UpdatableByteArrayInputStream : ByteArrayInputStream(ByteArray(0)) {
+    fun update(newBuf: ByteArray) {
+        this.pos = 0
+        this.buf = newBuf
+        this.count = newBuf.size
     }
 }
