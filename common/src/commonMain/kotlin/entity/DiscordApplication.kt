@@ -184,5 +184,5 @@ public data class InstallParams(
 public data class ApplicationIntegrationTypeConfig(
     /** Install params for each installation context's default in-app authorization link */
     @SerialName("oauth2_install_params")
-    val oauth2InstallParams: InstallParams
+    val oauth2InstallParams: Optional<InstallParams> = Optional.Missing()
 )

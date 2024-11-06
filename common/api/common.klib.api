@@ -384,13 +384,13 @@ final class dev.kord.common.entity/ApplicationFlags { // dev.kord.common.entity/
 }
 
 final class dev.kord.common.entity/ApplicationIntegrationTypeConfig { // dev.kord.common.entity/ApplicationIntegrationTypeConfig|null[0]
-    constructor <init>(dev.kord.common.entity/InstallParams) // dev.kord.common.entity/ApplicationIntegrationTypeConfig.<init>|<init>(dev.kord.common.entity.InstallParams){}[0]
+    constructor <init>(dev.kord.common.entity.optional/Optional<dev.kord.common.entity/InstallParams> = ...) // dev.kord.common.entity/ApplicationIntegrationTypeConfig.<init>|<init>(dev.kord.common.entity.optional.Optional<dev.kord.common.entity.InstallParams>){}[0]
 
     final val oauth2InstallParams // dev.kord.common.entity/ApplicationIntegrationTypeConfig.oauth2InstallParams|{}oauth2InstallParams[0]
-        final fun <get-oauth2InstallParams>(): dev.kord.common.entity/InstallParams // dev.kord.common.entity/ApplicationIntegrationTypeConfig.oauth2InstallParams.<get-oauth2InstallParams>|<get-oauth2InstallParams>(){}[0]
+        final fun <get-oauth2InstallParams>(): dev.kord.common.entity.optional/Optional<dev.kord.common.entity/InstallParams> // dev.kord.common.entity/ApplicationIntegrationTypeConfig.oauth2InstallParams.<get-oauth2InstallParams>|<get-oauth2InstallParams>(){}[0]
 
-    final fun component1(): dev.kord.common.entity/InstallParams // dev.kord.common.entity/ApplicationIntegrationTypeConfig.component1|component1(){}[0]
-    final fun copy(dev.kord.common.entity/InstallParams = ...): dev.kord.common.entity/ApplicationIntegrationTypeConfig // dev.kord.common.entity/ApplicationIntegrationTypeConfig.copy|copy(dev.kord.common.entity.InstallParams){}[0]
+    final fun component1(): dev.kord.common.entity.optional/Optional<dev.kord.common.entity/InstallParams> // dev.kord.common.entity/ApplicationIntegrationTypeConfig.component1|component1(){}[0]
+    final fun copy(dev.kord.common.entity.optional/Optional<dev.kord.common.entity/InstallParams> = ...): dev.kord.common.entity/ApplicationIntegrationTypeConfig // dev.kord.common.entity/ApplicationIntegrationTypeConfig.copy|copy(dev.kord.common.entity.optional.Optional<dev.kord.common.entity.InstallParams>){}[0]
     final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.common.entity/ApplicationIntegrationTypeConfig.equals|equals(kotlin.Any?){}[0]
     final fun hashCode(): kotlin/Int // dev.kord.common.entity/ApplicationIntegrationTypeConfig.hashCode|hashCode(){}[0]
     final fun toString(): kotlin/String // dev.kord.common.entity/ApplicationIntegrationTypeConfig.toString|toString(){}[0]
@@ -405,6 +405,8 @@ final class dev.kord.common.entity/ApplicationIntegrationTypeConfig { // dev.kor
     }
 
     final object Companion { // dev.kord.common.entity/ApplicationIntegrationTypeConfig.Companion|null[0]
+        final val $childSerializers // dev.kord.common.entity/ApplicationIntegrationTypeConfig.Companion.$childSerializers|{}$childSerializers[0]
+
         final fun serializer(): kotlinx.serialization/KSerializer<dev.kord.common.entity/ApplicationIntegrationTypeConfig> // dev.kord.common.entity/ApplicationIntegrationTypeConfig.Companion.serializer|serializer(){}[0]
     }
 }
