@@ -1,6 +1,6 @@
 package dev.kord.gateway
 
- import dev.kord.gateway.internal.Decompress
+import dev.kord.gateway.internal.Decompress
 import io.ktor.websocket.*
 import js.typedarrays.toUint8Array
 
