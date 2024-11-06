@@ -12,7 +12,7 @@ internal actual fun ZstdDecompressor() = object : Decompressor {
 
     override fun Frame.decompress(): String {
         input.updateDelegate(data)
-        return zstdStream.readAllBytes().decodeToString()
+        return zstdStream.readBytes().decodeToString()
     }
 
     override fun close() {
