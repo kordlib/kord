@@ -15,6 +15,7 @@ kotlin-node = "22.5.4-pre.818" # https://github.com/JetBrains/kotlin-wrappers
 bignum = "0.3.10" # https://github.com/ionspin/kotlin-multiplatform-bignum
 stately = "2.1.0" # https://github.com/touchlab/Stately
 fastZlib = "2.0.1" # https://github.com/timotejroiko/fast-zlib
+fzstd = "0.1.1" # https://github.com/101arrowz/fzstd/
 zstd-jni = "1.5.6-7" # https://github.com/luben/zstd-jni
 zstd-codec = "0.1.5" # https://www.npmjs.com/package/zstd-codec
 

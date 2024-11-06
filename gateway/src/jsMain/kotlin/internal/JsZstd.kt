@@ -1,7 +1,11 @@
-@file:JsModule("simple-zstd")
+@file:JsModule("fzstd")
 
 package dev.kord.gateway.internal
 
-import node.stream.Transform
+import js.typedarrays.Uint8Array
 
-internal external class ZSTDDecompress : Transform
+internal external class Decompress {
+    @JsName("ondata")
+    var onData: (data: Uint8Array, final: Boolean) -> Unit
+    fun push(chunk: Uint8Array, final: Boolean = definedExternally)
+}

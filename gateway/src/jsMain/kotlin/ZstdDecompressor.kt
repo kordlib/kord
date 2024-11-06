@@ -1,29 +1,21 @@
 package dev.kord.gateway
 
-import dev.kord.gateway.internal.ZSTDDecompress
+ import dev.kord.gateway.internal.Decompress
 import io.ktor.websocket.*
 import js.typedarrays.toUint8Array
-import node.stream.DuplexEvent
-import web.encoding.TextDecoder
 
 internal actual fun ZstdDecompressor() = object : Decompressor {
-    private val stream = ZSTDDecompress()
-    private val decoder = TextDecoder()
+    private val stream = Decompress()
 
     override fun Frame.decompress(): String {
-        try {
-            stream.write(data.toUint8Array())
-            stream.on(DuplexEvent.FINISH) {
-                println("finish")
-            }
-            stream.on(DuplexEvent.DATA) {
-                println("Data: $it")
-            }
-        } catch (exception: Exception) {
-            exception.printStackTrace()
+        var cache = ByteArray(0)
+        stream.onData = { data, _ ->
+            cache += data.toByteArray()
         }
-        return ""
+        // This call is sync, so if it finishes, the cache will store all the chunks
+        stream.push(data.toUint8Array())
+        return cache.decodeToString()
     }
 
-    override fun close() = stream.end()
+    override fun close() = Unit
 }

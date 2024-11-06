@@ -26,7 +26,7 @@ kotlin {
             dependencies {
                 implementation(libs.kotlin.node)
                 implementation(npm("fast-zlib", libs.versions.fastZlib.get()))
-                implementation(npm("simple-zstd", "1.4.2"))
+                 implementation(npm("fzstd", libs.versions.fzstd.get()))
 
                 // workaround for https://youtrack.jetbrains.com/issue/KT-43500 /
                 // https://youtrack.jetbrains.com/issue/KT-64109#focus=Comments-27-10064206.0-0 /
