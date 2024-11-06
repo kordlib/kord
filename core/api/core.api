@@ -2184,6 +2184,7 @@ public abstract class dev/kord/core/builder/kord/BaseKordBuilder {
 	public final fun cache (Lkotlin/jvm/functions/Function2;)V
 	public final fun gateways (Lkotlin/jvm/functions/Function2;)V
 	public final fun getApplicationId ()Ldev/kord/common/entity/Snowflake;
+	public final fun getCompression ()Ldev/kord/gateway/Compression;
 	public final fun getDefaultDispatcher ()Lkotlinx/coroutines/CoroutineDispatcher;
 	public final fun getDefaultStrategy ()Ldev/kord/core/supplier/EntitySupplyStrategy;
 	public final fun getEventFlow ()Lkotlinx/coroutines/flow/MutableSharedFlow;
@@ -2193,6 +2194,7 @@ public abstract class dev/kord/core/builder/kord/BaseKordBuilder {
 	public final fun getToken ()Ljava/lang/String;
 	public final fun requestHandler (Lkotlin/jvm/functions/Function1;)V
 	public final fun setApplicationId (Ldev/kord/common/entity/Snowflake;)V
+	public final fun setCompression (Ldev/kord/gateway/Compression;)V
 	public final fun setDefaultDispatcher (Lkotlinx/coroutines/CoroutineDispatcher;)V
 	public final fun setDefaultStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)V
 	public final fun setEventFlow (Lkotlinx/coroutines/flow/MutableSharedFlow;)V

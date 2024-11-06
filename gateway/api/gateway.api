@@ -219,6 +219,43 @@ public final class dev/kord/gateway/Command$SerializationStrategy : kotlinx/seri
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
 }
 
+public abstract interface class dev/kord/gateway/Compression {
+	public abstract fun getName ()Ljava/lang/String;
+	public abstract fun newDecompressor ()Ldev/kord/gateway/Decompressor;
+}
+
+public final class dev/kord/gateway/Compression$None : dev/kord/gateway/Compression {
+	public static final field INSTANCE Ldev/kord/gateway/Compression$None;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun getName ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun newDecompressor ()Ldev/kord/gateway/Decompressor;
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class dev/kord/gateway/Compression$ZLib : dev/kord/gateway/Compression {
+	public static final field INSTANCE Ldev/kord/gateway/Compression$ZLib;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun getName ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun newDecompressor ()Ldev/kord/gateway/Decompressor;
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class dev/kord/gateway/Compression$Zstd : dev/kord/gateway/Compression {
+	public static final field INSTANCE Ldev/kord/gateway/Compression$Zstd;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun getName ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun newDecompressor ()Ldev/kord/gateway/Decompressor;
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class dev/kord/gateway/Decompressor$Noop : dev/kord/gateway/Decompressor {
+	public fun close ()V
+	public fun decompress (Lio/ktor/websocket/Frame;)Ljava/lang/String;
+}
+
 public final class dev/kord/gateway/DefaultGateway : dev/kord/gateway/Gateway {
 	public static final field Companion Ldev/kord/gateway/DefaultGateway$Companion;
 	public fun <init> (Ldev/kord/gateway/DefaultGatewayData;)V
@@ -238,6 +275,7 @@ public final class dev/kord/gateway/DefaultGatewayBuilder {
 	public fun <init> ()V
 	public final fun build ()Ldev/kord/gateway/DefaultGateway;
 	public final fun getClient ()Lio/ktor/client/HttpClient;
+	public final fun getCompression ()Ldev/kord/gateway/Compression;
 	public final fun getDispatcher ()Lkotlinx/coroutines/CoroutineDispatcher;
 	public final fun getEventFlow ()Lkotlinx/coroutines/flow/MutableSharedFlow;
 	public final fun getIdentifyRateLimiter ()Ldev/kord/gateway/ratelimit/IdentifyRateLimiter;
@@ -245,6 +283,7 @@ public final class dev/kord/gateway/DefaultGatewayBuilder {
 	public final fun getSendRateLimiter ()Ldev/kord/common/ratelimit/RateLimiter;
 	public final fun getUrl ()Ljava/lang/String;
 	public final fun setClient (Lio/ktor/client/HttpClient;)V
+	public final fun setCompression (Ldev/kord/gateway/Compression;)V
 	public final fun setDispatcher (Lkotlinx/coroutines/CoroutineDispatcher;)V
 	public final fun setEventFlow (Lkotlinx/coroutines/flow/MutableSharedFlow;)V
 	public final fun setIdentifyRateLimiter (Ldev/kord/gateway/ratelimit/IdentifyRateLimiter;)V
@@ -254,7 +293,7 @@ public final class dev/kord/gateway/DefaultGatewayBuilder {
 }
 
 public final class dev/kord/gateway/DefaultGatewayData {
-	public fun <init> (Ljava/lang/String;Lio/ktor/client/HttpClient;Ldev/kord/gateway/retry/Retry;Ldev/kord/common/ratelimit/RateLimiter;Ldev/kord/gateway/ratelimit/IdentifyRateLimiter;Lkotlinx/coroutines/CoroutineDispatcher;Lkotlinx/coroutines/flow/MutableSharedFlow;)V
+	public fun <init> (Ljava/lang/String;Lio/ktor/client/HttpClient;Ldev/kord/gateway/retry/Retry;Ldev/kord/common/ratelimit/RateLimiter;Ldev/kord/gateway/ratelimit/IdentifyRateLimiter;Lkotlinx/coroutines/CoroutineDispatcher;Lkotlinx/coroutines/flow/MutableSharedFlow;Ldev/kord/gateway/Compression;)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun component2 ()Lio/ktor/client/HttpClient;
 	public final fun component3 ()Ldev/kord/gateway/retry/Retry;
@@ -262,10 +301,12 @@ public final class dev/kord/gateway/DefaultGatewayData {
 	public final fun component5 ()Ldev/kord/gateway/ratelimit/IdentifyRateLimiter;
 	public final fun component6 ()Lkotlinx/coroutines/CoroutineDispatcher;
 	public final fun component7 ()Lkotlinx/coroutines/flow/MutableSharedFlow;
-	public final fun copy (Ljava/lang/String;Lio/ktor/client/HttpClient;Ldev/kord/gateway/retry/Retry;Ldev/kord/common/ratelimit/RateLimiter;Ldev/kord/gateway/ratelimit/IdentifyRateLimiter;Lkotlinx/coroutines/CoroutineDispatcher;Lkotlinx/coroutines/flow/MutableSharedFlow;)Ldev/kord/gateway/DefaultGatewayData;
-	public static synthetic fun copy$default (Ldev/kord/gateway/DefaultGatewayData;Ljava/lang/String;Lio/ktor/client/HttpClient;Ldev/kord/gateway/retry/Retry;Ldev/kord/common/ratelimit/RateLimiter;Ldev/kord/gateway/ratelimit/IdentifyRateLimiter;Lkotlinx/coroutines/CoroutineDispatcher;Lkotlinx/coroutines/flow/MutableSharedFlow;ILjava/lang/Object;)Ldev/kord/gateway/DefaultGatewayData;
+	public final fun component8 ()Ldev/kord/gateway/Compression;
+	public final fun copy (Ljava/lang/String;Lio/ktor/client/HttpClient;Ldev/kord/gateway/retry/Retry;Ldev/kord/common/ratelimit/RateLimiter;Ldev/kord/gateway/ratelimit/IdentifyRateLimiter;Lkotlinx/coroutines/CoroutineDispatcher;Lkotlinx/coroutines/flow/MutableSharedFlow;Ldev/kord/gateway/Compression;)Ldev/kord/gateway/DefaultGatewayData;
+	public static synthetic fun copy$default (Ldev/kord/gateway/DefaultGatewayData;Ljava/lang/String;Lio/ktor/client/HttpClient;Ldev/kord/gateway/retry/Retry;Ldev/kord/common/ratelimit/RateLimiter;Ldev/kord/gateway/ratelimit/IdentifyRateLimiter;Lkotlinx/coroutines/CoroutineDispatcher;Lkotlinx/coroutines/flow/MutableSharedFlow;Ldev/kord/gateway/Compression;ILjava/lang/Object;)Ldev/kord/gateway/DefaultGatewayData;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getClient ()Lio/ktor/client/HttpClient;
+	public final fun getCompression ()Ldev/kord/gateway/Compression;
 	public final fun getDispatcher ()Lkotlinx/coroutines/CoroutineDispatcher;
 	public final fun getEventFlow ()Lkotlinx/coroutines/flow/MutableSharedFlow;
 	public final fun getIdentifyRateLimiter ()Ldev/kord/gateway/ratelimit/IdentifyRateLimiter;
