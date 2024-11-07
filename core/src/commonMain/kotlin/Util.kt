@@ -396,6 +396,13 @@ public fun Intents.Builder.enableEvent(event: KClass<out Event>): Unit = when (e
     AutoModerationRuleDeleteEvent::class,
     -> +AutoModerationConfiguration
 
+    EmojisUpdateEvent::class,
+        GuildSoundboardSoundCreateEvent::class,
+        GuildSoundboardSoundUpdateEvent::class,
+        GuildSoundboardSoundsUpdateEvent::class,
+        GuildSoundboardSoundDeletEvent::class,
+        -> +Intent.GuildExpressions
+
 
     /*
      * events requiring multiple intents:

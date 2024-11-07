@@ -48,6 +48,16 @@
             """,
         ),
         Entry(
+            "GuildExpressions", shift = 3,
+            kDoc = """
+                Enables the following events:
+                - [EmojisUpdateEvent]
+                - [SoundboardSoundCreatedEvent]
+                - [SoundboardSoundUpdateEvent]
+                - [SoundboardSoundDeleteEvent]
+            """
+        ),
+        Entry(
             "GuildEmojis", shift = 3,
             kDoc = """
                 Enables the following events:
