@@ -5,7 +5,6 @@ import dev.kord.cache.api.put
 import dev.kord.cache.api.putAll
 import dev.kord.cache.api.query
 import dev.kord.common.entity.DiscordGuild
-import dev.kord.common.entity.DiscordSoundboardSound
 import dev.kord.common.entity.optional.optionalSnowflake
 import dev.kord.common.entity.optional.orEmpty
 import dev.kord.core.Kord
@@ -18,10 +17,12 @@ import dev.kord.core.event.role.RoleDeleteEvent
 import dev.kord.core.event.role.RoleUpdateEvent
 import dev.kord.core.event.user.PresenceUpdateEvent
 import dev.kord.gateway.*
+import dev.kord.gateway.SoundboardSounds
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.singleOrNull
 import kotlinx.coroutines.flow.toSet
 import dev.kord.core.event.Event as CoreEvent
+import dev.kord.core.event.guild.SoundboardSounds as CoreSoundboardSounds
 
 internal class GuildEventHandler : BaseGatewayEventHandler() {
 
@@ -54,6 +55,7 @@ internal class GuildEventHandler : BaseGatewayEventHandler() {
             is GuildSoundboardSoundsUpdate -> handle(event, shard, kord, context)
             is GuildSoundboardSoundUpdate -> handle(event, shard, kord, context)
             is GuildSoundboardSoundDelete -> handle(event, shard, kord, context)
+            is SoundboardSounds -> handle(event, shard, kord, context)
             is PresenceUpdate -> handle(event, shard, kord, context)
             is InviteCreate -> handle(event, shard, kord, context)
             is InviteDelete -> handle(event, shard, kord, context)
@@ -575,6 +577,25 @@ internal class GuildEventHandler : BaseGatewayEventHandler() {
             data?.let { GuildSoundboardSound(it, kord) },
             event.sound.soundId,
             event.sound.guildId,
+            shard,
+            context?.get(),
+            kord
+        )
+    }
+
+    private suspend fun handle(
+        event: SoundboardSounds,
+        shard: Int,
+        kord: Kord,
+        context: LazyContext?,
+    ): CoreSoundboardSounds {
+        val data = event.data.soundboardSounds.map(SoundboardSoundData::from)
+
+        kord.cache.putAll(data)
+
+        return CoreSoundboardSounds(
+            data.map { GuildSoundboardSound(it, kord) },
+            event.data.guildId,
             shard,
             context?.get(),
             kord

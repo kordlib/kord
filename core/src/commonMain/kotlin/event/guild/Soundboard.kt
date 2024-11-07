@@ -3,8 +3,12 @@ package dev.kord.core.event.guild
 import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.Kord
+import dev.kord.core.entity.Guild
 import dev.kord.core.entity.GuildSoundboardSound
+import dev.kord.core.entity.Strategizable
 import dev.kord.core.event.Event
+import dev.kord.core.supplier.EntitySupplier
+import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.gateway.VoiceChannelEffect
 
 /**
@@ -75,3 +79,24 @@ public class VoiceChannelEffectSentEvent(
     override val shard: Int, @KordPreview
     override val customContext: Any?, override val kord: Kord
 ) : Event
+
+public class SoundboardSounds(
+    public val sounds: List<GuildSoundboardSound>,
+    public val guildId: Snowflake,
+    override val shard: Int,
+    @KordPreview
+    override val customContext: Any?,
+    override val kord: Kord,
+    override val supplier: EntitySupplier = kord.defaultSupplier
+) : Event, Strategizable {
+    public suspend fun getGuild(): Guild = supplier.getGuild(guildId)
+
+    override fun withStrategy(strategy: EntitySupplyStrategy<*>): Strategizable = SoundboardSounds(
+        sounds,
+        guildId,
+        shard,
+        customContext,
+        kord,
+        strategy.supply(kord)
+    )
+}
