@@ -81,6 +81,15 @@ public interface GuildBehavior : KordEntity, Strategizable {
         get() = supplier.getActiveThreads(id)
 
     /**
+     * Returns all [soundboard sounds][GuildSoundboardSound] in this guild.
+     *
+     * The returned flow is lazily executed, any [RequestException] will be thrown on
+     * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
+     */
+    public val soundboardSounds: Flow<GuildSoundboardSound>
+        get() = supplier.getGuildSoundboardSounds(id)
+
+    /**
      * Requests to get all threads in this guild that are present in [cache][Kord.cache].
      *
      * This property is not resolvable through REST and will always use [Kord.cache] instead.
@@ -597,6 +606,24 @@ public interface GuildBehavior : KordEntity, Strategizable {
      */
     public suspend fun getGuildScheduledEventOrNull(eventId: Snowflake): GuildScheduledEvent? =
         supplier.getGuildScheduledEventOrNull(id, eventId)
+
+    /**
+     * Requests a [GuildSoundboardSound] by its [soundId].
+     *
+     * @throws [RequestException] if anything went wrong during the request.
+     * @throws EntityNotFoundException if the sound is null
+     */
+    public suspend fun getSoundboardSound(soundId: Snowflake): GuildSoundboardSound =
+        supplier.getGuildSoundboardSound(id, soundId)
+
+    /**
+     * Requests a [GuildSoundboardSound] by its [soundId] returns `null` if none could be found.
+     *
+     * @throws [RequestException] if anything went wrong during the request.
+     * @throws EntityNotFoundException if the sound is null
+     */
+    public suspend fun getSoundboardSoundOrNull(soundId: Snowflake): GuildSoundboardSound? =
+        supplier.getGuildSoundboardSoundOrNull(id, soundId)
 
     public suspend fun getWidget(): GuildWidget = supplier.getGuildWidget(id)
 

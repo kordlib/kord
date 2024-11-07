@@ -23,7 +23,7 @@ public interface SoundboardSound : SoundboardSoundBehavior {
     public val data: SoundboardSoundData
 
     public val name: String get() = data.name
-    public val soundId: Snowflake get() = data.soundId
+    public val soundId: Snowflake get() = data.id
     public val volume: Double get() = data.volume
     public val emojiName: String? get() = data.emojiName
     public val available: Boolean get() = data.available
@@ -41,7 +41,7 @@ public class DefaultSoundboardSound(
     override val kord: Kord,
     override val supplier: EntitySupplier = kord.defaultSupplier
 ) : DefaultSoundboardSoundBehavior, SoundboardSound {
-    override val id: Snowflake get() = data.soundId
+    override val id: Snowflake get() = data.id
     override val emojiName: String
         get() = data.emojiName!!
 
@@ -61,11 +61,14 @@ public class GuildSoundboardSound(
     override val kord: Kord,
     override val supplier: EntitySupplier = kord.defaultSupplier
 ) : SoundboardSound, GuildSoundboardSoundBehavior {
-    override val id: Snowflake get() = data.soundId
+    override val id: Snowflake get() = data.id
     override val emojiName: String get() = data.emojiName!!
     override val guildId: Snowflake get() = data.guildId.value!!
     public val emojiId: Snowflake? get() = data.emojiId
     public val user: User get() = User(data.user.value!!, kord, supplier)
+
+    override suspend fun asGuildSoundboardSound(): GuildSoundboardSound = this
+    override suspend fun asGuildSoundboardSoundOrNull(): GuildSoundboardSound = this
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): GuildSoundboardSound =
         GuildSoundboardSound(data, kord, strategy.supply(kord))

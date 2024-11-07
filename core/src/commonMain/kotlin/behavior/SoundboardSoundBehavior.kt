@@ -1,16 +1,17 @@
 package dev.kord.core.behavior
 
-import dev.kord.common.entity.Permission
 import dev.kord.common.entity.Permission.Speak
 import dev.kord.common.entity.Permission.UseExternalSounds
 import dev.kord.common.entity.Permission.UseSoundboard
 import dev.kord.common.entity.Snowflake
+import dev.kord.common.exception.RequestException
 import dev.kord.core.behavior.channel.VoiceChannelBehavior
 import dev.kord.core.cache.data.SoundboardSoundData
 import dev.kord.core.entity.GuildSoundboardSound
 import dev.kord.core.entity.KordEntity
 import dev.kord.core.entity.Strategizable
 import dev.kord.core.entity.VoiceState
+import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.rest.builder.guild.SoundboardSoundModifyBuilder
 import dev.kord.rest.request.RestRequestException
@@ -65,6 +66,38 @@ public interface GuildSoundboardSoundBehavior : SoundboardSoundBehavior {
 
     override suspend fun send(channel: VoiceChannelBehavior): Unit =
         kord.rest.channel.sendSoundboardSound(id, channel.id, guildId)
+
+    /**
+     * Requests to get this behavior as a [GuildSoundboardSoundBehavior] .
+     *
+     * @throws RequestException if something went wrong during the request.
+     * @throws EntityNotFoundException if the sound wasn't present.
+     */
+    public suspend fun asGuildSoundboardSound(): GuildSoundboardSound = fetchGuildSoundboardSound()
+
+    /**
+     * Requests to get this behavior as a [GuildSoundboardSoundBehavior] or `null` if the sound does not exist.
+     *
+     * @throws RequestException if something went wrong during the request.
+     */
+    public suspend fun asGuildSoundboardSoundOrNull(): GuildSoundboardSound? = fetchGuildSoundboardSoundOrNull()
+
+    /**
+     * Retrieves to get this behavior as a [GuildSoundboardSoundBehavior] .
+     *
+     * @throws RequestException if something went wrong during the request.
+     * @throws EntityNotFoundException if the sound wasn't present.
+     */
+    public suspend fun fetchGuildSoundboardSound(): GuildSoundboardSound =
+        supplier.getGuildSoundboardSound(guildId, id)
+
+    /**
+     * Retrieves to get this behavior as a [GuildSoundboardSoundBehavior] or `null` if the sound does not exist.
+     *
+     * @throws RequestException if something went wrong during the request.
+     */
+    public suspend fun fetchGuildSoundboardSoundOrNull(): GuildSoundboardSound? =
+        supplier.getGuildSoundboardSoundOrNull(guildId, id)
 
     /**
      * Deletes this sound.

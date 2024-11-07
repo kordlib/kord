@@ -339,6 +339,30 @@ public interface EntitySupplier {
     public fun getEmojis(guildId: Snowflake): Flow<GuildEmoji>
 
     /**
+     * Requests the [GuildSoundboardSound] with the [soundId] in the [Guild] with the given [guildId].
+     *
+     * @throws RequestException if something went wrong while retrieving the emoji.
+     */
+    public suspend fun getGuildSoundboardSoundOrNull(guildId: Snowflake, soundId: Snowflake): GuildSoundboardSound?
+
+    /**
+     * Requests the [GuildSoundboardSound] with the [soundId] in the [Guild] wit the given [guildId].
+     *
+     * @throws RequestException if something went wrong while retrieving the emoji.
+     * @throws EntityNotFoundException if the sound was null.
+     */
+    public suspend fun getGuildSoundboardSound(guildId: Snowflake, soundId: Snowflake): GuildSoundboardSound =
+        getGuildSoundboardSoundOrNull(guildId, soundId) ?: EntityNotFoundException.soundboardSoundNotFound(guildId, soundId)
+
+    /**
+     * Requests the [guild soundboard sound][GuildSoundboardSound] of the [Guild] with the given [guildId].
+     *
+     * The returned flow is lazily executed, any [RequestException] will be thrown on
+     * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
+     */
+    public fun getGuildSoundboardSounds(guildId: Snowflake): Flow<GuildSoundboardSound>
+
+    /**
      * Requests [guilds][Guild] this bot is known to be part of.
      *
      * The flow may use paginated requests to supply guilds, [limit] will limit the maximum number of guilds
