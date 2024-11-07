@@ -5633,6 +5633,48 @@ public final class dev/kord/common/entity/DiscordSku$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
+public final class dev/kord/common/entity/DiscordSoundboardSound {
+	public static final field Companion Ldev/kord/common/entity/DiscordSoundboardSound$Companion;
+	public fun <init> (Ljava/lang/String;Ldev/kord/common/entity/Snowflake;DLdev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/common/entity/optional/OptionalSnowflake;ZLdev/kord/common/entity/optional/Optional;)V
+	public synthetic fun <init> (Ljava/lang/String;Ldev/kord/common/entity/Snowflake;DLdev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/common/entity/optional/OptionalSnowflake;ZLdev/kord/common/entity/optional/Optional;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ldev/kord/common/entity/Snowflake;
+	public final fun component3 ()D
+	public final fun component4 ()Ldev/kord/common/entity/Snowflake;
+	public final fun component5 ()Ljava/lang/String;
+	public final fun component6 ()Ldev/kord/common/entity/optional/OptionalSnowflake;
+	public final fun component7 ()Z
+	public final fun component8 ()Ldev/kord/common/entity/optional/Optional;
+	public final fun copy (Ljava/lang/String;Ldev/kord/common/entity/Snowflake;DLdev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/common/entity/optional/OptionalSnowflake;ZLdev/kord/common/entity/optional/Optional;)Ldev/kord/common/entity/DiscordSoundboardSound;
+	public static synthetic fun copy$default (Ldev/kord/common/entity/DiscordSoundboardSound;Ljava/lang/String;Ldev/kord/common/entity/Snowflake;DLdev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/common/entity/optional/OptionalSnowflake;ZLdev/kord/common/entity/optional/Optional;ILjava/lang/Object;)Ldev/kord/common/entity/DiscordSoundboardSound;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getAvailable ()Z
+	public final fun getEmojiId ()Ldev/kord/common/entity/Snowflake;
+	public final fun getEmojiName ()Ljava/lang/String;
+	public final fun getGuildId ()Ldev/kord/common/entity/optional/OptionalSnowflake;
+	public final fun getName ()Ljava/lang/String;
+	public final fun getSoundId ()Ldev/kord/common/entity/Snowflake;
+	public final fun getUser ()Ldev/kord/common/entity/optional/Optional;
+	public final fun getVolume ()D
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public synthetic class dev/kord/common/entity/DiscordSoundboardSound$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Ldev/kord/common/entity/DiscordSoundboardSound$$serializer;
+	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/common/entity/DiscordSoundboardSound;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/common/entity/DiscordSoundboardSound;)V
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class dev/kord/common/entity/DiscordSoundboardSound$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
 public final class dev/kord/common/entity/DiscordStageInstance {
 	public static final field Companion Ldev/kord/common/entity/DiscordStageInstance$Companion;
 	public fun <init> (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/common/entity/StageInstancePrivacyLevel;ZLdev/kord/common/entity/Snowflake;)V
@@ -9196,6 +9238,40 @@ public final class dev/kord/common/entity/optional/OptionalBooleanKt {
 	public static final fun orElse (Ldev/kord/common/entity/optional/OptionalBoolean;Z)Z
 }
 
+public abstract class dev/kord/common/entity/optional/OptionalDouble {
+	public static final field Companion Ldev/kord/common/entity/optional/OptionalDouble$Companion;
+	public final fun getAsNullable ()Ljava/lang/Double;
+	public final fun getAsOptional ()Ldev/kord/common/entity/optional/Optional;
+	public final fun orElse (D)D
+}
+
+public final class dev/kord/common/entity/optional/OptionalDouble$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class dev/kord/common/entity/optional/OptionalDouble$Missing : dev/kord/common/entity/optional/OptionalDouble {
+	public static final field INSTANCE Ldev/kord/common/entity/optional/OptionalDouble$Missing;
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class dev/kord/common/entity/optional/OptionalDouble$Value : dev/kord/common/entity/optional/OptionalDouble {
+	public fun <init> (D)V
+	public final fun component1 ()D
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getValue ()D
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class dev/kord/common/entity/optional/OptionalDoubleKt {
+	public static final fun getAsNullable (Ldev/kord/common/entity/optional/OptionalDouble;)Ljava/lang/Double;
+	public static final fun getOrThrow (Ldev/kord/common/entity/optional/OptionalDouble;)D
+	public static final fun getValue (Ldev/kord/common/entity/optional/OptionalDouble;)Ljava/lang/Double;
+	public static final fun map (Ldev/kord/common/entity/optional/OptionalDouble;Lkotlin/jvm/functions/Function1;)Ldev/kord/common/entity/optional/OptionalDouble;
+	public static final fun optionalDouble (D)Ldev/kord/common/entity/optional/OptionalDouble$Value;
+	public static final fun orElse (Ldev/kord/common/entity/optional/OptionalDouble;I)I
+}
+
 public abstract class dev/kord/common/entity/optional/OptionalInt {
 	public static final field Companion Ldev/kord/common/entity/optional/OptionalInt$Companion;
 	public final fun getAsNullable ()Ljava/lang/Integer;
@@ -9316,6 +9392,7 @@ public final class dev/kord/common/entity/optional/OptionalSnowflake$Value : dev
 }
 
 public final class dev/kord/common/entity/optional/OptionalSnowflakeKt {
+	public static final fun getMissingIfNull (Ldev/kord/common/entity/Snowflake;)Ldev/kord/common/entity/optional/OptionalSnowflake;
 	public static final fun getValue (Ldev/kord/common/entity/optional/OptionalSnowflake;)Ldev/kord/common/entity/Snowflake;
 	public static final fun map (Ldev/kord/common/entity/optional/OptionalSnowflake;Lkotlin/jvm/functions/Function1;)Ldev/kord/common/entity/optional/Optional;
 	public static final fun optionalNullable (Ldev/kord/common/entity/Snowflake;)Ldev/kord/common/entity/optional/OptionalSnowflake$Value;
@@ -9330,6 +9407,11 @@ public final class dev/kord/common/entity/optional/delegate/OptionalBooleanDeleg
 public final class dev/kord/common/entity/optional/delegate/OptionalDelegateKt {
 	public static final fun delegate (Lkotlin/reflect/KMutableProperty0;)Lkotlin/properties/ReadWriteProperty;
 	public static final fun delegateList (Lkotlin/reflect/KMutableProperty0;)Lkotlin/properties/ReadWriteProperty;
+	public static final fun provideNullableDelegate (Lkotlin/reflect/KMutableProperty0;)Lkotlin/properties/ReadWriteProperty;
+}
+
+public final class dev/kord/common/entity/optional/delegate/OptionalDoubleDelegateKt {
+	public static final fun delegate (Lkotlin/reflect/KMutableProperty0;)Lkotlin/properties/ReadWriteProperty;
 	public static final fun provideNullableDelegate (Lkotlin/reflect/KMutableProperty0;)Lkotlin/properties/ReadWriteProperty;
 }
 

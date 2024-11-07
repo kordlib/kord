@@ -35,6 +35,7 @@ final enum class dev.kord.rest.json/JsonErrorCode : kotlin/Enum<dev.kord.rest.js
     enum entry CannotSendMessageInForumChannel // dev.kord.rest.json/JsonErrorCode.CannotSendMessageInForumChannel|null[0]
     enum entry CannotSendMessagesInNonTextChannel // dev.kord.rest.json/JsonErrorCode.CannotSendMessagesInNonTextChannel|null[0]
     enum entry CannotSendMessagesToUser // dev.kord.rest.json/JsonErrorCode.CannotSendMessagesToUser|null[0]
+    enum entry CannotSendVoiceEffect // dev.kord.rest.json/JsonErrorCode.CannotSendVoiceEffect|null[0]
     enum entry CannotSendVoiceMessagesInThisChannel // dev.kord.rest.json/JsonErrorCode.CannotSendVoiceMessagesInThisChannel|null[0]
     enum entry CannotUpdateFinishedEvent // dev.kord.rest.json/JsonErrorCode.CannotUpdateFinishedEvent|null[0]
     enum entry CannotUpdateOnboarding // dev.kord.rest.json/JsonErrorCode.CannotUpdateOnboarding|null[0]
@@ -61,6 +62,10 @@ final enum class dev.kord.rest.json/JsonErrorCode : kotlin/Enum<dev.kord.rest.js
     enum entry InvalidActivityAction // dev.kord.rest.json/JsonErrorCode.InvalidActivityAction|null[0]
     enum entry InvalidAuthToken // dev.kord.rest.json/JsonErrorCode.InvalidAuthToken|null[0]
     enum entry InvalidFile // dev.kord.rest.json/JsonErrorCode.InvalidFile|null[0]
+    enum entry InvalidFileDuration // dev.kord.rest.json/JsonErrorCode.InvalidFileDuration|null[0]
+    enum entry InvalidFileExceedsMaximumLength // dev.kord.rest.json/JsonErrorCode.InvalidFileExceedsMaximumLength|null[0]
+    enum entry InvalidFileProvided // dev.kord.rest.json/JsonErrorCode.InvalidFileProvided|null[0]
+    enum entry InvalidFileType // dev.kord.rest.json/JsonErrorCode.InvalidFileType|null[0]
     enum entry InvalidFormBody // dev.kord.rest.json/JsonErrorCode.InvalidFormBody|null[0]
     enum entry InvalidGuild // dev.kord.rest.json/JsonErrorCode.InvalidGuild|null[0]
     enum entry InvalidJsonForLottieFile // dev.kord.rest.json/JsonErrorCode.InvalidJsonForLottieFile|null[0]
@@ -106,6 +111,7 @@ final enum class dev.kord.rest.json/JsonErrorCode : kotlin/Enum<dev.kord.rest.js
     enum entry MaxRecipients // dev.kord.rest.json/JsonErrorCode.MaxRecipients|null[0]
     enum entry MaxServerCategories // dev.kord.rest.json/JsonErrorCode.MaxServerCategories|null[0]
     enum entry MaxServerMembers // dev.kord.rest.json/JsonErrorCode.MaxServerMembers|null[0]
+    enum entry MaxSoundboardSounds // dev.kord.rest.json/JsonErrorCode.MaxSoundboardSounds|null[0]
     enum entry MaxStickerAnimationDuration // dev.kord.rest.json/JsonErrorCode.MaxStickerAnimationDuration|null[0]
     enum entry MaxStickerFrameCount // dev.kord.rest.json/JsonErrorCode.MaxStickerFrameCount|null[0]
     enum entry MaxStickerFrameRate // dev.kord.rest.json/JsonErrorCode.MaxStickerFrameRate|null[0]
@@ -160,6 +166,7 @@ final enum class dev.kord.rest.json/JsonErrorCode : kotlin/Enum<dev.kord.rest.js
     enum entry UnknownApplication // dev.kord.rest.json/JsonErrorCode.UnknownApplication|null[0]
     enum entry UnknownApplicationCommand // dev.kord.rest.json/JsonErrorCode.UnknownApplicationCommand|null[0]
     enum entry UnknownApplicationCommandPermissions // dev.kord.rest.json/JsonErrorCode.UnknownApplicationCommandPermissions|null[0]
+    enum entry UnknownAsset // dev.kord.rest.json/JsonErrorCode.UnknownAsset|null[0]
     enum entry UnknownBan // dev.kord.rest.json/JsonErrorCode.UnknownBan|null[0]
     enum entry UnknownBranch // dev.kord.rest.json/JsonErrorCode.UnknownBranch|null[0]
     enum entry UnknownBuild // dev.kord.rest.json/JsonErrorCode.UnknownBuild|null[0]
@@ -187,6 +194,7 @@ final enum class dev.kord.rest.json/JsonErrorCode : kotlin/Enum<dev.kord.rest.js
     enum entry UnknownRole // dev.kord.rest.json/JsonErrorCode.UnknownRole|null[0]
     enum entry UnknownSKU // dev.kord.rest.json/JsonErrorCode.UnknownSKU|null[0]
     enum entry UnknownSession // dev.kord.rest.json/JsonErrorCode.UnknownSession|null[0]
+    enum entry UnknownSound // dev.kord.rest.json/JsonErrorCode.UnknownSound|null[0]
     enum entry UnknownStageInstance // dev.kord.rest.json/JsonErrorCode.UnknownStageInstance|null[0]
     enum entry UnknownSticker // dev.kord.rest.json/JsonErrorCode.UnknownSticker|null[0]
     enum entry UnknownStoreDirectoryLayout // dev.kord.rest.json/JsonErrorCode.UnknownStoreDirectoryLayout|null[0]
@@ -2073,6 +2081,52 @@ final class dev.kord.rest.builder.guild/ScheduledEventCreateBuilder : dev.kord.r
     final fun toRequest(): dev.kord.rest.json.request/GuildScheduledEventCreateRequest // dev.kord.rest.builder.guild/ScheduledEventCreateBuilder.toRequest|toRequest(){}[0]
 }
 
+final class dev.kord.rest.builder.guild/SoundboardSoundCreateBuilder : dev.kord.rest.builder/AuditRequestBuilder<dev.kord.rest.json.request/CreateSoundboardSoundRequest> { // dev.kord.rest.builder.guild/SoundboardSoundCreateBuilder|null[0]
+    constructor <init>(kotlin/String, dev.kord.rest/Sound) // dev.kord.rest.builder.guild/SoundboardSoundCreateBuilder.<init>|<init>(kotlin.String;dev.kord.rest.Sound){}[0]
+
+    final val name // dev.kord.rest.builder.guild/SoundboardSoundCreateBuilder.name|{}name[0]
+        final fun <get-name>(): kotlin/String // dev.kord.rest.builder.guild/SoundboardSoundCreateBuilder.name.<get-name>|<get-name>(){}[0]
+    final val sound // dev.kord.rest.builder.guild/SoundboardSoundCreateBuilder.sound|{}sound[0]
+        final fun <get-sound>(): dev.kord.rest/Sound // dev.kord.rest.builder.guild/SoundboardSoundCreateBuilder.sound.<get-sound>|<get-sound>(){}[0]
+
+    final var emojiId // dev.kord.rest.builder.guild/SoundboardSoundCreateBuilder.emojiId|{}emojiId[0]
+        final fun <get-emojiId>(): dev.kord.common.entity/Snowflake? // dev.kord.rest.builder.guild/SoundboardSoundCreateBuilder.emojiId.<get-emojiId>|<get-emojiId>(){}[0]
+        final fun <set-emojiId>(dev.kord.common.entity/Snowflake?) // dev.kord.rest.builder.guild/SoundboardSoundCreateBuilder.emojiId.<set-emojiId>|<set-emojiId>(dev.kord.common.entity.Snowflake?){}[0]
+    final var emojiName // dev.kord.rest.builder.guild/SoundboardSoundCreateBuilder.emojiName|{}emojiName[0]
+        final fun <get-emojiName>(): kotlin/String? // dev.kord.rest.builder.guild/SoundboardSoundCreateBuilder.emojiName.<get-emojiName>|<get-emojiName>(){}[0]
+        final fun <set-emojiName>(kotlin/String?) // dev.kord.rest.builder.guild/SoundboardSoundCreateBuilder.emojiName.<set-emojiName>|<set-emojiName>(kotlin.String?){}[0]
+    final var reason // dev.kord.rest.builder.guild/SoundboardSoundCreateBuilder.reason|{}reason[0]
+        final fun <get-reason>(): kotlin/String? // dev.kord.rest.builder.guild/SoundboardSoundCreateBuilder.reason.<get-reason>|<get-reason>(){}[0]
+        final fun <set-reason>(kotlin/String?) // dev.kord.rest.builder.guild/SoundboardSoundCreateBuilder.reason.<set-reason>|<set-reason>(kotlin.String?){}[0]
+    final var volume // dev.kord.rest.builder.guild/SoundboardSoundCreateBuilder.volume|{}volume[0]
+        final fun <get-volume>(): kotlin/Double? // dev.kord.rest.builder.guild/SoundboardSoundCreateBuilder.volume.<get-volume>|<get-volume>(){}[0]
+        final fun <set-volume>(kotlin/Double?) // dev.kord.rest.builder.guild/SoundboardSoundCreateBuilder.volume.<set-volume>|<set-volume>(kotlin.Double?){}[0]
+
+    final fun toRequest(): dev.kord.rest.json.request/CreateSoundboardSoundRequest // dev.kord.rest.builder.guild/SoundboardSoundCreateBuilder.toRequest|toRequest(){}[0]
+}
+
+final class dev.kord.rest.builder.guild/SoundboardSoundModifyBuilder : dev.kord.rest.builder/AuditRequestBuilder<dev.kord.rest.json.request/UpdateSoundboardSoundRequest> { // dev.kord.rest.builder.guild/SoundboardSoundModifyBuilder|null[0]
+    constructor <init>() // dev.kord.rest.builder.guild/SoundboardSoundModifyBuilder.<init>|<init>(){}[0]
+
+    final var emojiId // dev.kord.rest.builder.guild/SoundboardSoundModifyBuilder.emojiId|{}emojiId[0]
+        final fun <get-emojiId>(): dev.kord.common.entity/Snowflake? // dev.kord.rest.builder.guild/SoundboardSoundModifyBuilder.emojiId.<get-emojiId>|<get-emojiId>(){}[0]
+        final fun <set-emojiId>(dev.kord.common.entity/Snowflake?) // dev.kord.rest.builder.guild/SoundboardSoundModifyBuilder.emojiId.<set-emojiId>|<set-emojiId>(dev.kord.common.entity.Snowflake?){}[0]
+    final var emojiName // dev.kord.rest.builder.guild/SoundboardSoundModifyBuilder.emojiName|{}emojiName[0]
+        final fun <get-emojiName>(): kotlin/String? // dev.kord.rest.builder.guild/SoundboardSoundModifyBuilder.emojiName.<get-emojiName>|<get-emojiName>(){}[0]
+        final fun <set-emojiName>(kotlin/String?) // dev.kord.rest.builder.guild/SoundboardSoundModifyBuilder.emojiName.<set-emojiName>|<set-emojiName>(kotlin.String?){}[0]
+    final var name // dev.kord.rest.builder.guild/SoundboardSoundModifyBuilder.name|{}name[0]
+        final fun <get-name>(): kotlin/String? // dev.kord.rest.builder.guild/SoundboardSoundModifyBuilder.name.<get-name>|<get-name>(){}[0]
+        final fun <set-name>(kotlin/String?) // dev.kord.rest.builder.guild/SoundboardSoundModifyBuilder.name.<set-name>|<set-name>(kotlin.String?){}[0]
+    final var reason // dev.kord.rest.builder.guild/SoundboardSoundModifyBuilder.reason|{}reason[0]
+        final fun <get-reason>(): kotlin/String? // dev.kord.rest.builder.guild/SoundboardSoundModifyBuilder.reason.<get-reason>|<get-reason>(){}[0]
+        final fun <set-reason>(kotlin/String?) // dev.kord.rest.builder.guild/SoundboardSoundModifyBuilder.reason.<set-reason>|<set-reason>(kotlin.String?){}[0]
+    final var volume // dev.kord.rest.builder.guild/SoundboardSoundModifyBuilder.volume|{}volume[0]
+        final fun <get-volume>(): kotlin/Double? // dev.kord.rest.builder.guild/SoundboardSoundModifyBuilder.volume.<get-volume>|<get-volume>(){}[0]
+        final fun <set-volume>(kotlin/Double?) // dev.kord.rest.builder.guild/SoundboardSoundModifyBuilder.volume.<set-volume>|<set-volume>(kotlin.Double?){}[0]
+
+    final fun toRequest(): dev.kord.rest.json.request/UpdateSoundboardSoundRequest // dev.kord.rest.builder.guild/SoundboardSoundModifyBuilder.toRequest|toRequest(){}[0]
+}
+
 final class dev.kord.rest.builder.guild/StickerModifyBuilder : dev.kord.rest.builder/RequestBuilder<dev.kord.rest.json.request/GuildStickerModifyRequest> { // dev.kord.rest.builder.guild/StickerModifyBuilder|null[0]
     constructor <init>() // dev.kord.rest.builder.guild/StickerModifyBuilder.<init>|<init>(){}[0]
 
@@ -3616,6 +3670,46 @@ final class dev.kord.rest.json.request/ChannelPositionSwapRequest { // dev.kord.
 
     final object Companion { // dev.kord.rest.json.request/ChannelPositionSwapRequest.Companion|null[0]
         final fun serializer(): kotlinx.serialization/KSerializer<dev.kord.rest.json.request/ChannelPositionSwapRequest> // dev.kord.rest.json.request/ChannelPositionSwapRequest.Companion.serializer|serializer(){}[0]
+    }
+}
+
+final class dev.kord.rest.json.request/CreateSoundboardSoundRequest { // dev.kord.rest.json.request/CreateSoundboardSoundRequest|null[0]
+    constructor <init>(kotlin/String, kotlin/String, dev.kord.common.entity.optional/OptionalDouble? = ..., dev.kord.common.entity.optional/OptionalSnowflake? = ..., dev.kord.common.entity.optional/Optional<kotlin/String?> = ...) // dev.kord.rest.json.request/CreateSoundboardSoundRequest.<init>|<init>(kotlin.String;kotlin.String;dev.kord.common.entity.optional.OptionalDouble?;dev.kord.common.entity.optional.OptionalSnowflake?;dev.kord.common.entity.optional.Optional<kotlin.String?>){}[0]
+
+    final val emojiId // dev.kord.rest.json.request/CreateSoundboardSoundRequest.emojiId|{}emojiId[0]
+        final fun <get-emojiId>(): dev.kord.common.entity.optional/OptionalSnowflake? // dev.kord.rest.json.request/CreateSoundboardSoundRequest.emojiId.<get-emojiId>|<get-emojiId>(){}[0]
+    final val emojiName // dev.kord.rest.json.request/CreateSoundboardSoundRequest.emojiName|{}emojiName[0]
+        final fun <get-emojiName>(): dev.kord.common.entity.optional/Optional<kotlin/String?> // dev.kord.rest.json.request/CreateSoundboardSoundRequest.emojiName.<get-emojiName>|<get-emojiName>(){}[0]
+    final val name // dev.kord.rest.json.request/CreateSoundboardSoundRequest.name|{}name[0]
+        final fun <get-name>(): kotlin/String // dev.kord.rest.json.request/CreateSoundboardSoundRequest.name.<get-name>|<get-name>(){}[0]
+    final val sound // dev.kord.rest.json.request/CreateSoundboardSoundRequest.sound|{}sound[0]
+        final fun <get-sound>(): kotlin/String // dev.kord.rest.json.request/CreateSoundboardSoundRequest.sound.<get-sound>|<get-sound>(){}[0]
+    final val volume // dev.kord.rest.json.request/CreateSoundboardSoundRequest.volume|{}volume[0]
+        final fun <get-volume>(): dev.kord.common.entity.optional/OptionalDouble? // dev.kord.rest.json.request/CreateSoundboardSoundRequest.volume.<get-volume>|<get-volume>(){}[0]
+
+    final fun component1(): kotlin/String // dev.kord.rest.json.request/CreateSoundboardSoundRequest.component1|component1(){}[0]
+    final fun component2(): kotlin/String // dev.kord.rest.json.request/CreateSoundboardSoundRequest.component2|component2(){}[0]
+    final fun component3(): dev.kord.common.entity.optional/OptionalDouble? // dev.kord.rest.json.request/CreateSoundboardSoundRequest.component3|component3(){}[0]
+    final fun component4(): dev.kord.common.entity.optional/OptionalSnowflake? // dev.kord.rest.json.request/CreateSoundboardSoundRequest.component4|component4(){}[0]
+    final fun component5(): dev.kord.common.entity.optional/Optional<kotlin/String?> // dev.kord.rest.json.request/CreateSoundboardSoundRequest.component5|component5(){}[0]
+    final fun copy(kotlin/String = ..., kotlin/String = ..., dev.kord.common.entity.optional/OptionalDouble? = ..., dev.kord.common.entity.optional/OptionalSnowflake? = ..., dev.kord.common.entity.optional/Optional<kotlin/String?> = ...): dev.kord.rest.json.request/CreateSoundboardSoundRequest // dev.kord.rest.json.request/CreateSoundboardSoundRequest.copy|copy(kotlin.String;kotlin.String;dev.kord.common.entity.optional.OptionalDouble?;dev.kord.common.entity.optional.OptionalSnowflake?;dev.kord.common.entity.optional.Optional<kotlin.String?>){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.json.request/CreateSoundboardSoundRequest.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.rest.json.request/CreateSoundboardSoundRequest.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // dev.kord.rest.json.request/CreateSoundboardSoundRequest.toString|toString(){}[0]
+
+    final object $serializer : kotlinx.serialization.internal/GeneratedSerializer<dev.kord.rest.json.request/CreateSoundboardSoundRequest> { // dev.kord.rest.json.request/CreateSoundboardSoundRequest.$serializer|null[0]
+        final val descriptor // dev.kord.rest.json.request/CreateSoundboardSoundRequest.$serializer.descriptor|{}descriptor[0]
+            final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // dev.kord.rest.json.request/CreateSoundboardSoundRequest.$serializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
+
+        final fun childSerializers(): kotlin/Array<kotlinx.serialization/KSerializer<*>> // dev.kord.rest.json.request/CreateSoundboardSoundRequest.$serializer.childSerializers|childSerializers(){}[0]
+        final fun deserialize(kotlinx.serialization.encoding/Decoder): dev.kord.rest.json.request/CreateSoundboardSoundRequest // dev.kord.rest.json.request/CreateSoundboardSoundRequest.$serializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
+        final fun serialize(kotlinx.serialization.encoding/Encoder, dev.kord.rest.json.request/CreateSoundboardSoundRequest) // dev.kord.rest.json.request/CreateSoundboardSoundRequest.$serializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;dev.kord.rest.json.request.CreateSoundboardSoundRequest){}[0]
+    }
+
+    final object Companion { // dev.kord.rest.json.request/CreateSoundboardSoundRequest.Companion|null[0]
+        final val $childSerializers // dev.kord.rest.json.request/CreateSoundboardSoundRequest.Companion.$childSerializers|{}$childSerializers[0]
+
+        final fun serializer(): kotlinx.serialization/KSerializer<dev.kord.rest.json.request/CreateSoundboardSoundRequest> // dev.kord.rest.json.request/CreateSoundboardSoundRequest.Companion.serializer|serializer(){}[0]
     }
 }
 
@@ -5777,6 +5871,35 @@ final class dev.kord.rest.json.request/ScheduledEventModifyRequest { // dev.kord
     }
 }
 
+final class dev.kord.rest.json.request/SendSoundboardSoundRequest { // dev.kord.rest.json.request/SendSoundboardSoundRequest|null[0]
+    constructor <init>(dev.kord.common.entity/Snowflake, dev.kord.common.entity.optional/OptionalSnowflake = ...) // dev.kord.rest.json.request/SendSoundboardSoundRequest.<init>|<init>(dev.kord.common.entity.Snowflake;dev.kord.common.entity.optional.OptionalSnowflake){}[0]
+
+    final val soundId // dev.kord.rest.json.request/SendSoundboardSoundRequest.soundId|{}soundId[0]
+        final fun <get-soundId>(): dev.kord.common.entity/Snowflake // dev.kord.rest.json.request/SendSoundboardSoundRequest.soundId.<get-soundId>|<get-soundId>(){}[0]
+    final val sourceGuildId // dev.kord.rest.json.request/SendSoundboardSoundRequest.sourceGuildId|{}sourceGuildId[0]
+        final fun <get-sourceGuildId>(): dev.kord.common.entity.optional/OptionalSnowflake // dev.kord.rest.json.request/SendSoundboardSoundRequest.sourceGuildId.<get-sourceGuildId>|<get-sourceGuildId>(){}[0]
+
+    final fun component1(): dev.kord.common.entity/Snowflake // dev.kord.rest.json.request/SendSoundboardSoundRequest.component1|component1(){}[0]
+    final fun component2(): dev.kord.common.entity.optional/OptionalSnowflake // dev.kord.rest.json.request/SendSoundboardSoundRequest.component2|component2(){}[0]
+    final fun copy(dev.kord.common.entity/Snowflake = ..., dev.kord.common.entity.optional/OptionalSnowflake = ...): dev.kord.rest.json.request/SendSoundboardSoundRequest // dev.kord.rest.json.request/SendSoundboardSoundRequest.copy|copy(dev.kord.common.entity.Snowflake;dev.kord.common.entity.optional.OptionalSnowflake){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.json.request/SendSoundboardSoundRequest.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.rest.json.request/SendSoundboardSoundRequest.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // dev.kord.rest.json.request/SendSoundboardSoundRequest.toString|toString(){}[0]
+
+    final object $serializer : kotlinx.serialization.internal/GeneratedSerializer<dev.kord.rest.json.request/SendSoundboardSoundRequest> { // dev.kord.rest.json.request/SendSoundboardSoundRequest.$serializer|null[0]
+        final val descriptor // dev.kord.rest.json.request/SendSoundboardSoundRequest.$serializer.descriptor|{}descriptor[0]
+            final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // dev.kord.rest.json.request/SendSoundboardSoundRequest.$serializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
+
+        final fun childSerializers(): kotlin/Array<kotlinx.serialization/KSerializer<*>> // dev.kord.rest.json.request/SendSoundboardSoundRequest.$serializer.childSerializers|childSerializers(){}[0]
+        final fun deserialize(kotlinx.serialization.encoding/Decoder): dev.kord.rest.json.request/SendSoundboardSoundRequest // dev.kord.rest.json.request/SendSoundboardSoundRequest.$serializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
+        final fun serialize(kotlinx.serialization.encoding/Encoder, dev.kord.rest.json.request/SendSoundboardSoundRequest) // dev.kord.rest.json.request/SendSoundboardSoundRequest.$serializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;dev.kord.rest.json.request.SendSoundboardSoundRequest){}[0]
+    }
+
+    final object Companion { // dev.kord.rest.json.request/SendSoundboardSoundRequest.Companion|null[0]
+        final fun serializer(): kotlinx.serialization/KSerializer<dev.kord.rest.json.request/SendSoundboardSoundRequest> // dev.kord.rest.json.request/SendSoundboardSoundRequest.Companion.serializer|serializer(){}[0]
+    }
+}
+
 final class dev.kord.rest.json.request/SkuSubscriptionsListRequest { // dev.kord.rest.json.request/SkuSubscriptionsListRequest|null[0]
     constructor <init>(dev.kord.rest.route/Position.BeforeOrAfter? = ..., kotlin/Int? = ..., dev.kord.common.entity/Snowflake? = ...) // dev.kord.rest.json.request/SkuSubscriptionsListRequest.<init>|<init>(dev.kord.rest.route.Position.BeforeOrAfter?;kotlin.Int?;dev.kord.common.entity.Snowflake?){}[0]
 
@@ -5942,6 +6065,43 @@ final class dev.kord.rest.json.request/TestEntitlementCreateRequest { // dev.kor
 
     final object Companion { // dev.kord.rest.json.request/TestEntitlementCreateRequest.Companion|null[0]
         final fun serializer(): kotlinx.serialization/KSerializer<dev.kord.rest.json.request/TestEntitlementCreateRequest> // dev.kord.rest.json.request/TestEntitlementCreateRequest.Companion.serializer|serializer(){}[0]
+    }
+}
+
+final class dev.kord.rest.json.request/UpdateSoundboardSoundRequest { // dev.kord.rest.json.request/UpdateSoundboardSoundRequest|null[0]
+    constructor <init>(dev.kord.common.entity.optional/Optional<kotlin/String> = ..., dev.kord.common.entity.optional/OptionalDouble? = ..., dev.kord.common.entity.optional/OptionalSnowflake? = ..., dev.kord.common.entity.optional/Optional<kotlin/String?> = ...) // dev.kord.rest.json.request/UpdateSoundboardSoundRequest.<init>|<init>(dev.kord.common.entity.optional.Optional<kotlin.String>;dev.kord.common.entity.optional.OptionalDouble?;dev.kord.common.entity.optional.OptionalSnowflake?;dev.kord.common.entity.optional.Optional<kotlin.String?>){}[0]
+
+    final val emojiId // dev.kord.rest.json.request/UpdateSoundboardSoundRequest.emojiId|{}emojiId[0]
+        final fun <get-emojiId>(): dev.kord.common.entity.optional/OptionalSnowflake? // dev.kord.rest.json.request/UpdateSoundboardSoundRequest.emojiId.<get-emojiId>|<get-emojiId>(){}[0]
+    final val emojiName // dev.kord.rest.json.request/UpdateSoundboardSoundRequest.emojiName|{}emojiName[0]
+        final fun <get-emojiName>(): dev.kord.common.entity.optional/Optional<kotlin/String?> // dev.kord.rest.json.request/UpdateSoundboardSoundRequest.emojiName.<get-emojiName>|<get-emojiName>(){}[0]
+    final val name // dev.kord.rest.json.request/UpdateSoundboardSoundRequest.name|{}name[0]
+        final fun <get-name>(): dev.kord.common.entity.optional/Optional<kotlin/String> // dev.kord.rest.json.request/UpdateSoundboardSoundRequest.name.<get-name>|<get-name>(){}[0]
+    final val volume // dev.kord.rest.json.request/UpdateSoundboardSoundRequest.volume|{}volume[0]
+        final fun <get-volume>(): dev.kord.common.entity.optional/OptionalDouble? // dev.kord.rest.json.request/UpdateSoundboardSoundRequest.volume.<get-volume>|<get-volume>(){}[0]
+
+    final fun component1(): dev.kord.common.entity.optional/Optional<kotlin/String> // dev.kord.rest.json.request/UpdateSoundboardSoundRequest.component1|component1(){}[0]
+    final fun component2(): dev.kord.common.entity.optional/OptionalDouble? // dev.kord.rest.json.request/UpdateSoundboardSoundRequest.component2|component2(){}[0]
+    final fun component3(): dev.kord.common.entity.optional/OptionalSnowflake? // dev.kord.rest.json.request/UpdateSoundboardSoundRequest.component3|component3(){}[0]
+    final fun component4(): dev.kord.common.entity.optional/Optional<kotlin/String?> // dev.kord.rest.json.request/UpdateSoundboardSoundRequest.component4|component4(){}[0]
+    final fun copy(dev.kord.common.entity.optional/Optional<kotlin/String> = ..., dev.kord.common.entity.optional/OptionalDouble? = ..., dev.kord.common.entity.optional/OptionalSnowflake? = ..., dev.kord.common.entity.optional/Optional<kotlin/String?> = ...): dev.kord.rest.json.request/UpdateSoundboardSoundRequest // dev.kord.rest.json.request/UpdateSoundboardSoundRequest.copy|copy(dev.kord.common.entity.optional.Optional<kotlin.String>;dev.kord.common.entity.optional.OptionalDouble?;dev.kord.common.entity.optional.OptionalSnowflake?;dev.kord.common.entity.optional.Optional<kotlin.String?>){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.json.request/UpdateSoundboardSoundRequest.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.rest.json.request/UpdateSoundboardSoundRequest.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // dev.kord.rest.json.request/UpdateSoundboardSoundRequest.toString|toString(){}[0]
+
+    final object $serializer : kotlinx.serialization.internal/GeneratedSerializer<dev.kord.rest.json.request/UpdateSoundboardSoundRequest> { // dev.kord.rest.json.request/UpdateSoundboardSoundRequest.$serializer|null[0]
+        final val descriptor // dev.kord.rest.json.request/UpdateSoundboardSoundRequest.$serializer.descriptor|{}descriptor[0]
+            final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // dev.kord.rest.json.request/UpdateSoundboardSoundRequest.$serializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
+
+        final fun childSerializers(): kotlin/Array<kotlinx.serialization/KSerializer<*>> // dev.kord.rest.json.request/UpdateSoundboardSoundRequest.$serializer.childSerializers|childSerializers(){}[0]
+        final fun deserialize(kotlinx.serialization.encoding/Decoder): dev.kord.rest.json.request/UpdateSoundboardSoundRequest // dev.kord.rest.json.request/UpdateSoundboardSoundRequest.$serializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
+        final fun serialize(kotlinx.serialization.encoding/Encoder, dev.kord.rest.json.request/UpdateSoundboardSoundRequest) // dev.kord.rest.json.request/UpdateSoundboardSoundRequest.$serializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;dev.kord.rest.json.request.UpdateSoundboardSoundRequest){}[0]
+    }
+
+    final object Companion { // dev.kord.rest.json.request/UpdateSoundboardSoundRequest.Companion|null[0]
+        final val $childSerializers // dev.kord.rest.json.request/UpdateSoundboardSoundRequest.Companion.$childSerializers|{}$childSerializers[0]
+
+        final fun serializer(): kotlinx.serialization/KSerializer<dev.kord.rest.json.request/UpdateSoundboardSoundRequest> // dev.kord.rest.json.request/UpdateSoundboardSoundRequest.Companion.serializer|serializer(){}[0]
     }
 }
 
@@ -6447,6 +6607,34 @@ final class dev.kord.rest.json.response/GuildMFALevelModifyResponse { // dev.kor
     }
 }
 
+final class dev.kord.rest.json.response/GuildSoundboardSoundsResponse { // dev.kord.rest.json.response/GuildSoundboardSoundsResponse|null[0]
+    constructor <init>(kotlin.collections/List<dev.kord.common.entity/DiscordSoundboardSound>) // dev.kord.rest.json.response/GuildSoundboardSoundsResponse.<init>|<init>(kotlin.collections.List<dev.kord.common.entity.DiscordSoundboardSound>){}[0]
+
+    final val items // dev.kord.rest.json.response/GuildSoundboardSoundsResponse.items|{}items[0]
+        final fun <get-items>(): kotlin.collections/List<dev.kord.common.entity/DiscordSoundboardSound> // dev.kord.rest.json.response/GuildSoundboardSoundsResponse.items.<get-items>|<get-items>(){}[0]
+
+    final fun component1(): kotlin.collections/List<dev.kord.common.entity/DiscordSoundboardSound> // dev.kord.rest.json.response/GuildSoundboardSoundsResponse.component1|component1(){}[0]
+    final fun copy(kotlin.collections/List<dev.kord.common.entity/DiscordSoundboardSound> = ...): dev.kord.rest.json.response/GuildSoundboardSoundsResponse // dev.kord.rest.json.response/GuildSoundboardSoundsResponse.copy|copy(kotlin.collections.List<dev.kord.common.entity.DiscordSoundboardSound>){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.json.response/GuildSoundboardSoundsResponse.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.rest.json.response/GuildSoundboardSoundsResponse.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // dev.kord.rest.json.response/GuildSoundboardSoundsResponse.toString|toString(){}[0]
+
+    final object $serializer : kotlinx.serialization.internal/GeneratedSerializer<dev.kord.rest.json.response/GuildSoundboardSoundsResponse> { // dev.kord.rest.json.response/GuildSoundboardSoundsResponse.$serializer|null[0]
+        final val descriptor // dev.kord.rest.json.response/GuildSoundboardSoundsResponse.$serializer.descriptor|{}descriptor[0]
+            final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // dev.kord.rest.json.response/GuildSoundboardSoundsResponse.$serializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
+
+        final fun childSerializers(): kotlin/Array<kotlinx.serialization/KSerializer<*>> // dev.kord.rest.json.response/GuildSoundboardSoundsResponse.$serializer.childSerializers|childSerializers(){}[0]
+        final fun deserialize(kotlinx.serialization.encoding/Decoder): dev.kord.rest.json.response/GuildSoundboardSoundsResponse // dev.kord.rest.json.response/GuildSoundboardSoundsResponse.$serializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
+        final fun serialize(kotlinx.serialization.encoding/Encoder, dev.kord.rest.json.response/GuildSoundboardSoundsResponse) // dev.kord.rest.json.response/GuildSoundboardSoundsResponse.$serializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;dev.kord.rest.json.response.GuildSoundboardSoundsResponse){}[0]
+    }
+
+    final object Companion { // dev.kord.rest.json.response/GuildSoundboardSoundsResponse.Companion|null[0]
+        final val $childSerializers // dev.kord.rest.json.response/GuildSoundboardSoundsResponse.Companion.$childSerializers|{}$childSerializers[0]
+
+        final fun serializer(): kotlinx.serialization/KSerializer<dev.kord.rest.json.response/GuildSoundboardSoundsResponse> // dev.kord.rest.json.response/GuildSoundboardSoundsResponse.Companion.serializer|serializer(){}[0]
+    }
+}
+
 final class dev.kord.rest.json.response/ListThreadsResponse { // dev.kord.rest.json.response/ListThreadsResponse|null[0]
     constructor <init>(kotlin.collections/List<dev.kord.common.entity/DiscordChannel>, kotlin.collections/List<dev.kord.common.entity/DiscordThreadMember>) // dev.kord.rest.json.response/ListThreadsResponse.<init>|<init>(kotlin.collections.List<dev.kord.common.entity.DiscordChannel>;kotlin.collections.List<dev.kord.common.entity.DiscordThreadMember>){}[0]
 
@@ -6772,6 +6960,7 @@ final class dev.kord.rest.service/ChannelService : dev.kord.rest.service/RestSer
     final suspend fun putChannel(dev.kord.common.entity/Snowflake, dev.kord.rest.json.request/ChannelModifyPutRequest, kotlin/String? = ...): dev.kord.common.entity/DiscordChannel // dev.kord.rest.service/ChannelService.putChannel|putChannel(dev.kord.common.entity.Snowflake;dev.kord.rest.json.request.ChannelModifyPutRequest;kotlin.String?){}[0]
     final suspend fun removeFromGroup(dev.kord.common.entity/Snowflake, dev.kord.common.entity/Snowflake) // dev.kord.rest.service/ChannelService.removeFromGroup|removeFromGroup(dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake){}[0]
     final suspend fun removeUserFromThread(dev.kord.common.entity/Snowflake, dev.kord.common.entity/Snowflake) // dev.kord.rest.service/ChannelService.removeUserFromThread|removeUserFromThread(dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake){}[0]
+    final suspend fun sendSoundboardSound(dev.kord.common.entity/Snowflake, dev.kord.common.entity/Snowflake, dev.kord.common.entity/Snowflake? = ...) // dev.kord.rest.service/ChannelService.sendSoundboardSound|sendSoundboardSound(dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake?){}[0]
     final suspend fun startForumThread(dev.kord.common.entity/Snowflake, kotlin/String, kotlin/Function1<dev.kord.rest.builder.channel.thread/StartForumThreadBuilder, kotlin/Unit> = ...): dev.kord.common.entity/DiscordChannel // dev.kord.rest.service/ChannelService.startForumThread|startForumThread(dev.kord.common.entity.Snowflake;kotlin.String;kotlin.Function1<dev.kord.rest.builder.channel.thread.StartForumThreadBuilder,kotlin.Unit>){}[0]
     final suspend fun startThread(dev.kord.common.entity/Snowflake, dev.kord.rest.json.request/MultipartStartThreadRequest, kotlin/String? = ...): dev.kord.common.entity/DiscordChannel // dev.kord.rest.service/ChannelService.startThread|startThread(dev.kord.common.entity.Snowflake;dev.kord.rest.json.request.MultipartStartThreadRequest;kotlin.String?){}[0]
     final suspend fun startThread(dev.kord.common.entity/Snowflake, dev.kord.rest.json.request/StartThreadRequest, kotlin/String? = ...): dev.kord.common.entity/DiscordChannel // dev.kord.rest.service/ChannelService.startThread|startThread(dev.kord.common.entity.Snowflake;dev.kord.rest.json.request.StartThreadRequest;kotlin.String?){}[0]
@@ -6812,12 +7001,14 @@ final class dev.kord.rest.service/GuildService : dev.kord.rest.service/RestServi
     final suspend fun beginGuildPrune(dev.kord.common.entity/Snowflake, kotlin/Int = ..., kotlin/Boolean = ..., kotlin/String? = ...): dev.kord.rest.json.response/PruneResponse // dev.kord.rest.service/GuildService.beginGuildPrune|beginGuildPrune(dev.kord.common.entity.Snowflake;kotlin.Int;kotlin.Boolean;kotlin.String?){}[0]
     final suspend fun createGuildChannel(dev.kord.common.entity/Snowflake, dev.kord.rest.json.request/GuildChannelCreateRequest, kotlin/String? = ...): dev.kord.common.entity/DiscordChannel // dev.kord.rest.service/GuildService.createGuildChannel|createGuildChannel(dev.kord.common.entity.Snowflake;dev.kord.rest.json.request.GuildChannelCreateRequest;kotlin.String?){}[0]
     final suspend fun createGuildIntegration(dev.kord.common.entity/Snowflake, dev.kord.rest.json.request/GuildIntegrationCreateRequest) // dev.kord.rest.service/GuildService.createGuildIntegration|createGuildIntegration(dev.kord.common.entity.Snowflake;dev.kord.rest.json.request.GuildIntegrationCreateRequest){}[0]
+    final suspend fun createGuildSoundboardSound(dev.kord.common.entity/Snowflake, dev.kord.rest.json.request/CreateSoundboardSoundRequest, kotlin/String? = ...): dev.kord.common.entity/DiscordSoundboardSound // dev.kord.rest.service/GuildService.createGuildSoundboardSound|createGuildSoundboardSound(dev.kord.common.entity.Snowflake;dev.kord.rest.json.request.CreateSoundboardSoundRequest;kotlin.String?){}[0]
     final suspend fun createScheduledEvent(dev.kord.common.entity/Snowflake, dev.kord.rest.json.request/GuildScheduledEventCreateRequest, kotlin/String? = ...): dev.kord.common.entity/DiscordGuildScheduledEvent // dev.kord.rest.service/GuildService.createScheduledEvent|createScheduledEvent(dev.kord.common.entity.Snowflake;dev.kord.rest.json.request.GuildScheduledEventCreateRequest;kotlin.String?){}[0]
     final suspend fun deleteGuild(dev.kord.common.entity/Snowflake) // dev.kord.rest.service/GuildService.deleteGuild|deleteGuild(dev.kord.common.entity.Snowflake){}[0]
     final suspend fun deleteGuildBan(dev.kord.common.entity/Snowflake, dev.kord.common.entity/Snowflake, kotlin/String? = ...) // dev.kord.rest.service/GuildService.deleteGuildBan|deleteGuildBan(dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake;kotlin.String?){}[0]
     final suspend fun deleteGuildIntegration(dev.kord.common.entity/Snowflake, dev.kord.common.entity/Snowflake, kotlin/String? = ...) // dev.kord.rest.service/GuildService.deleteGuildIntegration|deleteGuildIntegration(dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake;kotlin.String?){}[0]
     final suspend fun deleteGuildMember(dev.kord.common.entity/Snowflake, dev.kord.common.entity/Snowflake, kotlin/String? = ...) // dev.kord.rest.service/GuildService.deleteGuildMember|deleteGuildMember(dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake;kotlin.String?){}[0]
     final suspend fun deleteGuildRole(dev.kord.common.entity/Snowflake, dev.kord.common.entity/Snowflake, kotlin/String? = ...) // dev.kord.rest.service/GuildService.deleteGuildRole|deleteGuildRole(dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake;kotlin.String?){}[0]
+    final suspend fun deleteGuildSoundboardSound(dev.kord.common.entity/Snowflake, dev.kord.common.entity/Snowflake, kotlin/String? = ...) // dev.kord.rest.service/GuildService.deleteGuildSoundboardSound|deleteGuildSoundboardSound(dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake;kotlin.String?){}[0]
     final suspend fun deleteRoleFromGuildMember(dev.kord.common.entity/Snowflake, dev.kord.common.entity/Snowflake, dev.kord.common.entity/Snowflake, kotlin/String? = ...) // dev.kord.rest.service/GuildService.deleteRoleFromGuildMember|deleteRoleFromGuildMember(dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake;kotlin.String?){}[0]
     final suspend fun deleteScheduledEvent(dev.kord.common.entity/Snowflake, dev.kord.common.entity/Snowflake) // dev.kord.rest.service/GuildService.deleteScheduledEvent|deleteScheduledEvent(dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake){}[0]
     final suspend fun getGuild(dev.kord.common.entity/Snowflake, kotlin/Boolean = ...): dev.kord.common.entity/DiscordGuild // dev.kord.rest.service/GuildService.getGuild|getGuild(dev.kord.common.entity.Snowflake;kotlin.Boolean){}[0]
@@ -6833,6 +7024,7 @@ final class dev.kord.rest.service/GuildService : dev.kord.rest.service/RestServi
     final suspend fun getGuildPreview(dev.kord.common.entity/Snowflake): dev.kord.common.entity/DiscordGuildPreview // dev.kord.rest.service/GuildService.getGuildPreview|getGuildPreview(dev.kord.common.entity.Snowflake){}[0]
     final suspend fun getGuildPruneCount(dev.kord.common.entity/Snowflake, kotlin/Int = ...): dev.kord.rest.json.response/GetPruneResponse // dev.kord.rest.service/GuildService.getGuildPruneCount|getGuildPruneCount(dev.kord.common.entity.Snowflake;kotlin.Int){}[0]
     final suspend fun getGuildRoles(dev.kord.common.entity/Snowflake): kotlin.collections/List<dev.kord.common.entity/DiscordRole> // dev.kord.rest.service/GuildService.getGuildRoles|getGuildRoles(dev.kord.common.entity.Snowflake){}[0]
+    final suspend fun getGuildSoundboardSound(dev.kord.common.entity/Snowflake, dev.kord.common.entity/Snowflake): dev.kord.common.entity/DiscordSoundboardSound // dev.kord.rest.service/GuildService.getGuildSoundboardSound|getGuildSoundboardSound(dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake){}[0]
     final suspend fun getGuildVoiceRegions(dev.kord.common.entity/Snowflake): kotlin.collections/List<dev.kord.common.entity/DiscordVoiceRegion> // dev.kord.rest.service/GuildService.getGuildVoiceRegions|getGuildVoiceRegions(dev.kord.common.entity.Snowflake){}[0]
     final suspend fun getGuildWelcomeScreen(dev.kord.common.entity/Snowflake): dev.kord.common.entity/DiscordWelcomeScreen // dev.kord.rest.service/GuildService.getGuildWelcomeScreen|getGuildWelcomeScreen(dev.kord.common.entity.Snowflake){}[0]
     final suspend fun getGuildWidget(dev.kord.common.entity/Snowflake): dev.kord.common.entity/DiscordGuildWidget // dev.kord.rest.service/GuildService.getGuildWidget|getGuildWidget(dev.kord.common.entity.Snowflake){}[0]
@@ -6842,11 +7034,13 @@ final class dev.kord.rest.service/GuildService : dev.kord.rest.service/RestServi
     final suspend fun getScheduledEventUsersBefore(dev.kord.common.entity/Snowflake, dev.kord.common.entity/Snowflake, dev.kord.common.entity/Snowflake, kotlin/Boolean? = ..., kotlin/Int? = ...): kotlin.collections/List<dev.kord.rest.json.request/GuildScheduledEventUsersResponse> // dev.kord.rest.service/GuildService.getScheduledEventUsersBefore|getScheduledEventUsersBefore(dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake;kotlin.Boolean?;kotlin.Int?){}[0]
     final suspend fun getVanityInvite(dev.kord.common.entity/Snowflake): dev.kord.common.entity/DiscordPartialInvite // dev.kord.rest.service/GuildService.getVanityInvite|getVanityInvite(dev.kord.common.entity.Snowflake){}[0]
     final suspend fun listActiveThreads(dev.kord.common.entity/Snowflake): dev.kord.rest.json.response/ListThreadsResponse // dev.kord.rest.service/GuildService.listActiveThreads|listActiveThreads(dev.kord.common.entity.Snowflake){}[0]
+    final suspend fun listGuildSoundboardSounds(dev.kord.common.entity/Snowflake): dev.kord.rest.json.response/GuildSoundboardSoundsResponse // dev.kord.rest.service/GuildService.listGuildSoundboardSounds|listGuildSoundboardSounds(dev.kord.common.entity.Snowflake){}[0]
     final suspend fun listScheduledEvents(dev.kord.common.entity/Snowflake, kotlin/Boolean? = ...): kotlin.collections/List<dev.kord.common.entity/DiscordGuildScheduledEvent> // dev.kord.rest.service/GuildService.listScheduledEvents|listScheduledEvents(dev.kord.common.entity.Snowflake;kotlin.Boolean?){}[0]
     final suspend fun modifyCurrentUserNickname(dev.kord.common.entity/Snowflake, dev.kord.rest.json.request/CurrentUserNicknameModifyRequest, kotlin/String? = ...): dev.kord.rest.json.response/CurrentUserNicknameModifyResponse // dev.kord.rest.service/GuildService.modifyCurrentUserNickname|modifyCurrentUserNickname(dev.kord.common.entity.Snowflake;dev.kord.rest.json.request.CurrentUserNicknameModifyRequest;kotlin.String?){}[0]
     final suspend fun modifyCurrentVoiceState(dev.kord.common.entity/Snowflake, dev.kord.rest.json.request/CurrentVoiceStateModifyRequest) // dev.kord.rest.service/GuildService.modifyCurrentVoiceState|modifyCurrentVoiceState(dev.kord.common.entity.Snowflake;dev.kord.rest.json.request.CurrentVoiceStateModifyRequest){}[0]
     final suspend fun modifyGuildMFALevel(dev.kord.common.entity/Snowflake, dev.kord.common.entity/MFALevel, kotlin/String? = ...): dev.kord.rest.json.response/GuildMFALevelModifyResponse // dev.kord.rest.service/GuildService.modifyGuildMFALevel|modifyGuildMFALevel(dev.kord.common.entity.Snowflake;dev.kord.common.entity.MFALevel;kotlin.String?){}[0]
     final suspend fun modifyGuildOnboarding(dev.kord.common.entity/Snowflake, dev.kord.rest.json.request/GuildOnboardingModifyRequest, kotlin/String? = ...): dev.kord.common.entity/DiscordGuildOnboarding // dev.kord.rest.service/GuildService.modifyGuildOnboarding|modifyGuildOnboarding(dev.kord.common.entity.Snowflake;dev.kord.rest.json.request.GuildOnboardingModifyRequest;kotlin.String?){}[0]
+    final suspend fun modifyGuildSoundboardSound(dev.kord.common.entity/Snowflake, dev.kord.common.entity/Snowflake, dev.kord.rest.json.request/UpdateSoundboardSoundRequest, kotlin/String? = ...): dev.kord.common.entity/DiscordSoundboardSound // dev.kord.rest.service/GuildService.modifyGuildSoundboardSound|modifyGuildSoundboardSound(dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake;dev.kord.rest.json.request.UpdateSoundboardSoundRequest;kotlin.String?){}[0]
     final suspend fun modifyGuildWelcomeScreen(dev.kord.common.entity/Snowflake, dev.kord.rest.json.request/GuildWelcomeScreenModifyRequest, kotlin/String? = ...): dev.kord.common.entity/DiscordWelcomeScreen // dev.kord.rest.service/GuildService.modifyGuildWelcomeScreen|modifyGuildWelcomeScreen(dev.kord.common.entity.Snowflake;dev.kord.rest.json.request.GuildWelcomeScreenModifyRequest;kotlin.String?){}[0]
     final suspend fun modifyGuildWidget(dev.kord.common.entity/Snowflake, dev.kord.rest.json.request/GuildWidgetModifyRequest, kotlin/String? = ...): dev.kord.common.entity/DiscordGuildWidget // dev.kord.rest.service/GuildService.modifyGuildWidget|modifyGuildWidget(dev.kord.common.entity.Snowflake;dev.kord.rest.json.request.GuildWidgetModifyRequest;kotlin.String?){}[0]
     final suspend fun modifyScheduledEvent(dev.kord.common.entity/Snowflake, dev.kord.common.entity/Snowflake, dev.kord.rest.json.request/ScheduledEventModifyRequest, kotlin/String? = ...): dev.kord.common.entity/DiscordGuildScheduledEvent // dev.kord.rest.service/GuildService.modifyScheduledEvent|modifyScheduledEvent(dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake;dev.kord.rest.json.request.ScheduledEventModifyRequest;kotlin.String?){}[0]
@@ -6954,6 +7148,8 @@ final class dev.kord.rest.service/RestClient : dev.kord.rest.service/RestService
         final fun <get-invite>(): dev.kord.rest.service/InviteService // dev.kord.rest.service/RestClient.invite.<get-invite>|<get-invite>(){}[0]
     final val sku // dev.kord.rest.service/RestClient.sku|{}sku[0]
         final fun <get-sku>(): dev.kord.rest.service/SkuService // dev.kord.rest.service/RestClient.sku.<get-sku>|<get-sku>(){}[0]
+    final val soundboard // dev.kord.rest.service/RestClient.soundboard|{}soundboard[0]
+        final fun <get-soundboard>(): dev.kord.rest.service/SoundboardService // dev.kord.rest.service/RestClient.soundboard.<get-soundboard>|<get-soundboard>(){}[0]
     final val stageInstance // dev.kord.rest.service/RestClient.stageInstance|{}stageInstance[0]
         final fun <get-stageInstance>(): dev.kord.rest.service/StageInstanceService // dev.kord.rest.service/RestClient.stageInstance.<get-stageInstance>|<get-stageInstance>(){}[0]
     final val sticker // dev.kord.rest.service/RestClient.sticker|{}sticker[0]
@@ -6976,6 +7172,12 @@ final class dev.kord.rest.service/SkuService : dev.kord.rest.service/RestService
     constructor <init>(dev.kord.rest.request/RequestHandler) // dev.kord.rest.service/SkuService.<init>|<init>(dev.kord.rest.request.RequestHandler){}[0]
 
     final suspend fun listSkus(dev.kord.common.entity/Snowflake): kotlin.collections/List<dev.kord.common.entity/DiscordSku> // dev.kord.rest.service/SkuService.listSkus|listSkus(dev.kord.common.entity.Snowflake){}[0]
+}
+
+final class dev.kord.rest.service/SoundboardService : dev.kord.rest.service/RestService { // dev.kord.rest.service/SoundboardService|null[0]
+    constructor <init>(dev.kord.rest.request/RequestHandler) // dev.kord.rest.service/SoundboardService.<init>|<init>(dev.kord.rest.request.RequestHandler){}[0]
+
+    final suspend fun getDefaultSounds(): kotlin.collections/List<dev.kord.common.entity/DiscordSoundboardSound> // dev.kord.rest.service/SoundboardService.getDefaultSounds|getDefaultSounds(){}[0]
 }
 
 final class dev.kord.rest.service/StageInstanceService : dev.kord.rest.service/RestService { // dev.kord.rest.service/StageInstanceService|null[0]
@@ -7135,6 +7337,53 @@ final class dev.kord.rest/NamedFile { // dev.kord.rest/NamedFile|null[0]
     final fun component1(): kotlin/String // dev.kord.rest/NamedFile.component1|component1(){}[0]
     final fun component2(): io.ktor.client.request.forms/ChannelProvider // dev.kord.rest/NamedFile.component2|component2(){}[0]
     final fun component3(): kotlin/String // dev.kord.rest/NamedFile.component3|component3(){}[0]
+}
+
+final class dev.kord.rest/Sound { // dev.kord.rest/Sound|null[0]
+    final val data // dev.kord.rest/Sound.data|{}data[0]
+        final fun <get-data>(): kotlin/ByteArray // dev.kord.rest/Sound.data.<get-data>|<get-data>(){}[0]
+    final val dataUri // dev.kord.rest/Sound.dataUri|{}dataUri[0]
+        final fun <get-dataUri>(): kotlin/String // dev.kord.rest/Sound.dataUri.<get-dataUri>|<get-dataUri>(){}[0]
+    final val format // dev.kord.rest/Sound.format|{}format[0]
+        final fun <get-format>(): dev.kord.rest/Sound.Format // dev.kord.rest/Sound.format.<get-format>|<get-format>(){}[0]
+
+    sealed class Format { // dev.kord.rest/Sound.Format|null[0]
+        final val extension // dev.kord.rest/Sound.Format.extension|{}extension[0]
+            final fun <get-extension>(): kotlin/String // dev.kord.rest/Sound.Format.extension.<get-extension>|<get-extension>(){}[0]
+        final val extensions // dev.kord.rest/Sound.Format.extensions|{}extensions[0]
+            final fun <get-extensions>(): kotlin.collections/List<kotlin/String> // dev.kord.rest/Sound.Format.extensions.<get-extensions>|<get-extensions>(){}[0]
+        final val mimeType // dev.kord.rest/Sound.Format.mimeType|{}mimeType[0]
+            final fun <get-mimeType>(): io.ktor.http/ContentType // dev.kord.rest/Sound.Format.mimeType.<get-mimeType>|<get-mimeType>(){}[0]
+
+        final object Companion { // dev.kord.rest/Sound.Format.Companion|null[0]
+            final val values // dev.kord.rest/Sound.Format.Companion.values|{}values[0]
+                final fun <get-values>(): kotlin.collections/Set<dev.kord.rest/Sound.Format> // dev.kord.rest/Sound.Format.Companion.values.<get-values>|<get-values>(){}[0]
+
+            final fun fromContentType(io.ktor.http/ContentType): dev.kord.rest/Sound.Format // dev.kord.rest/Sound.Format.Companion.fromContentType|fromContentType(io.ktor.http.ContentType){}[0]
+            final fun fromContentType(kotlin/String): dev.kord.rest/Sound.Format // dev.kord.rest/Sound.Format.Companion.fromContentType|fromContentType(kotlin.String){}[0]
+            final fun fromExtension(kotlin/String): dev.kord.rest/Sound.Format // dev.kord.rest/Sound.Format.Companion.fromExtension|fromExtension(kotlin.String){}[0]
+            final fun isSupported(kotlin/String): kotlin/Boolean // dev.kord.rest/Sound.Format.Companion.isSupported|isSupported(kotlin.String){}[0]
+        }
+
+        final object MP3 : dev.kord.rest/Sound.Format { // dev.kord.rest/Sound.Format.MP3|null[0]
+            final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest/Sound.Format.MP3.equals|equals(kotlin.Any?){}[0]
+            final fun hashCode(): kotlin/Int // dev.kord.rest/Sound.Format.MP3.hashCode|hashCode(){}[0]
+            final fun toString(): kotlin/String // dev.kord.rest/Sound.Format.MP3.toString|toString(){}[0]
+        }
+
+        final object OGG : dev.kord.rest/Sound.Format { // dev.kord.rest/Sound.Format.OGG|null[0]
+            final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest/Sound.Format.OGG.equals|equals(kotlin.Any?){}[0]
+            final fun hashCode(): kotlin/Int // dev.kord.rest/Sound.Format.OGG.hashCode|hashCode(){}[0]
+            final fun toString(): kotlin/String // dev.kord.rest/Sound.Format.OGG.toString|toString(){}[0]
+        }
+    }
+
+    final object Companion { // dev.kord.rest/Sound.Companion|null[0]
+        final fun fromFile(kotlinx.io.files/Path, kotlinx.io.files/FileSystem = ...): dev.kord.rest/Sound // dev.kord.rest/Sound.Companion.fromFile|fromFile(kotlinx.io.files.Path;kotlinx.io.files.FileSystem){}[0]
+        final fun fromSource(kotlinx.io/Source, dev.kord.rest/Sound.Format): dev.kord.rest/Sound // dev.kord.rest/Sound.Companion.fromSource|fromSource(kotlinx.io.Source;dev.kord.rest.Sound.Format){}[0]
+        final fun raw(kotlin/ByteArray, dev.kord.rest/Sound.Format): dev.kord.rest/Sound // dev.kord.rest/Sound.Companion.raw|raw(kotlin.ByteArray;dev.kord.rest.Sound.Format){}[0]
+        final suspend fun fromUrl(io.ktor.client/HttpClient, kotlin/String): dev.kord.rest/Sound // dev.kord.rest/Sound.Companion.fromUrl|fromUrl(io.ktor.client.HttpClient;kotlin.String){}[0]
+    }
 }
 
 final value class dev.kord.rest.ratelimit/BucketKey { // dev.kord.rest.ratelimit/BucketKey|null[0]
@@ -7300,6 +7549,8 @@ sealed class <#A: kotlin/Any?> dev.kord.rest.route/Route { // dev.kord.rest.rout
 
     final object DeleteAllReactionsForEmoji : dev.kord.rest.route/Route<kotlin/Unit> // dev.kord.rest.route/Route.DeleteAllReactionsForEmoji|null[0]
 
+    final object DeleteGuildsSoundboardSound : dev.kord.rest.route/Route<kotlin/Unit> // dev.kord.rest.route/Route.DeleteGuildsSoundboardSound|null[0]
+
     final object DeleteWebhookMessage : dev.kord.rest.route/Route<kotlin/Unit> // dev.kord.rest.route/Route.DeleteWebhookMessage|null[0]
 
     final object EditMessagePatch : dev.kord.rest.route/Route<dev.kord.common.entity/DiscordMessage> // dev.kord.rest.route/Route.EditMessagePatch|null[0]
@@ -7333,6 +7584,12 @@ sealed class <#A: kotlin/Any?> dev.kord.rest.route/Route { // dev.kord.rest.rout
     final object GatewayBotGet : dev.kord.rest.route/Route<dev.kord.rest.json.response/BotGatewayResponse> // dev.kord.rest.route/Route.GatewayBotGet|null[0]
 
     final object GatewayGet : dev.kord.rest.route/Route<dev.kord.rest.json.response/GatewayResponse> // dev.kord.rest.route/Route.GatewayGet|null[0]
+
+    final object GetGuildsSoundboardSound : dev.kord.rest.route/Route<dev.kord.common.entity/DiscordSoundboardSound> // dev.kord.rest.route/Route.GetGuildsSoundboardSound|null[0]
+
+    final object GetGuildsSoundboardSounds : dev.kord.rest.route/Route<dev.kord.rest.json.response/GuildSoundboardSoundsResponse> // dev.kord.rest.route/Route.GetGuildsSoundboardSounds|null[0]
+
+    final object GetSoundboardDefaultSounds : dev.kord.rest.route/Route<kotlin.collections/List<dev.kord.common.entity/DiscordSoundboardSound>> // dev.kord.rest.route/Route.GetSoundboardDefaultSounds|null[0]
 
     final object GetWebhookMessage : dev.kord.rest.route/Route<dev.kord.common.entity/DiscordMessage> // dev.kord.rest.route/Route.GetWebhookMessage|null[0]
 
@@ -7548,11 +7805,15 @@ sealed class <#A: kotlin/Any?> dev.kord.rest.route/Route { // dev.kord.rest.rout
 
     final object OwnReactionDelete : dev.kord.rest.route/Route<kotlin/Unit> // dev.kord.rest.route/Route.OwnReactionDelete|null[0]
 
+    final object PatchGuildsSoundboardSound : dev.kord.rest.route/Route<dev.kord.common.entity/DiscordSoundboardSound> // dev.kord.rest.route/Route.PatchGuildsSoundboardSound|null[0]
+
     final object PinDelete : dev.kord.rest.route/Route<kotlin/Unit> // dev.kord.rest.route/Route.PinDelete|null[0]
 
     final object PinPut : dev.kord.rest.route/Route<kotlin/Unit> // dev.kord.rest.route/Route.PinPut|null[0]
 
     final object PinsGet : dev.kord.rest.route/Route<kotlin.collections/List<dev.kord.common.entity/DiscordMessage>> // dev.kord.rest.route/Route.PinsGet|null[0]
+
+    final object PostGuildsSoundboardSounds : dev.kord.rest.route/Route<dev.kord.common.entity/DiscordSoundboardSound> // dev.kord.rest.route/Route.PostGuildsSoundboardSounds|null[0]
 
     final object PrivateArchivedThreadsGet : dev.kord.rest.route/Route<dev.kord.rest.json.response/ListThreadsResponse> // dev.kord.rest.route/Route.PrivateArchivedThreadsGet|null[0]
 
@@ -7574,6 +7835,8 @@ sealed class <#A: kotlin/Any?> dev.kord.rest.route/Route { // dev.kord.rest.rout
 
     final object SelfVoiceStatePatch : dev.kord.rest.route/Route<kotlin/Unit> // dev.kord.rest.route/Route.SelfVoiceStatePatch|null[0]
 
+    final object SendSoundboardSound : dev.kord.rest.route/Route<kotlin/Unit> // dev.kord.rest.route/Route.SendSoundboardSound|null[0]
+
     final object SkuId : dev.kord.rest.route/Route.Key // dev.kord.rest.route/Route.SkuId|null[0]
 
     final object SkuSubscriptionGet : dev.kord.rest.route/Route<dev.kord.common.entity/DiscordSubscription> // dev.kord.rest.route/Route.SkuSubscriptionGet|null[0]
@@ -7581,6 +7844,8 @@ sealed class <#A: kotlin/Any?> dev.kord.rest.route/Route { // dev.kord.rest.rout
     final object SkuSubscriptionsList : dev.kord.rest.route/Route<kotlin.collections/List<dev.kord.common.entity/DiscordSubscription>> // dev.kord.rest.route/Route.SkuSubscriptionsList|null[0]
 
     final object SkusList : dev.kord.rest.route/Route<kotlin.collections/List<dev.kord.common.entity/DiscordSku>> // dev.kord.rest.route/Route.SkusList|null[0]
+
+    final object SoundId : dev.kord.rest.route/Route.Key // dev.kord.rest.route/Route.SoundId|null[0]
 
     final object StageInstanceDelete : dev.kord.rest.route/Route<kotlin/Unit> // dev.kord.rest.route/Route.StageInstanceDelete|null[0]
 
@@ -8124,6 +8389,7 @@ final suspend inline fun (dev.kord.rest.service/ChannelService).dev.kord.rest.se
 final suspend inline fun (dev.kord.rest.service/ChannelService).dev.kord.rest.service/patchVoiceChannel(dev.kord.common.entity/Snowflake, kotlin/Function1<dev.kord.rest.builder.channel/VoiceChannelModifyBuilder, kotlin/Unit>): dev.kord.common.entity/DiscordChannel // dev.kord.rest.service/patchVoiceChannel|patchVoiceChannel@dev.kord.rest.service.ChannelService(dev.kord.common.entity.Snowflake;kotlin.Function1<dev.kord.rest.builder.channel.VoiceChannelModifyBuilder,kotlin.Unit>){}[0]
 final suspend inline fun (dev.kord.rest.service/GuildService).dev.kord.rest.service/createCategory(dev.kord.common.entity/Snowflake, kotlin/String, kotlin/Function1<dev.kord.rest.builder.channel/CategoryCreateBuilder, kotlin/Unit>): dev.kord.common.entity/DiscordChannel // dev.kord.rest.service/createCategory|createCategory@dev.kord.rest.service.GuildService(dev.kord.common.entity.Snowflake;kotlin.String;kotlin.Function1<dev.kord.rest.builder.channel.CategoryCreateBuilder,kotlin.Unit>){}[0]
 final suspend inline fun (dev.kord.rest.service/GuildService).dev.kord.rest.service/createForumChannel(dev.kord.common.entity/Snowflake, kotlin/String, kotlin/Function1<dev.kord.rest.builder.channel/ForumChannelCreateBuilder, kotlin/Unit>): dev.kord.common.entity/DiscordChannel // dev.kord.rest.service/createForumChannel|createForumChannel@dev.kord.rest.service.GuildService(dev.kord.common.entity.Snowflake;kotlin.String;kotlin.Function1<dev.kord.rest.builder.channel.ForumChannelCreateBuilder,kotlin.Unit>){}[0]
+final suspend inline fun (dev.kord.rest.service/GuildService).dev.kord.rest.service/createGuildSoundboardSound(dev.kord.common.entity/Snowflake, kotlin/String, dev.kord.rest/Sound, kotlin/Function1<dev.kord.rest.builder.guild/SoundboardSoundCreateBuilder, kotlin/Unit> = ...): dev.kord.common.entity/DiscordSoundboardSound // dev.kord.rest.service/createGuildSoundboardSound|createGuildSoundboardSound@dev.kord.rest.service.GuildService(dev.kord.common.entity.Snowflake;kotlin.String;dev.kord.rest.Sound;kotlin.Function1<dev.kord.rest.builder.guild.SoundboardSoundCreateBuilder,kotlin.Unit>){}[0]
 final suspend inline fun (dev.kord.rest.service/GuildService).dev.kord.rest.service/createMediaChannel(dev.kord.common.entity/Snowflake, kotlin/String, kotlin/Function1<dev.kord.rest.builder.channel/MediaChannelCreateBuilder, kotlin/Unit>): dev.kord.common.entity/DiscordChannel // dev.kord.rest.service/createMediaChannel|createMediaChannel@dev.kord.rest.service.GuildService(dev.kord.common.entity.Snowflake;kotlin.String;kotlin.Function1<dev.kord.rest.builder.channel.MediaChannelCreateBuilder,kotlin.Unit>){}[0]
 final suspend inline fun (dev.kord.rest.service/GuildService).dev.kord.rest.service/createNewsChannel(dev.kord.common.entity/Snowflake, kotlin/String, kotlin/Function1<dev.kord.rest.builder.channel/NewsChannelCreateBuilder, kotlin/Unit>): dev.kord.common.entity/DiscordChannel // dev.kord.rest.service/createNewsChannel|createNewsChannel@dev.kord.rest.service.GuildService(dev.kord.common.entity.Snowflake;kotlin.String;kotlin.Function1<dev.kord.rest.builder.channel.NewsChannelCreateBuilder,kotlin.Unit>){}[0]
 final suspend inline fun (dev.kord.rest.service/GuildService).dev.kord.rest.service/createScheduledEvent(dev.kord.common.entity/Snowflake, kotlin/String, dev.kord.common.entity/GuildScheduledEventPrivacyLevel, kotlinx.datetime/Instant, dev.kord.common.entity/ScheduledEntityType, kotlin/Function1<dev.kord.rest.builder.guild/ScheduledEventCreateBuilder, kotlin/Unit> = ...): dev.kord.common.entity/DiscordGuildScheduledEvent // dev.kord.rest.service/createScheduledEvent|createScheduledEvent@dev.kord.rest.service.GuildService(dev.kord.common.entity.Snowflake;kotlin.String;dev.kord.common.entity.GuildScheduledEventPrivacyLevel;kotlinx.datetime.Instant;dev.kord.common.entity.ScheduledEntityType;kotlin.Function1<dev.kord.rest.builder.guild.ScheduledEventCreateBuilder,kotlin.Unit>){}[0]
@@ -8131,6 +8397,7 @@ final suspend inline fun (dev.kord.rest.service/GuildService).dev.kord.rest.serv
 final suspend inline fun (dev.kord.rest.service/GuildService).dev.kord.rest.service/createTextChannel(dev.kord.common.entity/Snowflake, kotlin/String, kotlin/Function1<dev.kord.rest.builder.channel/TextChannelCreateBuilder, kotlin/Unit>): dev.kord.common.entity/DiscordChannel // dev.kord.rest.service/createTextChannel|createTextChannel@dev.kord.rest.service.GuildService(dev.kord.common.entity.Snowflake;kotlin.String;kotlin.Function1<dev.kord.rest.builder.channel.TextChannelCreateBuilder,kotlin.Unit>){}[0]
 final suspend inline fun (dev.kord.rest.service/GuildService).dev.kord.rest.service/createVoiceChannel(dev.kord.common.entity/Snowflake, kotlin/String, kotlin/Function1<dev.kord.rest.builder.channel/VoiceChannelCreateBuilder, kotlin/Unit>): dev.kord.common.entity/DiscordChannel // dev.kord.rest.service/createVoiceChannel|createVoiceChannel@dev.kord.rest.service.GuildService(dev.kord.common.entity.Snowflake;kotlin.String;kotlin.Function1<dev.kord.rest.builder.channel.VoiceChannelCreateBuilder,kotlin.Unit>){}[0]
 final suspend inline fun (dev.kord.rest.service/GuildService).dev.kord.rest.service/modifyCurrentVoiceState(dev.kord.common.entity/Snowflake, kotlin/Function1<dev.kord.rest.builder.guild/CurrentVoiceStateModifyBuilder, kotlin/Unit>) // dev.kord.rest.service/modifyCurrentVoiceState|modifyCurrentVoiceState@dev.kord.rest.service.GuildService(dev.kord.common.entity.Snowflake;kotlin.Function1<dev.kord.rest.builder.guild.CurrentVoiceStateModifyBuilder,kotlin.Unit>){}[0]
+final suspend inline fun (dev.kord.rest.service/GuildService).dev.kord.rest.service/modifyGuildSoundboardSound(dev.kord.common.entity/Snowflake, dev.kord.common.entity/Snowflake, kotlin/Function1<dev.kord.rest.builder.guild/SoundboardSoundModifyBuilder, kotlin/Unit> = ...): dev.kord.common.entity/DiscordSoundboardSound // dev.kord.rest.service/modifyGuildSoundboardSound|modifyGuildSoundboardSound@dev.kord.rest.service.GuildService(dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake;kotlin.Function1<dev.kord.rest.builder.guild.SoundboardSoundModifyBuilder,kotlin.Unit>){}[0]
 final suspend inline fun (dev.kord.rest.service/GuildService).dev.kord.rest.service/modifyGuildWelcomeScreen(dev.kord.common.entity/Snowflake, kotlin/Function1<dev.kord.rest.builder.guild/WelcomeScreenModifyBuilder, kotlin/Unit>): dev.kord.common.entity/DiscordWelcomeScreen // dev.kord.rest.service/modifyGuildWelcomeScreen|modifyGuildWelcomeScreen@dev.kord.rest.service.GuildService(dev.kord.common.entity.Snowflake;kotlin.Function1<dev.kord.rest.builder.guild.WelcomeScreenModifyBuilder,kotlin.Unit>){}[0]
 final suspend inline fun (dev.kord.rest.service/GuildService).dev.kord.rest.service/modifyScheduledEvent(dev.kord.common.entity/Snowflake, dev.kord.common.entity/Snowflake, kotlin/Function1<dev.kord.rest.builder.scheduled_events/ScheduledEventModifyBuilder, kotlin/Unit>): dev.kord.common.entity/DiscordGuildScheduledEvent // dev.kord.rest.service/modifyScheduledEvent|modifyScheduledEvent@dev.kord.rest.service.GuildService(dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake;kotlin.Function1<dev.kord.rest.builder.scheduled_events.ScheduledEventModifyBuilder,kotlin.Unit>){}[0]
 final suspend inline fun (dev.kord.rest.service/GuildService).dev.kord.rest.service/modifyVoiceState(dev.kord.common.entity/Snowflake, dev.kord.common.entity/Snowflake, dev.kord.common.entity/Snowflake, kotlin/Function1<dev.kord.rest.builder.guild/VoiceStateModifyBuilder, kotlin/Unit>) // dev.kord.rest.service/modifyVoiceState|modifyVoiceState@dev.kord.rest.service.GuildService(dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake;kotlin.Function1<dev.kord.rest.builder.guild.VoiceStateModifyBuilder,kotlin.Unit>){}[0]
