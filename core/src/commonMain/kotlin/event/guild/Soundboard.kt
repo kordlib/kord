@@ -5,6 +5,7 @@ import dev.kord.common.entity.Snowflake
 import dev.kord.core.Kord
 import dev.kord.core.entity.GuildSoundboardSound
 import dev.kord.core.event.Event
+import dev.kord.gateway.VoiceChannelEffect
 
 /**
  * Event fired when a new [GuildSoundboardSound] is created.
@@ -60,6 +61,17 @@ public class GuildSoundboardSoundDeletEvent(
     public val old: GuildSoundboardSound?,
     public val soundId: Snowflake,
     public val guildId: Snowflake,
+    override val shard: Int, @KordPreview
+    override val customContext: Any?, override val kord: Kord
+) : Event
+
+/**
+ * Event fired when a [VoiceChannelEffect] is sent.
+ *
+ * @property effect the effect
+ */
+public class VoiceChannelEffectSentEvent(
+    public val effect: VoiceChannelEffect,
     override val shard: Int, @KordPreview
     override val customContext: Any?, override val kord: Kord
 ) : Event

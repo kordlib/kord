@@ -370,7 +370,7 @@ public fun Intents.Builder.enableEvent(event: KClass<out Event>): Unit = when (e
     InviteCreateEvent::class, InviteDeleteEvent::class -> +GuildInvites
 
 
-    VoiceStateUpdateEvent::class -> +GuildVoiceStates
+    VoiceStateUpdateEvent::class, VoiceChannelEffectSentEvent::class -> +GuildVoiceStates
 
 
     PresenceUpdateEvent::class -> +GuildPresences
@@ -401,7 +401,7 @@ public fun Intents.Builder.enableEvent(event: KClass<out Event>): Unit = when (e
         GuildSoundboardSoundUpdateEvent::class,
         GuildSoundboardSoundsUpdateEvent::class,
         GuildSoundboardSoundDeletEvent::class,
-        -> +Intent.GuildExpressions
+        -> +GuildExpressions
 
 
     /*

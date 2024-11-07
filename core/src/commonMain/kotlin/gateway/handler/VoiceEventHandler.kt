@@ -7,9 +7,12 @@ import dev.kord.core.cache.data.VoiceStateData
 import dev.kord.core.cache.data.id
 import dev.kord.core.cache.idEq
 import dev.kord.core.entity.VoiceState
+import dev.kord.core.event.guild.VoiceChannelEffectSentEvent
 import dev.kord.core.event.guild.VoiceServerUpdateEvent
 import dev.kord.core.event.user.VoiceStateUpdateEvent
 import dev.kord.gateway.Event
+import dev.kord.gateway.VoiceChannelEffect
+import dev.kord.gateway.VoiceEffectSend
 import dev.kord.gateway.VoiceServerUpdate
 import dev.kord.gateway.VoiceStateUpdate
 import kotlinx.coroutines.flow.map
@@ -22,6 +25,7 @@ internal class VoiceEventHandler : BaseGatewayEventHandler() {
         when (event) {
             is VoiceStateUpdate -> handle(event, shard, kord, context)
             is VoiceServerUpdate -> handle(event, shard, kord, context)
+            is VoiceEffectSend -> handle(event, shard, kord, context)
             else -> null
         }
 
@@ -50,6 +54,16 @@ internal class VoiceEventHandler : BaseGatewayEventHandler() {
     ): VoiceServerUpdateEvent =
         with(event.voiceServerUpdateData) {
             VoiceServerUpdateEvent(token, guildId, endpoint, kord, shard, context?.get())
+        }
+
+    private suspend fun handle(
+        event: VoiceEffectSend,
+        shard: Int,
+        kord: Kord,
+        context: LazyContext?,
+    ): VoiceChannelEffectSentEvent =
+        with(event) {
+            VoiceChannelEffectSentEvent(effect, shard, context?.get(), kord)
         }
 
 }

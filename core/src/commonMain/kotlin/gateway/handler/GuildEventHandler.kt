@@ -545,7 +545,7 @@ internal class GuildEventHandler : BaseGatewayEventHandler() {
         val updates = data.map {
             val oldData = kord.cache.query {
                 idEq(SoundboardSoundData::id, it.id)
-                idEq(SoundboardSoundData::guildId, it.guildId.value)
+                idEq(SoundboardSoundData::guildId, it.guildId.value!!)
             }.singleOrNull()
             val old = oldData?.let {GuildSoundboardSound(it, kord)}
 
