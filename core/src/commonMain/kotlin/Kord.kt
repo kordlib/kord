@@ -11,6 +11,7 @@ import dev.kord.core.builder.kord.KordProxyBuilder
 import dev.kord.core.builder.kord.KordRestOnlyBuilder
 import dev.kord.core.cache.data.ApplicationCommandData
 import dev.kord.core.cache.data.GuildData
+import dev.kord.core.cache.data.SoundboardSoundData
 import dev.kord.core.cache.data.UserData
 import dev.kord.core.entity.*
 import dev.kord.core.entity.application.*
@@ -105,6 +106,12 @@ public class Kord(
 
     public val guilds: Flow<Guild>
         get() = defaultSupplier.guilds
+
+    public val defaultSoundboardSounds: Flow<DefaultSoundboardSound>
+        get() = flow {
+            rest.soundboard.getDefaultSounds()
+                .forEach { emit(DefaultSoundboardSound(SoundboardSoundData.from(it), this@Kord)) }
+        }
 
     init {
         gateway.events

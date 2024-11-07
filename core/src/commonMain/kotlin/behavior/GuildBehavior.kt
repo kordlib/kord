@@ -34,6 +34,7 @@ import dev.kord.gateway.builder.RequestGuildMembersBuilder
 import dev.kord.gateway.start
 import dev.kord.rest.Image
 import dev.kord.rest.NamedFile
+import dev.kord.rest.Sound
 import dev.kord.rest.builder.auditlog.AuditLogGetRequestBuilder
 import dev.kord.rest.builder.automoderation.*
 import dev.kord.rest.builder.ban.BanCreateBuilder
@@ -1143,4 +1144,21 @@ public suspend inline fun GuildBehavior.createMemberProfileAutoModerationRule(
     contract { callsInPlace(builder, EXACTLY_ONCE) }
     val rule = kord.rest.autoModeration.createMemberProfileAutoModerationRule(guildId = id, name, eventType, builder)
     return MemberProfileAutoModerationRule(AutoModerationRuleData.from(rule), kord, supplier)
+}
+
+/**
+ * Creates a new [sound][GuildSoundboardSound] on this guild and returns it.
+ *
+ * This requires the [Permission.ManageGuildExpressions] permission.
+ *
+ * @param name the name of the sound
+ * @param sound the [Sound]
+ *
+ * @throws RestRequestException if something went wrong during the request.
+ */
+public suspend inline fun GuildBehavior.createSoundboardSound(name: String, sound: Sound, builder: SoundboardSoundCreateBuilder.() -> Unit = {}): GuildSoundboardSound {
+    contract { callsInPlace(builder, EXACTLY_ONCE) }
+    val sound = kord.rest.guild.createGuildSoundboardSound(guildId = id, name, sound, builder)
+
+    return GuildSoundboardSound(SoundboardSoundData.from(sound), kord, supplier)
 }

@@ -582,13 +582,29 @@ public class GuildService(requestHandler: RequestHandler) : RestService(requestH
      * @param request the data to change
      * @param reason the audit log reason for this change
      */
-    public suspend fun modifyGuildSoundboardSound(guildId: Snowflake, soundId: Snowflake, request: UpdateSoundboardSoundRequest, reason: String?=null): DiscordSoundboardSound =
+    public suspend fun modifyGuildSoundboardSound(guildId: Snowflake, soundId: Snowflake, request: UpdateSoundboardSoundRequest, reason: String? = null): DiscordSoundboardSound =
         call(Route.GetGuildsSoundboardSound) {
             keys[Route.GuildId] = guildId
             keys[Route.SoundId] = soundId
             auditLogReason(reason)
 
             body(UpdateSoundboardSoundRequest.serializer(), request)
+        }
+
+    /**
+     * Deletes [sound][soundId] on [guild][guildId].
+     *
+     * @param reason the audit log reason for this change
+     */
+    public suspend fun deleteGuildSoundboardSound(
+        guildId: Snowflake,
+        soundId: Snowflake,
+        reason: String? = null
+    ): Unit =
+        call(Route.DeleteGuildsSoundboardSound) {
+            keys[Route.GuildId] = guildId
+            keys[Route.SoundId] = soundId
+            auditLogReason(reason)
         }
 }
 
@@ -734,7 +750,7 @@ public suspend inline fun GuildService.modifyScheduledEvent(
  * @param sound the [audio data][Sound] of the sound
  * @param builder additional data for the sound
  */
-public suspend inline fun GuildService.createSound(
+public suspend inline fun GuildService.createGuildSoundboardSound(
     guildId: Snowflake,
     name: String,
     sound: Sound,
@@ -754,7 +770,7 @@ public suspend inline fun GuildService.createSound(
  *
  * @param builder the data to update
  */
-public suspend inline fun GuildService.modifySound(
+public suspend inline fun GuildService.modifyGuildSoundboardSound(
     guildId: Snowflake,
     soundId: Snowflake,
     builder: SoundboardSoundModifyBuilder.() -> Unit = {}
