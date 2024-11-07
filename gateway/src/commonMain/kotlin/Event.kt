@@ -83,7 +83,7 @@ public sealed class Event {
                 }
                 // OpCodes for Commands (aka send events), they shouldn't be received
                 OpCode.Identify, OpCode.StatusUpdate, OpCode.VoiceStateUpdate, OpCode.Resume,
-                OpCode.RequestGuildMembers,
+                OpCode.RequestGuildMembers, OpCode.RequestSoundboardSounds
                 -> throw IllegalArgumentException("Illegal opcode for gateway event: $op")
                 OpCode.Unknown -> throw IllegalArgumentException("Unknown opcode for gateway event")
             }
@@ -708,7 +708,7 @@ public data class VoiceChannelEffect(
 )
 
 /**
- * Event sent in response to [RequestSoundboardSounds] containing the [sounds][soundboardSounds] for [guildId].
+ * Event sent in response to [RequestSoundboardSounds] containing the [sounds][data] for [guildId].
  */
 public data class SoundboardSounds(
     val data: SoundboardSoundsChunk,
