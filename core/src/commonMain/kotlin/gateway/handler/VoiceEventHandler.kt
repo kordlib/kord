@@ -11,7 +11,6 @@ import dev.kord.core.event.guild.VoiceChannelEffectSentEvent
 import dev.kord.core.event.guild.VoiceServerUpdateEvent
 import dev.kord.core.event.user.VoiceStateUpdateEvent
 import dev.kord.gateway.Event
-import dev.kord.gateway.VoiceChannelEffect
 import dev.kord.gateway.VoiceEffectSend
 import dev.kord.gateway.VoiceServerUpdate
 import dev.kord.gateway.VoiceStateUpdate

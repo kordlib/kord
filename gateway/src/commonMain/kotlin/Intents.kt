@@ -51,10 +51,11 @@
             "GuildExpressions", shift = 3,
             kDoc = """
                 Enables the following events:
-                - [EmojisUpdateEvent]
-                - [SoundboardSoundCreatedEvent]
-                - [SoundboardSoundUpdateEvent]
-                - [SoundboardSoundDeleteEvent]
+                - [GuildEmojisUpdate]
+                - [GuildSoundboardSoundCreate]
+                - [GuildSoundboardSoundUpdate]
+                - [GuildSoundboardSoundsUpdate]
+                - [GuildSoundboardSoundDelete]
             """
         ),
         Entry(

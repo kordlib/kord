@@ -110,10 +110,11 @@ public sealed class Intent(
 
     /**
      * Enables the following events:
-     * - [EmojisUpdateEvent]
-     * - [SoundboardSoundCreatedEvent]
-     * - [SoundboardSoundUpdateEvent]
-     * - [SoundboardSoundDeleteEvent]
+     * - [GuildEmojisUpdate]
+     * - [GuildSoundboardSoundCreate]
+     * - [GuildSoundboardSoundUpdate]
+     * - [GuildSoundboardSoundsUpdate]
+     * - [GuildSoundboardSoundDelete]
      */
     public object GuildExpressions : Intent(3)
 

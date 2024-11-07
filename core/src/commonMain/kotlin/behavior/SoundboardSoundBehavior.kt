@@ -1,8 +1,7 @@
+
 package dev.kord.core.behavior
 
-import dev.kord.common.entity.Permission.Speak
-import dev.kord.common.entity.Permission.UseExternalSounds
-import dev.kord.common.entity.Permission.UseSoundboard
+import dev.kord.common.entity.Permission
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.exception.RequestException
 import dev.kord.core.behavior.channel.VoiceChannelBehavior
