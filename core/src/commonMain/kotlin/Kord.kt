@@ -28,6 +28,8 @@ import dev.kord.core.supplier.*
 import dev.kord.gateway.Gateway
 import dev.kord.gateway.builder.LoginBuilder
 import dev.kord.gateway.builder.PresenceBuilder
+import dev.kord.gateway.requestSoundboardSounds
+import dev.kord.gateway.start
 import dev.kord.rest.builder.application.ApplicationRoleConnectionMetadataRecordsBuilder
 import dev.kord.rest.builder.guild.GuildCreateBuilder
 import dev.kord.rest.builder.interaction.*
@@ -38,6 +40,7 @@ import dev.kord.rest.service.RestClient
 import io.github.oshai.kotlinlogging.KotlinLogging
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
+import kotlin.collections.map
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 import kotlin.coroutines.CoroutineContext
@@ -411,6 +414,34 @@ public class Kord(
         }
         val status = PresenceBuilder().apply(builder).toUpdateStatus()
         gateway.sendAll(status)
+    }
+
+    /**
+     * Requests guild emojis [through the gateway][requestSoundboardSounds] for [guildIds].
+     *
+     * The returned flow is cold, and will execute the request only on subscription.
+     * Collection of this flow on a [Gateway] that is not [running][Gateway.start]
+     * will result in an [IllegalStateException] being thrown.
+     *
+     * Executing the request on a [MasterGateway] with a [Shard][dev.kord.common.entity.DiscordShard] that
+     * [does not match the guild id](https://discord.com/developers/docs/topics/gateway#sharding)
+     * can result in undefined behavior for the returned flow and inconsistencies in the cache.
+     */
+    @OptIn(ExperimentalCoroutinesApi::class, KordUnsafe::class)
+    public fun requestSoundboardSounds(guildIds: List<Snowflake>): Flow<GuildSoundboardSound> {
+        return guildIds.groupBy { guildId ->
+            val guild = unsafe.guild(guildId)
+            guild.gateway
+        }.mapNotNull { (gateway, guilds) ->
+            val gateway = gateway ?: return@mapNotNull null
+
+            gateway.requestSoundboardSounds(guilds).flatMapConcat {
+                it.soundboardSounds.map { sound ->
+                    val data = SoundboardSoundData.from(sound)
+                    GuildSoundboardSound(data, this)
+                }.asFlow()
+            }
+        }.asFlow().flattenConcat()
     }
 
     override fun equals(other: Any?): Boolean = other is Kord && this.resources.token == other.resources.token
