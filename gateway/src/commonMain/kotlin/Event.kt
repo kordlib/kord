@@ -698,13 +698,20 @@ public data class DeletedSound(
 
 @Serializable
 public data class VoiceChannelEffect(
+    @SerialName("channel_id")
     val channelId: Snowflake,
+    @SerialName("guild_id")
     val guildId: Snowflake,
+    @SerialName("user_id")
     val userId: Snowflake,
     val emoji: Optional<DiscordEmoji?> = Optional.Missing(),
+    @SerialName("animation_type")
     val animationType: Optional<AnimationType > = Optional.Missing(),
+    @SerialName("animation_id")
     val animationId: OptionalInt = OptionalInt.Missing,
+    @SerialName("sound_id")
     val soundId: OptionalSnowflake = OptionalSnowflake.Missing,
+    @SerialName("sound_volume")
     val soundVolume: OptionalDouble = OptionalDouble.Missing
 )
 
