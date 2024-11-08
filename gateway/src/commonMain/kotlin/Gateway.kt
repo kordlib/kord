@@ -237,7 +237,7 @@ public fun Gateway.requestSoundboardSounds(guildIds: List<Snowflake>): Flow<Soun
         .filterIsInstance<SoundboardSounds>()
         .transformWhile {
             emit(it.data)
-            receivedGuilds.size == guildIds.size
+            receivedGuilds.size < guildIds.size
         }
 }
 
