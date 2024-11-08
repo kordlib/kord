@@ -1,8 +1,8 @@
 package dev.kord.rest.builder.role
 
-import dev.kord.rest.builder.AuditRequestBuilder
 import dev.kord.common.annotation.KordDsl
 import dev.kord.common.entity.Snowflake
+import dev.kord.rest.builder.AuditRequestBuilder
 import dev.kord.rest.json.request.GuildRolePositionModifyRequest
 
 @KordDsl

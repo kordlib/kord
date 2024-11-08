@@ -9,6 +9,7 @@ import dev.kord.core.entity.InviteWithMetadata
 import dev.kord.core.entity.Webhook
 import dev.kord.core.entity.channel.CategorizableChannel
 import dev.kord.core.exception.EntityNotFoundException
+import dev.kord.core.hash
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.rest.builder.channel.InviteCreateBuilder
@@ -17,7 +18,6 @@ import dev.kord.rest.request.RestRequestException
 import dev.kord.rest.service.RestClient
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import dev.kord.core.hash
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 

@@ -1,6 +1,5 @@
 package dev.kord.common.entity
 
-import dev.kord.ksp.Generate.EntityType.BIT_SET_FLAGS
 import kotlin.random.Random
 import kotlin.random.nextInt
 import kotlin.test.*

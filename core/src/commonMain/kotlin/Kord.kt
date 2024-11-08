@@ -4,6 +4,7 @@ import dev.kord.cache.api.DataCache
 import dev.kord.common.annotation.KordExperimental
 import dev.kord.common.annotation.KordUnsafe
 import dev.kord.common.entity.DiscordShard
+import dev.kord.common.entity.PrimaryEntryPointCommandHandlerType
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.exception.RequestException
 import dev.kord.core.builder.kord.KordBuilder
@@ -683,6 +684,46 @@ public class Kord(
         return GuildUserCommand(data, rest.interaction)
     }
 
+    public suspend inline fun createGuildPrimaryEntryPointCommand(
+        guildId: Snowflake,
+        name: String,
+        description: String,
+        handler: PrimaryEntryPointCommandHandlerType,
+        builder: EntryPointCreateBuilder.() -> Unit = {},
+    ): GuildPrimaryEntryPointCommand {
+        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+        val response = rest.interaction.createGuildPrimaryEntryPointCommand(
+            resources.applicationId,
+            guildId,
+            name,
+            description,
+            handler,
+            builder
+        )
+
+        val data = ApplicationCommandData.from(response)
+        return GuildPrimaryEntryPointCommand(data, rest.interaction)
+    }
+
+
+    public suspend inline fun createGlobalPrimaryEntryPointCommand(
+        name: String,
+        description: String,
+        handler: PrimaryEntryPointCommandHandlerType,
+        builder: EntryPointCreateBuilder.() -> Unit = {},
+    ): GlobalPrimaryEntryPointCommand {
+        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+        val response = rest.interaction.createGlobalPrimaryEntryPointCommand(
+            resources.applicationId,
+            name,
+            description,
+            handler,
+            builder
+        )
+
+        val data = ApplicationCommandData.from(response)
+        return GlobalPrimaryEntryPointCommand(data, rest.interaction)
+    }
 
     public suspend inline fun createGuildApplicationCommands(
         guildId: Snowflake,

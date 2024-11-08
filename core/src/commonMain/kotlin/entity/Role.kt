@@ -8,9 +8,9 @@ import dev.kord.common.entity.optional.unwrap
 import dev.kord.core.Kord
 import dev.kord.core.behavior.RoleBehavior
 import dev.kord.core.cache.data.RoleData
+import dev.kord.core.hash
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
-import dev.kord.core.hash
 
 public data class Role(
     val data: RoleData,
