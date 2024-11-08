@@ -223,6 +223,7 @@ public sealed class Event {
                 "GUILD_SOUNDBOARD_SOUNDS_UPDATE" -> GuildSoundboardSoundsUpdate(decode(SoundboardSoundsChunk.serializer()), sequence)
                 "GUILD_SOUNDBOARD_SOUNDS_DELETE" -> GuildSoundboardSoundDelete(decode(DeletedSound.serializer()), sequence)
                 "VOICE_CHANNEL_EFFECT_SEND" -> VoiceEffectSend(decode(VoiceChannelEffect.serializer()), sequence)
+                "SOUNDBOARD_SOUNDS" -> SoundboardSounds(decode(SoundboardSoundsChunk.serializer()), sequence)
                 else -> {
                     jsonLogger.debug { "Unknown gateway event name: $eventName" }
                     UnknownDispatchEvent(eventName, eventData, sequence)
