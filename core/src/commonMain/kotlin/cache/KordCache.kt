@@ -101,6 +101,12 @@ public class KordCacheBuilder {
     public fun emojis(generator: Generator<EmojiData, Snowflake>): Unit = forDescription(EmojiData.description, generator)
 
     /**
+     * Configures the caching for [SoundboardSoundData].
+     */
+    public fun soundboardSounds(generator: Generator<SoundboardSoundData, Snowflake>): Unit =
+        forDescription(SoundboardSoundData.description, generator)
+
+    /**
      *  Configures the caching for [WebhookData].
      */
     public fun webhooks(generator: Generator<WebhookData, Snowflake>): Unit = forDescription(WebhookData.description, generator)

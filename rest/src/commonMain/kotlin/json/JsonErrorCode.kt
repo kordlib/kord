@@ -73,6 +73,9 @@ public enum class JsonErrorCode(public val code: Int) {
     /** Unknown session. */
     UnknownSession(10020),
 
+    /** Unknown asset */
+    UnknownAsset(10021),
+
     /** Unknown ban. */
     UnknownBan(10026),
 
@@ -147,6 +150,9 @@ public enum class JsonErrorCode(public val code: Int) {
 
     /** Unknown Tag. */
     UnknownTag(10087),
+
+    /** Unknown sound */
+    UnknownSound(10097),
 
     /** Bots cannot use this endpoint. */
     NonBotEndpoint(20001),
@@ -258,6 +264,9 @@ public enum class JsonErrorCode(public val code: Int) {
 
     /** Maximum number of guild widget settings updates has been reached. Try again later. */
     MaxGuildWidgetSettingsUpdates(30042),
+
+    /** Maximum number of soundboard sounds reached */
+    MaxSoundboardSounds(30045),
 
     /** Maximum number of edits to messages older than 1 hour reached. Try again later. */
     MaxOldMessageEdits(30046),
@@ -509,6 +518,19 @@ public enum class JsonErrorCode(public val code: Int) {
     /** The request body contains invalid JSON. */
     InvalidJsonInRequestBody(50109),
 
+    /**
+     * The provided file is invalid.
+     *
+     * Not to be confused with [InvalidFile]
+     */
+    InvalidFileProvided(50110),
+
+    /** The provided file type is invalid. */
+    InvalidFileType(50123),
+
+    /** The provided file duration exceeds maximum of 5.2 seconds. */
+    InvalidFileExceedsMaximumLength(50124),
+
     /** Owner cannot be pending member. */
     OwnerCannotBePendingMember(50131),
 
@@ -542,11 +564,17 @@ public enum class JsonErrorCode(public val code: Int) {
     /** Cannot delete guild subscription integration. */
     CannotDeleteGuildSubscriptionIntegration(50163),
 
+    /** Cannot send voice effect when user is server muted, deafened or suppressed */
+    CannotSendVoiceEffect(50167),
+
     /** You cannot send voice messages in this channel. */
     CannotSendVoiceMessagesInThisChannel(50173),
 
     /** The user account must first be verified. */
     UserAccountMustBeVerified(50178),
+
+    /** The provided file does not have a valid duration */
+    InvalidFileDuration(50192),
 
     /** You do not have permission to send this sticker. */
     StickerPermissionLack(50600),

@@ -30,6 +30,7 @@ public suspend fun DataCache.registerKordData(): Unit = register(
     AutoModerationRuleData.description,
     EntitlementData.description,
     SubscriptionData.description,
+    SoundboardSoundData.description
 )
 
 /**
@@ -54,6 +55,7 @@ internal suspend fun DataCache.removeKordData() {
     query<AutoModerationRuleData>().remove()
     query<EntitlementData>().remove()
     query<SubscriptionData>().remove()
+    query<SoundboardSoundData>().remove()
 }
 
 /**

@@ -35,6 +35,7 @@ public class RestClient(requestHandler: RequestHandler) : RestService(requestHan
     public val user: UserService = UserService(requestHandler)
     public val voice: VoiceService = VoiceService(requestHandler)
     public val webhook: WebhookService = WebhookService(requestHandler)
+    public val soundboard: SoundboardService = SoundboardService(requestHandler)
 
     /**
      * Sends a request to the given [route]. This function exposes a direct call to the Discord api and allows

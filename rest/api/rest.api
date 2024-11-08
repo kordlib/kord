@@ -71,6 +71,53 @@ public final class dev/kord/rest/NamedFile {
 	public final fun getUrl ()Ljava/lang/String;
 }
 
+public final class dev/kord/rest/Sound {
+	public static final field Companion Ldev/kord/rest/Sound$Companion;
+	public synthetic fun <init> ([BLdev/kord/rest/Sound$Format;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun getData ()[B
+	public final fun getDataUri ()Ljava/lang/String;
+	public final fun getFormat ()Ldev/kord/rest/Sound$Format;
+}
+
+public final class dev/kord/rest/Sound$Companion {
+	public final fun fromFile (Lkotlinx/io/files/Path;Lkotlinx/io/files/FileSystem;)Ldev/kord/rest/Sound;
+	public static synthetic fun fromFile$default (Ldev/kord/rest/Sound$Companion;Lkotlinx/io/files/Path;Lkotlinx/io/files/FileSystem;ILjava/lang/Object;)Ldev/kord/rest/Sound;
+	public final fun fromSource (Lkotlinx/io/Source;Ldev/kord/rest/Sound$Format;)Ldev/kord/rest/Sound;
+	public final fun fromUrl (Lio/ktor/client/HttpClient;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun raw ([BLdev/kord/rest/Sound$Format;)Ldev/kord/rest/Sound;
+}
+
+public abstract class dev/kord/rest/Sound$Format {
+	public static final field Companion Ldev/kord/rest/Sound$Format$Companion;
+	public synthetic fun <init> (Lio/ktor/http/ContentType;Ljava/util/List;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (Lio/ktor/http/ContentType;[Ljava/lang/String;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun getExtension ()Ljava/lang/String;
+	public final fun getExtensions ()Ljava/util/List;
+	public final fun getMimeType ()Lio/ktor/http/ContentType;
+}
+
+public final class dev/kord/rest/Sound$Format$Companion {
+	public final fun fromContentType (Lio/ktor/http/ContentType;)Ldev/kord/rest/Sound$Format;
+	public final fun fromContentType (Ljava/lang/String;)Ldev/kord/rest/Sound$Format;
+	public final fun fromExtension (Ljava/lang/String;)Ldev/kord/rest/Sound$Format;
+	public final fun getValues ()Ljava/util/Set;
+	public final fun isSupported (Ljava/lang/String;)Z
+}
+
+public final class dev/kord/rest/Sound$Format$MP3 : dev/kord/rest/Sound$Format {
+	public static final field INSTANCE Ldev/kord/rest/Sound$Format$MP3;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class dev/kord/rest/Sound$Format$OGG : dev/kord/rest/Sound$Format {
+	public static final field INSTANCE Ldev/kord/rest/Sound$Format$OGG;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
 public abstract interface class dev/kord/rest/builder/AuditBuilder {
 	public abstract fun getReason ()Ljava/lang/String;
 	public abstract fun setReason (Ljava/lang/String;)V
@@ -1414,6 +1461,38 @@ public final class dev/kord/rest/builder/guild/ScheduledEventCreateBuilder : dev
 	public synthetic fun toRequest ()Ljava/lang/Object;
 }
 
+public final class dev/kord/rest/builder/guild/SoundboardSoundCreateBuilder : dev/kord/rest/builder/AuditRequestBuilder {
+	public fun <init> (Ljava/lang/String;Ldev/kord/rest/Sound;)V
+	public final fun getEmojiId ()Ldev/kord/common/entity/Snowflake;
+	public final fun getEmojiName ()Ljava/lang/String;
+	public final fun getName ()Ljava/lang/String;
+	public fun getReason ()Ljava/lang/String;
+	public final fun getSound ()Ldev/kord/rest/Sound;
+	public final fun getVolume ()Ljava/lang/Double;
+	public final fun setEmojiId (Ldev/kord/common/entity/Snowflake;)V
+	public final fun setEmojiName (Ljava/lang/String;)V
+	public fun setReason (Ljava/lang/String;)V
+	public final fun setVolume (Ljava/lang/Double;)V
+	public fun toRequest ()Ldev/kord/rest/json/request/CreateSoundboardSoundRequest;
+	public synthetic fun toRequest ()Ljava/lang/Object;
+}
+
+public final class dev/kord/rest/builder/guild/SoundboardSoundModifyBuilder : dev/kord/rest/builder/AuditRequestBuilder {
+	public fun <init> ()V
+	public final fun getEmojiId ()Ldev/kord/common/entity/Snowflake;
+	public final fun getEmojiName ()Ljava/lang/String;
+	public final fun getName ()Ljava/lang/String;
+	public fun getReason ()Ljava/lang/String;
+	public final fun getVolume ()Ljava/lang/Double;
+	public final fun setEmojiId (Ldev/kord/common/entity/Snowflake;)V
+	public final fun setEmojiName (Ljava/lang/String;)V
+	public final fun setName (Ljava/lang/String;)V
+	public fun setReason (Ljava/lang/String;)V
+	public final fun setVolume (Ljava/lang/Double;)V
+	public fun toRequest ()Ldev/kord/rest/json/request/UpdateSoundboardSoundRequest;
+	public synthetic fun toRequest ()Ljava/lang/Object;
+}
+
 public final class dev/kord/rest/builder/guild/StickerModifyBuilder : dev/kord/rest/builder/RequestBuilder {
 	public fun <init> ()V
 	public final fun getDescription ()Ljava/lang/String;
@@ -2630,6 +2709,7 @@ public final class dev/kord/rest/json/JsonErrorCode : java/lang/Enum {
 	public static final field CannotSendMessageInForumChannel Ldev/kord/rest/json/JsonErrorCode;
 	public static final field CannotSendMessagesInNonTextChannel Ldev/kord/rest/json/JsonErrorCode;
 	public static final field CannotSendMessagesToUser Ldev/kord/rest/json/JsonErrorCode;
+	public static final field CannotSendVoiceEffect Ldev/kord/rest/json/JsonErrorCode;
 	public static final field CannotSendVoiceMessagesInThisChannel Ldev/kord/rest/json/JsonErrorCode;
 	public static final field CannotUpdateFinishedEvent Ldev/kord/rest/json/JsonErrorCode;
 	public static final field CannotUpdateOnboarding Ldev/kord/rest/json/JsonErrorCode;
@@ -2657,6 +2737,10 @@ public final class dev/kord/rest/json/JsonErrorCode : java/lang/Enum {
 	public static final field InvalidActivityAction Ldev/kord/rest/json/JsonErrorCode;
 	public static final field InvalidAuthToken Ldev/kord/rest/json/JsonErrorCode;
 	public static final field InvalidFile Ldev/kord/rest/json/JsonErrorCode;
+	public static final field InvalidFileDuration Ldev/kord/rest/json/JsonErrorCode;
+	public static final field InvalidFileExceedsMaximumLength Ldev/kord/rest/json/JsonErrorCode;
+	public static final field InvalidFileProvided Ldev/kord/rest/json/JsonErrorCode;
+	public static final field InvalidFileType Ldev/kord/rest/json/JsonErrorCode;
 	public static final field InvalidFormBody Ldev/kord/rest/json/JsonErrorCode;
 	public static final field InvalidGuild Ldev/kord/rest/json/JsonErrorCode;
 	public static final field InvalidJsonForLottieFile Ldev/kord/rest/json/JsonErrorCode;
@@ -2702,6 +2786,7 @@ public final class dev/kord/rest/json/JsonErrorCode : java/lang/Enum {
 	public static final field MaxRecipients Ldev/kord/rest/json/JsonErrorCode;
 	public static final field MaxServerCategories Ldev/kord/rest/json/JsonErrorCode;
 	public static final field MaxServerMembers Ldev/kord/rest/json/JsonErrorCode;
+	public static final field MaxSoundboardSounds Ldev/kord/rest/json/JsonErrorCode;
 	public static final field MaxStickerAnimationDuration Ldev/kord/rest/json/JsonErrorCode;
 	public static final field MaxStickerFrameCount Ldev/kord/rest/json/JsonErrorCode;
 	public static final field MaxStickerFrameRate Ldev/kord/rest/json/JsonErrorCode;
@@ -2756,6 +2841,7 @@ public final class dev/kord/rest/json/JsonErrorCode : java/lang/Enum {
 	public static final field UnknownApplication Ldev/kord/rest/json/JsonErrorCode;
 	public static final field UnknownApplicationCommand Ldev/kord/rest/json/JsonErrorCode;
 	public static final field UnknownApplicationCommandPermissions Ldev/kord/rest/json/JsonErrorCode;
+	public static final field UnknownAsset Ldev/kord/rest/json/JsonErrorCode;
 	public static final field UnknownBan Ldev/kord/rest/json/JsonErrorCode;
 	public static final field UnknownBranch Ldev/kord/rest/json/JsonErrorCode;
 	public static final field UnknownBuild Ldev/kord/rest/json/JsonErrorCode;
@@ -2783,6 +2869,7 @@ public final class dev/kord/rest/json/JsonErrorCode : java/lang/Enum {
 	public static final field UnknownRole Ldev/kord/rest/json/JsonErrorCode;
 	public static final field UnknownSKU Ldev/kord/rest/json/JsonErrorCode;
 	public static final field UnknownSession Ldev/kord/rest/json/JsonErrorCode;
+	public static final field UnknownSound Ldev/kord/rest/json/JsonErrorCode;
 	public static final field UnknownStageInstance Ldev/kord/rest/json/JsonErrorCode;
 	public static final field UnknownSticker Ldev/kord/rest/json/JsonErrorCode;
 	public static final field UnknownStoreDirectoryLayout Ldev/kord/rest/json/JsonErrorCode;
@@ -3307,6 +3394,42 @@ public synthetic class dev/kord/rest/json/request/ChannelPositionSwapRequest$$se
 }
 
 public final class dev/kord/rest/json/request/ChannelPositionSwapRequest$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class dev/kord/rest/json/request/CreateSoundboardSoundRequest {
+	public static final field Companion Ldev/kord/rest/json/request/CreateSoundboardSoundRequest$Companion;
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ldev/kord/common/entity/optional/OptionalDouble;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Ldev/kord/common/entity/optional/OptionalDouble;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()Ldev/kord/common/entity/optional/OptionalDouble;
+	public final fun component4 ()Ldev/kord/common/entity/optional/OptionalSnowflake;
+	public final fun component5 ()Ldev/kord/common/entity/optional/Optional;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ldev/kord/common/entity/optional/OptionalDouble;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;)Ldev/kord/rest/json/request/CreateSoundboardSoundRequest;
+	public static synthetic fun copy$default (Ldev/kord/rest/json/request/CreateSoundboardSoundRequest;Ljava/lang/String;Ljava/lang/String;Ldev/kord/common/entity/optional/OptionalDouble;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;ILjava/lang/Object;)Ldev/kord/rest/json/request/CreateSoundboardSoundRequest;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getEmojiId ()Ldev/kord/common/entity/optional/OptionalSnowflake;
+	public final fun getEmojiName ()Ldev/kord/common/entity/optional/Optional;
+	public final fun getName ()Ljava/lang/String;
+	public final fun getSound ()Ljava/lang/String;
+	public final fun getVolume ()Ldev/kord/common/entity/optional/OptionalDouble;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public synthetic class dev/kord/rest/json/request/CreateSoundboardSoundRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Ldev/kord/rest/json/request/CreateSoundboardSoundRequest$$serializer;
+	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/rest/json/request/CreateSoundboardSoundRequest;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/rest/json/request/CreateSoundboardSoundRequest;)V
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class dev/kord/rest/json/request/CreateSoundboardSoundRequest$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
@@ -5283,6 +5406,36 @@ public final class dev/kord/rest/json/request/ScheduledEventModifyRequest$Compan
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
+public final class dev/kord/rest/json/request/SendSoundboardSoundRequest {
+	public static final field Companion Ldev/kord/rest/json/request/SendSoundboardSoundRequest$Companion;
+	public fun <init> (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/optional/OptionalSnowflake;)V
+	public synthetic fun <init> (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/optional/OptionalSnowflake;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ldev/kord/common/entity/Snowflake;
+	public final fun component2 ()Ldev/kord/common/entity/optional/OptionalSnowflake;
+	public final fun copy (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/optional/OptionalSnowflake;)Ldev/kord/rest/json/request/SendSoundboardSoundRequest;
+	public static synthetic fun copy$default (Ldev/kord/rest/json/request/SendSoundboardSoundRequest;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/optional/OptionalSnowflake;ILjava/lang/Object;)Ldev/kord/rest/json/request/SendSoundboardSoundRequest;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getSoundId ()Ldev/kord/common/entity/Snowflake;
+	public final fun getSourceGuildId ()Ldev/kord/common/entity/optional/OptionalSnowflake;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public synthetic class dev/kord/rest/json/request/SendSoundboardSoundRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Ldev/kord/rest/json/request/SendSoundboardSoundRequest$$serializer;
+	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/rest/json/request/SendSoundboardSoundRequest;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/rest/json/request/SendSoundboardSoundRequest;)V
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class dev/kord/rest/json/request/SendSoundboardSoundRequest$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
 public final class dev/kord/rest/json/request/SkuSubscriptionsListRequest {
 	public fun <init> ()V
 	public fun <init> (Ldev/kord/rest/route/Position$BeforeOrAfter;Ljava/lang/Integer;Ldev/kord/common/entity/Snowflake;)V
@@ -5435,6 +5588,41 @@ public synthetic class dev/kord/rest/json/request/TestEntitlementCreateRequest$$
 }
 
 public final class dev/kord/rest/json/request/TestEntitlementCreateRequest$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class dev/kord/rest/json/request/UpdateSoundboardSoundRequest {
+	public static final field Companion Ldev/kord/rest/json/request/UpdateSoundboardSoundRequest$Companion;
+	public fun <init> ()V
+	public fun <init> (Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalDouble;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;)V
+	public synthetic fun <init> (Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalDouble;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ldev/kord/common/entity/optional/Optional;
+	public final fun component2 ()Ldev/kord/common/entity/optional/OptionalDouble;
+	public final fun component3 ()Ldev/kord/common/entity/optional/OptionalSnowflake;
+	public final fun component4 ()Ldev/kord/common/entity/optional/Optional;
+	public final fun copy (Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalDouble;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;)Ldev/kord/rest/json/request/UpdateSoundboardSoundRequest;
+	public static synthetic fun copy$default (Ldev/kord/rest/json/request/UpdateSoundboardSoundRequest;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalDouble;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;ILjava/lang/Object;)Ldev/kord/rest/json/request/UpdateSoundboardSoundRequest;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getEmojiId ()Ldev/kord/common/entity/optional/OptionalSnowflake;
+	public final fun getEmojiName ()Ldev/kord/common/entity/optional/Optional;
+	public final fun getName ()Ldev/kord/common/entity/optional/Optional;
+	public final fun getVolume ()Ldev/kord/common/entity/optional/OptionalDouble;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public synthetic class dev/kord/rest/json/request/UpdateSoundboardSoundRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Ldev/kord/rest/json/request/UpdateSoundboardSoundRequest$$serializer;
+	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/rest/json/request/UpdateSoundboardSoundRequest;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/rest/json/request/UpdateSoundboardSoundRequest;)V
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class dev/kord/rest/json/request/UpdateSoundboardSoundRequest$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
@@ -5918,6 +6106,33 @@ public synthetic class dev/kord/rest/json/response/GuildMFALevelModifyResponse$$
 }
 
 public final class dev/kord/rest/json/response/GuildMFALevelModifyResponse$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class dev/kord/rest/json/response/GuildSoundboardSoundsResponse {
+	public static final field Companion Ldev/kord/rest/json/response/GuildSoundboardSoundsResponse$Companion;
+	public fun <init> (Ljava/util/List;)V
+	public final fun component1 ()Ljava/util/List;
+	public final fun copy (Ljava/util/List;)Ldev/kord/rest/json/response/GuildSoundboardSoundsResponse;
+	public static synthetic fun copy$default (Ldev/kord/rest/json/response/GuildSoundboardSoundsResponse;Ljava/util/List;ILjava/lang/Object;)Ldev/kord/rest/json/response/GuildSoundboardSoundsResponse;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getItems ()Ljava/util/List;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public synthetic class dev/kord/rest/json/response/GuildSoundboardSoundsResponse$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Ldev/kord/rest/json/response/GuildSoundboardSoundsResponse$$serializer;
+	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/rest/json/response/GuildSoundboardSoundsResponse;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/rest/json/response/GuildSoundboardSoundsResponse;)V
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class dev/kord/rest/json/response/GuildSoundboardSoundsResponse$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
@@ -6628,6 +6843,10 @@ public final class dev/kord/rest/route/Route$DeleteAllReactionsForEmoji : dev/ko
 	public static final field INSTANCE Ldev/kord/rest/route/Route$DeleteAllReactionsForEmoji;
 }
 
+public final class dev/kord/rest/route/Route$DeleteGuildsSoundboardSound : dev/kord/rest/route/Route {
+	public static final field INSTANCE Ldev/kord/rest/route/Route$DeleteGuildsSoundboardSound;
+}
+
 public final class dev/kord/rest/route/Route$DeleteWebhookMessage : dev/kord/rest/route/Route {
 	public static final field INSTANCE Ldev/kord/rest/route/Route$DeleteWebhookMessage;
 }
@@ -6694,6 +6913,18 @@ public final class dev/kord/rest/route/Route$GatewayBotGet : dev/kord/rest/route
 
 public final class dev/kord/rest/route/Route$GatewayGet : dev/kord/rest/route/Route {
 	public static final field INSTANCE Ldev/kord/rest/route/Route$GatewayGet;
+}
+
+public final class dev/kord/rest/route/Route$GetGuildsSoundboardSound : dev/kord/rest/route/Route {
+	public static final field INSTANCE Ldev/kord/rest/route/Route$GetGuildsSoundboardSound;
+}
+
+public final class dev/kord/rest/route/Route$GetGuildsSoundboardSounds : dev/kord/rest/route/Route {
+	public static final field INSTANCE Ldev/kord/rest/route/Route$GetGuildsSoundboardSounds;
+}
+
+public final class dev/kord/rest/route/Route$GetSoundboardDefaultSounds : dev/kord/rest/route/Route {
+	public static final field INSTANCE Ldev/kord/rest/route/Route$GetSoundboardDefaultSounds;
 }
 
 public final class dev/kord/rest/route/Route$GetWebhookMessage : dev/kord/rest/route/Route {
@@ -7132,6 +7363,10 @@ public final class dev/kord/rest/route/Route$OwnReactionDelete : dev/kord/rest/r
 	public static final field INSTANCE Ldev/kord/rest/route/Route$OwnReactionDelete;
 }
 
+public final class dev/kord/rest/route/Route$PatchGuildsSoundboardSound : dev/kord/rest/route/Route {
+	public static final field INSTANCE Ldev/kord/rest/route/Route$PatchGuildsSoundboardSound;
+}
+
 public final class dev/kord/rest/route/Route$PinDelete : dev/kord/rest/route/Route {
 	public static final field INSTANCE Ldev/kord/rest/route/Route$PinDelete;
 }
@@ -7142,6 +7377,10 @@ public final class dev/kord/rest/route/Route$PinPut : dev/kord/rest/route/Route 
 
 public final class dev/kord/rest/route/Route$PinsGet : dev/kord/rest/route/Route {
 	public static final field INSTANCE Ldev/kord/rest/route/Route$PinsGet;
+}
+
+public final class dev/kord/rest/route/Route$PostGuildsSoundboardSounds : dev/kord/rest/route/Route {
+	public static final field INSTANCE Ldev/kord/rest/route/Route$PostGuildsSoundboardSounds;
 }
 
 public final class dev/kord/rest/route/Route$PrivateArchivedThreadsGet : dev/kord/rest/route/Route {
@@ -7184,6 +7423,10 @@ public final class dev/kord/rest/route/Route$SelfVoiceStatePatch : dev/kord/rest
 	public static final field INSTANCE Ldev/kord/rest/route/Route$SelfVoiceStatePatch;
 }
 
+public final class dev/kord/rest/route/Route$SendSoundboardSound : dev/kord/rest/route/Route {
+	public static final field INSTANCE Ldev/kord/rest/route/Route$SendSoundboardSound;
+}
+
 public final class dev/kord/rest/route/Route$SkuId : dev/kord/rest/route/Route$Key {
 	public static final field INSTANCE Ldev/kord/rest/route/Route$SkuId;
 }
@@ -7198,6 +7441,10 @@ public final class dev/kord/rest/route/Route$SkuSubscriptionsList : dev/kord/res
 
 public final class dev/kord/rest/route/Route$SkusList : dev/kord/rest/route/Route {
 	public static final field INSTANCE Ldev/kord/rest/route/Route$SkusList;
+}
+
+public final class dev/kord/rest/route/Route$SoundId : dev/kord/rest/route/Route$Key {
+	public static final field INSTANCE Ldev/kord/rest/route/Route$SoundId;
 }
 
 public final class dev/kord/rest/route/Route$StageInstanceDelete : dev/kord/rest/route/Route {
@@ -7420,6 +7667,8 @@ public final class dev/kord/rest/service/ChannelService : dev/kord/rest/service/
 	public static synthetic fun putChannel$default (Ldev/kord/rest/service/ChannelService;Ldev/kord/common/entity/Snowflake;Ldev/kord/rest/json/request/ChannelModifyPutRequest;Ljava/lang/String;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public final fun removeFromGroup (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun removeUserFromThread (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun sendSoundboardSound (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static synthetic fun sendSoundboardSound$default (Ldev/kord/rest/service/ChannelService;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public final fun startForumThread (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static synthetic fun startForumThread$default (Ldev/kord/rest/service/ChannelService;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public final fun startThread (Ldev/kord/common/entity/Snowflake;Ldev/kord/rest/json/request/MultipartStartThreadRequest;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -7481,6 +7730,8 @@ public final class dev/kord/rest/service/GuildService : dev/kord/rest/service/Re
 	public final fun createGuildIntegration (Ldev/kord/common/entity/Snowflake;Ldev/kord/rest/json/request/GuildIntegrationCreateRequest;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun createGuildRole (Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static synthetic fun createGuildRole$default (Ldev/kord/rest/service/GuildService;Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+	public final fun createGuildSoundboardSound (Ldev/kord/common/entity/Snowflake;Ldev/kord/rest/json/request/CreateSoundboardSoundRequest;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static synthetic fun createGuildSoundboardSound$default (Ldev/kord/rest/service/GuildService;Ldev/kord/common/entity/Snowflake;Ldev/kord/rest/json/request/CreateSoundboardSoundRequest;Ljava/lang/String;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public final fun createScheduledEvent (Ldev/kord/common/entity/Snowflake;Ldev/kord/rest/json/request/GuildScheduledEventCreateRequest;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static synthetic fun createScheduledEvent$default (Ldev/kord/rest/service/GuildService;Ldev/kord/common/entity/Snowflake;Ldev/kord/rest/json/request/GuildScheduledEventCreateRequest;Ljava/lang/String;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public final fun deleteGuild (Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -7492,6 +7743,8 @@ public final class dev/kord/rest/service/GuildService : dev/kord/rest/service/Re
 	public static synthetic fun deleteGuildMember$default (Ldev/kord/rest/service/GuildService;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public final fun deleteGuildRole (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static synthetic fun deleteGuildRole$default (Ldev/kord/rest/service/GuildService;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+	public final fun deleteGuildSoundboardSound (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static synthetic fun deleteGuildSoundboardSound$default (Ldev/kord/rest/service/GuildService;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public final fun deleteRoleFromGuildMember (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static synthetic fun deleteRoleFromGuildMember$default (Ldev/kord/rest/service/GuildService;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public final fun deleteScheduledEvent (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -7513,6 +7766,7 @@ public final class dev/kord/rest/service/GuildService : dev/kord/rest/service/Re
 	public final fun getGuildPruneCount (Ldev/kord/common/entity/Snowflake;ILkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static synthetic fun getGuildPruneCount$default (Ldev/kord/rest/service/GuildService;Ldev/kord/common/entity/Snowflake;ILkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public final fun getGuildRoles (Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun getGuildSoundboardSound (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun getGuildVoiceRegions (Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun getGuildWelcomeScreen (Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun getGuildWidget (Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -7525,6 +7779,7 @@ public final class dev/kord/rest/service/GuildService : dev/kord/rest/service/Re
 	public static synthetic fun getScheduledEventUsersBefore$default (Ldev/kord/rest/service/GuildService;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ljava/lang/Boolean;Ljava/lang/Integer;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public final fun getVanityInvite (Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun listActiveThreads (Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun listGuildSoundboardSounds (Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun listScheduledEvents (Ldev/kord/common/entity/Snowflake;Ljava/lang/Boolean;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static synthetic fun listScheduledEvents$default (Ldev/kord/rest/service/GuildService;Ldev/kord/common/entity/Snowflake;Ljava/lang/Boolean;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public final fun modifyCurrentUserNickname (Ldev/kord/common/entity/Snowflake;Ldev/kord/rest/json/request/CurrentUserNicknameModifyRequest;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -7541,6 +7796,8 @@ public final class dev/kord/rest/service/GuildService : dev/kord/rest/service/Re
 	public static synthetic fun modifyGuildOnboarding$default (Ldev/kord/rest/service/GuildService;Ldev/kord/common/entity/Snowflake;Ldev/kord/rest/json/request/GuildOnboardingModifyRequest;Ljava/lang/String;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public final fun modifyGuildRole (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun modifyGuildRolePosition (Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun modifyGuildSoundboardSound (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/rest/json/request/UpdateSoundboardSoundRequest;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static synthetic fun modifyGuildSoundboardSound$default (Ldev/kord/rest/service/GuildService;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/rest/json/request/UpdateSoundboardSoundRequest;Ljava/lang/String;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public final fun modifyGuildWelcomeScreen (Ldev/kord/common/entity/Snowflake;Ldev/kord/rest/json/request/GuildWelcomeScreenModifyRequest;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static synthetic fun modifyGuildWelcomeScreen$default (Ldev/kord/rest/service/GuildService;Ldev/kord/common/entity/Snowflake;Ldev/kord/rest/json/request/GuildWelcomeScreenModifyRequest;Ljava/lang/String;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public final fun modifyGuildWidget (Ldev/kord/common/entity/Snowflake;Ldev/kord/rest/json/request/GuildWidgetModifyRequest;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -7555,6 +7812,8 @@ public final class dev/kord/rest/service/GuildService : dev/kord/rest/service/Re
 public final class dev/kord/rest/service/GuildServiceKt {
 	public static final fun createCategory (Ldev/kord/rest/service/GuildService;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static final fun createForumChannel (Ldev/kord/rest/service/GuildService;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static final fun createGuildSoundboardSound (Ldev/kord/rest/service/GuildService;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/rest/Sound;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static synthetic fun createGuildSoundboardSound$default (Ldev/kord/rest/service/GuildService;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/rest/Sound;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public static final fun createMediaChannel (Ldev/kord/rest/service/GuildService;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static final fun createNewsChannel (Ldev/kord/rest/service/GuildService;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static final fun createScheduledEvent (Ldev/kord/rest/service/GuildService;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/common/entity/GuildScheduledEventPrivacyLevel;Lkotlinx/datetime/Instant;Ldev/kord/common/entity/ScheduledEntityType;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -7563,6 +7822,8 @@ public final class dev/kord/rest/service/GuildServiceKt {
 	public static final fun createTextChannel (Ldev/kord/rest/service/GuildService;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static final fun createVoiceChannel (Ldev/kord/rest/service/GuildService;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static final fun modifyCurrentVoiceState (Ldev/kord/rest/service/GuildService;Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static final fun modifyGuildSoundboardSound (Ldev/kord/rest/service/GuildService;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static synthetic fun modifyGuildSoundboardSound$default (Ldev/kord/rest/service/GuildService;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public static final fun modifyGuildWelcomeScreen (Ldev/kord/rest/service/GuildService;Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static final fun modifyScheduledEvent (Ldev/kord/rest/service/GuildService;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static final fun modifyVoiceState (Ldev/kord/rest/service/GuildService;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -7661,6 +7922,7 @@ public final class dev/kord/rest/service/RestClient : dev/kord/rest/service/Rest
 	public final fun getInteraction ()Ldev/kord/rest/service/InteractionService;
 	public final fun getInvite ()Ldev/kord/rest/service/InviteService;
 	public final fun getSku ()Ldev/kord/rest/service/SkuService;
+	public final fun getSoundboard ()Ldev/kord/rest/service/SoundboardService;
 	public final fun getStageInstance ()Ldev/kord/rest/service/StageInstanceService;
 	public final fun getSticker ()Ldev/kord/rest/service/StickerService;
 	public final fun getSubscription ()Ldev/kord/rest/service/SubscriptionService;
@@ -7685,6 +7947,11 @@ public abstract class dev/kord/rest/service/RestService {
 public final class dev/kord/rest/service/SkuService : dev/kord/rest/service/RestService {
 	public fun <init> (Ldev/kord/rest/request/RequestHandler;)V
 	public final fun listSkus (Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class dev/kord/rest/service/SoundboardService : dev/kord/rest/service/RestService {
+	public fun <init> (Ldev/kord/rest/request/RequestHandler;)V
+	public final fun getDefaultSounds (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class dev/kord/rest/service/StageInstanceService : dev/kord/rest/service/RestService {
