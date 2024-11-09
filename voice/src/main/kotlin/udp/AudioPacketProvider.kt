@@ -44,8 +44,8 @@ public abstract class AudioPacketProvider internal constructor(
 private class CouldNotEncryptDataException(data: ByteArray) :
     RuntimeException("Couldn't encrypt the following data: [${data.joinToString(", ")}]")
 
-public class DefaultAudioPacketProvider internal constructor(
-    key: ByteArray, nonceStrategy: @Suppress("DEPRECATION") NonceStrategy?, encryptionMode: EncryptionMode?,
+public class DefaultAudioPacketProvider private constructor(
+    key: ByteArray, nonceStrategy: @Suppress("DEPRECATION") NonceStrategy?, private val delegate: ProviderDelegate,
 ) : AudioPacketProvider(nonceStrategy, key) {
     @Deprecated(
         "The 'nonceStrategy' property is only used for XSalsa20 Poly1305 encryption. Construct a " +
@@ -58,22 +58,27 @@ public class DefaultAudioPacketProvider internal constructor(
         DeprecationLevel.WARNING,
     )
     public constructor(key: ByteArray, nonceStrategy: @Suppress("DEPRECATION") NonceStrategy) :
-        this(key, nonceStrategy, encryptionMode = null)
+        this(key, nonceStrategy, LegacyProviderDelegate(key, nonceStrategy))
+
+    internal constructor(
+        key: ByteArray, nonceStrategy: @Suppress("DEPRECATION") NonceStrategy?, encryptionMode: EncryptionMode,
+    ) : this(
+        key, nonceStrategy,
+        delegate = if (nonceStrategy != null) {
+            LegacyProviderDelegate(key, nonceStrategy)
+        } else @Suppress("DEPRECATION") when (encryptionMode) {
+            EncryptionMode.AeadAes256GcmRtpSize ->
+                EncryptedPacketCreatorProviderDelegate(AeadAes256GcmRtpSizeVoicePacketCreator(key))
+            EncryptionMode.AeadXChaCha20Poly1305RtpSize ->
+                EncryptedPacketCreatorProviderDelegate(AeadXChaCha20Poly1305RtpSizeVoicePacketCreator(key))
+            EncryptionMode.XSalsa20Poly1305 -> LegacyProviderDelegate(key, NormalNonceStrategy())
+            EncryptionMode.XSalsa20Poly1305Lite -> LegacyProviderDelegate(key, LiteNonceStrategy())
+            EncryptionMode.XSalsa20Poly1305Suffix -> LegacyProviderDelegate(key, SuffixNonceStrategy())
+            is EncryptionMode.Unknown -> throw UnsupportedOperationException("Unknown encryption mode $encryptionMode")
+        },
+    )
 
     public constructor(key: ByteArray, encryptionMode: EncryptionMode) : this(key, nonceStrategy = null, encryptionMode)
-
-    private val delegate = if (nonceStrategy != null) {
-        LegacyProviderDelegate(key, nonceStrategy)
-    } else @Suppress("DEPRECATION") when (encryptionMode!!) {
-        EncryptionMode.AeadAes256GcmRtpSize ->
-            EncryptedPacketCreatorProviderDelegate(AeadAes256GcmRtpSizeVoicePacketCreator(key))
-        EncryptionMode.AeadXChaCha20Poly1305RtpSize ->
-            EncryptedPacketCreatorProviderDelegate(AeadXChaCha20Poly1305RtpSizeVoicePacketCreator(key))
-        EncryptionMode.XSalsa20Poly1305 -> LegacyProviderDelegate(key, NormalNonceStrategy())
-        EncryptionMode.XSalsa20Poly1305Lite -> LegacyProviderDelegate(key, LiteNonceStrategy())
-        EncryptionMode.XSalsa20Poly1305Suffix -> LegacyProviderDelegate(key, SuffixNonceStrategy())
-        is EncryptionMode.Unknown -> throw UnsupportedOperationException("Unknown encryption mode $encryptionMode")
-    }
 
     override fun provide(sequence: UShort, timestamp: UInt, ssrc: UInt, data: ByteArray): ByteArrayView =
         delegate.provide(sequence, timestamp, ssrc, data)
