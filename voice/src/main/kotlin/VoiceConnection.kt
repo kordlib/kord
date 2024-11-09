@@ -62,7 +62,7 @@ public class VoiceConnection internal constructor(
         ReplaceWith(
             "VoiceConnection(data, gateway, voiceGateway, socket, voiceGatewayConfiguration, streams, audioProvider, " +
                 "frameInterceptor, frameSender, connectionDetachDuration)",
-            imports = ["dev.kord.voice.VoiceConnection"]
+            imports = ["dev.kord.voice.VoiceConnection"],
         ),
         DeprecationLevel.WARNING,
     )
