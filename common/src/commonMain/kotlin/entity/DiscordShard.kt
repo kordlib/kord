@@ -35,20 +35,18 @@ public data class DiscordShard(val index: Int, val count: Int) {
     public companion object {
         @Suppress("DEPRECATION_ERROR")
         @Deprecated(
-            "Renamed to 'Companion'. The deprecation level will be raised to HIDDEN in 0.16.0 and this declaration " +
-                "will be removed in 0.17.0.",
+            "Renamed to 'Companion'. This declaration will be removed in 0.17.0.",
             ReplaceWith("DiscordShard.Companion", imports = ["dev.kord.common.entity.DiscordShard"]),
-            DeprecationLevel.ERROR,
+            DeprecationLevel.HIDDEN,
         )
         @JvmField
         public val NewCompanion: NewCompanion = NewCompanion()
     }
 
     @Deprecated(
-        "Renamed to 'Companion'. The deprecation level will be raised to HIDDEN in 0.16.0 and this declaration will " +
-            "be removed in 0.17.0.",
+        "Renamed to 'Companion'. This declaration will be removed in 0.17.0.",
         ReplaceWith("DiscordShard.Companion", imports = ["dev.kord.common.entity.DiscordShard"]),
-        DeprecationLevel.ERROR,
+        DeprecationLevel.HIDDEN,
     )
     public class NewCompanion internal constructor() {
         public fun serializer(): KSerializer<DiscordShard> = DiscordShard.serializer()

@@ -50,6 +50,7 @@ public sealed class Route<T>(
     public val path: String,
     public val mapper: ResponseMapper<T>,
     public val requiresAuthorizationHeader: Boolean = true,
+    public val affectedByGlobalRateLimit: Boolean = true
 ) {
 
     public companion object {
@@ -91,7 +92,8 @@ public sealed class Route<T>(
         path: String,
         strategy: DeserializationStrategy<T>,
         requiresAuthorizationHeader: Boolean = true,
-    ) : this(method, path, ValueJsonMapper(strategy), requiresAuthorizationHeader)
+        affectedByGlobalRateLimit: Boolean = true
+    ) : this(method, path, ValueJsonMapper(strategy), requiresAuthorizationHeader, affectedByGlobalRateLimit)
 
     override fun toString(): String = "Route(method:${method.value},path:$path,mapper:$mapper)"
 
@@ -990,6 +992,7 @@ public sealed class Route<T>(
             "/interactions/$InteractionId/$InteractionToken/callback",
             NoStrategy,
             requiresAuthorizationHeader = false,
+            affectedByGlobalRateLimit = false
         )
 
     public object OriginalInteractionResponseGet :
@@ -998,6 +1001,7 @@ public sealed class Route<T>(
             "/webhooks/$ApplicationId/$InteractionToken/messages/@original",
             DiscordMessage.serializer(),
             requiresAuthorizationHeader = false,
+            affectedByGlobalRateLimit = false
         )
 
     public object OriginalInteractionResponseModify :
@@ -1006,6 +1010,7 @@ public sealed class Route<T>(
             "/webhooks/$ApplicationId/$InteractionToken/messages/@original",
             DiscordMessage.serializer(),
             requiresAuthorizationHeader = false,
+            affectedByGlobalRateLimit = false
         )
 
     public object OriginalInteractionResponseDelete :
@@ -1014,6 +1019,7 @@ public sealed class Route<T>(
             "/webhooks/$ApplicationId/$InteractionToken/messages/@original",
             NoStrategy,
             requiresAuthorizationHeader = false,
+            affectedByGlobalRateLimit = false
         )
 
     public object FollowupMessageCreate :
@@ -1022,6 +1028,7 @@ public sealed class Route<T>(
             "/webhooks/$ApplicationId/$InteractionToken",
             DiscordMessage.serializer(),
             requiresAuthorizationHeader = false,
+            affectedByGlobalRateLimit = false
         )
 
     public object FollowupMessageGet :
@@ -1030,6 +1037,7 @@ public sealed class Route<T>(
             "/webhooks/$ApplicationId/$InteractionToken/messages/$MessageId",
             DiscordMessage.serializer(),
             requiresAuthorizationHeader = false,
+            affectedByGlobalRateLimit = false
         )
 
     public object FollowupMessageModify :
@@ -1038,6 +1046,7 @@ public sealed class Route<T>(
             "/webhooks/$ApplicationId/$InteractionToken/messages/$MessageId",
             DiscordMessage.serializer(),
             requiresAuthorizationHeader = false,
+            affectedByGlobalRateLimit = false
         )
 
     public object FollowupMessageDelete :
@@ -1046,6 +1055,7 @@ public sealed class Route<T>(
             "/webhooks/$ApplicationId/$InteractionToken/messages/$MessageId",
             NoStrategy,
             requiresAuthorizationHeader = false,
+            affectedByGlobalRateLimit = false
         )
 
 
