@@ -706,7 +706,7 @@ public data class VoiceChannelEffect(
     val userId: Snowflake,
     val emoji: Optional<DiscordEmoji?> = Optional.Missing(),
     @SerialName("animation_type")
-    val animationType: Optional<AnimationType > = Optional.Missing(),
+    val animationType: Optional<AnimationType?> = Optional.Missing(),
     @SerialName("animation_id")
     val animationId: OptionalInt = OptionalInt.Missing,
     @SerialName("sound_id")
