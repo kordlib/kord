@@ -94,6 +94,43 @@ abstract interface dev.kord.gateway/Gateway : kotlinx.coroutines/CoroutineScope 
     }
 }
 
+sealed interface dev.kord.gateway/Compression { // dev.kord.gateway/Compression|null[0]
+    abstract val name // dev.kord.gateway/Compression.name|{}name[0]
+        abstract fun <get-name>(): kotlin/String? // dev.kord.gateway/Compression.name.<get-name>|<get-name>(){}[0]
+
+    abstract fun newDecompressor(): dev.kord.gateway/Decompressor // dev.kord.gateway/Compression.newDecompressor|newDecompressor(){}[0]
+
+    final object None : dev.kord.gateway/Compression { // dev.kord.gateway/Compression.None|null[0]
+        final val name // dev.kord.gateway/Compression.None.name|{}name[0]
+            final fun <get-name>(): kotlin/String? // dev.kord.gateway/Compression.None.name.<get-name>|<get-name>(){}[0]
+
+        final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.gateway/Compression.None.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // dev.kord.gateway/Compression.None.hashCode|hashCode(){}[0]
+        final fun newDecompressor(): dev.kord.gateway/Decompressor // dev.kord.gateway/Compression.None.newDecompressor|newDecompressor(){}[0]
+        final fun toString(): kotlin/String // dev.kord.gateway/Compression.None.toString|toString(){}[0]
+    }
+
+    final object ZLib : dev.kord.gateway/Compression { // dev.kord.gateway/Compression.ZLib|null[0]
+        final val name // dev.kord.gateway/Compression.ZLib.name|{}name[0]
+            final fun <get-name>(): kotlin/String // dev.kord.gateway/Compression.ZLib.name.<get-name>|<get-name>(){}[0]
+
+        final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.gateway/Compression.ZLib.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // dev.kord.gateway/Compression.ZLib.hashCode|hashCode(){}[0]
+        final fun newDecompressor(): dev.kord.gateway/Decompressor // dev.kord.gateway/Compression.ZLib.newDecompressor|newDecompressor(){}[0]
+        final fun toString(): kotlin/String // dev.kord.gateway/Compression.ZLib.toString|toString(){}[0]
+    }
+
+    final object Zstd : dev.kord.gateway/Compression { // dev.kord.gateway/Compression.Zstd|null[0]
+        final val name // dev.kord.gateway/Compression.Zstd.name|{}name[0]
+            final fun <get-name>(): kotlin/String // dev.kord.gateway/Compression.Zstd.name.<get-name>|<get-name>(){}[0]
+
+        final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.gateway/Compression.Zstd.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // dev.kord.gateway/Compression.Zstd.hashCode|hashCode(){}[0]
+        final fun newDecompressor(): dev.kord.gateway/Decompressor // dev.kord.gateway/Compression.Zstd.newDecompressor|newDecompressor(){}[0]
+        final fun toString(): kotlin/String // dev.kord.gateway/Compression.Zstd.toString|toString(){}[0]
+    }
+}
+
 final class dev.kord.gateway.builder/LoginBuilder { // dev.kord.gateway.builder/LoginBuilder|null[0]
     constructor <init>() // dev.kord.gateway.builder/LoginBuilder.<init>|<init>(){}[0]
 
@@ -405,6 +442,9 @@ final class dev.kord.gateway/DefaultGatewayBuilder { // dev.kord.gateway/Default
     final var client // dev.kord.gateway/DefaultGatewayBuilder.client|{}client[0]
         final fun <get-client>(): io.ktor.client/HttpClient? // dev.kord.gateway/DefaultGatewayBuilder.client.<get-client>|<get-client>(){}[0]
         final fun <set-client>(io.ktor.client/HttpClient?) // dev.kord.gateway/DefaultGatewayBuilder.client.<set-client>|<set-client>(io.ktor.client.HttpClient?){}[0]
+    final var compression // dev.kord.gateway/DefaultGatewayBuilder.compression|{}compression[0]
+        final fun <get-compression>(): dev.kord.gateway/Compression // dev.kord.gateway/DefaultGatewayBuilder.compression.<get-compression>|<get-compression>(){}[0]
+        final fun <set-compression>(dev.kord.gateway/Compression) // dev.kord.gateway/DefaultGatewayBuilder.compression.<set-compression>|<set-compression>(dev.kord.gateway.Compression){}[0]
     final var dispatcher // dev.kord.gateway/DefaultGatewayBuilder.dispatcher|{}dispatcher[0]
         final fun <get-dispatcher>(): kotlinx.coroutines/CoroutineDispatcher // dev.kord.gateway/DefaultGatewayBuilder.dispatcher.<get-dispatcher>|<get-dispatcher>(){}[0]
         final fun <set-dispatcher>(kotlinx.coroutines/CoroutineDispatcher) // dev.kord.gateway/DefaultGatewayBuilder.dispatcher.<set-dispatcher>|<set-dispatcher>(kotlinx.coroutines.CoroutineDispatcher){}[0]
@@ -428,10 +468,12 @@ final class dev.kord.gateway/DefaultGatewayBuilder { // dev.kord.gateway/Default
 }
 
 final class dev.kord.gateway/DefaultGatewayData { // dev.kord.gateway/DefaultGatewayData|null[0]
-    constructor <init>(kotlin/String, io.ktor.client/HttpClient, dev.kord.gateway.retry/Retry, dev.kord.common.ratelimit/RateLimiter, dev.kord.gateway.ratelimit/IdentifyRateLimiter, kotlinx.coroutines/CoroutineDispatcher, kotlinx.coroutines.flow/MutableSharedFlow<dev.kord.gateway/Event>) // dev.kord.gateway/DefaultGatewayData.<init>|<init>(kotlin.String;io.ktor.client.HttpClient;dev.kord.gateway.retry.Retry;dev.kord.common.ratelimit.RateLimiter;dev.kord.gateway.ratelimit.IdentifyRateLimiter;kotlinx.coroutines.CoroutineDispatcher;kotlinx.coroutines.flow.MutableSharedFlow<dev.kord.gateway.Event>){}[0]
+    constructor <init>(kotlin/String, io.ktor.client/HttpClient, dev.kord.gateway.retry/Retry, dev.kord.common.ratelimit/RateLimiter, dev.kord.gateway.ratelimit/IdentifyRateLimiter, kotlinx.coroutines/CoroutineDispatcher, kotlinx.coroutines.flow/MutableSharedFlow<dev.kord.gateway/Event>, dev.kord.gateway/Compression) // dev.kord.gateway/DefaultGatewayData.<init>|<init>(kotlin.String;io.ktor.client.HttpClient;dev.kord.gateway.retry.Retry;dev.kord.common.ratelimit.RateLimiter;dev.kord.gateway.ratelimit.IdentifyRateLimiter;kotlinx.coroutines.CoroutineDispatcher;kotlinx.coroutines.flow.MutableSharedFlow<dev.kord.gateway.Event>;dev.kord.gateway.Compression){}[0]
 
     final val client // dev.kord.gateway/DefaultGatewayData.client|{}client[0]
         final fun <get-client>(): io.ktor.client/HttpClient // dev.kord.gateway/DefaultGatewayData.client.<get-client>|<get-client>(){}[0]
+    final val compression // dev.kord.gateway/DefaultGatewayData.compression|{}compression[0]
+        final fun <get-compression>(): dev.kord.gateway/Compression // dev.kord.gateway/DefaultGatewayData.compression.<get-compression>|<get-compression>(){}[0]
     final val dispatcher // dev.kord.gateway/DefaultGatewayData.dispatcher|{}dispatcher[0]
         final fun <get-dispatcher>(): kotlinx.coroutines/CoroutineDispatcher // dev.kord.gateway/DefaultGatewayData.dispatcher.<get-dispatcher>|<get-dispatcher>(){}[0]
     final val eventFlow // dev.kord.gateway/DefaultGatewayData.eventFlow|{}eventFlow[0]
@@ -452,7 +494,8 @@ final class dev.kord.gateway/DefaultGatewayData { // dev.kord.gateway/DefaultGat
     final fun component5(): dev.kord.gateway.ratelimit/IdentifyRateLimiter // dev.kord.gateway/DefaultGatewayData.component5|component5(){}[0]
     final fun component6(): kotlinx.coroutines/CoroutineDispatcher // dev.kord.gateway/DefaultGatewayData.component6|component6(){}[0]
     final fun component7(): kotlinx.coroutines.flow/MutableSharedFlow<dev.kord.gateway/Event> // dev.kord.gateway/DefaultGatewayData.component7|component7(){}[0]
-    final fun copy(kotlin/String = ..., io.ktor.client/HttpClient = ..., dev.kord.gateway.retry/Retry = ..., dev.kord.common.ratelimit/RateLimiter = ..., dev.kord.gateway.ratelimit/IdentifyRateLimiter = ..., kotlinx.coroutines/CoroutineDispatcher = ..., kotlinx.coroutines.flow/MutableSharedFlow<dev.kord.gateway/Event> = ...): dev.kord.gateway/DefaultGatewayData // dev.kord.gateway/DefaultGatewayData.copy|copy(kotlin.String;io.ktor.client.HttpClient;dev.kord.gateway.retry.Retry;dev.kord.common.ratelimit.RateLimiter;dev.kord.gateway.ratelimit.IdentifyRateLimiter;kotlinx.coroutines.CoroutineDispatcher;kotlinx.coroutines.flow.MutableSharedFlow<dev.kord.gateway.Event>){}[0]
+    final fun component8(): dev.kord.gateway/Compression // dev.kord.gateway/DefaultGatewayData.component8|component8(){}[0]
+    final fun copy(kotlin/String = ..., io.ktor.client/HttpClient = ..., dev.kord.gateway.retry/Retry = ..., dev.kord.common.ratelimit/RateLimiter = ..., dev.kord.gateway.ratelimit/IdentifyRateLimiter = ..., kotlinx.coroutines/CoroutineDispatcher = ..., kotlinx.coroutines.flow/MutableSharedFlow<dev.kord.gateway/Event> = ..., dev.kord.gateway/Compression = ...): dev.kord.gateway/DefaultGatewayData // dev.kord.gateway/DefaultGatewayData.copy|copy(kotlin.String;io.ktor.client.HttpClient;dev.kord.gateway.retry.Retry;dev.kord.common.ratelimit.RateLimiter;dev.kord.gateway.ratelimit.IdentifyRateLimiter;kotlinx.coroutines.CoroutineDispatcher;kotlinx.coroutines.flow.MutableSharedFlow<dev.kord.gateway.Event>;dev.kord.gateway.Compression){}[0]
     final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.gateway/DefaultGatewayData.equals|equals(kotlin.Any?){}[0]
     final fun hashCode(): kotlin/Int // dev.kord.gateway/DefaultGatewayData.hashCode|hashCode(){}[0]
     final fun toString(): kotlin/String // dev.kord.gateway/DefaultGatewayData.toString|toString(){}[0]

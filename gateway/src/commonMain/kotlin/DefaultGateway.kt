@@ -39,12 +39,13 @@ private sealed class State(val retry: Boolean) {
 }
 
 /**
- * @param url The url to connect to.
- * @param client The [HttpClient] from which a WebSocket will be created, requires the [WebSockets] plugin to be
+ * @property url The url to connect to.
+ * @property client The [HttpClient] from which a WebSocket will be created, requires the [WebSockets] plugin to be
  * installed.
- * @param reconnectRetry A [Retry] used for reconnection attempts.
- * @param sendRateLimiter A [RateLimiter] that follows the Discord API specifications for sending messages.
- * @param identifyRateLimiter An [IdentifyRateLimiter] that follows the Discord API specifications for identifying.
+ * @property reconnectRetry A [Retry] used for reconnection attempts.
+ * @property sendRateLimiter A [RateLimiter] that follows the Discord API specifications for sending messages.
+ * @property identifyRateLimiter An [IdentifyRateLimiter] that follows the Discord API specifications for identifying.
+ * @property compression the [compression mode][Compression] used
  */
 public data class DefaultGatewayData(
     val url: String,
@@ -54,6 +55,7 @@ public data class DefaultGatewayData(
     val identifyRateLimiter: IdentifyRateLimiter,
     val dispatcher: CoroutineDispatcher,
     val eventFlow: MutableSharedFlow<Event>,
+    val compression: Compression,
 )
 
 /**
@@ -62,8 +64,6 @@ public data class DefaultGatewayData(
 public class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
 
     override val coroutineContext: CoroutineContext = SupervisorJob() + data.dispatcher
-
-    private val compression: Boolean
 
     private val _ping = MutableStateFlow<Duration?>(null)
     override val ping: StateFlow<Duration?> get() = _ping
@@ -76,7 +76,7 @@ public class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
 
     private val handshakeHandler: HandshakeHandler
 
-    private lateinit var inflater: Inflater
+    private lateinit var decompressor: Decompressor
 
     private val jsonParser = Json {
         ignoreUnknownKeys = true
@@ -86,9 +86,10 @@ public class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
     private val stateMutex = Mutex()
 
     init {
-        val initialUrl = Url(data.url)
-        compression = initialUrl.parameters.contains("compress", "zlib-stream")
-
+        val initialUrl = URLBuilder(data.url).apply {
+            val compressionName = data.compression.name ?: return@apply
+            parameters.append("compress", compressionName)
+        }.build()
         val sequence = Sequence()
         SequenceHandler(events, sequence)
         handshakeHandler = HandshakeHandler(events, initialUrl, ::trySend, sequence, data.reconnectRetry)
@@ -117,7 +118,11 @@ public class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
                  *
                  * > Every connection to the gateway should use its own unique zlib context.
                  */
-                inflater = Inflater()
+                try {
+                    decompressor = data.compression.newDecompressor()
+                } catch (e: Throwable) {
+                    e.printStackTrace()
+                }
             } catch (exception: Exception) {
                 defaultGatewayLogger.error(exception) { "" }
                 if (exception.isTimeout()) {
@@ -179,10 +184,7 @@ public class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
 
     private suspend fun read(frame: Frame) {
         defaultGatewayLogger.trace { "Received raw frame: $frame" }
-        val json = when {
-            compression -> with(inflater) { frame.inflateData() }
-            else -> frame.data.decodeToString()
-        }
+        val json = with(decompressor) { frame.decompress() }
 
         try {
             defaultGatewayLogger.trace { "Gateway <<< $json" }
@@ -195,7 +197,7 @@ public class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
     }
 
     private suspend fun handleClose() {
-        inflater.close()
+        decompressor.close()
 
         val reason = withTimeoutOrNull(1500) {
             socket.closeReason.await()
@@ -211,6 +213,7 @@ public class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
                 state.update { State.Stopped }
                 throw IllegalStateException("Gateway closed: ${reason.code} ${reason.message}")
             }
+
             discordReason.resetSession -> {
                 setStopped()
             }

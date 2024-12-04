@@ -18,13 +18,14 @@ import kotlin.time.Duration.Companion.seconds
 
 public class DefaultGatewayBuilder {
     public var url: String =
-        "wss://gateway.discord.gg/?v=${KordConfiguration.GATEWAY_VERSION}&encoding=json&compress=zlib-stream"
+        "wss://gateway.discord.gg/?v=${KordConfiguration.GATEWAY_VERSION}&encoding=json"
     public var client: HttpClient? = null
     public var reconnectRetry: Retry? = null
     public var sendRateLimiter: RateLimiter? = null
     public var identifyRateLimiter: IdentifyRateLimiter? = null
     public var dispatcher: CoroutineDispatcher = Dispatchers.Default
     public var eventFlow: MutableSharedFlow<Event> = MutableSharedFlow(extraBufferCapacity = Int.MAX_VALUE)
+    public var compression: Compression = Compression.ZLib
 
     public fun build(): DefaultGateway {
         val client = client ?: HttpClient(httpEngine()) {
@@ -44,7 +45,8 @@ public class DefaultGatewayBuilder {
             sendRateLimiter,
             identifyRateLimiter,
             dispatcher,
-            eventFlow
+            eventFlow,
+            compression
         )
 
         return DefaultGateway(data)
