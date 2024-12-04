@@ -1,9 +1,12 @@
 package dev.kord.voice.encryption
 
-import com.iwebpp.crypto.TweetNaclFast
+import com.iwebpp.crypto.*
+import dev.kord.voice.XSalsa20_CLASS_DEPRECATION
+import dev.kord.voice.XSalsa20_FUNCTION_DEPRECATION
 import dev.kord.voice.io.MutableByteArrayCursor
 import dev.kord.voice.io.mutableCursor
 
+@Deprecated(XSalsa20_CLASS_DEPRECATION, level = DeprecationLevel.WARNING)
 public class XSalsa20Poly1305Codec(public val key: ByteArray) {
     private val encryption = XSalsa20Poly1305Encryption(key)
 
@@ -26,6 +29,8 @@ public class XSalsa20Poly1305Codec(public val key: ByteArray) {
         encryption.open(box, boxOffset, boxLength, nonce, output)
 }
 
+@Suppress("DEPRECATION")
+@Deprecated(XSalsa20_FUNCTION_DEPRECATION, level = DeprecationLevel.WARNING)
 public fun XSalsa20Poly1305Codec.encrypt(
     message: ByteArray,
     mOffset: Int = 0,
@@ -37,6 +42,8 @@ public fun XSalsa20Poly1305Codec.encrypt(
     return buffer
 }
 
+@Suppress("DEPRECATION")
+@Deprecated(XSalsa20_FUNCTION_DEPRECATION, level = DeprecationLevel.WARNING)
 public fun XSalsa20Poly1305Codec.decrypt(
     box: ByteArray,
     boxOffset: Int = 0,

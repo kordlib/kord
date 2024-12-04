@@ -11,6 +11,7 @@ kord-cache = "0.5.4" # https://github.com/kordlib/cache
 # implementation dependencies
 kotlin-logging = "7.0.0" # https://github.com/oshai/kotlin-logging
 slf4j = "2.0.16" # https://www.slf4j.org
+tink = "1.15.0" # https://github.com/tink-crypto/tink-java
 kotlin-node = "22.5.4-pre.818" # https://github.com/JetBrains/kotlin-wrappers
 bignum = "0.3.10" # https://github.com/ionspin/kotlin-multiplatform-bignum
 stately = "2.1.0" # https://github.com/touchlab/Stately
@@ -58,6 +59,7 @@ kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.
 # other
 kotlin-logging = { module = "io.github.oshai:kotlin-logging", version.ref = "kotlin-logging" }
 slf4j-api = { module = "org.slf4j:slf4j-api", version.ref = "slf4j" }
+tink = { module = "com.google.crypto.tink:tink", version.ref = "tink" }
 kotlin-node = { module = "org.jetbrains.kotlin-wrappers:kotlin-node", version.ref = "kotlin-node" }
 
 # JDK replacements

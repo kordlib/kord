@@ -15,7 +15,7 @@ import kotlinx.serialization.encoding.Encoder
 
 /**
  * See [EncryptionMode]s in the
- * [Discord Developer Documentation](https://discord.com/developers/docs/topics/voice-connections#establishing-a-voice-udp-connection-encryption-modes).
+ * [Discord Developer Documentation](https://discord.com/developers/docs/topics/voice-connections#transport-encryption-modes).
  */
 @Serializable(with = EncryptionMode.Serializer::class)
 public sealed class EncryptionMode(
@@ -42,10 +42,32 @@ public sealed class EncryptionMode(
         `value`: String,
     ) : EncryptionMode(value)
 
+    public object AeadAes256GcmRtpSize : EncryptionMode("aead_aes256_gcm_rtpsize")
+
+    public object AeadXChaCha20Poly1305RtpSize : EncryptionMode("aead_xchacha20_poly1305_rtpsize")
+
+    @Deprecated(
+        message =
+                "Use 'EncryptionMode.from(\"xsalsa20_poly1305\")' if you need to keep using this deprecated 'EncryptionMode'. XSalsa20 Poly1305 encryption is deprecated for Discord voice connections and will be discontinued as of November 18th, 2024. As of this date, the voice gateway will not allow you to connect with one of the deprecated encryption modes. See https://discord.com/developers/docs/change-log#voice-encryption-modes for details. The deprecation level will be raised to ERROR in 0.17.0, to HIDDEN in 0.18.0, and this object will be removed in 0.19.0.",
+        replaceWith = ReplaceWith(expression = "EncryptionMode.from(\"xsalsa20_poly1305\")", imports
+                    = arrayOf("dev.kord.voice.EncryptionMode")),
+    )
     public object XSalsa20Poly1305 : EncryptionMode("xsalsa20_poly1305")
 
+    @Deprecated(
+        message =
+                "Use 'EncryptionMode.from(\"xsalsa20_poly1305_suffix\")' if you need to keep using this deprecated 'EncryptionMode'. XSalsa20 Poly1305 encryption is deprecated for Discord voice connections and will be discontinued as of November 18th, 2024. As of this date, the voice gateway will not allow you to connect with one of the deprecated encryption modes. See https://discord.com/developers/docs/change-log#voice-encryption-modes for details. The deprecation level will be raised to ERROR in 0.17.0, to HIDDEN in 0.18.0, and this object will be removed in 0.19.0.",
+        replaceWith = ReplaceWith(expression = "EncryptionMode.from(\"xsalsa20_poly1305_suffix\")",
+                    imports = arrayOf("dev.kord.voice.EncryptionMode")),
+    )
     public object XSalsa20Poly1305Suffix : EncryptionMode("xsalsa20_poly1305_suffix")
 
+    @Deprecated(
+        message =
+                "Use 'EncryptionMode.from(\"xsalsa20_poly1305_lite\")' if you need to keep using this deprecated 'EncryptionMode'. XSalsa20 Poly1305 encryption is deprecated for Discord voice connections and will be discontinued as of November 18th, 2024. As of this date, the voice gateway will not allow you to connect with one of the deprecated encryption modes. See https://discord.com/developers/docs/change-log#voice-encryption-modes for details. The deprecation level will be raised to ERROR in 0.17.0, to HIDDEN in 0.18.0, and this object will be removed in 0.19.0.",
+        replaceWith = ReplaceWith(expression = "EncryptionMode.from(\"xsalsa20_poly1305_lite\")",
+                    imports = arrayOf("dev.kord.voice.EncryptionMode")),
+    )
     public object XSalsa20Poly1305Lite : EncryptionMode("xsalsa20_poly1305_lite")
 
     internal object Serializer : KSerializer<EncryptionMode> {
@@ -65,9 +87,11 @@ public sealed class EncryptionMode(
          */
         public val entries: List<EncryptionMode> by lazy(mode = PUBLICATION) {
             listOf(
-                XSalsa20Poly1305,
-                XSalsa20Poly1305Suffix,
-                XSalsa20Poly1305Lite,
+                AeadAes256GcmRtpSize,
+                AeadXChaCha20Poly1305RtpSize,
+                @Suppress("DEPRECATION") XSalsa20Poly1305,
+                @Suppress("DEPRECATION") XSalsa20Poly1305Suffix,
+                @Suppress("DEPRECATION") XSalsa20Poly1305Lite,
             )
         }
 
@@ -76,9 +100,11 @@ public sealed class EncryptionMode(
          * specified [value].
          */
         public fun from(`value`: String): EncryptionMode = when (value) {
-            "xsalsa20_poly1305" -> XSalsa20Poly1305
-            "xsalsa20_poly1305_suffix" -> XSalsa20Poly1305Suffix
-            "xsalsa20_poly1305_lite" -> XSalsa20Poly1305Lite
+            "aead_aes256_gcm_rtpsize" -> AeadAes256GcmRtpSize
+            "aead_xchacha20_poly1305_rtpsize" -> AeadXChaCha20Poly1305RtpSize
+            "xsalsa20_poly1305" -> @Suppress("DEPRECATION") XSalsa20Poly1305
+            "xsalsa20_poly1305_suffix" -> @Suppress("DEPRECATION") XSalsa20Poly1305Suffix
+            "xsalsa20_poly1305_lite" -> @Suppress("DEPRECATION") XSalsa20Poly1305Lite
             else -> Unknown(value)
         }
     }

@@ -7,8 +7,7 @@ import dev.kord.gateway.Gateway
 import dev.kord.gateway.UpdateVoiceStatus
 import dev.kord.gateway.VoiceServerUpdate
 import dev.kord.gateway.VoiceStateUpdate
-import dev.kord.voice.encryption.strategies.LiteNonceStrategy
-import dev.kord.voice.encryption.strategies.NonceStrategy
+import dev.kord.voice.encryption.strategies.*
 import dev.kord.voice.exception.VoiceConnectionInitializationException
 import dev.kord.voice.gateway.DefaultVoiceGatewayBuilder
 import dev.kord.voice.gateway.VoiceGateway
@@ -65,9 +64,19 @@ public class VoiceConnectionBuilder(
 
     /**
      * The nonce strategy to be used for the encryption of audio packets.
-     * If `null`, [dev.kord.voice.encryption.strategies.LiteNonceStrategy] will be used.
      */
-    public var nonceStrategy: NonceStrategy? = null
+    @Deprecated(
+        "The 'nonceStrategy' property is only used for XSalsa20 Poly1305 encryption. Do not explicitly specify a " +
+            "'nonceStrategy', the 'VoiceConnection' automatically selects a suitable encryption mode. " +
+            XSalsa20_PROPERTY_DEPRECATION,
+        level = DeprecationLevel.WARNING,
+    )
+    public var nonceStrategy: @Suppress("DEPRECATION") NonceStrategy?
+        get() = _nonceStrategy
+        set(value) {
+            _nonceStrategy = value
+        }
+    private var _nonceStrategy: @Suppress("DEPRECATION") NonceStrategy? = null
 
     /**
      * A boolean indicating whether your voice state will be muted.
@@ -166,19 +175,19 @@ public class VoiceConnectionBuilder(
             .build()
         val udpSocket = udpSocket ?: GlobalVoiceUdpSocket
         val audioProvider = audioProvider ?: EmptyAudioPlayerProvider
-        val nonceStrategy = nonceStrategy ?: LiteNonceStrategy()
+        val nonceStrategy = _nonceStrategy
         val frameInterceptor = frameInterceptor ?: DefaultFrameInterceptor()
         val audioSender =
             audioSender ?: DefaultAudioFrameSender(
                 DefaultAudioFrameSenderData(
                     udpSocket,
                     frameInterceptor,
+                    nonceStrategy,
                     audioProvider,
-                    nonceStrategy
                 )
             )
         val streams =
-            streams ?: if (receiveVoice) DefaultStreams(voiceGateway, udpSocket, nonceStrategy) else NOPStreams
+            streams ?: if (receiveVoice) DefaultStreams(voiceGateway, nonceStrategy, udpSocket) else NOPStreams
 
         return VoiceConnection(
             voiceConnectionData,
@@ -190,8 +199,8 @@ public class VoiceConnectionBuilder(
             audioProvider,
             frameInterceptor,
             audioSender,
+            connectionDetachDuration,
             nonceStrategy,
-            connectionDetachDuration
         )
     }
 

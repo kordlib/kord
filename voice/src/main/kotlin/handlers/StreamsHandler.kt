@@ -30,7 +30,13 @@ internal class StreamsHandler(
 
         on<SessionDescription> {
             streamsJob?.cancel()
-            streamsJob = launch { streams.listen(it.secretKey.toUByteArray().toByteArray(), server.value!!) }
+            streamsJob = launch {
+                streams.listen(
+                    it.secretKey.toUByteArray().toByteArray(),
+                    server.value!!,
+                    encryptionMode = it.mode,
+                )
+            }
         }
 
         on<Close> {

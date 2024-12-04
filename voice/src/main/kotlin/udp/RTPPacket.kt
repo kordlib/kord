@@ -10,6 +10,9 @@ import kotlinx.io.readUInt
 import kotlinx.io.readUShort
 import kotlin.experimental.and
 
+// this size doesn't contain the optional CSRCs and header extension
+// https://discord.com/developers/docs/topics/voice-connections#transport-encryption-modes-voice-packet-structure
+// TODO rename to something with min size
 internal const val RTP_HEADER_LENGTH = 12
 
 /**
