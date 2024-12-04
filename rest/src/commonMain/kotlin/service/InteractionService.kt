@@ -477,6 +477,38 @@ public class InteractionService(requestHandler: RequestHandler) : RestService(re
         )
     }
 
+    public suspend inline fun createGuildPrimaryEntryPointCommand(
+        applicationId: Snowflake,
+        guildId: Snowflake,
+        name: String,
+        description: String,
+        handler: PrimaryEntryPointCommandHandlerType,
+        builder: EntryPointCreateBuilder.() -> Unit = {}
+    ): DiscordApplicationCommand {
+        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+
+        return createGuildApplicationCommand(
+            applicationId,
+            guildId,
+            EntryPointCreateBuilderImpl(name, description, handler).apply(builder).toRequest()
+        )
+    }
+
+    public suspend inline fun createGlobalPrimaryEntryPointCommand(
+        applicationId: Snowflake,
+        name: String,
+        description: String,
+        handler: PrimaryEntryPointCommandHandlerType,
+        builder: EntryPointCreateBuilder.() -> Unit = {}
+    ): DiscordApplicationCommand {
+        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+
+        return createGlobalApplicationCommand(
+            applicationId,
+            EntryPointCreateBuilderImpl(name, description, handler).apply(builder).toRequest()
+        )
+    }
+
     public suspend inline fun createGuildApplicationCommands(
         applicationId: Snowflake,
         guildId: Snowflake,
@@ -521,6 +553,36 @@ public class InteractionService(requestHandler: RequestHandler) : RestService(re
             guildId,
             commandId,
             MessageCommandModifyBuilderImpl().apply(builder).toRequest()
+        )
+    }
+
+    public suspend inline fun modifyGuildPrimaryEntryPointApplicationCommand(
+        applicationId: Snowflake,
+        guildId: Snowflake,
+        commandId: Snowflake,
+        builder: EntryPointModifyBuilder.() -> Unit
+    ): DiscordApplicationCommand {
+        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+
+        return modifyGuildApplicationCommand(
+            applicationId,
+            guildId,
+            commandId,
+            EntryPointModifyBuilderImpl().apply(builder).toRequest()
+        )
+    }
+
+    public suspend inline fun modifyGlobalPrimaryEntryPointApplicationCommand(
+        applicationId: Snowflake,
+        commandId: Snowflake,
+        builder: EntryPointModifyBuilder.() -> Unit
+    ): DiscordApplicationCommand {
+        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+
+        return modifyGlobalApplicationCommand(
+            applicationId,
+            commandId,
+            EntryPointModifyBuilderImpl().apply(builder).toRequest()
         )
     }
 

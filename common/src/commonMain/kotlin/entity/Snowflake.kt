@@ -1,6 +1,5 @@
 package dev.kord.common.entity
 
-import dev.kord.common.entity.Snowflake.Companion.validValues
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import kotlinx.serialization.KSerializer

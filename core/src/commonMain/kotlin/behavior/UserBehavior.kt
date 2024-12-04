@@ -8,6 +8,7 @@ import dev.kord.core.entity.*
 import dev.kord.core.entity.channel.Channel
 import dev.kord.core.entity.channel.DmChannel
 import dev.kord.core.exception.EntityNotFoundException
+import dev.kord.core.hash
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.rest.json.JsonErrorCode
@@ -15,7 +16,6 @@ import dev.kord.rest.json.request.DMCreateRequest
 import dev.kord.rest.request.RestRequestException
 import dev.kord.rest.service.RestClient
 import io.ktor.http.*
-import dev.kord.core.hash
 
 /**
  * The behavior of a [Discord User](https://discord.com/developers/docs/resources/user)

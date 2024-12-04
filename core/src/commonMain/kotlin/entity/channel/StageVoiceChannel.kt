@@ -6,9 +6,9 @@ import dev.kord.core.behavior.channel.ChannelBehavior
 import dev.kord.core.behavior.channel.GuildChannelBehavior
 import dev.kord.core.behavior.channel.StageChannelBehavior
 import dev.kord.core.cache.data.ChannelData
+import dev.kord.core.hash
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
-import dev.kord.core.hash
 
 /**
  * An instance of a [Discord Stage Channel](https://support.discord.com/hc/en-us/articles/1500005513722)

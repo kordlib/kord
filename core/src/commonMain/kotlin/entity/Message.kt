@@ -12,6 +12,7 @@ import dev.kord.core.behavior.MessageBehavior
 import dev.kord.core.behavior.UserBehavior
 import dev.kord.core.behavior.channel.ChannelBehavior
 import dev.kord.core.behavior.interaction.response.InteractionResponseBehavior
+import dev.kord.core.cache.data.InteractionMetadataData
 import dev.kord.core.cache.data.MessageData
 import dev.kord.core.cache.data.MessageInteractionData
 import dev.kord.core.entity.application.ApplicationCommand
@@ -23,13 +24,13 @@ import dev.kord.core.entity.component.ActionRowComponent
 import dev.kord.core.entity.interaction.ActionInteraction
 import dev.kord.core.entity.interaction.followup.FollowupMessage
 import dev.kord.core.exception.EntityNotFoundException
+import dev.kord.core.hash
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.core.supplier.getChannelOf
 import dev.kord.core.supplier.getChannelOfOrNull
 import kotlinx.coroutines.flow.*
 import kotlinx.datetime.Instant
-import dev.kord.core.hash
 
 /**
  * An instance of a [Discord Message][https://discord.com/developers/docs/resources/channel#message-object].
@@ -41,10 +42,32 @@ public class Message(
 ) : MessageBehavior {
 
     /**
+     * An instance of [InteractionMetadata](https://discord.com/developers/docs/resources/message#message-interaction-metadata-object)
+     */
+    public class InteractionMetadata(
+        public val data: InteractionMetadataData,
+        override val kord: Kord,
+        override val supplier: EntitySupplier = kord.defaultSupplier,
+    ) : KordEntity, Strategizable {
+        override val id: Snowflake get() = data.id
+        public val type: InteractionType get() = data.type
+        public val user: User get() = User(data.user, kord, supplier)
+
+        public val authorizingIntegrationOwners: IntegrationOwners get() = data.authorizingIntegrationOwners
+        public val originalResponseMessageId: Snowflake? get() = data.originalResponseMessageId.value
+        public val interactedMessageId: Snowflake? get() = data.interactedMessageId.value
+        public val triggeringInteractionMetadata: DiscordInteractionMetadata? get() = data.triggeringInteractionMetadata.value
+
+        override fun withStrategy(strategy: EntitySupplyStrategy<*>): Strategizable =
+            InteractionMetadata(data, kord, strategy.supply(kord))
+    }
+
+    /**
      * An instance of [MessageInteraction](https://discord.com/developers/docs/interactions/receiving-and-responding#message-interaction-object)
      *
      * This is sent on the [Message] object when the message is a response to an [ActionInteraction].
      */
+    @Deprecated("Deprecated in favor of InteractionMetadata")
     public class Interaction(
         public val data: MessageInteractionData,
         override val kord: Kord,
@@ -82,6 +105,7 @@ public class Message(
          */
         public suspend fun getUserOrNull(): User? = supplier.getUserOrNull(user.id)
 
+        @Suppress("DEPRECATION")
         override fun withStrategy(strategy: EntitySupplyStrategy<*>): Interaction =
             Interaction(data, kord, strategy.supply(kord))
     }
@@ -181,7 +205,13 @@ public class Message(
      * so its state is unknown.
      * If the field exists but is null, the referenced message was deleted.
      */
-    public val messageReference: MessageReference? get() = data.messageReference.value?.let { MessageReference(it, kord) }
+    public val messageReference: MessageReference?
+        get() = data.messageReference.value?.let {
+            MessageReference(
+                it,
+                kord
+            )
+        }
 
     /**
      * The [Channels][Channel] specifically mentioned in this message.
@@ -238,7 +268,15 @@ public class Message(
     /**
      * The [Message.Interaction] sent on this message object when it is a response to an [ActionInteraction].
      */
+    @Deprecated("Deprecated in favor of interactionMetadata", ReplaceWith("interactionMetadata"))
+    @Suppress("DEPRECATION")
     public val interaction: Interaction? get() = data.interaction.mapNullable { Interaction(it, kord) }.value
+
+    /**
+     * The [Message.Interaction] sent on this message object when it is a response to an [ActionInteraction].
+     */
+    public val interactionMetadata: InteractionMetadata?
+        get() = data.interactionMetadata.mapNullable { InteractionMetadata(it, kord) }.value
 
     /**
      * The [users][User] mentioned in this message.
