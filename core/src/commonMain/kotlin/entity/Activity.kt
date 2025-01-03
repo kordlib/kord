@@ -25,6 +25,8 @@ public class Activity(public val data: ActivityData) {
 
     public val state: String? get() = data.state.value
 
+    public val platform: String? get() = data.platform.value
+
     public val party: Party?
         get() = data.party.value?.let {
             Party(
