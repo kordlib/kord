@@ -34,7 +34,7 @@
         Entry("Desktop", stringValue = "desktop"),
         Entry("Xbox", stringValue = "xbox"),
         Entry("Samsung", stringValue = "samsung"),
-        Entry("IOS", stringValue = "ios"),
+        Entry("Ios", stringValue = "ios"),
         Entry("Android", stringValue = "android"),
         Entry("Embedded", stringValue = "embedded"),
         Entry("PS4", stringValue = "ps4"),
