@@ -7116,7 +7116,7 @@ sealed class dev.kord.common.entity/ActivityPlatform { // dev.kord.common.entity
 
     final object Embedded : dev.kord.common.entity/ActivityPlatform // dev.kord.common.entity/ActivityPlatform.Embedded|null[0]
 
-    final object IOS : dev.kord.common.entity/ActivityPlatform // dev.kord.common.entity/ActivityPlatform.IOS|null[0]
+    final object Ios : dev.kord.common.entity/ActivityPlatform // dev.kord.common.entity/ActivityPlatform.Ios|null[0]
 
     final object PS4 : dev.kord.common.entity/ActivityPlatform // dev.kord.common.entity/ActivityPlatform.PS4|null[0]
 

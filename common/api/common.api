@@ -290,8 +290,8 @@ public final class dev/kord/common/entity/ActivityPlatform$Embedded : dev/kord/c
 	public static final field INSTANCE Ldev/kord/common/entity/ActivityPlatform$Embedded;
 }
 
-public final class dev/kord/common/entity/ActivityPlatform$IOS : dev/kord/common/entity/ActivityPlatform {
-	public static final field INSTANCE Ldev/kord/common/entity/ActivityPlatform$IOS;
+public final class dev/kord/common/entity/ActivityPlatform$Ios : dev/kord/common/entity/ActivityPlatform {
+	public static final field INSTANCE Ldev/kord/common/entity/ActivityPlatform$Ios;
 }
 
 public final class dev/kord/common/entity/ActivityPlatform$PS4 : dev/kord/common/entity/ActivityPlatform {

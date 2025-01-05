@@ -48,7 +48,7 @@ public sealed class ActivityPlatform(
 
     public object Samsung : ActivityPlatform("samsung")
 
-    public object IOS : ActivityPlatform("ios")
+    public object Ios : ActivityPlatform("ios")
 
     public object Android : ActivityPlatform("android")
 
@@ -79,7 +79,7 @@ public sealed class ActivityPlatform(
                 Desktop,
                 Xbox,
                 Samsung,
-                IOS,
+                Ios,
                 Android,
                 Embedded,
                 PS4,
@@ -95,7 +95,7 @@ public sealed class ActivityPlatform(
             "desktop" -> Desktop
             "xbox" -> Xbox
             "samsung" -> Samsung
-            "ios" -> IOS
+            "ios" -> Ios
             "android" -> Android
             "embedded" -> Embedded
             "ps4" -> PS4
