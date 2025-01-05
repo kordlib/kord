@@ -6,7 +6,7 @@
 // - Show declarations: true
 
 // Library unique name: <kord:core>
-abstract interface <#A: dev.kord.core.supplier/EntitySupplier> dev.kord.core.supplier/EntitySupplyStrategy { // dev.kord.core.supplier/EntitySupplyStrategy|null[0]
+abstract interface <#A: out dev.kord.core.supplier/EntitySupplier> dev.kord.core.supplier/EntitySupplyStrategy { // dev.kord.core.supplier/EntitySupplyStrategy|null[0]
     abstract fun supply(dev.kord.core/Kord): #A // dev.kord.core.supplier/EntitySupplyStrategy.supply|supply(dev.kord.core.Kord){}[0]
 
     final object Companion { // dev.kord.core.supplier/EntitySupplyStrategy.Companion|null[0]
