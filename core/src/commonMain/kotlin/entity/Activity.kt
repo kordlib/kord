@@ -1,6 +1,7 @@
 package dev.kord.core.entity
 
 import dev.kord.common.entity.ActivityFlags
+import dev.kord.common.entity.ActivityPlatform
 import dev.kord.common.entity.ActivityType
 import dev.kord.common.entity.DiscordActivityEmoji
 import dev.kord.common.entity.Snowflake
@@ -25,7 +26,7 @@ public class Activity(public val data: ActivityData) {
 
     public val state: String? get() = data.state.value
 
-    public val platform: String? get() = data.platform.value
+    public val platform: ActivityPlatform? get() = data.platform.value
 
     public val party: Party?
         get() = data.party.value?.let {

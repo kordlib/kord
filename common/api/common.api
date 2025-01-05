@@ -263,6 +263,56 @@ public final class dev/kord/common/entity/ActivityFlags$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
+public abstract class dev/kord/common/entity/ActivityPlatform {
+	public static final field Companion Ldev/kord/common/entity/ActivityPlatform$Companion;
+	public synthetic fun <init> (Ljava/lang/String;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun equals (Ljava/lang/Object;)Z
+	public final fun getValue ()Ljava/lang/String;
+	public final fun hashCode ()I
+	public final fun toString ()Ljava/lang/String;
+}
+
+public final class dev/kord/common/entity/ActivityPlatform$Android : dev/kord/common/entity/ActivityPlatform {
+	public static final field INSTANCE Ldev/kord/common/entity/ActivityPlatform$Android;
+}
+
+public final class dev/kord/common/entity/ActivityPlatform$Companion {
+	public final fun from (Ljava/lang/String;)Ldev/kord/common/entity/ActivityPlatform;
+	public final fun getEntries ()Ljava/util/List;
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class dev/kord/common/entity/ActivityPlatform$Desktop : dev/kord/common/entity/ActivityPlatform {
+	public static final field INSTANCE Ldev/kord/common/entity/ActivityPlatform$Desktop;
+}
+
+public final class dev/kord/common/entity/ActivityPlatform$Embedded : dev/kord/common/entity/ActivityPlatform {
+	public static final field INSTANCE Ldev/kord/common/entity/ActivityPlatform$Embedded;
+}
+
+public final class dev/kord/common/entity/ActivityPlatform$IOS : dev/kord/common/entity/ActivityPlatform {
+	public static final field INSTANCE Ldev/kord/common/entity/ActivityPlatform$IOS;
+}
+
+public final class dev/kord/common/entity/ActivityPlatform$PS4 : dev/kord/common/entity/ActivityPlatform {
+	public static final field INSTANCE Ldev/kord/common/entity/ActivityPlatform$PS4;
+}
+
+public final class dev/kord/common/entity/ActivityPlatform$PS5 : dev/kord/common/entity/ActivityPlatform {
+	public static final field INSTANCE Ldev/kord/common/entity/ActivityPlatform$PS5;
+}
+
+public final class dev/kord/common/entity/ActivityPlatform$Samsung : dev/kord/common/entity/ActivityPlatform {
+	public static final field INSTANCE Ldev/kord/common/entity/ActivityPlatform$Samsung;
+}
+
+public final class dev/kord/common/entity/ActivityPlatform$Unknown : dev/kord/common/entity/ActivityPlatform {
+}
+
+public final class dev/kord/common/entity/ActivityPlatform$Xbox : dev/kord/common/entity/ActivityPlatform {
+	public static final field INSTANCE Ldev/kord/common/entity/ActivityPlatform$Xbox;
+}
+
 public abstract class dev/kord/common/entity/ActivityType {
 	public static final field Companion Ldev/kord/common/entity/ActivityType$Companion;
 	public synthetic fun <init> (ILkotlin/jvm/internal/DefaultConstructorMarker;)V

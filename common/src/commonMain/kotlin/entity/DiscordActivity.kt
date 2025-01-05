@@ -27,6 +27,21 @@
     ],
 )
 
+@file:Generate(
+    STRING_KORD_ENUM, name = "ActivityPlatform",
+    docUrl = "https://discord.com/developers/docs/events/gateway-events#activity-object",
+    entries = [
+        Entry("Desktop", stringValue = "desktop"),
+        Entry("Xbox", stringValue = "xbox"),
+        Entry("Samsung", stringValue = "samsung"),
+        Entry("IOS", stringValue = "ios"),
+        Entry("Android", stringValue = "android"),
+        Entry("Embedded", stringValue = "embedded"),
+        Entry("PS4", stringValue = "ps4"),
+        Entry("PS5", stringValue = "ps5"),
+    ],
+)
+
 package dev.kord.common.entity
 
 import dev.kord.common.entity.optional.Optional
@@ -36,6 +51,7 @@ import dev.kord.common.serialization.InstantInEpochMilliseconds
 import dev.kord.ksp.Generate
 import dev.kord.ksp.Generate.EntityType.INT_FLAGS
 import dev.kord.ksp.Generate.EntityType.INT_KORD_ENUM
+import dev.kord.ksp.Generate.EntityType.STRING_KORD_ENUM
 import dev.kord.ksp.Generate.Entry
 import kotlinx.serialization.*
 import kotlinx.serialization.builtins.ListSerializer
@@ -64,7 +80,7 @@ public data class DiscordActivity(
     val applicationId: OptionalSnowflake = OptionalSnowflake.Missing,
     val details: Optional<String?> = Optional.Missing(),
     val state: Optional<String?> = Optional.Missing(),
-    val platform: Optional<String?> = Optional.Missing(),
+    val platform: Optional<ActivityPlatform?> = Optional.Missing(),
     val emoji: Optional<DiscordActivityEmoji?> = Optional.Missing(),
     val party: Optional<DiscordActivityParty> = Optional.Missing(),
     val assets: Optional<DiscordActivityAssets> = Optional.Missing(),

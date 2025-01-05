@@ -17,7 +17,7 @@ public data class ActivityData(
     val applicationId: OptionalSnowflake = OptionalSnowflake.Missing,
     val details: Optional<String?> = Optional.Missing(),
     val state: Optional<String?> = Optional.Missing(),
-    val platform: Optional<String?> = Optional.Missing(),
+    val platform: Optional<ActivityPlatform?> = Optional.Missing(),
     val emoji: Optional<DiscordActivityEmoji?> = Optional.Missing(),
     val party: Optional<DiscordActivityParty> = Optional.Missing(),
     val assets: Optional<DiscordActivityAssets> = Optional.Missing(),

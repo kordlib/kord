@@ -5792,7 +5792,7 @@ public final class dev/kord/core/entity/Activity {
 	public final fun getFlags ()Ldev/kord/common/entity/ActivityFlags;
 	public final fun getName ()Ljava/lang/String;
 	public final fun getParty ()Ldev/kord/core/entity/Activity$Party;
-	public final fun getPlatform ()Ljava/lang/String;
+	public final fun getPlatform ()Ldev/kord/common/entity/ActivityPlatform;
 	public final fun getSecrets ()Ldev/kord/core/entity/Activity$Secrets;
 	public final fun getStart ()Lkotlinx/datetime/Instant;
 	public final fun getState ()Ljava/lang/String;
