@@ -622,7 +622,7 @@ final class dev.kord.common.entity/DeletedMessage { // dev.kord.common.entity/De
 }
 
 final class dev.kord.common.entity/DiscordActivity { // dev.kord.common.entity/DiscordActivity|null[0]
-    constructor <init>(kotlin/String, dev.kord.common.entity/ActivityType, dev.kord.common.entity.optional/Optional<kotlin/String?> = ..., kotlinx.datetime/Instant, dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordActivityTimestamps> = ..., dev.kord.common.entity.optional/OptionalSnowflake = ..., dev.kord.common.entity.optional/Optional<kotlin/String?> = ..., dev.kord.common.entity.optional/Optional<kotlin/String?> = ..., dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordActivityEmoji?> = ..., dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordActivityParty> = ..., dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordActivityAssets> = ..., dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordActivitySecrets> = ..., dev.kord.common.entity.optional/OptionalBoolean = ..., dev.kord.common.entity.optional/Optional<dev.kord.common.entity/ActivityFlags> = ..., dev.kord.common.entity.optional/Optional<kotlin.collections/List<kotlin/String>> = ...) // dev.kord.common.entity/DiscordActivity.<init>|<init>(kotlin.String;dev.kord.common.entity.ActivityType;dev.kord.common.entity.optional.Optional<kotlin.String?>;kotlinx.datetime.Instant;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.DiscordActivityTimestamps>;dev.kord.common.entity.optional.OptionalSnowflake;dev.kord.common.entity.optional.Optional<kotlin.String?>;dev.kord.common.entity.optional.Optional<kotlin.String?>;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.DiscordActivityEmoji?>;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.DiscordActivityParty>;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.DiscordActivityAssets>;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.DiscordActivitySecrets>;dev.kord.common.entity.optional.OptionalBoolean;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.ActivityFlags>;dev.kord.common.entity.optional.Optional<kotlin.collections.List<kotlin.String>>){}[0]
+    constructor <init>(kotlin/String, dev.kord.common.entity/ActivityType, dev.kord.common.entity.optional/Optional<kotlin/String?> = ..., kotlinx.datetime/Instant, dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordActivityTimestamps> = ..., dev.kord.common.entity.optional/OptionalSnowflake = ..., dev.kord.common.entity.optional/Optional<kotlin/String?> = ..., dev.kord.common.entity.optional/Optional<kotlin/String?> = ..., dev.kord.common.entity.optional/Optional<dev.kord.common.entity/ActivityPlatform?> = ..., dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordActivityEmoji?> = ..., dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordActivityParty> = ..., dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordActivityAssets> = ..., dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordActivitySecrets> = ..., dev.kord.common.entity.optional/OptionalBoolean = ..., dev.kord.common.entity.optional/Optional<dev.kord.common.entity/ActivityFlags> = ..., dev.kord.common.entity.optional/Optional<kotlin.collections/List<kotlin/String>> = ...) // dev.kord.common.entity/DiscordActivity.<init>|<init>(kotlin.String;dev.kord.common.entity.ActivityType;dev.kord.common.entity.optional.Optional<kotlin.String?>;kotlinx.datetime.Instant;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.DiscordActivityTimestamps>;dev.kord.common.entity.optional.OptionalSnowflake;dev.kord.common.entity.optional.Optional<kotlin.String?>;dev.kord.common.entity.optional.Optional<kotlin.String?>;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.ActivityPlatform?>;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.DiscordActivityEmoji?>;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.DiscordActivityParty>;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.DiscordActivityAssets>;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.DiscordActivitySecrets>;dev.kord.common.entity.optional.OptionalBoolean;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.ActivityFlags>;dev.kord.common.entity.optional.Optional<kotlin.collections.List<kotlin.String>>){}[0]
 
     final val applicationId // dev.kord.common.entity/DiscordActivity.applicationId|{}applicationId[0]
         final fun <get-applicationId>(): dev.kord.common.entity.optional/OptionalSnowflake // dev.kord.common.entity/DiscordActivity.applicationId.<get-applicationId>|<get-applicationId>(){}[0]
@@ -644,6 +644,8 @@ final class dev.kord.common.entity/DiscordActivity { // dev.kord.common.entity/D
         final fun <get-name>(): kotlin/String // dev.kord.common.entity/DiscordActivity.name.<get-name>|<get-name>(){}[0]
     final val party // dev.kord.common.entity/DiscordActivity.party|{}party[0]
         final fun <get-party>(): dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordActivityParty> // dev.kord.common.entity/DiscordActivity.party.<get-party>|<get-party>(){}[0]
+    final val platform // dev.kord.common.entity/DiscordActivity.platform|{}platform[0]
+        final fun <get-platform>(): dev.kord.common.entity.optional/Optional<dev.kord.common.entity/ActivityPlatform?> // dev.kord.common.entity/DiscordActivity.platform.<get-platform>|<get-platform>(){}[0]
     final val secrets // dev.kord.common.entity/DiscordActivity.secrets|{}secrets[0]
         final fun <get-secrets>(): dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordActivitySecrets> // dev.kord.common.entity/DiscordActivity.secrets.<get-secrets>|<get-secrets>(){}[0]
     final val state // dev.kord.common.entity/DiscordActivity.state|{}state[0]
@@ -656,12 +658,13 @@ final class dev.kord.common.entity/DiscordActivity { // dev.kord.common.entity/D
         final fun <get-url>(): dev.kord.common.entity.optional/Optional<kotlin/String?> // dev.kord.common.entity/DiscordActivity.url.<get-url>|<get-url>(){}[0]
 
     final fun component1(): kotlin/String // dev.kord.common.entity/DiscordActivity.component1|component1(){}[0]
-    final fun component10(): dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordActivityParty> // dev.kord.common.entity/DiscordActivity.component10|component10(){}[0]
-    final fun component11(): dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordActivityAssets> // dev.kord.common.entity/DiscordActivity.component11|component11(){}[0]
-    final fun component12(): dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordActivitySecrets> // dev.kord.common.entity/DiscordActivity.component12|component12(){}[0]
-    final fun component13(): dev.kord.common.entity.optional/OptionalBoolean // dev.kord.common.entity/DiscordActivity.component13|component13(){}[0]
-    final fun component14(): dev.kord.common.entity.optional/Optional<dev.kord.common.entity/ActivityFlags> // dev.kord.common.entity/DiscordActivity.component14|component14(){}[0]
-    final fun component15(): dev.kord.common.entity.optional/Optional<kotlin.collections/List<kotlin/String>> // dev.kord.common.entity/DiscordActivity.component15|component15(){}[0]
+    final fun component10(): dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordActivityEmoji?> // dev.kord.common.entity/DiscordActivity.component10|component10(){}[0]
+    final fun component11(): dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordActivityParty> // dev.kord.common.entity/DiscordActivity.component11|component11(){}[0]
+    final fun component12(): dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordActivityAssets> // dev.kord.common.entity/DiscordActivity.component12|component12(){}[0]
+    final fun component13(): dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordActivitySecrets> // dev.kord.common.entity/DiscordActivity.component13|component13(){}[0]
+    final fun component14(): dev.kord.common.entity.optional/OptionalBoolean // dev.kord.common.entity/DiscordActivity.component14|component14(){}[0]
+    final fun component15(): dev.kord.common.entity.optional/Optional<dev.kord.common.entity/ActivityFlags> // dev.kord.common.entity/DiscordActivity.component15|component15(){}[0]
+    final fun component16(): dev.kord.common.entity.optional/Optional<kotlin.collections/List<kotlin/String>> // dev.kord.common.entity/DiscordActivity.component16|component16(){}[0]
     final fun component2(): dev.kord.common.entity/ActivityType // dev.kord.common.entity/DiscordActivity.component2|component2(){}[0]
     final fun component3(): dev.kord.common.entity.optional/Optional<kotlin/String?> // dev.kord.common.entity/DiscordActivity.component3|component3(){}[0]
     final fun component4(): kotlinx.datetime/Instant // dev.kord.common.entity/DiscordActivity.component4|component4(){}[0]
@@ -669,8 +672,8 @@ final class dev.kord.common.entity/DiscordActivity { // dev.kord.common.entity/D
     final fun component6(): dev.kord.common.entity.optional/OptionalSnowflake // dev.kord.common.entity/DiscordActivity.component6|component6(){}[0]
     final fun component7(): dev.kord.common.entity.optional/Optional<kotlin/String?> // dev.kord.common.entity/DiscordActivity.component7|component7(){}[0]
     final fun component8(): dev.kord.common.entity.optional/Optional<kotlin/String?> // dev.kord.common.entity/DiscordActivity.component8|component8(){}[0]
-    final fun component9(): dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordActivityEmoji?> // dev.kord.common.entity/DiscordActivity.component9|component9(){}[0]
-    final fun copy(kotlin/String = ..., dev.kord.common.entity/ActivityType = ..., dev.kord.common.entity.optional/Optional<kotlin/String?> = ..., kotlinx.datetime/Instant = ..., dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordActivityTimestamps> = ..., dev.kord.common.entity.optional/OptionalSnowflake = ..., dev.kord.common.entity.optional/Optional<kotlin/String?> = ..., dev.kord.common.entity.optional/Optional<kotlin/String?> = ..., dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordActivityEmoji?> = ..., dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordActivityParty> = ..., dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordActivityAssets> = ..., dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordActivitySecrets> = ..., dev.kord.common.entity.optional/OptionalBoolean = ..., dev.kord.common.entity.optional/Optional<dev.kord.common.entity/ActivityFlags> = ..., dev.kord.common.entity.optional/Optional<kotlin.collections/List<kotlin/String>> = ...): dev.kord.common.entity/DiscordActivity // dev.kord.common.entity/DiscordActivity.copy|copy(kotlin.String;dev.kord.common.entity.ActivityType;dev.kord.common.entity.optional.Optional<kotlin.String?>;kotlinx.datetime.Instant;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.DiscordActivityTimestamps>;dev.kord.common.entity.optional.OptionalSnowflake;dev.kord.common.entity.optional.Optional<kotlin.String?>;dev.kord.common.entity.optional.Optional<kotlin.String?>;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.DiscordActivityEmoji?>;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.DiscordActivityParty>;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.DiscordActivityAssets>;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.DiscordActivitySecrets>;dev.kord.common.entity.optional.OptionalBoolean;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.ActivityFlags>;dev.kord.common.entity.optional.Optional<kotlin.collections.List<kotlin.String>>){}[0]
+    final fun component9(): dev.kord.common.entity.optional/Optional<dev.kord.common.entity/ActivityPlatform?> // dev.kord.common.entity/DiscordActivity.component9|component9(){}[0]
+    final fun copy(kotlin/String = ..., dev.kord.common.entity/ActivityType = ..., dev.kord.common.entity.optional/Optional<kotlin/String?> = ..., kotlinx.datetime/Instant = ..., dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordActivityTimestamps> = ..., dev.kord.common.entity.optional/OptionalSnowflake = ..., dev.kord.common.entity.optional/Optional<kotlin/String?> = ..., dev.kord.common.entity.optional/Optional<kotlin/String?> = ..., dev.kord.common.entity.optional/Optional<dev.kord.common.entity/ActivityPlatform?> = ..., dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordActivityEmoji?> = ..., dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordActivityParty> = ..., dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordActivityAssets> = ..., dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordActivitySecrets> = ..., dev.kord.common.entity.optional/OptionalBoolean = ..., dev.kord.common.entity.optional/Optional<dev.kord.common.entity/ActivityFlags> = ..., dev.kord.common.entity.optional/Optional<kotlin.collections/List<kotlin/String>> = ...): dev.kord.common.entity/DiscordActivity // dev.kord.common.entity/DiscordActivity.copy|copy(kotlin.String;dev.kord.common.entity.ActivityType;dev.kord.common.entity.optional.Optional<kotlin.String?>;kotlinx.datetime.Instant;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.DiscordActivityTimestamps>;dev.kord.common.entity.optional.OptionalSnowflake;dev.kord.common.entity.optional.Optional<kotlin.String?>;dev.kord.common.entity.optional.Optional<kotlin.String?>;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.ActivityPlatform?>;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.DiscordActivityEmoji?>;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.DiscordActivityParty>;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.DiscordActivityAssets>;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.DiscordActivitySecrets>;dev.kord.common.entity.optional.OptionalBoolean;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.ActivityFlags>;dev.kord.common.entity.optional.Optional<kotlin.collections.List<kotlin.String>>){}[0]
     final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.common.entity/DiscordActivity.equals|equals(kotlin.Any?){}[0]
     final fun hashCode(): kotlin/Int // dev.kord.common.entity/DiscordActivity.hashCode|hashCode(){}[0]
     final fun toString(): kotlin/String // dev.kord.common.entity/DiscordActivity.toString|toString(){}[0]
@@ -7087,6 +7090,41 @@ sealed class dev.kord.common.entity/ActivityFlag { // dev.kord.common.entity/Act
     final object Spectate : dev.kord.common.entity/ActivityFlag // dev.kord.common.entity/ActivityFlag.Spectate|null[0]
 
     final object Sync : dev.kord.common.entity/ActivityFlag // dev.kord.common.entity/ActivityFlag.Sync|null[0]
+}
+
+sealed class dev.kord.common.entity/ActivityPlatform { // dev.kord.common.entity/ActivityPlatform|null[0]
+    final val value // dev.kord.common.entity/ActivityPlatform.value|{}value[0]
+        final fun <get-value>(): kotlin/String // dev.kord.common.entity/ActivityPlatform.value.<get-value>|<get-value>(){}[0]
+
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.common.entity/ActivityPlatform.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.common.entity/ActivityPlatform.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // dev.kord.common.entity/ActivityPlatform.toString|toString(){}[0]
+
+    final class Unknown : dev.kord.common.entity/ActivityPlatform // dev.kord.common.entity/ActivityPlatform.Unknown|null[0]
+
+    final object Android : dev.kord.common.entity/ActivityPlatform // dev.kord.common.entity/ActivityPlatform.Android|null[0]
+
+    final object Companion { // dev.kord.common.entity/ActivityPlatform.Companion|null[0]
+        final val entries // dev.kord.common.entity/ActivityPlatform.Companion.entries|{}entries[0]
+            final fun <get-entries>(): kotlin.collections/List<dev.kord.common.entity/ActivityPlatform> // dev.kord.common.entity/ActivityPlatform.Companion.entries.<get-entries>|<get-entries>(){}[0]
+
+        final fun from(kotlin/String): dev.kord.common.entity/ActivityPlatform // dev.kord.common.entity/ActivityPlatform.Companion.from|from(kotlin.String){}[0]
+        final fun serializer(): kotlinx.serialization/KSerializer<dev.kord.common.entity/ActivityPlatform> // dev.kord.common.entity/ActivityPlatform.Companion.serializer|serializer(){}[0]
+    }
+
+    final object Desktop : dev.kord.common.entity/ActivityPlatform // dev.kord.common.entity/ActivityPlatform.Desktop|null[0]
+
+    final object Embedded : dev.kord.common.entity/ActivityPlatform // dev.kord.common.entity/ActivityPlatform.Embedded|null[0]
+
+    final object Ios : dev.kord.common.entity/ActivityPlatform // dev.kord.common.entity/ActivityPlatform.Ios|null[0]
+
+    final object PS4 : dev.kord.common.entity/ActivityPlatform // dev.kord.common.entity/ActivityPlatform.PS4|null[0]
+
+    final object PS5 : dev.kord.common.entity/ActivityPlatform // dev.kord.common.entity/ActivityPlatform.PS5|null[0]
+
+    final object Samsung : dev.kord.common.entity/ActivityPlatform // dev.kord.common.entity/ActivityPlatform.Samsung|null[0]
+
+    final object Xbox : dev.kord.common.entity/ActivityPlatform // dev.kord.common.entity/ActivityPlatform.Xbox|null[0]
 }
 
 sealed class dev.kord.common.entity/ActivityType { // dev.kord.common.entity/ActivityType|null[0]
