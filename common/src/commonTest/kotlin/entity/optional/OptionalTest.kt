@@ -2,7 +2,6 @@ package dev.kord.common.entity.optional
 
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.SerializationException
-import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import kotlin.js.JsName
 import kotlin.test.Test
