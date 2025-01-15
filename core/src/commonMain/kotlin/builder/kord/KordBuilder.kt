@@ -15,6 +15,7 @@ import dev.kord.core.gateway.DefaultMasterGateway
 import dev.kord.core.gateway.handler.DefaultGatewayEventInterceptor
 import dev.kord.core.gateway.handler.GatewayEventInterceptor
 import dev.kord.core.supplier.EntitySupplyStrategy
+import dev.kord.gateway.Compression
 import dev.kord.gateway.DefaultGateway
 import dev.kord.gateway.Gateway
 import dev.kord.gateway.builder.Shards
@@ -49,6 +50,7 @@ public abstract class BaseKordBuilder internal constructor(public val token: Str
                 DefaultGateway {
                     client = resources.httpClient
                     identifyRateLimiter = rateLimiter
+                    compression = this@BaseKordBuilder.compression
                 }
             }
         }
@@ -56,6 +58,11 @@ public abstract class BaseKordBuilder internal constructor(public val token: Str
     private var handlerBuilder: (resources: ClientResources) -> RequestHandler =
         { KtorRequestHandler(it.httpClient, ExclusionRequestRateLimiter(), token = token) }
     private var cacheBuilder: KordCacheBuilder.(resources: ClientResources) -> Unit = {}
+
+    /**
+     * The [compression mode][Compression] used.
+     */
+    public var compression: Compression = Compression.ZLib
 
     /**
      * Enables stack trace recovery on the currently defined [RequestHandler].

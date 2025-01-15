@@ -5,10 +5,10 @@ import io.ktor.websocket.*
 import node.buffer.Buffer
 import node.buffer.BufferEncoding
 
-internal actual fun Inflater() = object : Inflater {
+internal actual fun ZLibDecompressor() = object : Decompressor {
     private val inflate = Inflate()
 
-    override fun Frame.inflateData(): String {
+    override fun Frame.decompress(): String {
         val buffer = Buffer.from(data)
 
         return inflate.process(buffer).toString(BufferEncoding.utf8)
