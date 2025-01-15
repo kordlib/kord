@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package dev.kord.voice.encryption
 
 import com.iwebpp.crypto.TweetNaclFast
