@@ -6,14 +6,14 @@ import com.squareup.kotlinpoet.*
 import com.squareup.kotlinpoet.KModifier.*
 import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
 import com.squareup.kotlinpoet.jvm.jvmName
-import dev.kord.ksp.addAnnotation
-import dev.kord.ksp.addFunction
-import dev.kord.ksp.addParameter
+import dev.kord.codegen.kotlinpoet.addAnnotation
+import dev.kord.codegen.kotlinpoet.addFunction
+import dev.kord.codegen.kotlinpoet.addParameter
+import dev.kord.codegen.kotlinpoet.withControlFlow
 import dev.kord.ksp.generation.GenerationEntity.BitFlags
 import dev.kord.ksp.generation.shared.CONTRACT
 import dev.kord.ksp.generation.shared.EXACTLY_ONCE
 import dev.kord.ksp.generation.shared.GenerationContext
-import dev.kord.ksp.withControlFlow
 
 context(GenerationContext)
 private val BitFlags.factoryFunctionName
