@@ -23,13 +23,13 @@ import dev.kord.core.entity.component.ActionRowComponent
 import dev.kord.core.entity.interaction.ActionInteraction
 import dev.kord.core.entity.interaction.followup.FollowupMessage
 import dev.kord.core.exception.EntityNotFoundException
+import dev.kord.core.hash
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.core.supplier.getChannelOf
 import dev.kord.core.supplier.getChannelOfOrNull
 import kotlinx.coroutines.flow.*
 import kotlinx.datetime.Instant
-import dev.kord.core.hash
 
 /**
  * An instance of a [Discord Message][https://discord.com/developers/docs/resources/channel#message-object].
@@ -182,6 +182,13 @@ public class Message(
      * If the field exists but is null, the referenced message was deleted.
      */
     public val messageReference: MessageReference? get() = data.messageReference.value?.let { MessageReference(it, kord) }
+
+    /**
+     * If this message is a [MessageReferenceType.Forward] this will contain snapshots of the original message.
+     */
+    public val messageSnapshots: List<MessageSnapshot>? get() = data.messageSnapshots.value?.map {
+        MessageSnapshot(it, kord)
+    }
 
     /**
      * The [Channels][Channel] specifically mentioned in this message.
