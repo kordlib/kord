@@ -31,6 +31,10 @@ kotlin {
             api(projects.gateway)
 
             implementation(libs.kotlin.logging)
+            implementation(libs.slf4j.api)
+
+            compileOnly(projects.kspAnnotations)
+            implementation(libs.kotlin.logging)
 
             compileOnly(projects.kspAnnotations)
         }

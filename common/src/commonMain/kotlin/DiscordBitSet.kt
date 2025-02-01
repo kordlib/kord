@@ -149,11 +149,3 @@ public fun DiscordBitSet(value: String): DiscordBitSet {
 
     return DiscordBitSet(destination)
 }
-
-
-@Deprecated(
-    "Replaced by 'DiscordBitSet.serializer()'. This declaration will be removed in 0.16.0.",
-    ReplaceWith("DiscordBitSet.serializer()", imports = ["dev.kord.common.DiscordBitSet"]),
-    DeprecationLevel.HIDDEN,
-)
-public object DiscordBitSetSerializer : KSerializer<DiscordBitSet> by DiscordBitSet.Serializer

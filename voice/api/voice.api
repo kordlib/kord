@@ -735,7 +735,7 @@ public final class dev/kord/voice/gateway/Resume$Companion {
 
 public final class dev/kord/voice/gateway/Resumed : dev/kord/voice/gateway/VoiceEvent {
 	public static final field INSTANCE Ldev/kord/voice/gateway/Resumed;
-	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+	public final synthetic fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/voice/gateway/SelectProtocol : dev/kord/voice/gateway/Command {
