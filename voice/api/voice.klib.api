@@ -1,6 +1,5 @@
 // Klib ABI Dump
 // Targets: [iosArm64, iosSimulatorArm64, iosX64, js, linuxArm64, linuxX64, macosArm64, macosX64, mingwX64, tvosArm64, tvosSimulatorArm64, tvosX64, watchosArm64, watchosSimulatorArm64]
-// Alias: native => [iosArm64, iosSimulatorArm64, iosX64, linuxArm64, linuxX64, macosArm64, macosX64, mingwX64, tvosArm64, tvosSimulatorArm64, tvosX64, watchosArm64, watchosSimulatorArm64]
 // Alias: apple => [iosArm64, iosSimulatorArm64, iosX64, macosArm64, macosX64, tvosArm64, tvosSimulatorArm64, tvosX64, watchosArm64, watchosSimulatorArm64]
 // Rendering settings:
 // - Signature version: 2
@@ -73,11 +72,7 @@ abstract interface dev.kord.voice.streams/Streams { // dev.kord.voice.streams/St
     abstract val ssrcToUser // dev.kord.voice.streams/Streams.ssrcToUser|{}ssrcToUser[0]
         abstract fun <get-ssrcToUser>(): kotlin.collections/Map<kotlin/UInt, dev.kord.common.entity/Snowflake> // dev.kord.voice.streams/Streams.ssrcToUser.<get-ssrcToUser>|<get-ssrcToUser>(){}[0]
 
-    // Targets: [native]
     abstract suspend fun listen(kotlin/ByteArray, io.ktor.network.sockets/InetSocketAddress) // dev.kord.voice.streams/Streams.listen|listen(kotlin.ByteArray;io.ktor.network.sockets.InetSocketAddress){}[0]
-
-    // Targets: [js]
-    abstract suspend fun listen(kotlin/ByteArray, dev.kord.voice.udp/SocketAddress) // dev.kord.voice.streams/Streams.listen|listen(kotlin.ByteArray;dev.kord.voice.udp.SocketAddress){}[0]
 }
 
 abstract interface dev.kord.voice.udp/AudioFrameSender { // dev.kord.voice.udp/AudioFrameSender|null[0]
@@ -85,26 +80,16 @@ abstract interface dev.kord.voice.udp/AudioFrameSender { // dev.kord.voice.udp/A
 }
 
 abstract interface dev.kord.voice.udp/VoiceUdpSocket { // dev.kord.voice.udp/VoiceUdpSocket|null[0]
+    abstract fun all(io.ktor.network.sockets/InetSocketAddress): kotlinx.coroutines.flow/Flow<kotlinx.io/Source> // dev.kord.voice.udp/VoiceUdpSocket.all|all(io.ktor.network.sockets.InetSocketAddress){}[0]
+    abstract suspend fun send(io.ktor.network.sockets/InetSocketAddress, dev.kord.voice.io/ByteArrayView) // dev.kord.voice.udp/VoiceUdpSocket.send|send(io.ktor.network.sockets.InetSocketAddress;dev.kord.voice.io.ByteArrayView){}[0]
     abstract suspend fun stop() // dev.kord.voice.udp/VoiceUdpSocket.stop|stop(){}[0]
 
     final object Companion { // dev.kord.voice.udp/VoiceUdpSocket.Companion|null[0]
         final fun none(): dev.kord.voice.udp/VoiceUdpSocket // dev.kord.voice.udp/VoiceUdpSocket.Companion.none|none(){}[0]
     }
 
-    // Targets: [native]
-    abstract fun all(io.ktor.network.sockets/InetSocketAddress): kotlinx.coroutines.flow/Flow<kotlinx.io/Source> // dev.kord.voice.udp/VoiceUdpSocket.all|all(io.ktor.network.sockets.InetSocketAddress){}[0]
-
-    // Targets: [native]
-    abstract suspend fun send(io.ktor.network.sockets/InetSocketAddress, dev.kord.voice.io/ByteArrayView) // dev.kord.voice.udp/VoiceUdpSocket.send|send(io.ktor.network.sockets.InetSocketAddress;dev.kord.voice.io.ByteArrayView){}[0]
-
     // Targets: [apple]
     abstract fun all(io.ktor.network.sockets/InetSocketAddress): kotlinx.coroutines.flow/Flow<io.ktor.utils.io.core/ByteReadPacket> // dev.kord.voice.udp/VoiceUdpSocket.all|all(io.ktor.network.sockets.InetSocketAddress){}[0]
-
-    // Targets: [js]
-    abstract fun all(dev.kord.voice.udp/SocketAddress): kotlinx.coroutines.flow/Flow<kotlinx.io/Source> // dev.kord.voice.udp/VoiceUdpSocket.all|all(dev.kord.voice.udp.SocketAddress){}[0]
-
-    // Targets: [js]
-    abstract suspend fun send(dev.kord.voice.udp/SocketAddress, dev.kord.voice.io/ByteArrayView) // dev.kord.voice.udp/VoiceUdpSocket.send|send(dev.kord.voice.udp.SocketAddress;dev.kord.voice.io.ByteArrayView){}[0]
 }
 
 sealed interface dev.kord.voice.encryption.strategies/NonceStrategy { // dev.kord.voice.encryption.strategies/NonceStrategy|null[0]
@@ -661,54 +646,32 @@ final class dev.kord.voice.streams/DefaultStreams : dev.kord.voice.streams/Strea
     final val ssrcToUser // dev.kord.voice.streams/DefaultStreams.ssrcToUser|{}ssrcToUser[0]
         final fun <get-ssrcToUser>(): kotlin.collections/Map<kotlin/UInt, dev.kord.common.entity/Snowflake> // dev.kord.voice.streams/DefaultStreams.ssrcToUser.<get-ssrcToUser>|<get-ssrcToUser>(){}[0]
 
-    // Targets: [native]
     final suspend fun listen(kotlin/ByteArray, io.ktor.network.sockets/InetSocketAddress) // dev.kord.voice.streams/DefaultStreams.listen|listen(kotlin.ByteArray;io.ktor.network.sockets.InetSocketAddress){}[0]
-
-    // Targets: [js]
-    final suspend fun listen(kotlin/ByteArray, dev.kord.voice.udp/SocketAddress) // dev.kord.voice.streams/DefaultStreams.listen|listen(kotlin.ByteArray;dev.kord.voice.udp.SocketAddress){}[0]
 }
 
 final class dev.kord.voice.udp/AudioFrameSenderConfiguration { // dev.kord.voice.udp/AudioFrameSenderConfiguration|null[0]
+    constructor <init>(io.ktor.network.sockets/InetSocketAddress, kotlin/UInt, kotlin/ByteArray, dev.kord.voice/FrameInterceptorConfiguration) // dev.kord.voice.udp/AudioFrameSenderConfiguration.<init>|<init>(io.ktor.network.sockets.InetSocketAddress;kotlin.UInt;kotlin.ByteArray;dev.kord.voice.FrameInterceptorConfiguration){}[0]
+
     final val interceptorConfiguration // dev.kord.voice.udp/AudioFrameSenderConfiguration.interceptorConfiguration|{}interceptorConfiguration[0]
         final fun <get-interceptorConfiguration>(): dev.kord.voice/FrameInterceptorConfiguration // dev.kord.voice.udp/AudioFrameSenderConfiguration.interceptorConfiguration.<get-interceptorConfiguration>|<get-interceptorConfiguration>(){}[0]
     final val key // dev.kord.voice.udp/AudioFrameSenderConfiguration.key|{}key[0]
         final fun <get-key>(): kotlin/ByteArray // dev.kord.voice.udp/AudioFrameSenderConfiguration.key.<get-key>|<get-key>(){}[0]
     final val server // dev.kord.voice.udp/AudioFrameSenderConfiguration.server|{}server[0]
-        // Targets: [native]
         final fun <get-server>(): io.ktor.network.sockets/InetSocketAddress // dev.kord.voice.udp/AudioFrameSenderConfiguration.server.<get-server>|<get-server>(){}[0]
-
-        // Targets: [js]
-        final fun <get-server>(): dev.kord.voice.udp/SocketAddress // dev.kord.voice.udp/AudioFrameSenderConfiguration.server.<get-server>|<get-server>(){}[0]
     final val ssrc // dev.kord.voice.udp/AudioFrameSenderConfiguration.ssrc|{}ssrc[0]
         final fun <get-ssrc>(): kotlin/UInt // dev.kord.voice.udp/AudioFrameSenderConfiguration.ssrc.<get-ssrc>|<get-ssrc>(){}[0]
 
+    final fun component1(): io.ktor.network.sockets/InetSocketAddress // dev.kord.voice.udp/AudioFrameSenderConfiguration.component1|component1(){}[0]
     final fun component2(): kotlin/UInt // dev.kord.voice.udp/AudioFrameSenderConfiguration.component2|component2(){}[0]
     final fun component3(): kotlin/ByteArray // dev.kord.voice.udp/AudioFrameSenderConfiguration.component3|component3(){}[0]
     final fun component4(): dev.kord.voice/FrameInterceptorConfiguration // dev.kord.voice.udp/AudioFrameSenderConfiguration.component4|component4(){}[0]
+    final fun copy(io.ktor.network.sockets/InetSocketAddress = ..., kotlin/UInt = ..., kotlin/ByteArray = ..., dev.kord.voice/FrameInterceptorConfiguration = ...): dev.kord.voice.udp/AudioFrameSenderConfiguration // dev.kord.voice.udp/AudioFrameSenderConfiguration.copy|copy(io.ktor.network.sockets.InetSocketAddress;kotlin.UInt;kotlin.ByteArray;dev.kord.voice.FrameInterceptorConfiguration){}[0]
     final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.voice.udp/AudioFrameSenderConfiguration.equals|equals(kotlin.Any?){}[0]
     final fun hashCode(): kotlin/Int // dev.kord.voice.udp/AudioFrameSenderConfiguration.hashCode|hashCode(){}[0]
     final fun toString(): kotlin/String // dev.kord.voice.udp/AudioFrameSenderConfiguration.toString|toString(){}[0]
 
-    // Targets: [native]
-    constructor <init>(io.ktor.network.sockets/InetSocketAddress, kotlin/UInt, kotlin/ByteArray, dev.kord.voice/FrameInterceptorConfiguration) // dev.kord.voice.udp/AudioFrameSenderConfiguration.<init>|<init>(io.ktor.network.sockets.InetSocketAddress;kotlin.UInt;kotlin.ByteArray;dev.kord.voice.FrameInterceptorConfiguration){}[0]
-
-    // Targets: [native]
-    final fun component1(): io.ktor.network.sockets/InetSocketAddress // dev.kord.voice.udp/AudioFrameSenderConfiguration.component1|component1(){}[0]
-
-    // Targets: [native]
-    final fun copy(io.ktor.network.sockets/InetSocketAddress = ..., kotlin/UInt = ..., kotlin/ByteArray = ..., dev.kord.voice/FrameInterceptorConfiguration = ...): dev.kord.voice.udp/AudioFrameSenderConfiguration // dev.kord.voice.udp/AudioFrameSenderConfiguration.copy|copy(io.ktor.network.sockets.InetSocketAddress;kotlin.UInt;kotlin.ByteArray;dev.kord.voice.FrameInterceptorConfiguration){}[0]
-
     // Targets: [apple]
     final fun copy(io.ktor.network.sockets/InetSocketAddress =..., kotlin/UInt =..., kotlin/ByteArray =..., dev.kord.voice/FrameInterceptorConfiguration =...): dev.kord.voice.udp/AudioFrameSenderConfiguration // dev.kord.voice.udp/AudioFrameSenderConfiguration.copy|copy(io.ktor.network.sockets.InetSocketAddress;kotlin.UInt;kotlin.ByteArray;dev.kord.voice.FrameInterceptorConfiguration){}[0]
-
-    // Targets: [js]
-    constructor <init>(dev.kord.voice.udp/SocketAddress, kotlin/UInt, kotlin/ByteArray, dev.kord.voice/FrameInterceptorConfiguration) // dev.kord.voice.udp/AudioFrameSenderConfiguration.<init>|<init>(dev.kord.voice.udp.SocketAddress;kotlin.UInt;kotlin.ByteArray;dev.kord.voice.FrameInterceptorConfiguration){}[0]
-
-    // Targets: [js]
-    final fun component1(): dev.kord.voice.udp/SocketAddress // dev.kord.voice.udp/AudioFrameSenderConfiguration.component1|component1(){}[0]
-
-    // Targets: [js]
-    final fun copy(dev.kord.voice.udp/SocketAddress = ..., kotlin/UInt = ..., kotlin/ByteArray = ..., dev.kord.voice/FrameInterceptorConfiguration = ...): dev.kord.voice.udp/AudioFrameSenderConfiguration // dev.kord.voice.udp/AudioFrameSenderConfiguration.copy|copy(dev.kord.voice.udp.SocketAddress;kotlin.UInt;kotlin.ByteArray;dev.kord.voice.FrameInterceptorConfiguration){}[0]
 }
 
 final class dev.kord.voice.udp/DefaultAudioFrameSender : dev.kord.voice.udp/AudioFrameSender { // dev.kord.voice.udp/DefaultAudioFrameSender|null[0]
@@ -1195,11 +1158,7 @@ final object dev.kord.voice.streams/NOPStreams : dev.kord.voice.streams/Streams 
     final val ssrcToUser // dev.kord.voice.streams/NOPStreams.ssrcToUser|{}ssrcToUser[0]
         final fun <get-ssrcToUser>(): kotlin.collections/Map<kotlin/UInt, dev.kord.common.entity/Snowflake> // dev.kord.voice.streams/NOPStreams.ssrcToUser.<get-ssrcToUser>|<get-ssrcToUser>(){}[0]
 
-    // Targets: [native]
     final suspend fun listen(kotlin/ByteArray, io.ktor.network.sockets/InetSocketAddress) // dev.kord.voice.streams/NOPStreams.listen|listen(kotlin.ByteArray;io.ktor.network.sockets.InetSocketAddress){}[0]
-
-    // Targets: [js]
-    final suspend fun listen(kotlin/ByteArray, dev.kord.voice.udp/SocketAddress) // dev.kord.voice.streams/NOPStreams.listen|listen(kotlin.ByteArray;dev.kord.voice.udp.SocketAddress){}[0]
 }
 
 final val dev.kord.voice.udp/GlobalVoiceUdpSocket // dev.kord.voice.udp/GlobalVoiceUdpSocket|{}GlobalVoiceUdpSocket[0]
@@ -1222,36 +1181,9 @@ final fun dev.kord.voice/SpeakingFlags(kotlin/Array<out dev.kord.voice/SpeakingF
 final fun dev.kord.voice/SpeakingFlags(kotlin/Array<out dev.kord.voice/SpeakingFlags>...): dev.kord.voice/SpeakingFlags // dev.kord.voice/SpeakingFlags|SpeakingFlags(kotlin.Array<out|dev.kord.voice.SpeakingFlags>...){}[0]
 final inline fun <#A: reified dev.kord.voice.gateway/VoiceEvent> (dev.kord.voice.gateway/VoiceGateway).dev.kord.voice.gateway/on(kotlinx.coroutines/CoroutineScope = ..., crossinline kotlin.coroutines/SuspendFunction1<#A, kotlin/Unit>): kotlinx.coroutines/Job // dev.kord.voice.gateway/on|on@dev.kord.voice.gateway.VoiceGateway(kotlinx.coroutines.CoroutineScope;kotlin.coroutines.SuspendFunction1<0:0,kotlin.Unit>){0§<dev.kord.voice.gateway.VoiceEvent>}[0]
 final inline fun dev.kord.voice/SpeakingFlags(kotlin/Function1<dev.kord.voice/SpeakingFlags.Builder, kotlin/Unit> = ...): dev.kord.voice/SpeakingFlags // dev.kord.voice/SpeakingFlags|SpeakingFlags(kotlin.Function1<dev.kord.voice.SpeakingFlags.Builder,kotlin.Unit>){}[0]
-final suspend inline fun dev.kord.voice/VoiceConnection(dev.kord.gateway/Gateway, dev.kord.common.entity/Snowflake, dev.kord.common.entity/Snowflake, dev.kord.common.entity/Snowflake, kotlin/Function1<dev.kord.voice/VoiceConnectionBuilder, kotlin/Unit> = ...): dev.kord.voice/VoiceConnection // dev.kord.voice/VoiceConnection|VoiceConnection(dev.kord.gateway.Gateway;dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake;kotlin.Function1<dev.kord.voice.VoiceConnectionBuilder,kotlin.Unit>){}[0]
-
-// Targets: [native]
 final suspend fun (dev.kord.voice.udp/VoiceUdpSocket).dev.kord.voice.udp/discoverIP(io.ktor.network.sockets/InetSocketAddress, kotlin/Int): io.ktor.network.sockets/InetSocketAddress // dev.kord.voice.udp/discoverIP|discoverIP@dev.kord.voice.udp.VoiceUdpSocket(io.ktor.network.sockets.InetSocketAddress;kotlin.Int){}[0]
-
-// Targets: [native]
 final suspend fun (dev.kord.voice.udp/VoiceUdpSocket).dev.kord.voice.udp/recv(io.ktor.network.sockets/InetSocketAddress): kotlinx.io/Source // dev.kord.voice.udp/recv|recv@dev.kord.voice.udp.VoiceUdpSocket(io.ktor.network.sockets.InetSocketAddress){}[0]
+final suspend inline fun dev.kord.voice/VoiceConnection(dev.kord.gateway/Gateway, dev.kord.common.entity/Snowflake, dev.kord.common.entity/Snowflake, dev.kord.common.entity/Snowflake, kotlin/Function1<dev.kord.voice/VoiceConnectionBuilder, kotlin/Unit> = ...): dev.kord.voice/VoiceConnection // dev.kord.voice/VoiceConnection|VoiceConnection(dev.kord.gateway.Gateway;dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake;kotlin.Function1<dev.kord.voice.VoiceConnectionBuilder,kotlin.Unit>){}[0]
 
 // Targets: [apple]
 final suspend fun (dev.kord.voice.udp/VoiceUdpSocket).dev.kord.voice.udp/recv(io.ktor.network.sockets/InetSocketAddress): io.ktor.utils.io.core/ByteReadPacket // dev.kord.voice.udp/recv|recv@dev.kord.voice.udp.VoiceUdpSocket(io.ktor.network.sockets.InetSocketAddress){}[0]
-
-// Targets: [js]
-final class dev.kord.voice.udp/SocketAddress { // dev.kord.voice.udp/SocketAddress|null[0]
-    constructor <init>(kotlin/String, kotlin/Int) // dev.kord.voice.udp/SocketAddress.<init>|<init>(kotlin.String;kotlin.Int){}[0]
-
-    final val hostname // dev.kord.voice.udp/SocketAddress.hostname|{}hostname[0]
-        final fun <get-hostname>(): kotlin/String // dev.kord.voice.udp/SocketAddress.hostname.<get-hostname>|<get-hostname>(){}[0]
-    final val port // dev.kord.voice.udp/SocketAddress.port|{}port[0]
-        final fun <get-port>(): kotlin/Int // dev.kord.voice.udp/SocketAddress.port.<get-port>|<get-port>(){}[0]
-
-    final fun component1(): kotlin/String // dev.kord.voice.udp/SocketAddress.component1|component1(){}[0]
-    final fun component2(): kotlin/Int // dev.kord.voice.udp/SocketAddress.component2|component2(){}[0]
-    final fun copy(kotlin/String = ..., kotlin/Int = ...): dev.kord.voice.udp/SocketAddress // dev.kord.voice.udp/SocketAddress.copy|copy(kotlin.String;kotlin.Int){}[0]
-    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.voice.udp/SocketAddress.equals|equals(kotlin.Any?){}[0]
-    final fun hashCode(): kotlin/Int // dev.kord.voice.udp/SocketAddress.hashCode|hashCode(){}[0]
-    final fun toString(): kotlin/String // dev.kord.voice.udp/SocketAddress.toString|toString(){}[0]
-}
-
-// Targets: [js]
-final suspend fun (dev.kord.voice.udp/VoiceUdpSocket).dev.kord.voice.udp/discoverIP(dev.kord.voice.udp/SocketAddress, kotlin/Int): dev.kord.voice.udp/SocketAddress // dev.kord.voice.udp/discoverIP|discoverIP@dev.kord.voice.udp.VoiceUdpSocket(dev.kord.voice.udp.SocketAddress;kotlin.Int){}[0]
-
-// Targets: [js]
-final suspend fun (dev.kord.voice.udp/VoiceUdpSocket).dev.kord.voice.udp/recv(dev.kord.voice.udp/SocketAddress): kotlinx.io/Source // dev.kord.voice.udp/recv|recv@dev.kord.voice.udp.VoiceUdpSocket(dev.kord.voice.udp.SocketAddress){}[0]

@@ -1,6 +1,5 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
-@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
-                "SpellCheckingInspection", "GrazieInspection"))
+@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
@@ -14,8 +13,7 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 /**
- * See [SortOrderType]s in the
- * [Discord Developer Documentation](https://discord.com/developers/docs/resources/channel#channel-object-sort-order-types).
+ * See [SortOrderType]s in the [Discord Developer Documentation](https://discord.com/developers/docs/resources/channel#channel-object-sort-order-types).
  */
 @Serializable(with = SortOrderType.Serializer::class)
 public sealed class SortOrderType(
@@ -24,14 +22,11 @@ public sealed class SortOrderType(
      */
     public val `value`: Int,
 ) {
-    final override fun equals(other: Any?): Boolean = this === other ||
-            (other is SortOrderType && this.value == other.value)
+    final override fun equals(other: Any?): Boolean = this === other || (other is SortOrderType && this.value == other.value)
 
     final override fun hashCode(): Int = value.hashCode()
 
-    final override fun toString(): String =
-            if (this is Unknown) "SortOrderType.Unknown(value=$value)"
-            else "SortOrderType.${this::class.simpleName}"
+    final override fun toString(): String = if (this is Unknown) "SortOrderType.Unknown(value=$value)" else "SortOrderType.${this::class.simpleName}"
 
     /**
      * An unknown [SortOrderType].
@@ -75,8 +70,7 @@ public sealed class SortOrderType(
         }
 
         /**
-         * Returns an instance of [SortOrderType] with [SortOrderType.value] equal to the specified
-         * [value].
+         * Returns an instance of [SortOrderType] with [SortOrderType.value] equal to the specified [value].
          */
         public fun from(`value`: Int): SortOrderType = when (value) {
             0 -> LatestActivity

@@ -1,6 +1,5 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
-@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
-                "SpellCheckingInspection", "GrazieInspection"))
+@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
@@ -14,8 +13,7 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 /**
- * See [WebhookType]s in the
- * [Discord Developer Documentation](https://discord.com/developers/docs/resources/webhook#webhook-object-webhook-types).
+ * See [WebhookType]s in the [Discord Developer Documentation](https://discord.com/developers/docs/resources/webhook#webhook-object-webhook-types).
  */
 @Serializable(with = WebhookType.Serializer::class)
 public sealed class WebhookType(
@@ -24,13 +22,11 @@ public sealed class WebhookType(
      */
     public val `value`: Int,
 ) {
-    final override fun equals(other: Any?): Boolean = this === other ||
-            (other is WebhookType && this.value == other.value)
+    final override fun equals(other: Any?): Boolean = this === other || (other is WebhookType && this.value == other.value)
 
     final override fun hashCode(): Int = value.hashCode()
 
-    final override fun toString(): String = if (this is Unknown) "WebhookType.Unknown(value=$value)"
-            else "WebhookType.${this::class.simpleName}"
+    final override fun toString(): String = if (this is Unknown) "WebhookType.Unknown(value=$value)" else "WebhookType.${this::class.simpleName}"
 
     /**
      * An unknown [WebhookType].
@@ -47,8 +43,7 @@ public sealed class WebhookType(
     public object Incoming : WebhookType(1)
 
     /**
-     * Channel Follower Webhooks are internal webhooks used with Channel Following to post new
-     * messages into channels.
+     * Channel Follower Webhooks are internal webhooks used with Channel Following to post new messages into channels.
      */
     public object ChannelFollower : WebhookType(2)
 
@@ -81,8 +76,7 @@ public sealed class WebhookType(
         }
 
         /**
-         * Returns an instance of [WebhookType] with [WebhookType.value] equal to the specified
-         * [value].
+         * Returns an instance of [WebhookType] with [WebhookType.value] equal to the specified [value].
          */
         public fun from(`value`: Int): WebhookType = when (value) {
             1 -> Incoming

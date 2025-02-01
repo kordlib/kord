@@ -1,6 +1,5 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
-@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
-                "SpellCheckingInspection", "GrazieInspection"))
+@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
@@ -14,8 +13,7 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 /**
- * See [NsfwLevel]s in the
- * [Discord Developer Documentation](https://discord.com/developers/docs/resources/guild#guild-object-guild-nsfw-level).
+ * See [NsfwLevel]s in the [Discord Developer Documentation](https://discord.com/developers/docs/resources/guild#guild-object-guild-nsfw-level).
  */
 @Serializable(with = NsfwLevel.Serializer::class)
 public sealed class NsfwLevel(
@@ -24,13 +22,11 @@ public sealed class NsfwLevel(
      */
     public val `value`: Int,
 ) {
-    final override fun equals(other: Any?): Boolean = this === other ||
-            (other is NsfwLevel && this.value == other.value)
+    final override fun equals(other: Any?): Boolean = this === other || (other is NsfwLevel && this.value == other.value)
 
     final override fun hashCode(): Int = value.hashCode()
 
-    final override fun toString(): String = if (this is Unknown) "NsfwLevel.Unknown(value=$value)"
-            else "NsfwLevel.${this::class.simpleName}"
+    final override fun toString(): String = if (this is Unknown) "NsfwLevel.Unknown(value=$value)" else "NsfwLevel.${this::class.simpleName}"
 
     /**
      * An unknown [NsfwLevel].
