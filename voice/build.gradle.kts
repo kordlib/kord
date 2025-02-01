@@ -29,6 +29,7 @@ kotlin {
         commonMain.dependencies {
             api(projects.common)
             api(projects.gateway)
+            api(libs.ktor.network)
 
             implementation(libs.kotlin.logging)
 
