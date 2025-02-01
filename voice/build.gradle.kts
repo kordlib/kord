@@ -1,26 +1,9 @@
-import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
-
 plugins {
     `kord-multiplatform-module`
     `kord-publishing`
 }
 
-@OptIn(ExperimentalKotlinGradlePluginApi::class)
 kotlin {
-    applyDefaultHierarchyTemplate {
-        common {
-            group("ktor") {
-                withJvm()
-                withApple()
-                withLinux()
-                withMingw()
-            }
-
-            group("nonKtor") {
-                withJs()
-            }
-        }
-    }
     jvm {
         withJava()
     }
