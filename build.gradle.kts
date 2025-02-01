@@ -4,8 +4,8 @@ plugins {
 
 allprojects {
     repositories {
-        // TODO: Remove wants https://github.com/ktorio/ktor/pull/3950 lands
-        maven("https://europe-west3-maven.pkg.dev/mik-music/kord")
+        // TODO: Remove once Ktor 3.1.0 releases
+        maven("https://maven.pkg.jetbrains.space/public/p/ktor/eap/")
         mavenCentral()
         maven("https://oss.sonatype.org/content/repositories/snapshots/")
     }
