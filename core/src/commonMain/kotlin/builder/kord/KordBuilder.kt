@@ -190,7 +190,7 @@ public abstract class BaseKordBuilder internal constructor(public val token: Str
                 if (response.status == HttpStatusCode.Unauthorized) {
                     append(", make sure the bot token you entered is valid.")
                 } else {
-                    append('.')
+                    append(". ")
                 }
 
                 appendLine("Discord response: $responseBody (${response.status})")
