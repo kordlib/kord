@@ -1,6 +1,5 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
-@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
-                "SpellCheckingInspection", "GrazieInspection"))
+@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
@@ -18,8 +17,7 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 /**
- * See [UserFlag]s in the
- * [Discord Developer Documentation](https://discord.com/developers/docs/resources/user#user-object-user-flags).
+ * See [UserFlag]s in the [Discord Developer Documentation](https://discord.com/developers/docs/resources/user#user-object-user-flags).
  */
 public sealed class UserFlag(
     /**
@@ -47,13 +45,11 @@ public sealed class UserFlag(
      */
     public operator fun plus(flags: UserFlags): UserFlags = UserFlags(this.code or flags.code)
 
-    final override fun equals(other: Any?): Boolean = this === other ||
-            (other is UserFlag && this.shift == other.shift)
+    final override fun equals(other: Any?): Boolean = this === other || (other is UserFlag && this.shift == other.shift)
 
     final override fun hashCode(): Int = shift.hashCode()
 
-    final override fun toString(): String = if (this is Unknown) "UserFlag.Unknown(shift=$shift)"
-            else "UserFlag.${this::class.simpleName}"
+    final override fun toString(): String = if (this is Unknown) "UserFlag.Unknown(shift=$shift)" else "UserFlag.${this::class.simpleName}"
 
     /**
      * An unknown [UserFlag].
@@ -231,8 +227,7 @@ public sealed class UserFlag(
  *
  * ## Checking for [UserFlag]s
  *
- * You can use the [contains] operator to check whether an instance of [UserFlags] contains specific
- * [UserFlag]s:
+ * You can use the [contains] operator to check whether an instance of [UserFlags] contains specific [UserFlag]s:
  * ```kotlin
  * val hasUserFlag = UserFlag.DiscordEmployee in userFlags
  * val hasUserFlags = UserFlags(UserFlag.DiscordEmployee, UserFlag.DiscordPartner) in userFlags
@@ -240,8 +235,7 @@ public sealed class UserFlag(
  *
  * ## Unknown [UserFlag]s
  *
- * Whenever [UserFlag]s haven't been added to Kord yet, they will be deserialized as instances of
- * [UserFlag.Unknown].
+ * Whenever [UserFlag]s haven't been added to Kord yet, they will be deserialized as instances of [UserFlag.Unknown].
  *
  * You can also use [UserFlag.fromShift] to check for [unknown][UserFlag.Unknown] [UserFlag]s.
  * ```kotlin
@@ -293,17 +287,14 @@ public class UserFlags internal constructor(
     public operator fun plus(flags: UserFlags): UserFlags = UserFlags(this.code or flags.code)
 
     /**
-     * Returns an instance of [UserFlags] that has all bits set that are set in `this` except the
-     * bits that are set in [flag].
+     * Returns an instance of [UserFlags] that has all bits set that are set in `this` except the bits that are set in [flag].
      */
     public operator fun minus(flag: UserFlag): UserFlags = UserFlags(this.code and flag.code.inv())
 
     /**
-     * Returns an instance of [UserFlags] that has all bits set that are set in `this` except the
-     * bits that are set in [flags].
+     * Returns an instance of [UserFlags] that has all bits set that are set in `this` except the bits that are set in [flags].
      */
-    public operator fun minus(flags: UserFlags): UserFlags =
-            UserFlags(this.code and flags.code.inv())
+    public operator fun minus(flags: UserFlags): UserFlags = UserFlags(this.code and flags.code.inv())
 
     /**
      * Returns a copy of this instance of [UserFlags] modified with [builder].
@@ -322,8 +313,7 @@ public class UserFlags internal constructor(
         return copy(builder)
     }
 
-    override fun equals(other: Any?): Boolean = this === other ||
-            (other is UserFlags && this.code == other.code)
+    override fun equals(other: Any?): Boolean = this === other || (other is UserFlags && this.code == other.code)
 
     override fun hashCode(): Int = code.hashCode()
 
@@ -361,8 +351,7 @@ public class UserFlags internal constructor(
         }
 
         /**
-         * Returns an instance of [UserFlags] that has all bits set that are currently set in this
-         * [Builder].
+         * Returns an instance of [UserFlags] that has all bits set that are currently set in this [Builder].
          */
         public fun build(): UserFlags = UserFlags(code)
     }
@@ -377,8 +366,7 @@ public class UserFlags internal constructor(
             encoder.encodeSerializableValue(delegate, value.code)
         }
 
-        override fun deserialize(decoder: Decoder): UserFlags =
-                UserFlags(decoder.decodeSerializableValue(delegate))
+        override fun deserialize(decoder: Decoder): UserFlags = UserFlags(decoder.decodeSerializableValue(delegate))
     }
 }
 

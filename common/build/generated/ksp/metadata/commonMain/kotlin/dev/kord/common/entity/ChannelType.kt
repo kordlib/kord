@@ -1,6 +1,5 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
-@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
-                "SpellCheckingInspection", "GrazieInspection"))
+@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
@@ -14,8 +13,7 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 /**
- * See [ChannelType]s in the
- * [Discord Developer Documentation](https://discord.com/developers/docs/resources/channel#channel-object-channel-types).
+ * See [ChannelType]s in the [Discord Developer Documentation](https://discord.com/developers/docs/resources/channel#channel-object-channel-types).
  */
 @Serializable(with = ChannelType.Serializer::class)
 public sealed class ChannelType(
@@ -24,13 +22,11 @@ public sealed class ChannelType(
      */
     public val `value`: Int,
 ) {
-    final override fun equals(other: Any?): Boolean = this === other ||
-            (other is ChannelType && this.value == other.value)
+    final override fun equals(other: Any?): Boolean = this === other || (other is ChannelType && this.value == other.value)
 
     final override fun hashCode(): Int = value.hashCode()
 
-    final override fun toString(): String = if (this is Unknown) "ChannelType.Unknown(value=$value)"
-            else "ChannelType.${this::class.simpleName}"
+    final override fun toString(): String = if (this is Unknown) "ChannelType.Unknown(value=$value)" else "ChannelType.${this::class.simpleName}"
 
     /**
      * An unknown [ChannelType].
@@ -62,15 +58,12 @@ public sealed class ChannelType(
     public object GroupDM : ChannelType(3)
 
     /**
-     * An
-     * [organizational category](https://support.discord.com/hc/en-us/articles/115001580171-Channel-Categories-101)
-     * that contains up to 50 channels.
+     * An [organizational category](https://support.discord.com/hc/en-us/articles/115001580171-Channel-Categories-101) that contains up to 50 channels.
      */
     public object GuildCategory : ChannelType(4)
 
     /**
-     * A channel that
-     * [users can follow and crosspost into their own server](https://support.discord.com/hc/en-us/articles/360032008192).
+     * A channel that [users can follow and crosspost into their own server](https://support.discord.com/hc/en-us/articles/360032008192).
      */
     public object GuildNews : ChannelType(5)
 
@@ -85,21 +78,17 @@ public sealed class ChannelType(
     public object PublicGuildThread : ChannelType(11)
 
     /**
-     * A temporary sub-channel within a [GuildText] channel that is only viewable by those invited
-     * and those with the [ManageThreads][dev.kord.common.entity.Permission.ManageThreads] permission.
+     * A temporary sub-channel within a [GuildText] channel that is only viewable by those invited and those with the [ManageThreads][dev.kord.common.entity.Permission.ManageThreads] permission.
      */
     public object PrivateThread : ChannelType(12)
 
     /**
-     * A voice channel for
-     * [hosting events with an audience](https://support.discord.com/hc/en-us/articles/1500005513722).
+     * A voice channel for [hosting events with an audience](https://support.discord.com/hc/en-us/articles/1500005513722).
      */
     public object GuildStageVoice : ChannelType(13)
 
     /**
-     * The channel in a
-     * [hub](https://support.discord.com/hc/en-us/articles/4406046651927-Discord-Student-Hubs-FAQ)
-     * containing the listed servers.
+     * The channel in a [hub](https://support.discord.com/hc/en-us/articles/4406046651927-Discord-Student-Hubs-FAQ) containing the listed servers.
      */
     public object GuildDirectory : ChannelType(14)
 
@@ -147,8 +136,7 @@ public sealed class ChannelType(
         }
 
         /**
-         * Returns an instance of [ChannelType] with [ChannelType.value] equal to the specified
-         * [value].
+         * Returns an instance of [ChannelType] with [ChannelType.value] equal to the specified [value].
          */
         public fun from(`value`: Int): ChannelType = when (value) {
             0 -> GuildText

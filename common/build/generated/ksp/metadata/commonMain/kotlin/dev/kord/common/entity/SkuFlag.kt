@@ -1,6 +1,5 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
-@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
-                "SpellCheckingInspection", "GrazieInspection"))
+@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
@@ -18,8 +17,7 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 /**
- * See [SkuFlag]s in the
- * [Discord Developer Documentation](https://discord.com/developers/docs/resources/sku#sku-object-sku-flags).
+ * See [SkuFlag]s in the [Discord Developer Documentation](https://discord.com/developers/docs/resources/sku#sku-object-sku-flags).
  */
 public sealed class SkuFlag(
     /**
@@ -47,13 +45,11 @@ public sealed class SkuFlag(
      */
     public operator fun plus(flags: SkuFlags): SkuFlags = SkuFlags(this.value or flags.value)
 
-    final override fun equals(other: Any?): Boolean = this === other ||
-            (other is SkuFlag && this.shift == other.shift)
+    final override fun equals(other: Any?): Boolean = this === other || (other is SkuFlag && this.shift == other.shift)
 
     final override fun hashCode(): Int = shift.hashCode()
 
-    final override fun toString(): String = if (this is Unknown) "SkuFlag.Unknown(shift=$shift)"
-            else "SkuFlag.${this::class.simpleName}"
+    final override fun toString(): String = if (this is Unknown) "SkuFlag.Unknown(shift=$shift)" else "SkuFlag.${this::class.simpleName}"
 
     /**
      * An unknown [SkuFlag].
@@ -70,14 +66,12 @@ public sealed class SkuFlag(
     public object Available : SkuFlag(2)
 
     /**
-     * Recurring SKU that can be purchased by a user and applied to a single server. Grants access
-     * to every user in that server.
+     * Recurring SKU that can be purchased by a user and applied to a single server. Grants access to every user in that server.
      */
     public object GuildSubscription : SkuFlag(7)
 
     /**
-     * Recurring SKU purchased by a user for themselves. Grants access to the purchasing user in
-     * every server.
+     * Recurring SKU purchased by a user for themselves. Grants access to the purchasing user in every server.
      */
     public object UserSubscription : SkuFlag(8)
 
@@ -149,8 +143,7 @@ public sealed class SkuFlag(
  *
  * ## Checking for [SkuFlag]s
  *
- * You can use the [contains] operator to check whether an instance of [SkuFlags] contains specific
- * [SkuFlag]s:
+ * You can use the [contains] operator to check whether an instance of [SkuFlags] contains specific [SkuFlag]s:
  * ```kotlin
  * val hasSkuFlag = SkuFlag.Available in skuFlags
  * val hasSkuFlags = SkuFlags(SkuFlag.Available, SkuFlag.GuildSubscription) in skuFlags
@@ -158,8 +151,7 @@ public sealed class SkuFlag(
  *
  * ## Unknown [SkuFlag]s
  *
- * Whenever [SkuFlag]s haven't been added to Kord yet, they will be deserialized as instances of
- * [SkuFlag.Unknown].
+ * Whenever [SkuFlag]s haven't been added to Kord yet, they will be deserialized as instances of [SkuFlag.Unknown].
  *
  * You can also use [SkuFlag.fromShift] to check for [unknown][SkuFlag.Unknown] [SkuFlag]s.
  * ```kotlin
@@ -198,8 +190,7 @@ public class SkuFlags internal constructor(
     /**
      * Checks if this instance of [SkuFlags] has all bits set that are set in [flags].
      */
-    public operator fun contains(flags: SkuFlags): Boolean =
-            this.value and flags.value == flags.value
+    public operator fun contains(flags: SkuFlags): Boolean = this.value and flags.value == flags.value
 
     /**
      * Returns an instance of [SkuFlags] that has all bits set that are set in `this` and [flag].
@@ -212,17 +203,14 @@ public class SkuFlags internal constructor(
     public operator fun plus(flags: SkuFlags): SkuFlags = SkuFlags(this.value or flags.value)
 
     /**
-     * Returns an instance of [SkuFlags] that has all bits set that are set in `this` except the
-     * bits that are set in [flag].
+     * Returns an instance of [SkuFlags] that has all bits set that are set in `this` except the bits that are set in [flag].
      */
     public operator fun minus(flag: SkuFlag): SkuFlags = SkuFlags(this.value and flag.value.inv())
 
     /**
-     * Returns an instance of [SkuFlags] that has all bits set that are set in `this` except the
-     * bits that are set in [flags].
+     * Returns an instance of [SkuFlags] that has all bits set that are set in `this` except the bits that are set in [flags].
      */
-    public operator fun minus(flags: SkuFlags): SkuFlags =
-            SkuFlags(this.value and flags.value.inv())
+    public operator fun minus(flags: SkuFlags): SkuFlags = SkuFlags(this.value and flags.value.inv())
 
     /**
      * Returns a copy of this instance of [SkuFlags] modified with [builder].
@@ -232,8 +220,7 @@ public class SkuFlags internal constructor(
         return Builder(value).apply(builder).build()
     }
 
-    override fun equals(other: Any?): Boolean = this === other ||
-            (other is SkuFlags && this.value == other.value)
+    override fun equals(other: Any?): Boolean = this === other || (other is SkuFlags && this.value == other.value)
 
     override fun hashCode(): Int = value.hashCode()
 
@@ -271,8 +258,7 @@ public class SkuFlags internal constructor(
         }
 
         /**
-         * Returns an instance of [SkuFlags] that has all bits set that are currently set in this
-         * [Builder].
+         * Returns an instance of [SkuFlags] that has all bits set that are currently set in this [Builder].
          */
         public fun build(): SkuFlags = SkuFlags(value)
     }
@@ -287,8 +273,7 @@ public class SkuFlags internal constructor(
             encoder.encodeSerializableValue(delegate, value.value)
         }
 
-        override fun deserialize(decoder: Decoder): SkuFlags =
-                SkuFlags(decoder.decodeSerializableValue(delegate))
+        override fun deserialize(decoder: Decoder): SkuFlags = SkuFlags(decoder.decodeSerializableValue(delegate))
     }
 }
 

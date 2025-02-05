@@ -2857,7 +2857,6 @@ public synthetic class dev/kord/rest/json/request/ApplicationCommandCreateReques
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/rest/json/request/ApplicationCommandCreateRequest;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/rest/json/request/ApplicationCommandCreateRequest$Companion {
@@ -2902,7 +2901,6 @@ public synthetic class dev/kord/rest/json/request/ApplicationCommandModifyReques
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/rest/json/request/ApplicationCommandModifyRequest;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/rest/json/request/ApplicationCommandModifyRequest$Companion {
@@ -2934,7 +2932,6 @@ public synthetic class dev/kord/rest/json/request/AttachmentRequest$$serializer 
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/rest/json/request/AttachmentRequest;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/rest/json/request/AttachmentRequest$Companion {
@@ -2984,7 +2981,6 @@ public synthetic class dev/kord/rest/json/request/AutoCompleteResponseCreateRequ
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/rest/json/request/AutoCompleteResponseCreateRequest;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/rest/json/request/AutoCompleteResponseCreateRequest$Companion {
@@ -3026,7 +3022,6 @@ public synthetic class dev/kord/rest/json/request/AutoModerationRuleCreateReques
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/rest/json/request/AutoModerationRuleCreateRequest;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/rest/json/request/AutoModerationRuleCreateRequest$Companion {
@@ -3067,7 +3062,6 @@ public synthetic class dev/kord/rest/json/request/AutoModerationRuleModifyReques
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/rest/json/request/AutoModerationRuleModifyRequest;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/rest/json/request/AutoModerationRuleModifyRequest$Companion {
@@ -3094,7 +3088,6 @@ public synthetic class dev/kord/rest/json/request/BulkDeleteRequest$$serializer 
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/rest/json/request/BulkDeleteRequest;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/rest/json/request/BulkDeleteRequest$Companion {
@@ -3121,7 +3114,6 @@ public synthetic class dev/kord/rest/json/request/ChannelFollowRequest$$serializ
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/rest/json/request/ChannelFollowRequest;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/rest/json/request/ChannelFollowRequest$Companion {
@@ -3194,7 +3186,6 @@ public synthetic class dev/kord/rest/json/request/ChannelModifyPatchRequest$$ser
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/rest/json/request/ChannelModifyPatchRequest;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/rest/json/request/ChannelModifyPatchRequest$Companion {
@@ -3238,7 +3229,6 @@ public synthetic class dev/kord/rest/json/request/ChannelModifyPutRequest$$seria
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/rest/json/request/ChannelModifyPutRequest;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/rest/json/request/ChannelModifyPutRequest$Companion {
@@ -3269,7 +3259,6 @@ public synthetic class dev/kord/rest/json/request/ChannelPermissionEditRequest$$
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/rest/json/request/ChannelPermissionEditRequest;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/rest/json/request/ChannelPermissionEditRequest$Companion {
@@ -3303,7 +3292,6 @@ public synthetic class dev/kord/rest/json/request/ChannelPositionSwapRequest$$se
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/rest/json/request/ChannelPositionSwapRequest;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/rest/json/request/ChannelPositionSwapRequest$Companion {
@@ -3334,7 +3322,6 @@ public synthetic class dev/kord/rest/json/request/CurrentUserModifyRequest$$seri
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/rest/json/request/CurrentUserModifyRequest;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/rest/json/request/CurrentUserModifyRequest$Companion {
@@ -3363,7 +3350,6 @@ public synthetic class dev/kord/rest/json/request/CurrentUserNicknameModifyReque
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/rest/json/request/CurrentUserNicknameModifyRequest;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/rest/json/request/CurrentUserNicknameModifyRequest$Companion {
@@ -3396,7 +3382,6 @@ public synthetic class dev/kord/rest/json/request/CurrentVoiceStateModifyRequest
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/rest/json/request/CurrentVoiceStateModifyRequest;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/rest/json/request/CurrentVoiceStateModifyRequest$Companion {
@@ -3423,7 +3408,6 @@ public synthetic class dev/kord/rest/json/request/DMCreateRequest$$serializer : 
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/rest/json/request/DMCreateRequest;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/rest/json/request/DMCreateRequest$Companion {
@@ -3456,7 +3440,6 @@ public synthetic class dev/kord/rest/json/request/EmbedAuthorRequest$$serializer
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/rest/json/request/EmbedAuthorRequest;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/rest/json/request/EmbedAuthorRequest$Companion {
@@ -3488,7 +3471,6 @@ public synthetic class dev/kord/rest/json/request/EmbedFieldRequest$$serializer 
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/rest/json/request/EmbedFieldRequest;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/rest/json/request/EmbedFieldRequest$Companion {
@@ -3518,7 +3500,6 @@ public synthetic class dev/kord/rest/json/request/EmbedFooterRequest$$serializer
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/rest/json/request/EmbedFooterRequest;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/rest/json/request/EmbedFooterRequest$Companion {
@@ -3545,7 +3526,6 @@ public synthetic class dev/kord/rest/json/request/EmbedImageRequest$$serializer 
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/rest/json/request/EmbedImageRequest;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/rest/json/request/EmbedImageRequest$Companion {
@@ -3594,7 +3574,6 @@ public synthetic class dev/kord/rest/json/request/EmbedRequest$$serializer : kot
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/rest/json/request/EmbedRequest;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/rest/json/request/EmbedRequest$Companion {
@@ -3621,7 +3600,6 @@ public synthetic class dev/kord/rest/json/request/EmbedThumbnailRequest$$seriali
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/rest/json/request/EmbedThumbnailRequest;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/rest/json/request/EmbedThumbnailRequest$Companion {
@@ -3652,7 +3630,6 @@ public synthetic class dev/kord/rest/json/request/EmojiCreateRequest$$serializer
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/rest/json/request/EmojiCreateRequest;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/rest/json/request/EmojiCreateRequest$Companion {
@@ -3683,7 +3660,6 @@ public synthetic class dev/kord/rest/json/request/EmojiModifyRequest$$serializer
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/rest/json/request/EmojiModifyRequest;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/rest/json/request/EmojiModifyRequest$Companion {
@@ -3747,7 +3723,6 @@ public synthetic class dev/kord/rest/json/request/FollowupMessageCreateRequest$$
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/rest/json/request/FollowupMessageCreateRequest;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/rest/json/request/FollowupMessageCreateRequest$Companion {
@@ -3786,7 +3761,6 @@ public synthetic class dev/kord/rest/json/request/FollowupMessageModifyRequest$$
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/rest/json/request/FollowupMessageModifyRequest;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/rest/json/request/FollowupMessageModifyRequest$Companion {
@@ -3820,7 +3794,6 @@ public synthetic class dev/kord/rest/json/request/ForumTagRequest$$serializer : 
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/rest/json/request/ForumTagRequest;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/rest/json/request/ForumTagRequest$Companion {
@@ -3863,7 +3836,6 @@ public synthetic class dev/kord/rest/json/request/ForumThreadMessageRequest$$ser
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/rest/json/request/ForumThreadMessageRequest;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/rest/json/request/ForumThreadMessageRequest$Companion {
@@ -3892,7 +3864,6 @@ public synthetic class dev/kord/rest/json/request/GroupDMCreateRequest$$serializ
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/rest/json/request/GroupDMCreateRequest;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/rest/json/request/GroupDMCreateRequest$Companion {
@@ -3921,7 +3892,6 @@ public synthetic class dev/kord/rest/json/request/GuildBanCreateRequest$$seriali
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/rest/json/request/GuildBanCreateRequest;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/rest/json/request/GuildBanCreateRequest$Companion {
@@ -3983,7 +3953,6 @@ public synthetic class dev/kord/rest/json/request/GuildChannelCreateRequest$$ser
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/rest/json/request/GuildChannelCreateRequest;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/rest/json/request/GuildChannelCreateRequest$Companion {
@@ -4047,7 +4016,6 @@ public synthetic class dev/kord/rest/json/request/GuildCreateRequest$$serializer
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/rest/json/request/GuildCreateRequest;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/rest/json/request/GuildCreateRequest$Companion {
@@ -4077,7 +4045,6 @@ public synthetic class dev/kord/rest/json/request/GuildFromTemplateCreateRequest
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/rest/json/request/GuildFromTemplateCreateRequest;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/rest/json/request/GuildFromTemplateCreateRequest$Companion {
@@ -4106,7 +4073,6 @@ public synthetic class dev/kord/rest/json/request/GuildIntegrationCreateRequest$
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/rest/json/request/GuildIntegrationCreateRequest;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/rest/json/request/GuildIntegrationCreateRequest$Companion {
@@ -4139,7 +4105,6 @@ public synthetic class dev/kord/rest/json/request/GuildIntegrationModifyRequest$
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/rest/json/request/GuildIntegrationModifyRequest;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/rest/json/request/GuildIntegrationModifyRequest$Companion {
@@ -4166,7 +4131,6 @@ public synthetic class dev/kord/rest/json/request/GuildMFALevelModifyRequest$$se
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/rest/json/request/GuildMFALevelModifyRequest;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/rest/json/request/GuildMFALevelModifyRequest$Companion {
@@ -4204,7 +4168,6 @@ public synthetic class dev/kord/rest/json/request/GuildMemberAddRequest$$seriali
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/rest/json/request/GuildMemberAddRequest;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/rest/json/request/GuildMemberAddRequest$Companion {
@@ -4245,7 +4208,6 @@ public synthetic class dev/kord/rest/json/request/GuildMemberModifyRequest$$seri
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/rest/json/request/GuildMemberModifyRequest;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/rest/json/request/GuildMemberModifyRequest$Companion {
@@ -4306,7 +4268,6 @@ public synthetic class dev/kord/rest/json/request/GuildModifyRequest$$serializer
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/rest/json/request/GuildModifyRequest;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/rest/json/request/GuildModifyRequest$Companion {
@@ -4341,7 +4302,6 @@ public synthetic class dev/kord/rest/json/request/GuildOnboardingModifyRequest$$
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/rest/json/request/GuildOnboardingModifyRequest;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/rest/json/request/GuildOnboardingModifyRequest$Companion {
@@ -4384,7 +4344,6 @@ public synthetic class dev/kord/rest/json/request/GuildRoleCreateRequest$$serial
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/rest/json/request/GuildRoleCreateRequest;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/rest/json/request/GuildRoleCreateRequest$Companion {
@@ -4425,7 +4384,6 @@ public synthetic class dev/kord/rest/json/request/GuildRoleModifyRequest$$serial
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/rest/json/request/GuildRoleModifyRequest;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/rest/json/request/GuildRoleModifyRequest$Companion {
@@ -4485,7 +4443,6 @@ public synthetic class dev/kord/rest/json/request/GuildScheduledEventCreateReque
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/rest/json/request/GuildScheduledEventCreateRequest;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/rest/json/request/GuildScheduledEventCreateRequest$Companion {
@@ -4517,7 +4474,6 @@ public synthetic class dev/kord/rest/json/request/GuildScheduledEventUsersRespon
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/rest/json/request/GuildScheduledEventUsersResponse;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/rest/json/request/GuildScheduledEventUsersResponse$Companion {
@@ -4548,7 +4504,6 @@ public synthetic class dev/kord/rest/json/request/GuildStickerCreateRequest$$ser
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/rest/json/request/GuildStickerCreateRequest;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/rest/json/request/GuildStickerCreateRequest$Companion {
@@ -4581,7 +4536,6 @@ public synthetic class dev/kord/rest/json/request/GuildStickerModifyRequest$$ser
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/rest/json/request/GuildStickerModifyRequest;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/rest/json/request/GuildStickerModifyRequest$Companion {
@@ -4611,7 +4565,6 @@ public synthetic class dev/kord/rest/json/request/GuildTemplateCreateRequest$$se
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/rest/json/request/GuildTemplateCreateRequest;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/rest/json/request/GuildTemplateCreateRequest$Companion {
@@ -4642,7 +4595,6 @@ public synthetic class dev/kord/rest/json/request/GuildTemplateModifyRequest$$se
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/rest/json/request/GuildTemplateModifyRequest;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/rest/json/request/GuildTemplateModifyRequest$Companion {
@@ -4675,7 +4627,6 @@ public synthetic class dev/kord/rest/json/request/GuildWelcomeScreenModifyReques
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/rest/json/request/GuildWelcomeScreenModifyRequest;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/rest/json/request/GuildWelcomeScreenModifyRequest$Companion {
@@ -4706,7 +4657,6 @@ public synthetic class dev/kord/rest/json/request/GuildWidgetModifyRequest$$seri
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/rest/json/request/GuildWidgetModifyRequest;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/rest/json/request/GuildWidgetModifyRequest$Companion {
@@ -4747,7 +4697,6 @@ public synthetic class dev/kord/rest/json/request/InteractionApplicationCommandC
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/rest/json/request/InteractionApplicationCommandCallbackData;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/rest/json/request/InteractionApplicationCommandCallbackData$Companion {
@@ -4777,7 +4726,6 @@ public synthetic class dev/kord/rest/json/request/InteractionResponseCreateReque
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/rest/json/request/InteractionResponseCreateRequest;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/rest/json/request/InteractionResponseCreateRequest$Companion {
@@ -4816,7 +4764,6 @@ public synthetic class dev/kord/rest/json/request/InteractionResponseModifyReque
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/rest/json/request/InteractionResponseModifyRequest;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/rest/json/request/InteractionResponseModifyRequest$Companion {
@@ -4857,7 +4804,6 @@ public synthetic class dev/kord/rest/json/request/InviteCreateRequest$$serialize
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/rest/json/request/InviteCreateRequest;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/rest/json/request/InviteCreateRequest$Companion {
@@ -4936,7 +4882,6 @@ public synthetic class dev/kord/rest/json/request/MessageCreateRequest$$serializ
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/rest/json/request/MessageCreateRequest;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/rest/json/request/MessageCreateRequest$Companion {
@@ -4975,7 +4920,6 @@ public synthetic class dev/kord/rest/json/request/MessageEditPatchRequest$$seria
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/rest/json/request/MessageEditPatchRequest;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/rest/json/request/MessageEditPatchRequest$Companion {
@@ -5004,7 +4948,6 @@ public synthetic class dev/kord/rest/json/request/ModalResponseCreateRequest$$se
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/rest/json/request/ModalResponseCreateRequest;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/rest/json/request/ModalResponseCreateRequest$Companion {
@@ -5190,7 +5133,6 @@ public synthetic class dev/kord/rest/json/request/OnboardingPromptOptionRequest$
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/rest/json/request/OnboardingPromptOptionRequest;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/rest/json/request/OnboardingPromptOptionRequest$Companion {
@@ -5229,7 +5171,6 @@ public synthetic class dev/kord/rest/json/request/OnboardingPromptRequest$$seria
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/rest/json/request/OnboardingPromptRequest;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/rest/json/request/OnboardingPromptRequest$Companion {
@@ -5276,7 +5217,6 @@ public synthetic class dev/kord/rest/json/request/ScheduledEventModifyRequest$$s
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/rest/json/request/ScheduledEventModifyRequest;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/rest/json/request/ScheduledEventModifyRequest$Companion {
@@ -5329,7 +5269,6 @@ public synthetic class dev/kord/rest/json/request/StageInstanceCreateRequest$$se
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/rest/json/request/StageInstanceCreateRequest;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/rest/json/request/StageInstanceCreateRequest$Companion {
@@ -5360,7 +5299,6 @@ public synthetic class dev/kord/rest/json/request/StageInstanceModifyRequest$$se
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/rest/json/request/StageInstanceModifyRequest;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/rest/json/request/StageInstanceModifyRequest$Companion {
@@ -5400,7 +5338,6 @@ public synthetic class dev/kord/rest/json/request/StartThreadRequest$$serializer
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/rest/json/request/StartThreadRequest;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/rest/json/request/StartThreadRequest$Companion {
@@ -5431,7 +5368,6 @@ public synthetic class dev/kord/rest/json/request/TestEntitlementCreateRequest$$
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/rest/json/request/TestEntitlementCreateRequest;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/rest/json/request/TestEntitlementCreateRequest$Companion {
@@ -5460,7 +5396,6 @@ public synthetic class dev/kord/rest/json/request/UserAddDMRequest$$serializer :
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/rest/json/request/UserAddDMRequest;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/rest/json/request/UserAddDMRequest$Companion {
@@ -5490,7 +5425,6 @@ public synthetic class dev/kord/rest/json/request/VoiceStateModifyRequest$$seria
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/rest/json/request/VoiceStateModifyRequest;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/rest/json/request/VoiceStateModifyRequest$Companion {
@@ -5520,7 +5454,6 @@ public synthetic class dev/kord/rest/json/request/WebhookCreateRequest$$serializ
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/rest/json/request/WebhookCreateRequest;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/rest/json/request/WebhookCreateRequest$Companion {
@@ -5559,7 +5492,6 @@ public synthetic class dev/kord/rest/json/request/WebhookEditMessageRequest$$ser
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/rest/json/request/WebhookEditMessageRequest;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/rest/json/request/WebhookEditMessageRequest$Companion {
@@ -5608,7 +5540,6 @@ public synthetic class dev/kord/rest/json/request/WebhookExecuteRequest$$seriali
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/rest/json/request/WebhookExecuteRequest;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/rest/json/request/WebhookExecuteRequest$Companion {
@@ -5641,7 +5572,6 @@ public synthetic class dev/kord/rest/json/request/WebhookModifyRequest$$serializ
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/rest/json/request/WebhookModifyRequest;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/rest/json/request/WebhookModifyRequest$Companion {
@@ -5670,7 +5600,6 @@ public synthetic class dev/kord/rest/json/response/BanResponse$$serializer : kot
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/rest/json/response/BanResponse;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/rest/json/response/BanResponse$Companion {
@@ -5701,7 +5630,6 @@ public synthetic class dev/kord/rest/json/response/BotGatewayResponse$$serialize
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/rest/json/response/BotGatewayResponse;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/rest/json/response/BotGatewayResponse$Companion {
@@ -5744,7 +5672,6 @@ public synthetic class dev/kord/rest/json/response/Connection$$serializer : kotl
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/rest/json/response/Connection;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/rest/json/response/Connection$Companion {
@@ -5771,7 +5698,6 @@ public synthetic class dev/kord/rest/json/response/CurrentUserNicknameModifyResp
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/rest/json/response/CurrentUserNicknameModifyResponse;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/rest/json/response/CurrentUserNicknameModifyResponse$Companion {
@@ -5804,7 +5730,6 @@ public synthetic class dev/kord/rest/json/response/DiscordErrorResponse$$seriali
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/rest/json/response/DiscordErrorResponse;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/rest/json/response/DiscordErrorResponse$Companion {
@@ -5833,7 +5758,6 @@ public synthetic class dev/kord/rest/json/response/FollowedChannelResponse$$seri
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/rest/json/response/FollowedChannelResponse;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/rest/json/response/FollowedChannelResponse$Companion {
@@ -5860,7 +5784,6 @@ public synthetic class dev/kord/rest/json/response/GatewayResponse$$serializer :
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/rest/json/response/GatewayResponse;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/rest/json/response/GatewayResponse$Companion {
@@ -5887,7 +5810,6 @@ public synthetic class dev/kord/rest/json/response/GetPruneResponse$$serializer 
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/rest/json/response/GetPruneResponse;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/rest/json/response/GetPruneResponse$Companion {
@@ -5914,7 +5836,6 @@ public synthetic class dev/kord/rest/json/response/GuildMFALevelModifyResponse$$
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/rest/json/response/GuildMFALevelModifyResponse;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/rest/json/response/GuildMFALevelModifyResponse$Companion {
@@ -5943,7 +5864,6 @@ public synthetic class dev/kord/rest/json/response/ListThreadsResponse$$serializ
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/rest/json/response/ListThreadsResponse;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/rest/json/response/ListThreadsResponse$Companion {
@@ -5970,7 +5890,6 @@ public synthetic class dev/kord/rest/json/response/NitroStickerPacksResponse$$se
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/rest/json/response/NitroStickerPacksResponse;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/rest/json/response/NitroStickerPacksResponse$Companion {
@@ -5999,7 +5918,6 @@ public synthetic class dev/kord/rest/json/response/PartialChannelResponse$$seria
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/rest/json/response/PartialChannelResponse;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/rest/json/response/PartialChannelResponse$Companion {
@@ -6026,7 +5944,6 @@ public synthetic class dev/kord/rest/json/response/PruneResponse$$serializer : k
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/rest/json/response/PruneResponse;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/rest/json/response/PruneResponse$Companion {
@@ -6059,7 +5976,6 @@ public synthetic class dev/kord/rest/json/response/SessionStartLimitResponse$$se
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/rest/json/response/SessionStartLimitResponse;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/rest/json/response/SessionStartLimitResponse$Companion {

@@ -1,6 +1,5 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
-@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
-                "SpellCheckingInspection", "GrazieInspection"))
+@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
@@ -14,8 +13,7 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 /**
- * See [ApplicationCommandPermissionType]s in the
- * [Discord Developer Documentation](https://discord.com/developers/docs/interactions/application-commands#application-command-permissions-object-application-command-permission-type).
+ * See [ApplicationCommandPermissionType]s in the [Discord Developer Documentation](https://discord.com/developers/docs/interactions/application-commands#application-command-permissions-object-application-command-permission-type).
  */
 @Serializable(with = ApplicationCommandPermissionType.Serializer::class)
 public sealed class ApplicationCommandPermissionType(
@@ -24,20 +22,16 @@ public sealed class ApplicationCommandPermissionType(
      */
     public val `value`: Int,
 ) {
-    final override fun equals(other: Any?): Boolean = this === other ||
-            (other is ApplicationCommandPermissionType && this.value == other.value)
+    final override fun equals(other: Any?): Boolean = this === other || (other is ApplicationCommandPermissionType && this.value == other.value)
 
     final override fun hashCode(): Int = value.hashCode()
 
-    final override fun toString(): String =
-            if (this is Unknown) "ApplicationCommandPermissionType.Unknown(value=$value)"
-            else "ApplicationCommandPermissionType.${this::class.simpleName}"
+    final override fun toString(): String = if (this is Unknown) "ApplicationCommandPermissionType.Unknown(value=$value)" else "ApplicationCommandPermissionType.${this::class.simpleName}"
 
     /**
      * An unknown [ApplicationCommandPermissionType].
      *
-     * This is used as a fallback for [ApplicationCommandPermissionType]s that haven't been added to
-     * Kord yet.
+     * This is used as a fallback for [ApplicationCommandPermissionType]s that haven't been added to Kord yet.
      */
     public class Unknown internal constructor(
         `value`: Int,
@@ -51,15 +45,13 @@ public sealed class ApplicationCommandPermissionType(
 
     internal object Serializer : KSerializer<ApplicationCommandPermissionType> {
         override val descriptor: SerialDescriptor =
-                PrimitiveSerialDescriptor("dev.kord.common.entity.ApplicationCommandPermissionType",
-                PrimitiveKind.INT)
+                PrimitiveSerialDescriptor("dev.kord.common.entity.ApplicationCommandPermissionType", PrimitiveKind.INT)
 
         override fun serialize(encoder: Encoder, `value`: ApplicationCommandPermissionType) {
             encoder.encodeInt(value.value)
         }
 
-        override fun deserialize(decoder: Decoder): ApplicationCommandPermissionType =
-                from(decoder.decodeInt())
+        override fun deserialize(decoder: Decoder): ApplicationCommandPermissionType = from(decoder.decodeInt())
     }
 
     public companion object {
@@ -75,8 +67,7 @@ public sealed class ApplicationCommandPermissionType(
         }
 
         /**
-         * Returns an instance of [ApplicationCommandPermissionType] with
-         * [ApplicationCommandPermissionType.value] equal to the specified [value].
+         * Returns an instance of [ApplicationCommandPermissionType] with [ApplicationCommandPermissionType.value] equal to the specified [value].
          */
         public fun from(`value`: Int): ApplicationCommandPermissionType = when (value) {
             1 -> Role

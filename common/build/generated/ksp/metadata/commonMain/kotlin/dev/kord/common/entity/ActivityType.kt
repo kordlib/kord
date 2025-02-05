@@ -1,6 +1,5 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
-@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
-                "SpellCheckingInspection", "GrazieInspection"))
+@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
@@ -14,8 +13,7 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 /**
- * See [ActivityType]s in the
- * [Discord Developer Documentation](https://discord.com/developers/docs/topics/gateway-events#activity-object-activity-types).
+ * See [ActivityType]s in the [Discord Developer Documentation](https://discord.com/developers/docs/topics/gateway-events#activity-object-activity-types).
  */
 @Serializable(with = ActivityType.Serializer::class)
 public sealed class ActivityType(
@@ -24,13 +22,11 @@ public sealed class ActivityType(
      */
     public val code: Int,
 ) {
-    final override fun equals(other: Any?): Boolean = this === other ||
-            (other is ActivityType && this.code == other.code)
+    final override fun equals(other: Any?): Boolean = this === other || (other is ActivityType && this.code == other.code)
 
     final override fun hashCode(): Int = code.hashCode()
 
-    final override fun toString(): String = if (this is Unknown) "ActivityType.Unknown(code=$code)"
-            else "ActivityType.${this::class.simpleName}"
+    final override fun toString(): String = if (this is Unknown) "ActivityType.Unknown(code=$code)" else "ActivityType.${this::class.simpleName}"
 
     /**
      * An unknown [ActivityType].
@@ -80,8 +76,7 @@ public sealed class ActivityType(
         }
 
         /**
-         * Returns an instance of [ActivityType] with [ActivityType.code] equal to the specified
-         * [code].
+         * Returns an instance of [ActivityType] with [ActivityType.code] equal to the specified [code].
          */
         public fun from(code: Int): ActivityType = when (code) {
             0 -> Game

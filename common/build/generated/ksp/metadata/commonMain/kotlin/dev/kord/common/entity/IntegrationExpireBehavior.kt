@@ -1,6 +1,5 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
-@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
-                "SpellCheckingInspection", "GrazieInspection"))
+@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
@@ -14,8 +13,7 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 /**
- * See [IntegrationExpireBehavior]s in the
- * [Discord Developer Documentation](https://discord.com/developers/docs/resources/guild#integration-object-integration-expire-behaviors).
+ * See [IntegrationExpireBehavior]s in the [Discord Developer Documentation](https://discord.com/developers/docs/resources/guild#integration-object-integration-expire-behaviors).
  */
 @Serializable(with = IntegrationExpireBehavior.Serializer::class)
 public sealed class IntegrationExpireBehavior(
@@ -24,20 +22,16 @@ public sealed class IntegrationExpireBehavior(
      */
     public val `value`: Int,
 ) {
-    final override fun equals(other: Any?): Boolean = this === other ||
-            (other is IntegrationExpireBehavior && this.value == other.value)
+    final override fun equals(other: Any?): Boolean = this === other || (other is IntegrationExpireBehavior && this.value == other.value)
 
     final override fun hashCode(): Int = value.hashCode()
 
-    final override fun toString(): String =
-            if (this is Unknown) "IntegrationExpireBehavior.Unknown(value=$value)"
-            else "IntegrationExpireBehavior.${this::class.simpleName}"
+    final override fun toString(): String = if (this is Unknown) "IntegrationExpireBehavior.Unknown(value=$value)" else "IntegrationExpireBehavior.${this::class.simpleName}"
 
     /**
      * An unknown [IntegrationExpireBehavior].
      *
-     * This is used as a fallback for [IntegrationExpireBehavior]s that haven't been added to Kord
-     * yet.
+     * This is used as a fallback for [IntegrationExpireBehavior]s that haven't been added to Kord yet.
      */
     public class Unknown internal constructor(
         `value`: Int,
@@ -49,15 +43,13 @@ public sealed class IntegrationExpireBehavior(
 
     internal object Serializer : KSerializer<IntegrationExpireBehavior> {
         override val descriptor: SerialDescriptor =
-                PrimitiveSerialDescriptor("dev.kord.common.entity.IntegrationExpireBehavior",
-                PrimitiveKind.INT)
+                PrimitiveSerialDescriptor("dev.kord.common.entity.IntegrationExpireBehavior", PrimitiveKind.INT)
 
         override fun serialize(encoder: Encoder, `value`: IntegrationExpireBehavior) {
             encoder.encodeInt(value.value)
         }
 
-        override fun deserialize(decoder: Decoder): IntegrationExpireBehavior =
-                from(decoder.decodeInt())
+        override fun deserialize(decoder: Decoder): IntegrationExpireBehavior = from(decoder.decodeInt())
     }
 
     public companion object {
@@ -72,8 +64,7 @@ public sealed class IntegrationExpireBehavior(
         }
 
         /**
-         * Returns an instance of [IntegrationExpireBehavior] with [IntegrationExpireBehavior.value]
-         * equal to the specified [value].
+         * Returns an instance of [IntegrationExpireBehavior] with [IntegrationExpireBehavior.value] equal to the specified [value].
          */
         public fun from(`value`: Int): IntegrationExpireBehavior = when (value) {
             0 -> RemoveRole

@@ -1,6 +1,5 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
-@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
-                "SpellCheckingInspection", "GrazieInspection"))
+@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
@@ -18,8 +17,7 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 /**
- * See [RoleFlag]s in the
- * [Discord Developer Documentation](https://discord.com/developers/docs/topics/permissions#role-object-role-flags).
+ * See [RoleFlag]s in the [Discord Developer Documentation](https://discord.com/developers/docs/topics/permissions#role-object-role-flags).
  */
 public sealed class RoleFlag(
     /**
@@ -47,13 +45,11 @@ public sealed class RoleFlag(
      */
     public operator fun plus(flags: RoleFlags): RoleFlags = RoleFlags(this.value or flags.value)
 
-    final override fun equals(other: Any?): Boolean = this === other ||
-            (other is RoleFlag && this.shift == other.shift)
+    final override fun equals(other: Any?): Boolean = this === other || (other is RoleFlag && this.shift == other.shift)
 
     final override fun hashCode(): Int = shift.hashCode()
 
-    final override fun toString(): String = if (this is Unknown) "RoleFlag.Unknown(shift=$shift)"
-            else "RoleFlag.${this::class.simpleName}"
+    final override fun toString(): String = if (this is Unknown) "RoleFlag.Unknown(shift=$shift)" else "RoleFlag.${this::class.simpleName}"
 
     /**
      * An unknown [RoleFlag].
@@ -133,8 +129,7 @@ public sealed class RoleFlag(
  *
  * ## Checking for [RoleFlag]s
  *
- * You can use the [contains] operator to check whether an instance of [RoleFlags] contains specific
- * [RoleFlag]s:
+ * You can use the [contains] operator to check whether an instance of [RoleFlags] contains specific [RoleFlag]s:
  * ```kotlin
  * val hasRoleFlag = RoleFlag.InPrompt in roleFlags
  * val hasRoleFlags = RoleFlags(RoleFlag.InPrompt, RoleFlag.fromShift(22)) in roleFlags
@@ -142,8 +137,7 @@ public sealed class RoleFlag(
  *
  * ## Unknown [RoleFlag]s
  *
- * Whenever [RoleFlag]s haven't been added to Kord yet, they will be deserialized as instances of
- * [RoleFlag.Unknown].
+ * Whenever [RoleFlag]s haven't been added to Kord yet, they will be deserialized as instances of [RoleFlag.Unknown].
  *
  * You can also use [RoleFlag.fromShift] to check for [unknown][RoleFlag.Unknown] [RoleFlag]s.
  * ```kotlin
@@ -182,8 +176,7 @@ public class RoleFlags internal constructor(
     /**
      * Checks if this instance of [RoleFlags] has all bits set that are set in [flags].
      */
-    public operator fun contains(flags: RoleFlags): Boolean =
-            this.value and flags.value == flags.value
+    public operator fun contains(flags: RoleFlags): Boolean = this.value and flags.value == flags.value
 
     /**
      * Returns an instance of [RoleFlags] that has all bits set that are set in `this` and [flag].
@@ -196,18 +189,14 @@ public class RoleFlags internal constructor(
     public operator fun plus(flags: RoleFlags): RoleFlags = RoleFlags(this.value or flags.value)
 
     /**
-     * Returns an instance of [RoleFlags] that has all bits set that are set in `this` except the
-     * bits that are set in [flag].
+     * Returns an instance of [RoleFlags] that has all bits set that are set in `this` except the bits that are set in [flag].
      */
-    public operator fun minus(flag: RoleFlag): RoleFlags =
-            RoleFlags(this.value and flag.value.inv())
+    public operator fun minus(flag: RoleFlag): RoleFlags = RoleFlags(this.value and flag.value.inv())
 
     /**
-     * Returns an instance of [RoleFlags] that has all bits set that are set in `this` except the
-     * bits that are set in [flags].
+     * Returns an instance of [RoleFlags] that has all bits set that are set in `this` except the bits that are set in [flags].
      */
-    public operator fun minus(flags: RoleFlags): RoleFlags =
-            RoleFlags(this.value and flags.value.inv())
+    public operator fun minus(flags: RoleFlags): RoleFlags = RoleFlags(this.value and flags.value.inv())
 
     /**
      * Returns a copy of this instance of [RoleFlags] modified with [builder].
@@ -217,8 +206,7 @@ public class RoleFlags internal constructor(
         return Builder(value).apply(builder).build()
     }
 
-    override fun equals(other: Any?): Boolean = this === other ||
-            (other is RoleFlags && this.value == other.value)
+    override fun equals(other: Any?): Boolean = this === other || (other is RoleFlags && this.value == other.value)
 
     override fun hashCode(): Int = value.hashCode()
 
@@ -256,8 +244,7 @@ public class RoleFlags internal constructor(
         }
 
         /**
-         * Returns an instance of [RoleFlags] that has all bits set that are currently set in this
-         * [Builder].
+         * Returns an instance of [RoleFlags] that has all bits set that are currently set in this [Builder].
          */
         public fun build(): RoleFlags = RoleFlags(value)
     }
@@ -272,8 +259,7 @@ public class RoleFlags internal constructor(
             encoder.encodeSerializableValue(delegate, value.value)
         }
 
-        override fun deserialize(decoder: Decoder): RoleFlags =
-                RoleFlags(decoder.decodeSerializableValue(delegate))
+        override fun deserialize(decoder: Decoder): RoleFlags = RoleFlags(decoder.decodeSerializableValue(delegate))
     }
 }
 
