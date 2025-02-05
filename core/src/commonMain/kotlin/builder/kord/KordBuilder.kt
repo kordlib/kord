@@ -193,7 +193,7 @@ public abstract class BaseKordBuilder internal constructor(public val token: Str
                     append('.')
                 }
 
-                appendLine(responseBody)
+                appendLine("Discord response: $responseBody (${response.status})")
             }
 
             throw KordInitializationException(message)
