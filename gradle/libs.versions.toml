@@ -1,37 +1,37 @@
 [versions]
 
 # api dependencies
-kotlin = "2.0.21" # https://github.com/JetBrains/kotlin
-ktor = "3.0.0" # https://github.com/ktorio/ktor
-kotlinx-coroutines = "1.9.0" # https://github.com/Kotlin/kotlinx.coroutines
-kotlinx-serialization = "1.7.3" # https://github.com/Kotlin/kotlinx.serialization
+kotlin = "2.1.10" # https://github.com/JetBrains/kotlin
+ktor = "3.0.3" # https://github.com/ktorio/ktor
+kotlinx-coroutines = "1.10.1" # https://github.com/Kotlin/kotlinx.coroutines
+kotlinx-serialization = "1.8.0" # https://github.com/Kotlin/kotlinx.serialization
 kotlinx-datetime = "0.6.1" # https://github.com/Kotlin/kotlinx-datetime
-kord-cache = "0.5.4" # https://github.com/kordlib/cache
+kord-cache = "0.5.6" # https://github.com/kordlib/cache
 
 # implementation dependencies
-kotlin-logging = "7.0.0" # https://github.com/oshai/kotlin-logging
+kotlin-logging = "7.0.3" # https://github.com/oshai/kotlin-logging
 slf4j = "2.0.16" # https://www.slf4j.org
-kotlin-node = "22.5.4-pre.818" # https://github.com/JetBrains/kotlin-wrappers
+kotlin-node = "2025.2.1-22.10.5" # https://github.com/JetBrains/kotlin-wrappers
 bignum = "0.3.10" # https://github.com/ionspin/kotlin-multiplatform-bignum
 stately = "2.1.0" # https://github.com/touchlab/Stately
 fastZlib = "2.0.1" # https://github.com/timotejroiko/fast-zlib
 
 # code generation
-ksp = "2.0.21-1.0.25" # https://github.com/google/ksp
-kotlinpoet = "1.18.1" # https://github.com/square/kotlinpoet
+ksp = "2.1.10-1.0.29" # https://github.com/google/ksp
+kotlinpoet = "2.0.0" # https://github.com/square/kotlinpoet
 
 # tests
-junit-jupiter = "5.11.2" # https://github.com/junit-team/junit5
-junit-platform = "1.11.2"
-mockk = "1.13.13" # https://github.com/mockk/mockk
+junit-jupiter = "5.11.4" # https://github.com/junit-team/junit5
+junit-platform = "1.11.4"
+mockk = "1.13.16" # https://github.com/mockk/mockk
 kbson = "0.4.0" # https://github.com/mongodb/kbson
 
 # plugins
-dokka = "2.0.0-Beta" # https://github.com/Kotlin/dokka
-kotlinx-atomicfu = "0.25.0" # https://github.com/Kotlin/kotlinx-atomicfu
-binary-compatibility-validator = "0.16.3" # https://github.com/Kotlin/binary-compatibility-validator
-buildconfig = "5.5.0" # https://github.com/gmazzo/gradle-buildconfig-plugin
+dokka = "2.0.0" # https://github.com/Kotlin/dokka
+kotlinx-atomicfu = "0.27.0" # https://github.com/Kotlin/kotlinx-atomicfubbn
 
+binary-compatibility-validator = "0.17.0" # https://github.com/Kotlin/binary-compatibility-validator
+buildconfig = "5.5.1" # https://github.com/gmazzo/gradle-buildconfig-plugin
 
 [libraries]
 

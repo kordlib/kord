@@ -1,6 +1,5 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
-@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
-                "SpellCheckingInspection", "GrazieInspection"))
+@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
@@ -14,8 +13,7 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 /**
- * See [MessageActivityType]s in the
- * [Discord Developer Documentation](https://discord.com/developers/docs/resources/channel#message-object-message-activity-types).
+ * See [MessageActivityType]s in the [Discord Developer Documentation](https://discord.com/developers/docs/resources/channel#message-object-message-activity-types).
  */
 @Serializable(with = MessageActivityType.Serializer::class)
 public sealed class MessageActivityType(
@@ -24,14 +22,11 @@ public sealed class MessageActivityType(
      */
     public val `value`: Int,
 ) {
-    final override fun equals(other: Any?): Boolean = this === other ||
-            (other is MessageActivityType && this.value == other.value)
+    final override fun equals(other: Any?): Boolean = this === other || (other is MessageActivityType && this.value == other.value)
 
     final override fun hashCode(): Int = value.hashCode()
 
-    final override fun toString(): String =
-            if (this is Unknown) "MessageActivityType.Unknown(value=$value)"
-            else "MessageActivityType.${this::class.simpleName}"
+    final override fun toString(): String = if (this is Unknown) "MessageActivityType.Unknown(value=$value)" else "MessageActivityType.${this::class.simpleName}"
 
     /**
      * An unknown [MessageActivityType].
@@ -52,8 +47,7 @@ public sealed class MessageActivityType(
 
     internal object Serializer : KSerializer<MessageActivityType> {
         override val descriptor: SerialDescriptor =
-                PrimitiveSerialDescriptor("dev.kord.common.entity.MessageActivityType",
-                PrimitiveKind.INT)
+                PrimitiveSerialDescriptor("dev.kord.common.entity.MessageActivityType", PrimitiveKind.INT)
 
         override fun serialize(encoder: Encoder, `value`: MessageActivityType) {
             encoder.encodeInt(value.value)
@@ -76,8 +70,7 @@ public sealed class MessageActivityType(
         }
 
         /**
-         * Returns an instance of [MessageActivityType] with [MessageActivityType.value] equal to
-         * the specified [value].
+         * Returns an instance of [MessageActivityType] with [MessageActivityType.value] equal to the specified [value].
          */
         public fun from(`value`: Int): MessageActivityType = when (value) {
             1 -> Join

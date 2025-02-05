@@ -1,6 +1,5 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
-@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
-                "SpellCheckingInspection", "GrazieInspection"))
+@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
@@ -16,8 +15,7 @@ import kotlinx.serialization.encoding.Encoder
 /**
  * Style of a [button][dev.kord.common.entity.ComponentType.Button].
  *
- * See [ButtonStyle]s in the
- * [Discord Developer Documentation](https://discord.com/developers/docs/interactions/message-components#button-object-button-styles).
+ * See [ButtonStyle]s in the [Discord Developer Documentation](https://discord.com/developers/docs/interactions/message-components#button-object-button-styles).
  */
 @Serializable(with = ButtonStyle.Serializer::class)
 public sealed class ButtonStyle(
@@ -26,13 +24,11 @@ public sealed class ButtonStyle(
      */
     public val `value`: Int,
 ) {
-    final override fun equals(other: Any?): Boolean = this === other ||
-            (other is ButtonStyle && this.value == other.value)
+    final override fun equals(other: Any?): Boolean = this === other || (other is ButtonStyle && this.value == other.value)
 
     final override fun hashCode(): Int = value.hashCode()
 
-    final override fun toString(): String = if (this is Unknown) "ButtonStyle.Unknown(value=$value)"
-            else "ButtonStyle.${this::class.simpleName}"
+    final override fun toString(): String = if (this is Unknown) "ButtonStyle.Unknown(value=$value)" else "ButtonStyle.${this::class.simpleName}"
 
     /**
      * An unknown [ButtonStyle].
@@ -100,8 +96,7 @@ public sealed class ButtonStyle(
         }
 
         /**
-         * Returns an instance of [ButtonStyle] with [ButtonStyle.value] equal to the specified
-         * [value].
+         * Returns an instance of [ButtonStyle] with [ButtonStyle.value] equal to the specified [value].
          */
         public fun from(`value`: Int): ButtonStyle = when (value) {
             1 -> Primary

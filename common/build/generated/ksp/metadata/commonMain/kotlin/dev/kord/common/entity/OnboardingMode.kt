@@ -1,6 +1,5 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
-@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
-                "SpellCheckingInspection", "GrazieInspection"))
+@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
@@ -16,8 +15,7 @@ import kotlinx.serialization.encoding.Encoder
 /**
  * Defines the criteria used to satisfy Onboarding constraints that are required for enabling.
  *
- * See [OnboardingMode]s in the
- * [Discord Developer Documentation](https://discord.com/developers/docs/resources/guild#guild-onboarding-object-onboarding-mode).
+ * See [OnboardingMode]s in the [Discord Developer Documentation](https://discord.com/developers/docs/resources/guild#guild-onboarding-object-onboarding-mode).
  */
 @Serializable(with = OnboardingMode.Serializer::class)
 public sealed class OnboardingMode(
@@ -26,14 +24,11 @@ public sealed class OnboardingMode(
      */
     public val `value`: Int,
 ) {
-    final override fun equals(other: Any?): Boolean = this === other ||
-            (other is OnboardingMode && this.value == other.value)
+    final override fun equals(other: Any?): Boolean = this === other || (other is OnboardingMode && this.value == other.value)
 
     final override fun hashCode(): Int = value.hashCode()
 
-    final override fun toString(): String =
-            if (this is Unknown) "OnboardingMode.Unknown(value=$value)"
-            else "OnboardingMode.${this::class.simpleName}"
+    final override fun toString(): String = if (this is Unknown) "OnboardingMode.Unknown(value=$value)" else "OnboardingMode.${this::class.simpleName}"
 
     /**
      * An unknown [OnboardingMode].
@@ -56,8 +51,7 @@ public sealed class OnboardingMode(
 
     internal object Serializer : KSerializer<OnboardingMode> {
         override val descriptor: SerialDescriptor =
-                PrimitiveSerialDescriptor("dev.kord.common.entity.OnboardingMode",
-                PrimitiveKind.INT)
+                PrimitiveSerialDescriptor("dev.kord.common.entity.OnboardingMode", PrimitiveKind.INT)
 
         override fun serialize(encoder: Encoder, `value`: OnboardingMode) {
             encoder.encodeInt(value.value)
@@ -78,8 +72,7 @@ public sealed class OnboardingMode(
         }
 
         /**
-         * Returns an instance of [OnboardingMode] with [OnboardingMode.value] equal to the
-         * specified [value].
+         * Returns an instance of [OnboardingMode] with [OnboardingMode.value] equal to the specified [value].
          */
         public fun from(`value`: Int): OnboardingMode = when (value) {
             0 -> Default

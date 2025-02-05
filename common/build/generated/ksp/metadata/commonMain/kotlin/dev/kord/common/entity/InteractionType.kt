@@ -1,6 +1,5 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
-@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
-                "SpellCheckingInspection", "GrazieInspection"))
+@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
@@ -14,8 +13,7 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 /**
- * See [InteractionType]s in the
- * [Discord Developer Documentation](https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-interaction-type).
+ * See [InteractionType]s in the [Discord Developer Documentation](https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-interaction-type).
  */
 @Serializable(with = InteractionType.Serializer::class)
 public sealed class InteractionType(
@@ -24,14 +22,11 @@ public sealed class InteractionType(
      */
     public val type: Int,
 ) {
-    final override fun equals(other: Any?): Boolean = this === other ||
-            (other is InteractionType && this.type == other.type)
+    final override fun equals(other: Any?): Boolean = this === other || (other is InteractionType && this.type == other.type)
 
     final override fun hashCode(): Int = type.hashCode()
 
-    final override fun toString(): String =
-            if (this is Unknown) "InteractionType.Unknown(type=$type)"
-            else "InteractionType.${this::class.simpleName}"
+    final override fun toString(): String = if (this is Unknown) "InteractionType.Unknown(type=$type)" else "InteractionType.${this::class.simpleName}"
 
     /**
      * An unknown [InteractionType].
@@ -54,8 +49,7 @@ public sealed class InteractionType(
 
     internal object Serializer : KSerializer<InteractionType> {
         override val descriptor: SerialDescriptor =
-                PrimitiveSerialDescriptor("dev.kord.common.entity.InteractionType",
-                PrimitiveKind.INT)
+                PrimitiveSerialDescriptor("dev.kord.common.entity.InteractionType", PrimitiveKind.INT)
 
         override fun serialize(encoder: Encoder, `value`: InteractionType) {
             encoder.encodeInt(value.type)
@@ -79,8 +73,7 @@ public sealed class InteractionType(
         }
 
         /**
-         * Returns an instance of [InteractionType] with [InteractionType.type] equal to the
-         * specified [type].
+         * Returns an instance of [InteractionType] with [InteractionType.type] equal to the specified [type].
          */
         public fun from(type: Int): InteractionType = when (type) {
             1 -> Ping
