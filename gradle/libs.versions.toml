@@ -2,7 +2,7 @@
 
 # api dependencies
 kotlin = "2.1.10" # https://github.com/JetBrains/kotlin
-ktor = "3.1.0-eap-1221" # https://github.com/ktorio/ktor
+ktor = "3.1.0" # https://github.com/ktorio/ktor
 kotlinx-coroutines = "1.10.1" # https://github.com/Kotlin/kotlinx.coroutines
 kotlinx-serialization = "1.8.0" # https://github.com/Kotlin/kotlinx.serialization
 kotlinx-datetime = "0.6.1" # https://github.com/Kotlin/kotlinx-datetime

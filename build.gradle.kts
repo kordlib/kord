@@ -4,8 +4,6 @@ plugins {
 
 allprojects {
     repositories {
-        // TODO: Remove once Ktor 3.1.0 releases
-        maven("https://maven.pkg.jetbrains.space/public/p/ktor/eap/")
         mavenCentral()
         maven("https://oss.sonatype.org/content/repositories/snapshots/")
     }
