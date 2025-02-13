@@ -1,6 +1,5 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
-@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
-                "SpellCheckingInspection", "GrazieInspection"))
+@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
@@ -16,8 +15,7 @@ import kotlinx.serialization.encoding.Encoder
 /**
  * Style of a [text input][dev.kord.common.entity.ComponentType.TextInput].
  *
- * See [TextInputStyle]s in the
- * [Discord Developer Documentation](https://discord.com/developers/docs/interactions/message-components#text-input-object-text-input-styles).
+ * See [TextInputStyle]s in the [Discord Developer Documentation](https://discord.com/developers/docs/interactions/message-components#text-input-object-text-input-styles).
  */
 @Serializable(with = TextInputStyle.Serializer::class)
 public sealed class TextInputStyle(
@@ -26,14 +24,11 @@ public sealed class TextInputStyle(
      */
     public val `value`: Int,
 ) {
-    final override fun equals(other: Any?): Boolean = this === other ||
-            (other is TextInputStyle && this.value == other.value)
+    final override fun equals(other: Any?): Boolean = this === other || (other is TextInputStyle && this.value == other.value)
 
     final override fun hashCode(): Int = value.hashCode()
 
-    final override fun toString(): String =
-            if (this is Unknown) "TextInputStyle.Unknown(value=$value)"
-            else "TextInputStyle.${this::class.simpleName}"
+    final override fun toString(): String = if (this is Unknown) "TextInputStyle.Unknown(value=$value)" else "TextInputStyle.${this::class.simpleName}"
 
     /**
      * An unknown [TextInputStyle].
@@ -56,8 +51,7 @@ public sealed class TextInputStyle(
 
     internal object Serializer : KSerializer<TextInputStyle> {
         override val descriptor: SerialDescriptor =
-                PrimitiveSerialDescriptor("dev.kord.common.entity.TextInputStyle",
-                PrimitiveKind.INT)
+                PrimitiveSerialDescriptor("dev.kord.common.entity.TextInputStyle", PrimitiveKind.INT)
 
         override fun serialize(encoder: Encoder, `value`: TextInputStyle) {
             encoder.encodeInt(value.value)
@@ -78,8 +72,7 @@ public sealed class TextInputStyle(
         }
 
         /**
-         * Returns an instance of [TextInputStyle] with [TextInputStyle.value] equal to the
-         * specified [value].
+         * Returns an instance of [TextInputStyle] with [TextInputStyle.value] equal to the specified [value].
          */
         public fun from(`value`: Int): TextInputStyle = when (value) {
             1 -> Short

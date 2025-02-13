@@ -3,6 +3,7 @@ package dev.kord.common.json
 import dev.kord.common.entity.DiscordRole
 import dev.kord.common.entity.Permission
 import dev.kord.common.entity.Permissions
+import dev.kord.test.IgnoreOnSimulatorPlatforms
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.put
@@ -10,6 +11,7 @@ import kotlin.js.JsName
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
+@IgnoreOnSimulatorPlatforms
 class PermissionsTest {
 
     @Test
