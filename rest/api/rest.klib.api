@@ -511,9 +511,13 @@ sealed interface dev.kord.rest.builder.channel/PermissionOverwritesBuilder { // 
     abstract fun addOverwrite(dev.kord.common.entity/Overwrite) // dev.kord.rest.builder.channel/PermissionOverwritesBuilder.addOverwrite|addOverwrite(dev.kord.common.entity.Overwrite){}[0]
 }
 
+sealed interface dev.kord.rest.builder.component/AccessoryComponentBuilder : dev.kord.rest.builder.component/ComponentBuilder // dev.kord.rest.builder.component/AccessoryComponentBuilder|null[0]
+
 sealed interface dev.kord.rest.builder.component/ComponentBuilder { // dev.kord.rest.builder.component/ComponentBuilder|null[0]
     abstract fun build(): dev.kord.common.entity/DiscordComponent // dev.kord.rest.builder.component/ComponentBuilder.build|build(){}[0]
 }
+
+sealed interface dev.kord.rest.builder.component/ContainerComponentBuilder : dev.kord.rest.builder.component/MessageComponentBuilder // dev.kord.rest.builder.component/ContainerComponentBuilder|null[0]
 
 sealed interface dev.kord.rest.builder.component/MessageComponentBuilder : dev.kord.rest.builder.component/ComponentBuilder // dev.kord.rest.builder.component/MessageComponentBuilder|null[0]
 
@@ -1668,7 +1672,7 @@ final class dev.kord.rest.builder.channel/VoiceChannelModifyBuilder : dev.kord.r
     final fun toRequest(): dev.kord.rest.json.request/ChannelModifyPatchRequest // dev.kord.rest.builder.channel/VoiceChannelModifyBuilder.toRequest|toRequest(){}[0]
 }
 
-final class dev.kord.rest.builder.component/ActionRowBuilder : dev.kord.rest.builder.component/MessageComponentBuilder { // dev.kord.rest.builder.component/ActionRowBuilder|null[0]
+final class dev.kord.rest.builder.component/ActionRowBuilder : dev.kord.rest.builder.component/ContainerComponentBuilder, dev.kord.rest.builder.component/MessageComponentBuilder { // dev.kord.rest.builder.component/ActionRowBuilder|null[0]
     constructor <init>() // dev.kord.rest.builder.component/ActionRowBuilder.<init>|<init>(){}[0]
 
     final val components // dev.kord.rest.builder.component/ActionRowBuilder.components|{}components[0]
@@ -1697,6 +1701,67 @@ final class dev.kord.rest.builder.component/ChannelSelectBuilder : dev.kord.rest
         final fun <set-channelTypes>(kotlin.collections/MutableList<dev.kord.common.entity/ChannelType>?) // dev.kord.rest.builder.component/ChannelSelectBuilder.channelTypes.<set-channelTypes>|<set-channelTypes>(kotlin.collections.MutableList<dev.kord.common.entity.ChannelType>?){}[0]
 }
 
+final class dev.kord.rest.builder.component/ContainerBuilder : dev.kord.rest.builder.component/MessageComponentBuilder { // dev.kord.rest.builder.component/ContainerBuilder|null[0]
+    constructor <init>() // dev.kord.rest.builder.component/ContainerBuilder.<init>|<init>(){}[0]
+
+    final val components // dev.kord.rest.builder.component/ContainerBuilder.components|{}components[0]
+        final fun <get-components>(): kotlin.collections/MutableList<dev.kord.rest.builder.component/ContainerComponentBuilder> // dev.kord.rest.builder.component/ContainerBuilder.components.<get-components>|<get-components>(){}[0]
+
+    final var accentColor // dev.kord.rest.builder.component/ContainerBuilder.accentColor|{}accentColor[0]
+        final fun <get-accentColor>(): dev.kord.common/Color? // dev.kord.rest.builder.component/ContainerBuilder.accentColor.<get-accentColor>|<get-accentColor>(){}[0]
+        final fun <set-accentColor>(dev.kord.common/Color?) // dev.kord.rest.builder.component/ContainerBuilder.accentColor.<set-accentColor>|<set-accentColor>(dev.kord.common.Color?){}[0]
+    final var spoiler // dev.kord.rest.builder.component/ContainerBuilder.spoiler|{}spoiler[0]
+        final fun <get-spoiler>(): kotlin/Boolean? // dev.kord.rest.builder.component/ContainerBuilder.spoiler.<get-spoiler>|<get-spoiler>(){}[0]
+        final fun <set-spoiler>(kotlin/Boolean?) // dev.kord.rest.builder.component/ContainerBuilder.spoiler.<set-spoiler>|<set-spoiler>(kotlin.Boolean?){}[0]
+
+    final fun actionRow(kotlin/Function1<dev.kord.rest.builder.component/ActionRowBuilder, kotlin/Unit>) // dev.kord.rest.builder.component/ContainerBuilder.actionRow|actionRow(kotlin.Function1<dev.kord.rest.builder.component.ActionRowBuilder,kotlin.Unit>){}[0]
+    final fun build(): dev.kord.common.entity/DiscordComponent // dev.kord.rest.builder.component/ContainerBuilder.build|build(){}[0]
+    final fun file(kotlin/Function1<dev.kord.rest.builder.component/FileBuilder, kotlin/Unit>) // dev.kord.rest.builder.component/ContainerBuilder.file|file(kotlin.Function1<dev.kord.rest.builder.component.FileBuilder,kotlin.Unit>){}[0]
+    final fun mediaGallery(kotlin/Function1<dev.kord.rest.builder.component/MediaGalleryBuilder, kotlin/Unit>) // dev.kord.rest.builder.component/ContainerBuilder.mediaGallery|mediaGallery(kotlin.Function1<dev.kord.rest.builder.component.MediaGalleryBuilder,kotlin.Unit>){}[0]
+    final fun section(kotlin/Function1<dev.kord.rest.builder.component/SectionBuilder, kotlin/Unit>) // dev.kord.rest.builder.component/ContainerBuilder.section|section(kotlin.Function1<dev.kord.rest.builder.component.SectionBuilder,kotlin.Unit>){}[0]
+    final fun separator(kotlin/Function1<dev.kord.rest.builder.component/SeparatorBuilder, kotlin/Unit>) // dev.kord.rest.builder.component/ContainerBuilder.separator|separator(kotlin.Function1<dev.kord.rest.builder.component.SeparatorBuilder,kotlin.Unit>){}[0]
+    final fun textDisplay(kotlin/Function1<dev.kord.rest.builder.component/TextDisplayBuilder, kotlin/Unit>) // dev.kord.rest.builder.component/ContainerBuilder.textDisplay|textDisplay(kotlin.Function1<dev.kord.rest.builder.component.TextDisplayBuilder,kotlin.Unit>){}[0]
+}
+
+final class dev.kord.rest.builder.component/FileBuilder : dev.kord.rest.builder.component/ContainerComponentBuilder { // dev.kord.rest.builder.component/FileBuilder|null[0]
+    constructor <init>() // dev.kord.rest.builder.component/FileBuilder.<init>|<init>(){}[0]
+
+    final var spoiler // dev.kord.rest.builder.component/FileBuilder.spoiler|{}spoiler[0]
+        final fun <get-spoiler>(): kotlin/Boolean? // dev.kord.rest.builder.component/FileBuilder.spoiler.<get-spoiler>|<get-spoiler>(){}[0]
+        final fun <set-spoiler>(kotlin/Boolean?) // dev.kord.rest.builder.component/FileBuilder.spoiler.<set-spoiler>|<set-spoiler>(kotlin.Boolean?){}[0]
+    final var url // dev.kord.rest.builder.component/FileBuilder.url|{}url[0]
+        final fun <get-url>(): kotlin/String? // dev.kord.rest.builder.component/FileBuilder.url.<get-url>|<get-url>(){}[0]
+        final fun <set-url>(kotlin/String?) // dev.kord.rest.builder.component/FileBuilder.url.<set-url>|<set-url>(kotlin.String?){}[0]
+
+    final fun build(): dev.kord.common.entity/DiscordComponent // dev.kord.rest.builder.component/FileBuilder.build|build(){}[0]
+}
+
+final class dev.kord.rest.builder.component/MediaGalleryBuilder : dev.kord.rest.builder.component/ContainerComponentBuilder { // dev.kord.rest.builder.component/MediaGalleryBuilder|null[0]
+    constructor <init>() // dev.kord.rest.builder.component/MediaGalleryBuilder.<init>|<init>(){}[0]
+
+    final val items // dev.kord.rest.builder.component/MediaGalleryBuilder.items|{}items[0]
+        final fun <get-items>(): kotlin.collections/MutableList<dev.kord.rest.builder.component/MediaGalleryItemBuilder> // dev.kord.rest.builder.component/MediaGalleryBuilder.items.<get-items>|<get-items>(){}[0]
+
+    final fun build(): dev.kord.common.entity/DiscordComponent // dev.kord.rest.builder.component/MediaGalleryBuilder.build|build(){}[0]
+    final fun item(kotlin/String, kotlin/Function1<dev.kord.rest.builder.component/MediaGalleryItemBuilder, kotlin/Unit>) // dev.kord.rest.builder.component/MediaGalleryBuilder.item|item(kotlin.String;kotlin.Function1<dev.kord.rest.builder.component.MediaGalleryItemBuilder,kotlin.Unit>){}[0]
+}
+
+final class dev.kord.rest.builder.component/MediaGalleryItemBuilder { // dev.kord.rest.builder.component/MediaGalleryItemBuilder|null[0]
+    constructor <init>(kotlin/String) // dev.kord.rest.builder.component/MediaGalleryItemBuilder.<init>|<init>(kotlin.String){}[0]
+
+    final var description // dev.kord.rest.builder.component/MediaGalleryItemBuilder.description|{}description[0]
+        final fun <get-description>(): kotlin/String? // dev.kord.rest.builder.component/MediaGalleryItemBuilder.description.<get-description>|<get-description>(){}[0]
+        final fun <set-description>(kotlin/String?) // dev.kord.rest.builder.component/MediaGalleryItemBuilder.description.<set-description>|<set-description>(kotlin.String?){}[0]
+    final var spoiler // dev.kord.rest.builder.component/MediaGalleryItemBuilder.spoiler|{}spoiler[0]
+        final fun <get-spoiler>(): kotlin/Boolean? // dev.kord.rest.builder.component/MediaGalleryItemBuilder.spoiler.<get-spoiler>|<get-spoiler>(){}[0]
+        final fun <set-spoiler>(kotlin/Boolean?) // dev.kord.rest.builder.component/MediaGalleryItemBuilder.spoiler.<set-spoiler>|<set-spoiler>(kotlin.Boolean?){}[0]
+    final var url // dev.kord.rest.builder.component/MediaGalleryItemBuilder.url|{}url[0]
+        final fun <get-url>(): kotlin/String // dev.kord.rest.builder.component/MediaGalleryItemBuilder.url.<get-url>|<get-url>(){}[0]
+        final fun <set-url>(kotlin/String) // dev.kord.rest.builder.component/MediaGalleryItemBuilder.url.<set-url>|<set-url>(kotlin.String){}[0]
+
+    final fun build(): dev.kord.common.entity/MediaGalleryItem // dev.kord.rest.builder.component/MediaGalleryItemBuilder.build|build(){}[0]
+}
+
 final class dev.kord.rest.builder.component/MentionableSelectBuilder : dev.kord.rest.builder.component/SelectMenuBuilder { // dev.kord.rest.builder.component/MentionableSelectBuilder|null[0]
     constructor <init>(kotlin/String) // dev.kord.rest.builder.component/MentionableSelectBuilder.<init>|<init>(kotlin.String){}[0]
 
@@ -1723,6 +1788,23 @@ final class dev.kord.rest.builder.component/RoleSelectBuilder : dev.kord.rest.bu
         final fun <get-defaultRoles>(): kotlin.collections/MutableList<dev.kord.common.entity/Snowflake> // dev.kord.rest.builder.component/RoleSelectBuilder.defaultRoles.<get-defaultRoles>|<get-defaultRoles>(){}[0]
 }
 
+final class dev.kord.rest.builder.component/SectionBuilder : dev.kord.rest.builder.component/ContainerComponentBuilder { // dev.kord.rest.builder.component/SectionBuilder|null[0]
+    constructor <init>() // dev.kord.rest.builder.component/SectionBuilder.<init>|<init>(){}[0]
+
+    final val components // dev.kord.rest.builder.component/SectionBuilder.components|{}components[0]
+        final fun <get-components>(): kotlin.collections/MutableList<dev.kord.rest.builder.component/TextDisplayBuilder> // dev.kord.rest.builder.component/SectionBuilder.components.<get-components>|<get-components>(){}[0]
+
+    final var accessory // dev.kord.rest.builder.component/SectionBuilder.accessory|{}accessory[0]
+        final fun <get-accessory>(): dev.kord.rest.builder.component/AccessoryComponentBuilder? // dev.kord.rest.builder.component/SectionBuilder.accessory.<get-accessory>|<get-accessory>(){}[0]
+        final fun <set-accessory>(dev.kord.rest.builder.component/AccessoryComponentBuilder?) // dev.kord.rest.builder.component/SectionBuilder.accessory.<set-accessory>|<set-accessory>(dev.kord.rest.builder.component.AccessoryComponentBuilder?){}[0]
+
+    final fun build(): dev.kord.common.entity/DiscordComponent // dev.kord.rest.builder.component/SectionBuilder.build|build(){}[0]
+    final inline fun interactionButtonAccessory(dev.kord.common.entity/ButtonStyle, kotlin/String, kotlin/Function1<dev.kord.rest.builder.component/ButtonBuilder, kotlin/Unit> = ...) // dev.kord.rest.builder.component/SectionBuilder.interactionButtonAccessory|interactionButtonAccessory(dev.kord.common.entity.ButtonStyle;kotlin.String;kotlin.Function1<dev.kord.rest.builder.component.ButtonBuilder,kotlin.Unit>){}[0]
+    final inline fun linkButtonAccessory(kotlin/String, kotlin/Function1<dev.kord.rest.builder.component/ButtonBuilder, kotlin/Unit> = ...) // dev.kord.rest.builder.component/SectionBuilder.linkButtonAccessory|linkButtonAccessory(kotlin.String;kotlin.Function1<dev.kord.rest.builder.component.ButtonBuilder,kotlin.Unit>){}[0]
+    final inline fun textDisplay(kotlin/Function1<dev.kord.rest.builder.component/TextDisplayBuilder, kotlin/Unit>) // dev.kord.rest.builder.component/SectionBuilder.textDisplay|textDisplay(kotlin.Function1<dev.kord.rest.builder.component.TextDisplayBuilder,kotlin.Unit>){}[0]
+    final inline fun thumbnailAccessory(kotlin/Function1<dev.kord.rest.builder.component/ThumbnailBuilder, kotlin/Unit>) // dev.kord.rest.builder.component/SectionBuilder.thumbnailAccessory|thumbnailAccessory(kotlin.Function1<dev.kord.rest.builder.component.ThumbnailBuilder,kotlin.Unit>){}[0]
+}
+
 final class dev.kord.rest.builder.component/SelectOptionBuilder { // dev.kord.rest.builder.component/SelectOptionBuilder|null[0]
     constructor <init>(kotlin/String, kotlin/String) // dev.kord.rest.builder.component/SelectOptionBuilder.<init>|<init>(kotlin.String;kotlin.String){}[0]
 
@@ -1745,12 +1827,32 @@ final class dev.kord.rest.builder.component/SelectOptionBuilder { // dev.kord.re
     final fun build(): dev.kord.common.entity/DiscordSelectOption // dev.kord.rest.builder.component/SelectOptionBuilder.build|build(){}[0]
 }
 
+final class dev.kord.rest.builder.component/SeparatorBuilder : dev.kord.rest.builder.component/ContainerComponentBuilder { // dev.kord.rest.builder.component/SeparatorBuilder|null[0]
+    constructor <init>() // dev.kord.rest.builder.component/SeparatorBuilder.<init>|<init>(){}[0]
+
+    final var spacing // dev.kord.rest.builder.component/SeparatorBuilder.spacing|{}spacing[0]
+        final fun <get-spacing>(): dev.kord.common.entity/SeparatorSpacingSize? // dev.kord.rest.builder.component/SeparatorBuilder.spacing.<get-spacing>|<get-spacing>(){}[0]
+        final fun <set-spacing>(dev.kord.common.entity/SeparatorSpacingSize?) // dev.kord.rest.builder.component/SeparatorBuilder.spacing.<set-spacing>|<set-spacing>(dev.kord.common.entity.SeparatorSpacingSize?){}[0]
+
+    final fun build(): dev.kord.common.entity/DiscordComponent // dev.kord.rest.builder.component/SeparatorBuilder.build|build(){}[0]
+}
+
 final class dev.kord.rest.builder.component/StringSelectBuilder : dev.kord.rest.builder.component/SelectMenuBuilder { // dev.kord.rest.builder.component/StringSelectBuilder|null[0]
     constructor <init>(kotlin/String) // dev.kord.rest.builder.component/StringSelectBuilder.<init>|<init>(kotlin.String){}[0]
 
     final var options // dev.kord.rest.builder.component/StringSelectBuilder.options|{}options[0]
         final fun <get-options>(): kotlin.collections/MutableList<dev.kord.rest.builder.component/SelectOptionBuilder> // dev.kord.rest.builder.component/StringSelectBuilder.options.<get-options>|<get-options>(){}[0]
         final fun <set-options>(kotlin.collections/MutableList<dev.kord.rest.builder.component/SelectOptionBuilder>) // dev.kord.rest.builder.component/StringSelectBuilder.options.<set-options>|<set-options>(kotlin.collections.MutableList<dev.kord.rest.builder.component.SelectOptionBuilder>){}[0]
+}
+
+final class dev.kord.rest.builder.component/TextDisplayBuilder : dev.kord.rest.builder.component/ContainerComponentBuilder { // dev.kord.rest.builder.component/TextDisplayBuilder|null[0]
+    constructor <init>() // dev.kord.rest.builder.component/TextDisplayBuilder.<init>|<init>(){}[0]
+
+    final var content // dev.kord.rest.builder.component/TextDisplayBuilder.content|{}content[0]
+        final fun <get-content>(): kotlin/String? // dev.kord.rest.builder.component/TextDisplayBuilder.content.<get-content>|<get-content>(){}[0]
+        final fun <set-content>(kotlin/String?) // dev.kord.rest.builder.component/TextDisplayBuilder.content.<set-content>|<set-content>(kotlin.String?){}[0]
+
+    final fun build(): dev.kord.common.entity/DiscordComponent // dev.kord.rest.builder.component/TextDisplayBuilder.build|build(){}[0]
 }
 
 final class dev.kord.rest.builder.component/TextInputBuilder : dev.kord.rest.builder.component/ActionRowComponentBuilder { // dev.kord.rest.builder.component/TextInputBuilder|null[0]
@@ -1779,6 +1881,22 @@ final class dev.kord.rest.builder.component/TextInputBuilder : dev.kord.rest.bui
         final fun <set-value>(kotlin/String?) // dev.kord.rest.builder.component/TextInputBuilder.value.<set-value>|<set-value>(kotlin.String?){}[0]
 
     final fun build(): dev.kord.common.entity/DiscordTextInputComponent // dev.kord.rest.builder.component/TextInputBuilder.build|build(){}[0]
+}
+
+final class dev.kord.rest.builder.component/ThumbnailBuilder : dev.kord.rest.builder.component/AccessoryComponentBuilder { // dev.kord.rest.builder.component/ThumbnailBuilder|null[0]
+    constructor <init>() // dev.kord.rest.builder.component/ThumbnailBuilder.<init>|<init>(){}[0]
+
+    final var description // dev.kord.rest.builder.component/ThumbnailBuilder.description|{}description[0]
+        final fun <get-description>(): kotlin/String? // dev.kord.rest.builder.component/ThumbnailBuilder.description.<get-description>|<get-description>(){}[0]
+        final fun <set-description>(kotlin/String?) // dev.kord.rest.builder.component/ThumbnailBuilder.description.<set-description>|<set-description>(kotlin.String?){}[0]
+    final var spoiler // dev.kord.rest.builder.component/ThumbnailBuilder.spoiler|{}spoiler[0]
+        final fun <get-spoiler>(): kotlin/Boolean? // dev.kord.rest.builder.component/ThumbnailBuilder.spoiler.<get-spoiler>|<get-spoiler>(){}[0]
+        final fun <set-spoiler>(kotlin/Boolean?) // dev.kord.rest.builder.component/ThumbnailBuilder.spoiler.<set-spoiler>|<set-spoiler>(kotlin.Boolean?){}[0]
+    final var url // dev.kord.rest.builder.component/ThumbnailBuilder.url|{}url[0]
+        final fun <get-url>(): kotlin/String? // dev.kord.rest.builder.component/ThumbnailBuilder.url.<get-url>|<get-url>(){}[0]
+        final fun <set-url>(kotlin/String?) // dev.kord.rest.builder.component/ThumbnailBuilder.url.<set-url>|<set-url>(kotlin.String?){}[0]
+
+    final fun build(): dev.kord.common.entity/DiscordComponent // dev.kord.rest.builder.component/ThumbnailBuilder.build|build(){}[0]
 }
 
 final class dev.kord.rest.builder.component/UserSelectBuilder : dev.kord.rest.builder.component/SelectMenuBuilder { // dev.kord.rest.builder.component/UserSelectBuilder|null[0]
@@ -7724,7 +7842,7 @@ sealed class dev.kord.rest.builder.automoderation/AutoModerationRuleModifyBuilde
     open fun buildTriggerMetadata(): dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordAutoModerationRuleTriggerMetadata> // dev.kord.rest.builder.automoderation/AutoModerationRuleModifyBuilder.buildTriggerMetadata|buildTriggerMetadata(){}[0]
 }
 
-sealed class dev.kord.rest.builder.component/ActionRowComponentBuilder : dev.kord.rest.builder.component/ComponentBuilder { // dev.kord.rest.builder.component/ActionRowComponentBuilder|null[0]
+sealed class dev.kord.rest.builder.component/ActionRowComponentBuilder : dev.kord.rest.builder.component/ContainerComponentBuilder { // dev.kord.rest.builder.component/ActionRowComponentBuilder|null[0]
     final var _disabled // dev.kord.rest.builder.component/ActionRowComponentBuilder._disabled|{}_disabled[0]
         final fun <get-_disabled>(): dev.kord.common.entity.optional/OptionalBoolean // dev.kord.rest.builder.component/ActionRowComponentBuilder._disabled.<get-_disabled>|<get-_disabled>(){}[0]
     final var disabled // dev.kord.rest.builder.component/ActionRowComponentBuilder.disabled|{}disabled[0]
@@ -7732,7 +7850,7 @@ sealed class dev.kord.rest.builder.component/ActionRowComponentBuilder : dev.kor
         final fun <set-disabled>(kotlin/Boolean?) // dev.kord.rest.builder.component/ActionRowComponentBuilder.disabled.<set-disabled>|<set-disabled>(kotlin.Boolean?){}[0]
 }
 
-sealed class dev.kord.rest.builder.component/ButtonBuilder : dev.kord.rest.builder.component/ActionRowComponentBuilder { // dev.kord.rest.builder.component/ButtonBuilder|null[0]
+sealed class dev.kord.rest.builder.component/ButtonBuilder : dev.kord.rest.builder.component/AccessoryComponentBuilder, dev.kord.rest.builder.component/ActionRowComponentBuilder { // dev.kord.rest.builder.component/ButtonBuilder|null[0]
     final var _emoji // dev.kord.rest.builder.component/ButtonBuilder._emoji|{}_emoji[0]
         final fun <get-_emoji>(): dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordPartialEmoji> // dev.kord.rest.builder.component/ButtonBuilder._emoji.<get-_emoji>|<get-_emoji>(){}[0]
     final var _label // dev.kord.rest.builder.component/ButtonBuilder._label|{}_label[0]
