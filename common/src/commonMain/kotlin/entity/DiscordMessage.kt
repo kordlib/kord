@@ -66,6 +66,7 @@
             "SuppressNotifications", shift = 12, kDoc = "This message will not trigger push and desktop notifications.",
         ),
         Entry("IsVoiceMessage", shift = 13, kDoc = "This message is a voice message."),
+        Entry("IsComponentsV2", shift = 15, kDoc = "Enable V2 of the Components API"),
     ],
 )
 
@@ -131,7 +132,9 @@ import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.common.serialization.DurationInDoubleSeconds
 import dev.kord.common.serialization.LongOrStringSerializer
 import dev.kord.ksp.Generate
-import dev.kord.ksp.Generate.EntityType.*
+import dev.kord.ksp.Generate.EntityType.INT_FLAGS
+import dev.kord.ksp.Generate.EntityType.INT_KORD_ENUM
+import dev.kord.ksp.Generate.EntityType.STRING_KORD_ENUM
 import dev.kord.ksp.Generate.Entry
 import kotlinx.datetime.Instant
 import kotlinx.serialization.SerialName
@@ -237,7 +240,7 @@ public data class DiscordMessage(
     val components: Optional<List<DiscordComponent>> = Optional.Missing(),
     val interaction: Optional<DiscordMessageInteraction> = Optional.Missing(),
     val thread: Optional<DiscordChannel> = Optional.Missing(),
-    val position: OptionalInt = OptionalInt.Missing
+    val position: OptionalInt = OptionalInt.Missing,
 )
 
 /**
@@ -263,7 +266,7 @@ public data class DiscordMessageSticker(
     val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
     val user: Optional<DiscordUser> = Optional.Missing(),
     @SerialName("sort_value")
-    val sortValue: OptionalInt = OptionalInt.Missing
+    val sortValue: OptionalInt = OptionalInt.Missing,
 )
 
 @Serializable
@@ -277,7 +280,7 @@ public data class DiscordStickerPack(
     val coverStickerId: OptionalSnowflake = OptionalSnowflake.Missing,
     val description: String,
     @SerialName("banner_asset_id")
-    val bannerAssetId: Snowflake
+    val bannerAssetId: Snowflake,
 )
 
 @Serializable
@@ -285,7 +288,7 @@ public data class DiscordStickerItem(
     val id: Snowflake,
     val name: String,
     @SerialName("format_type")
-    val formatType: MessageStickerType
+    val formatType: MessageStickerType,
 )
 
 /**
@@ -384,7 +387,7 @@ public data class DiscordMessageReference(
     @SerialName("guild_id")
     val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
     @SerialName("fail_if_not_exists")
-    val failIfNotExists: OptionalBoolean = OptionalBoolean.Missing
+    val failIfNotExists: OptionalBoolean = OptionalBoolean.Missing,
 )
 
 /**
@@ -690,5 +693,5 @@ public data class RoleSubscription(
     @SerialName("total_months_subscribed")
     val totalMonthsSubscribed: Int,
     @SerialName("is_renewal")
-    val isRenewal: Boolean
+    val isRenewal: Boolean,
 )

@@ -40,5 +40,12 @@ public fun Component(data: ComponentData): Component = when (data.type) {
     ComponentType.MentionableSelect -> MentionableSelectComponent(data)
     ComponentType.ChannelSelect -> ChannelSelectComponent(data)
     ComponentType.TextInput -> TextInputComponent(data as TextInputComponentData)
+    ComponentType.Container -> ContainerComponent(data as ChatComponentData)
+    ComponentType.File -> FileComponent(data as ChatComponentData)
+    ComponentType.MediaGallery -> MediaGalleryComponent(data as ChatComponentData)
+    ComponentType.Section -> SectionComponent(data as ChatComponentData)
+    ComponentType.Separator -> SeparatorComponent(data as ChatComponentData)
+    ComponentType.TextDisplay -> TextDisplayComponent(data as ChatComponentData)
+    ComponentType.Thumbnail -> ThumbnailComponent(data as ChatComponentData)
     is ComponentType.Unknown -> UnknownComponent(data)
 }

@@ -82,6 +82,20 @@ public sealed class ComponentType(
      */
     public object ChannelSelect : ComponentType(8)
 
+    public object Section : ComponentType(9)
+
+    public object TextDisplay : ComponentType(10)
+
+    public object Thumbnail : ComponentType(11)
+
+    public object MediaGallery : ComponentType(12)
+
+    public object File : ComponentType(13)
+
+    public object Separator : ComponentType(14)
+
+    public object Container : ComponentType(17)
+
     internal object Serializer : KSerializer<ComponentType> {
         override val descriptor: SerialDescriptor =
                 PrimitiveSerialDescriptor("dev.kord.common.entity.ComponentType", PrimitiveKind.INT)
@@ -107,6 +121,13 @@ public sealed class ComponentType(
                 RoleSelect,
                 MentionableSelect,
                 ChannelSelect,
+                Section,
+                TextDisplay,
+                Thumbnail,
+                MediaGallery,
+                File,
+                Separator,
+                Container,
             )
         }
 
@@ -123,6 +144,13 @@ public sealed class ComponentType(
             6 -> RoleSelect
             7 -> MentionableSelect
             8 -> ChannelSelect
+            9 -> Section
+            10 -> TextDisplay
+            11 -> Thumbnail
+            12 -> MediaGallery
+            13 -> File
+            14 -> Separator
+            17 -> Container
             else -> Unknown(value)
         }
     }
