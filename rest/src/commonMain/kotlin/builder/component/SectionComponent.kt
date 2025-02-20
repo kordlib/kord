@@ -1,6 +1,5 @@
 package dev.kord.rest.builder.component
 
-import dev.kord.common.entity.ButtonStyle
 import dev.kord.common.entity.ComponentType
 import dev.kord.common.entity.DiscordChatComponent
 import dev.kord.common.entity.DiscordComponent
@@ -10,13 +9,13 @@ import dev.kord.common.entity.optional.map
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
-public class SectionBuilder : ContainerComponentBuilder {
+public class SectionBuilder : ContainerComponentBuilder, AccessoryHolder {
     private var _accessory: Optional<AccessoryComponentBuilder> = Optional.Missing()
 
     /**
      *
      */
-    public var accessory: AccessoryComponentBuilder? by ::_accessory.delegate()
+    public override var accessory: AccessoryComponentBuilder? by ::_accessory.delegate()
 
     /**
      * A list of [text displays][TextDisplayBuilder] in this section.
@@ -36,39 +35,6 @@ public class SectionBuilder : ContainerComponentBuilder {
     }
 
     /**
-     * Adds an interaction button as an accessory to this section.
-     * This is mutually exclusive with other accessory components.
-     *
-     * @param style the style of this button, use [linkButtonAccessory] for [ButtonStyle.Link].
-     * @param customId the ID of this button, used to identify component interactions.
-     */
-    public inline fun interactionButtonAccessory(
-        style: ButtonStyle,
-        customId: String,
-        builder: ButtonBuilder.() -> Unit = {},
-    ) {
-        contract {
-            callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
-        }
-
-        accessory = ButtonBuilder.InteractionButtonBuilder(style, customId).apply(builder)
-    }
-
-    /**
-     * Adds a link button as an accessory to this section.
-     * This is mutually exclusive with other accessory components.
-     *
-     * @param url The url to open.
-     */
-    public inline fun linkButtonAccessory(url: String, builder: ButtonBuilder.() -> Unit = {}) {
-        contract {
-            callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
-        }
-
-        accessory = ButtonBuilder.LinkButtonBuilder(url).apply(builder)
-    }
-
-    /**
      * Adds a text display as a component to this section.
      *
      *
@@ -79,6 +45,10 @@ public class SectionBuilder : ContainerComponentBuilder {
         }
 
         components.add(TextDisplayBuilder().apply(builder))
+    }
+
+    public fun textDisplay(content: String): Unit = textDisplay {
+        this.content = content
     }
 
     override fun build(): DiscordComponent = DiscordChatComponent(

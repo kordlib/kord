@@ -43,7 +43,7 @@ public sealed class SeparatorSpacingSize(
 
     public object Small : SeparatorSpacingSize(1)
 
-    public object Large : SeparatorSpacingSize(1)
+    public object Large : SeparatorSpacingSize(2)
 
     internal object Serializer : KSerializer<SeparatorSpacingSize> {
         override val descriptor: SerialDescriptor =
@@ -64,6 +64,7 @@ public sealed class SeparatorSpacingSize(
         public val entries: List<SeparatorSpacingSize> by lazy(mode = PUBLICATION) {
             listOf(
                 Small,
+                Large,
             )
         }
 
@@ -73,6 +74,7 @@ public sealed class SeparatorSpacingSize(
          */
         public fun from(`value`: Int): SeparatorSpacingSize = when (value) {
             1 -> Small
+            2 -> Large
             else -> Unknown(value)
         }
     }

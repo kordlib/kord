@@ -11,7 +11,7 @@ import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
 @KordDsl
-public class ActionRowBuilder : MessageComponentBuilder, ContainerComponentBuilder {
+public class ActionRowBuilder : ContainerComponentBuilder {
     public val components: MutableList<ActionRowComponentBuilder> = mutableListOf()
 
     public inline fun interactionButton(

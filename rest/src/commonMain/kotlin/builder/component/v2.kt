@@ -26,7 +26,7 @@ public class ThumbnailBuilder : AccessoryComponentBuilder {
 
     override fun build(): DiscordComponent = DiscordChatComponent(
         type = ComponentType.Thumbnail,
-        image = _url.map { UnfurledMediaItem(it) },
+        media = _url.map { UnfurledMediaItem(it) },
         description = _description,
         spoiler = _spoiler,
     )
@@ -83,7 +83,7 @@ public class FileBuilder : ContainerComponentBuilder {
 
     override fun build(): DiscordComponent = DiscordChatComponent(
         type = ComponentType.File,
-        image = _url.map { UnfurledMediaItem(it) },
+        media = _url.map { UnfurledMediaItem(it) },
         spoiler = _spoiler
     )
 }

@@ -72,7 +72,7 @@ public sealed class ComponentData {
                     skuId = entity.skuId,
                     accessory = accessory.map { from(it) },
                     content = content,
-                    image = image,
+                    image = media,
                     description = description,
                     spoiler = spoiler,
                     items = items,

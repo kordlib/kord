@@ -8,12 +8,12 @@ import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.delegate.delegate
 
-public class ContainerBuilder : MessageComponentBuilder {
+public class ContainerBuilder : ComponentContainerBuilder, MessageComponentBuilder {
     private var _spoiler: OptionalBoolean = OptionalBoolean.Missing
 
     private var _accentColor: Optional<Color> = Optional.Missing()
 
-    public val components: MutableList<ContainerComponentBuilder> = mutableListOf()
+    public var components: MutableList<MessageComponentBuilder>? = mutableListOf()
 
     /**
      * Whether the component is a spoiler. Defaults to `false`.
@@ -27,33 +27,13 @@ public class ContainerBuilder : MessageComponentBuilder {
      */
     public var accentColor: Color? by ::_accentColor.delegate()
 
-    public fun actionRow(builder: ActionRowBuilder.() -> Unit) {
-        components.add(ActionRowBuilder().apply(builder))
-    }
-
-    public fun textDisplay(builder: TextDisplayBuilder.() -> Unit) {
-        components.add(TextDisplayBuilder().apply(builder))
-    }
-
-    public fun section(builder: SectionBuilder.() -> Unit) {
-        components.add(SectionBuilder().apply(builder))
-    }
-
-    public fun mediaGallery(builder: MediaGalleryBuilder.() -> Unit) {
-        components.add(MediaGalleryBuilder().apply(builder))
-    }
-
-    public fun separator(builder: SeparatorBuilder.() -> Unit) {
-        components.add(SeparatorBuilder().apply(builder))
-    }
-
-    public fun file(builder: FileBuilder.() -> Unit) {
-        components.add(FileBuilder().apply(builder))
+    override fun addComponent(component: ContainerComponentBuilder) {
+        components?.add(component) ?: run { components = mutableListOf(component) }
     }
 
     override fun build(): DiscordComponent = DiscordChatComponent(
         type = ComponentType.Container,
-        components = Optional(components.map { it.build() }),
+        components = Optional((components ?: emptyList()).map { it.build() }),
         spoiler = _spoiler,
         accentColor = _accentColor,
     )

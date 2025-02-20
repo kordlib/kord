@@ -88,7 +88,7 @@
         Entry("Rich", stringValue = "rich", kDoc = "Generic embed rendered from embed attributes."),
         Entry("Image", stringValue = "image", kDoc = "Image embed."),
         Entry("Video", stringValue = "video", kDoc = "Video embed."),
-        Entry("Gifv", stringValue = "gifv", kDoc = "Animated gif image embed rendered as a video embed."),
+        Entry("Gifv", stringValue = "gifv", kDoc = "Animated gif media embed rendered as a video embed."),
         Entry("Article", stringValue = "article", kDoc = "Article embed."),
         Entry("Link", stringValue = "link", kDoc = "Link embed."),
     ],
@@ -417,8 +417,8 @@ public data class DiscordMentionedChannel(
  * @property size The size of the file in bytes.
  * @property url The source url of the file.
  * @property proxyUrl A proxied url of the field.
- * @property height The height of the file (if it is an image).
- * @property width The width of the file (if it is an image).
+ * @property height The height of the file (if it is an media).
+ * @property width The width of the file (if it is an media).
  * @property ephemeral Whether this attachment is ephemeral
  * @property durationSecs The duration of the audio file (currently for voice messages)
  * @property waveform Base64 encoded bytearray representing a sampled waveform (currently for voice messages)
@@ -453,7 +453,7 @@ public data class DiscordAttachment(
  * @param timestamp The timestamp of the embed content.
  * @param color The color code of the embed.
  * @param footer The footer information.
- * @param image The image information.
+ * @param image The media information.
  * @param thumbnail The thumbnail information.
  * @param video The video information.
  * @param provider The provider information.
@@ -494,12 +494,12 @@ public data class DiscordEmbed(
     )
 
     /**
-     * A representation of a [Discord Embed Image structure](https://discord.com/developers/docs/resources/channel#embed-object-embed-image-structure).
+     * A representation of a [Discord Embed Image structure](https://discord.com/developers/docs/resources/channel#embed-object-embed-media-structure).
      *
-     * @param url The source url of the image (only supports http(s) and attachments).
-     * @param proxyUrl A proxied url of the image.
-     * @param height The height of the image.
-     * @param width The width of the image.
+     * @param url The source url of the media (only supports http(s) and attachments).
+     * @param proxyUrl A proxied url of the media.
+     * @param height The height of the media.
+     * @param width The width of the media.
      */
     @Serializable
     public data class Image(

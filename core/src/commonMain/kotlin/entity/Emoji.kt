@@ -132,7 +132,7 @@ public class GuildEmoji(
      */
     public val user: UserBehavior? get() = userId?.let { UserBehavior(it, kord) }
 
-    /** The image of this emoji as an [Asset]. */
+    /** The media of this emoji as an [Asset]. */
     public val image: Asset get() = Asset.emoji(id, isAnimated, kord)
 
     /**

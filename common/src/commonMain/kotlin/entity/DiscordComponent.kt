@@ -50,7 +50,7 @@
     docUrl = "",
     entries = [
         Entry("Small", intValue = 1),
-        Entry("Large", intValue = 1),
+        Entry("Large", intValue = 2),
     ]
 )
 
@@ -181,7 +181,7 @@ public data class DiscordChatComponent(
     val skuId: OptionalSnowflake = OptionalSnowflake.Missing,
     val accessory: Optional<DiscordComponent> = Optional.Missing(),
     val content: Optional<String> = Optional.Missing(),
-    val image: Optional<UnfurledMediaItem> = Optional.Missing(),
+    val media: Optional<UnfurledMediaItem> = Optional.Missing(),
     val description: Optional<String> = Optional.Missing(),
     val spoiler: OptionalBoolean = OptionalBoolean.Missing,
     val items: Optional<List<MediaGalleryItem>> = Optional.Missing(),
