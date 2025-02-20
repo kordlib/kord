@@ -249,6 +249,17 @@ abstract interface dev.kord.rest.builder.channel/PermissionOverwritesModifyBuild
     open fun addOverwrite(dev.kord.common.entity/Overwrite) // dev.kord.rest.builder.channel/PermissionOverwritesModifyBuilder.addOverwrite|addOverwrite(dev.kord.common.entity.Overwrite){}[0]
 }
 
+abstract interface dev.kord.rest.builder.component/AccessoryHolder { // dev.kord.rest.builder.component/AccessoryHolder|null[0]
+    abstract var accessory // dev.kord.rest.builder.component/AccessoryHolder.accessory|{}accessory[0]
+        abstract fun <get-accessory>(): dev.kord.rest.builder.component/AccessoryComponentBuilder? // dev.kord.rest.builder.component/AccessoryHolder.accessory.<get-accessory>|<get-accessory>(){}[0]
+        abstract fun <set-accessory>(dev.kord.rest.builder.component/AccessoryComponentBuilder?) // dev.kord.rest.builder.component/AccessoryHolder.accessory.<set-accessory>|<set-accessory>(dev.kord.rest.builder.component.AccessoryComponentBuilder?){}[0]
+}
+
+abstract interface dev.kord.rest.builder.component/ComponentContainerBuilder { // dev.kord.rest.builder.component/ComponentContainerBuilder|null[0]
+    open fun separator(dev.kord.common.entity/SeparatorSpacingSize) // dev.kord.rest.builder.component/ComponentContainerBuilder.separator|separator(dev.kord.common.entity.SeparatorSpacingSize){}[0]
+    open fun textDisplay(kotlin/String) // dev.kord.rest.builder.component/ComponentContainerBuilder.textDisplay|textDisplay(kotlin.String){}[0]
+}
+
 abstract interface dev.kord.rest.builder.interaction/ApplicationCommandCreateBuilder : dev.kord.rest.builder.interaction/LocalizedNameCreateBuilder, dev.kord.rest.builder/RequestBuilder<dev.kord.rest.json.request/ApplicationCommandCreateRequest> { // dev.kord.rest.builder.interaction/ApplicationCommandCreateBuilder|null[0]
     abstract val type // dev.kord.rest.builder.interaction/ApplicationCommandCreateBuilder.type|{}type[0]
         abstract fun <get-type>(): dev.kord.common.entity/ApplicationCommandType // dev.kord.rest.builder.interaction/ApplicationCommandCreateBuilder.type.<get-type>|<get-type>(){}[0]
@@ -362,7 +373,7 @@ abstract interface dev.kord.rest.builder.interaction/UserCommandCreateBuilder : 
 
 abstract interface dev.kord.rest.builder.interaction/UserCommandModifyBuilder : dev.kord.rest.builder.interaction/ApplicationCommandModifyBuilder // dev.kord.rest.builder.interaction/UserCommandModifyBuilder|null[0]
 
-abstract interface dev.kord.rest.builder.message/MessageBuilder { // dev.kord.rest.builder.message/MessageBuilder|null[0]
+abstract interface dev.kord.rest.builder.message/MessageBuilder : dev.kord.rest.builder.component/ComponentContainerBuilder { // dev.kord.rest.builder.message/MessageBuilder|null[0]
     abstract val files // dev.kord.rest.builder.message/MessageBuilder.files|{}files[0]
         abstract fun <get-files>(): kotlin.collections/MutableList<dev.kord.rest/NamedFile> // dev.kord.rest.builder.message/MessageBuilder.files.<get-files>|<get-files>(){}[0]
 
@@ -388,6 +399,7 @@ abstract interface dev.kord.rest.builder.message/MessageBuilder { // dev.kord.re
         abstract fun <get-suppressEmbeds>(): kotlin/Boolean? // dev.kord.rest.builder.message/MessageBuilder.suppressEmbeds.<get-suppressEmbeds>|<get-suppressEmbeds>(){}[0]
         abstract fun <set-suppressEmbeds>(kotlin/Boolean?) // dev.kord.rest.builder.message/MessageBuilder.suppressEmbeds.<set-suppressEmbeds>|<set-suppressEmbeds>(kotlin.Boolean?){}[0]
 
+    open fun addComponent(dev.kord.rest.builder.component/ContainerComponentBuilder) // dev.kord.rest.builder.message/MessageBuilder.addComponent|addComponent(dev.kord.rest.builder.component.ContainerComponentBuilder){}[0]
     open fun addFile(kotlin/String, io.ktor.client.request.forms/ChannelProvider): dev.kord.rest/NamedFile // dev.kord.rest.builder.message/MessageBuilder.addFile|addFile(kotlin.String;io.ktor.client.request.forms.ChannelProvider){}[0]
 }
 
@@ -1672,7 +1684,7 @@ final class dev.kord.rest.builder.channel/VoiceChannelModifyBuilder : dev.kord.r
     final fun toRequest(): dev.kord.rest.json.request/ChannelModifyPatchRequest // dev.kord.rest.builder.channel/VoiceChannelModifyBuilder.toRequest|toRequest(){}[0]
 }
 
-final class dev.kord.rest.builder.component/ActionRowBuilder : dev.kord.rest.builder.component/ContainerComponentBuilder, dev.kord.rest.builder.component/MessageComponentBuilder { // dev.kord.rest.builder.component/ActionRowBuilder|null[0]
+final class dev.kord.rest.builder.component/ActionRowBuilder : dev.kord.rest.builder.component/ContainerComponentBuilder { // dev.kord.rest.builder.component/ActionRowBuilder|null[0]
     constructor <init>() // dev.kord.rest.builder.component/ActionRowBuilder.<init>|<init>(){}[0]
 
     final val components // dev.kord.rest.builder.component/ActionRowBuilder.components|{}components[0]
@@ -1701,26 +1713,21 @@ final class dev.kord.rest.builder.component/ChannelSelectBuilder : dev.kord.rest
         final fun <set-channelTypes>(kotlin.collections/MutableList<dev.kord.common.entity/ChannelType>?) // dev.kord.rest.builder.component/ChannelSelectBuilder.channelTypes.<set-channelTypes>|<set-channelTypes>(kotlin.collections.MutableList<dev.kord.common.entity.ChannelType>?){}[0]
 }
 
-final class dev.kord.rest.builder.component/ContainerBuilder : dev.kord.rest.builder.component/MessageComponentBuilder { // dev.kord.rest.builder.component/ContainerBuilder|null[0]
+final class dev.kord.rest.builder.component/ContainerBuilder : dev.kord.rest.builder.component/ComponentContainerBuilder, dev.kord.rest.builder.component/MessageComponentBuilder { // dev.kord.rest.builder.component/ContainerBuilder|null[0]
     constructor <init>() // dev.kord.rest.builder.component/ContainerBuilder.<init>|<init>(){}[0]
-
-    final val components // dev.kord.rest.builder.component/ContainerBuilder.components|{}components[0]
-        final fun <get-components>(): kotlin.collections/MutableList<dev.kord.rest.builder.component/ContainerComponentBuilder> // dev.kord.rest.builder.component/ContainerBuilder.components.<get-components>|<get-components>(){}[0]
 
     final var accentColor // dev.kord.rest.builder.component/ContainerBuilder.accentColor|{}accentColor[0]
         final fun <get-accentColor>(): dev.kord.common/Color? // dev.kord.rest.builder.component/ContainerBuilder.accentColor.<get-accentColor>|<get-accentColor>(){}[0]
         final fun <set-accentColor>(dev.kord.common/Color?) // dev.kord.rest.builder.component/ContainerBuilder.accentColor.<set-accentColor>|<set-accentColor>(dev.kord.common.Color?){}[0]
+    final var components // dev.kord.rest.builder.component/ContainerBuilder.components|{}components[0]
+        final fun <get-components>(): kotlin.collections/MutableList<dev.kord.rest.builder.component/MessageComponentBuilder>? // dev.kord.rest.builder.component/ContainerBuilder.components.<get-components>|<get-components>(){}[0]
+        final fun <set-components>(kotlin.collections/MutableList<dev.kord.rest.builder.component/MessageComponentBuilder>?) // dev.kord.rest.builder.component/ContainerBuilder.components.<set-components>|<set-components>(kotlin.collections.MutableList<dev.kord.rest.builder.component.MessageComponentBuilder>?){}[0]
     final var spoiler // dev.kord.rest.builder.component/ContainerBuilder.spoiler|{}spoiler[0]
         final fun <get-spoiler>(): kotlin/Boolean? // dev.kord.rest.builder.component/ContainerBuilder.spoiler.<get-spoiler>|<get-spoiler>(){}[0]
         final fun <set-spoiler>(kotlin/Boolean?) // dev.kord.rest.builder.component/ContainerBuilder.spoiler.<set-spoiler>|<set-spoiler>(kotlin.Boolean?){}[0]
 
-    final fun actionRow(kotlin/Function1<dev.kord.rest.builder.component/ActionRowBuilder, kotlin/Unit>) // dev.kord.rest.builder.component/ContainerBuilder.actionRow|actionRow(kotlin.Function1<dev.kord.rest.builder.component.ActionRowBuilder,kotlin.Unit>){}[0]
+    final fun addComponent(dev.kord.rest.builder.component/ContainerComponentBuilder) // dev.kord.rest.builder.component/ContainerBuilder.addComponent|addComponent(dev.kord.rest.builder.component.ContainerComponentBuilder){}[0]
     final fun build(): dev.kord.common.entity/DiscordComponent // dev.kord.rest.builder.component/ContainerBuilder.build|build(){}[0]
-    final fun file(kotlin/Function1<dev.kord.rest.builder.component/FileBuilder, kotlin/Unit>) // dev.kord.rest.builder.component/ContainerBuilder.file|file(kotlin.Function1<dev.kord.rest.builder.component.FileBuilder,kotlin.Unit>){}[0]
-    final fun mediaGallery(kotlin/Function1<dev.kord.rest.builder.component/MediaGalleryBuilder, kotlin/Unit>) // dev.kord.rest.builder.component/ContainerBuilder.mediaGallery|mediaGallery(kotlin.Function1<dev.kord.rest.builder.component.MediaGalleryBuilder,kotlin.Unit>){}[0]
-    final fun section(kotlin/Function1<dev.kord.rest.builder.component/SectionBuilder, kotlin/Unit>) // dev.kord.rest.builder.component/ContainerBuilder.section|section(kotlin.Function1<dev.kord.rest.builder.component.SectionBuilder,kotlin.Unit>){}[0]
-    final fun separator(kotlin/Function1<dev.kord.rest.builder.component/SeparatorBuilder, kotlin/Unit>) // dev.kord.rest.builder.component/ContainerBuilder.separator|separator(kotlin.Function1<dev.kord.rest.builder.component.SeparatorBuilder,kotlin.Unit>){}[0]
-    final fun textDisplay(kotlin/Function1<dev.kord.rest.builder.component/TextDisplayBuilder, kotlin/Unit>) // dev.kord.rest.builder.component/ContainerBuilder.textDisplay|textDisplay(kotlin.Function1<dev.kord.rest.builder.component.TextDisplayBuilder,kotlin.Unit>){}[0]
 }
 
 final class dev.kord.rest.builder.component/FileBuilder : dev.kord.rest.builder.component/ContainerComponentBuilder { // dev.kord.rest.builder.component/FileBuilder|null[0]
@@ -1788,7 +1795,7 @@ final class dev.kord.rest.builder.component/RoleSelectBuilder : dev.kord.rest.bu
         final fun <get-defaultRoles>(): kotlin.collections/MutableList<dev.kord.common.entity/Snowflake> // dev.kord.rest.builder.component/RoleSelectBuilder.defaultRoles.<get-defaultRoles>|<get-defaultRoles>(){}[0]
 }
 
-final class dev.kord.rest.builder.component/SectionBuilder : dev.kord.rest.builder.component/ContainerComponentBuilder { // dev.kord.rest.builder.component/SectionBuilder|null[0]
+final class dev.kord.rest.builder.component/SectionBuilder : dev.kord.rest.builder.component/AccessoryHolder, dev.kord.rest.builder.component/ContainerComponentBuilder { // dev.kord.rest.builder.component/SectionBuilder|null[0]
     constructor <init>() // dev.kord.rest.builder.component/SectionBuilder.<init>|<init>(){}[0]
 
     final val components // dev.kord.rest.builder.component/SectionBuilder.components|{}components[0]
@@ -1799,8 +1806,7 @@ final class dev.kord.rest.builder.component/SectionBuilder : dev.kord.rest.build
         final fun <set-accessory>(dev.kord.rest.builder.component/AccessoryComponentBuilder?) // dev.kord.rest.builder.component/SectionBuilder.accessory.<set-accessory>|<set-accessory>(dev.kord.rest.builder.component.AccessoryComponentBuilder?){}[0]
 
     final fun build(): dev.kord.common.entity/DiscordComponent // dev.kord.rest.builder.component/SectionBuilder.build|build(){}[0]
-    final inline fun interactionButtonAccessory(dev.kord.common.entity/ButtonStyle, kotlin/String, kotlin/Function1<dev.kord.rest.builder.component/ButtonBuilder, kotlin/Unit> = ...) // dev.kord.rest.builder.component/SectionBuilder.interactionButtonAccessory|interactionButtonAccessory(dev.kord.common.entity.ButtonStyle;kotlin.String;kotlin.Function1<dev.kord.rest.builder.component.ButtonBuilder,kotlin.Unit>){}[0]
-    final inline fun linkButtonAccessory(kotlin/String, kotlin/Function1<dev.kord.rest.builder.component/ButtonBuilder, kotlin/Unit> = ...) // dev.kord.rest.builder.component/SectionBuilder.linkButtonAccessory|linkButtonAccessory(kotlin.String;kotlin.Function1<dev.kord.rest.builder.component.ButtonBuilder,kotlin.Unit>){}[0]
+    final fun textDisplay(kotlin/String) // dev.kord.rest.builder.component/SectionBuilder.textDisplay|textDisplay(kotlin.String){}[0]
     final inline fun textDisplay(kotlin/Function1<dev.kord.rest.builder.component/TextDisplayBuilder, kotlin/Unit>) // dev.kord.rest.builder.component/SectionBuilder.textDisplay|textDisplay(kotlin.Function1<dev.kord.rest.builder.component.TextDisplayBuilder,kotlin.Unit>){}[0]
     final inline fun thumbnailAccessory(kotlin/Function1<dev.kord.rest.builder.component/ThumbnailBuilder, kotlin/Unit>) // dev.kord.rest.builder.component/SectionBuilder.thumbnailAccessory|thumbnailAccessory(kotlin.Function1<dev.kord.rest.builder.component.ThumbnailBuilder,kotlin.Unit>){}[0]
 }
@@ -8207,6 +8213,14 @@ final inline fun (dev.kord.rest.builder.automoderation/MemberProfileAutoModerati
 final inline fun (dev.kord.rest.builder.automoderation/TimeoutAutoModerationRuleBuilder).dev.kord.rest.builder.automoderation/timeout(kotlin.time/Duration, kotlin/Function1<dev.kord.rest.builder.automoderation/TimeoutAutoModerationActionBuilder, kotlin/Unit> = ...) // dev.kord.rest.builder.automoderation/timeout|timeout@dev.kord.rest.builder.automoderation.TimeoutAutoModerationRuleBuilder(kotlin.time.Duration;kotlin.Function1<dev.kord.rest.builder.automoderation.TimeoutAutoModerationActionBuilder,kotlin.Unit>){}[0]
 final inline fun (dev.kord.rest.builder.channel/PermissionOverwritesBuilder).dev.kord.rest.builder.channel/addMemberOverwrite(dev.kord.common.entity/Snowflake, kotlin/Function1<dev.kord.rest.builder.channel/PermissionOverwriteBuilder, kotlin/Unit>) // dev.kord.rest.builder.channel/addMemberOverwrite|addMemberOverwrite@dev.kord.rest.builder.channel.PermissionOverwritesBuilder(dev.kord.common.entity.Snowflake;kotlin.Function1<dev.kord.rest.builder.channel.PermissionOverwriteBuilder,kotlin.Unit>){}[0]
 final inline fun (dev.kord.rest.builder.channel/PermissionOverwritesBuilder).dev.kord.rest.builder.channel/addRoleOverwrite(dev.kord.common.entity/Snowflake, kotlin/Function1<dev.kord.rest.builder.channel/PermissionOverwriteBuilder, kotlin/Unit>) // dev.kord.rest.builder.channel/addRoleOverwrite|addRoleOverwrite@dev.kord.rest.builder.channel.PermissionOverwritesBuilder(dev.kord.common.entity.Snowflake;kotlin.Function1<dev.kord.rest.builder.channel.PermissionOverwriteBuilder,kotlin.Unit>){}[0]
+final inline fun (dev.kord.rest.builder.component/AccessoryHolder).dev.kord.rest.builder.component/interactionButtonAccessory(dev.kord.common.entity/ButtonStyle, kotlin/String, kotlin/Function1<dev.kord.rest.builder.component/ButtonBuilder, kotlin/Unit> = ...) // dev.kord.rest.builder.component/interactionButtonAccessory|interactionButtonAccessory@dev.kord.rest.builder.component.AccessoryHolder(dev.kord.common.entity.ButtonStyle;kotlin.String;kotlin.Function1<dev.kord.rest.builder.component.ButtonBuilder,kotlin.Unit>){}[0]
+final inline fun (dev.kord.rest.builder.component/AccessoryHolder).dev.kord.rest.builder.component/linkButtonAccessory(kotlin/String, kotlin/Function1<dev.kord.rest.builder.component/ButtonBuilder, kotlin/Unit> = ...) // dev.kord.rest.builder.component/linkButtonAccessory|linkButtonAccessory@dev.kord.rest.builder.component.AccessoryHolder(kotlin.String;kotlin.Function1<dev.kord.rest.builder.component.ButtonBuilder,kotlin.Unit>){}[0]
+final inline fun (dev.kord.rest.builder.component/ComponentContainerBuilder).dev.kord.rest.builder.component/actionRow(kotlin/Function1<dev.kord.rest.builder.component/ActionRowBuilder, kotlin/Unit>) // dev.kord.rest.builder.component/actionRow|actionRow@dev.kord.rest.builder.component.ComponentContainerBuilder(kotlin.Function1<dev.kord.rest.builder.component.ActionRowBuilder,kotlin.Unit>){}[0]
+final inline fun (dev.kord.rest.builder.component/ComponentContainerBuilder).dev.kord.rest.builder.component/file(kotlin/Function1<dev.kord.rest.builder.component/FileBuilder, kotlin/Unit>) // dev.kord.rest.builder.component/file|file@dev.kord.rest.builder.component.ComponentContainerBuilder(kotlin.Function1<dev.kord.rest.builder.component.FileBuilder,kotlin.Unit>){}[0]
+final inline fun (dev.kord.rest.builder.component/ComponentContainerBuilder).dev.kord.rest.builder.component/mediaGallery(kotlin/Function1<dev.kord.rest.builder.component/MediaGalleryBuilder, kotlin/Unit>) // dev.kord.rest.builder.component/mediaGallery|mediaGallery@dev.kord.rest.builder.component.ComponentContainerBuilder(kotlin.Function1<dev.kord.rest.builder.component.MediaGalleryBuilder,kotlin.Unit>){}[0]
+final inline fun (dev.kord.rest.builder.component/ComponentContainerBuilder).dev.kord.rest.builder.component/section(kotlin/Function1<dev.kord.rest.builder.component/SectionBuilder, kotlin/Unit>) // dev.kord.rest.builder.component/section|section@dev.kord.rest.builder.component.ComponentContainerBuilder(kotlin.Function1<dev.kord.rest.builder.component.SectionBuilder,kotlin.Unit>){}[0]
+final inline fun (dev.kord.rest.builder.component/ComponentContainerBuilder).dev.kord.rest.builder.component/separator(kotlin/Function1<dev.kord.rest.builder.component/SeparatorBuilder, kotlin/Unit>) // dev.kord.rest.builder.component/separator|separator@dev.kord.rest.builder.component.ComponentContainerBuilder(kotlin.Function1<dev.kord.rest.builder.component.SeparatorBuilder,kotlin.Unit>){}[0]
+final inline fun (dev.kord.rest.builder.component/ComponentContainerBuilder).dev.kord.rest.builder.component/textDisplay(kotlin/Function1<dev.kord.rest.builder.component/TextDisplayBuilder, kotlin/Unit>) // dev.kord.rest.builder.component/textDisplay|textDisplay@dev.kord.rest.builder.component.ComponentContainerBuilder(kotlin.Function1<dev.kord.rest.builder.component.TextDisplayBuilder,kotlin.Unit>){}[0]
 final inline fun (dev.kord.rest.builder.component/StringSelectBuilder).dev.kord.rest.builder.component/option(kotlin/String, kotlin/String, kotlin/Function1<dev.kord.rest.builder.component/SelectOptionBuilder, kotlin/Unit> = ...) // dev.kord.rest.builder.component/option|option@dev.kord.rest.builder.component.StringSelectBuilder(kotlin.String;kotlin.String;kotlin.Function1<dev.kord.rest.builder.component.SelectOptionBuilder,kotlin.Unit>){}[0]
 final inline fun (dev.kord.rest.builder.guild/GuildOnboardingModifyBuilder).dev.kord.rest.builder.guild/prompt(dev.kord.common.entity/OnboardingPromptType, kotlin/String, kotlin/Boolean, kotlin/Boolean, kotlin/Boolean, kotlin/Function1<dev.kord.rest.builder.guild/OnboardingPromptBuilder, kotlin/Unit>) // dev.kord.rest.builder.guild/prompt|prompt@dev.kord.rest.builder.guild.GuildOnboardingModifyBuilder(dev.kord.common.entity.OnboardingPromptType;kotlin.String;kotlin.Boolean;kotlin.Boolean;kotlin.Boolean;kotlin.Function1<dev.kord.rest.builder.guild.OnboardingPromptBuilder,kotlin.Unit>){}[0]
 final inline fun (dev.kord.rest.builder.guild/OnboardingPromptBuilder).dev.kord.rest.builder.guild/option(kotlin/String, kotlin/Function1<dev.kord.rest.builder.guild/OnboardingPromptOptionBuilder, kotlin/Unit>) // dev.kord.rest.builder.guild/option|option@dev.kord.rest.builder.guild.OnboardingPromptBuilder(kotlin.String;kotlin.Function1<dev.kord.rest.builder.guild.OnboardingPromptOptionBuilder,kotlin.Unit>){}[0]
@@ -8228,6 +8242,7 @@ final inline fun (dev.kord.rest.builder.message.modify/MessageModifyBuilder).dev
 final inline fun (dev.kord.rest.builder.message/MessageBuilder).dev.kord.rest.builder.message/actionRow(kotlin/Function1<dev.kord.rest.builder.component/ActionRowBuilder, kotlin/Unit>) // dev.kord.rest.builder.message/actionRow|actionRow@dev.kord.rest.builder.message.MessageBuilder(kotlin.Function1<dev.kord.rest.builder.component.ActionRowBuilder,kotlin.Unit>){}[0]
 final inline fun (dev.kord.rest.builder.message/MessageBuilder).dev.kord.rest.builder.message/addFile(kotlin/String, io.ktor.client.request.forms/ChannelProvider, kotlin/Function1<dev.kord.rest.builder.message/AttachmentBuilder, kotlin/Unit>): dev.kord.rest/NamedFile // dev.kord.rest.builder.message/addFile|addFile@dev.kord.rest.builder.message.MessageBuilder(kotlin.String;io.ktor.client.request.forms.ChannelProvider;kotlin.Function1<dev.kord.rest.builder.message.AttachmentBuilder,kotlin.Unit>){}[0]
 final inline fun (dev.kord.rest.builder.message/MessageBuilder).dev.kord.rest.builder.message/allowedMentions(kotlin/Function1<dev.kord.rest.builder.message/AllowedMentionsBuilder, kotlin/Unit> = ...) // dev.kord.rest.builder.message/allowedMentions|allowedMentions@dev.kord.rest.builder.message.MessageBuilder(kotlin.Function1<dev.kord.rest.builder.message.AllowedMentionsBuilder,kotlin.Unit>){}[0]
+final inline fun (dev.kord.rest.builder.message/MessageBuilder).dev.kord.rest.builder.message/container(kotlin/Function1<dev.kord.rest.builder.component/ContainerBuilder, kotlin/Unit>) // dev.kord.rest.builder.message/container|container@dev.kord.rest.builder.message.MessageBuilder(kotlin.Function1<dev.kord.rest.builder.component.ContainerBuilder,kotlin.Unit>){}[0]
 final inline fun (dev.kord.rest.builder.message/MessageBuilder).dev.kord.rest.builder.message/embed(kotlin/Function1<dev.kord.rest.builder.message/EmbedBuilder, kotlin/Unit>) // dev.kord.rest.builder.message/embed|embed@dev.kord.rest.builder.message.MessageBuilder(kotlin.Function1<dev.kord.rest.builder.message.EmbedBuilder,kotlin.Unit>){}[0]
 final inline fun (dev.kord.rest.builder.message/MessageBuilder).dev.kord.rest.builder.message/messageFlags(kotlin/Function1<dev.kord.common.entity/MessageFlags.Builder, kotlin/Unit>) // dev.kord.rest.builder.message/messageFlags|messageFlags@dev.kord.rest.builder.message.MessageBuilder(kotlin.Function1<dev.kord.common.entity.MessageFlags.Builder,kotlin.Unit>){}[0]
 final suspend fun (io.ktor.client.statement/HttpResponse).dev.kord.rest.request/errorString(): kotlin/String // dev.kord.rest.request/errorString|errorString@io.ktor.client.statement.HttpResponse(){}[0]

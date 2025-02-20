@@ -3226,11 +3226,11 @@ public final class dev/kord/common/entity/DiscordChatComponent : dev/kord/common
 	public final fun getDivider ()Ldev/kord/common/entity/optional/OptionalBoolean;
 	public fun getEmoji ()Ldev/kord/common/entity/optional/Optional;
 	public final fun getFile ()Ldev/kord/common/entity/optional/Optional;
-	public final fun getImage ()Ldev/kord/common/entity/optional/Optional;
 	public final fun getItems ()Ldev/kord/common/entity/optional/Optional;
 	public fun getLabel ()Ldev/kord/common/entity/optional/Optional;
 	public fun getMaxLength ()Ldev/kord/common/entity/optional/OptionalInt;
 	public fun getMaxValues ()Ldev/kord/common/entity/optional/OptionalInt;
+	public final fun getMedia ()Ldev/kord/common/entity/optional/Optional;
 	public fun getMinLength ()Ldev/kord/common/entity/optional/OptionalInt;
 	public fun getMinValues ()Ldev/kord/common/entity/optional/OptionalInt;
 	public fun getOptions ()Ldev/kord/common/entity/optional/Optional;
