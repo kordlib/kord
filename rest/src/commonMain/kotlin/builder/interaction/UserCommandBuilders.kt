@@ -25,7 +25,7 @@ internal class UserCommandModifyBuilderImpl : GlobalUserCommandModifyBuilder {
 
     override var defaultMemberPermissions: Permissions? by state::defaultMemberPermissions.delegate()
 
-    @Deprecated("'dmPermissions' is deprecated in favor of 'contexts'.'")
+    @Deprecated("'dmPermissions' is deprecated in favor of 'contexts'.")
     override var dmPermission: Boolean? by @Suppress("DEPRECATION") state::dmPermission.delegate()
 
     @Deprecated("'defaultPermission' is deprecated in favor of 'defaultMemberPermissions' and 'dmPermission'. Setting 'defaultPermission' to false can be replaced by setting 'defaultMemberPermissions' to empty Permissions and 'dmPermission' to false ('dmPermission' is only available for global commands).")
