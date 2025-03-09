@@ -20,11 +20,13 @@ public data class ApplicationCommandData(
     val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
     val options: Optional<List<ApplicationCommandOptionData>> = Optional.Missing(),
     val defaultMemberPermissions: Permissions?,
+    @Deprecated("'dmPermission' is deprecated in favor of `contexts`")
     val dmPermission: OptionalBoolean = OptionalBoolean.Missing,
-    @Deprecated("'defaultPermission' is deprecated in favor of 'defaultMemberPermissions' and 'dmPermission'.")
+    @Deprecated("'defaultPermission' is deprecated in favor of 'defaultMemberPermissions' and 'contexts'.")
     val defaultPermission: OptionalBoolean? = OptionalBoolean.Missing,
     val nsfw: OptionalBoolean = OptionalBoolean.Missing,
-    val version: Snowflake
+    val version: Snowflake,
+    val contexts: Optional<List<InteractionContextType>> = Optional.Missing()
 ) {
     public companion object {
         public val description: DataDescription<ApplicationCommandData, Snowflake> =
@@ -48,7 +50,8 @@ public data class ApplicationCommandData(
                     @Suppress("DEPRECATION") dmPermission,
                     @Suppress("DEPRECATION") defaultPermission,
                     nsfw,
-                    version
+                    version,
+                    contexts
                 )
             }
         }

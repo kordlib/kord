@@ -1,10 +1,7 @@
 package dev.kord.core.entity.application
 
 import dev.kord.common.Locale
-import dev.kord.common.entity.ApplicationCommandType
-import dev.kord.common.entity.ChannelType
-import dev.kord.common.entity.Permissions
-import dev.kord.common.entity.Snowflake
+import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.orEmpty
 import dev.kord.common.entity.optional.value
 import dev.kord.core.behavior.ApplicationCommandBehavior
@@ -56,7 +53,7 @@ public sealed interface ApplicationCommand : ApplicationCommandBehavior {
      * whether the command is enabled by default when the app is added to a guild.
      */
     @Suppress("DeprecatedCallableAddReplaceWith")
-    @Deprecated("'defaultPermission' is deprecated in favor of 'defaultMemberPermissions' and 'dmPermission'.")
+    @Deprecated("'defaultPermission' is deprecated in favor of 'defaultMemberPermissions' and 'contexts'.")
     public val defaultPermission: Boolean? get() = @Suppress("DEPRECATION") data.defaultPermission.value
 
     /** Indicates whether the command is age-restricted. */
@@ -68,7 +65,12 @@ public interface GlobalApplicationCommand : ApplicationCommand, GlobalApplicatio
     /**
      * Whether this command is available in DMs with the application.
      */
-    public val dmPermission: Boolean get() = data.dmPermission.orElse(true)
+    public val dmPermission: Boolean get() = @Suppress("DEPRECATION") data.dmPermission.orElse(true)
+
+    /**
+     * Whether this command is available in DMs or group chats with the application,
+     */
+    public val contexts: List<InteractionContextType> get() = data.contexts.orEmpty()
 }
 public class UnknownGlobalApplicationCommand(
     override val data: ApplicationCommandData,
