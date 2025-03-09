@@ -45,7 +45,7 @@ public data class ApplicationCommandData(
                     guildId,
                     options.mapList { ApplicationCommandOptionData.from(it) },
                     defaultMemberPermissions,
-                    dmPermission,
+                    @Suppress("DEPRECATION") dmPermission,
                     @Suppress("DEPRECATION") defaultPermission,
                     nsfw,
                     version
