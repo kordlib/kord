@@ -33,14 +33,14 @@ public interface ApplicationCommandCreateBuilder : LocalizedNameCreateBuilder,
 
 @KordDsl
 public interface GlobalApplicationCommandCreateBuilder : ApplicationCommandCreateBuilder {
-    @Deprecated("'dmPermission' is deprecated in favor of 'contexts'. Setting 'dmPermission' to false can be replaced by setting 'contexts' to empty InteractionContextType ('context' is only available for global commands).")
+    @Deprecated("'dmPermission' is deprecated in favor of 'contexts'. Setting 'dmPermission' to false can be replaced by setting 'contexts' to empty InteractionContextType ('contexts' is only available for global commands).")
     public var dmPermission: Boolean?
     public var contexts: MutableList<InteractionContextType>?
 }
 
 @KordDsl
 public interface GlobalApplicationCommandModifyBuilder : ApplicationCommandModifyBuilder {
-    @Deprecated("'dmPermission' is deprecated in favor of 'contexts'. Setting 'dmPermission' to false can be replaced by setting 'contexts' to empty InteractionContextType ('context' is only available for global commands).")
+    @Deprecated("'dmPermission' is deprecated in favor of 'contexts'. Setting 'dmPermission' to false can be replaced by setting 'contexts' to empty InteractionContextType ('contexts' is only available for global commands).")
     public var dmPermission: Boolean?
     public var contexts: MutableList<InteractionContextType>?
 }

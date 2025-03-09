@@ -123,10 +123,10 @@ public data class DiscordApplicationCommand(
     @SerialName("default_member_permissions")
     val defaultMemberPermissions: Permissions?,
     @SerialName("dm_permission")
-    @Deprecated("'dmPermission' is deprecated in favor of 'context'.")
+    @Deprecated("'dmPermission' is deprecated in favor of 'contexts'.")
     val dmPermission: OptionalBoolean = OptionalBoolean.Missing,
     @SerialName("default_permission")
-    @Deprecated("'defaultPermission' is deprecated in favor of 'defaultMemberPermissions' and 'context'.")
+    @Deprecated("'defaultPermission' is deprecated in favor of 'defaultMemberPermissions' and 'contexts'.")
     val defaultPermission: OptionalBoolean? = OptionalBoolean.Missing,
     val nsfw: OptionalBoolean = OptionalBoolean.Missing,
     val contexts: Optional<List<InteractionContextType>> = Optional.Missing(),

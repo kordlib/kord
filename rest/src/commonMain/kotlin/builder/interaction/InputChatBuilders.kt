@@ -148,10 +148,10 @@ internal class ChatInputCreateBuilderImpl(
 
     override var options: MutableList<OptionsBuilder>? by state::options.delegate()
     override var defaultMemberPermissions: Permissions? by state::defaultMemberPermissions.delegate()
-    @Deprecated("'dmPermission' is deprecated in favor of 'contexts'. Setting 'dmPermission' to false can be replaced by setting 'contexts' to empty InteractionContextType ('context' is only available for global commands).")
+    @Deprecated("'dmPermission' is deprecated in favor of 'contexts'. Setting 'dmPermission' to false can be replaced by setting 'contexts' to empty InteractionContextType ('contexts' is only available for global commands).")
     override var dmPermission: Boolean? by @Suppress("DEPRECATION") state::dmPermission.delegate()
 
-    @Deprecated("'defaultPermission' is deprecated in favor of 'defaultMemberPermissions' and 'context'. Setting 'defaultPermission' to false can be replaced by setting 'defaultMemberPermissions' to empty Permissions and 'contexts' to empty InteractionContextType ('contexts' is only available for global commands).")    override var defaultPermission: Boolean? by @Suppress("DEPRECATION") state::defaultPermission.delegate()
+    @Deprecated("'defaultPermission' is deprecated in favor of 'defaultMemberPermissions' and 'contexts'. Setting 'defaultPermission' to false can be replaced by setting 'defaultMemberPermissions' to empty Permissions and 'contexts' to empty InteractionContextType ('contexts' is only available for global commands).")    override var defaultPermission: Boolean? by @Suppress("DEPRECATION") state::defaultPermission.delegate()
 
     override var nsfw: Boolean? by state::nsfw.delegate()
 
