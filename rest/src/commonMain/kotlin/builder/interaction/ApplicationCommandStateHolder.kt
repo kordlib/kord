@@ -27,7 +27,7 @@ internal class ApplicationCommandModifyStateHolder {
     var dmPermission: OptionalBoolean? = OptionalBoolean.Missing
 
 
-    @Deprecated("'defaultPermission' is deprecated in favor of 'defaultMemberPermissions' and 'contexts'. Setting 'defaultPermission' to false can be replaced by setting 'defaultMemberPermissions' to empty Permissions and 'dmPermission' to empty InteractionContextType ('dmPermission' is only available for global commands).")
+    @Deprecated("'defaultPermission' is deprecated in favor of 'defaultMemberPermissions' and 'contexts'. Setting 'defaultPermission' to false can be replaced by setting 'defaultMemberPermissions' to empty Permissions and 'contexts' to empty InteractionContextType ('contexts' is only available for global commands).")
     @SerialName("default_permission")
     var defaultPermission: OptionalBoolean = OptionalBoolean.Missing
 
