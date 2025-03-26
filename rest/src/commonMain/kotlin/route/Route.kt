@@ -603,6 +603,13 @@ public sealed class Route<T>(
             ListSerializer(DiscordVoiceRegion.serializer())
         )
 
+    public object GuildVoiceStatesGet :
+        Route<DiscordVoiceState>(
+            HttpMethod.Get,
+            "/guilds/$GuildId/voice-states/$UserId",
+            DiscordVoiceState.serializer()
+        )
+
     public object GuildInvitesGet :
         Route<List<DiscordInviteWithMetadata>>(
             HttpMethod.Get,
