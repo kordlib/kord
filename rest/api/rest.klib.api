@@ -6827,6 +6827,7 @@ final class dev.kord.rest.service/GuildService : dev.kord.rest.service/RestServi
     final suspend fun getGuildIntegrations(dev.kord.common.entity/Snowflake): kotlin.collections/List<dev.kord.common.entity/DiscordIntegration> // dev.kord.rest.service/GuildService.getGuildIntegrations|getGuildIntegrations(dev.kord.common.entity.Snowflake){}[0]
     final suspend fun getGuildInvites(dev.kord.common.entity/Snowflake): kotlin.collections/List<dev.kord.common.entity/DiscordInviteWithMetadata> // dev.kord.rest.service/GuildService.getGuildInvites|getGuildInvites(dev.kord.common.entity.Snowflake){}[0]
     final suspend fun getGuildMember(dev.kord.common.entity/Snowflake, dev.kord.common.entity/Snowflake): dev.kord.common.entity/DiscordGuildMember // dev.kord.rest.service/GuildService.getGuildMember|getGuildMember(dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake){}[0]
+    final suspend fun getGuildMemberVoiceState(dev.kord.common.entity/Snowflake, dev.kord.common.entity/Snowflake): dev.kord.common.entity/DiscordVoiceState // dev.kord.rest.service/GuildService.getGuildMemberVoiceState|getGuildMemberVoiceState(dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake){}[0]
     final suspend fun getGuildMembers(dev.kord.common.entity/Snowflake, dev.kord.rest.route/Position.After? = ..., kotlin/Int? = ...): kotlin.collections/List<dev.kord.common.entity/DiscordGuildMember> // dev.kord.rest.service/GuildService.getGuildMembers|getGuildMembers(dev.kord.common.entity.Snowflake;dev.kord.rest.route.Position.After?;kotlin.Int?){}[0]
     final suspend fun getGuildMembers(dev.kord.common.entity/Snowflake, kotlin/String, kotlin/Int? = ...): kotlin.collections/List<dev.kord.common.entity/DiscordGuildMember> // dev.kord.rest.service/GuildService.getGuildMembers|getGuildMembers(dev.kord.common.entity.Snowflake;kotlin.String;kotlin.Int?){}[0]
     final suspend fun getGuildOnboarding(dev.kord.common.entity/Snowflake): dev.kord.common.entity/DiscordGuildOnboarding // dev.kord.rest.service/GuildService.getGuildOnboarding|getGuildOnboarding(dev.kord.common.entity.Snowflake){}[0]
@@ -7485,6 +7486,8 @@ sealed class <#A: kotlin/Any?> dev.kord.rest.route/Route { // dev.kord.rest.rout
     final object GuildVanityInviteGet : dev.kord.rest.route/Route<dev.kord.common.entity/DiscordPartialInvite> // dev.kord.rest.route/Route.GuildVanityInviteGet|null[0]
 
     final object GuildVoiceRegionsGet : dev.kord.rest.route/Route<kotlin.collections/List<dev.kord.common.entity/DiscordVoiceRegion>> // dev.kord.rest.route/Route.GuildVoiceRegionsGet|null[0]
+
+    final object GuildVoiceStatesGet : dev.kord.rest.route/Route<dev.kord.common.entity/DiscordVoiceState> // dev.kord.rest.route/Route.GuildVoiceStatesGet|null[0]
 
     final object GuildWebhooksGet : dev.kord.rest.route/Route<kotlin.collections/List<dev.kord.common.entity/DiscordWebhook>> // dev.kord.rest.route/Route.GuildWebhooksGet|null[0]
 

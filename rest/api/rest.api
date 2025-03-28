@@ -7000,6 +7000,10 @@ public final class dev/kord/rest/route/Route$GuildVoiceRegionsGet : dev/kord/res
 	public static final field INSTANCE Ldev/kord/rest/route/Route$GuildVoiceRegionsGet;
 }
 
+public final class dev/kord/rest/route/Route$GuildVoiceStatesGet : dev/kord/rest/route/Route {
+	public static final field INSTANCE Ldev/kord/rest/route/Route$GuildVoiceStatesGet;
+}
+
 public final class dev/kord/rest/route/Route$GuildWebhooksGet : dev/kord/rest/route/Route {
 	public static final field INSTANCE Ldev/kord/rest/route/Route$GuildWebhooksGet;
 }
@@ -7504,6 +7508,7 @@ public final class dev/kord/rest/service/GuildService : dev/kord/rest/service/Re
 	public final fun getGuildIntegrations (Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun getGuildInvites (Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun getGuildMember (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun getGuildMemberVoiceState (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun getGuildMembers (Ldev/kord/common/entity/Snowflake;Ldev/kord/rest/route/Position$After;Ljava/lang/Integer;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun getGuildMembers (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ljava/lang/Integer;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static synthetic fun getGuildMembers$default (Ldev/kord/rest/service/GuildService;Ldev/kord/common/entity/Snowflake;Ldev/kord/rest/route/Position$After;Ljava/lang/Integer;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;

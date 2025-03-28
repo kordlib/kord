@@ -70,6 +70,10 @@ public class StoreEntitySupplier(
             cache.put(member.memberData)
         }
 
+    override suspend fun getMemberVoiceStateOrNull(guildId: Snowflake, userId: Snowflake): VoiceState? {
+        return storeAndReturn(supplier.getMemberVoiceStateOrNull(guildId, userId)) { it.data }
+    }
+
     override suspend fun getMessageOrNull(channelId: Snowflake, messageId: Snowflake): Message? {
         return storeAndReturn(supplier.getMessageOrNull(channelId, messageId)) { it.data }
     }
