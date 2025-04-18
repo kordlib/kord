@@ -21,10 +21,10 @@ kotlin {
                 runtimeOnly(libs.bundles.test.jvm.runtime)
             }
         }
-        wasmJsMain {
-            dependencies {
-
-            }
-        }
+        //wasmJsMain {
+        //    dependencies {
+        //        api(libs.bundles.test.wasmJs)
+        //    }
+        //}
     }
 }

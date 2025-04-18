@@ -74,6 +74,7 @@ kotlinpoet-ksp = { module = "com.squareup:kotlinpoet-ksp", version.ref = "kotlin
 kotlin-test-annotations-common = { module = "org.jetbrains.kotlin:kotlin-test-annotations-common", version.ref = "kotlin" }
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test-common", version.ref = "kotlin" }
 kotlin-test-js = { module = "org.jetbrains.kotlin:kotlin-test-js", version.ref = "kotlin" }
+kotlin-test-wasmJs = { module = "org.jetbrains.kotlin:kotlin-test-wasm-js", version.ref = "kotlin" }
 kotlin-test-junit5 = { module = "org.jetbrains.kotlin:kotlin-test-junit5", version.ref = "kotlin" }
 junit-jupiter-api = { module = "org.junit.jupiter:junit-jupiter-api", version.ref = "junit-jupiter" }
 junit-jupiter-engine = { module = "org.junit.jupiter:junit-jupiter-engine", version.ref = "junit-jupiter" }
@@ -98,6 +99,7 @@ ktor-client-serialization = ["ktor-client-content-negotiation", "ktor-serializat
 
 test-common = ["kotlin-test-annotations-common", "kotlin-test", "kotlinx-coroutines-test"]
 test-js = ["kotlin-test-js", "kotlin-node"]
+test-wasmJs = ["kotlin-test-wasmJs"]
 test-jvm = ["kotlin-test-junit5", "junit-jupiter-api"]
 test-jvm-runtime = ["junit-jupiter-engine", "junit-platform-launcher", "slf4j-simple"]
 
