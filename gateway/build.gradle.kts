@@ -1,3 +1,7 @@
+@file:OptIn(ExperimentalWasmDsl::class)
+
+import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
+
 plugins {
     `kord-multiplatform-module`
     `kord-publishing`
@@ -24,6 +28,16 @@ kotlin {
         jsMain {
             dependencies {
                 implementation(libs.kotlin.node)
+                implementation(npm("fast-zlib", libs.versions.fastZlib.get()))
+
+                // workaround for https://youtrack.jetbrains.com/issue/KT-43500 /
+                // https://youtrack.jetbrains.com/issue/KT-64109#focus=Comments-27-10064206.0-0 /
+                // https://youtrack.jetbrains.com/issue/KT-61096 (intended to be compileOnly in commonMain only)
+                implementation(projects.kspAnnotations)
+            }
+        }
+        wasmJsMain {
+            dependencies {
                 implementation(npm("fast-zlib", libs.versions.fastZlib.get()))
 
                 // workaround for https://youtrack.jetbrains.com/issue/KT-43500 /

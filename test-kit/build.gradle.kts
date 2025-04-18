@@ -21,5 +21,10 @@ kotlin {
                 runtimeOnly(libs.bundles.test.jvm.runtime)
             }
         }
+        wasmJsMain {
+            dependencies {
+
+            }
+        }
     }
 }
