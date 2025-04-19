@@ -6,12 +6,13 @@ ktor = "3.1.2" # https://github.com/ktorio/ktor
 kotlinx-coroutines = "1.10.2" # https://github.com/Kotlin/kotlinx.coroutines
 kotlinx-serialization = "1.8.1" # https://github.com/Kotlin/kotlinx.serialization
 kotlinx-datetime = "0.6.2" # https://github.com/Kotlin/kotlinx-datetime
-kord-cache = "0.5.6" # https://github.com/kordlib/cache
+kotlinx-browser = "0.3" # https://github.com/kotlin/kotlinx-browser
+kord-cache = "0.5.6" # https://github.com/kordlib/cache TODO need support wasm/Js
 
 # implementation dependencies
 kotlin-logging = "7.0.3" # https://github.com/oshai/kotlin-logging
 slf4j = "2.0.16" # https://www.slf4j.org
-kotlin-node = "2025.4.12-22.13.10" # https://github.com/JetBrains/kotlin-wrappers
+kotlin-node = "2025.4.14-22.13.10" # https://github.com/JetBrains/kotlin-wrappers
 bignum = "0.3.10" # https://github.com/ionspin/kotlin-multiplatform-bignum
 stately = "2.1.0" # https://github.com/touchlab/Stately
 fastZlib = "2.0.1" # https://github.com/timotejroiko/fast-zlib
@@ -55,6 +56,7 @@ kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-c
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinx-coroutines" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization" }
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinx-datetime" }
+kotlinx-browser = { module = "org.jetbrains.kotlinx:kotlinx-browser", version.ref = "kotlinx-browser" }
 
 # other
 kotlin-logging = { module = "io.github.oshai:kotlin-logging", version.ref = "kotlin-logging" }

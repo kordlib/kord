@@ -23,12 +23,10 @@ kotlin {
         }
     }
     js {
-        nodejs()
-        useCommonJs()
+        applyKordJsTarget()
     }
     wasmJs {
-        nodejs()
-        useCommonJs()
+        applyKordJsTarget()
     }
 }
 

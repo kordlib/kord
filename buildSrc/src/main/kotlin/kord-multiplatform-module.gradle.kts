@@ -39,32 +39,21 @@ kotlin {
         }
     }
     js {
-        nodejs {
-            testTask {
-                useMocha {
-                    // disable timeouts, some tests are too slow for default 2-second timeout:
-                    // https://mochajs.org/#-timeout-ms-t-ms
-                    timeout = "0"
-                }
-            }
-        }
-        useCommonJs()
+        applyKordJsTarget()
     }
 
     wasmJs {
-        nodejs {
-            testTask {
-                useMocha {
-                    // disable timeouts, some tests are too slow for default 2-second timeout:
-                    // https://mochajs.org/#-timeout-ms-t-ms
-                    timeout = "0"
-                }
-            }
-        }
-        useCommonJs()
+        applyKordJsTarget()
     }
 
     applyDefaultHierarchyTemplate()
+
+    applyHierarchyTemplate {
+        group("wasmJsShared") {
+            withWasmJs()
+            withJs()
+        }
+    }
 
     sourceSets {
         applyKordTestOptIns()
@@ -86,6 +75,8 @@ kotlin {
         wasmJsMain {
             dependsOn(nonJvmMain)
         }
+        sourceSets["wasmJsSharedTest"].dependsOn(commonTest.get())
+        sourceSets["wasmJsSharedMain"].dependsOn(commonMain.get())
     }
 }
 

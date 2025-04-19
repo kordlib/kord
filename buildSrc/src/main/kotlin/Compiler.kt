@@ -4,6 +4,7 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_1_8
 import org.jetbrains.kotlin.gradle.dsl.KotlinCommonCompilerOptions
 import org.jetbrains.kotlin.gradle.dsl.KotlinJvmCompilerOptions
 import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet
+import org.jetbrains.kotlin.gradle.targets.js.dsl.KotlinJsTargetDsl
 
 val kordOptIns = listOf(
     "kotlin.contracts.ExperimentalContracts",
@@ -26,6 +27,19 @@ internal fun KotlinJvmCompilerOptions.applyKordJvmCompilerOptions() {
     applyKordCommonCompilerOptions()
     jvmTarget = JVM_1_8
     freeCompilerArgs.add("-Xjdk-release=1.8")
+}
+
+internal fun KotlinJsTargetDsl.applyKordJsTarget() {
+    nodejs {
+        testTask {
+            useMocha {
+                // disable timeouts, some tests are too slow for default 2-second timeout:
+                // https://mochajs.org/#-timeout-ms-t-ms
+                timeout = "0"
+            }
+        }
+    }
+    useCommonJs()
 }
 
 internal fun NamedDomainObjectSet<KotlinSourceSet>.applyKordTestOptIns() {
