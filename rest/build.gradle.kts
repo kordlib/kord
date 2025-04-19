@@ -24,5 +24,10 @@ kotlin {
                 implementation(libs.slf4j.api)
             }
         }
+        wasmJsMain {
+            dependencies {
+                implementation(libs.kotlinx.browser)
+            }
+        }
     }
 }

@@ -1,34 +1,35 @@
 [versions]
 
 # api dependencies
-kotlin = "2.1.10" # https://github.com/JetBrains/kotlin
-ktor = "3.0.3" # https://github.com/ktorio/ktor
-kotlinx-coroutines = "1.10.1" # https://github.com/Kotlin/kotlinx.coroutines
-kotlinx-serialization = "1.8.0" # https://github.com/Kotlin/kotlinx.serialization
-kotlinx-datetime = "0.6.1" # https://github.com/Kotlin/kotlinx-datetime
-kord-cache = "0.5.6" # https://github.com/kordlib/cache
+kotlin = "2.1.21-RC" # https://github.com/JetBrains/kotlin
+ktor = "3.1.2" # https://github.com/ktorio/ktor
+kotlinx-coroutines = "1.10.2" # https://github.com/Kotlin/kotlinx.coroutines
+kotlinx-serialization = "1.8.1" # https://github.com/Kotlin/kotlinx.serialization
+kotlinx-datetime = "0.6.2" # https://github.com/Kotlin/kotlinx-datetime
+kotlinx-browser = "0.3" # https://github.com/kotlin/kotlinx-browser
+kord-cache = "0.5.6" # https://github.com/kordlib/cache TODO need support wasm/Js
 
 # implementation dependencies
 kotlin-logging = "7.0.3" # https://github.com/oshai/kotlin-logging
 slf4j = "2.0.16" # https://www.slf4j.org
-kotlin-node = "2025.2.1-22.10.5" # https://github.com/JetBrains/kotlin-wrappers
+kotlin-node = "2025.4.14-22.13.10" # https://github.com/JetBrains/kotlin-wrappers
 bignum = "0.3.10" # https://github.com/ionspin/kotlin-multiplatform-bignum
 stately = "2.1.0" # https://github.com/touchlab/Stately
 fastZlib = "2.0.1" # https://github.com/timotejroiko/fast-zlib
 
 # code generation
-ksp = "2.1.10-1.0.29" # https://github.com/google/ksp
+ksp = "2.1.21-RC-2.0.0" # https://github.com/google/ksp
 kotlinpoet = "2.0.0" # https://github.com/square/kotlinpoet
 
 # tests
 junit-jupiter = "5.11.4" # https://github.com/junit-team/junit5
 junit-platform = "1.11.4"
-mockk = "1.13.16" # https://github.com/mockk/mockk
+mockk = "1.14.0" # https://github.com/mockk/mockk
 kbson = "0.4.0" # https://github.com/mongodb/kbson
 
 # plugins
 dokka = "2.0.0" # https://github.com/Kotlin/dokka
-kotlinx-atomicfu = "0.27.0" # https://github.com/Kotlin/kotlinx-atomicfubbn
+kotlinx-atomicfu = "0.27.0" # https://github.com/Kotlin/kotlinx-atomicfu
 
 binary-compatibility-validator = "0.17.0" # https://github.com/Kotlin/binary-compatibility-validator
 buildconfig = "5.5.1" # https://github.com/gmazzo/gradle-buildconfig-plugin
@@ -44,6 +45,7 @@ ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negoti
 ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
 ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
 ktor-client-js = { module = "io.ktor:ktor-client-js", version.ref = "ktor" }
+ktor-client-wasmJs = { module = "io.ktor:ktor-client-js-wasm-js", version.ref = "ktor" }
 ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktor" }
 ktor-client-mock = { module = "io.ktor:ktor-client-mock", version.ref = "ktor" }
 ktor-network = { module = "io.ktor:ktor-network", version.ref = "ktor" }
@@ -54,6 +56,7 @@ kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-c
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinx-coroutines" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization" }
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinx-datetime" }
+kotlinx-browser = { module = "org.jetbrains.kotlinx:kotlinx-browser", version.ref = "kotlinx-browser" }
 
 # other
 kotlin-logging = { module = "io.github.oshai:kotlin-logging", version.ref = "kotlin-logging" }
@@ -73,6 +76,7 @@ kotlinpoet-ksp = { module = "com.squareup:kotlinpoet-ksp", version.ref = "kotlin
 kotlin-test-annotations-common = { module = "org.jetbrains.kotlin:kotlin-test-annotations-common", version.ref = "kotlin" }
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test-common", version.ref = "kotlin" }
 kotlin-test-js = { module = "org.jetbrains.kotlin:kotlin-test-js", version.ref = "kotlin" }
+kotlin-test-wasmJs = { module = "org.jetbrains.kotlin:kotlin-test-wasm-js", version.ref = "kotlin" }
 kotlin-test-junit5 = { module = "org.jetbrains.kotlin:kotlin-test-junit5", version.ref = "kotlin" }
 junit-jupiter-api = { module = "org.junit.jupiter:junit-jupiter-api", version.ref = "junit-jupiter" }
 junit-jupiter-engine = { module = "org.junit.jupiter:junit-jupiter-engine", version.ref = "junit-jupiter" }
@@ -97,6 +101,7 @@ ktor-client-serialization = ["ktor-client-content-negotiation", "ktor-serializat
 
 test-common = ["kotlin-test-annotations-common", "kotlin-test", "kotlinx-coroutines-test"]
 test-js = ["kotlin-test-js", "kotlin-node"]
+test-wasmJs = ["kotlin-test-wasmJs"]
 test-jvm = ["kotlin-test-junit5", "junit-jupiter-api"]
 test-jvm-runtime = ["junit-jupiter-engine", "junit-platform-launcher", "slf4j-simple"]
 

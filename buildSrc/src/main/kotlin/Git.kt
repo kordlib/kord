@@ -1,5 +1,4 @@
 import org.gradle.api.Project
-import org.gradle.api.provider.Provider
 
 internal fun Project.git(vararg command: String) = providers.exec {
         commandLine("git", *command)

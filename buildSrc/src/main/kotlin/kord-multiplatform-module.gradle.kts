@@ -1,4 +1,7 @@
+@file:OptIn(ExperimentalWasmDsl::class)
+
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
+import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.targets.js.testing.KotlinJsTest
 
 plugins {
@@ -36,19 +39,21 @@ kotlin {
         }
     }
     js {
-        nodejs {
-            testTask {
-                useMocha {
-                    // disable timeouts, some tests are too slow for default 2-second timeout:
-                    // https://mochajs.org/#-timeout-ms-t-ms
-                    timeout = "0"
-                }
-            }
-        }
-        useCommonJs()
+        applyKordJsTarget()
+    }
+
+    wasmJs {
+        applyKordJsTarget()
     }
 
     applyDefaultHierarchyTemplate()
+
+    applyHierarchyTemplate {
+        group("wasmJsShared") {
+            withWasmJs()
+            withJs()
+        }
+    }
 
     sourceSets {
         applyKordTestOptIns()
@@ -67,6 +72,11 @@ kotlin {
         jsMain {
             dependsOn(nonJvmMain)
         }
+        wasmJsMain {
+            dependsOn(nonJvmMain)
+        }
+        sourceSets["wasmJsSharedTest"].dependsOn(commonTest.get())
+        sourceSets["wasmJsSharedMain"].dependsOn(commonMain.get())
     }
 }
 
