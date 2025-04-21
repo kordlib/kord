@@ -10,10 +10,9 @@ import kotlinx.coroutines.flow.flow
 
 @KordVoice
 public object NOPStreams : Streams {
-    override suspend fun listen(key: ByteArray, server: SocketAddress) {}
+    override suspend fun listen(key: ByteArray, server: SocketAddress, s2u: (UInt) -> Snowflake?) {}
 
     override val incomingAudioPackets: Flow<RTPPacket> = flow { }
     override val incomingAudioFrames: Flow<Pair<UInt, AudioFrame>> = flow { }
     override val incomingUserStreams: Flow<Pair<Snowflake, AudioFrame>> = flow { }
-    override val ssrcToUser: Map<UInt, Snowflake> = emptyMap()
 }

@@ -177,8 +177,9 @@ public class VoiceConnectionBuilder(
                     nonceStrategy
                 )
             )
+
         val streams =
-            streams ?: if (receiveVoice) DefaultStreams(voiceGateway, udpSocket, nonceStrategy) else NOPStreams
+            streams ?: if (receiveVoice) DefaultStreams(udpSocket, nonceStrategy) else NOPStreams
 
         return VoiceConnection(
             voiceConnectionData,

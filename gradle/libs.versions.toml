@@ -6,6 +6,7 @@ ktor = "3.0.0" # https://github.com/ktorio/ktor
 kotlinx-coroutines = "1.9.0" # https://github.com/Kotlin/kotlinx.coroutines
 kotlinx-serialization = "1.7.3" # https://github.com/Kotlin/kotlinx.serialization
 kotlinx-datetime = "0.6.1" # https://github.com/Kotlin/kotlinx-datetime
+kotlinx-collections-immutable = "0.3.8" # https://github.com/Kotlin/kotlinx.collections.immutable
 kord-cache = "0.5.4" # https://github.com/kordlib/cache
 
 # implementation dependencies
@@ -54,6 +55,7 @@ kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-c
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinx-coroutines" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization" }
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinx-datetime" }
+kotlinx-collections-immutable = { module = "org.jetbrains.kotlinx:kotlinx-collections-immutable", version.ref = "kotlinx-collections-immutable"}
 
 # other
 kotlin-logging = { module = "io.github.oshai:kotlin-logging", version.ref = "kotlin-logging" }
