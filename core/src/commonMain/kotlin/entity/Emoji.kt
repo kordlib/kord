@@ -105,12 +105,11 @@ public sealed class CustomEmoji : Emoji, KordEntity, Strategizable {
 
 
     /**
-     * Requests to delete this emoji, with the given [reason].
+     * Requests to delete this emoji.
      *
-     * @param reason the reason showing up in the audit log
      * @throws RequestException if anything went wrong during the request.
      */
-    public abstract suspend fun delete(reason: String? = null)
+    public abstract suspend fun delete()
 
     /**
      * Requests to get the creator of the emoji as a [User],
@@ -169,9 +168,11 @@ public class GuildEmoji(
      * @param reason the reason showing up in the audit log
      * @throws RequestException if anything went wrong during the request.
      */
-    public override suspend fun delete(reason: String?) {
+    public suspend fun delete(reason: String?) {
         kord.rest.emoji.deleteEmoji(guildId = guildId, emojiId = id, reason = reason)
     }
+
+    override suspend fun delete(): Unit = delete(null)
 
     /**
      *  Requests to edit the emoji.
@@ -229,8 +230,8 @@ public class ApplicationEmoji(
      * @param reason the reason showing up in the audit log
      * @throws RequestException if anything went wrong during the request.
      */
-    public override suspend fun delete(reason: String?) {
-        kord.rest.application.deleteApplicationEmoji(appId = applicationId, emojiId = id, reason = reason)
+    public override suspend fun delete() {
+        kord.rest.application.deleteApplicationEmoji(appId = applicationId, emojiId = id)
     }
 
     /**

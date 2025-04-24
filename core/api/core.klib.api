@@ -6939,7 +6939,7 @@ final class dev.kord.core.entity/ApplicationEmoji : dev.kord.core.entity/CustomE
     final fun hashCode(): kotlin/Int // dev.kord.core.entity/ApplicationEmoji.hashCode|hashCode(){}[0]
     final fun toString(): kotlin/String // dev.kord.core.entity/ApplicationEmoji.toString|toString(){}[0]
     final fun withStrategy(dev.kord.core.supplier/EntitySupplyStrategy<*>): dev.kord.core.entity/ApplicationEmoji // dev.kord.core.entity/ApplicationEmoji.withStrategy|withStrategy(dev.kord.core.supplier.EntitySupplyStrategy<*>){}[0]
-    final suspend fun delete(kotlin/String?) // dev.kord.core.entity/ApplicationEmoji.delete|delete(kotlin.String?){}[0]
+    final suspend fun delete() // dev.kord.core.entity/ApplicationEmoji.delete|delete(){}[0]
     final suspend inline fun edit(kotlin/Function1<dev.kord.rest.builder.guild/EmojiModifyBuilder, kotlin/Unit>) // dev.kord.core.entity/ApplicationEmoji.edit|edit(kotlin.Function1<dev.kord.rest.builder.guild.EmojiModifyBuilder,kotlin.Unit>){}[0]
 }
 
@@ -7507,6 +7507,7 @@ final class dev.kord.core.entity/GuildEmoji : dev.kord.core.entity/CustomEmoji {
     final fun hashCode(): kotlin/Int // dev.kord.core.entity/GuildEmoji.hashCode|hashCode(){}[0]
     final fun toString(): kotlin/String // dev.kord.core.entity/GuildEmoji.toString|toString(){}[0]
     final fun withStrategy(dev.kord.core.supplier/EntitySupplyStrategy<*>): dev.kord.core.entity/GuildEmoji // dev.kord.core.entity/GuildEmoji.withStrategy|withStrategy(dev.kord.core.supplier.EntitySupplyStrategy<*>){}[0]
+    final suspend fun delete() // dev.kord.core.entity/GuildEmoji.delete|delete(){}[0]
     final suspend fun delete(kotlin/String?) // dev.kord.core.entity/GuildEmoji.delete|delete(kotlin.String?){}[0]
     final suspend fun getMember(): dev.kord.core.entity/Member? // dev.kord.core.entity/GuildEmoji.getMember|getMember(){}[0]
     final suspend inline fun edit(kotlin/Function1<dev.kord.rest.builder.guild/EmojiModifyBuilder, kotlin/Unit>) // dev.kord.core.entity/GuildEmoji.edit|edit(kotlin.Function1<dev.kord.rest.builder.guild.EmojiModifyBuilder,kotlin.Unit>){}[0]
@@ -11804,7 +11805,7 @@ sealed class dev.kord.core.entity/CustomEmoji : dev.kord.core.entity/Emoji, dev.
     open val name // dev.kord.core.entity/CustomEmoji.name|{}name[0]
         open fun <get-name>(): kotlin/String? // dev.kord.core.entity/CustomEmoji.name.<get-name>|<get-name>(){}[0]
 
-    abstract suspend fun delete(kotlin/String? = ...) // dev.kord.core.entity/CustomEmoji.delete|delete(kotlin.String?){}[0]
+    abstract suspend fun delete() // dev.kord.core.entity/CustomEmoji.delete|delete(){}[0]
     final suspend fun getUser(): dev.kord.core.entity/User? // dev.kord.core.entity/CustomEmoji.getUser|getUser(){}[0]
 }
 

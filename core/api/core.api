@@ -5717,7 +5717,7 @@ public final class dev/kord/core/entity/Application : dev/kord/core/entity/BaseA
 public final class dev/kord/core/entity/ApplicationEmoji : dev/kord/core/entity/CustomEmoji {
 	public fun <init> (Ldev/kord/core/cache/data/EmojiData;Ldev/kord/core/Kord;Ldev/kord/core/supplier/EntitySupplier;)V
 	public synthetic fun <init> (Ldev/kord/core/cache/data/EmojiData;Ldev/kord/core/Kord;Ldev/kord/core/supplier/EntitySupplier;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public fun delete (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun delete (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun edit (Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getApplicationId ()Ldev/kord/common/entity/Snowflake;
@@ -5906,8 +5906,7 @@ public final class dev/kord/core/entity/ClientStatus$Client$Web : dev/kord/core/
 public abstract class dev/kord/core/entity/CustomEmoji : dev/kord/core/entity/Emoji, dev/kord/core/entity/KordEntity, dev/kord/core/entity/Strategizable {
 	public fun compareTo (Ldev/kord/core/entity/Entity;)I
 	public synthetic fun compareTo (Ljava/lang/Object;)I
-	public abstract fun delete (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static synthetic fun delete$default (Ldev/kord/core/entity/CustomEmoji;Ljava/lang/String;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+	public abstract fun delete (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun getData ()Ldev/kord/core/cache/data/EmojiData;
 	public fun getId ()Ldev/kord/common/entity/Snowflake;
 	public final fun getImage ()Ldev/kord/core/entity/Asset;
@@ -6238,7 +6237,8 @@ public final class dev/kord/core/entity/Guild : dev/kord/core/behavior/GuildBeha
 public final class dev/kord/core/entity/GuildEmoji : dev/kord/core/entity/CustomEmoji {
 	public fun <init> (Ldev/kord/core/cache/data/EmojiData;Ldev/kord/core/Kord;Ldev/kord/core/supplier/EntitySupplier;)V
 	public synthetic fun <init> (Ldev/kord/core/cache/data/EmojiData;Ldev/kord/core/Kord;Ldev/kord/core/supplier/EntitySupplier;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public fun delete (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun delete (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun delete (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun edit (Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun equals (Ljava/lang/Object;)Z
 	public fun getData ()Ldev/kord/core/cache/data/EmojiData;
