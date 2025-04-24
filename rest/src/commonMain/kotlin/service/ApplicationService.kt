@@ -53,7 +53,7 @@ public class ApplicationService(handler: RequestHandler) : RestService(handler) 
     ): DiscordEmoji =
         call(Route.PatchApplicationEmoji) {
             keys[Route.ApplicationId] = appId
-            keys[Route.ApplicationId] = emojiId
+            keys[Route.EmojiId] = emojiId
 
             body(EmojiModifyRequest.serializer(), request)
         }
@@ -70,12 +70,10 @@ public class ApplicationService(handler: RequestHandler) : RestService(handler) 
     public suspend inline fun deleteApplicationEmoji(
         appId: Snowflake,
         emojiId: Snowflake,
-        reason: String? = null,
     ): Unit =
         call(Route.DeleteApplicationEmoji) {
             keys[Route.ApplicationId] = appId
-            keys[Route.ApplicationId] = emojiId
+            keys[Route.EmojiId] = emojiId
 
-            auditLogReason(reason)
         }
 }
