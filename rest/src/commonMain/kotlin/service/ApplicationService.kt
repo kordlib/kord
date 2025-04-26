@@ -41,7 +41,7 @@ public class ApplicationService(handler: RequestHandler) : RestService(handler) 
         image: Image,
     ): DiscordEmoji = createApplicationEmoji(appId, EmojiCreateBuilder(name, image).toRequest())
 
-    public suspend inline fun modifyApplicationEmoji(
+    public suspend fun modifyApplicationEmoji(
         appId: Snowflake,
         emojiId: Snowflake,
         request: EmojiModifyRequest
@@ -62,7 +62,7 @@ public class ApplicationService(handler: RequestHandler) : RestService(handler) 
         return modifyApplicationEmoji(appId, emojiId, EmojiModifyBuilder().apply(builder).toRequest())
     }
 
-    public suspend inline fun deleteApplicationEmoji(
+    public suspend fun deleteApplicationEmoji(
         appId: Snowflake,
         emojiId: Snowflake,
     ): Unit = call(Route.DeleteApplicationEmoji) {

@@ -10,7 +10,6 @@ import kotlinx.serialization.DeserializationStrategy
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.InternalSerializationApi
 import kotlinx.serialization.builtins.ListSerializer
-import kotlinx.serialization.builtins.serializer
 import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.descriptors.StructureKind
 import kotlinx.serialization.descriptors.buildSerialDescriptor
@@ -1136,7 +1135,7 @@ public sealed class Route<T>(
 
     public object PostApplicationEmoji : Route<DiscordEmoji>(
         HttpMethod.Post,
-        "/applications/$ApplicationId/emojis/",
+        "/applications/$ApplicationId/emojis",
         DiscordEmoji.serializer()
     )
 
@@ -1149,6 +1148,6 @@ public sealed class Route<T>(
     public object DeleteApplicationEmoji : Route<Unit>(
         HttpMethod.Delete,
         "/applications/$ApplicationId/emojis/$EmojiId",
-        Unit.serializer()
+        NoStrategy
     )
 }

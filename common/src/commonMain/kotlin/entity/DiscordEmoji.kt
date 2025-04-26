@@ -58,4 +58,4 @@ public data class DiscordPartialEmoji(
  * @property items the list of emojis
  */
 @Serializable
-public data class ApplicationEmojis(val items: List<DiscordEmoji>) : List<DiscordEmoji> by items
+public value class ApplicationEmojis(public val items: List<DiscordEmoji>)
