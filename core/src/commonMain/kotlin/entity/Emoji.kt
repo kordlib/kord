@@ -18,17 +18,17 @@ import dev.kord.core.hash
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
-/** Either a [StandardEmoji] or a [GuildEmoji]. */
+/** Either a [StandardEmoji] or a [CustomEmoji]. */
 public sealed interface Emoji {
     /**
      * Either the unicode representation of the emoji if it's a [StandardEmoji] or the emoji name if it's a
-     * [GuildEmoji].
+     * [CustomEmoji].
      */
     public val name: String?
 
     /**
      * Either the unicode representation of the emoji if it's a [StandardEmoji] or the
-     * [mention string](https://discord.com/developers/docs/reference#message-formatting) if it's a [GuildEmoji].
+     * [mention string](https://discord.com/developers/docs/reference#message-formatting) if it's a [CustomEmoji].
      */
     public val mention: String
 }
@@ -48,7 +48,7 @@ public class StandardEmoji(override val name: String) : Emoji {
 }
 
 /**
- * Superclass for all non standard emojis.
+ * Supertype for all non-standard emojis.
  *
  * @see GuildEmoji
  * @see ApplicationEmoji
@@ -226,13 +226,7 @@ public class ApplicationEmoji(
     public val applicationId: Snowflake
         get() = kord.selfId
 
-    /**
-     * Requests to delete this emoji, with the given [reason].
-     *
-     * @param reason the reason showing up in the audit log
-     * @throws RequestException if anything went wrong during the request.
-     */
-    public override suspend fun delete() {
+    override suspend fun delete() {
         kord.rest.application.deleteApplicationEmoji(appId = applicationId, emojiId = id)
     }
 
