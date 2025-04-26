@@ -10,6 +10,7 @@ import kotlinx.serialization.DeserializationStrategy
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.InternalSerializationApi
 import kotlinx.serialization.builtins.ListSerializer
+import kotlinx.serialization.builtins.serializer
 import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.descriptors.StructureKind
 import kotlinx.serialization.descriptors.buildSerialDescriptor
@@ -21,7 +22,9 @@ public sealed interface ResponseMapper<T> {
 }
 
 internal class ValueJsonMapper<T>(val strategy: DeserializationStrategy<T>) : ResponseMapper<T> {
-    override fun deserialize(json: Json, body: String): T = json.decodeFromString(strategy, body)
+    override fun deserialize(json: Json, body: String): T {
+        return json.decodeFromString(strategy, body)
+    }
     override fun toString(): String = "ValueJsonMapper(strategy=$strategy)"
 }
 
@@ -1118,4 +1121,34 @@ public sealed class Route<T>(
             "/guilds/$GuildId/stickers/$StickerId",
             DiscordMessageSticker.serializer()
         )
+
+    public object GetApplicationEmojis : Route<ApplicationEmojis>(
+        HttpMethod.Get,
+        "/applications/$ApplicationId/emojis",
+        ApplicationEmojis.serializer()
+    )
+
+    public object GetApplicationEmoji : Route<DiscordEmoji>(
+        HttpMethod.Get,
+        "/applications/$ApplicationId/emojis/$EmojiId",
+        DiscordEmoji.serializer()
+    )
+
+    public object PostApplicationEmoji : Route<DiscordEmoji>(
+        HttpMethod.Post,
+        "/applications/$ApplicationId/emojis/",
+        DiscordEmoji.serializer()
+    )
+
+    public object PatchApplicationEmoji : Route<DiscordEmoji>(
+        HttpMethod.Patch,
+        "/applications/$ApplicationId/emojis/$EmojiId",
+        DiscordEmoji.serializer()
+    )
+
+    public object DeleteApplicationEmoji : Route<Unit>(
+        HttpMethod.Delete,
+        "/applications/$ApplicationId/emojis/$EmojiId",
+        Unit.serializer()
+    )
 }

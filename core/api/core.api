@@ -30,6 +30,7 @@ public final class dev/kord/core/Kord : kotlinx/coroutines/CoroutineScope {
 	public final fun editPresence (Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun editSelf (Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun equals (Ljava/lang/Object;)Z
+	public final fun getApplicationEmoji (Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun getApplicationInfo (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun getApplicationRoleConnectionMetadataRecords (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun getCache ()Ldev/kord/cache/api/DataCache;
@@ -37,6 +38,7 @@ public final class dev/kord/core/Kord : kotlinx/coroutines/CoroutineScope {
 	public static synthetic fun getChannel$default (Ldev/kord/core/Kord;Ldev/kord/common/entity/Snowflake;Ldev/kord/core/supplier/EntitySupplyStrategy;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public fun getCoroutineContext ()Lkotlin/coroutines/CoroutineContext;
 	public final fun getDefaultSupplier ()Ldev/kord/core/supplier/EntitySupplier;
+	public final fun getEmojis ()Lkotlinx/coroutines/flow/Flow;
 	public final fun getEntitlements (Ldev/kord/core/supplier/EntitySupplyStrategy;Lkotlin/jvm/functions/Function1;)Lkotlinx/coroutines/flow/Flow;
 	public static synthetic fun getEntitlements$default (Ldev/kord/core/Kord;Ldev/kord/core/supplier/EntitySupplyStrategy;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lkotlinx/coroutines/flow/Flow;
 	public final fun getEvents ()Lkotlinx/coroutines/flow/SharedFlow;
@@ -5884,6 +5886,22 @@ public final class dev/kord/core/entity/Application : dev/kord/core/entity/BaseA
 	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/Strategizable;
 }
 
+public final class dev/kord/core/entity/ApplicationEmoji : dev/kord/core/entity/CustomEmoji {
+	public fun <init> (Ldev/kord/core/cache/data/EmojiData;Ldev/kord/core/Kord;Ldev/kord/core/supplier/EntitySupplier;)V
+	public synthetic fun <init> (Ldev/kord/core/cache/data/EmojiData;Ldev/kord/core/Kord;Ldev/kord/core/supplier/EntitySupplier;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun delete (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun edit (Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getApplicationId ()Ldev/kord/common/entity/Snowflake;
+	public fun getData ()Ldev/kord/core/cache/data/EmojiData;
+	public fun getKord ()Ldev/kord/core/Kord;
+	public fun getSupplier ()Ldev/kord/core/supplier/EntitySupplier;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/ApplicationEmoji;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/Strategizable;
+}
+
 public final class dev/kord/core/entity/Asset : dev/kord/core/KordObject {
 	public static final field Companion Ldev/kord/core/entity/Asset$Companion;
 	public synthetic fun <init> (ZLdev/kord/rest/route/CdnUrl;Ldev/kord/core/Kord;Ldev/kord/rest/Image$Format;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
@@ -6055,6 +6073,24 @@ public final class dev/kord/core/entity/ClientStatus$Client$Mobile : dev/kord/co
 
 public final class dev/kord/core/entity/ClientStatus$Client$Web : dev/kord/core/entity/ClientStatus$Client {
 	public fun <init> (Ldev/kord/common/entity/PresenceStatus;)V
+}
+
+public abstract class dev/kord/core/entity/CustomEmoji : dev/kord/core/entity/Emoji, dev/kord/core/entity/KordEntity, dev/kord/core/entity/Strategizable {
+	public fun compareTo (Ldev/kord/core/entity/Entity;)I
+	public synthetic fun compareTo (Ljava/lang/Object;)I
+	public abstract fun delete (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun getData ()Ldev/kord/core/cache/data/EmojiData;
+	public fun getId ()Ldev/kord/common/entity/Snowflake;
+	public final fun getImage ()Ldev/kord/core/entity/Asset;
+	public fun getMention ()Ljava/lang/String;
+	public fun getName ()Ljava/lang/String;
+	public final fun getRequiresColons ()Z
+	public final fun getUser ()Ldev/kord/core/behavior/UserBehavior;
+	public final fun getUser (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun getUserId ()Ldev/kord/common/entity/Snowflake;
+	public final fun isAnimated ()Z
+	public final fun isAvailable ()Z
+	public final fun isManaged ()Z
 }
 
 public final class dev/kord/core/entity/Embed : dev/kord/core/KordObject {
@@ -6370,36 +6406,23 @@ public final class dev/kord/core/entity/Guild : dev/kord/core/behavior/GuildBeha
 	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/Strategizable;
 }
 
-public final class dev/kord/core/entity/GuildEmoji : dev/kord/core/entity/Emoji, dev/kord/core/entity/KordEntity, dev/kord/core/entity/Strategizable {
+public final class dev/kord/core/entity/GuildEmoji : dev/kord/core/entity/CustomEmoji {
 	public fun <init> (Ldev/kord/core/cache/data/EmojiData;Ldev/kord/core/Kord;Ldev/kord/core/supplier/EntitySupplier;)V
 	public synthetic fun <init> (Ldev/kord/core/cache/data/EmojiData;Ldev/kord/core/Kord;Ldev/kord/core/supplier/EntitySupplier;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public fun compareTo (Ldev/kord/core/entity/Entity;)I
-	public synthetic fun compareTo (Ljava/lang/Object;)I
 	public final fun delete (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static synthetic fun delete$default (Ldev/kord/core/entity/GuildEmoji;Ljava/lang/String;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+	public fun delete (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun edit (Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun equals (Ljava/lang/Object;)Z
-	public final fun getData ()Ldev/kord/core/cache/data/EmojiData;
+	public fun getData ()Ldev/kord/core/cache/data/EmojiData;
 	public final fun getGuildId ()Ldev/kord/common/entity/Snowflake;
-	public fun getId ()Ldev/kord/common/entity/Snowflake;
-	public final fun getImage ()Ldev/kord/core/entity/Asset;
 	public fun getKord ()Ldev/kord/core/Kord;
 	public final fun getMember ()Ldev/kord/core/behavior/MemberBehavior;
 	public final fun getMember (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun getMention ()Ljava/lang/String;
-	public fun getName ()Ljava/lang/String;
-	public final fun getRequiresColons ()Z
 	public final fun getRoleBehaviors ()Ljava/util/Set;
 	public final fun getRoleIds ()Ljava/util/Set;
 	public final fun getRoles ()Lkotlinx/coroutines/flow/Flow;
 	public fun getSupplier ()Ldev/kord/core/supplier/EntitySupplier;
-	public final fun getUser ()Ldev/kord/core/behavior/UserBehavior;
-	public final fun getUser (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public final fun getUserId ()Ldev/kord/common/entity/Snowflake;
 	public fun hashCode ()I
-	public final fun isAnimated ()Z
-	public final fun isAvailable ()Z
-	public final fun isManaged ()Z
 	public fun toString ()Ljava/lang/String;
 	public fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/GuildEmoji;
 	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/Strategizable;

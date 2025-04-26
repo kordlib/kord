@@ -351,6 +351,47 @@ final class dev.kord.common.entity/ApplicationCommandOption { // dev.kord.common
     }
 }
 
+final class dev.kord.common.entity/ApplicationEmojis : kotlin.collections/List<dev.kord.common.entity/DiscordEmoji> { // dev.kord.common.entity/ApplicationEmojis|null[0]
+    constructor <init>(kotlin.collections/List<dev.kord.common.entity/DiscordEmoji>) // dev.kord.common.entity/ApplicationEmojis.<init>|<init>(kotlin.collections.List<dev.kord.common.entity.DiscordEmoji>){}[0]
+
+    final val items // dev.kord.common.entity/ApplicationEmojis.items|{}items[0]
+        final fun <get-items>(): kotlin.collections/List<dev.kord.common.entity/DiscordEmoji> // dev.kord.common.entity/ApplicationEmojis.items.<get-items>|<get-items>(){}[0]
+    final val size // dev.kord.common.entity/ApplicationEmojis.size|{}size[0]
+        final fun <get-size>(): kotlin/Int // dev.kord.common.entity/ApplicationEmojis.size.<get-size>|<get-size>(){}[0]
+
+    final fun asJsReadonlyArrayView(): kotlin.js.collections/JsReadonlyArray<dev.kord.common.entity/DiscordEmoji> // dev.kord.common.entity/ApplicationEmojis.asJsReadonlyArrayView|asJsReadonlyArrayView(){}[0]
+    final fun component1(): kotlin.collections/List<dev.kord.common.entity/DiscordEmoji> // dev.kord.common.entity/ApplicationEmojis.component1|component1(){}[0]
+    final fun contains(dev.kord.common.entity/DiscordEmoji): kotlin/Boolean // dev.kord.common.entity/ApplicationEmojis.contains|contains(dev.kord.common.entity.DiscordEmoji){}[0]
+    final fun containsAll(kotlin.collections/Collection<dev.kord.common.entity/DiscordEmoji>): kotlin/Boolean // dev.kord.common.entity/ApplicationEmojis.containsAll|containsAll(kotlin.collections.Collection<dev.kord.common.entity.DiscordEmoji>){}[0]
+    final fun copy(kotlin.collections/List<dev.kord.common.entity/DiscordEmoji> = ...): dev.kord.common.entity/ApplicationEmojis // dev.kord.common.entity/ApplicationEmojis.copy|copy(kotlin.collections.List<dev.kord.common.entity.DiscordEmoji>){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.common.entity/ApplicationEmojis.equals|equals(kotlin.Any?){}[0]
+    final fun get(kotlin/Int): dev.kord.common.entity/DiscordEmoji // dev.kord.common.entity/ApplicationEmojis.get|get(kotlin.Int){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.common.entity/ApplicationEmojis.hashCode|hashCode(){}[0]
+    final fun indexOf(dev.kord.common.entity/DiscordEmoji): kotlin/Int // dev.kord.common.entity/ApplicationEmojis.indexOf|indexOf(dev.kord.common.entity.DiscordEmoji){}[0]
+    final fun isEmpty(): kotlin/Boolean // dev.kord.common.entity/ApplicationEmojis.isEmpty|isEmpty(){}[0]
+    final fun iterator(): kotlin.collections/Iterator<dev.kord.common.entity/DiscordEmoji> // dev.kord.common.entity/ApplicationEmojis.iterator|iterator(){}[0]
+    final fun lastIndexOf(dev.kord.common.entity/DiscordEmoji): kotlin/Int // dev.kord.common.entity/ApplicationEmojis.lastIndexOf|lastIndexOf(dev.kord.common.entity.DiscordEmoji){}[0]
+    final fun listIterator(): kotlin.collections/ListIterator<dev.kord.common.entity/DiscordEmoji> // dev.kord.common.entity/ApplicationEmojis.listIterator|listIterator(){}[0]
+    final fun listIterator(kotlin/Int): kotlin.collections/ListIterator<dev.kord.common.entity/DiscordEmoji> // dev.kord.common.entity/ApplicationEmojis.listIterator|listIterator(kotlin.Int){}[0]
+    final fun subList(kotlin/Int, kotlin/Int): kotlin.collections/List<dev.kord.common.entity/DiscordEmoji> // dev.kord.common.entity/ApplicationEmojis.subList|subList(kotlin.Int;kotlin.Int){}[0]
+    final fun toString(): kotlin/String // dev.kord.common.entity/ApplicationEmojis.toString|toString(){}[0]
+
+    final object $serializer : kotlinx.serialization.internal/GeneratedSerializer<dev.kord.common.entity/ApplicationEmojis> { // dev.kord.common.entity/ApplicationEmojis.$serializer|null[0]
+        final val descriptor // dev.kord.common.entity/ApplicationEmojis.$serializer.descriptor|{}descriptor[0]
+            final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // dev.kord.common.entity/ApplicationEmojis.$serializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
+
+        final fun childSerializers(): kotlin/Array<kotlinx.serialization/KSerializer<*>> // dev.kord.common.entity/ApplicationEmojis.$serializer.childSerializers|childSerializers(){}[0]
+        final fun deserialize(kotlinx.serialization.encoding/Decoder): dev.kord.common.entity/ApplicationEmojis // dev.kord.common.entity/ApplicationEmojis.$serializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
+        final fun serialize(kotlinx.serialization.encoding/Encoder, dev.kord.common.entity/ApplicationEmojis) // dev.kord.common.entity/ApplicationEmojis.$serializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;dev.kord.common.entity.ApplicationEmojis){}[0]
+    }
+
+    final object Companion { // dev.kord.common.entity/ApplicationEmojis.Companion|null[0]
+        final val $childSerializers // dev.kord.common.entity/ApplicationEmojis.Companion.$childSerializers|{}$childSerializers[0]
+
+        final fun serializer(): kotlinx.serialization/KSerializer<dev.kord.common.entity/ApplicationEmojis> // dev.kord.common.entity/ApplicationEmojis.Companion.serializer|serializer(){}[0]
+    }
+}
+
 final class dev.kord.common.entity/ApplicationFlags { // dev.kord.common.entity/ApplicationFlags|null[0]
     final val code // dev.kord.common.entity/ApplicationFlags.code|{}code[0]
         final fun <get-code>(): kotlin/Int // dev.kord.common.entity/ApplicationFlags.code.<get-code>|<get-code>(){}[0]
@@ -3590,14 +3631,14 @@ final class dev.kord.common.entity/DiscordMessageReference { // dev.kord.common.
 }
 
 final class dev.kord.common.entity/DiscordMessageSticker { // dev.kord.common.entity/DiscordMessageSticker|null[0]
-    constructor <init>(dev.kord.common.entity/Snowflake, dev.kord.common.entity.optional/OptionalSnowflake = ..., kotlin/String, kotlin/String?, dev.kord.common.entity.optional/Optional<kotlin/String> = ..., dev.kord.common.entity/MessageStickerType, dev.kord.common.entity.optional/OptionalBoolean = ..., dev.kord.common.entity.optional/OptionalSnowflake = ..., dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordUser> = ..., dev.kord.common.entity.optional/OptionalInt = ...) // dev.kord.common.entity/DiscordMessageSticker.<init>|<init>(dev.kord.common.entity.Snowflake;dev.kord.common.entity.optional.OptionalSnowflake;kotlin.String;kotlin.String?;dev.kord.common.entity.optional.Optional<kotlin.String>;dev.kord.common.entity.MessageStickerType;dev.kord.common.entity.optional.OptionalBoolean;dev.kord.common.entity.optional.OptionalSnowflake;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.DiscordUser>;dev.kord.common.entity.optional.OptionalInt){}[0]
+    constructor <init>(dev.kord.common.entity/Snowflake, dev.kord.common.entity.optional/OptionalSnowflake = ..., kotlin/String, kotlin/String?, dev.kord.common.entity.optional/Optional<kotlin/String> = ..., dev.kord.common.entity/MessageStickerType?, dev.kord.common.entity.optional/OptionalBoolean = ..., dev.kord.common.entity.optional/OptionalSnowflake = ..., dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordUser> = ..., dev.kord.common.entity.optional/OptionalInt = ...) // dev.kord.common.entity/DiscordMessageSticker.<init>|<init>(dev.kord.common.entity.Snowflake;dev.kord.common.entity.optional.OptionalSnowflake;kotlin.String;kotlin.String?;dev.kord.common.entity.optional.Optional<kotlin.String>;dev.kord.common.entity.MessageStickerType?;dev.kord.common.entity.optional.OptionalBoolean;dev.kord.common.entity.optional.OptionalSnowflake;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.DiscordUser>;dev.kord.common.entity.optional.OptionalInt){}[0]
 
     final val available // dev.kord.common.entity/DiscordMessageSticker.available|{}available[0]
         final fun <get-available>(): dev.kord.common.entity.optional/OptionalBoolean // dev.kord.common.entity/DiscordMessageSticker.available.<get-available>|<get-available>(){}[0]
     final val description // dev.kord.common.entity/DiscordMessageSticker.description|{}description[0]
         final fun <get-description>(): kotlin/String? // dev.kord.common.entity/DiscordMessageSticker.description.<get-description>|<get-description>(){}[0]
     final val formatType // dev.kord.common.entity/DiscordMessageSticker.formatType|{}formatType[0]
-        final fun <get-formatType>(): dev.kord.common.entity/MessageStickerType // dev.kord.common.entity/DiscordMessageSticker.formatType.<get-formatType>|<get-formatType>(){}[0]
+        final fun <get-formatType>(): dev.kord.common.entity/MessageStickerType? // dev.kord.common.entity/DiscordMessageSticker.formatType.<get-formatType>|<get-formatType>(){}[0]
     final val guildId // dev.kord.common.entity/DiscordMessageSticker.guildId|{}guildId[0]
         final fun <get-guildId>(): dev.kord.common.entity.optional/OptionalSnowflake // dev.kord.common.entity/DiscordMessageSticker.guildId.<get-guildId>|<get-guildId>(){}[0]
     final val id // dev.kord.common.entity/DiscordMessageSticker.id|{}id[0]
@@ -3619,11 +3660,11 @@ final class dev.kord.common.entity/DiscordMessageSticker { // dev.kord.common.en
     final fun component3(): kotlin/String // dev.kord.common.entity/DiscordMessageSticker.component3|component3(){}[0]
     final fun component4(): kotlin/String? // dev.kord.common.entity/DiscordMessageSticker.component4|component4(){}[0]
     final fun component5(): dev.kord.common.entity.optional/Optional<kotlin/String> // dev.kord.common.entity/DiscordMessageSticker.component5|component5(){}[0]
-    final fun component6(): dev.kord.common.entity/MessageStickerType // dev.kord.common.entity/DiscordMessageSticker.component6|component6(){}[0]
+    final fun component6(): dev.kord.common.entity/MessageStickerType? // dev.kord.common.entity/DiscordMessageSticker.component6|component6(){}[0]
     final fun component7(): dev.kord.common.entity.optional/OptionalBoolean // dev.kord.common.entity/DiscordMessageSticker.component7|component7(){}[0]
     final fun component8(): dev.kord.common.entity.optional/OptionalSnowflake // dev.kord.common.entity/DiscordMessageSticker.component8|component8(){}[0]
     final fun component9(): dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordUser> // dev.kord.common.entity/DiscordMessageSticker.component9|component9(){}[0]
-    final fun copy(dev.kord.common.entity/Snowflake = ..., dev.kord.common.entity.optional/OptionalSnowflake = ..., kotlin/String = ..., kotlin/String? = ..., dev.kord.common.entity.optional/Optional<kotlin/String> = ..., dev.kord.common.entity/MessageStickerType = ..., dev.kord.common.entity.optional/OptionalBoolean = ..., dev.kord.common.entity.optional/OptionalSnowflake = ..., dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordUser> = ..., dev.kord.common.entity.optional/OptionalInt = ...): dev.kord.common.entity/DiscordMessageSticker // dev.kord.common.entity/DiscordMessageSticker.copy|copy(dev.kord.common.entity.Snowflake;dev.kord.common.entity.optional.OptionalSnowflake;kotlin.String;kotlin.String?;dev.kord.common.entity.optional.Optional<kotlin.String>;dev.kord.common.entity.MessageStickerType;dev.kord.common.entity.optional.OptionalBoolean;dev.kord.common.entity.optional.OptionalSnowflake;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.DiscordUser>;dev.kord.common.entity.optional.OptionalInt){}[0]
+    final fun copy(dev.kord.common.entity/Snowflake = ..., dev.kord.common.entity.optional/OptionalSnowflake = ..., kotlin/String = ..., kotlin/String? = ..., dev.kord.common.entity.optional/Optional<kotlin/String> = ..., dev.kord.common.entity/MessageStickerType? = ..., dev.kord.common.entity.optional/OptionalBoolean = ..., dev.kord.common.entity.optional/OptionalSnowflake = ..., dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordUser> = ..., dev.kord.common.entity.optional/OptionalInt = ...): dev.kord.common.entity/DiscordMessageSticker // dev.kord.common.entity/DiscordMessageSticker.copy|copy(dev.kord.common.entity.Snowflake;dev.kord.common.entity.optional.OptionalSnowflake;kotlin.String;kotlin.String?;dev.kord.common.entity.optional.Optional<kotlin.String>;dev.kord.common.entity.MessageStickerType?;dev.kord.common.entity.optional.OptionalBoolean;dev.kord.common.entity.optional.OptionalSnowflake;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.DiscordUser>;dev.kord.common.entity.optional.OptionalInt){}[0]
     final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.common.entity/DiscordMessageSticker.equals|equals(kotlin.Any?){}[0]
     final fun hashCode(): kotlin/Int // dev.kord.common.entity/DiscordMessageSticker.hashCode|hashCode(){}[0]
     final fun toString(): kotlin/String // dev.kord.common.entity/DiscordMessageSticker.toString|toString(){}[0]
