@@ -66,7 +66,11 @@
             "SuppressNotifications", shift = 12, kDoc = "This message will not trigger push and desktop notifications.",
         ),
         Entry("IsVoiceMessage", shift = 13, kDoc = "This message is a voice message."),
-        Entry("IsComponentsV2", shift = 15, kDoc = "Enable V2 of the Components API"),
+        Entry(
+            "IsComponentsV2", shift = 15,
+            kDoc = "Allows you to create fully [component](https://discord.com/developers/docs/components/overview)-" +
+                "driven messages.",
+        ),
     ],
 )
 
