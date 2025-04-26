@@ -134,7 +134,9 @@ public sealed class Event {
                 "THREAD_MEMBER_UPDATE" -> ThreadMemberUpdate(decode(DiscordThreadMember.serializer()), sequence)
                 "THREAD_MEMBERS_UPDATE" ->
                     ThreadMembersUpdate(decode(DiscordThreadMembersUpdate.serializer()), sequence)
-                // Missing: Entitlement Create, Entitlement Update, Entitlement Delete
+                "ENTITLEMENT_CREATE" -> EntitlementCreate(decode(DiscordEntitlement.serializer()), sequence)
+                "ENTITLEMENT_UPDATE" -> EntitlementUpdate(decode(DiscordEntitlement.serializer()), sequence)
+                "ENTITLEMENT_DELETE" -> EntitlementDelete(decode(DiscordEntitlement.serializer()), sequence)
                 "GUILD_CREATE" -> GuildCreate(decode(DiscordGuild.serializer()), sequence)
                 "GUILD_UPDATE" -> GuildUpdate(decode(DiscordGuild.serializer()), sequence)
                 "GUILD_DELETE" -> GuildDelete(decode(DiscordUnavailableGuild.serializer()), sequence)
@@ -181,9 +183,13 @@ public sealed class Event {
                 "MESSAGE_REACTION_REMOVE_EMOJI" ->
                     MessageReactionRemoveEmoji(decode(DiscordRemovedEmoji.serializer()), sequence)
                 "PRESENCE_UPDATE" -> PresenceUpdate(decode(DiscordPresenceUpdate.serializer()), sequence)
-                //  Missing: Stage Instance Create, Stage Instance Update, Stage Instance Delete
+                // Missing: Stage Instance Create, Stage Instance Update, Stage Instance Delete
+                "SUBSCRIPTION_CREATE" -> SubscriptionCreate(decode(DiscordSubscription.serializer()), sequence)
+                "SUBSCRIPTION_UPDATE" -> SubscriptionUpdate(decode(DiscordSubscription.serializer()), sequence)
+                "SUBSCRIPTION_DELETE" -> SubscriptionDelete(decode(DiscordSubscription.serializer()), sequence)
                 "TYPING_START" -> TypingStart(decode(DiscordTyping.serializer()), sequence)
                 "USER_UPDATE" -> UserUpdate(decode(DiscordUser.serializer()), sequence)
+                // Missing: Voice Channel Effect Send
                 "VOICE_STATE_UPDATE" -> VoiceStateUpdate(decode(DiscordVoiceState.serializer()), sequence)
                 "VOICE_SERVER_UPDATE" -> VoiceServerUpdate(decode(DiscordVoiceServerUpdateData.serializer()), sequence)
                 "WEBHOOKS_UPDATE" -> WebhooksUpdate(decode(DiscordWebhooksUpdateData.serializer()), sequence)
@@ -339,20 +345,18 @@ public data class Heartbeat(val data: Long?) : Event() {
     public companion object {
         @Suppress("DEPRECATION_ERROR")
         @Deprecated(
-            "Renamed to 'Companion'. The deprecation level will be raised to HIDDEN in 0.16.0 and this declaration " +
-                "will be removed in 0.17.0.",
+            "Renamed to 'Companion'. This declaration will be removed in 0.17.0.",
             ReplaceWith("Heartbeat.Companion", imports = ["dev.kord.gateway.Heartbeat"]),
-            DeprecationLevel.ERROR,
+            DeprecationLevel.HIDDEN,
         )
         @JvmField
         public val NewCompanion: NewCompanion = NewCompanion()
     }
 
     @Deprecated(
-        "Renamed to 'Companion'. The deprecation level will be raised to HIDDEN in 0.16.0 and this declaration will " +
-            "be removed in 0.17.0.",
+        "Renamed to 'Companion'. This declaration will be removed in 0.17.0.",
         ReplaceWith("Heartbeat.Companion", imports = ["dev.kord.gateway.Heartbeat"]),
-        DeprecationLevel.ERROR,
+        DeprecationLevel.HIDDEN,
     )
     public class NewCompanion internal constructor() {
         public fun serializer(): KSerializer<Heartbeat> = Heartbeat.serializer()
@@ -549,9 +553,8 @@ public data class InteractionCreate(val interaction: DiscordInteraction, overrid
 
 @Deprecated(
     "This event is not supposed to be sent to bots. See https://github.com/discord/discord-api-docs/issues/3690 for " +
-        "details. The deprecation level will be raised to HIDDEN in 0.16.0 and this declaration will be removed in " +
-        "0.17.0.",
-    level = DeprecationLevel.ERROR,
+        "details. This declaration will be removed in 0.17.0.",
+    level = DeprecationLevel.HIDDEN,
 )
 public data class ApplicationCommandCreate(val application: DiscordApplicationCommand, override val sequence: Int?) :
     DispatchEvent()
@@ -559,9 +562,8 @@ public data class ApplicationCommandCreate(val application: DiscordApplicationCo
 
 @Deprecated(
     "This event is not supposed to be sent to bots. See https://github.com/discord/discord-api-docs/issues/3690 for " +
-        "details. The deprecation level will be raised to HIDDEN in 0.16.0 and this declaration will be removed in " +
-        "0.17.0.",
-    level = DeprecationLevel.ERROR,
+        "details. This declaration will be removed in 0.17.0.",
+    level = DeprecationLevel.HIDDEN,
 )
 public data class ApplicationCommandUpdate(val application: DiscordApplicationCommand, override val sequence: Int?) :
     DispatchEvent()
@@ -569,9 +571,8 @@ public data class ApplicationCommandUpdate(val application: DiscordApplicationCo
 
 @Deprecated(
     "This event is not supposed to be sent to bots. See https://github.com/discord/discord-api-docs/issues/3690 for " +
-        "details. The deprecation level will be raised to HIDDEN in 0.16.0 and this declaration will be removed in " +
-        "0.17.0.",
-    level = DeprecationLevel.ERROR,
+        "details. This declaration will be removed in 0.17.0.",
+    level = DeprecationLevel.HIDDEN,
 )
 public data class ApplicationCommandDelete(val application: DiscordApplicationCommand, override val sequence: Int?) :
     DispatchEvent()
@@ -646,3 +647,18 @@ public data class DiscordThreadMembersUpdate(
     @SerialName("removed_member_ids")
     val removedMemberIds: Optional<List<Snowflake>> = Optional.Missing()
 )
+
+public data class EntitlementCreate(val entitlement: DiscordEntitlement, override val sequence: Int?) : DispatchEvent()
+
+public data class EntitlementUpdate(val entitlement: DiscordEntitlement, override val sequence: Int?) : DispatchEvent()
+
+public data class EntitlementDelete(val entitlement: DiscordEntitlement, override val sequence: Int?) : DispatchEvent()
+
+public data class SubscriptionCreate(val subscription: DiscordSubscription, override val sequence: Int?) :
+    DispatchEvent()
+
+public data class SubscriptionUpdate(val subscription: DiscordSubscription, override val sequence: Int?) :
+    DispatchEvent()
+
+public data class SubscriptionDelete(val subscription: DiscordSubscription, override val sequence: Int?) :
+    DispatchEvent()

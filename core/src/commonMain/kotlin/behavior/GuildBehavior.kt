@@ -3,6 +3,7 @@ package dev.kord.core.behavior
 import dev.kord.cache.api.query
 import dev.kord.common.annotation.KordExperimental
 import dev.kord.common.entity.*
+import dev.kord.common.entity.AutoModerationRuleEventType.MemberUpdate
 import dev.kord.common.entity.AutoModerationRuleEventType.MessageSend
 import dev.kord.common.entity.Permission.ManageGuild
 import dev.kord.common.entity.Permission.ManageRoles
@@ -34,10 +35,7 @@ import dev.kord.gateway.start
 import dev.kord.rest.Image
 import dev.kord.rest.NamedFile
 import dev.kord.rest.builder.auditlog.AuditLogGetRequestBuilder
-import dev.kord.rest.builder.automoderation.KeywordAutoModerationRuleCreateBuilder
-import dev.kord.rest.builder.automoderation.KeywordPresetAutoModerationRuleCreateBuilder
-import dev.kord.rest.builder.automoderation.MentionSpamAutoModerationRuleCreateBuilder
-import dev.kord.rest.builder.automoderation.SpamAutoModerationRuleCreateBuilder
+import dev.kord.rest.builder.automoderation.*
 import dev.kord.rest.builder.ban.BanCreateBuilder
 import dev.kord.rest.builder.channel.*
 import dev.kord.rest.builder.guild.*
@@ -1125,4 +1123,24 @@ public suspend inline fun GuildBehavior.createMentionSpamAutoModerationRule(
     contract { callsInPlace(builder, EXACTLY_ONCE) }
     val rule = kord.rest.autoModeration.createMentionSpamAutoModerationRule(guildId = id, name, eventType, builder)
     return MentionSpamAutoModerationRule(AutoModerationRuleData.from(rule), kord, supplier)
+}
+
+/**
+ * Requests to create a new [MemberProfileAutoModerationRule] in this guild and returns it.
+ *
+ * This requires the [ManageGuild] permission.
+ *
+ * @param name the rule name.
+ * @param eventType the rule [event type][AutoModerationRuleEventType].
+ *
+ * @throws RestRequestException if something went wrong during the request.
+ */
+public suspend inline fun GuildBehavior.createMemberProfileAutoModerationRule(
+    name: String,
+    eventType: AutoModerationRuleEventType = MemberUpdate,
+    builder: MemberProfileAutoModerationRuleCreateBuilder.() -> Unit,
+): MemberProfileAutoModerationRule {
+    contract { callsInPlace(builder, EXACTLY_ONCE) }
+    val rule = kord.rest.autoModeration.createMemberProfileAutoModerationRule(guildId = id, name, eventType, builder)
+    return MemberProfileAutoModerationRule(AutoModerationRuleData.from(rule), kord, supplier)
 }

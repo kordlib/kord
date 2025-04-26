@@ -1,3 +1,5 @@
+@file:Suppress("CONTEXT_RECEIVERS_DEPRECATED")
+
 package dev.kord.ksp.generation.kordenum
 
 import com.squareup.kotlinpoet.KModifier.OVERRIDE

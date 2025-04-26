@@ -65,6 +65,11 @@ public sealed class AutoModerationRuleTriggerType(
      */
     public object MentionSpam : AutoModerationRuleTriggerType(5)
 
+    /**
+     * Check if member profile contains words from a user defined list of keywords.
+     */
+    public object MemberProfile : AutoModerationRuleTriggerType(6)
+
     internal object Serializer : KSerializer<AutoModerationRuleTriggerType> {
         override val descriptor: SerialDescriptor =
                 PrimitiveSerialDescriptor("dev.kord.common.entity.AutoModerationRuleTriggerType",
@@ -88,6 +93,7 @@ public sealed class AutoModerationRuleTriggerType(
                 Spam,
                 KeywordPreset,
                 MentionSpam,
+                MemberProfile,
             )
         }
 
@@ -100,6 +106,7 @@ public sealed class AutoModerationRuleTriggerType(
             3 -> Spam
             4 -> KeywordPreset
             5 -> MentionSpam
+            6 -> MemberProfile
             else -> Unknown(value)
         }
     }

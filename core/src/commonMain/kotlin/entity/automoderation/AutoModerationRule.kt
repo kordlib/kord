@@ -110,6 +110,7 @@ internal fun AutoModerationRule(
     Spam -> SpamAutoModerationRule(data, kord, supplier)
     KeywordPreset -> KeywordPresetAutoModerationRule(data, kord, supplier)
     MentionSpam -> MentionSpamAutoModerationRule(data, kord, supplier)
+    MemberProfile -> MemberProfileAutoModerationRule(data, kord, supplier)
     is Unknown -> UnknownAutoModerationRule(data, kord, supplier)
 }
 
@@ -211,6 +212,45 @@ public class MentionSpamAutoModerationRule(data: AutoModerationRuleData, kord: K
         MentionSpamAutoModerationRule(data, kord, strategy.supply(kord))
 
     override fun toString(): String = "MentionSpamAutoModerationRule(data=$data, kord=$kord, supplier=$supplier)"
+}
+
+/** An [AutoModerationRule] with trigger type [MemberProfile]. */
+public class MemberProfileAutoModerationRule(data: AutoModerationRuleData, kord: Kord, supplier: EntitySupplier) :
+    AutoModerationRule(data, kord, supplier, expectedTriggerType = MemberProfile),
+    MemberProfileAutoModerationRuleBehavior {
+
+    /**
+     * Substrings which will be searched for in content.
+     *
+     * A keyword can be a phrase which contains multiple words.
+     * [Wildcard symbols](https://discord.com/developers/docs/resources/auto-moderation#auto-moderation-rule-object-keyword-matching-strategies)
+     * can be used to customize how each keyword will be matched.
+     */
+    public val keywords: List<String> get() = data.triggerMetadata.keywordFilter.orEmpty()
+
+    /**
+     * Regular expression patterns which will be matched against content.
+     *
+     * Only Rust flavored regex is currently supported.
+     */
+    public val regexPatterns: List<String> get() = data.triggerMetadata.regexPatterns.orEmpty()
+
+    /**
+     * Substrings which should not trigger the rule.
+     *
+     * A keyword can be a phrase which contains multiple words.
+     * [Wildcard symbols](https://discord.com/developers/docs/resources/auto-moderation#auto-moderation-rule-object-keyword-matching-strategies)
+     * can be used to customize how each keyword will be matched.
+     */
+    public val allowedKeywords: List<String> get() = data.triggerMetadata.allowList.orEmpty()
+
+    override suspend fun asAutoModerationRuleOrNull(): MemberProfileAutoModerationRule = this
+    override suspend fun asAutoModerationRule(): MemberProfileAutoModerationRule = this
+
+    override fun withStrategy(strategy: EntitySupplyStrategy<*>): MemberProfileAutoModerationRule =
+        MemberProfileAutoModerationRule(data, kord, strategy.supply(kord))
+
+    override fun toString(): String = "MemberProfileAutoModerationRule(data=$data, kord=$kord, supplier=$supplier)"
 }
 
 /** An [AutoModerationRule] with trigger type [Unknown]. */

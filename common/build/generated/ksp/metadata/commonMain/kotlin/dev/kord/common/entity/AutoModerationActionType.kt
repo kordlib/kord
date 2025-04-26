@@ -68,6 +68,11 @@ public sealed class AutoModerationActionType(
      */
     public object Timeout : AutoModerationActionType(3)
 
+    /**
+     * Prevents a member from using text, voice, or other interactions.
+     */
+    public object BlockMemberInteraction : AutoModerationActionType(4)
+
     internal object Serializer : KSerializer<AutoModerationActionType> {
         override val descriptor: SerialDescriptor =
                 PrimitiveSerialDescriptor("dev.kord.common.entity.AutoModerationActionType",
@@ -90,6 +95,7 @@ public sealed class AutoModerationActionType(
                 BlockMessage,
                 SendAlertMessage,
                 Timeout,
+                BlockMemberInteraction,
             )
         }
 
@@ -101,6 +107,7 @@ public sealed class AutoModerationActionType(
             1 -> BlockMessage
             2 -> SendAlertMessage
             3 -> Timeout
+            4 -> BlockMemberInteraction
             else -> Unknown(value)
         }
     }

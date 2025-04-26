@@ -14,7 +14,7 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 /**
- * See [PresenceStatus]s in the
+ * See [PresenceStatus]es in the
  * [Discord Developer Documentation](https://discord.com/developers/docs/topics/gateway-events#update-presence-status-types).
  */
 @Serializable(with = PresenceStatus.Serializer::class)
@@ -36,7 +36,7 @@ public sealed class PresenceStatus(
     /**
      * An unknown [PresenceStatus].
      *
-     * This is used as a fallback for [PresenceStatus]s that haven't been added to Kord yet.
+     * This is used as a fallback for [PresenceStatus]es that haven't been added to Kord yet.
      */
     public class Unknown internal constructor(
         `value`: String,
@@ -81,7 +81,7 @@ public sealed class PresenceStatus(
 
     public companion object {
         /**
-         * A [List] of all known [PresenceStatus]s.
+         * A [List] of all known [PresenceStatus]es.
          */
         public val entries: List<PresenceStatus> by lazy(mode = PUBLICATION) {
             listOf(
