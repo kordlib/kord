@@ -52,10 +52,3 @@ public data class DiscordPartialEmoji(
     val animated: OptionalBoolean = OptionalBoolean.Missing,
 )
 
-/**
- * List of application [emojis][DiscordEmoji].
- *
- * @property items the list of emojis
- */
-@Serializable
-public class ApplicationEmojis(public val items: List<DiscordEmoji>)

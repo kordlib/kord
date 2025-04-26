@@ -1121,10 +1121,10 @@ public sealed class Route<T>(
             DiscordMessageSticker.serializer()
         )
 
-    public object GetApplicationEmojis : Route<ApplicationEmojis>(
+    public object GetApplicationEmojis : Route<ApplicationEmojisResponse>(
         HttpMethod.Get,
         "/applications/$ApplicationId/emojis",
-        ApplicationEmojis.serializer()
+        ApplicationEmojisResponse.serializer()
     )
 
     public object GetApplicationEmoji : Route<DiscordEmoji>(

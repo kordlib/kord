@@ -351,28 +351,6 @@ final class dev.kord.common.entity/ApplicationCommandOption { // dev.kord.common
     }
 }
 
-final class dev.kord.common.entity/ApplicationEmojis { // dev.kord.common.entity/ApplicationEmojis|null[0]
-    constructor <init>(kotlin.collections/List<dev.kord.common.entity/DiscordEmoji>) // dev.kord.common.entity/ApplicationEmojis.<init>|<init>(kotlin.collections.List<dev.kord.common.entity.DiscordEmoji>){}[0]
-
-    final val items // dev.kord.common.entity/ApplicationEmojis.items|{}items[0]
-        final fun <get-items>(): kotlin.collections/List<dev.kord.common.entity/DiscordEmoji> // dev.kord.common.entity/ApplicationEmojis.items.<get-items>|<get-items>(){}[0]
-
-    final object $serializer : kotlinx.serialization.internal/GeneratedSerializer<dev.kord.common.entity/ApplicationEmojis> { // dev.kord.common.entity/ApplicationEmojis.$serializer|null[0]
-        final val descriptor // dev.kord.common.entity/ApplicationEmojis.$serializer.descriptor|{}descriptor[0]
-            final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // dev.kord.common.entity/ApplicationEmojis.$serializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
-
-        final fun childSerializers(): kotlin/Array<kotlinx.serialization/KSerializer<*>> // dev.kord.common.entity/ApplicationEmojis.$serializer.childSerializers|childSerializers(){}[0]
-        final fun deserialize(kotlinx.serialization.encoding/Decoder): dev.kord.common.entity/ApplicationEmojis // dev.kord.common.entity/ApplicationEmojis.$serializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
-        final fun serialize(kotlinx.serialization.encoding/Encoder, dev.kord.common.entity/ApplicationEmojis) // dev.kord.common.entity/ApplicationEmojis.$serializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;dev.kord.common.entity.ApplicationEmojis){}[0]
-    }
-
-    final object Companion { // dev.kord.common.entity/ApplicationEmojis.Companion|null[0]
-        final val $childSerializers // dev.kord.common.entity/ApplicationEmojis.Companion.$childSerializers|{}$childSerializers[0]
-
-        final fun serializer(): kotlinx.serialization/KSerializer<dev.kord.common.entity/ApplicationEmojis> // dev.kord.common.entity/ApplicationEmojis.Companion.serializer|serializer(){}[0]
-    }
-}
-
 final class dev.kord.common.entity/ApplicationFlags { // dev.kord.common.entity/ApplicationFlags|null[0]
     final val code // dev.kord.common.entity/ApplicationFlags.code|{}code[0]
         final fun <get-code>(): kotlin/Int // dev.kord.common.entity/ApplicationFlags.code.<get-code>|<get-code>(){}[0]

@@ -629,27 +629,6 @@ public final class dev/kord/common/entity/ApplicationCommandType$User : dev/kord
 	public static final field INSTANCE Ldev/kord/common/entity/ApplicationCommandType$User;
 }
 
-public final class dev/kord/common/entity/ApplicationEmojis {
-	public static final field Companion Ldev/kord/common/entity/ApplicationEmojis$Companion;
-	public fun <init> (Ljava/util/List;)V
-	public final fun getItems ()Ljava/util/List;
-}
-
-public synthetic class dev/kord/common/entity/ApplicationEmojis$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
-	public static final field INSTANCE Ldev/kord/common/entity/ApplicationEmojis$$serializer;
-	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
-	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/common/entity/ApplicationEmojis;
-	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
-	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/common/entity/ApplicationEmojis;)V
-	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
-}
-
-public final class dev/kord/common/entity/ApplicationEmojis$Companion {
-	public final fun serializer ()Lkotlinx/serialization/KSerializer;
-}
-
 public abstract class dev/kord/common/entity/ApplicationFlag {
 	public static final field Companion Ldev/kord/common/entity/ApplicationFlag$Companion;
 	public synthetic fun <init> (ILkotlin/jvm/internal/DefaultConstructorMarker;)V

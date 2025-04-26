@@ -5648,6 +5648,27 @@ public final class dev/kord/rest/json/request/WebhookModifyRequest$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
+public final class dev/kord/rest/json/response/ApplicationEmojisResponse {
+	public static final field Companion Ldev/kord/rest/json/response/ApplicationEmojisResponse$Companion;
+	public fun <init> (Ljava/util/List;)V
+	public final fun getItems ()Ljava/util/List;
+}
+
+public synthetic class dev/kord/rest/json/response/ApplicationEmojisResponse$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Ldev/kord/rest/json/response/ApplicationEmojisResponse$$serializer;
+	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/rest/json/response/ApplicationEmojisResponse;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/rest/json/response/ApplicationEmojisResponse;)V
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class dev/kord/rest/json/response/ApplicationEmojisResponse$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
 public final class dev/kord/rest/json/response/BanResponse {
 	public static final field Companion Ldev/kord/rest/json/response/BanResponse$Companion;
 	public fun <init> (Ljava/lang/String;Ldev/kord/common/entity/DiscordUser;)V
