@@ -6701,7 +6701,14 @@ final class dev.kord.rest.service/ApplicationRoleConnectionMetadataService : dev
 final class dev.kord.rest.service/ApplicationService : dev.kord.rest.service/RestService { // dev.kord.rest.service/ApplicationService|null[0]
     constructor <init>(dev.kord.rest.request/RequestHandler) // dev.kord.rest.service/ApplicationService.<init>|<init>(dev.kord.rest.request.RequestHandler){}[0]
 
+    final suspend fun createApplicationEmoji(dev.kord.common.entity/Snowflake, dev.kord.rest.json.request/EmojiCreateRequest): dev.kord.common.entity/DiscordEmoji // dev.kord.rest.service/ApplicationService.createApplicationEmoji|createApplicationEmoji(dev.kord.common.entity.Snowflake;dev.kord.rest.json.request.EmojiCreateRequest){}[0]
+    final suspend fun createApplicationEmoji(dev.kord.common.entity/Snowflake, kotlin/String, dev.kord.rest/Image): dev.kord.common.entity/DiscordEmoji // dev.kord.rest.service/ApplicationService.createApplicationEmoji|createApplicationEmoji(dev.kord.common.entity.Snowflake;kotlin.String;dev.kord.rest.Image){}[0]
+    final suspend fun getApplicationEmoji(dev.kord.common.entity/Snowflake, dev.kord.common.entity/Snowflake): dev.kord.common.entity/DiscordEmoji // dev.kord.rest.service/ApplicationService.getApplicationEmoji|getApplicationEmoji(dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake){}[0]
+    final suspend fun getApplicationEmojis(dev.kord.common.entity/Snowflake): dev.kord.common.entity/ApplicationEmojis // dev.kord.rest.service/ApplicationService.getApplicationEmojis|getApplicationEmojis(dev.kord.common.entity.Snowflake){}[0]
     final suspend fun getCurrentApplicationInfo(): dev.kord.common.entity/DiscordApplication // dev.kord.rest.service/ApplicationService.getCurrentApplicationInfo|getCurrentApplicationInfo(){}[0]
+    final suspend inline fun deleteApplicationEmoji(dev.kord.common.entity/Snowflake, dev.kord.common.entity/Snowflake) // dev.kord.rest.service/ApplicationService.deleteApplicationEmoji|deleteApplicationEmoji(dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake){}[0]
+    final suspend inline fun modifyApplicationEmoji(dev.kord.common.entity/Snowflake, dev.kord.common.entity/Snowflake, dev.kord.rest.json.request/EmojiModifyRequest): dev.kord.common.entity/DiscordEmoji // dev.kord.rest.service/ApplicationService.modifyApplicationEmoji|modifyApplicationEmoji(dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake;dev.kord.rest.json.request.EmojiModifyRequest){}[0]
+    final suspend inline fun modifyApplicationEmoji(dev.kord.common.entity/Snowflake, dev.kord.common.entity/Snowflake, kotlin/Function1<dev.kord.rest.builder.guild/EmojiModifyBuilder, kotlin/Unit>): dev.kord.common.entity/DiscordEmoji // dev.kord.rest.service/ApplicationService.modifyApplicationEmoji|modifyApplicationEmoji(dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake;kotlin.Function1<dev.kord.rest.builder.guild.EmojiModifyBuilder,kotlin.Unit>){}[0]
 }
 
 final class dev.kord.rest.service/AuditLogService : dev.kord.rest.service/RestService { // dev.kord.rest.service/AuditLogService|null[0]
@@ -7300,6 +7307,8 @@ sealed class <#A: kotlin/Any?> dev.kord.rest.route/Route { // dev.kord.rest.rout
 
     final object DeleteAllReactionsForEmoji : dev.kord.rest.route/Route<kotlin/Unit> // dev.kord.rest.route/Route.DeleteAllReactionsForEmoji|null[0]
 
+    final object DeleteApplicationEmoji : dev.kord.rest.route/Route<kotlin/Unit> // dev.kord.rest.route/Route.DeleteApplicationEmoji|null[0]
+
     final object DeleteWebhookMessage : dev.kord.rest.route/Route<kotlin/Unit> // dev.kord.rest.route/Route.DeleteWebhookMessage|null[0]
 
     final object EditMessagePatch : dev.kord.rest.route/Route<dev.kord.common.entity/DiscordMessage> // dev.kord.rest.route/Route.EditMessagePatch|null[0]
@@ -7333,6 +7342,10 @@ sealed class <#A: kotlin/Any?> dev.kord.rest.route/Route { // dev.kord.rest.rout
     final object GatewayBotGet : dev.kord.rest.route/Route<dev.kord.rest.json.response/BotGatewayResponse> // dev.kord.rest.route/Route.GatewayBotGet|null[0]
 
     final object GatewayGet : dev.kord.rest.route/Route<dev.kord.rest.json.response/GatewayResponse> // dev.kord.rest.route/Route.GatewayGet|null[0]
+
+    final object GetApplicationEmoji : dev.kord.rest.route/Route<dev.kord.common.entity/DiscordEmoji> // dev.kord.rest.route/Route.GetApplicationEmoji|null[0]
+
+    final object GetApplicationEmojis : dev.kord.rest.route/Route<dev.kord.common.entity/ApplicationEmojis> // dev.kord.rest.route/Route.GetApplicationEmojis|null[0]
 
     final object GetWebhookMessage : dev.kord.rest.route/Route<dev.kord.common.entity/DiscordMessage> // dev.kord.rest.route/Route.GetWebhookMessage|null[0]
 
@@ -7548,11 +7561,15 @@ sealed class <#A: kotlin/Any?> dev.kord.rest.route/Route { // dev.kord.rest.rout
 
     final object OwnReactionDelete : dev.kord.rest.route/Route<kotlin/Unit> // dev.kord.rest.route/Route.OwnReactionDelete|null[0]
 
+    final object PatchApplicationEmoji : dev.kord.rest.route/Route<dev.kord.common.entity/DiscordEmoji> // dev.kord.rest.route/Route.PatchApplicationEmoji|null[0]
+
     final object PinDelete : dev.kord.rest.route/Route<kotlin/Unit> // dev.kord.rest.route/Route.PinDelete|null[0]
 
     final object PinPut : dev.kord.rest.route/Route<kotlin/Unit> // dev.kord.rest.route/Route.PinPut|null[0]
 
     final object PinsGet : dev.kord.rest.route/Route<kotlin.collections/List<dev.kord.common.entity/DiscordMessage>> // dev.kord.rest.route/Route.PinsGet|null[0]
+
+    final object PostApplicationEmoji : dev.kord.rest.route/Route<dev.kord.common.entity/DiscordEmoji> // dev.kord.rest.route/Route.PostApplicationEmoji|null[0]
 
     final object PrivateArchivedThreadsGet : dev.kord.rest.route/Route<dev.kord.rest.json.response/ListThreadsResponse> // dev.kord.rest.route/Route.PrivateArchivedThreadsGet|null[0]
 

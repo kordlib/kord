@@ -10,6 +10,7 @@ import dev.kord.core.builder.kord.KordBuilder
 import dev.kord.core.builder.kord.KordProxyBuilder
 import dev.kord.core.builder.kord.KordRestOnlyBuilder
 import dev.kord.core.cache.data.ApplicationCommandData
+import dev.kord.core.cache.data.EmojiData
 import dev.kord.core.cache.data.GuildData
 import dev.kord.core.cache.data.UserData
 import dev.kord.core.entity.*
@@ -105,6 +106,16 @@ public class Kord(
 
     public val guilds: Flow<Guild>
         get() = defaultSupplier.guilds
+
+    /**
+     * Flow of [application emojis][ApplicationEmoji].
+     */
+    public val emojis: Flow<ApplicationEmoji> = flow {
+        rest.application.getApplicationEmojis(selfId).forEach {
+            val data = EmojiData.from(selfId, it.id!!, it)
+            ApplicationEmoji(data, this@Kord)
+        }
+    }
 
     init {
         gateway.events
@@ -660,6 +671,16 @@ public class Kord(
                 emit(GuildApplicationCommand(data, rest.interaction))
             }
         }
+    }
+
+    /**
+     * Retrieves an [ApplicationEmoji] by its [id].
+     */
+    public suspend fun getApplicationEmoji(id: Snowflake): ApplicationEmoji {
+        val emoji = rest.application.getApplicationEmoji(selfId, id)
+        val data = EmojiData.from(selfId, id, emoji)
+
+        return ApplicationEmoji(data, this)
     }
 }
 
