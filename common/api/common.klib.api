@@ -351,30 +351,11 @@ final class dev.kord.common.entity/ApplicationCommandOption { // dev.kord.common
     }
 }
 
-final class dev.kord.common.entity/ApplicationEmojis : kotlin.collections/List<dev.kord.common.entity/DiscordEmoji> { // dev.kord.common.entity/ApplicationEmojis|null[0]
+final class dev.kord.common.entity/ApplicationEmojis { // dev.kord.common.entity/ApplicationEmojis|null[0]
     constructor <init>(kotlin.collections/List<dev.kord.common.entity/DiscordEmoji>) // dev.kord.common.entity/ApplicationEmojis.<init>|<init>(kotlin.collections.List<dev.kord.common.entity.DiscordEmoji>){}[0]
 
     final val items // dev.kord.common.entity/ApplicationEmojis.items|{}items[0]
         final fun <get-items>(): kotlin.collections/List<dev.kord.common.entity/DiscordEmoji> // dev.kord.common.entity/ApplicationEmojis.items.<get-items>|<get-items>(){}[0]
-    final val size // dev.kord.common.entity/ApplicationEmojis.size|{}size[0]
-        final fun <get-size>(): kotlin/Int // dev.kord.common.entity/ApplicationEmojis.size.<get-size>|<get-size>(){}[0]
-
-    final fun asJsReadonlyArrayView(): kotlin.js.collections/JsReadonlyArray<dev.kord.common.entity/DiscordEmoji> // dev.kord.common.entity/ApplicationEmojis.asJsReadonlyArrayView|asJsReadonlyArrayView(){}[0]
-    final fun component1(): kotlin.collections/List<dev.kord.common.entity/DiscordEmoji> // dev.kord.common.entity/ApplicationEmojis.component1|component1(){}[0]
-    final fun contains(dev.kord.common.entity/DiscordEmoji): kotlin/Boolean // dev.kord.common.entity/ApplicationEmojis.contains|contains(dev.kord.common.entity.DiscordEmoji){}[0]
-    final fun containsAll(kotlin.collections/Collection<dev.kord.common.entity/DiscordEmoji>): kotlin/Boolean // dev.kord.common.entity/ApplicationEmojis.containsAll|containsAll(kotlin.collections.Collection<dev.kord.common.entity.DiscordEmoji>){}[0]
-    final fun copy(kotlin.collections/List<dev.kord.common.entity/DiscordEmoji> = ...): dev.kord.common.entity/ApplicationEmojis // dev.kord.common.entity/ApplicationEmojis.copy|copy(kotlin.collections.List<dev.kord.common.entity.DiscordEmoji>){}[0]
-    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.common.entity/ApplicationEmojis.equals|equals(kotlin.Any?){}[0]
-    final fun get(kotlin/Int): dev.kord.common.entity/DiscordEmoji // dev.kord.common.entity/ApplicationEmojis.get|get(kotlin.Int){}[0]
-    final fun hashCode(): kotlin/Int // dev.kord.common.entity/ApplicationEmojis.hashCode|hashCode(){}[0]
-    final fun indexOf(dev.kord.common.entity/DiscordEmoji): kotlin/Int // dev.kord.common.entity/ApplicationEmojis.indexOf|indexOf(dev.kord.common.entity.DiscordEmoji){}[0]
-    final fun isEmpty(): kotlin/Boolean // dev.kord.common.entity/ApplicationEmojis.isEmpty|isEmpty(){}[0]
-    final fun iterator(): kotlin.collections/Iterator<dev.kord.common.entity/DiscordEmoji> // dev.kord.common.entity/ApplicationEmojis.iterator|iterator(){}[0]
-    final fun lastIndexOf(dev.kord.common.entity/DiscordEmoji): kotlin/Int // dev.kord.common.entity/ApplicationEmojis.lastIndexOf|lastIndexOf(dev.kord.common.entity.DiscordEmoji){}[0]
-    final fun listIterator(): kotlin.collections/ListIterator<dev.kord.common.entity/DiscordEmoji> // dev.kord.common.entity/ApplicationEmojis.listIterator|listIterator(){}[0]
-    final fun listIterator(kotlin/Int): kotlin.collections/ListIterator<dev.kord.common.entity/DiscordEmoji> // dev.kord.common.entity/ApplicationEmojis.listIterator|listIterator(kotlin.Int){}[0]
-    final fun subList(kotlin/Int, kotlin/Int): kotlin.collections/List<dev.kord.common.entity/DiscordEmoji> // dev.kord.common.entity/ApplicationEmojis.subList|subList(kotlin.Int;kotlin.Int){}[0]
-    final fun toString(): kotlin/String // dev.kord.common.entity/ApplicationEmojis.toString|toString(){}[0]
 
     final object $serializer : kotlinx.serialization.internal/GeneratedSerializer<dev.kord.common.entity/ApplicationEmojis> { // dev.kord.common.entity/ApplicationEmojis.$serializer|null[0]
         final val descriptor // dev.kord.common.entity/ApplicationEmojis.$serializer.descriptor|{}descriptor[0]
