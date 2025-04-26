@@ -18,17 +18,17 @@ import dev.kord.core.hash
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
-/** Either a [StandardEmoji] or a [GuildEmoji]. */
+/** Either a [StandardEmoji] or a [CustomEmoji]. */
 public sealed interface Emoji {
     /**
      * Either the unicode representation of the emoji if it's a [StandardEmoji] or the emoji name if it's a
-     * [GuildEmoji].
+     * [CustomEmoji].
      */
     public val name: String?
 
     /**
      * Either the unicode representation of the emoji if it's a [StandardEmoji] or the
-     * [mention string](https://discord.com/developers/docs/reference#message-formatting) if it's a [GuildEmoji].
+     * [mention string](https://discord.com/developers/docs/reference#message-formatting) if it's a [CustomEmoji].
      */
     public val mention: String
 }
@@ -48,13 +48,13 @@ public class StandardEmoji(override val name: String) : Emoji {
 }
 
 /**
- * Superclass for all non standard emojis.
+ * Supertype for all non-standard emojis.
  *
  * @see GuildEmoji
  * @see ApplicationEmoji
  */
-public sealed class CustomEmoji : Emoji, KordEntity, Strategizable {
-    public abstract val data: EmojiData
+public sealed interface CustomEmoji : Emoji, KordEntity, Strategizable {
+    public val data: EmojiData
 
     override val id: Snowflake
         get() = data.id
@@ -109,7 +109,7 @@ public sealed class CustomEmoji : Emoji, KordEntity, Strategizable {
      *
      * @throws RequestException if anything went wrong during the request.
      */
-    public abstract suspend fun delete()
+    public suspend fun delete()
 
     /**
      * Requests to get the creator of the emoji as a [User],
@@ -118,6 +118,8 @@ public sealed class CustomEmoji : Emoji, KordEntity, Strategizable {
      * @throws [RequestException] if anything went wrong during the request.
      */
     public suspend fun getUser(): User? = userId?.let { supplier.getUserOrNull(it) }
+
+    override fun withStrategy(strategy: EntitySupplyStrategy<*>): CustomEmoji
 }
 
 /**
@@ -128,7 +130,7 @@ public class GuildEmoji(
     override val data: EmojiData,
     override val kord: Kord,
     override val supplier: EntitySupplier = kord.defaultSupplier
-) : CustomEmoji() {
+) : CustomEmoji {
 
     public val guildId: Snowflake
         get() = data.guildId
@@ -168,7 +170,7 @@ public class GuildEmoji(
      * @param reason the reason showing up in the audit log
      * @throws RequestException if anything went wrong during the request.
      */
-    public suspend fun delete(reason: String?) {
+    public suspend fun delete(reason: String? = null) {
         kord.rest.emoji.deleteEmoji(guildId = guildId, emojiId = id, reason = reason)
     }
 
@@ -220,17 +222,11 @@ public class ApplicationEmoji(
     override val data: EmojiData,
     override val kord: Kord,
     override val supplier: EntitySupplier = kord.defaultSupplier
-) : CustomEmoji() {
+) : CustomEmoji {
     public val applicationId: Snowflake
         get() = kord.selfId
 
-    /**
-     * Requests to delete this emoji, with the given [reason].
-     *
-     * @param reason the reason showing up in the audit log
-     * @throws RequestException if anything went wrong during the request.
-     */
-    public override suspend fun delete() {
+    override suspend fun delete() {
         kord.rest.application.deleteApplicationEmoji(appId = applicationId, emojiId = id)
     }
 

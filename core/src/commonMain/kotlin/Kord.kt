@@ -111,9 +111,9 @@ public class Kord(
      * Flow of [application emojis][ApplicationEmoji].
      */
     public val emojis: Flow<ApplicationEmoji> = flow {
-        rest.application.getApplicationEmojis(selfId).forEach {
+        rest.application.getApplicationEmojis(selfId).items.forEach {
             val data = EmojiData.from(selfId, it.id!!, it)
-            ApplicationEmoji(data, this@Kord)
+            emit(ApplicationEmoji(data, this@Kord))
         }
     }
 

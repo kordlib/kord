@@ -629,67 +629,6 @@ public final class dev/kord/common/entity/ApplicationCommandType$User : dev/kord
 	public static final field INSTANCE Ldev/kord/common/entity/ApplicationCommandType$User;
 }
 
-public final class dev/kord/common/entity/ApplicationEmojis : java/util/List, kotlin/jvm/internal/markers/KMappedMarker {
-	public static final field Companion Ldev/kord/common/entity/ApplicationEmojis$Companion;
-	public fun <init> (Ljava/util/List;)V
-	public fun add (ILdev/kord/common/entity/DiscordEmoji;)V
-	public synthetic fun add (ILjava/lang/Object;)V
-	public fun add (Ldev/kord/common/entity/DiscordEmoji;)Z
-	public synthetic fun add (Ljava/lang/Object;)Z
-	public fun addAll (ILjava/util/Collection;)Z
-	public fun addAll (Ljava/util/Collection;)Z
-	public fun clear ()V
-	public final fun component1 ()Ljava/util/List;
-	public fun contains (Ldev/kord/common/entity/DiscordEmoji;)Z
-	public final fun contains (Ljava/lang/Object;)Z
-	public fun containsAll (Ljava/util/Collection;)Z
-	public final fun copy (Ljava/util/List;)Ldev/kord/common/entity/ApplicationEmojis;
-	public static synthetic fun copy$default (Ldev/kord/common/entity/ApplicationEmojis;Ljava/util/List;ILjava/lang/Object;)Ldev/kord/common/entity/ApplicationEmojis;
-	public fun equals (Ljava/lang/Object;)Z
-	public fun get (I)Ldev/kord/common/entity/DiscordEmoji;
-	public synthetic fun get (I)Ljava/lang/Object;
-	public final fun getItems ()Ljava/util/List;
-	public fun getSize ()I
-	public fun hashCode ()I
-	public fun indexOf (Ldev/kord/common/entity/DiscordEmoji;)I
-	public final fun indexOf (Ljava/lang/Object;)I
-	public fun isEmpty ()Z
-	public fun iterator ()Ljava/util/Iterator;
-	public fun lastIndexOf (Ldev/kord/common/entity/DiscordEmoji;)I
-	public final fun lastIndexOf (Ljava/lang/Object;)I
-	public fun listIterator ()Ljava/util/ListIterator;
-	public fun listIterator (I)Ljava/util/ListIterator;
-	public fun remove (I)Ldev/kord/common/entity/DiscordEmoji;
-	public synthetic fun remove (I)Ljava/lang/Object;
-	public fun remove (Ljava/lang/Object;)Z
-	public fun removeAll (Ljava/util/Collection;)Z
-	public fun replaceAll (Ljava/util/function/UnaryOperator;)V
-	public fun retainAll (Ljava/util/Collection;)Z
-	public fun set (ILdev/kord/common/entity/DiscordEmoji;)Ldev/kord/common/entity/DiscordEmoji;
-	public synthetic fun set (ILjava/lang/Object;)Ljava/lang/Object;
-	public final fun size ()I
-	public fun sort (Ljava/util/Comparator;)V
-	public fun subList (II)Ljava/util/List;
-	public fun toArray ()[Ljava/lang/Object;
-	public fun toArray ([Ljava/lang/Object;)[Ljava/lang/Object;
-	public fun toString ()Ljava/lang/String;
-}
-
-public synthetic class dev/kord/common/entity/ApplicationEmojis$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
-	public static final field INSTANCE Ldev/kord/common/entity/ApplicationEmojis$$serializer;
-	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
-	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/common/entity/ApplicationEmojis;
-	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
-	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/common/entity/ApplicationEmojis;)V
-	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
-}
-
-public final class dev/kord/common/entity/ApplicationEmojis$Companion {
-	public final fun serializer ()Lkotlinx/serialization/KSerializer;
-}
-
 public abstract class dev/kord/common/entity/ApplicationFlag {
 	public static final field Companion Ldev/kord/common/entity/ApplicationFlag$Companion;
 	public synthetic fun <init> (ILkotlin/jvm/internal/DefaultConstructorMarker;)V
