@@ -28,7 +28,7 @@ public class RoleModifyBuilder : AuditRequestBuilder<GuildRoleModifyRequest> {
 
     private var _icon: Optional<Image?> = Optional.Missing()
 
-    /** The role's icon media (if the guild has the [RoleIcons][GuildFeature.RoleIcons] feature). */
+    /** The role's icon image (if the guild has the [RoleIcons][GuildFeature.RoleIcons] feature). */
     public var icon: Image? by ::_icon.delegate()
 
     private var _unicodeEmoji: Optional<String?> = Optional.Missing()

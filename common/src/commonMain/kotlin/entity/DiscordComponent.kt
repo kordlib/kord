@@ -11,13 +11,13 @@
         Entry("MentionableSelect", intValue = 7, kDoc = "Select menu for mentionables (users and roles)."),
         Entry("ChannelSelect", intValue = 8, kDoc = "Select menu for channels."),
         // v2
-        Entry("Section", intValue = 9),
-        Entry("TextDisplay", intValue = 10),
-        Entry("Thumbnail", intValue = 11),
-        Entry("MediaGallery", intValue = 12),
-        Entry("File", intValue = 13),
-        Entry("Separator", intValue = 14),
-        Entry("Container", intValue = 17),
+        Entry("Section", intValue = 9, kDoc = "Container to display text alongside an accessory component"),
+        Entry("TextDisplay", intValue = 10, kDoc = "Markdown text"),
+        Entry("Thumbnail", intValue = 11, kDoc = "Small image that can be used as an accessory"),
+        Entry("MediaGallery", intValue = 12, kDoc = "Display images and other media"),
+        Entry("File", intValue = 13, kDoc = "Displays an attached file"),
+        Entry("Separator", intValue = 14, kDoc = "Component to add vertical padding between other components"),
+        Entry("Container", intValue = 17, kDoc = "Container that visually groups a set of components"),
     ],
 )
 
@@ -47,7 +47,7 @@
 
 @file:Generate(
     INT_KORD_ENUM, name = "SeparatorSpacingSize",
-    docUrl = "",
+    docUrl = "https://discord.com/developers/docs/components/reference#separator-separator-structure",
     entries = [
         Entry("Small", intValue = 1),
         Entry("Large", intValue = 2),
@@ -144,27 +144,13 @@ public data class MediaGalleryItem(
 )
 
 @Serializable
-@ConsistentCopyVisibility
-public data class UnfurledMediaItem internal constructor(
+public data class UnfurledMediaItem(
     val url: String,
     @SerialName("proxy_url")
     val proxyUrl: Optional<String> = Optional.Missing(),
     val height: OptionalInt? = OptionalInt.Missing,
     val width: OptionalInt? = OptionalInt.Missing,
     val contentType: Optional<String> = Optional.Missing()
-) {
-    public fun copy(url: String): UnfurledMediaItem = copy(url = url, height = height)
-}
-
-/**
- * Create a new [UnfurledMediaItem].
- */
-public fun UnfurledMediaItem(url: String): UnfurledMediaItem = UnfurledMediaItem(
-    url,
-    proxyUrl = Optional.Missing(),
-    height = OptionalInt.Missing,
-    width = OptionalInt.Missing,
-    contentType = Optional.Missing()
 )
 
 @Serializable

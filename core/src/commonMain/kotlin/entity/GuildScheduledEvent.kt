@@ -114,7 +114,7 @@ public class GuildScheduledEvent(
     public val userCount: Int?
         get() = data.userCount.value
 
-    /** The cover media hash of this event. */
+    /** The cover image hash of this event. */
     public val imageHash: String? get() = data.image.value
 
     public val image: Asset? get() = imageHash?.let { Asset.guildScheduledEventCover(id, it, kord) }
