@@ -51,4 +51,3 @@ public data class DiscordPartialEmoji(
     val name: String? = null,
     val animated: OptionalBoolean = OptionalBoolean.Missing,
 )
-
