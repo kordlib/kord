@@ -10,4 +10,4 @@ import kotlinx.serialization.Serializable
  * @property items the list of emojis
  */
 @Serializable
-public class ApplicationEmojisResponse(public val items: List<DiscordEmoji>)
+public data class ApplicationEmojisResponse(val items: List<DiscordEmoji>)

@@ -6175,6 +6175,12 @@ final class dev.kord.rest.json.response/ApplicationEmojisResponse { // dev.kord.
     final val items // dev.kord.rest.json.response/ApplicationEmojisResponse.items|{}items[0]
         final fun <get-items>(): kotlin.collections/List<dev.kord.common.entity/DiscordEmoji> // dev.kord.rest.json.response/ApplicationEmojisResponse.items.<get-items>|<get-items>(){}[0]
 
+    final fun component1(): kotlin.collections/List<dev.kord.common.entity/DiscordEmoji> // dev.kord.rest.json.response/ApplicationEmojisResponse.component1|component1(){}[0]
+    final fun copy(kotlin.collections/List<dev.kord.common.entity/DiscordEmoji> = ...): dev.kord.rest.json.response/ApplicationEmojisResponse // dev.kord.rest.json.response/ApplicationEmojisResponse.copy|copy(kotlin.collections.List<dev.kord.common.entity.DiscordEmoji>){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.json.response/ApplicationEmojisResponse.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.rest.json.response/ApplicationEmojisResponse.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // dev.kord.rest.json.response/ApplicationEmojisResponse.toString|toString(){}[0]
+
     final object $serializer : kotlinx.serialization.internal/GeneratedSerializer<dev.kord.rest.json.response/ApplicationEmojisResponse> { // dev.kord.rest.json.response/ApplicationEmojisResponse.$serializer|null[0]
         final val descriptor // dev.kord.rest.json.response/ApplicationEmojisResponse.$serializer.descriptor|{}descriptor[0]
             final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // dev.kord.rest.json.response/ApplicationEmojisResponse.$serializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
