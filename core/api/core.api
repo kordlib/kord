@@ -9148,6 +9148,13 @@ public final class dev/kord/core/entity/channel/thread/ThreadMember : dev/kord/c
 	public fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/channel/thread/ThreadMember;
 }
 
+public abstract interface class dev/kord/core/entity/component/AccessoryComponent : dev/kord/core/entity/component/Component {
+}
+
+public final class dev/kord/core/entity/component/AccessoryComponent$DefaultImpls {
+	public static fun getType (Ldev/kord/core/entity/component/AccessoryComponent;)Ldev/kord/common/entity/ComponentType;
+}
+
 public final class dev/kord/core/entity/component/ActionRowComponent : dev/kord/core/entity/component/Component {
 	public fun <init> (Ldev/kord/core/cache/data/ComponentData;)V
 	public final fun getComponents ()Ljava/util/List;
@@ -9162,7 +9169,7 @@ public final class dev/kord/core/entity/component/ActionRowComponent : dev/kord/
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class dev/kord/core/entity/component/ButtonComponent : dev/kord/core/entity/component/Component {
+public final class dev/kord/core/entity/component/ButtonComponent : dev/kord/core/entity/component/AccessoryComponent {
 	public fun <init> (Ldev/kord/core/cache/data/ChatComponentData;)V
 	public final fun getCustomId ()Ljava/lang/String;
 	public fun getData ()Ldev/kord/core/cache/data/ChatComponentData;
@@ -9213,7 +9220,7 @@ public final class dev/kord/core/entity/component/FileComponent : dev/kord/core/
 	public synthetic fun getData ()Ldev/kord/core/cache/data/ComponentData;
 	public final fun getSpoiler ()Z
 	public fun getType ()Ldev/kord/common/entity/ComponentType;
-	public final fun getUrl ()Ljava/lang/String;
+	public final fun getUrl ()Ldev/kord/core/entity/component/UnfurledMediaItem;
 }
 
 public final class dev/kord/core/entity/component/MediaGalleryComponent : dev/kord/core/entity/component/Component {
@@ -9240,7 +9247,7 @@ public final class dev/kord/core/entity/component/RoleSelectComponent : dev/kord
 
 public final class dev/kord/core/entity/component/SectionComponent : dev/kord/core/entity/component/Component {
 	public fun <init> (Ldev/kord/core/cache/data/ChatComponentData;)V
-	public final fun getAccessory ()Ldev/kord/core/entity/component/Component;
+	public final fun getAccessory ()Ldev/kord/core/entity/component/AccessoryComponent;
 	public final fun getComponents ()Ljava/util/List;
 	public fun getData ()Ldev/kord/core/cache/data/ChatComponentData;
 	public synthetic fun getData ()Ldev/kord/core/cache/data/ComponentData;
@@ -9353,14 +9360,23 @@ public final class dev/kord/core/entity/component/TextInputComponent : dev/kord/
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class dev/kord/core/entity/component/ThumbnailComponent : dev/kord/core/entity/component/Component {
+public final class dev/kord/core/entity/component/ThumbnailComponent : dev/kord/core/entity/component/AccessoryComponent {
 	public fun <init> (Ldev/kord/core/cache/data/ChatComponentData;)V
 	public fun getData ()Ldev/kord/core/cache/data/ChatComponentData;
 	public synthetic fun getData ()Ldev/kord/core/cache/data/ComponentData;
 	public final fun getDescription ()Ljava/lang/String;
 	public final fun getSpoiler ()Z
 	public fun getType ()Ldev/kord/common/entity/ComponentType;
+	public final fun getUrl ()Ldev/kord/core/entity/component/UnfurledMediaItem;
+}
+
+public final class dev/kord/core/entity/component/UnfurledMediaItem {
+	public fun <init> (Ldev/kord/common/entity/UnfurledMediaItem;)V
+	public final fun getContentType ()Ljava/lang/String;
+	public final fun getHeight ()Ljava/lang/Integer;
+	public final fun getProxyUrl ()Ljava/lang/String;
 	public final fun getUrl ()Ljava/lang/String;
+	public final fun getWidth ()Ljava/lang/Integer;
 }
 
 public final class dev/kord/core/entity/component/UnknownComponent : dev/kord/core/entity/component/Component {

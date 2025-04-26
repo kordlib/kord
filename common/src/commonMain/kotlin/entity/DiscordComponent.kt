@@ -67,11 +67,7 @@ import dev.kord.ksp.Generate.Entry
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.json.JsonContentPolymorphicSerializer
-import kotlinx.serialization.json.JsonElement
-import kotlinx.serialization.json.intOrNull
-import kotlinx.serialization.json.jsonObject
-import kotlinx.serialization.json.jsonPrimitive
+import kotlinx.serialization.json.*
 
 /**
  * Represent a [interactable component within a message sent in Discord](https://discord.com/developers/docs/interactions/message-components#what-are-components).
@@ -148,7 +144,28 @@ public data class MediaGalleryItem(
 )
 
 @Serializable
-public data class UnfurledMediaItem(val url: String)
+@ConsistentCopyVisibility
+public data class UnfurledMediaItem internal constructor(
+    val url: String,
+    @SerialName("proxy_url")
+    val proxyUrl: Optional<String> = Optional.Missing(),
+    val height: OptionalInt? = OptionalInt.Missing,
+    val width: OptionalInt? = OptionalInt.Missing,
+    val contentType: Optional<String> = Optional.Missing()
+) {
+    public fun copy(url: String): UnfurledMediaItem = copy(url = url, height = height)
+}
+
+/**
+ * Create a new [UnfurledMediaItem].
+ */
+public fun UnfurledMediaItem(url: String): UnfurledMediaItem = UnfurledMediaItem(
+    url,
+    proxyUrl = Optional.Missing(),
+    height = OptionalInt.Missing,
+    width = OptionalInt.Missing,
+    contentType = Optional.Missing()
+)
 
 @Serializable
 public data class DiscordChatComponent(

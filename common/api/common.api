@@ -3381,6 +3381,10 @@ public final class dev/kord/common/entity/DiscordComponent$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
+public final class dev/kord/common/entity/DiscordComponentKt {
+	public static final fun UnfurledMediaItem (Ljava/lang/String;)Ldev/kord/common/entity/UnfurledMediaItem;
+}
+
 public final class dev/kord/common/entity/DiscordConnection {
 	public static final field Companion Ldev/kord/common/entity/DiscordConnection$Companion;
 	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;ZZZLdev/kord/common/entity/DiscordConnectionVisibility;)V
@@ -9092,12 +9096,18 @@ public final class dev/kord/common/entity/TextInputStyle$Unknown : dev/kord/comm
 
 public final class dev/kord/common/entity/UnfurledMediaItem {
 	public static final field Companion Ldev/kord/common/entity/UnfurledMediaItem$Companion;
-	public fun <init> (Ljava/lang/String;)V
 	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ldev/kord/common/entity/optional/Optional;
+	public final fun component3 ()Ldev/kord/common/entity/optional/OptionalInt;
+	public final fun component4 ()Ldev/kord/common/entity/optional/OptionalInt;
+	public final fun component5 ()Ldev/kord/common/entity/optional/Optional;
 	public final fun copy (Ljava/lang/String;)Ldev/kord/common/entity/UnfurledMediaItem;
-	public static synthetic fun copy$default (Ldev/kord/common/entity/UnfurledMediaItem;Ljava/lang/String;ILjava/lang/Object;)Ldev/kord/common/entity/UnfurledMediaItem;
 	public fun equals (Ljava/lang/Object;)Z
+	public final fun getContentType ()Ldev/kord/common/entity/optional/Optional;
+	public final fun getHeight ()Ldev/kord/common/entity/optional/OptionalInt;
+	public final fun getProxyUrl ()Ldev/kord/common/entity/optional/Optional;
 	public final fun getUrl ()Ljava/lang/String;
+	public final fun getWidth ()Ldev/kord/common/entity/optional/OptionalInt;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }
