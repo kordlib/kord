@@ -9,6 +9,7 @@ dependencies {
     api(projects.common)
     api(projects.gateway)
 
+    implementation(libs.kotlinx.collections.immutable)
     implementation(libs.kotlin.logging)
     implementation(libs.slf4j.api)
 

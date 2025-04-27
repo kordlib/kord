@@ -1061,14 +1061,12 @@ public final class dev/kord/voice/io/ReadableByteArrayCursor {
 }
 
 public final class dev/kord/voice/streams/DefaultStreams : dev/kord/voice/streams/Streams {
-	public fun <init> (Ldev/kord/voice/gateway/VoiceGateway;Ldev/kord/voice/udp/VoiceUdpSocket;Ldev/kord/voice/encryption/strategies/NonceStrategy;)V
+	public fun <init> (Ldev/kord/voice/udp/VoiceUdpSocket;Ldev/kord/voice/encryption/strategies/NonceStrategy;)V
 	public fun getIncomingAudioFrames ()Lkotlinx/coroutines/flow/Flow;
 	public synthetic fun getIncomingAudioPackets ()Lkotlinx/coroutines/flow/Flow;
 	public fun getIncomingAudioPackets ()Lkotlinx/coroutines/flow/SharedFlow;
-	public synthetic fun getIncomingUserStreams ()Lkotlinx/coroutines/flow/Flow;
-	public fun getIncomingUserStreams ()Lkotlinx/coroutines/flow/SharedFlow;
-	public fun getSsrcToUser ()Ljava/util/Map;
-	public fun listen ([BLio/ktor/network/sockets/SocketAddress;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getIncomingUserStreams ()Lkotlinx/coroutines/flow/Flow;
+	public fun listen ([BLio/ktor/network/sockets/SocketAddress;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class dev/kord/voice/streams/NOPStreams : dev/kord/voice/streams/Streams {
@@ -1076,16 +1074,14 @@ public final class dev/kord/voice/streams/NOPStreams : dev/kord/voice/streams/St
 	public fun getIncomingAudioFrames ()Lkotlinx/coroutines/flow/Flow;
 	public fun getIncomingAudioPackets ()Lkotlinx/coroutines/flow/Flow;
 	public fun getIncomingUserStreams ()Lkotlinx/coroutines/flow/Flow;
-	public fun getSsrcToUser ()Ljava/util/Map;
-	public fun listen ([BLio/ktor/network/sockets/SocketAddress;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun listen ([BLio/ktor/network/sockets/SocketAddress;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public abstract interface class dev/kord/voice/streams/Streams {
 	public abstract fun getIncomingAudioFrames ()Lkotlinx/coroutines/flow/Flow;
 	public abstract fun getIncomingAudioPackets ()Lkotlinx/coroutines/flow/Flow;
 	public abstract fun getIncomingUserStreams ()Lkotlinx/coroutines/flow/Flow;
-	public abstract fun getSsrcToUser ()Ljava/util/Map;
-	public abstract fun listen ([BLio/ktor/network/sockets/SocketAddress;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun listen ([BLio/ktor/network/sockets/SocketAddress;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public abstract interface class dev/kord/voice/udp/AudioFrameSender {
