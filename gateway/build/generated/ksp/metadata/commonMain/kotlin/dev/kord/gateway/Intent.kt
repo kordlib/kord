@@ -1,6 +1,5 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
-@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
-                "SpellCheckingInspection", "GrazieInspection"))
+@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.gateway
 
@@ -21,8 +20,7 @@ import kotlinx.serialization.encoding.Encoder
 /**
  * Values that enable a group of events as defined by Discord.
  *
- * See [Intent]s in the
- * [Discord Developer Documentation](https://discord.com/developers/docs/topics/gateway#gateway-intents).
+ * See [Intent]s in the [Discord Developer Documentation](https://discord.com/developers/docs/topics/gateway#gateway-intents).
  */
 public sealed class Intent(
     /**
@@ -50,13 +48,11 @@ public sealed class Intent(
      */
     public operator fun plus(flags: Intents): Intents = Intents(this.code + flags.code)
 
-    final override fun equals(other: Any?): Boolean = this === other ||
-            (other is Intent && this.shift == other.shift)
+    final override fun equals(other: Any?): Boolean = this === other || (other is Intent && this.shift == other.shift)
 
     final override fun hashCode(): Int = shift.hashCode()
 
-    final override fun toString(): String = if (this is Unknown) "Intent.Unknown(shift=$shift)"
-            else "Intent.${this::class.simpleName}"
+    final override fun toString(): String = if (this is Unknown) "Intent.Unknown(shift=$shift)" else "Intent.${this::class.simpleName}"
 
     /**
      * An unknown [Intent].
@@ -198,19 +194,11 @@ public sealed class Intent(
     public object DirectMessageTyping : Intent(14)
 
     /**
-     * [MessageContent] is a unique [privileged intent][PrivilegedIntent] that isn't directly
-     * associated with any Gateway [event][Event]s. Instead, access to [MessageContent] permits your
-     * app to receive message content data across the APIs.
+     * [MessageContent] is a unique [privileged intent][PrivilegedIntent] that isn't directly associated with any Gateway [event][Event]s. Instead, access to [MessageContent] permits your app to receive message content data across the APIs.
      *
-     * For example, the [content][dev.kord.common.entity.DiscordMessage.content],
-     * [embeds][dev.kord.common.entity.DiscordMessage.embeds],
-     * [attachments][dev.kord.common.entity.DiscordMessage.attachments], and
-     * [components][dev.kord.common.entity.DiscordMessage.components] fields in [message
-     * objects][dev.kord.common.entity.DiscordMessage] all contain message content and therefore
-     * require this intent.
+     * For example, the [content][dev.kord.common.entity.DiscordMessage.content], [embeds][dev.kord.common.entity.DiscordMessage.embeds], [attachments][dev.kord.common.entity.DiscordMessage.attachments], and [components][dev.kord.common.entity.DiscordMessage.components] fields in [message objects][dev.kord.common.entity.DiscordMessage] all contain message content and therefore require this intent.
      *
-     * Apps **without** this intent will receive empty values in fields that contain user-inputted
-     * content with a few exceptions:
+     * Apps **without** this intent will receive empty values in fields that contain user-inputted content with a few exceptions:
      * - Content in messages that an app sends
      * - Content in DMs with the app
      * - Content in which the app is mentioned
@@ -345,8 +333,7 @@ public sealed class Intent(
  *
  * ## Checking for [Intent]s
  *
- * You can use the [contains] operator to check whether an instance of [Intents] contains specific
- * [Intent]s:
+ * You can use the [contains] operator to check whether an instance of [Intents] contains specific [Intent]s:
  * ```kotlin
  * val hasIntent = Intent.Guilds in intents
  * val hasIntents = Intents(Intent.Guilds, Intent.GuildMembers) in intents
@@ -354,8 +341,7 @@ public sealed class Intent(
  *
  * ## Unknown [Intent]s
  *
- * Whenever [Intent]s haven't been added to Kord yet, they will be deserialized as instances of
- * [Intent.Unknown].
+ * Whenever [Intent]s haven't been added to Kord yet, they will be deserialized as instances of [Intent.Unknown].
  *
  * You can also use [Intent.fromShift] to check for [unknown][Intent.Unknown] [Intent]s.
  * ```kotlin
@@ -403,14 +389,12 @@ public class Intents internal constructor(
     public operator fun plus(flags: Intents): Intents = Intents(this.code + flags.code)
 
     /**
-     * Returns an instance of [Intents] that has all bits set that are set in `this` except the bits
-     * that are set in [flag].
+     * Returns an instance of [Intents] that has all bits set that are set in `this` except the bits that are set in [flag].
      */
     public operator fun minus(flag: Intent): Intents = Intents(this.code - flag.code)
 
     /**
-     * Returns an instance of [Intents] that has all bits set that are set in `this` except the bits
-     * that are set in [flags].
+     * Returns an instance of [Intents] that has all bits set that are set in `this` except the bits that are set in [flags].
      */
     public operator fun minus(flags: Intents): Intents = Intents(this.code - flags.code)
 
@@ -431,8 +415,7 @@ public class Intents internal constructor(
         return copy(builder)
     }
 
-    override fun equals(other: Any?): Boolean = this === other ||
-            (other is Intents && this.code == other.code)
+    override fun equals(other: Any?): Boolean = this === other || (other is Intents && this.code == other.code)
 
     override fun hashCode(): Int = code.hashCode()
 
@@ -470,8 +453,7 @@ public class Intents internal constructor(
         }
 
         /**
-         * Returns an instance of [Intents] that has all bits set that are currently set in this
-         * [Builder].
+         * Returns an instance of [Intents] that has all bits set that are currently set in this [Builder].
          */
         public fun build(): Intents = Intents(code.copy())
     }
@@ -486,8 +468,7 @@ public class Intents internal constructor(
             encoder.encodeSerializableValue(delegate, value.code)
         }
 
-        override fun deserialize(decoder: Decoder): Intents =
-                Intents(decoder.decodeSerializableValue(delegate))
+        override fun deserialize(decoder: Decoder): Intents = Intents(decoder.decodeSerializableValue(delegate))
     }
 }
 

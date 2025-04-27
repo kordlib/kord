@@ -4,6 +4,7 @@ import dev.kord.common.entity.*
 import dev.kord.common.entity.Permission.*
 import dev.kord.common.entity.optional.orEmpty
 import dev.kord.common.readFile
+import dev.kord.test.IgnoreOnSimulatorPlatforms
 import kotlinx.coroutines.test.runTest
 import kotlinx.serialization.json.Json
 import kotlin.js.JsName
@@ -30,6 +31,7 @@ private val testEntitlements = listOf(
     ),
 )
 
+@IgnoreOnSimulatorPlatforms
 class InteractionTest {
 
     val json = Json {

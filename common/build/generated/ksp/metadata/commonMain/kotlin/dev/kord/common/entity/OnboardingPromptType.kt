@@ -1,6 +1,5 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
-@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
-                "SpellCheckingInspection", "GrazieInspection"))
+@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
@@ -14,8 +13,7 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 /**
- * See [OnboardingPromptType]s in the
- * [Discord Developer Documentation](https://discord.com/developers/docs/resources/guild#guild-onboarding-object-prompt-types).
+ * See [OnboardingPromptType]s in the [Discord Developer Documentation](https://discord.com/developers/docs/resources/guild#guild-onboarding-object-prompt-types).
  */
 @Serializable(with = OnboardingPromptType.Serializer::class)
 public sealed class OnboardingPromptType(
@@ -24,14 +22,11 @@ public sealed class OnboardingPromptType(
      */
     public val `value`: Int,
 ) {
-    final override fun equals(other: Any?): Boolean = this === other ||
-            (other is OnboardingPromptType && this.value == other.value)
+    final override fun equals(other: Any?): Boolean = this === other || (other is OnboardingPromptType && this.value == other.value)
 
     final override fun hashCode(): Int = value.hashCode()
 
-    final override fun toString(): String =
-            if (this is Unknown) "OnboardingPromptType.Unknown(value=$value)"
-            else "OnboardingPromptType.${this::class.simpleName}"
+    final override fun toString(): String = if (this is Unknown) "OnboardingPromptType.Unknown(value=$value)" else "OnboardingPromptType.${this::class.simpleName}"
 
     /**
      * An unknown [OnboardingPromptType].
@@ -48,8 +43,7 @@ public sealed class OnboardingPromptType(
 
     internal object Serializer : KSerializer<OnboardingPromptType> {
         override val descriptor: SerialDescriptor =
-                PrimitiveSerialDescriptor("dev.kord.common.entity.OnboardingPromptType",
-                PrimitiveKind.INT)
+                PrimitiveSerialDescriptor("dev.kord.common.entity.OnboardingPromptType", PrimitiveKind.INT)
 
         override fun serialize(encoder: Encoder, `value`: OnboardingPromptType) {
             encoder.encodeInt(value.value)
@@ -70,8 +64,7 @@ public sealed class OnboardingPromptType(
         }
 
         /**
-         * Returns an instance of [OnboardingPromptType] with [OnboardingPromptType.value] equal to
-         * the specified [value].
+         * Returns an instance of [OnboardingPromptType] with [OnboardingPromptType.value] equal to the specified [value].
          */
         public fun from(`value`: Int): OnboardingPromptType = when (value) {
             0 -> MultipleChoice
