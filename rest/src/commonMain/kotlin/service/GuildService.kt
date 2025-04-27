@@ -125,6 +125,12 @@ public class GuildService(requestHandler: RequestHandler) : RestService(requestH
             keys[Route.UserId] = userId
         }
 
+    public suspend fun getGuildMemberVoiceState(guildId: Snowflake, userId: Snowflake): DiscordVoiceState =
+        call(Route.GuildVoiceStatesGet) {
+            keys[Route.GuildId] = guildId
+            keys[Route.UserId] = userId
+        }
+
     public suspend fun getGuildMembers(
         guildId: Snowflake,
         after: Position.After? = null,
