@@ -1,6 +1,5 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
-@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
-                "SpellCheckingInspection", "GrazieInspection"))
+@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
@@ -14,8 +13,7 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 /**
- * See [TeamMemberRole]s in the
- * [Discord Developer Documentation](https://discord.com/developers/docs/topics/teams#team-member-roles).
+ * See [TeamMemberRole]s in the [Discord Developer Documentation](https://discord.com/developers/docs/topics/teams#team-member-roles).
  */
 @Serializable(with = TeamMemberRole.Serializer::class)
 public sealed class TeamMemberRole(
@@ -24,14 +22,11 @@ public sealed class TeamMemberRole(
      */
     public val `value`: String,
 ) {
-    final override fun equals(other: Any?): Boolean = this === other ||
-            (other is TeamMemberRole && this.value == other.value)
+    final override fun equals(other: Any?): Boolean = this === other || (other is TeamMemberRole && this.value == other.value)
 
     final override fun hashCode(): Int = value.hashCode()
 
-    final override fun toString(): String =
-            if (this is Unknown) "TeamMemberRole.Unknown(value=$value)"
-            else "TeamMemberRole.${this::class.simpleName}"
+    final override fun toString(): String = if (this is Unknown) "TeamMemberRole.Unknown(value=$value)" else "TeamMemberRole.${this::class.simpleName}"
 
     /**
      * An unknown [TeamMemberRole].
@@ -43,29 +38,23 @@ public sealed class TeamMemberRole(
     ) : TeamMemberRole(value)
 
     /**
-     * Admins have similar access as owners, except they cannot take destructive actions on the team
-     * or team-owned apps.
+     * Admins have similar access as owners, except they cannot take destructive actions on the team or team-owned apps.
      */
     public object Admin : TeamMemberRole("admin")
 
     /**
-     * Developers can access information about team-owned apps, like the client secret or public
-     * key. They can also take limited actions on team-owned apps, like configuring interaction
-     * endpoints or resetting the bot token. Members with the Developer role _cannot_ manage the team
-     * or its members, or take destructive actions on team-owned apps.
+     * Developers can access information about team-owned apps, like the client secret or public key. They can also take limited actions on team-owned apps, like configuring interaction endpoints or resetting the bot token. Members with the Developer role _cannot_ manage the team or its members, or take destructive actions on team-owned apps.
      */
     public object Developer : TeamMemberRole("developer")
 
     /**
-     * Read-only members can access information about a team and any team-owned apps. Some examples
-     * include getting the IDs of applications and exporting payout records.
+     * Read-only members can access information about a team and any team-owned apps. Some examples include getting the IDs of applications and exporting payout records.
      */
     public object ReadOnly : TeamMemberRole("read_only")
 
     internal object Serializer : KSerializer<TeamMemberRole> {
         override val descriptor: SerialDescriptor =
-                PrimitiveSerialDescriptor("dev.kord.common.entity.TeamMemberRole",
-                PrimitiveKind.STRING)
+                PrimitiveSerialDescriptor("dev.kord.common.entity.TeamMemberRole", PrimitiveKind.STRING)
 
         override fun serialize(encoder: Encoder, `value`: TeamMemberRole) {
             encoder.encodeString(value.value)
@@ -87,8 +76,7 @@ public sealed class TeamMemberRole(
         }
 
         /**
-         * Returns an instance of [TeamMemberRole] with [TeamMemberRole.value] equal to the
-         * specified [value].
+         * Returns an instance of [TeamMemberRole] with [TeamMemberRole.value] equal to the specified [value].
          */
         public fun from(`value`: String): TeamMemberRole = when (value) {
             "admin" -> Admin

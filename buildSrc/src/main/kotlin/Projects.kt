@@ -1,4 +1,5 @@
 import org.gradle.api.Project
+import org.gradle.api.provider.Provider
 
 object Library {
     const val name = "kord"
