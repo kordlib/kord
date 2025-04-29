@@ -51,7 +51,7 @@ public class MediaGalleryItemBuilder(public var url: String) {
 public class MediaGalleryBuilder : ContainerComponentBuilder {
     public val items: MutableList<MediaGalleryItemBuilder> = mutableListOf()
 
-    public fun item(url: String, builder: MediaGalleryItemBuilder.() -> Unit) {
+    public fun item(url: String, builder: MediaGalleryItemBuilder.() -> Unit = {}) {
         items.add(MediaGalleryItemBuilder(url).apply(builder))
     }
 
@@ -63,12 +63,15 @@ public class MediaGalleryBuilder : ContainerComponentBuilder {
 
 public class SeparatorBuilder : ContainerComponentBuilder {
     private var _spacing: Optional<SeparatorSpacingSize> = Optional.Missing()
+private var _divider: OptionalBoolean = OptionalBoolean.Missing
 
+public var divider: Boolean? by ::_divider.delegate()
     public var spacing: SeparatorSpacingSize? by ::_spacing.delegate()
 
     override fun build(): DiscordComponent = DiscordChatComponent(
         type = ComponentType.Separator,
-        spacing = _spacing
+        spacing = _spacing,
+        divider = _divider,
     )
 }
 
