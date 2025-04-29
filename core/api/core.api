@@ -3111,8 +3111,8 @@ public final class dev/kord/core/cache/data/ChannelDataKt {
 
 public final class dev/kord/core/cache/data/ChatComponentData : dev/kord/core/cache/data/ComponentData {
 	public static final field Companion Ldev/kord/core/cache/data/ChatComponentData$Companion;
-	public fun <init> (Ldev/kord/common/entity/ComponentType;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalSnowflake;)V
-	public synthetic fun <init> (Ldev/kord/common/entity/ComponentType;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalSnowflake;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Ldev/kord/common/entity/ComponentType;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;)V
+	public synthetic fun <init> (Ldev/kord/common/entity/ComponentType;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ldev/kord/common/entity/ComponentType;
 	public final fun component10 ()Ldev/kord/common/entity/optional/Optional;
 	public final fun component11 ()Ldev/kord/common/entity/optional/OptionalInt;
@@ -3125,6 +3125,16 @@ public final class dev/kord/core/cache/data/ChatComponentData : dev/kord/core/ca
 	public final fun component18 ()Ldev/kord/common/entity/optional/Optional;
 	public final fun component19 ()Ldev/kord/common/entity/optional/OptionalSnowflake;
 	public final fun component2 ()Ldev/kord/common/entity/optional/Optional;
+	public final fun component20 ()Ldev/kord/common/entity/optional/Optional;
+	public final fun component21 ()Ldev/kord/common/entity/optional/Optional;
+	public final fun component22 ()Ldev/kord/common/entity/optional/Optional;
+	public final fun component23 ()Ldev/kord/common/entity/optional/Optional;
+	public final fun component24 ()Ldev/kord/common/entity/optional/OptionalBoolean;
+	public final fun component25 ()Ldev/kord/common/entity/optional/Optional;
+	public final fun component26 ()Ldev/kord/common/entity/optional/OptionalBoolean;
+	public final fun component27 ()Ldev/kord/common/entity/optional/Optional;
+	public final fun component28 ()Ldev/kord/common/entity/optional/Optional;
+	public final fun component29 ()Ldev/kord/common/entity/optional/Optional;
 	public final fun component3 ()Ldev/kord/common/entity/optional/Optional;
 	public final fun component4 ()Ldev/kord/common/entity/optional/Optional;
 	public final fun component5 ()Ldev/kord/common/entity/optional/Optional;
@@ -3132,15 +3142,23 @@ public final class dev/kord/core/cache/data/ChatComponentData : dev/kord/core/ca
 	public final fun component7 ()Ldev/kord/common/entity/optional/OptionalBoolean;
 	public final fun component8 ()Ldev/kord/common/entity/optional/Optional;
 	public final fun component9 ()Ldev/kord/common/entity/optional/Optional;
-	public final fun copy (Ldev/kord/common/entity/ComponentType;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalSnowflake;)Ldev/kord/core/cache/data/ChatComponentData;
-	public static synthetic fun copy$default (Ldev/kord/core/cache/data/ChatComponentData;Ldev/kord/common/entity/ComponentType;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalSnowflake;ILjava/lang/Object;)Ldev/kord/core/cache/data/ChatComponentData;
+	public final fun copy (Ldev/kord/common/entity/ComponentType;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;)Ldev/kord/core/cache/data/ChatComponentData;
+	public static synthetic fun copy$default (Ldev/kord/core/cache/data/ChatComponentData;Ldev/kord/common/entity/ComponentType;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;ILjava/lang/Object;)Ldev/kord/core/cache/data/ChatComponentData;
 	public fun equals (Ljava/lang/Object;)Z
+	public final fun getAccentColor ()Ldev/kord/common/entity/optional/Optional;
+	public final fun getAccessory ()Ldev/kord/common/entity/optional/Optional;
 	public fun getChannelTypes ()Ldev/kord/common/entity/optional/Optional;
 	public fun getComponents ()Ldev/kord/common/entity/optional/Optional;
+	public final fun getContent ()Ldev/kord/common/entity/optional/Optional;
 	public fun getCustomId ()Ldev/kord/common/entity/optional/Optional;
 	public fun getDefaultValues ()Ldev/kord/common/entity/optional/Optional;
+	public final fun getDescription ()Ldev/kord/common/entity/optional/Optional;
 	public fun getDisabled ()Ldev/kord/common/entity/optional/OptionalBoolean;
+	public final fun getDivider ()Ldev/kord/common/entity/optional/OptionalBoolean;
 	public fun getEmoji ()Ldev/kord/common/entity/optional/Optional;
+	public final fun getFile ()Ldev/kord/common/entity/optional/Optional;
+	public final fun getImage ()Ldev/kord/common/entity/optional/Optional;
+	public final fun getItems ()Ldev/kord/common/entity/optional/Optional;
 	public fun getLabel ()Ldev/kord/common/entity/optional/Optional;
 	public fun getMaxLength ()Ldev/kord/common/entity/optional/OptionalInt;
 	public fun getMaxValues ()Ldev/kord/common/entity/optional/OptionalInt;
@@ -3150,6 +3168,8 @@ public final class dev/kord/core/cache/data/ChatComponentData : dev/kord/core/ca
 	public fun getPlaceholder ()Ldev/kord/common/entity/optional/Optional;
 	public fun getRequired ()Ldev/kord/common/entity/optional/OptionalBoolean;
 	public final fun getSkuId ()Ldev/kord/common/entity/optional/OptionalSnowflake;
+	public final fun getSpacing ()Ldev/kord/common/entity/optional/Optional;
+	public final fun getSpoiler ()Ldev/kord/common/entity/optional/OptionalBoolean;
 	public final fun getStyle ()Ldev/kord/common/entity/optional/Optional;
 	public fun getType ()Ldev/kord/common/entity/ComponentType;
 	public fun getUrl ()Ldev/kord/common/entity/optional/Optional;
@@ -9171,6 +9191,13 @@ public final class dev/kord/core/entity/channel/thread/ThreadMember : dev/kord/c
 	public fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/channel/thread/ThreadMember;
 }
 
+public abstract interface class dev/kord/core/entity/component/AccessoryComponent : dev/kord/core/entity/component/Component {
+}
+
+public final class dev/kord/core/entity/component/AccessoryComponent$DefaultImpls {
+	public static fun getType (Ldev/kord/core/entity/component/AccessoryComponent;)Ldev/kord/common/entity/ComponentType;
+}
+
 public final class dev/kord/core/entity/component/ActionRowComponent : dev/kord/core/entity/component/Component {
 	public fun <init> (Ldev/kord/core/cache/data/ComponentData;)V
 	public final fun getComponents ()Ljava/util/List;
@@ -9185,7 +9212,7 @@ public final class dev/kord/core/entity/component/ActionRowComponent : dev/kord/
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class dev/kord/core/entity/component/ButtonComponent : dev/kord/core/entity/component/Component {
+public final class dev/kord/core/entity/component/ButtonComponent : dev/kord/core/entity/component/AccessoryComponent {
 	public fun <init> (Ldev/kord/core/cache/data/ChatComponentData;)V
 	public final fun getCustomId ()Ljava/lang/String;
 	public fun getData ()Ldev/kord/core/cache/data/ChatComponentData;
@@ -9222,6 +9249,31 @@ public final class dev/kord/core/entity/component/ComponentKt {
 	public static final fun Component (Ldev/kord/core/cache/data/ComponentData;)Ldev/kord/core/entity/component/Component;
 }
 
+public final class dev/kord/core/entity/component/ContainerComponent : dev/kord/core/entity/component/Component {
+	public fun <init> (Ldev/kord/core/cache/data/ChatComponentData;)V
+	public final fun getComponents ()Ljava/util/List;
+	public fun getData ()Ldev/kord/core/cache/data/ChatComponentData;
+	public synthetic fun getData ()Ldev/kord/core/cache/data/ComponentData;
+	public fun getType ()Ldev/kord/common/entity/ComponentType;
+}
+
+public final class dev/kord/core/entity/component/FileComponent : dev/kord/core/entity/component/Component {
+	public fun <init> (Ldev/kord/core/cache/data/ChatComponentData;)V
+	public fun getData ()Ldev/kord/core/cache/data/ChatComponentData;
+	public synthetic fun getData ()Ldev/kord/core/cache/data/ComponentData;
+	public final fun getSpoiler ()Z
+	public fun getType ()Ldev/kord/common/entity/ComponentType;
+	public final fun getUrl ()Ldev/kord/core/entity/component/UnfurledMediaItem;
+}
+
+public final class dev/kord/core/entity/component/MediaGalleryComponent : dev/kord/core/entity/component/Component {
+	public fun <init> (Ldev/kord/core/cache/data/ChatComponentData;)V
+	public fun getData ()Ldev/kord/core/cache/data/ChatComponentData;
+	public synthetic fun getData ()Ldev/kord/core/cache/data/ComponentData;
+	public final fun getItems ()Ljava/util/List;
+	public fun getType ()Ldev/kord/common/entity/ComponentType;
+}
+
 public final class dev/kord/core/entity/component/MentionableSelectComponent : dev/kord/core/entity/component/SelectMenuComponent {
 	public fun <init> (Ldev/kord/core/cache/data/ComponentData;)V
 	public final fun getDefaultValues ()Ljava/util/List;
@@ -9234,6 +9286,15 @@ public final class dev/kord/core/entity/component/RoleSelectComponent : dev/kord
 	public final fun getDefaultValues ()Ljava/util/List;
 	public fun getType ()Ldev/kord/common/entity/ComponentType$RoleSelect;
 	public synthetic fun getType ()Ldev/kord/common/entity/ComponentType;
+}
+
+public final class dev/kord/core/entity/component/SectionComponent : dev/kord/core/entity/component/Component {
+	public fun <init> (Ldev/kord/core/cache/data/ChatComponentData;)V
+	public final fun getAccessory ()Ldev/kord/core/entity/component/AccessoryComponent;
+	public final fun getComponents ()Ljava/util/List;
+	public fun getData ()Ldev/kord/core/cache/data/ChatComponentData;
+	public synthetic fun getData ()Ldev/kord/core/cache/data/ComponentData;
+	public fun getType ()Ldev/kord/common/entity/ComponentType;
 }
 
 public abstract interface class dev/kord/core/entity/component/SelectDefaultValue {
@@ -9301,11 +9362,28 @@ public final class dev/kord/core/entity/component/SelectOption {
 	public fun toString ()Ljava/lang/String;
 }
 
+public final class dev/kord/core/entity/component/SeparatorComponent : dev/kord/core/entity/component/Component {
+	public fun <init> (Ldev/kord/core/cache/data/ChatComponentData;)V
+	public fun getData ()Ldev/kord/core/cache/data/ChatComponentData;
+	public synthetic fun getData ()Ldev/kord/core/cache/data/ComponentData;
+	public final fun getDivider ()Z
+	public final fun getSpacing ()Ldev/kord/common/entity/SeparatorSpacingSize;
+	public fun getType ()Ldev/kord/common/entity/ComponentType;
+}
+
 public final class dev/kord/core/entity/component/StringSelectComponent : dev/kord/core/entity/component/SelectMenuComponent {
 	public fun <init> (Ldev/kord/core/cache/data/ComponentData;)V
 	public final fun getOptions ()Ljava/util/List;
 	public fun getType ()Ldev/kord/common/entity/ComponentType$StringSelect;
 	public synthetic fun getType ()Ldev/kord/common/entity/ComponentType;
+}
+
+public final class dev/kord/core/entity/component/TextDisplayComponent : dev/kord/core/entity/component/Component {
+	public fun <init> (Ldev/kord/core/cache/data/ChatComponentData;)V
+	public final fun getContent ()Ljava/lang/String;
+	public fun getData ()Ldev/kord/core/cache/data/ChatComponentData;
+	public synthetic fun getData ()Ldev/kord/core/cache/data/ComponentData;
+	public fun getType ()Ldev/kord/common/entity/ComponentType;
 }
 
 public final class dev/kord/core/entity/component/TextInputComponent : dev/kord/core/entity/component/Component {
@@ -9323,6 +9401,25 @@ public final class dev/kord/core/entity/component/TextInputComponent : dev/kord/
 	public synthetic fun getType ()Ldev/kord/common/entity/ComponentType;
 	public final fun getValue ()Ljava/lang/String;
 	public fun toString ()Ljava/lang/String;
+}
+
+public final class dev/kord/core/entity/component/ThumbnailComponent : dev/kord/core/entity/component/AccessoryComponent {
+	public fun <init> (Ldev/kord/core/cache/data/ChatComponentData;)V
+	public fun getData ()Ldev/kord/core/cache/data/ChatComponentData;
+	public synthetic fun getData ()Ldev/kord/core/cache/data/ComponentData;
+	public final fun getDescription ()Ljava/lang/String;
+	public final fun getSpoiler ()Z
+	public fun getType ()Ldev/kord/common/entity/ComponentType;
+	public final fun getUrl ()Ldev/kord/core/entity/component/UnfurledMediaItem;
+}
+
+public final class dev/kord/core/entity/component/UnfurledMediaItem {
+	public fun <init> (Ldev/kord/common/entity/UnfurledMediaItem;)V
+	public final fun getContentType ()Ljava/lang/String;
+	public final fun getHeight ()Ljava/lang/Integer;
+	public final fun getProxyUrl ()Ljava/lang/String;
+	public final fun getUrl ()Ljava/lang/String;
+	public final fun getWidth ()Ljava/lang/Integer;
 }
 
 public final class dev/kord/core/entity/component/UnknownComponent : dev/kord/core/entity/component/Component {

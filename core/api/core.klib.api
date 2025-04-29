@@ -1220,6 +1220,8 @@ sealed interface dev.kord.core.entity.channel/ThreadOnlyChannel : dev.kord.core.
     abstract suspend fun asChannelOrNull(): dev.kord.core.entity.channel/ThreadOnlyChannel // dev.kord.core.entity.channel/ThreadOnlyChannel.asChannelOrNull|asChannelOrNull(){}[0]
 }
 
+sealed interface dev.kord.core.entity.component/AccessoryComponent : dev.kord.core.entity.component/Component // dev.kord.core.entity.component/AccessoryComponent|null[0]
+
 sealed interface dev.kord.core.entity.component/Component { // dev.kord.core.entity.component/Component|null[0]
     abstract val data // dev.kord.core.entity.component/Component.data|{}data[0]
         abstract fun <get-data>(): dev.kord.core.cache.data/ComponentData // dev.kord.core.entity.component/Component.data.<get-data>|<get-data>(){}[0]
@@ -2691,20 +2693,36 @@ final class dev.kord.core.cache.data/ChannelData { // dev.kord.core.cache.data/C
 }
 
 final class dev.kord.core.cache.data/ChatComponentData : dev.kord.core.cache.data/ComponentData { // dev.kord.core.cache.data/ChatComponentData|null[0]
-    constructor <init>(dev.kord.common.entity/ComponentType, dev.kord.common.entity.optional/Optional<dev.kord.common.entity/ButtonStyle> = ..., dev.kord.common.entity.optional/Optional<kotlin/String> = ..., dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordPartialEmoji> = ..., dev.kord.common.entity.optional/Optional<kotlin/String> = ..., dev.kord.common.entity.optional/Optional<kotlin/String> = ..., dev.kord.common.entity.optional/OptionalBoolean = ..., dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.core.cache.data/ComponentData>> = ..., dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.common.entity/DiscordSelectDefaultValue>> = ..., dev.kord.common.entity.optional/Optional<kotlin/String> = ..., dev.kord.common.entity.optional/OptionalInt = ..., dev.kord.common.entity.optional/OptionalInt = ..., dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.core.cache.data/SelectOptionData>> = ..., dev.kord.common.entity.optional/OptionalInt = ..., dev.kord.common.entity.optional/OptionalInt = ..., dev.kord.common.entity.optional/OptionalBoolean = ..., dev.kord.common.entity.optional/Optional<kotlin/String> = ..., dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.common.entity/ChannelType>> = ..., dev.kord.common.entity.optional/OptionalSnowflake = ...) // dev.kord.core.cache.data/ChatComponentData.<init>|<init>(dev.kord.common.entity.ComponentType;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.ButtonStyle>;dev.kord.common.entity.optional.Optional<kotlin.String>;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.DiscordPartialEmoji>;dev.kord.common.entity.optional.Optional<kotlin.String>;dev.kord.common.entity.optional.Optional<kotlin.String>;dev.kord.common.entity.optional.OptionalBoolean;dev.kord.common.entity.optional.Optional<kotlin.collections.List<dev.kord.core.cache.data.ComponentData>>;dev.kord.common.entity.optional.Optional<kotlin.collections.List<dev.kord.common.entity.DiscordSelectDefaultValue>>;dev.kord.common.entity.optional.Optional<kotlin.String>;dev.kord.common.entity.optional.OptionalInt;dev.kord.common.entity.optional.OptionalInt;dev.kord.common.entity.optional.Optional<kotlin.collections.List<dev.kord.core.cache.data.SelectOptionData>>;dev.kord.common.entity.optional.OptionalInt;dev.kord.common.entity.optional.OptionalInt;dev.kord.common.entity.optional.OptionalBoolean;dev.kord.common.entity.optional.Optional<kotlin.String>;dev.kord.common.entity.optional.Optional<kotlin.collections.List<dev.kord.common.entity.ChannelType>>;dev.kord.common.entity.optional.OptionalSnowflake){}[0]
+    constructor <init>(dev.kord.common.entity/ComponentType, dev.kord.common.entity.optional/Optional<dev.kord.common.entity/ButtonStyle> = ..., dev.kord.common.entity.optional/Optional<kotlin/String> = ..., dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordPartialEmoji> = ..., dev.kord.common.entity.optional/Optional<kotlin/String> = ..., dev.kord.common.entity.optional/Optional<kotlin/String> = ..., dev.kord.common.entity.optional/OptionalBoolean = ..., dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.core.cache.data/ComponentData>> = ..., dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.common.entity/DiscordSelectDefaultValue>> = ..., dev.kord.common.entity.optional/Optional<kotlin/String> = ..., dev.kord.common.entity.optional/OptionalInt = ..., dev.kord.common.entity.optional/OptionalInt = ..., dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.core.cache.data/SelectOptionData>> = ..., dev.kord.common.entity.optional/OptionalInt = ..., dev.kord.common.entity.optional/OptionalInt = ..., dev.kord.common.entity.optional/OptionalBoolean = ..., dev.kord.common.entity.optional/Optional<kotlin/String> = ..., dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.common.entity/ChannelType>> = ..., dev.kord.common.entity.optional/OptionalSnowflake = ..., dev.kord.common.entity.optional/Optional<dev.kord.core.cache.data/ChatComponentData> = ..., dev.kord.common.entity.optional/Optional<kotlin/String> = ..., dev.kord.common.entity.optional/Optional<dev.kord.common.entity/UnfurledMediaItem> = ..., dev.kord.common.entity.optional/Optional<kotlin/String> = ..., dev.kord.common.entity.optional/OptionalBoolean = ..., dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.common.entity/MediaGalleryItem>> = ..., dev.kord.common.entity.optional/OptionalBoolean = ..., dev.kord.common.entity.optional/Optional<dev.kord.common.entity/SeparatorSpacingSize> = ..., dev.kord.common.entity.optional/Optional<dev.kord.common.entity/UnfurledMediaItem> = ..., dev.kord.common.entity.optional/Optional<dev.kord.common/Color?> = ...) // dev.kord.core.cache.data/ChatComponentData.<init>|<init>(dev.kord.common.entity.ComponentType;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.ButtonStyle>;dev.kord.common.entity.optional.Optional<kotlin.String>;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.DiscordPartialEmoji>;dev.kord.common.entity.optional.Optional<kotlin.String>;dev.kord.common.entity.optional.Optional<kotlin.String>;dev.kord.common.entity.optional.OptionalBoolean;dev.kord.common.entity.optional.Optional<kotlin.collections.List<dev.kord.core.cache.data.ComponentData>>;dev.kord.common.entity.optional.Optional<kotlin.collections.List<dev.kord.common.entity.DiscordSelectDefaultValue>>;dev.kord.common.entity.optional.Optional<kotlin.String>;dev.kord.common.entity.optional.OptionalInt;dev.kord.common.entity.optional.OptionalInt;dev.kord.common.entity.optional.Optional<kotlin.collections.List<dev.kord.core.cache.data.SelectOptionData>>;dev.kord.common.entity.optional.OptionalInt;dev.kord.common.entity.optional.OptionalInt;dev.kord.common.entity.optional.OptionalBoolean;dev.kord.common.entity.optional.Optional<kotlin.String>;dev.kord.common.entity.optional.Optional<kotlin.collections.List<dev.kord.common.entity.ChannelType>>;dev.kord.common.entity.optional.OptionalSnowflake;dev.kord.common.entity.optional.Optional<dev.kord.core.cache.data.ChatComponentData>;dev.kord.common.entity.optional.Optional<kotlin.String>;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.UnfurledMediaItem>;dev.kord.common.entity.optional.Optional<kotlin.String>;dev.kord.common.entity.optional.OptionalBoolean;dev.kord.common.entity.optional.Optional<kotlin.collections.List<dev.kord.common.entity.MediaGalleryItem>>;dev.kord.common.entity.optional.OptionalBoolean;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.SeparatorSpacingSize>;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.UnfurledMediaItem>;dev.kord.common.entity.optional.Optional<dev.kord.common.Color?>){}[0]
 
+    final val accentColor // dev.kord.core.cache.data/ChatComponentData.accentColor|{}accentColor[0]
+        final fun <get-accentColor>(): dev.kord.common.entity.optional/Optional<dev.kord.common/Color?> // dev.kord.core.cache.data/ChatComponentData.accentColor.<get-accentColor>|<get-accentColor>(){}[0]
+    final val accessory // dev.kord.core.cache.data/ChatComponentData.accessory|{}accessory[0]
+        final fun <get-accessory>(): dev.kord.common.entity.optional/Optional<dev.kord.core.cache.data/ChatComponentData> // dev.kord.core.cache.data/ChatComponentData.accessory.<get-accessory>|<get-accessory>(){}[0]
     final val channelTypes // dev.kord.core.cache.data/ChatComponentData.channelTypes|{}channelTypes[0]
         final fun <get-channelTypes>(): dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.common.entity/ChannelType>> // dev.kord.core.cache.data/ChatComponentData.channelTypes.<get-channelTypes>|<get-channelTypes>(){}[0]
     final val components // dev.kord.core.cache.data/ChatComponentData.components|{}components[0]
         final fun <get-components>(): dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.core.cache.data/ComponentData>> // dev.kord.core.cache.data/ChatComponentData.components.<get-components>|<get-components>(){}[0]
+    final val content // dev.kord.core.cache.data/ChatComponentData.content|{}content[0]
+        final fun <get-content>(): dev.kord.common.entity.optional/Optional<kotlin/String> // dev.kord.core.cache.data/ChatComponentData.content.<get-content>|<get-content>(){}[0]
     final val customId // dev.kord.core.cache.data/ChatComponentData.customId|{}customId[0]
         final fun <get-customId>(): dev.kord.common.entity.optional/Optional<kotlin/String> // dev.kord.core.cache.data/ChatComponentData.customId.<get-customId>|<get-customId>(){}[0]
     final val defaultValues // dev.kord.core.cache.data/ChatComponentData.defaultValues|{}defaultValues[0]
         final fun <get-defaultValues>(): dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.common.entity/DiscordSelectDefaultValue>> // dev.kord.core.cache.data/ChatComponentData.defaultValues.<get-defaultValues>|<get-defaultValues>(){}[0]
+    final val description // dev.kord.core.cache.data/ChatComponentData.description|{}description[0]
+        final fun <get-description>(): dev.kord.common.entity.optional/Optional<kotlin/String> // dev.kord.core.cache.data/ChatComponentData.description.<get-description>|<get-description>(){}[0]
     final val disabled // dev.kord.core.cache.data/ChatComponentData.disabled|{}disabled[0]
         final fun <get-disabled>(): dev.kord.common.entity.optional/OptionalBoolean // dev.kord.core.cache.data/ChatComponentData.disabled.<get-disabled>|<get-disabled>(){}[0]
+    final val divider // dev.kord.core.cache.data/ChatComponentData.divider|{}divider[0]
+        final fun <get-divider>(): dev.kord.common.entity.optional/OptionalBoolean // dev.kord.core.cache.data/ChatComponentData.divider.<get-divider>|<get-divider>(){}[0]
     final val emoji // dev.kord.core.cache.data/ChatComponentData.emoji|{}emoji[0]
         final fun <get-emoji>(): dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordPartialEmoji> // dev.kord.core.cache.data/ChatComponentData.emoji.<get-emoji>|<get-emoji>(){}[0]
+    final val file // dev.kord.core.cache.data/ChatComponentData.file|{}file[0]
+        final fun <get-file>(): dev.kord.common.entity.optional/Optional<dev.kord.common.entity/UnfurledMediaItem> // dev.kord.core.cache.data/ChatComponentData.file.<get-file>|<get-file>(){}[0]
+    final val image // dev.kord.core.cache.data/ChatComponentData.image|{}image[0]
+        final fun <get-image>(): dev.kord.common.entity.optional/Optional<dev.kord.common.entity/UnfurledMediaItem> // dev.kord.core.cache.data/ChatComponentData.image.<get-image>|<get-image>(){}[0]
+    final val items // dev.kord.core.cache.data/ChatComponentData.items|{}items[0]
+        final fun <get-items>(): dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.common.entity/MediaGalleryItem>> // dev.kord.core.cache.data/ChatComponentData.items.<get-items>|<get-items>(){}[0]
     final val label // dev.kord.core.cache.data/ChatComponentData.label|{}label[0]
         final fun <get-label>(): dev.kord.common.entity.optional/Optional<kotlin/String> // dev.kord.core.cache.data/ChatComponentData.label.<get-label>|<get-label>(){}[0]
     final val maxLength // dev.kord.core.cache.data/ChatComponentData.maxLength|{}maxLength[0]
@@ -2723,6 +2741,10 @@ final class dev.kord.core.cache.data/ChatComponentData : dev.kord.core.cache.dat
         final fun <get-required>(): dev.kord.common.entity.optional/OptionalBoolean // dev.kord.core.cache.data/ChatComponentData.required.<get-required>|<get-required>(){}[0]
     final val skuId // dev.kord.core.cache.data/ChatComponentData.skuId|{}skuId[0]
         final fun <get-skuId>(): dev.kord.common.entity.optional/OptionalSnowflake // dev.kord.core.cache.data/ChatComponentData.skuId.<get-skuId>|<get-skuId>(){}[0]
+    final val spacing // dev.kord.core.cache.data/ChatComponentData.spacing|{}spacing[0]
+        final fun <get-spacing>(): dev.kord.common.entity.optional/Optional<dev.kord.common.entity/SeparatorSpacingSize> // dev.kord.core.cache.data/ChatComponentData.spacing.<get-spacing>|<get-spacing>(){}[0]
+    final val spoiler // dev.kord.core.cache.data/ChatComponentData.spoiler|{}spoiler[0]
+        final fun <get-spoiler>(): dev.kord.common.entity.optional/OptionalBoolean // dev.kord.core.cache.data/ChatComponentData.spoiler.<get-spoiler>|<get-spoiler>(){}[0]
     final val style // dev.kord.core.cache.data/ChatComponentData.style|{}style[0]
         final fun <get-style>(): dev.kord.common.entity.optional/Optional<dev.kord.common.entity/ButtonStyle> // dev.kord.core.cache.data/ChatComponentData.style.<get-style>|<get-style>(){}[0]
     final val type // dev.kord.core.cache.data/ChatComponentData.type|{}type[0]
@@ -2744,6 +2766,16 @@ final class dev.kord.core.cache.data/ChatComponentData : dev.kord.core.cache.dat
     final fun component18(): dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.common.entity/ChannelType>> // dev.kord.core.cache.data/ChatComponentData.component18|component18(){}[0]
     final fun component19(): dev.kord.common.entity.optional/OptionalSnowflake // dev.kord.core.cache.data/ChatComponentData.component19|component19(){}[0]
     final fun component2(): dev.kord.common.entity.optional/Optional<dev.kord.common.entity/ButtonStyle> // dev.kord.core.cache.data/ChatComponentData.component2|component2(){}[0]
+    final fun component20(): dev.kord.common.entity.optional/Optional<dev.kord.core.cache.data/ChatComponentData> // dev.kord.core.cache.data/ChatComponentData.component20|component20(){}[0]
+    final fun component21(): dev.kord.common.entity.optional/Optional<kotlin/String> // dev.kord.core.cache.data/ChatComponentData.component21|component21(){}[0]
+    final fun component22(): dev.kord.common.entity.optional/Optional<dev.kord.common.entity/UnfurledMediaItem> // dev.kord.core.cache.data/ChatComponentData.component22|component22(){}[0]
+    final fun component23(): dev.kord.common.entity.optional/Optional<kotlin/String> // dev.kord.core.cache.data/ChatComponentData.component23|component23(){}[0]
+    final fun component24(): dev.kord.common.entity.optional/OptionalBoolean // dev.kord.core.cache.data/ChatComponentData.component24|component24(){}[0]
+    final fun component25(): dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.common.entity/MediaGalleryItem>> // dev.kord.core.cache.data/ChatComponentData.component25|component25(){}[0]
+    final fun component26(): dev.kord.common.entity.optional/OptionalBoolean // dev.kord.core.cache.data/ChatComponentData.component26|component26(){}[0]
+    final fun component27(): dev.kord.common.entity.optional/Optional<dev.kord.common.entity/SeparatorSpacingSize> // dev.kord.core.cache.data/ChatComponentData.component27|component27(){}[0]
+    final fun component28(): dev.kord.common.entity.optional/Optional<dev.kord.common.entity/UnfurledMediaItem> // dev.kord.core.cache.data/ChatComponentData.component28|component28(){}[0]
+    final fun component29(): dev.kord.common.entity.optional/Optional<dev.kord.common/Color?> // dev.kord.core.cache.data/ChatComponentData.component29|component29(){}[0]
     final fun component3(): dev.kord.common.entity.optional/Optional<kotlin/String> // dev.kord.core.cache.data/ChatComponentData.component3|component3(){}[0]
     final fun component4(): dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordPartialEmoji> // dev.kord.core.cache.data/ChatComponentData.component4|component4(){}[0]
     final fun component5(): dev.kord.common.entity.optional/Optional<kotlin/String> // dev.kord.core.cache.data/ChatComponentData.component5|component5(){}[0]
@@ -2751,7 +2783,7 @@ final class dev.kord.core.cache.data/ChatComponentData : dev.kord.core.cache.dat
     final fun component7(): dev.kord.common.entity.optional/OptionalBoolean // dev.kord.core.cache.data/ChatComponentData.component7|component7(){}[0]
     final fun component8(): dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.core.cache.data/ComponentData>> // dev.kord.core.cache.data/ChatComponentData.component8|component8(){}[0]
     final fun component9(): dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.common.entity/DiscordSelectDefaultValue>> // dev.kord.core.cache.data/ChatComponentData.component9|component9(){}[0]
-    final fun copy(dev.kord.common.entity/ComponentType = ..., dev.kord.common.entity.optional/Optional<dev.kord.common.entity/ButtonStyle> = ..., dev.kord.common.entity.optional/Optional<kotlin/String> = ..., dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordPartialEmoji> = ..., dev.kord.common.entity.optional/Optional<kotlin/String> = ..., dev.kord.common.entity.optional/Optional<kotlin/String> = ..., dev.kord.common.entity.optional/OptionalBoolean = ..., dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.core.cache.data/ComponentData>> = ..., dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.common.entity/DiscordSelectDefaultValue>> = ..., dev.kord.common.entity.optional/Optional<kotlin/String> = ..., dev.kord.common.entity.optional/OptionalInt = ..., dev.kord.common.entity.optional/OptionalInt = ..., dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.core.cache.data/SelectOptionData>> = ..., dev.kord.common.entity.optional/OptionalInt = ..., dev.kord.common.entity.optional/OptionalInt = ..., dev.kord.common.entity.optional/OptionalBoolean = ..., dev.kord.common.entity.optional/Optional<kotlin/String> = ..., dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.common.entity/ChannelType>> = ..., dev.kord.common.entity.optional/OptionalSnowflake = ...): dev.kord.core.cache.data/ChatComponentData // dev.kord.core.cache.data/ChatComponentData.copy|copy(dev.kord.common.entity.ComponentType;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.ButtonStyle>;dev.kord.common.entity.optional.Optional<kotlin.String>;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.DiscordPartialEmoji>;dev.kord.common.entity.optional.Optional<kotlin.String>;dev.kord.common.entity.optional.Optional<kotlin.String>;dev.kord.common.entity.optional.OptionalBoolean;dev.kord.common.entity.optional.Optional<kotlin.collections.List<dev.kord.core.cache.data.ComponentData>>;dev.kord.common.entity.optional.Optional<kotlin.collections.List<dev.kord.common.entity.DiscordSelectDefaultValue>>;dev.kord.common.entity.optional.Optional<kotlin.String>;dev.kord.common.entity.optional.OptionalInt;dev.kord.common.entity.optional.OptionalInt;dev.kord.common.entity.optional.Optional<kotlin.collections.List<dev.kord.core.cache.data.SelectOptionData>>;dev.kord.common.entity.optional.OptionalInt;dev.kord.common.entity.optional.OptionalInt;dev.kord.common.entity.optional.OptionalBoolean;dev.kord.common.entity.optional.Optional<kotlin.String>;dev.kord.common.entity.optional.Optional<kotlin.collections.List<dev.kord.common.entity.ChannelType>>;dev.kord.common.entity.optional.OptionalSnowflake){}[0]
+    final fun copy(dev.kord.common.entity/ComponentType = ..., dev.kord.common.entity.optional/Optional<dev.kord.common.entity/ButtonStyle> = ..., dev.kord.common.entity.optional/Optional<kotlin/String> = ..., dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordPartialEmoji> = ..., dev.kord.common.entity.optional/Optional<kotlin/String> = ..., dev.kord.common.entity.optional/Optional<kotlin/String> = ..., dev.kord.common.entity.optional/OptionalBoolean = ..., dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.core.cache.data/ComponentData>> = ..., dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.common.entity/DiscordSelectDefaultValue>> = ..., dev.kord.common.entity.optional/Optional<kotlin/String> = ..., dev.kord.common.entity.optional/OptionalInt = ..., dev.kord.common.entity.optional/OptionalInt = ..., dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.core.cache.data/SelectOptionData>> = ..., dev.kord.common.entity.optional/OptionalInt = ..., dev.kord.common.entity.optional/OptionalInt = ..., dev.kord.common.entity.optional/OptionalBoolean = ..., dev.kord.common.entity.optional/Optional<kotlin/String> = ..., dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.common.entity/ChannelType>> = ..., dev.kord.common.entity.optional/OptionalSnowflake = ..., dev.kord.common.entity.optional/Optional<dev.kord.core.cache.data/ChatComponentData> = ..., dev.kord.common.entity.optional/Optional<kotlin/String> = ..., dev.kord.common.entity.optional/Optional<dev.kord.common.entity/UnfurledMediaItem> = ..., dev.kord.common.entity.optional/Optional<kotlin/String> = ..., dev.kord.common.entity.optional/OptionalBoolean = ..., dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.common.entity/MediaGalleryItem>> = ..., dev.kord.common.entity.optional/OptionalBoolean = ..., dev.kord.common.entity.optional/Optional<dev.kord.common.entity/SeparatorSpacingSize> = ..., dev.kord.common.entity.optional/Optional<dev.kord.common.entity/UnfurledMediaItem> = ..., dev.kord.common.entity.optional/Optional<dev.kord.common/Color?> = ...): dev.kord.core.cache.data/ChatComponentData // dev.kord.core.cache.data/ChatComponentData.copy|copy(dev.kord.common.entity.ComponentType;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.ButtonStyle>;dev.kord.common.entity.optional.Optional<kotlin.String>;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.DiscordPartialEmoji>;dev.kord.common.entity.optional.Optional<kotlin.String>;dev.kord.common.entity.optional.Optional<kotlin.String>;dev.kord.common.entity.optional.OptionalBoolean;dev.kord.common.entity.optional.Optional<kotlin.collections.List<dev.kord.core.cache.data.ComponentData>>;dev.kord.common.entity.optional.Optional<kotlin.collections.List<dev.kord.common.entity.DiscordSelectDefaultValue>>;dev.kord.common.entity.optional.Optional<kotlin.String>;dev.kord.common.entity.optional.OptionalInt;dev.kord.common.entity.optional.OptionalInt;dev.kord.common.entity.optional.Optional<kotlin.collections.List<dev.kord.core.cache.data.SelectOptionData>>;dev.kord.common.entity.optional.OptionalInt;dev.kord.common.entity.optional.OptionalInt;dev.kord.common.entity.optional.OptionalBoolean;dev.kord.common.entity.optional.Optional<kotlin.String>;dev.kord.common.entity.optional.Optional<kotlin.collections.List<dev.kord.common.entity.ChannelType>>;dev.kord.common.entity.optional.OptionalSnowflake;dev.kord.common.entity.optional.Optional<dev.kord.core.cache.data.ChatComponentData>;dev.kord.common.entity.optional.Optional<kotlin.String>;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.UnfurledMediaItem>;dev.kord.common.entity.optional.Optional<kotlin.String>;dev.kord.common.entity.optional.OptionalBoolean;dev.kord.common.entity.optional.Optional<kotlin.collections.List<dev.kord.common.entity.MediaGalleryItem>>;dev.kord.common.entity.optional.OptionalBoolean;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.SeparatorSpacingSize>;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.UnfurledMediaItem>;dev.kord.common.entity.optional.Optional<dev.kord.common.Color?>){}[0]
     final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.core.cache.data/ChatComponentData.equals|equals(kotlin.Any?){}[0]
     final fun hashCode(): kotlin/Int // dev.kord.core.cache.data/ChatComponentData.hashCode|hashCode(){}[0]
     final fun toString(): kotlin/String // dev.kord.core.cache.data/ChatComponentData.toString|toString(){}[0]
@@ -6435,7 +6467,7 @@ final class dev.kord.core.entity.component/ActionRowComponent : dev.kord.core.en
     final fun toString(): kotlin/String // dev.kord.core.entity.component/ActionRowComponent.toString|toString(){}[0]
 }
 
-final class dev.kord.core.entity.component/ButtonComponent : dev.kord.core.entity.component/Component { // dev.kord.core.entity.component/ButtonComponent|null[0]
+final class dev.kord.core.entity.component/ButtonComponent : dev.kord.core.entity.component/AccessoryComponent { // dev.kord.core.entity.component/ButtonComponent|null[0]
     constructor <init>(dev.kord.core.cache.data/ChatComponentData) // dev.kord.core.entity.component/ButtonComponent.<init>|<init>(dev.kord.core.cache.data.ChatComponentData){}[0]
 
     final val customId // dev.kord.core.entity.component/ButtonComponent.customId|{}customId[0]
@@ -6471,6 +6503,41 @@ final class dev.kord.core.entity.component/ChannelSelectComponent : dev.kord.cor
         final fun <get-type>(): dev.kord.common.entity/ComponentType.StringSelect // dev.kord.core.entity.component/ChannelSelectComponent.type.<get-type>|<get-type>(){}[0]
 }
 
+final class dev.kord.core.entity.component/ContainerComponent : dev.kord.core.entity.component/Component { // dev.kord.core.entity.component/ContainerComponent|null[0]
+    constructor <init>(dev.kord.core.cache.data/ChatComponentData) // dev.kord.core.entity.component/ContainerComponent.<init>|<init>(dev.kord.core.cache.data.ChatComponentData){}[0]
+
+    final val components // dev.kord.core.entity.component/ContainerComponent.components|{}components[0]
+        final fun <get-components>(): kotlin.collections/List<dev.kord.core.entity.component/Component> // dev.kord.core.entity.component/ContainerComponent.components.<get-components>|<get-components>(){}[0]
+    final val data // dev.kord.core.entity.component/ContainerComponent.data|{}data[0]
+        final fun <get-data>(): dev.kord.core.cache.data/ChatComponentData // dev.kord.core.entity.component/ContainerComponent.data.<get-data>|<get-data>(){}[0]
+    final val type // dev.kord.core.entity.component/ContainerComponent.type|{}type[0]
+        final fun <get-type>(): dev.kord.common.entity/ComponentType // dev.kord.core.entity.component/ContainerComponent.type.<get-type>|<get-type>(){}[0]
+}
+
+final class dev.kord.core.entity.component/FileComponent : dev.kord.core.entity.component/Component { // dev.kord.core.entity.component/FileComponent|null[0]
+    constructor <init>(dev.kord.core.cache.data/ChatComponentData) // dev.kord.core.entity.component/FileComponent.<init>|<init>(dev.kord.core.cache.data.ChatComponentData){}[0]
+
+    final val data // dev.kord.core.entity.component/FileComponent.data|{}data[0]
+        final fun <get-data>(): dev.kord.core.cache.data/ChatComponentData // dev.kord.core.entity.component/FileComponent.data.<get-data>|<get-data>(){}[0]
+    final val spoiler // dev.kord.core.entity.component/FileComponent.spoiler|{}spoiler[0]
+        final fun <get-spoiler>(): kotlin/Boolean // dev.kord.core.entity.component/FileComponent.spoiler.<get-spoiler>|<get-spoiler>(){}[0]
+    final val type // dev.kord.core.entity.component/FileComponent.type|{}type[0]
+        final fun <get-type>(): dev.kord.common.entity/ComponentType // dev.kord.core.entity.component/FileComponent.type.<get-type>|<get-type>(){}[0]
+    final val url // dev.kord.core.entity.component/FileComponent.url|{}url[0]
+        final fun <get-url>(): dev.kord.core.entity.component/UnfurledMediaItem // dev.kord.core.entity.component/FileComponent.url.<get-url>|<get-url>(){}[0]
+}
+
+final class dev.kord.core.entity.component/MediaGalleryComponent : dev.kord.core.entity.component/Component { // dev.kord.core.entity.component/MediaGalleryComponent|null[0]
+    constructor <init>(dev.kord.core.cache.data/ChatComponentData) // dev.kord.core.entity.component/MediaGalleryComponent.<init>|<init>(dev.kord.core.cache.data.ChatComponentData){}[0]
+
+    final val data // dev.kord.core.entity.component/MediaGalleryComponent.data|{}data[0]
+        final fun <get-data>(): dev.kord.core.cache.data/ChatComponentData // dev.kord.core.entity.component/MediaGalleryComponent.data.<get-data>|<get-data>(){}[0]
+    final val items // dev.kord.core.entity.component/MediaGalleryComponent.items|{}items[0]
+        final fun <get-items>(): kotlin.collections/List<dev.kord.common.entity/MediaGalleryItem> // dev.kord.core.entity.component/MediaGalleryComponent.items.<get-items>|<get-items>(){}[0]
+    final val type // dev.kord.core.entity.component/MediaGalleryComponent.type|{}type[0]
+        final fun <get-type>(): dev.kord.common.entity/ComponentType // dev.kord.core.entity.component/MediaGalleryComponent.type.<get-type>|<get-type>(){}[0]
+}
+
 final class dev.kord.core.entity.component/MentionableSelectComponent : dev.kord.core.entity.component/SelectMenuComponent { // dev.kord.core.entity.component/MentionableSelectComponent|null[0]
     constructor <init>(dev.kord.core.cache.data/ComponentData) // dev.kord.core.entity.component/MentionableSelectComponent.<init>|<init>(dev.kord.core.cache.data.ComponentData){}[0]
 
@@ -6487,6 +6554,19 @@ final class dev.kord.core.entity.component/RoleSelectComponent : dev.kord.core.e
         final fun <get-defaultValues>(): kotlin.collections/List<dev.kord.core.entity.component/SelectDefaultValue.Role> // dev.kord.core.entity.component/RoleSelectComponent.defaultValues.<get-defaultValues>|<get-defaultValues>(){}[0]
     final val type // dev.kord.core.entity.component/RoleSelectComponent.type|{}type[0]
         final fun <get-type>(): dev.kord.common.entity/ComponentType.RoleSelect // dev.kord.core.entity.component/RoleSelectComponent.type.<get-type>|<get-type>(){}[0]
+}
+
+final class dev.kord.core.entity.component/SectionComponent : dev.kord.core.entity.component/Component { // dev.kord.core.entity.component/SectionComponent|null[0]
+    constructor <init>(dev.kord.core.cache.data/ChatComponentData) // dev.kord.core.entity.component/SectionComponent.<init>|<init>(dev.kord.core.cache.data.ChatComponentData){}[0]
+
+    final val accessory // dev.kord.core.entity.component/SectionComponent.accessory|{}accessory[0]
+        final fun <get-accessory>(): dev.kord.core.entity.component/AccessoryComponent? // dev.kord.core.entity.component/SectionComponent.accessory.<get-accessory>|<get-accessory>(){}[0]
+    final val components // dev.kord.core.entity.component/SectionComponent.components|{}components[0]
+        final fun <get-components>(): kotlin.collections/List<dev.kord.core.entity.component/TextDisplayComponent> // dev.kord.core.entity.component/SectionComponent.components.<get-components>|<get-components>(){}[0]
+    final val data // dev.kord.core.entity.component/SectionComponent.data|{}data[0]
+        final fun <get-data>(): dev.kord.core.cache.data/ChatComponentData // dev.kord.core.entity.component/SectionComponent.data.<get-data>|<get-data>(){}[0]
+    final val type // dev.kord.core.entity.component/SectionComponent.type|{}type[0]
+        final fun <get-type>(): dev.kord.common.entity/ComponentType // dev.kord.core.entity.component/SectionComponent.type.<get-type>|<get-type>(){}[0]
 }
 
 final class dev.kord.core.entity.component/SelectOption { // dev.kord.core.entity.component/SelectOption|null[0]
@@ -6510,6 +6590,19 @@ final class dev.kord.core.entity.component/SelectOption { // dev.kord.core.entit
     final fun toString(): kotlin/String // dev.kord.core.entity.component/SelectOption.toString|toString(){}[0]
 }
 
+final class dev.kord.core.entity.component/SeparatorComponent : dev.kord.core.entity.component/Component { // dev.kord.core.entity.component/SeparatorComponent|null[0]
+    constructor <init>(dev.kord.core.cache.data/ChatComponentData) // dev.kord.core.entity.component/SeparatorComponent.<init>|<init>(dev.kord.core.cache.data.ChatComponentData){}[0]
+
+    final val data // dev.kord.core.entity.component/SeparatorComponent.data|{}data[0]
+        final fun <get-data>(): dev.kord.core.cache.data/ChatComponentData // dev.kord.core.entity.component/SeparatorComponent.data.<get-data>|<get-data>(){}[0]
+    final val divider // dev.kord.core.entity.component/SeparatorComponent.divider|{}divider[0]
+        final fun <get-divider>(): kotlin/Boolean // dev.kord.core.entity.component/SeparatorComponent.divider.<get-divider>|<get-divider>(){}[0]
+    final val spacing // dev.kord.core.entity.component/SeparatorComponent.spacing|{}spacing[0]
+        final fun <get-spacing>(): dev.kord.common.entity/SeparatorSpacingSize? // dev.kord.core.entity.component/SeparatorComponent.spacing.<get-spacing>|<get-spacing>(){}[0]
+    final val type // dev.kord.core.entity.component/SeparatorComponent.type|{}type[0]
+        final fun <get-type>(): dev.kord.common.entity/ComponentType // dev.kord.core.entity.component/SeparatorComponent.type.<get-type>|<get-type>(){}[0]
+}
+
 final class dev.kord.core.entity.component/StringSelectComponent : dev.kord.core.entity.component/SelectMenuComponent { // dev.kord.core.entity.component/StringSelectComponent|null[0]
     constructor <init>(dev.kord.core.cache.data/ComponentData) // dev.kord.core.entity.component/StringSelectComponent.<init>|<init>(dev.kord.core.cache.data.ComponentData){}[0]
 
@@ -6517,6 +6610,17 @@ final class dev.kord.core.entity.component/StringSelectComponent : dev.kord.core
         final fun <get-options>(): kotlin.collections/List<dev.kord.core.entity.component/SelectOption> // dev.kord.core.entity.component/StringSelectComponent.options.<get-options>|<get-options>(){}[0]
     final val type // dev.kord.core.entity.component/StringSelectComponent.type|{}type[0]
         final fun <get-type>(): dev.kord.common.entity/ComponentType.StringSelect // dev.kord.core.entity.component/StringSelectComponent.type.<get-type>|<get-type>(){}[0]
+}
+
+final class dev.kord.core.entity.component/TextDisplayComponent : dev.kord.core.entity.component/Component { // dev.kord.core.entity.component/TextDisplayComponent|null[0]
+    constructor <init>(dev.kord.core.cache.data/ChatComponentData) // dev.kord.core.entity.component/TextDisplayComponent.<init>|<init>(dev.kord.core.cache.data.ChatComponentData){}[0]
+
+    final val content // dev.kord.core.entity.component/TextDisplayComponent.content|{}content[0]
+        final fun <get-content>(): kotlin/String // dev.kord.core.entity.component/TextDisplayComponent.content.<get-content>|<get-content>(){}[0]
+    final val data // dev.kord.core.entity.component/TextDisplayComponent.data|{}data[0]
+        final fun <get-data>(): dev.kord.core.cache.data/ChatComponentData // dev.kord.core.entity.component/TextDisplayComponent.data.<get-data>|<get-data>(){}[0]
+    final val type // dev.kord.core.entity.component/TextDisplayComponent.type|{}type[0]
+        final fun <get-type>(): dev.kord.common.entity/ComponentType // dev.kord.core.entity.component/TextDisplayComponent.type.<get-type>|<get-type>(){}[0]
 }
 
 final class dev.kord.core.entity.component/TextInputComponent : dev.kord.core.entity.component/Component { // dev.kord.core.entity.component/TextInputComponent|null[0]
@@ -6544,6 +6648,36 @@ final class dev.kord.core.entity.component/TextInputComponent : dev.kord.core.en
         final fun <get-value>(): kotlin/String? // dev.kord.core.entity.component/TextInputComponent.value.<get-value>|<get-value>(){}[0]
 
     final fun toString(): kotlin/String // dev.kord.core.entity.component/TextInputComponent.toString|toString(){}[0]
+}
+
+final class dev.kord.core.entity.component/ThumbnailComponent : dev.kord.core.entity.component/AccessoryComponent { // dev.kord.core.entity.component/ThumbnailComponent|null[0]
+    constructor <init>(dev.kord.core.cache.data/ChatComponentData) // dev.kord.core.entity.component/ThumbnailComponent.<init>|<init>(dev.kord.core.cache.data.ChatComponentData){}[0]
+
+    final val data // dev.kord.core.entity.component/ThumbnailComponent.data|{}data[0]
+        final fun <get-data>(): dev.kord.core.cache.data/ChatComponentData // dev.kord.core.entity.component/ThumbnailComponent.data.<get-data>|<get-data>(){}[0]
+    final val description // dev.kord.core.entity.component/ThumbnailComponent.description|{}description[0]
+        final fun <get-description>(): kotlin/String? // dev.kord.core.entity.component/ThumbnailComponent.description.<get-description>|<get-description>(){}[0]
+    final val spoiler // dev.kord.core.entity.component/ThumbnailComponent.spoiler|{}spoiler[0]
+        final fun <get-spoiler>(): kotlin/Boolean // dev.kord.core.entity.component/ThumbnailComponent.spoiler.<get-spoiler>|<get-spoiler>(){}[0]
+    final val type // dev.kord.core.entity.component/ThumbnailComponent.type|{}type[0]
+        final fun <get-type>(): dev.kord.common.entity/ComponentType // dev.kord.core.entity.component/ThumbnailComponent.type.<get-type>|<get-type>(){}[0]
+    final val url // dev.kord.core.entity.component/ThumbnailComponent.url|{}url[0]
+        final fun <get-url>(): dev.kord.core.entity.component/UnfurledMediaItem // dev.kord.core.entity.component/ThumbnailComponent.url.<get-url>|<get-url>(){}[0]
+}
+
+final class dev.kord.core.entity.component/UnfurledMediaItem { // dev.kord.core.entity.component/UnfurledMediaItem|null[0]
+    constructor <init>(dev.kord.common.entity/UnfurledMediaItem) // dev.kord.core.entity.component/UnfurledMediaItem.<init>|<init>(dev.kord.common.entity.UnfurledMediaItem){}[0]
+
+    final val contentType // dev.kord.core.entity.component/UnfurledMediaItem.contentType|{}contentType[0]
+        final fun <get-contentType>(): kotlin/String? // dev.kord.core.entity.component/UnfurledMediaItem.contentType.<get-contentType>|<get-contentType>(){}[0]
+    final val height // dev.kord.core.entity.component/UnfurledMediaItem.height|{}height[0]
+        final fun <get-height>(): kotlin/Int? // dev.kord.core.entity.component/UnfurledMediaItem.height.<get-height>|<get-height>(){}[0]
+    final val proxyUrl // dev.kord.core.entity.component/UnfurledMediaItem.proxyUrl|{}proxyUrl[0]
+        final fun <get-proxyUrl>(): kotlin/String? // dev.kord.core.entity.component/UnfurledMediaItem.proxyUrl.<get-proxyUrl>|<get-proxyUrl>(){}[0]
+    final val url // dev.kord.core.entity.component/UnfurledMediaItem.url|{}url[0]
+        final fun <get-url>(): kotlin/String // dev.kord.core.entity.component/UnfurledMediaItem.url.<get-url>|<get-url>(){}[0]
+    final val width // dev.kord.core.entity.component/UnfurledMediaItem.width|{}width[0]
+        final fun <get-width>(): kotlin/Int? // dev.kord.core.entity.component/UnfurledMediaItem.width.<get-width>|<get-width>(){}[0]
 }
 
 final class dev.kord.core.entity.component/UnknownComponent : dev.kord.core.entity.component/Component { // dev.kord.core.entity.component/UnknownComponent|null[0]

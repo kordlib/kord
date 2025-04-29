@@ -3,13 +3,17 @@
 package dev.kord.rest.builder.component
 
 import dev.kord.common.annotation.KordDsl
-import dev.kord.common.entity.*
+import dev.kord.common.entity.ButtonStyle
+import dev.kord.common.entity.ComponentType
+import dev.kord.common.entity.DiscordChatComponent
+import dev.kord.common.entity.DiscordPartialEmoji
+import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.delegate.delegate
 import dev.kord.common.entity.optional.optionalSnowflake
 
 @KordDsl
-public sealed class ButtonBuilder : ActionRowComponentBuilder() {
+public sealed class ButtonBuilder : AccessoryComponentBuilder, ActionRowComponentBuilder() {
 
     protected var _label: Optional<String> = Optional.Missing()
         private set
