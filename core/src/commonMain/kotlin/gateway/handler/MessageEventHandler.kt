@@ -63,6 +63,7 @@ internal class MessageEventHandler : BaseGatewayEventHandler() {
             Member(memberData, userData, kord)
         } else null
 
+        @Suppress("DEPRECATION")
         //cache interaction user if present.
         if (interaction is Optional.Value) {
             val interactionUserData = UserData.from(interaction.value!!.user)

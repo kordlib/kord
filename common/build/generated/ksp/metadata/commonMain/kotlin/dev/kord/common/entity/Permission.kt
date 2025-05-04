@@ -312,6 +312,13 @@ public sealed class Permission(
      */
     public object SendVoiceMessages : Permission(46)
 
+    /**
+     * Allows user-installed apps to send public responses. When disabled, users will still be
+     * allowed to use their apps but the responses will be ephemeral. This only applies to apps not
+     * also installed to the server.
+     */
+    public object USE_EXTERNAL_APPS : Permission(50)
+
     public companion object {
         /**
          * A [List] of all known [Permission]s.
@@ -365,6 +372,7 @@ public sealed class Permission(
                 CreateEvents,
                 UseExternalSounds,
                 SendVoiceMessages,
+                USE_EXTERNAL_APPS,
             )
         }
 
@@ -422,6 +430,7 @@ public sealed class Permission(
             44 -> CreateEvents
             45 -> UseExternalSounds
             46 -> SendVoiceMessages
+            50 -> USE_EXTERNAL_APPS
             else -> Unknown(shift)
         }
     }

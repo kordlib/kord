@@ -6,8 +6,8 @@ import dev.kord.common.readFile
 import kotlinx.coroutines.test.runTest
 import kotlinx.serialization.json.Json
 import kotlin.js.JsName
-import kotlin.time.Duration.Companion.seconds
 import kotlin.test.Test
+import kotlin.time.Duration.Companion.seconds
 
 private suspend fun file(name: String): String = readFile("channel", name)
 

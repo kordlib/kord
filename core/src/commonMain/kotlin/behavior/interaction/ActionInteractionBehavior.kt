@@ -1,7 +1,7 @@
 package dev.kord.core.behavior.interaction
 
 import dev.kord.common.annotation.KordUnsafe
-import dev.kord.common.entity.MessageFlag
+import dev.kord.common.entity.InteractionResponseType
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.Kord
 import dev.kord.core.behavior.interaction.response.*
@@ -13,6 +13,7 @@ import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.core.supplier.EntitySupplyStrategy.Companion.rest
 import dev.kord.rest.builder.message.create.InteractionResponseCreateBuilder
+import dev.kord.rest.json.request.InteractionResponseCreateRequest
 import dev.kord.rest.request.RestRequestException
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
@@ -82,6 +83,18 @@ public interface ActionInteractionBehavior : InteractionBehavior {
     public suspend fun deferPublicResponse(): DeferredPublicMessageInteractionResponseBehavior {
         kord.rest.interaction.deferMessage(id, token, ephemeral = false)
         return DeferredPublicMessageInteractionResponseBehavior(applicationId, token, kord)
+    }
+
+    /**
+     * Opens the [Activity](https://discord.com/developers/docs/activities/overview) of this application.
+     *
+     * **Note:** This requires activities to be enabled for this application
+     */
+    public suspend fun openActivity() {
+        kord.rest.interaction.createInteractionResponse(
+            id, token,
+            InteractionResponseCreateRequest(InteractionResponseType.LaunchActivity)
+        )
     }
 
     /**

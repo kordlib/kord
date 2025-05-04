@@ -1,6 +1,10 @@
 package dev.kord.core.entity.interaction
 
 import dev.kord.common.Locale
+import dev.kord.common.entity.ApplicationIntegrationType
+import dev.kord.common.entity.ApplicationIntegrationType.GuildInstall
+import dev.kord.common.entity.ApplicationIntegrationType.UserInstall
+import dev.kord.common.entity.InteractionContextType
 import dev.kord.common.entity.InteractionType
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.OptionalSnowflake
@@ -11,7 +15,6 @@ import dev.kord.core.behavior.interaction.InteractionBehavior
 import dev.kord.core.cache.data.InteractionData
 import dev.kord.core.entity.User
 import dev.kord.core.entity.monetization.Entitlement
-import dev.kord.core.entity.monetization.Sku
 import dev.kord.core.supplier.EntitySupplyStrategy
 
 /**
@@ -62,6 +65,24 @@ public sealed interface Interaction : InteractionBehavior {
      * [invoking user][user], representing access to premium [Sku]s.
      */
     public val entitlements: List<Entitlement> get() = data.entitlements.mapList { Entitlement(it, kord) }.orEmpty()
+
+    /**
+     * Map of the authorizing users id by [type][ApplicationIntegrationType].
+     *
+     * For [ApplicationIntegrationType.GuildInstall] this will be:
+     *  - the guildId, if it's on a guild
+     *  - `0` if it is from a user DM
+     *
+     * For [ApplicationIntegrationType.UserInstall] this will be:
+     * - The id of the authorizing user
+     */
+    public val authorizingIntegrationOwners: Map<ApplicationIntegrationType, Snowflake>
+        get() = data.authorizingIntegrationOwners
+
+    /**
+     * [Context][InteractionContextType] where the interaction was triggered from.
+     */
+    public val context: InteractionContextType? get() = data.context.value
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): Interaction
 
