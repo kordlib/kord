@@ -4,6 +4,7 @@ import dev.kord.cache.api.data.DataDescription
 import dev.kord.cache.api.data.description
 import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.*
+import dev.kord.core.entity.channel.thread.ThreadChannel
 import kotlinx.datetime.Instant
 import kotlinx.serialization.Serializable
 
@@ -36,6 +37,7 @@ public data class MessageData(
     val stickers: Optional<List<StickerItemData>> = Optional.Missing(),
     val referencedMessage: Optional<MessageData?> = Optional.Missing(),
     val interaction: Optional<MessageInteractionData> = Optional.Missing(),
+    val thread: Optional<ChannelData> = Optional.Missing(),
     val components: Optional<List<ComponentData>> = Optional.Missing(),
     val roleSubscriptionData: Optional<RoleSubscription> = Optional.Missing(),
     val position: OptionalInt = OptionalInt.Missing,
@@ -109,6 +111,7 @@ public data class MessageData(
             components = components,
             roleSubscriptionData = roleSubscriptionData,
             position = position,
+            thread = partialMessage.thread.map { ChannelData.from(it) }
         )
     }
 
@@ -144,6 +147,7 @@ public data class MessageData(
                 stickers.mapList { StickerItemData.from(it) },
                 referencedMessage.mapNotNull { from(it) },
                 interaction.map { MessageInteractionData.from(it) },
+                thread.map { ChannelData.from(it) },
                 components = components.mapList { ComponentData.from(it) },
                 roleSubscriptionData = roleSubscriptionData,
                 position = position,
