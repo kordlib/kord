@@ -5,7 +5,7 @@ package dev.kord.ksp.generation.shared
 import com.squareup.kotlinpoet.*
 import com.squareup.kotlinpoet.KModifier.*
 import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
-import dev.kord.ksp.*
+import dev.kord.codegen.kotlinpoet.*
 import dev.kord.ksp.generation.GenerationEntity
 import kotlinx.serialization.descriptors.SerialDescriptor
 
