@@ -15,6 +15,9 @@ kotlin-node = "22.5.4-pre.818" # https://github.com/JetBrains/kotlin-wrappers
 bignum = "0.3.10" # https://github.com/ionspin/kotlin-multiplatform-bignum
 stately = "2.1.0" # https://github.com/touchlab/Stately
 fastZlib = "2.0.1" # https://github.com/timotejroiko/fast-zlib
+fzstd = "0.1.1" # https://github.com/101arrowz/fzstd/
+zstd-jni = "1.5.6-7" # https://github.com/luben/zstd-jni
+zstd-codec = "0.1.5" # https://www.npmjs.com/package/zstd-codec
 
 # code generation
 ksp = "2.0.21-1.0.25" # https://github.com/google/ksp
@@ -63,6 +66,7 @@ kotlin-node = { module = "org.jetbrains.kotlin-wrappers:kotlin-node", version.re
 # JDK replacements
 bignum = { module = "com.ionspin.kotlin:bignum", version.ref = "bignum" }
 stately-collections = { module = "co.touchlab:stately-concurrent-collections", version.ref = "stately" }
+zstd-jni = { module = "com.github.luben:zstd-jni", version.ref = "zstd-jni" }
 
 # code generation
 ksp-api = { module = "com.google.devtools.ksp:symbol-processing-api", version.ref = "ksp" }
