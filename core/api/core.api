@@ -13187,6 +13187,7 @@ public final class dev/kord/core/event/message/ReactionAddEvent : dev/kord/core/
 	public fun toString ()Ljava/lang/String;
 	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/Strategizable;
 	public fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/event/message/ReactionAddEvent;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/event/message/ReactionEvent;
 }
 
 public abstract interface class dev/kord/core/event/message/ReactionEvent : dev/kord/core/entity/Strategizable, dev/kord/core/event/Event {
@@ -13208,6 +13209,7 @@ public abstract interface class dev/kord/core/event/message/ReactionEvent : dev/
 	public abstract fun getUserAsMember (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun getUserId ()Ldev/kord/common/entity/Snowflake;
 	public abstract fun getUserOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/event/message/ReactionEvent;
 }
 
 public final class dev/kord/core/event/message/ReactionEvent$DefaultImpls {
@@ -13306,6 +13308,7 @@ public final class dev/kord/core/event/message/ReactionRemoveEvent : dev/kord/co
 	public fun getUserOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun toString ()Ljava/lang/String;
 	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/Strategizable;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/event/message/ReactionEvent;
 	public fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/event/message/ReactionRemoveEvent;
 }
 

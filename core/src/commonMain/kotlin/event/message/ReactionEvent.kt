@@ -9,10 +9,11 @@ import dev.kord.core.behavior.channel.MessageChannelBehavior
 import dev.kord.core.entity.*
 import dev.kord.core.entity.channel.MessageChannel
 import dev.kord.core.event.Event
+import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.core.supplier.getChannelOf
 import dev.kord.core.supplier.getChannelOfOrNull
 
-public interface ReactionEvent : Event, Strategizable {
+public sealed interface ReactionEvent : Event, Strategizable {
     public val userId: Snowflake
 
     public val channelId: Snowflake
@@ -48,4 +49,6 @@ public interface ReactionEvent : Event, Strategizable {
     public suspend fun getUserOrNull(): User? = supplier.getUserOrNull(userId)
 
     public suspend fun getUserAsMember(): Member? = guildId?.let { supplier.getMemberOrNull(it, userId) }
+
+    override fun withStrategy(strategy: EntitySupplyStrategy<*>): ReactionEvent
 }
