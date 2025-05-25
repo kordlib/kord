@@ -11,11 +11,11 @@ import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 
 public class ReactionAddEvent(
-    public override val userId: Snowflake,
-    public override val channelId: Snowflake,
-    public override val messageId: Snowflake,
-    public override val guildId: Snowflake?,
-    public override val emoji: ReactionEmoji,
+    override val userId: Snowflake,
+    override val channelId: Snowflake,
+    override val messageId: Snowflake,
+    override val guildId: Snowflake?,
+    override val emoji: ReactionEmoji,
     public val messageAuthorId: Snowflake?,
     override val kord: Kord,
     override val shard: Int,
@@ -51,6 +51,6 @@ public class ReactionAddEvent(
     )
 
     override fun toString(): String = "ReactionAddEvent(userId=$userId, channelId=$channelId, messageId=$messageId, " +
-        "guildId=$guildId, emoji=$emoji, messageAuthorId=$messageAuthorId, kord=$kord, shard=$shard, " +
-        "customContext=$customContext, supplier=$supplier)"
+            "guildId=$guildId, emoji=$emoji, messageAuthorId=$messageAuthorId, kord=$kord, shard=$shard, " +
+            "customContext=$customContext, supplier=$supplier)"
 }
