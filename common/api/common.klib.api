@@ -6455,6 +6455,8 @@ final class dev.kord.common.entity/SystemChannelFlags { // dev.kord.common.entit
 }
 
 final class dev.kord.common.entity/UnfurledMediaItem { // dev.kord.common.entity/UnfurledMediaItem|null[0]
+    constructor <init>(kotlin/String, dev.kord.common.entity.optional/Optional<kotlin/String> = ..., dev.kord.common.entity.optional/OptionalInt? = ..., dev.kord.common.entity.optional/OptionalInt? = ..., dev.kord.common.entity.optional/Optional<kotlin/String> = ...) // dev.kord.common.entity/UnfurledMediaItem.<init>|<init>(kotlin.String;dev.kord.common.entity.optional.Optional<kotlin.String>;dev.kord.common.entity.optional.OptionalInt?;dev.kord.common.entity.optional.OptionalInt?;dev.kord.common.entity.optional.Optional<kotlin.String>){}[0]
+
     final val contentType // dev.kord.common.entity/UnfurledMediaItem.contentType|{}contentType[0]
         final fun <get-contentType>(): dev.kord.common.entity.optional/Optional<kotlin/String> // dev.kord.common.entity/UnfurledMediaItem.contentType.<get-contentType>|<get-contentType>(){}[0]
     final val height // dev.kord.common.entity/UnfurledMediaItem.height|{}height[0]
@@ -6471,7 +6473,7 @@ final class dev.kord.common.entity/UnfurledMediaItem { // dev.kord.common.entity
     final fun component3(): dev.kord.common.entity.optional/OptionalInt? // dev.kord.common.entity/UnfurledMediaItem.component3|component3(){}[0]
     final fun component4(): dev.kord.common.entity.optional/OptionalInt? // dev.kord.common.entity/UnfurledMediaItem.component4|component4(){}[0]
     final fun component5(): dev.kord.common.entity.optional/Optional<kotlin/String> // dev.kord.common.entity/UnfurledMediaItem.component5|component5(){}[0]
-    final fun copy(kotlin/String): dev.kord.common.entity/UnfurledMediaItem // dev.kord.common.entity/UnfurledMediaItem.copy|copy(kotlin.String){}[0]
+    final fun copy(kotlin/String = ..., dev.kord.common.entity.optional/Optional<kotlin/String> = ..., dev.kord.common.entity.optional/OptionalInt? = ..., dev.kord.common.entity.optional/OptionalInt? = ..., dev.kord.common.entity.optional/Optional<kotlin/String> = ...): dev.kord.common.entity/UnfurledMediaItem // dev.kord.common.entity/UnfurledMediaItem.copy|copy(kotlin.String;dev.kord.common.entity.optional.Optional<kotlin.String>;dev.kord.common.entity.optional.OptionalInt?;dev.kord.common.entity.optional.OptionalInt?;dev.kord.common.entity.optional.Optional<kotlin.String>){}[0]
     final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.common.entity/UnfurledMediaItem.equals|equals(kotlin.Any?){}[0]
     final fun hashCode(): kotlin/Int // dev.kord.common.entity/UnfurledMediaItem.hashCode|hashCode(){}[0]
     final fun toString(): kotlin/String // dev.kord.common.entity/UnfurledMediaItem.toString|toString(){}[0]
@@ -9621,7 +9623,6 @@ final fun dev.kord.common.entity/SystemChannelFlags(kotlin.collections/Iterable<
 final fun dev.kord.common.entity/SystemChannelFlags(kotlin.collections/Iterable<dev.kord.common.entity/SystemChannelFlags>): dev.kord.common.entity/SystemChannelFlags // dev.kord.common.entity/SystemChannelFlags|SystemChannelFlags(kotlin.collections.Iterable<dev.kord.common.entity.SystemChannelFlags>){}[0]
 final fun dev.kord.common.entity/SystemChannelFlags(kotlin/Array<out dev.kord.common.entity/SystemChannelFlag>...): dev.kord.common.entity/SystemChannelFlags // dev.kord.common.entity/SystemChannelFlags|SystemChannelFlags(kotlin.Array<out|dev.kord.common.entity.SystemChannelFlag>...){}[0]
 final fun dev.kord.common.entity/SystemChannelFlags(kotlin/Array<out dev.kord.common.entity/SystemChannelFlags>...): dev.kord.common.entity/SystemChannelFlags // dev.kord.common.entity/SystemChannelFlags|SystemChannelFlags(kotlin.Array<out|dev.kord.common.entity.SystemChannelFlags>...){}[0]
-final fun dev.kord.common.entity/UnfurledMediaItem(kotlin/String): dev.kord.common.entity/UnfurledMediaItem // dev.kord.common.entity/UnfurledMediaItem|UnfurledMediaItem(kotlin.String){}[0]
 final fun dev.kord.common.entity/UserFlags(kotlin.collections/Iterable<dev.kord.common.entity/UserFlag>): dev.kord.common.entity/UserFlags // dev.kord.common.entity/UserFlags|UserFlags(kotlin.collections.Iterable<dev.kord.common.entity.UserFlag>){}[0]
 final fun dev.kord.common.entity/UserFlags(kotlin.collections/Iterable<dev.kord.common.entity/UserFlags>): dev.kord.common.entity/UserFlags // dev.kord.common.entity/UserFlags|UserFlags(kotlin.collections.Iterable<dev.kord.common.entity.UserFlags>){}[0]
 final fun dev.kord.common.entity/UserFlags(kotlin/Array<out dev.kord.common.entity/UserFlag>...): dev.kord.common.entity/UserFlags // dev.kord.common.entity/UserFlags|UserFlags(kotlin.Array<out|dev.kord.common.entity.UserFlag>...){}[0]

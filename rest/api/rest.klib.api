@@ -1750,7 +1750,7 @@ final class dev.kord.rest.builder.component/MediaGalleryBuilder : dev.kord.rest.
         final fun <get-items>(): kotlin.collections/MutableList<dev.kord.rest.builder.component/MediaGalleryItemBuilder> // dev.kord.rest.builder.component/MediaGalleryBuilder.items.<get-items>|<get-items>(){}[0]
 
     final fun build(): dev.kord.common.entity/DiscordComponent // dev.kord.rest.builder.component/MediaGalleryBuilder.build|build(){}[0]
-    final fun item(kotlin/String, kotlin/Function1<dev.kord.rest.builder.component/MediaGalleryItemBuilder, kotlin/Unit>) // dev.kord.rest.builder.component/MediaGalleryBuilder.item|item(kotlin.String;kotlin.Function1<dev.kord.rest.builder.component.MediaGalleryItemBuilder,kotlin.Unit>){}[0]
+    final fun item(kotlin/String, kotlin/Function1<dev.kord.rest.builder.component/MediaGalleryItemBuilder, kotlin/Unit> = ...) // dev.kord.rest.builder.component/MediaGalleryBuilder.item|item(kotlin.String;kotlin.Function1<dev.kord.rest.builder.component.MediaGalleryItemBuilder,kotlin.Unit>){}[0]
 }
 
 final class dev.kord.rest.builder.component/MediaGalleryItemBuilder { // dev.kord.rest.builder.component/MediaGalleryItemBuilder|null[0]
@@ -1836,6 +1836,9 @@ final class dev.kord.rest.builder.component/SelectOptionBuilder { // dev.kord.re
 final class dev.kord.rest.builder.component/SeparatorBuilder : dev.kord.rest.builder.component/ContainerComponentBuilder { // dev.kord.rest.builder.component/SeparatorBuilder|null[0]
     constructor <init>() // dev.kord.rest.builder.component/SeparatorBuilder.<init>|<init>(){}[0]
 
+    final var divider // dev.kord.rest.builder.component/SeparatorBuilder.divider|{}divider[0]
+        final fun <get-divider>(): kotlin/Boolean? // dev.kord.rest.builder.component/SeparatorBuilder.divider.<get-divider>|<get-divider>(){}[0]
+        final fun <set-divider>(kotlin/Boolean?) // dev.kord.rest.builder.component/SeparatorBuilder.divider.<set-divider>|<set-divider>(kotlin.Boolean?){}[0]
     final var spacing // dev.kord.rest.builder.component/SeparatorBuilder.spacing|{}spacing[0]
         final fun <get-spacing>(): dev.kord.common.entity/SeparatorSpacingSize? // dev.kord.rest.builder.component/SeparatorBuilder.spacing.<get-spacing>|<get-spacing>(){}[0]
         final fun <set-spacing>(dev.kord.common.entity/SeparatorSpacingSize?) // dev.kord.rest.builder.component/SeparatorBuilder.spacing.<set-spacing>|<set-spacing>(dev.kord.common.entity.SeparatorSpacingSize?){}[0]

@@ -1175,6 +1175,7 @@ public final class dev/kord/rest/builder/component/MediaGalleryBuilder : dev/kor
 	public fun build ()Ldev/kord/common/entity/DiscordComponent;
 	public final fun getItems ()Ljava/util/List;
 	public final fun item (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+	public static synthetic fun item$default (Ldev/kord/rest/builder/component/MediaGalleryBuilder;Ljava/lang/String;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
 }
 
 public final class dev/kord/rest/builder/component/MediaGalleryItemBuilder {
@@ -1261,7 +1262,9 @@ public final class dev/kord/rest/builder/component/SelectOptionBuilder {
 public final class dev/kord/rest/builder/component/SeparatorBuilder : dev/kord/rest/builder/component/ContainerComponentBuilder {
 	public fun <init> ()V
 	public fun build ()Ldev/kord/common/entity/DiscordComponent;
+	public final fun getDivider ()Ljava/lang/Boolean;
 	public final fun getSpacing ()Ldev/kord/common/entity/SeparatorSpacingSize;
+	public final fun setDivider (Ljava/lang/Boolean;)V
 	public final fun setSpacing (Ldev/kord/common/entity/SeparatorSpacingSize;)V
 }
 
