@@ -82,18 +82,39 @@ public sealed class ComponentType(
      */
     public object ChannelSelect : ComponentType(8)
 
+    /**
+     * Container to display text alongside an accessory component
+     */
     public object Section : ComponentType(9)
 
+    /**
+     * Markdown text
+     */
     public object TextDisplay : ComponentType(10)
 
+    /**
+     * Small image that can be used as an accessory
+     */
     public object Thumbnail : ComponentType(11)
 
+    /**
+     * Display images and other media
+     */
     public object MediaGallery : ComponentType(12)
 
+    /**
+     * Displays an attached file
+     */
     public object File : ComponentType(13)
 
+    /**
+     * Component to add vertical padding between other components
+     */
     public object Separator : ComponentType(14)
 
+    /**
+     * Container that visually groups a set of components
+     */
     public object Container : ComponentType(17)
 
     internal object Serializer : KSerializer<ComponentType> {

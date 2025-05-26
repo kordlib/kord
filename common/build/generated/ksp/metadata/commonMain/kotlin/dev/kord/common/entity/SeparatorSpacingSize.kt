@@ -14,7 +14,8 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 /**
- * See [SeparatorSpacingSize]s in the [Discord Developer Documentation]().
+ * See [SeparatorSpacingSize]s in the
+ * [Discord Developer Documentation](https://discord.com/developers/docs/components/reference#separator-separator-structure).
  */
 @Serializable(with = SeparatorSpacingSize.Serializer::class)
 public sealed class SeparatorSpacingSize(

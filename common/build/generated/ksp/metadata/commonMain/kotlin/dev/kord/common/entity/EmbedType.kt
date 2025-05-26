@@ -57,7 +57,7 @@ public sealed class EmbedType(
     public object Video : EmbedType("video")
 
     /**
-     * Animated gif media embed rendered as a video embed.
+     * Animated gif image embed rendered as a video embed.
      */
     public object Gifv : EmbedType("gifv")
 

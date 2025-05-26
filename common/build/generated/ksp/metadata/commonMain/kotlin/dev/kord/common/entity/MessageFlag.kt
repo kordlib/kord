@@ -123,7 +123,8 @@ public sealed class MessageFlag(
     public object IsVoiceMessage : MessageFlag(13)
 
     /**
-     * Enable V2 of the Components API
+     * Allows you to create fully
+     * [component](https://discord.com/developers/docs/components/overview)-driven messages.
      */
     public object IsComponentsV2 : MessageFlag(15)
 
