@@ -10,6 +10,10 @@
             kDoc = "Check if content contains words from internal pre-defined wordsets."
         ),
         Entry("MentionSpam", intValue = 5, kDoc = "Check if content contains more unique mentions than allowed."),
+        Entry(
+            "MemberProfile", intValue = 6,
+            kDoc = "Check if member profile contains words from a user defined list of keywords.",
+        ),
     ],
 )
 
@@ -30,6 +34,7 @@
     docUrl = "https://discord.com/developers/docs/resources/auto-moderation#auto-moderation-rule-object-event-types",
     entries = [
         Entry("MessageSend", intValue = 1, kDoc = "When a member sends or edits a message in the guild."),
+        Entry("MemberUpdate", intValue = 2, kDoc = "When a member edits their profile."),
     ],
 )
 
@@ -51,6 +56,10 @@
                     "[MentionSpam][dev.kord.common.entity.AutoModerationRuleTriggerType.MentionSpam] rules. The " +
                     "[ModerateMembers][dev.kord.common.entity.Permission.ModerateMembers] permission is required to " +
                     "use the [Timeout] action type."
+        ),
+        Entry(
+            "BlockMemberInteraction", intValue = 4,
+            kDoc = "Prevents a member from using text, voice, or other interactions.",
         ),
     ],
 )

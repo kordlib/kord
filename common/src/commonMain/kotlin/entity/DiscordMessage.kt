@@ -33,6 +33,7 @@
         Entry("StageSpeaker", intValue = 29),
         Entry("StageTopic", intValue = 31),
         Entry("GuildApplicationPremiumSubscription", intValue = 32),
+        Entry("PurchaseNotification", intValue = 44),
     ],
 )
 
@@ -256,7 +257,8 @@ public data class DiscordMessageSticker(
     val description: String?,
     val tags: Optional<String> = Optional.Missing(),
     @SerialName("format_type")
-    val formatType: MessageStickerType,
+    // The docs says this is non-nullable, non optional, but it still returns null in our tests
+    val formatType: MessageStickerType?,
     val available: OptionalBoolean = OptionalBoolean.Missing,
     @SerialName("guild_id")
     val guildId: OptionalSnowflake = OptionalSnowflake.Missing,

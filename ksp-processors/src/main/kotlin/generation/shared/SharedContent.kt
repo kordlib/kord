@@ -1,3 +1,5 @@
+@file:Suppress("CONTEXT_RECEIVERS_DEPRECATED")
+
 package dev.kord.ksp.generation.shared
 
 import com.squareup.kotlinpoet.*
@@ -7,9 +9,11 @@ import dev.kord.ksp.*
 import dev.kord.ksp.generation.GenerationEntity
 import kotlinx.serialization.descriptors.SerialDescriptor
 
+private val GenerationEntity.entityNamePluralSuffix get() = if (entityName.endsWith('s')) "es" else "s"
+
 context(GenerationEntity, GenerationContext)
 internal fun TypeSpec.Builder.addEntityKDoc() {
-    val docLink = "See [%T]s in the [Discord·Developer·Documentation]($docUrl)."
+    val docLink = "See [%T]$entityNamePluralSuffix in the [Discord·Developer·Documentation]($docUrl)."
     val combinedKDocFormat = if (kDoc != null) "$kDoc\n\n$docLink" else docLink
     addKdoc(combinedKDocFormat, entityCN)
 }
@@ -18,7 +22,8 @@ context(GenerationEntity, GenerationContext)
 internal fun TypeSpec.Builder.addUnknownClass(constructorParameterName: String, constructorParameterType: TypeName) =
     addClass("Unknown") {
         addKdoc(
-            "An unknown [%1T].\n\nThis is used as a fallback for [%1T]s that haven't been added to Kord yet.",
+            "An unknown [%1T].\n\nThis is used as a fallback for [%1T]$entityNamePluralSuffix that haven't been " +
+                "added to Kord yet.",
             entityCN,
         )
         addModifiers(PUBLIC)
@@ -65,7 +70,7 @@ context(GenerationEntity, GenerationContext)
 internal fun TypeSpec.Builder.addSharedCompanionObjectContent() {
     addModifiers(PUBLIC)
     addProperty("entries", LIST.parameterizedBy(entityCN), PUBLIC) {
-        addKdoc("A [List] of all known [%T]s.", entityCN)
+        addKdoc("A [List] of all known [%T]$entityNamePluralSuffix.", entityCN)
         addEntryOptIns()
         delegate {
             withControlFlow("lazy(mode·=·%M)", LazyThreadSafetyMode.PUBLICATION.asMemberName()) {

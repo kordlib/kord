@@ -7,8 +7,8 @@ import dev.kord.core.event.Event
 
 @Deprecated(
     "This event is not supposed to be sent to bots. See https://github.com/discord/discord-api-docs/issues/3690 for " +
-        "details.",
-    level = DeprecationLevel.ERROR,
+        "details. This declaration will be removed in 0.17.0.",
+    level = DeprecationLevel.HIDDEN,
 )
 public sealed interface ApplicationCommandDeleteEvent : Event {
     public val command: GuildApplicationCommand
@@ -17,8 +17,8 @@ public sealed interface ApplicationCommandDeleteEvent : Event {
 @Suppress("DEPRECATION_ERROR")
 @Deprecated(
     "This event is not supposed to be sent to bots. See https://github.com/discord/discord-api-docs/issues/3690 for " +
-        "details.",
-    level = DeprecationLevel.ERROR,
+        "details. This declaration will be removed in 0.17.0.",
+    level = DeprecationLevel.HIDDEN,
 )
 public class ChatInputCommandDeleteEvent(
     override val command: GuildChatInputCommand,
@@ -31,8 +31,8 @@ public class ChatInputCommandDeleteEvent(
 @Suppress("DEPRECATION_ERROR")
 @Deprecated(
     "This event is not supposed to be sent to bots. See https://github.com/discord/discord-api-docs/issues/3690 for " +
-        "details.",
-    level = DeprecationLevel.ERROR,
+        "details. This declaration will be removed in 0.17.0.",
+    level = DeprecationLevel.HIDDEN,
 )
 public class UserCommandDeleteEvent(
     override val command: GuildUserCommand,
@@ -45,8 +45,8 @@ public class UserCommandDeleteEvent(
 @Suppress("DEPRECATION_ERROR")
 @Deprecated(
     "This event is not supposed to be sent to bots. See https://github.com/discord/discord-api-docs/issues/3690 for " +
-        "details.",
-    level = DeprecationLevel.ERROR,
+        "details. This declaration will be removed in 0.17.0.",
+    level = DeprecationLevel.HIDDEN,
 )
 public class MessageCommandDeleteEvent(
     override val command: GuildMessageCommand,
@@ -59,8 +59,8 @@ public class MessageCommandDeleteEvent(
 @Suppress("DEPRECATION_ERROR")
 @Deprecated(
     "This event is not supposed to be sent to bots. See https://github.com/discord/discord-api-docs/issues/3690 for " +
-        "details.",
-    level = DeprecationLevel.ERROR,
+        "details. This declaration will be removed in 0.17.0.",
+    level = DeprecationLevel.HIDDEN,
 )
 public class UnknownApplicationCommandDeleteEvent(
     override val command: UnknownGuildApplicationCommand,

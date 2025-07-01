@@ -122,5 +122,14 @@
   },
   "token": "UNIQUE_TOKEN",
   "type": 3,
-  "version": 1
+  "version": 1,
+  "entitlements": [
+    {
+      "id":"0",
+      "application_id":"0",
+      "sku_id":"0",
+      "type":8,
+      "deleted":false
+    }
+  ]
 }

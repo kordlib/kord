@@ -10,7 +10,7 @@ fun MavenPublication.registerDokkaJar() =
     tasks.register<Jar>("${name}DokkaJar") {
         archiveClassifier = "javadoc"
         destinationDirectory = destinationDirectory.get().dir(name)
-        from(tasks.named("dokkaHtml"))
+        from(tasks.named("dokkaGeneratePublicationHtml"))
     }
 
 publishing {
@@ -66,6 +66,17 @@ publishing {
             credentials {
                 username = getenv("NEXUS_USER")
                 password = getenv("NEXUS_PASSWORD")
+            }
+        }
+
+        if (!isRelease) {
+            maven {
+                name = "kordSnapshots"
+                url = uri("https://repo.kord.dev/snapshots")
+                credentials {
+                    username = getenv("KORD_REPO_USER")
+                    password = getenv("KORD_REPO_PASSWORD")
+                }
             }
         }
     }

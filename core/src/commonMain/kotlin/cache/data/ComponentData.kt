@@ -1,10 +1,7 @@
 package dev.kord.core.cache.data
 
 import dev.kord.common.entity.*
-import dev.kord.common.entity.optional.Optional
-import dev.kord.common.entity.optional.OptionalBoolean
-import dev.kord.common.entity.optional.OptionalInt
-import dev.kord.common.entity.optional.mapList
+import dev.kord.common.entity.optional.*
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.JsonClassDiscriminator
@@ -54,7 +51,8 @@ public sealed class ComponentData {
                         maxLength = maxLength,
                         required = required,
                         value = value,
-                        channelTypes = channelTypes
+                        channelTypes = channelTypes,
+                        skuId = entity.skuId,
                     )
                 }
                 is DiscordTextInputComponent -> {
@@ -105,6 +103,7 @@ public data class ChatComponentData(
     override val required: OptionalBoolean = OptionalBoolean.Missing,
     override val value: Optional<String> = Optional.Missing(),
     override val channelTypes: Optional<List<ChannelType>> = Optional.Missing(),
+    val skuId: OptionalSnowflake = OptionalSnowflake.Missing,
 ) : ComponentData()
 
 @Serializable
