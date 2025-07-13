@@ -62,6 +62,7 @@ class InteractionTest {
             arg.value shouldBe 1L
             appPermissions shouldBe perms
             entitlements shouldBe testEntitlements
+            context shouldBe InteractionContextType.Guild
         }
     }
 
@@ -115,6 +116,7 @@ class InteractionTest {
             arg.value shouldBe 1L
             appPermissions shouldBe perms
             entitlements shouldBe testEntitlements
+            context shouldBe InteractionContextType.BotDm
         }
     }
 
@@ -156,6 +158,7 @@ class InteractionTest {
             id shouldBe "847587388497854464"
             appPermissions shouldBe perms
             entitlements shouldBe testEntitlements
+            context shouldBe InteractionContextType.PrivateChannel
         }
     }
 

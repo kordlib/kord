@@ -1,6 +1,7 @@
 package dev.kord.core.entity.interaction
 
 import dev.kord.common.Locale
+import dev.kord.common.entity.InteractionContextType
 import dev.kord.common.entity.InteractionType
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.OptionalSnowflake
@@ -62,6 +63,11 @@ public sealed interface Interaction : InteractionBehavior {
      * [invoking user][user], representing access to premium [Sku]s.
      */
     public val entitlements: List<Entitlement> get() = data.entitlements.mapList { Entitlement(it, kord) }.orEmpty()
+
+    /**
+     * Context where the interaction was triggered from
+     */
+    public val context: InteractionContextType? get() = data.context.value
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): Interaction
 

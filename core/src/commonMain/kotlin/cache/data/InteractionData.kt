@@ -30,6 +30,7 @@ public data class InteractionData(
     val locale: Optional<Locale> = Optional.Missing(),
     val guildLocale: Optional<Locale> = Optional.Missing(),
     val entitlements: Optional<List<EntitlementData>> = Optional.Missing(),
+    val context: Optional<InteractionContextType> = Optional.Missing(),
 ) {
     public companion object {
         public fun from(interaction: DiscordInteraction): InteractionData {
@@ -55,6 +56,7 @@ public data class InteractionData(
                     locale,
                     guildLocale,
                     entitlements.mapList { EntitlementData.from(it) },
+                    context,
                 )
             }
         }
