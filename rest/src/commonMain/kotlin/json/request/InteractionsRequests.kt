@@ -20,8 +20,10 @@ public data class ApplicationCommandCreateRequest(
     val options: Optional<List<ApplicationCommandOption>> = Optional.Missing(),
     @SerialName("default_member_permissions")
     public val defaultMemberPermissions: Optional<Permissions?> = Optional.Missing(),
+    @Deprecated("'dmPermission' is deprecated in favor of 'contexts'.")
     @SerialName("dm_permission")
     public val dmPermission: OptionalBoolean? = OptionalBoolean.Missing,
+    val contexts: Optional<List<InteractionContextType>> = Optional.Missing(),
     @Deprecated("'defaultPermission' is deprecated in favor of 'defaultMemberPermissions' and 'dmPermission'. Setting 'defaultPermission' to false can be replaced by setting 'defaultMemberPermissions' to empty Permissions and 'dmPermission' to false ('dmPermission' is only available for global commands).")
     @SerialName("default_permission")
     val defaultPermission: OptionalBoolean = OptionalBoolean.Missing,
@@ -39,8 +41,10 @@ public data class ApplicationCommandModifyRequest(
     val options: Optional<List<ApplicationCommandOption>> = Optional.Missing(),
     @SerialName("default_member_permissions")
     public val defaultMemberPermissions: Optional<Permissions?> = Optional.Missing(),
+    @Deprecated("'dmPermission' is deprecated in favor of 'contexts'.")
     @SerialName("dm_permission")
     public val dmPermission: OptionalBoolean? = OptionalBoolean.Missing,
+    val contexts: Optional<List<InteractionContextType>> = Optional.Missing(),
     @Deprecated("'defaultPermission' is deprecated in favor of 'defaultMemberPermissions' and 'dmPermission'. Setting 'defaultPermission' to false can be replaced by setting 'defaultMemberPermissions' to empty Permissions and 'dmPermission' to false ('dmPermission' is only available for global commands).")
     @SerialName("default_permission")
     val defaultPermission: OptionalBoolean = OptionalBoolean.Missing,

@@ -75,6 +75,16 @@
     ],
 )
 
+@file:Generate(
+    INT_KORD_ENUM, name = "InteractionContextType", valueName = "type",
+    docUrl = "https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-interaction-context-types",
+    entries = [
+        Entry("Guild", intValue = 0),
+        Entry("BotDm", intValue = 1),
+        Entry("PrivateChannel", intValue = 2),
+    ]
+)
+
 package dev.kord.common.entity
 
 import dev.kord.common.Locale
@@ -113,7 +123,9 @@ public data class DiscordApplicationCommand(
     @SerialName("default_member_permissions")
     val defaultMemberPermissions: Permissions?,
     @SerialName("dm_permission")
+    @Deprecated("'dm_permission' is deprecated in favor of 'contexts'.")
     val dmPermission: OptionalBoolean = OptionalBoolean.Missing,
+    val contexts: Optional<List<InteractionContextType>> = Optional.Missing(),
     @SerialName("default_permission")
     @Deprecated("'defaultPermission' is deprecated in favor of 'defaultMemberPermissions' and 'dmPermission'.")
     val defaultPermission: OptionalBoolean? = OptionalBoolean.Missing,

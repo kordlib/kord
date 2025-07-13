@@ -3,6 +3,7 @@ package dev.kord.rest.builder.interaction
 import dev.kord.common.Locale
 import dev.kord.common.annotation.KordDsl
 import dev.kord.common.entity.ApplicationCommandType
+import dev.kord.common.entity.InteractionContextType
 import dev.kord.common.entity.Permissions
 import dev.kord.common.entity.optional.delegate.delegate
 import dev.kord.rest.json.request.ApplicationCommandCreateRequest
@@ -24,7 +25,9 @@ internal class MessageCommandModifyBuilderImpl : GlobalMessageCommandModifyBuild
     override var nameLocalizations: MutableMap<Locale, String>? by state::nameLocalizations.delegate()
 
     override var defaultMemberPermissions: Permissions? by state::defaultMemberPermissions.delegate()
-    override var dmPermission: Boolean? by state::dmPermission.delegate()
+    @Deprecated("'dmPermission' is deprecated in favor of 'contexts'.")
+    override var dmPermission: Boolean? by @Suppress("DEPRECATION") state::dmPermission.delegate()
+    override var contexts: MutableList<InteractionContextType>? by state::contexts.delegate()
 
     @Deprecated("'defaultPermission' is deprecated in favor of 'defaultMemberPermissions' and 'dmPermission'. Setting 'defaultPermission' to false can be replaced by setting 'defaultMemberPermissions' to empty Permissions and 'dmPermission' to false ('dmPermission' is only available for global commands).")
     override var defaultPermission: Boolean? by @Suppress("DEPRECATION") state::defaultPermission.delegate()
@@ -35,7 +38,8 @@ internal class MessageCommandModifyBuilderImpl : GlobalMessageCommandModifyBuild
         return ApplicationCommandModifyRequest(
             name = state.name,
             nameLocalizations = state.nameLocalizations,
-            dmPermission = state.dmPermission,
+            dmPermission = @Suppress("DEPRECATION") state.dmPermission,
+            contexts = state.contexts,
             defaultMemberPermissions = state.defaultMemberPermissions,
             defaultPermission = @Suppress("DEPRECATION") state.defaultPermission,
             nsfw = state.nsfw,
@@ -56,13 +60,14 @@ internal class MessageCommandCreateBuilderImpl(override var name: String) : Glob
     override val type: ApplicationCommandType
         get() = ApplicationCommandType.Message
 
-
     private val state = ApplicationCommandModifyStateHolder()
 
     override var nameLocalizations: MutableMap<Locale, String>? by state::nameLocalizations.delegate()
 
     override var defaultMemberPermissions: Permissions? by state::defaultMemberPermissions.delegate()
-    override var dmPermission: Boolean? by state::dmPermission.delegate()
+    @Deprecated("'dmPermission' is deprecated in favor of 'contexts'.")
+    override var dmPermission: Boolean? by @Suppress("DEPRECATION") state::dmPermission.delegate()
+    override var contexts: MutableList<InteractionContextType>? by state::contexts.delegate()
 
     @Deprecated("'defaultPermission' is deprecated in favor of 'defaultMemberPermissions' and 'dmPermission'. Setting 'defaultPermission' to false can be replaced by setting 'defaultMemberPermissions' to empty Permissions and 'dmPermission' to false ('dmPermission' is only available for global commands).")
     override var defaultPermission: Boolean? by @Suppress("DEPRECATION") state::defaultPermission.delegate()
@@ -74,7 +79,8 @@ internal class MessageCommandCreateBuilderImpl(override var name: String) : Glob
             name = name,
             nameLocalizations = state.nameLocalizations,
             type = type,
-            dmPermission = state.dmPermission,
+            dmPermission =  @Suppress("DEPRECATION") state.dmPermission,
+            contexts = state.contexts,
             defaultMemberPermissions = state.defaultMemberPermissions,
             defaultPermission = @Suppress("DEPRECATION") state.defaultPermission,
             nsfw = state.nsfw,
