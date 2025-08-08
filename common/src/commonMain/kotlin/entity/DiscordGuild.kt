@@ -377,6 +377,25 @@ public data class DiscordIntegrationAccount(
     val name: String,
 )
 
+@Serializable
+public data class DiscordMemberVerificationGuild(
+    val id: Snowflake,
+    val name: String,
+    val icon: String?,
+    val description: String?,
+    val splash: String?,
+    @SerialName("discovery_splash")
+    val discoverySplash: String?,
+    @SerialName("home_header")
+    val homeHeader: String?,
+    @SerialName("verification_level")
+    val verificationLevel: VerificationLevel,
+    val features: List<GuildFeature>,
+    val emojis: List<DiscordEmoji>,
+    val approximateMemberCount: Int,
+    val approximatePresenceCount: Int
+)
+
 
 /**
  * @param token The voice connection token.
@@ -465,3 +484,4 @@ public data class DiscordWelcomeScreen(
     val description: String?,
     @SerialName("welcome_channels") val welcomeChannels: List<DiscordWelcomeScreenChannel>,
 )
+

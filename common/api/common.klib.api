@@ -2310,6 +2310,35 @@ final class dev.kord.common.entity/DiscordEntitlement { // dev.kord.common.entit
     }
 }
 
+final class dev.kord.common.entity/DiscordGameActivity { // dev.kord.common.entity/DiscordGameActivity|null[0]
+    constructor <init>(kotlin/Int, kotlin/Int) // dev.kord.common.entity/DiscordGameActivity.<init>|<init>(kotlin.Int;kotlin.Int){}[0]
+
+    final val activityLevel // dev.kord.common.entity/DiscordGameActivity.activityLevel|{}activityLevel[0]
+        final fun <get-activityLevel>(): kotlin/Int // dev.kord.common.entity/DiscordGameActivity.activityLevel.<get-activityLevel>|<get-activityLevel>(){}[0]
+    final val activityScore // dev.kord.common.entity/DiscordGameActivity.activityScore|{}activityScore[0]
+        final fun <get-activityScore>(): kotlin/Int // dev.kord.common.entity/DiscordGameActivity.activityScore.<get-activityScore>|<get-activityScore>(){}[0]
+
+    final fun component1(): kotlin/Int // dev.kord.common.entity/DiscordGameActivity.component1|component1(){}[0]
+    final fun component2(): kotlin/Int // dev.kord.common.entity/DiscordGameActivity.component2|component2(){}[0]
+    final fun copy(kotlin/Int = ..., kotlin/Int = ...): dev.kord.common.entity/DiscordGameActivity // dev.kord.common.entity/DiscordGameActivity.copy|copy(kotlin.Int;kotlin.Int){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.common.entity/DiscordGameActivity.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.common.entity/DiscordGameActivity.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // dev.kord.common.entity/DiscordGameActivity.toString|toString(){}[0]
+
+    final object $serializer : kotlinx.serialization.internal/GeneratedSerializer<dev.kord.common.entity/DiscordGameActivity> { // dev.kord.common.entity/DiscordGameActivity.$serializer|null[0]
+        final val descriptor // dev.kord.common.entity/DiscordGameActivity.$serializer.descriptor|{}descriptor[0]
+            final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // dev.kord.common.entity/DiscordGameActivity.$serializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
+
+        final fun childSerializers(): kotlin/Array<kotlinx.serialization/KSerializer<*>> // dev.kord.common.entity/DiscordGameActivity.$serializer.childSerializers|childSerializers(){}[0]
+        final fun deserialize(kotlinx.serialization.encoding/Decoder): dev.kord.common.entity/DiscordGameActivity // dev.kord.common.entity/DiscordGameActivity.$serializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
+        final fun serialize(kotlinx.serialization.encoding/Encoder, dev.kord.common.entity/DiscordGameActivity) // dev.kord.common.entity/DiscordGameActivity.$serializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;dev.kord.common.entity.DiscordGameActivity){}[0]
+    }
+
+    final object Companion { // dev.kord.common.entity/DiscordGameActivity.Companion|null[0]
+        final fun serializer(): kotlinx.serialization/KSerializer<dev.kord.common.entity/DiscordGameActivity> // dev.kord.common.entity/DiscordGameActivity.Companion.serializer|serializer(){}[0]
+    }
+}
+
 final class dev.kord.common.entity/DiscordGuild { // dev.kord.common.entity/DiscordGuild|null[0]
     constructor <init>(dev.kord.common.entity/Snowflake, kotlin/String, kotlin/String?, dev.kord.common.entity.optional/Optional<kotlin/String?> = ..., dev.kord.common.entity.optional/Optional<kotlin/String?> = ..., dev.kord.common.entity.optional/Optional<kotlin/String?> = ..., dev.kord.common.entity.optional/OptionalBoolean = ..., dev.kord.common.entity/Snowflake, dev.kord.common.entity.optional/Optional<dev.kord.common.entity/Permissions> = ..., kotlin/String, dev.kord.common.entity/Snowflake?, kotlin.time/Duration, dev.kord.common.entity.optional/OptionalBoolean = ..., dev.kord.common.entity.optional/OptionalSnowflake? = ..., dev.kord.common.entity/VerificationLevel, dev.kord.common.entity/DefaultMessageNotificationLevel, dev.kord.common.entity/ExplicitContentFilter, kotlin.collections/List<dev.kord.common.entity/DiscordRole>, kotlin.collections/List<dev.kord.common.entity/DiscordEmoji>, kotlin.collections/List<dev.kord.common.entity/GuildFeature>, dev.kord.common.entity/MFALevel, dev.kord.common.entity/Snowflake?, dev.kord.common.entity/Snowflake?, dev.kord.common.entity/SystemChannelFlags, dev.kord.common.entity/Snowflake?, dev.kord.common.entity.optional/Optional<kotlinx.datetime/Instant> = ..., dev.kord.common.entity.optional/OptionalBoolean = ..., dev.kord.common.entity.optional/OptionalBoolean = ..., dev.kord.common.entity.optional/OptionalInt = ..., dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.common.entity/DiscordVoiceState>> = ..., dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.common.entity/DiscordGuildMember>> = ..., dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.common.entity/DiscordChannel>> = ..., dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.common.entity/DiscordChannel>> = ..., dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.common.entity/DiscordPresenceUpdate>> = ..., dev.kord.common.entity.optional/OptionalInt? = ..., dev.kord.common.entity.optional/OptionalInt = ..., kotlin/String?, kotlin/String?, kotlin/String?, dev.kord.common.entity/PremiumTier, dev.kord.common.entity.optional/OptionalInt = ..., kotlin/String, dev.kord.common.entity/Snowflake?, dev.kord.common.entity.optional/OptionalInt = ..., dev.kord.common.entity.optional/OptionalInt = ..., dev.kord.common.entity.optional/OptionalInt = ..., dev.kord.common.entity.optional/OptionalInt = ..., dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordWelcomeScreen> = ..., dev.kord.common.entity/NsfwLevel, dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.common.entity/DiscordStageInstance>> = ..., dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.common.entity/DiscordMessageSticker>> = ..., dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.common.entity/DiscordGuildScheduledEvent>> = ..., kotlin/Boolean, dev.kord.common.entity/Snowflake?) // dev.kord.common.entity/DiscordGuild.<init>|<init>(dev.kord.common.entity.Snowflake;kotlin.String;kotlin.String?;dev.kord.common.entity.optional.Optional<kotlin.String?>;dev.kord.common.entity.optional.Optional<kotlin.String?>;dev.kord.common.entity.optional.Optional<kotlin.String?>;dev.kord.common.entity.optional.OptionalBoolean;dev.kord.common.entity.Snowflake;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.Permissions>;kotlin.String;dev.kord.common.entity.Snowflake?;kotlin.time.Duration;dev.kord.common.entity.optional.OptionalBoolean;dev.kord.common.entity.optional.OptionalSnowflake?;dev.kord.common.entity.VerificationLevel;dev.kord.common.entity.DefaultMessageNotificationLevel;dev.kord.common.entity.ExplicitContentFilter;kotlin.collections.List<dev.kord.common.entity.DiscordRole>;kotlin.collections.List<dev.kord.common.entity.DiscordEmoji>;kotlin.collections.List<dev.kord.common.entity.GuildFeature>;dev.kord.common.entity.MFALevel;dev.kord.common.entity.Snowflake?;dev.kord.common.entity.Snowflake?;dev.kord.common.entity.SystemChannelFlags;dev.kord.common.entity.Snowflake?;dev.kord.common.entity.optional.Optional<kotlinx.datetime.Instant>;dev.kord.common.entity.optional.OptionalBoolean;dev.kord.common.entity.optional.OptionalBoolean;dev.kord.common.entity.optional.OptionalInt;dev.kord.common.entity.optional.Optional<kotlin.collections.List<dev.kord.common.entity.DiscordVoiceState>>;dev.kord.common.entity.optional.Optional<kotlin.collections.List<dev.kord.common.entity.DiscordGuildMember>>;dev.kord.common.entity.optional.Optional<kotlin.collections.List<dev.kord.common.entity.DiscordChannel>>;dev.kord.common.entity.optional.Optional<kotlin.collections.List<dev.kord.common.entity.DiscordChannel>>;dev.kord.common.entity.optional.Optional<kotlin.collections.List<dev.kord.common.entity.DiscordPresenceUpdate>>;dev.kord.common.entity.optional.OptionalInt?;dev.kord.common.entity.optional.OptionalInt;kotlin.String?;kotlin.String?;kotlin.String?;dev.kord.common.entity.PremiumTier;dev.kord.common.entity.optional.OptionalInt;kotlin.String;dev.kord.common.entity.Snowflake?;dev.kord.common.entity.optional.OptionalInt;dev.kord.common.entity.optional.OptionalInt;dev.kord.common.entity.optional.OptionalInt;dev.kord.common.entity.optional.OptionalInt;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.DiscordWelcomeScreen>;dev.kord.common.entity.NsfwLevel;dev.kord.common.entity.optional.Optional<kotlin.collections.List<dev.kord.common.entity.DiscordStageInstance>>;dev.kord.common.entity.optional.Optional<kotlin.collections.List<dev.kord.common.entity.DiscordMessageSticker>>;dev.kord.common.entity.optional.Optional<kotlin.collections.List<dev.kord.common.entity.DiscordGuildScheduledEvent>>;kotlin.Boolean;dev.kord.common.entity.Snowflake?){}[0]
 
@@ -2621,6 +2650,70 @@ final class dev.kord.common.entity/DiscordGuildIntegrations { // dev.kord.common
     }
 }
 
+final class dev.kord.common.entity/DiscordGuildJoinRequest { // dev.kord.common.entity/DiscordGuildJoinRequest|null[0]
+    constructor <init>(dev.kord.common.entity/Snowflake, dev.kord.common.entity/Snowflake, kotlinx.datetime/Instant, dev.kord.common.entity/GuildJoinRequestStatus, dev.kord.common.entity/Snowflake, dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.common.entity/DiscordMemberVerificationFormField>?> = ..., kotlinx.datetime/Instant?, dev.kord.common.entity.optional/OptionalSnowflake = ..., dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordUser> = ..., kotlin/String?, dev.kord.common.entity/Snowflake, dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordUser> = ..., dev.kord.common.entity/Snowflake?) // dev.kord.common.entity/DiscordGuildJoinRequest.<init>|<init>(dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake;kotlinx.datetime.Instant;dev.kord.common.entity.GuildJoinRequestStatus;dev.kord.common.entity.Snowflake;dev.kord.common.entity.optional.Optional<kotlin.collections.List<dev.kord.common.entity.DiscordMemberVerificationFormField>?>;kotlinx.datetime.Instant?;dev.kord.common.entity.optional.OptionalSnowflake;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.DiscordUser>;kotlin.String?;dev.kord.common.entity.Snowflake;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.DiscordUser>;dev.kord.common.entity.Snowflake?){}[0]
+
+    final val actionedAt // dev.kord.common.entity/DiscordGuildJoinRequest.actionedAt|{}actionedAt[0]
+        final fun <get-actionedAt>(): dev.kord.common.entity.optional/OptionalSnowflake // dev.kord.common.entity/DiscordGuildJoinRequest.actionedAt.<get-actionedAt>|<get-actionedAt>(){}[0]
+    final val actionedByUser // dev.kord.common.entity/DiscordGuildJoinRequest.actionedByUser|{}actionedByUser[0]
+        final fun <get-actionedByUser>(): dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordUser> // dev.kord.common.entity/DiscordGuildJoinRequest.actionedByUser.<get-actionedByUser>|<get-actionedByUser>(){}[0]
+    final val applicationStatus // dev.kord.common.entity/DiscordGuildJoinRequest.applicationStatus|{}applicationStatus[0]
+        final fun <get-applicationStatus>(): dev.kord.common.entity/GuildJoinRequestStatus // dev.kord.common.entity/DiscordGuildJoinRequest.applicationStatus.<get-applicationStatus>|<get-applicationStatus>(){}[0]
+    final val createdAt // dev.kord.common.entity/DiscordGuildJoinRequest.createdAt|{}createdAt[0]
+        final fun <get-createdAt>(): kotlinx.datetime/Instant // dev.kord.common.entity/DiscordGuildJoinRequest.createdAt.<get-createdAt>|<get-createdAt>(){}[0]
+    final val formResponses // dev.kord.common.entity/DiscordGuildJoinRequest.formResponses|{}formResponses[0]
+        final fun <get-formResponses>(): dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.common.entity/DiscordMemberVerificationFormField>?> // dev.kord.common.entity/DiscordGuildJoinRequest.formResponses.<get-formResponses>|<get-formResponses>(){}[0]
+    final val guildId // dev.kord.common.entity/DiscordGuildJoinRequest.guildId|{}guildId[0]
+        final fun <get-guildId>(): dev.kord.common.entity/Snowflake // dev.kord.common.entity/DiscordGuildJoinRequest.guildId.<get-guildId>|<get-guildId>(){}[0]
+    final val id // dev.kord.common.entity/DiscordGuildJoinRequest.id|{}id[0]
+        final fun <get-id>(): dev.kord.common.entity/Snowflake // dev.kord.common.entity/DiscordGuildJoinRequest.id.<get-id>|<get-id>(){}[0]
+    final val interviewChannelId // dev.kord.common.entity/DiscordGuildJoinRequest.interviewChannelId|{}interviewChannelId[0]
+        final fun <get-interviewChannelId>(): dev.kord.common.entity/Snowflake? // dev.kord.common.entity/DiscordGuildJoinRequest.interviewChannelId.<get-interviewChannelId>|<get-interviewChannelId>(){}[0]
+    final val joinRequestId // dev.kord.common.entity/DiscordGuildJoinRequest.joinRequestId|{}joinRequestId[0]
+        final fun <get-joinRequestId>(): dev.kord.common.entity/Snowflake // dev.kord.common.entity/DiscordGuildJoinRequest.joinRequestId.<get-joinRequestId>|<get-joinRequestId>(){}[0]
+    final val lastSeen // dev.kord.common.entity/DiscordGuildJoinRequest.lastSeen|{}lastSeen[0]
+        final fun <get-lastSeen>(): kotlinx.datetime/Instant? // dev.kord.common.entity/DiscordGuildJoinRequest.lastSeen.<get-lastSeen>|<get-lastSeen>(){}[0]
+    final val rejectionReason // dev.kord.common.entity/DiscordGuildJoinRequest.rejectionReason|{}rejectionReason[0]
+        final fun <get-rejectionReason>(): kotlin/String? // dev.kord.common.entity/DiscordGuildJoinRequest.rejectionReason.<get-rejectionReason>|<get-rejectionReason>(){}[0]
+    final val user // dev.kord.common.entity/DiscordGuildJoinRequest.user|{}user[0]
+        final fun <get-user>(): dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordUser> // dev.kord.common.entity/DiscordGuildJoinRequest.user.<get-user>|<get-user>(){}[0]
+    final val userId // dev.kord.common.entity/DiscordGuildJoinRequest.userId|{}userId[0]
+        final fun <get-userId>(): dev.kord.common.entity/Snowflake // dev.kord.common.entity/DiscordGuildJoinRequest.userId.<get-userId>|<get-userId>(){}[0]
+
+    final fun component1(): dev.kord.common.entity/Snowflake // dev.kord.common.entity/DiscordGuildJoinRequest.component1|component1(){}[0]
+    final fun component10(): kotlin/String? // dev.kord.common.entity/DiscordGuildJoinRequest.component10|component10(){}[0]
+    final fun component11(): dev.kord.common.entity/Snowflake // dev.kord.common.entity/DiscordGuildJoinRequest.component11|component11(){}[0]
+    final fun component12(): dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordUser> // dev.kord.common.entity/DiscordGuildJoinRequest.component12|component12(){}[0]
+    final fun component13(): dev.kord.common.entity/Snowflake? // dev.kord.common.entity/DiscordGuildJoinRequest.component13|component13(){}[0]
+    final fun component2(): dev.kord.common.entity/Snowflake // dev.kord.common.entity/DiscordGuildJoinRequest.component2|component2(){}[0]
+    final fun component3(): kotlinx.datetime/Instant // dev.kord.common.entity/DiscordGuildJoinRequest.component3|component3(){}[0]
+    final fun component4(): dev.kord.common.entity/GuildJoinRequestStatus // dev.kord.common.entity/DiscordGuildJoinRequest.component4|component4(){}[0]
+    final fun component5(): dev.kord.common.entity/Snowflake // dev.kord.common.entity/DiscordGuildJoinRequest.component5|component5(){}[0]
+    final fun component6(): dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.common.entity/DiscordMemberVerificationFormField>?> // dev.kord.common.entity/DiscordGuildJoinRequest.component6|component6(){}[0]
+    final fun component7(): kotlinx.datetime/Instant? // dev.kord.common.entity/DiscordGuildJoinRequest.component7|component7(){}[0]
+    final fun component8(): dev.kord.common.entity.optional/OptionalSnowflake // dev.kord.common.entity/DiscordGuildJoinRequest.component8|component8(){}[0]
+    final fun component9(): dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordUser> // dev.kord.common.entity/DiscordGuildJoinRequest.component9|component9(){}[0]
+    final fun copy(dev.kord.common.entity/Snowflake = ..., dev.kord.common.entity/Snowflake = ..., kotlinx.datetime/Instant = ..., dev.kord.common.entity/GuildJoinRequestStatus = ..., dev.kord.common.entity/Snowflake = ..., dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.common.entity/DiscordMemberVerificationFormField>?> = ..., kotlinx.datetime/Instant? = ..., dev.kord.common.entity.optional/OptionalSnowflake = ..., dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordUser> = ..., kotlin/String? = ..., dev.kord.common.entity/Snowflake = ..., dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordUser> = ..., dev.kord.common.entity/Snowflake? = ...): dev.kord.common.entity/DiscordGuildJoinRequest // dev.kord.common.entity/DiscordGuildJoinRequest.copy|copy(dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake;kotlinx.datetime.Instant;dev.kord.common.entity.GuildJoinRequestStatus;dev.kord.common.entity.Snowflake;dev.kord.common.entity.optional.Optional<kotlin.collections.List<dev.kord.common.entity.DiscordMemberVerificationFormField>?>;kotlinx.datetime.Instant?;dev.kord.common.entity.optional.OptionalSnowflake;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.DiscordUser>;kotlin.String?;dev.kord.common.entity.Snowflake;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.DiscordUser>;dev.kord.common.entity.Snowflake?){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.common.entity/DiscordGuildJoinRequest.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.common.entity/DiscordGuildJoinRequest.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // dev.kord.common.entity/DiscordGuildJoinRequest.toString|toString(){}[0]
+
+    final object $serializer : kotlinx.serialization.internal/GeneratedSerializer<dev.kord.common.entity/DiscordGuildJoinRequest> { // dev.kord.common.entity/DiscordGuildJoinRequest.$serializer|null[0]
+        final val descriptor // dev.kord.common.entity/DiscordGuildJoinRequest.$serializer.descriptor|{}descriptor[0]
+            final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // dev.kord.common.entity/DiscordGuildJoinRequest.$serializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
+
+        final fun childSerializers(): kotlin/Array<kotlinx.serialization/KSerializer<*>> // dev.kord.common.entity/DiscordGuildJoinRequest.$serializer.childSerializers|childSerializers(){}[0]
+        final fun deserialize(kotlinx.serialization.encoding/Decoder): dev.kord.common.entity/DiscordGuildJoinRequest // dev.kord.common.entity/DiscordGuildJoinRequest.$serializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
+        final fun serialize(kotlinx.serialization.encoding/Encoder, dev.kord.common.entity/DiscordGuildJoinRequest) // dev.kord.common.entity/DiscordGuildJoinRequest.$serializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;dev.kord.common.entity.DiscordGuildJoinRequest){}[0]
+    }
+
+    final object Companion { // dev.kord.common.entity/DiscordGuildJoinRequest.Companion|null[0]
+        final val $childSerializers // dev.kord.common.entity/DiscordGuildJoinRequest.Companion.$childSerializers|{}$childSerializers[0]
+
+        final fun serializer(): kotlinx.serialization/KSerializer<dev.kord.common.entity/DiscordGuildJoinRequest> // dev.kord.common.entity/DiscordGuildJoinRequest.Companion.serializer|serializer(){}[0]
+    }
+}
+
 final class dev.kord.common.entity/DiscordGuildMember { // dev.kord.common.entity/DiscordGuildMember|null[0]
     constructor <init>(dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordUser> = ..., dev.kord.common.entity.optional/Optional<kotlin/String?> = ..., kotlin.collections/List<dev.kord.common.entity/Snowflake>, kotlinx.datetime/Instant?, dev.kord.common.entity.optional/Optional<kotlinx.datetime/Instant?> = ..., dev.kord.common.entity.optional/OptionalBoolean = ..., dev.kord.common.entity.optional/OptionalBoolean = ..., dev.kord.common.entity/GuildMemberFlags, dev.kord.common.entity.optional/OptionalBoolean = ..., dev.kord.common.entity.optional/Optional<kotlin/String?> = ..., dev.kord.common.entity.optional/Optional<kotlinx.datetime/Instant?> = ...) // dev.kord.common.entity/DiscordGuildMember.<init>|<init>(dev.kord.common.entity.optional.Optional<dev.kord.common.entity.DiscordUser>;dev.kord.common.entity.optional.Optional<kotlin.String?>;kotlin.collections.List<dev.kord.common.entity.Snowflake>;kotlinx.datetime.Instant?;dev.kord.common.entity.optional.Optional<kotlinx.datetime.Instant?>;dev.kord.common.entity.optional.OptionalBoolean;dev.kord.common.entity.optional.OptionalBoolean;dev.kord.common.entity.GuildMemberFlags;dev.kord.common.entity.optional.OptionalBoolean;dev.kord.common.entity.optional.Optional<kotlin.String?>;dev.kord.common.entity.optional.Optional<kotlinx.datetime.Instant?>){}[0]
 
@@ -2777,6 +2870,94 @@ final class dev.kord.common.entity/DiscordGuildPreview { // dev.kord.common.enti
     }
 }
 
+final class dev.kord.common.entity/DiscordGuildProfile { // dev.kord.common.entity/DiscordGuildProfile|null[0]
+    constructor <init>(dev.kord.common.entity/Snowflake, kotlin/String, kotlin/String?, kotlin/Int, kotlin/Int, kotlin/String, kotlin/String, kotlin/String?, kotlin.collections/List<dev.kord.common.entity/Snowflake>, kotlin.collections/Map<dev.kord.common.entity/Snowflake, dev.kord.common.entity/DiscordGameActivity>, kotlin/String?, dev.kord.common.entity/GuildBadgeType, kotlin/String, kotlin/String, kotlin/String, kotlin.collections/List<dev.kord.common.entity/DiscordGuildTrait>, kotlin.collections/List<kotlin/String>, dev.kord.common.entity/GuildVisibilityLevel, kotlin/String?, kotlin/Int, dev.kord.common.entity/PremiumTier) // dev.kord.common.entity/DiscordGuildProfile.<init>|<init>(dev.kord.common.entity.Snowflake;kotlin.String;kotlin.String?;kotlin.Int;kotlin.Int;kotlin.String;kotlin.String;kotlin.String?;kotlin.collections.List<dev.kord.common.entity.Snowflake>;kotlin.collections.Map<dev.kord.common.entity.Snowflake,dev.kord.common.entity.DiscordGameActivity>;kotlin.String?;dev.kord.common.entity.GuildBadgeType;kotlin.String;kotlin.String;kotlin.String;kotlin.collections.List<dev.kord.common.entity.DiscordGuildTrait>;kotlin.collections.List<kotlin.String>;dev.kord.common.entity.GuildVisibilityLevel;kotlin.String?;kotlin.Int;dev.kord.common.entity.PremiumTier){}[0]
+
+    final val badge // dev.kord.common.entity/DiscordGuildProfile.badge|{}badge[0]
+        final fun <get-badge>(): dev.kord.common.entity/GuildBadgeType // dev.kord.common.entity/DiscordGuildProfile.badge.<get-badge>|<get-badge>(){}[0]
+    final val badgeColorPrimary // dev.kord.common.entity/DiscordGuildProfile.badgeColorPrimary|{}badgeColorPrimary[0]
+        final fun <get-badgeColorPrimary>(): kotlin/String // dev.kord.common.entity/DiscordGuildProfile.badgeColorPrimary.<get-badgeColorPrimary>|<get-badgeColorPrimary>(){}[0]
+    final val badgeColorSecondary // dev.kord.common.entity/DiscordGuildProfile.badgeColorSecondary|{}badgeColorSecondary[0]
+        final fun <get-badgeColorSecondary>(): kotlin/String // dev.kord.common.entity/DiscordGuildProfile.badgeColorSecondary.<get-badgeColorSecondary>|<get-badgeColorSecondary>(){}[0]
+    final val badgeHash // dev.kord.common.entity/DiscordGuildProfile.badgeHash|{}badgeHash[0]
+        final fun <get-badgeHash>(): kotlin/String // dev.kord.common.entity/DiscordGuildProfile.badgeHash.<get-badgeHash>|<get-badgeHash>(){}[0]
+    final val bannerHash // dev.kord.common.entity/DiscordGuildProfile.bannerHash|{}bannerHash[0]
+        final fun <get-bannerHash>(): kotlin/String? // dev.kord.common.entity/DiscordGuildProfile.bannerHash.<get-bannerHash>|<get-bannerHash>(){}[0]
+    final val brandColorPrimary // dev.kord.common.entity/DiscordGuildProfile.brandColorPrimary|{}brandColorPrimary[0]
+        final fun <get-brandColorPrimary>(): kotlin/String // dev.kord.common.entity/DiscordGuildProfile.brandColorPrimary.<get-brandColorPrimary>|<get-brandColorPrimary>(){}[0]
+    final val customBannerHash // dev.kord.common.entity/DiscordGuildProfile.customBannerHash|{}customBannerHash[0]
+        final fun <get-customBannerHash>(): kotlin/String? // dev.kord.common.entity/DiscordGuildProfile.customBannerHash.<get-customBannerHash>|<get-customBannerHash>(){}[0]
+    final val description // dev.kord.common.entity/DiscordGuildProfile.description|{}description[0]
+        final fun <get-description>(): kotlin/String // dev.kord.common.entity/DiscordGuildProfile.description.<get-description>|<get-description>(){}[0]
+    final val features // dev.kord.common.entity/DiscordGuildProfile.features|{}features[0]
+        final fun <get-features>(): kotlin.collections/List<kotlin/String> // dev.kord.common.entity/DiscordGuildProfile.features.<get-features>|<get-features>(){}[0]
+    final val gameActivity // dev.kord.common.entity/DiscordGuildProfile.gameActivity|{}gameActivity[0]
+        final fun <get-gameActivity>(): kotlin.collections/Map<dev.kord.common.entity/Snowflake, dev.kord.common.entity/DiscordGameActivity> // dev.kord.common.entity/DiscordGuildProfile.gameActivity.<get-gameActivity>|<get-gameActivity>(){}[0]
+    final val gameApplicationIds // dev.kord.common.entity/DiscordGuildProfile.gameApplicationIds|{}gameApplicationIds[0]
+        final fun <get-gameApplicationIds>(): kotlin.collections/List<dev.kord.common.entity/Snowflake> // dev.kord.common.entity/DiscordGuildProfile.gameApplicationIds.<get-gameApplicationIds>|<get-gameApplicationIds>(){}[0]
+    final val iconHash // dev.kord.common.entity/DiscordGuildProfile.iconHash|{}iconHash[0]
+        final fun <get-iconHash>(): kotlin/String? // dev.kord.common.entity/DiscordGuildProfile.iconHash.<get-iconHash>|<get-iconHash>(){}[0]
+    final val id // dev.kord.common.entity/DiscordGuildProfile.id|{}id[0]
+        final fun <get-id>(): dev.kord.common.entity/Snowflake // dev.kord.common.entity/DiscordGuildProfile.id.<get-id>|<get-id>(){}[0]
+    final val memberCount // dev.kord.common.entity/DiscordGuildProfile.memberCount|{}memberCount[0]
+        final fun <get-memberCount>(): kotlin/Int // dev.kord.common.entity/DiscordGuildProfile.memberCount.<get-memberCount>|<get-memberCount>(){}[0]
+    final val name // dev.kord.common.entity/DiscordGuildProfile.name|{}name[0]
+        final fun <get-name>(): kotlin/String // dev.kord.common.entity/DiscordGuildProfile.name.<get-name>|<get-name>(){}[0]
+    final val onlineCount // dev.kord.common.entity/DiscordGuildProfile.onlineCount|{}onlineCount[0]
+        final fun <get-onlineCount>(): kotlin/Int // dev.kord.common.entity/DiscordGuildProfile.onlineCount.<get-onlineCount>|<get-onlineCount>(){}[0]
+    final val premiumSubscriptionCount // dev.kord.common.entity/DiscordGuildProfile.premiumSubscriptionCount|{}premiumSubscriptionCount[0]
+        final fun <get-premiumSubscriptionCount>(): kotlin/Int // dev.kord.common.entity/DiscordGuildProfile.premiumSubscriptionCount.<get-premiumSubscriptionCount>|<get-premiumSubscriptionCount>(){}[0]
+    final val premiumTier // dev.kord.common.entity/DiscordGuildProfile.premiumTier|{}premiumTier[0]
+        final fun <get-premiumTier>(): dev.kord.common.entity/PremiumTier // dev.kord.common.entity/DiscordGuildProfile.premiumTier.<get-premiumTier>|<get-premiumTier>(){}[0]
+    final val tag // dev.kord.common.entity/DiscordGuildProfile.tag|{}tag[0]
+        final fun <get-tag>(): kotlin/String? // dev.kord.common.entity/DiscordGuildProfile.tag.<get-tag>|<get-tag>(){}[0]
+    final val traits // dev.kord.common.entity/DiscordGuildProfile.traits|{}traits[0]
+        final fun <get-traits>(): kotlin.collections/List<dev.kord.common.entity/DiscordGuildTrait> // dev.kord.common.entity/DiscordGuildProfile.traits.<get-traits>|<get-traits>(){}[0]
+    final val visibility // dev.kord.common.entity/DiscordGuildProfile.visibility|{}visibility[0]
+        final fun <get-visibility>(): dev.kord.common.entity/GuildVisibilityLevel // dev.kord.common.entity/DiscordGuildProfile.visibility.<get-visibility>|<get-visibility>(){}[0]
+
+    final fun component1(): dev.kord.common.entity/Snowflake // dev.kord.common.entity/DiscordGuildProfile.component1|component1(){}[0]
+    final fun component10(): kotlin.collections/Map<dev.kord.common.entity/Snowflake, dev.kord.common.entity/DiscordGameActivity> // dev.kord.common.entity/DiscordGuildProfile.component10|component10(){}[0]
+    final fun component11(): kotlin/String? // dev.kord.common.entity/DiscordGuildProfile.component11|component11(){}[0]
+    final fun component12(): dev.kord.common.entity/GuildBadgeType // dev.kord.common.entity/DiscordGuildProfile.component12|component12(){}[0]
+    final fun component13(): kotlin/String // dev.kord.common.entity/DiscordGuildProfile.component13|component13(){}[0]
+    final fun component14(): kotlin/String // dev.kord.common.entity/DiscordGuildProfile.component14|component14(){}[0]
+    final fun component15(): kotlin/String // dev.kord.common.entity/DiscordGuildProfile.component15|component15(){}[0]
+    final fun component16(): kotlin.collections/List<dev.kord.common.entity/DiscordGuildTrait> // dev.kord.common.entity/DiscordGuildProfile.component16|component16(){}[0]
+    final fun component17(): kotlin.collections/List<kotlin/String> // dev.kord.common.entity/DiscordGuildProfile.component17|component17(){}[0]
+    final fun component18(): dev.kord.common.entity/GuildVisibilityLevel // dev.kord.common.entity/DiscordGuildProfile.component18|component18(){}[0]
+    final fun component19(): kotlin/String? // dev.kord.common.entity/DiscordGuildProfile.component19|component19(){}[0]
+    final fun component2(): kotlin/String // dev.kord.common.entity/DiscordGuildProfile.component2|component2(){}[0]
+    final fun component20(): kotlin/Int // dev.kord.common.entity/DiscordGuildProfile.component20|component20(){}[0]
+    final fun component21(): dev.kord.common.entity/PremiumTier // dev.kord.common.entity/DiscordGuildProfile.component21|component21(){}[0]
+    final fun component3(): kotlin/String? // dev.kord.common.entity/DiscordGuildProfile.component3|component3(){}[0]
+    final fun component4(): kotlin/Int // dev.kord.common.entity/DiscordGuildProfile.component4|component4(){}[0]
+    final fun component5(): kotlin/Int // dev.kord.common.entity/DiscordGuildProfile.component5|component5(){}[0]
+    final fun component6(): kotlin/String // dev.kord.common.entity/DiscordGuildProfile.component6|component6(){}[0]
+    final fun component7(): kotlin/String // dev.kord.common.entity/DiscordGuildProfile.component7|component7(){}[0]
+    final fun component8(): kotlin/String? // dev.kord.common.entity/DiscordGuildProfile.component8|component8(){}[0]
+    final fun component9(): kotlin.collections/List<dev.kord.common.entity/Snowflake> // dev.kord.common.entity/DiscordGuildProfile.component9|component9(){}[0]
+    final fun copy(dev.kord.common.entity/Snowflake = ..., kotlin/String = ..., kotlin/String? = ..., kotlin/Int = ..., kotlin/Int = ..., kotlin/String = ..., kotlin/String = ..., kotlin/String? = ..., kotlin.collections/List<dev.kord.common.entity/Snowflake> = ..., kotlin.collections/Map<dev.kord.common.entity/Snowflake, dev.kord.common.entity/DiscordGameActivity> = ..., kotlin/String? = ..., dev.kord.common.entity/GuildBadgeType = ..., kotlin/String = ..., kotlin/String = ..., kotlin/String = ..., kotlin.collections/List<dev.kord.common.entity/DiscordGuildTrait> = ..., kotlin.collections/List<kotlin/String> = ..., dev.kord.common.entity/GuildVisibilityLevel = ..., kotlin/String? = ..., kotlin/Int = ..., dev.kord.common.entity/PremiumTier = ...): dev.kord.common.entity/DiscordGuildProfile // dev.kord.common.entity/DiscordGuildProfile.copy|copy(dev.kord.common.entity.Snowflake;kotlin.String;kotlin.String?;kotlin.Int;kotlin.Int;kotlin.String;kotlin.String;kotlin.String?;kotlin.collections.List<dev.kord.common.entity.Snowflake>;kotlin.collections.Map<dev.kord.common.entity.Snowflake,dev.kord.common.entity.DiscordGameActivity>;kotlin.String?;dev.kord.common.entity.GuildBadgeType;kotlin.String;kotlin.String;kotlin.String;kotlin.collections.List<dev.kord.common.entity.DiscordGuildTrait>;kotlin.collections.List<kotlin.String>;dev.kord.common.entity.GuildVisibilityLevel;kotlin.String?;kotlin.Int;dev.kord.common.entity.PremiumTier){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.common.entity/DiscordGuildProfile.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.common.entity/DiscordGuildProfile.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // dev.kord.common.entity/DiscordGuildProfile.toString|toString(){}[0]
+
+    final object $serializer : kotlinx.serialization.internal/GeneratedSerializer<dev.kord.common.entity/DiscordGuildProfile> { // dev.kord.common.entity/DiscordGuildProfile.$serializer|null[0]
+        final val descriptor // dev.kord.common.entity/DiscordGuildProfile.$serializer.descriptor|{}descriptor[0]
+            final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // dev.kord.common.entity/DiscordGuildProfile.$serializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
+
+        final fun childSerializers(): kotlin/Array<kotlinx.serialization/KSerializer<*>> // dev.kord.common.entity/DiscordGuildProfile.$serializer.childSerializers|childSerializers(){}[0]
+        final fun deserialize(kotlinx.serialization.encoding/Decoder): dev.kord.common.entity/DiscordGuildProfile // dev.kord.common.entity/DiscordGuildProfile.$serializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
+        final fun serialize(kotlinx.serialization.encoding/Encoder, dev.kord.common.entity/DiscordGuildProfile) // dev.kord.common.entity/DiscordGuildProfile.$serializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;dev.kord.common.entity.DiscordGuildProfile){}[0]
+    }
+
+    final object Companion { // dev.kord.common.entity/DiscordGuildProfile.Companion|null[0]
+        final val $childSerializers // dev.kord.common.entity/DiscordGuildProfile.Companion.$childSerializers|{}$childSerializers[0]
+
+        final fun serializer(): kotlinx.serialization/KSerializer<dev.kord.common.entity/DiscordGuildProfile> // dev.kord.common.entity/DiscordGuildProfile.Companion.serializer|serializer(){}[0]
+    }
+}
+
 final class dev.kord.common.entity/DiscordGuildRole { // dev.kord.common.entity/DiscordGuildRole|null[0]
     constructor <init>(dev.kord.common.entity/Snowflake, dev.kord.common.entity/DiscordRole) // dev.kord.common.entity/DiscordGuildRole.<init>|<init>(dev.kord.common.entity.Snowflake;dev.kord.common.entity.DiscordRole){}[0]
 
@@ -2876,6 +3057,44 @@ final class dev.kord.common.entity/DiscordGuildScheduledEvent { // dev.kord.comm
         final val $childSerializers // dev.kord.common.entity/DiscordGuildScheduledEvent.Companion.$childSerializers|{}$childSerializers[0]
 
         final fun serializer(): kotlinx.serialization/KSerializer<dev.kord.common.entity/DiscordGuildScheduledEvent> // dev.kord.common.entity/DiscordGuildScheduledEvent.Companion.serializer|serializer(){}[0]
+    }
+}
+
+final class dev.kord.common.entity/DiscordGuildTrait { // dev.kord.common.entity/DiscordGuildTrait|null[0]
+    constructor <init>(dev.kord.common.entity/Snowflake?, kotlin/String?, kotlin/Boolean, kotlin/String, kotlin/Int) // dev.kord.common.entity/DiscordGuildTrait.<init>|<init>(dev.kord.common.entity.Snowflake?;kotlin.String?;kotlin.Boolean;kotlin.String;kotlin.Int){}[0]
+
+    final val emojiAnimated // dev.kord.common.entity/DiscordGuildTrait.emojiAnimated|{}emojiAnimated[0]
+        final fun <get-emojiAnimated>(): kotlin/Boolean // dev.kord.common.entity/DiscordGuildTrait.emojiAnimated.<get-emojiAnimated>|<get-emojiAnimated>(){}[0]
+    final val emojiId // dev.kord.common.entity/DiscordGuildTrait.emojiId|{}emojiId[0]
+        final fun <get-emojiId>(): dev.kord.common.entity/Snowflake? // dev.kord.common.entity/DiscordGuildTrait.emojiId.<get-emojiId>|<get-emojiId>(){}[0]
+    final val emojiName // dev.kord.common.entity/DiscordGuildTrait.emojiName|{}emojiName[0]
+        final fun <get-emojiName>(): kotlin/String? // dev.kord.common.entity/DiscordGuildTrait.emojiName.<get-emojiName>|<get-emojiName>(){}[0]
+    final val label // dev.kord.common.entity/DiscordGuildTrait.label|{}label[0]
+        final fun <get-label>(): kotlin/String // dev.kord.common.entity/DiscordGuildTrait.label.<get-label>|<get-label>(){}[0]
+    final val position // dev.kord.common.entity/DiscordGuildTrait.position|{}position[0]
+        final fun <get-position>(): kotlin/Int // dev.kord.common.entity/DiscordGuildTrait.position.<get-position>|<get-position>(){}[0]
+
+    final fun component1(): dev.kord.common.entity/Snowflake? // dev.kord.common.entity/DiscordGuildTrait.component1|component1(){}[0]
+    final fun component2(): kotlin/String? // dev.kord.common.entity/DiscordGuildTrait.component2|component2(){}[0]
+    final fun component3(): kotlin/Boolean // dev.kord.common.entity/DiscordGuildTrait.component3|component3(){}[0]
+    final fun component4(): kotlin/String // dev.kord.common.entity/DiscordGuildTrait.component4|component4(){}[0]
+    final fun component5(): kotlin/Int // dev.kord.common.entity/DiscordGuildTrait.component5|component5(){}[0]
+    final fun copy(dev.kord.common.entity/Snowflake? = ..., kotlin/String? = ..., kotlin/Boolean = ..., kotlin/String = ..., kotlin/Int = ...): dev.kord.common.entity/DiscordGuildTrait // dev.kord.common.entity/DiscordGuildTrait.copy|copy(dev.kord.common.entity.Snowflake?;kotlin.String?;kotlin.Boolean;kotlin.String;kotlin.Int){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.common.entity/DiscordGuildTrait.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.common.entity/DiscordGuildTrait.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // dev.kord.common.entity/DiscordGuildTrait.toString|toString(){}[0]
+
+    final object $serializer : kotlinx.serialization.internal/GeneratedSerializer<dev.kord.common.entity/DiscordGuildTrait> { // dev.kord.common.entity/DiscordGuildTrait.$serializer|null[0]
+        final val descriptor // dev.kord.common.entity/DiscordGuildTrait.$serializer.descriptor|{}descriptor[0]
+            final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // dev.kord.common.entity/DiscordGuildTrait.$serializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
+
+        final fun childSerializers(): kotlin/Array<kotlinx.serialization/KSerializer<*>> // dev.kord.common.entity/DiscordGuildTrait.$serializer.childSerializers|childSerializers(){}[0]
+        final fun deserialize(kotlinx.serialization.encoding/Decoder): dev.kord.common.entity/DiscordGuildTrait // dev.kord.common.entity/DiscordGuildTrait.$serializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
+        final fun serialize(kotlinx.serialization.encoding/Encoder, dev.kord.common.entity/DiscordGuildTrait) // dev.kord.common.entity/DiscordGuildTrait.$serializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;dev.kord.common.entity.DiscordGuildTrait){}[0]
+    }
+
+    final object Companion { // dev.kord.common.entity/DiscordGuildTrait.Companion|null[0]
+        final fun serializer(): kotlinx.serialization/KSerializer<dev.kord.common.entity/DiscordGuildTrait> // dev.kord.common.entity/DiscordGuildTrait.Companion.serializer|serializer(){}[0]
     }
 }
 
@@ -3330,6 +3549,159 @@ final class dev.kord.common.entity/DiscordInviteWithMetadata : dev.kord.common.e
         final val $childSerializers // dev.kord.common.entity/DiscordInviteWithMetadata.Companion.$childSerializers|{}$childSerializers[0]
 
         final fun serializer(): kotlinx.serialization/KSerializer<dev.kord.common.entity/DiscordInviteWithMetadata> // dev.kord.common.entity/DiscordInviteWithMetadata.Companion.serializer|serializer(){}[0]
+    }
+}
+
+final class dev.kord.common.entity/DiscordMemberVerification { // dev.kord.common.entity/DiscordMemberVerification|null[0]
+    constructor <init>(kotlinx.datetime/Instant?, kotlin.collections/List<dev.kord.common.entity/DiscordMemberVerificationFormField>, kotlin/String?, dev.kord.common.entity/DiscordMemberVerificationGuild?, dev.kord.common.entity/DiscordGuildProfile) // dev.kord.common.entity/DiscordMemberVerification.<init>|<init>(kotlinx.datetime.Instant?;kotlin.collections.List<dev.kord.common.entity.DiscordMemberVerificationFormField>;kotlin.String?;dev.kord.common.entity.DiscordMemberVerificationGuild?;dev.kord.common.entity.DiscordGuildProfile){}[0]
+
+    final val description // dev.kord.common.entity/DiscordMemberVerification.description|{}description[0]
+        final fun <get-description>(): kotlin/String? // dev.kord.common.entity/DiscordMemberVerification.description.<get-description>|<get-description>(){}[0]
+    final val formFields // dev.kord.common.entity/DiscordMemberVerification.formFields|{}formFields[0]
+        final fun <get-formFields>(): kotlin.collections/List<dev.kord.common.entity/DiscordMemberVerificationFormField> // dev.kord.common.entity/DiscordMemberVerification.formFields.<get-formFields>|<get-formFields>(){}[0]
+    final val guild // dev.kord.common.entity/DiscordMemberVerification.guild|{}guild[0]
+        final fun <get-guild>(): dev.kord.common.entity/DiscordMemberVerificationGuild? // dev.kord.common.entity/DiscordMemberVerification.guild.<get-guild>|<get-guild>(){}[0]
+    final val profile // dev.kord.common.entity/DiscordMemberVerification.profile|{}profile[0]
+        final fun <get-profile>(): dev.kord.common.entity/DiscordGuildProfile // dev.kord.common.entity/DiscordMemberVerification.profile.<get-profile>|<get-profile>(){}[0]
+    final val version // dev.kord.common.entity/DiscordMemberVerification.version|{}version[0]
+        final fun <get-version>(): kotlinx.datetime/Instant? // dev.kord.common.entity/DiscordMemberVerification.version.<get-version>|<get-version>(){}[0]
+
+    final fun component1(): kotlinx.datetime/Instant? // dev.kord.common.entity/DiscordMemberVerification.component1|component1(){}[0]
+    final fun component2(): kotlin.collections/List<dev.kord.common.entity/DiscordMemberVerificationFormField> // dev.kord.common.entity/DiscordMemberVerification.component2|component2(){}[0]
+    final fun component3(): kotlin/String? // dev.kord.common.entity/DiscordMemberVerification.component3|component3(){}[0]
+    final fun component4(): dev.kord.common.entity/DiscordMemberVerificationGuild? // dev.kord.common.entity/DiscordMemberVerification.component4|component4(){}[0]
+    final fun component5(): dev.kord.common.entity/DiscordGuildProfile // dev.kord.common.entity/DiscordMemberVerification.component5|component5(){}[0]
+    final fun copy(kotlinx.datetime/Instant? = ..., kotlin.collections/List<dev.kord.common.entity/DiscordMemberVerificationFormField> = ..., kotlin/String? = ..., dev.kord.common.entity/DiscordMemberVerificationGuild? = ..., dev.kord.common.entity/DiscordGuildProfile = ...): dev.kord.common.entity/DiscordMemberVerification // dev.kord.common.entity/DiscordMemberVerification.copy|copy(kotlinx.datetime.Instant?;kotlin.collections.List<dev.kord.common.entity.DiscordMemberVerificationFormField>;kotlin.String?;dev.kord.common.entity.DiscordMemberVerificationGuild?;dev.kord.common.entity.DiscordGuildProfile){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.common.entity/DiscordMemberVerification.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.common.entity/DiscordMemberVerification.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // dev.kord.common.entity/DiscordMemberVerification.toString|toString(){}[0]
+
+    final object $serializer : kotlinx.serialization.internal/GeneratedSerializer<dev.kord.common.entity/DiscordMemberVerification> { // dev.kord.common.entity/DiscordMemberVerification.$serializer|null[0]
+        final val descriptor // dev.kord.common.entity/DiscordMemberVerification.$serializer.descriptor|{}descriptor[0]
+            final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // dev.kord.common.entity/DiscordMemberVerification.$serializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
+
+        final fun childSerializers(): kotlin/Array<kotlinx.serialization/KSerializer<*>> // dev.kord.common.entity/DiscordMemberVerification.$serializer.childSerializers|childSerializers(){}[0]
+        final fun deserialize(kotlinx.serialization.encoding/Decoder): dev.kord.common.entity/DiscordMemberVerification // dev.kord.common.entity/DiscordMemberVerification.$serializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
+        final fun serialize(kotlinx.serialization.encoding/Encoder, dev.kord.common.entity/DiscordMemberVerification) // dev.kord.common.entity/DiscordMemberVerification.$serializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;dev.kord.common.entity.DiscordMemberVerification){}[0]
+    }
+
+    final object Companion { // dev.kord.common.entity/DiscordMemberVerification.Companion|null[0]
+        final val $childSerializers // dev.kord.common.entity/DiscordMemberVerification.Companion.$childSerializers|{}$childSerializers[0]
+
+        final fun serializer(): kotlinx.serialization/KSerializer<dev.kord.common.entity/DiscordMemberVerification> // dev.kord.common.entity/DiscordMemberVerification.Companion.serializer|serializer(){}[0]
+    }
+}
+
+final class dev.kord.common.entity/DiscordMemberVerificationFormField { // dev.kord.common.entity/DiscordMemberVerificationFormField|null[0]
+    constructor <init>(dev.kord.common.entity/MemberVerificationFormFieldType, kotlin/String?, dev.kord.common.entity.optional/Optional<kotlin.collections/List<kotlin/String>> = ..., dev.kord.common.entity.optional/Optional<kotlin.collections/List<kotlin/String>?> = ..., dev.kord.common.entity.optional/Optional<kotlin/String>? = ..., kotlin/Boolean, kotlin/String?, kotlin.collections/List<kotlin/String>?, dev.kord.common.entity.optional/Optional<kotlin/String>? = ...) // dev.kord.common.entity/DiscordMemberVerificationFormField.<init>|<init>(dev.kord.common.entity.MemberVerificationFormFieldType;kotlin.String?;dev.kord.common.entity.optional.Optional<kotlin.collections.List<kotlin.String>>;dev.kord.common.entity.optional.Optional<kotlin.collections.List<kotlin.String>?>;dev.kord.common.entity.optional.Optional<kotlin.String>?;kotlin.Boolean;kotlin.String?;kotlin.collections.List<kotlin.String>?;dev.kord.common.entity.optional.Optional<kotlin.String>?){}[0]
+
+    final val automations // dev.kord.common.entity/DiscordMemberVerificationFormField.automations|{}automations[0]
+        final fun <get-automations>(): kotlin.collections/List<kotlin/String>? // dev.kord.common.entity/DiscordMemberVerificationFormField.automations.<get-automations>|<get-automations>(){}[0]
+    final val choices // dev.kord.common.entity/DiscordMemberVerificationFormField.choices|{}choices[0]
+        final fun <get-choices>(): dev.kord.common.entity.optional/Optional<kotlin.collections/List<kotlin/String>> // dev.kord.common.entity/DiscordMemberVerificationFormField.choices.<get-choices>|<get-choices>(){}[0]
+    final val description // dev.kord.common.entity/DiscordMemberVerificationFormField.description|{}description[0]
+        final fun <get-description>(): kotlin/String? // dev.kord.common.entity/DiscordMemberVerificationFormField.description.<get-description>|<get-description>(){}[0]
+    final val fieldType // dev.kord.common.entity/DiscordMemberVerificationFormField.fieldType|{}fieldType[0]
+        final fun <get-fieldType>(): dev.kord.common.entity/MemberVerificationFormFieldType // dev.kord.common.entity/DiscordMemberVerificationFormField.fieldType.<get-fieldType>|<get-fieldType>(){}[0]
+    final val label // dev.kord.common.entity/DiscordMemberVerificationFormField.label|{}label[0]
+        final fun <get-label>(): kotlin/String? // dev.kord.common.entity/DiscordMemberVerificationFormField.label.<get-label>|<get-label>(){}[0]
+    final val placeholder // dev.kord.common.entity/DiscordMemberVerificationFormField.placeholder|{}placeholder[0]
+        final fun <get-placeholder>(): dev.kord.common.entity.optional/Optional<kotlin/String>? // dev.kord.common.entity/DiscordMemberVerificationFormField.placeholder.<get-placeholder>|<get-placeholder>(){}[0]
+    final val required // dev.kord.common.entity/DiscordMemberVerificationFormField.required|{}required[0]
+        final fun <get-required>(): kotlin/Boolean // dev.kord.common.entity/DiscordMemberVerificationFormField.required.<get-required>|<get-required>(){}[0]
+    final val response // dev.kord.common.entity/DiscordMemberVerificationFormField.response|{}response[0]
+        final fun <get-response>(): dev.kord.common.entity.optional/Optional<kotlin/String>? // dev.kord.common.entity/DiscordMemberVerificationFormField.response.<get-response>|<get-response>(){}[0]
+    final val values // dev.kord.common.entity/DiscordMemberVerificationFormField.values|{}values[0]
+        final fun <get-values>(): dev.kord.common.entity.optional/Optional<kotlin.collections/List<kotlin/String>?> // dev.kord.common.entity/DiscordMemberVerificationFormField.values.<get-values>|<get-values>(){}[0]
+
+    final fun component1(): dev.kord.common.entity/MemberVerificationFormFieldType // dev.kord.common.entity/DiscordMemberVerificationFormField.component1|component1(){}[0]
+    final fun component2(): kotlin/String? // dev.kord.common.entity/DiscordMemberVerificationFormField.component2|component2(){}[0]
+    final fun component3(): dev.kord.common.entity.optional/Optional<kotlin.collections/List<kotlin/String>> // dev.kord.common.entity/DiscordMemberVerificationFormField.component3|component3(){}[0]
+    final fun component4(): dev.kord.common.entity.optional/Optional<kotlin.collections/List<kotlin/String>?> // dev.kord.common.entity/DiscordMemberVerificationFormField.component4|component4(){}[0]
+    final fun component5(): dev.kord.common.entity.optional/Optional<kotlin/String>? // dev.kord.common.entity/DiscordMemberVerificationFormField.component5|component5(){}[0]
+    final fun component6(): kotlin/Boolean // dev.kord.common.entity/DiscordMemberVerificationFormField.component6|component6(){}[0]
+    final fun component7(): kotlin/String? // dev.kord.common.entity/DiscordMemberVerificationFormField.component7|component7(){}[0]
+    final fun component8(): kotlin.collections/List<kotlin/String>? // dev.kord.common.entity/DiscordMemberVerificationFormField.component8|component8(){}[0]
+    final fun component9(): dev.kord.common.entity.optional/Optional<kotlin/String>? // dev.kord.common.entity/DiscordMemberVerificationFormField.component9|component9(){}[0]
+    final fun copy(dev.kord.common.entity/MemberVerificationFormFieldType = ..., kotlin/String? = ..., dev.kord.common.entity.optional/Optional<kotlin.collections/List<kotlin/String>> = ..., dev.kord.common.entity.optional/Optional<kotlin.collections/List<kotlin/String>?> = ..., dev.kord.common.entity.optional/Optional<kotlin/String>? = ..., kotlin/Boolean = ..., kotlin/String? = ..., kotlin.collections/List<kotlin/String>? = ..., dev.kord.common.entity.optional/Optional<kotlin/String>? = ...): dev.kord.common.entity/DiscordMemberVerificationFormField // dev.kord.common.entity/DiscordMemberVerificationFormField.copy|copy(dev.kord.common.entity.MemberVerificationFormFieldType;kotlin.String?;dev.kord.common.entity.optional.Optional<kotlin.collections.List<kotlin.String>>;dev.kord.common.entity.optional.Optional<kotlin.collections.List<kotlin.String>?>;dev.kord.common.entity.optional.Optional<kotlin.String>?;kotlin.Boolean;kotlin.String?;kotlin.collections.List<kotlin.String>?;dev.kord.common.entity.optional.Optional<kotlin.String>?){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.common.entity/DiscordMemberVerificationFormField.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.common.entity/DiscordMemberVerificationFormField.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // dev.kord.common.entity/DiscordMemberVerificationFormField.toString|toString(){}[0]
+
+    final object $serializer : kotlinx.serialization.internal/GeneratedSerializer<dev.kord.common.entity/DiscordMemberVerificationFormField> { // dev.kord.common.entity/DiscordMemberVerificationFormField.$serializer|null[0]
+        final val descriptor // dev.kord.common.entity/DiscordMemberVerificationFormField.$serializer.descriptor|{}descriptor[0]
+            final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // dev.kord.common.entity/DiscordMemberVerificationFormField.$serializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
+
+        final fun childSerializers(): kotlin/Array<kotlinx.serialization/KSerializer<*>> // dev.kord.common.entity/DiscordMemberVerificationFormField.$serializer.childSerializers|childSerializers(){}[0]
+        final fun deserialize(kotlinx.serialization.encoding/Decoder): dev.kord.common.entity/DiscordMemberVerificationFormField // dev.kord.common.entity/DiscordMemberVerificationFormField.$serializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
+        final fun serialize(kotlinx.serialization.encoding/Encoder, dev.kord.common.entity/DiscordMemberVerificationFormField) // dev.kord.common.entity/DiscordMemberVerificationFormField.$serializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;dev.kord.common.entity.DiscordMemberVerificationFormField){}[0]
+    }
+
+    final object Companion { // dev.kord.common.entity/DiscordMemberVerificationFormField.Companion|null[0]
+        final val $childSerializers // dev.kord.common.entity/DiscordMemberVerificationFormField.Companion.$childSerializers|{}$childSerializers[0]
+
+        final fun serializer(): kotlinx.serialization/KSerializer<dev.kord.common.entity/DiscordMemberVerificationFormField> // dev.kord.common.entity/DiscordMemberVerificationFormField.Companion.serializer|serializer(){}[0]
+    }
+}
+
+final class dev.kord.common.entity/DiscordMemberVerificationGuild { // dev.kord.common.entity/DiscordMemberVerificationGuild|null[0]
+    constructor <init>(dev.kord.common.entity/Snowflake, kotlin/String, kotlin/String?, kotlin/String?, kotlin/String?, kotlin/String?, kotlin/String?, dev.kord.common.entity/VerificationLevel, kotlin.collections/List<dev.kord.common.entity/GuildFeature>, kotlin.collections/List<dev.kord.common.entity/DiscordEmoji>, kotlin/Int, kotlin/Int) // dev.kord.common.entity/DiscordMemberVerificationGuild.<init>|<init>(dev.kord.common.entity.Snowflake;kotlin.String;kotlin.String?;kotlin.String?;kotlin.String?;kotlin.String?;kotlin.String?;dev.kord.common.entity.VerificationLevel;kotlin.collections.List<dev.kord.common.entity.GuildFeature>;kotlin.collections.List<dev.kord.common.entity.DiscordEmoji>;kotlin.Int;kotlin.Int){}[0]
+
+    final val approximateMemberCount // dev.kord.common.entity/DiscordMemberVerificationGuild.approximateMemberCount|{}approximateMemberCount[0]
+        final fun <get-approximateMemberCount>(): kotlin/Int // dev.kord.common.entity/DiscordMemberVerificationGuild.approximateMemberCount.<get-approximateMemberCount>|<get-approximateMemberCount>(){}[0]
+    final val approximatePresenceCount // dev.kord.common.entity/DiscordMemberVerificationGuild.approximatePresenceCount|{}approximatePresenceCount[0]
+        final fun <get-approximatePresenceCount>(): kotlin/Int // dev.kord.common.entity/DiscordMemberVerificationGuild.approximatePresenceCount.<get-approximatePresenceCount>|<get-approximatePresenceCount>(){}[0]
+    final val description // dev.kord.common.entity/DiscordMemberVerificationGuild.description|{}description[0]
+        final fun <get-description>(): kotlin/String? // dev.kord.common.entity/DiscordMemberVerificationGuild.description.<get-description>|<get-description>(){}[0]
+    final val discoverySplash // dev.kord.common.entity/DiscordMemberVerificationGuild.discoverySplash|{}discoverySplash[0]
+        final fun <get-discoverySplash>(): kotlin/String? // dev.kord.common.entity/DiscordMemberVerificationGuild.discoverySplash.<get-discoverySplash>|<get-discoverySplash>(){}[0]
+    final val emojis // dev.kord.common.entity/DiscordMemberVerificationGuild.emojis|{}emojis[0]
+        final fun <get-emojis>(): kotlin.collections/List<dev.kord.common.entity/DiscordEmoji> // dev.kord.common.entity/DiscordMemberVerificationGuild.emojis.<get-emojis>|<get-emojis>(){}[0]
+    final val features // dev.kord.common.entity/DiscordMemberVerificationGuild.features|{}features[0]
+        final fun <get-features>(): kotlin.collections/List<dev.kord.common.entity/GuildFeature> // dev.kord.common.entity/DiscordMemberVerificationGuild.features.<get-features>|<get-features>(){}[0]
+    final val homeHeader // dev.kord.common.entity/DiscordMemberVerificationGuild.homeHeader|{}homeHeader[0]
+        final fun <get-homeHeader>(): kotlin/String? // dev.kord.common.entity/DiscordMemberVerificationGuild.homeHeader.<get-homeHeader>|<get-homeHeader>(){}[0]
+    final val icon // dev.kord.common.entity/DiscordMemberVerificationGuild.icon|{}icon[0]
+        final fun <get-icon>(): kotlin/String? // dev.kord.common.entity/DiscordMemberVerificationGuild.icon.<get-icon>|<get-icon>(){}[0]
+    final val id // dev.kord.common.entity/DiscordMemberVerificationGuild.id|{}id[0]
+        final fun <get-id>(): dev.kord.common.entity/Snowflake // dev.kord.common.entity/DiscordMemberVerificationGuild.id.<get-id>|<get-id>(){}[0]
+    final val name // dev.kord.common.entity/DiscordMemberVerificationGuild.name|{}name[0]
+        final fun <get-name>(): kotlin/String // dev.kord.common.entity/DiscordMemberVerificationGuild.name.<get-name>|<get-name>(){}[0]
+    final val splash // dev.kord.common.entity/DiscordMemberVerificationGuild.splash|{}splash[0]
+        final fun <get-splash>(): kotlin/String? // dev.kord.common.entity/DiscordMemberVerificationGuild.splash.<get-splash>|<get-splash>(){}[0]
+    final val verificationLevel // dev.kord.common.entity/DiscordMemberVerificationGuild.verificationLevel|{}verificationLevel[0]
+        final fun <get-verificationLevel>(): dev.kord.common.entity/VerificationLevel // dev.kord.common.entity/DiscordMemberVerificationGuild.verificationLevel.<get-verificationLevel>|<get-verificationLevel>(){}[0]
+
+    final fun component1(): dev.kord.common.entity/Snowflake // dev.kord.common.entity/DiscordMemberVerificationGuild.component1|component1(){}[0]
+    final fun component10(): kotlin.collections/List<dev.kord.common.entity/DiscordEmoji> // dev.kord.common.entity/DiscordMemberVerificationGuild.component10|component10(){}[0]
+    final fun component11(): kotlin/Int // dev.kord.common.entity/DiscordMemberVerificationGuild.component11|component11(){}[0]
+    final fun component12(): kotlin/Int // dev.kord.common.entity/DiscordMemberVerificationGuild.component12|component12(){}[0]
+    final fun component2(): kotlin/String // dev.kord.common.entity/DiscordMemberVerificationGuild.component2|component2(){}[0]
+    final fun component3(): kotlin/String? // dev.kord.common.entity/DiscordMemberVerificationGuild.component3|component3(){}[0]
+    final fun component4(): kotlin/String? // dev.kord.common.entity/DiscordMemberVerificationGuild.component4|component4(){}[0]
+    final fun component5(): kotlin/String? // dev.kord.common.entity/DiscordMemberVerificationGuild.component5|component5(){}[0]
+    final fun component6(): kotlin/String? // dev.kord.common.entity/DiscordMemberVerificationGuild.component6|component6(){}[0]
+    final fun component7(): kotlin/String? // dev.kord.common.entity/DiscordMemberVerificationGuild.component7|component7(){}[0]
+    final fun component8(): dev.kord.common.entity/VerificationLevel // dev.kord.common.entity/DiscordMemberVerificationGuild.component8|component8(){}[0]
+    final fun component9(): kotlin.collections/List<dev.kord.common.entity/GuildFeature> // dev.kord.common.entity/DiscordMemberVerificationGuild.component9|component9(){}[0]
+    final fun copy(dev.kord.common.entity/Snowflake = ..., kotlin/String = ..., kotlin/String? = ..., kotlin/String? = ..., kotlin/String? = ..., kotlin/String? = ..., kotlin/String? = ..., dev.kord.common.entity/VerificationLevel = ..., kotlin.collections/List<dev.kord.common.entity/GuildFeature> = ..., kotlin.collections/List<dev.kord.common.entity/DiscordEmoji> = ..., kotlin/Int = ..., kotlin/Int = ...): dev.kord.common.entity/DiscordMemberVerificationGuild // dev.kord.common.entity/DiscordMemberVerificationGuild.copy|copy(dev.kord.common.entity.Snowflake;kotlin.String;kotlin.String?;kotlin.String?;kotlin.String?;kotlin.String?;kotlin.String?;dev.kord.common.entity.VerificationLevel;kotlin.collections.List<dev.kord.common.entity.GuildFeature>;kotlin.collections.List<dev.kord.common.entity.DiscordEmoji>;kotlin.Int;kotlin.Int){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.common.entity/DiscordMemberVerificationGuild.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.common.entity/DiscordMemberVerificationGuild.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // dev.kord.common.entity/DiscordMemberVerificationGuild.toString|toString(){}[0]
+
+    final object $serializer : kotlinx.serialization.internal/GeneratedSerializer<dev.kord.common.entity/DiscordMemberVerificationGuild> { // dev.kord.common.entity/DiscordMemberVerificationGuild.$serializer|null[0]
+        final val descriptor // dev.kord.common.entity/DiscordMemberVerificationGuild.$serializer.descriptor|{}descriptor[0]
+            final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // dev.kord.common.entity/DiscordMemberVerificationGuild.$serializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
+
+        final fun childSerializers(): kotlin/Array<kotlinx.serialization/KSerializer<*>> // dev.kord.common.entity/DiscordMemberVerificationGuild.$serializer.childSerializers|childSerializers(){}[0]
+        final fun deserialize(kotlinx.serialization.encoding/Decoder): dev.kord.common.entity/DiscordMemberVerificationGuild // dev.kord.common.entity/DiscordMemberVerificationGuild.$serializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
+        final fun serialize(kotlinx.serialization.encoding/Encoder, dev.kord.common.entity/DiscordMemberVerificationGuild) // dev.kord.common.entity/DiscordMemberVerificationGuild.$serializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;dev.kord.common.entity.DiscordMemberVerificationGuild){}[0]
+    }
+
+    final object Companion { // dev.kord.common.entity/DiscordMemberVerificationGuild.Companion|null[0]
+        final val $childSerializers // dev.kord.common.entity/DiscordMemberVerificationGuild.Companion.$childSerializers|{}$childSerializers[0]
+
+        final fun serializer(): kotlinx.serialization/KSerializer<dev.kord.common.entity/DiscordMemberVerificationGuild> // dev.kord.common.entity/DiscordMemberVerificationGuild.Companion.serializer|serializer(){}[0]
     }
 }
 
@@ -8072,6 +8444,67 @@ sealed class dev.kord.common.entity/ForumLayoutType { // dev.kord.common.entity/
     final object NotSet : dev.kord.common.entity/ForumLayoutType // dev.kord.common.entity/ForumLayoutType.NotSet|null[0]
 }
 
+sealed class dev.kord.common.entity/GuildBadgeType { // dev.kord.common.entity/GuildBadgeType|null[0]
+    final val value // dev.kord.common.entity/GuildBadgeType.value|{}value[0]
+        final fun <get-value>(): kotlin/Int // dev.kord.common.entity/GuildBadgeType.value.<get-value>|<get-value>(){}[0]
+
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.common.entity/GuildBadgeType.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.common.entity/GuildBadgeType.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // dev.kord.common.entity/GuildBadgeType.toString|toString(){}[0]
+
+    final class Unknown : dev.kord.common.entity/GuildBadgeType // dev.kord.common.entity/GuildBadgeType.Unknown|null[0]
+
+    final object Companion { // dev.kord.common.entity/GuildBadgeType.Companion|null[0]
+        final val entries // dev.kord.common.entity/GuildBadgeType.Companion.entries|{}entries[0]
+            final fun <get-entries>(): kotlin.collections/List<dev.kord.common.entity/GuildBadgeType> // dev.kord.common.entity/GuildBadgeType.Companion.entries.<get-entries>|<get-entries>(){}[0]
+
+        final fun from(kotlin/Int): dev.kord.common.entity/GuildBadgeType // dev.kord.common.entity/GuildBadgeType.Companion.from|from(kotlin.Int){}[0]
+        final fun serializer(): kotlinx.serialization/KSerializer<dev.kord.common.entity/GuildBadgeType> // dev.kord.common.entity/GuildBadgeType.Companion.serializer|serializer(){}[0]
+    }
+
+    final object Compass : dev.kord.common.entity/GuildBadgeType // dev.kord.common.entity/GuildBadgeType.Compass|null[0]
+
+    final object Crosshairs : dev.kord.common.entity/GuildBadgeType // dev.kord.common.entity/GuildBadgeType.Crosshairs|null[0]
+
+    final object Fire : dev.kord.common.entity/GuildBadgeType // dev.kord.common.entity/GuildBadgeType.Fire|null[0]
+
+    final object Flower : dev.kord.common.entity/GuildBadgeType // dev.kord.common.entity/GuildBadgeType.Flower|null[0]
+
+    final object Force : dev.kord.common.entity/GuildBadgeType // dev.kord.common.entity/GuildBadgeType.Force|null[0]
+
+    final object Gem : dev.kord.common.entity/GuildBadgeType // dev.kord.common.entity/GuildBadgeType.Gem|null[0]
+
+    final object Heart : dev.kord.common.entity/GuildBadgeType // dev.kord.common.entity/GuildBadgeType.Heart|null[0]
+
+    final object Lava : dev.kord.common.entity/GuildBadgeType // dev.kord.common.entity/GuildBadgeType.Lava|null[0]
+
+    final object Leaf : dev.kord.common.entity/GuildBadgeType // dev.kord.common.entity/GuildBadgeType.Leaf|null[0]
+
+    final object Lightning : dev.kord.common.entity/GuildBadgeType // dev.kord.common.entity/GuildBadgeType.Lightning|null[0]
+
+    final object Moon : dev.kord.common.entity/GuildBadgeType // dev.kord.common.entity/GuildBadgeType.Moon|null[0]
+
+    final object Psychic : dev.kord.common.entity/GuildBadgeType // dev.kord.common.entity/GuildBadgeType.Psychic|null[0]
+
+    final object Skull : dev.kord.common.entity/GuildBadgeType // dev.kord.common.entity/GuildBadgeType.Skull|null[0]
+
+    final object Smoke : dev.kord.common.entity/GuildBadgeType // dev.kord.common.entity/GuildBadgeType.Smoke|null[0]
+
+    final object Snow : dev.kord.common.entity/GuildBadgeType // dev.kord.common.entity/GuildBadgeType.Snow|null[0]
+
+    final object Sound : dev.kord.common.entity/GuildBadgeType // dev.kord.common.entity/GuildBadgeType.Sound|null[0]
+
+    final object Sun : dev.kord.common.entity/GuildBadgeType // dev.kord.common.entity/GuildBadgeType.Sun|null[0]
+
+    final object Sword : dev.kord.common.entity/GuildBadgeType // dev.kord.common.entity/GuildBadgeType.Sword|null[0]
+
+    final object Toadstool : dev.kord.common.entity/GuildBadgeType // dev.kord.common.entity/GuildBadgeType.Toadstool|null[0]
+
+    final object WaterDrop : dev.kord.common.entity/GuildBadgeType // dev.kord.common.entity/GuildBadgeType.WaterDrop|null[0]
+
+    final object Wind : dev.kord.common.entity/GuildBadgeType // dev.kord.common.entity/GuildBadgeType.Wind|null[0]
+}
+
 sealed class dev.kord.common.entity/GuildFeature { // dev.kord.common.entity/GuildFeature|null[0]
     final val value // dev.kord.common.entity/GuildFeature.value|{}value[0]
         final fun <get-value>(): kotlin/String // dev.kord.common.entity/GuildFeature.value.<get-value>|<get-value>(){}[0]
@@ -8143,6 +8576,33 @@ sealed class dev.kord.common.entity/GuildFeature { // dev.kord.common.entity/Gui
     final object Verified : dev.kord.common.entity/GuildFeature // dev.kord.common.entity/GuildFeature.Verified|null[0]
 
     final object WelcomeScreenEnabled : dev.kord.common.entity/GuildFeature // dev.kord.common.entity/GuildFeature.WelcomeScreenEnabled|null[0]
+}
+
+sealed class dev.kord.common.entity/GuildJoinRequestStatus { // dev.kord.common.entity/GuildJoinRequestStatus|null[0]
+    final val value // dev.kord.common.entity/GuildJoinRequestStatus.value|{}value[0]
+        final fun <get-value>(): kotlin/String // dev.kord.common.entity/GuildJoinRequestStatus.value.<get-value>|<get-value>(){}[0]
+
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.common.entity/GuildJoinRequestStatus.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.common.entity/GuildJoinRequestStatus.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // dev.kord.common.entity/GuildJoinRequestStatus.toString|toString(){}[0]
+
+    final class Unknown : dev.kord.common.entity/GuildJoinRequestStatus // dev.kord.common.entity/GuildJoinRequestStatus.Unknown|null[0]
+
+    final object Approved : dev.kord.common.entity/GuildJoinRequestStatus // dev.kord.common.entity/GuildJoinRequestStatus.Approved|null[0]
+
+    final object Companion { // dev.kord.common.entity/GuildJoinRequestStatus.Companion|null[0]
+        final val entries // dev.kord.common.entity/GuildJoinRequestStatus.Companion.entries|{}entries[0]
+            final fun <get-entries>(): kotlin.collections/List<dev.kord.common.entity/GuildJoinRequestStatus> // dev.kord.common.entity/GuildJoinRequestStatus.Companion.entries.<get-entries>|<get-entries>(){}[0]
+
+        final fun from(kotlin/String): dev.kord.common.entity/GuildJoinRequestStatus // dev.kord.common.entity/GuildJoinRequestStatus.Companion.from|from(kotlin.String){}[0]
+        final fun serializer(): kotlinx.serialization/KSerializer<dev.kord.common.entity/GuildJoinRequestStatus> // dev.kord.common.entity/GuildJoinRequestStatus.Companion.serializer|serializer(){}[0]
+    }
+
+    final object Rejected : dev.kord.common.entity/GuildJoinRequestStatus // dev.kord.common.entity/GuildJoinRequestStatus.Rejected|null[0]
+
+    final object Started : dev.kord.common.entity/GuildJoinRequestStatus // dev.kord.common.entity/GuildJoinRequestStatus.Started|null[0]
+
+    final object Submitted : dev.kord.common.entity/GuildJoinRequestStatus // dev.kord.common.entity/GuildJoinRequestStatus.Submitted|null[0]
 }
 
 sealed class dev.kord.common.entity/GuildMemberFlag { // dev.kord.common.entity/GuildMemberFlag|null[0]
@@ -8221,6 +8681,31 @@ sealed class dev.kord.common.entity/GuildScheduledEventStatus { // dev.kord.comm
     final object Completed : dev.kord.common.entity/GuildScheduledEventStatus // dev.kord.common.entity/GuildScheduledEventStatus.Completed|null[0]
 
     final object Scheduled : dev.kord.common.entity/GuildScheduledEventStatus // dev.kord.common.entity/GuildScheduledEventStatus.Scheduled|null[0]
+}
+
+sealed class dev.kord.common.entity/GuildVisibilityLevel { // dev.kord.common.entity/GuildVisibilityLevel|null[0]
+    final val value // dev.kord.common.entity/GuildVisibilityLevel.value|{}value[0]
+        final fun <get-value>(): kotlin/Int // dev.kord.common.entity/GuildVisibilityLevel.value.<get-value>|<get-value>(){}[0]
+
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.common.entity/GuildVisibilityLevel.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.common.entity/GuildVisibilityLevel.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // dev.kord.common.entity/GuildVisibilityLevel.toString|toString(){}[0]
+
+    final class Unknown : dev.kord.common.entity/GuildVisibilityLevel // dev.kord.common.entity/GuildVisibilityLevel.Unknown|null[0]
+
+    final object Companion { // dev.kord.common.entity/GuildVisibilityLevel.Companion|null[0]
+        final val entries // dev.kord.common.entity/GuildVisibilityLevel.Companion.entries|{}entries[0]
+            final fun <get-entries>(): kotlin.collections/List<dev.kord.common.entity/GuildVisibilityLevel> // dev.kord.common.entity/GuildVisibilityLevel.Companion.entries.<get-entries>|<get-entries>(){}[0]
+
+        final fun from(kotlin/Int): dev.kord.common.entity/GuildVisibilityLevel // dev.kord.common.entity/GuildVisibilityLevel.Companion.from|from(kotlin.Int){}[0]
+        final fun serializer(): kotlinx.serialization/KSerializer<dev.kord.common.entity/GuildVisibilityLevel> // dev.kord.common.entity/GuildVisibilityLevel.Companion.serializer|serializer(){}[0]
+    }
+
+    final object Public : dev.kord.common.entity/GuildVisibilityLevel // dev.kord.common.entity/GuildVisibilityLevel.Public|null[0]
+
+    final object PublicWithRecruitment : dev.kord.common.entity/GuildVisibilityLevel // dev.kord.common.entity/GuildVisibilityLevel.PublicWithRecruitment|null[0]
+
+    final object Restricted : dev.kord.common.entity/GuildVisibilityLevel // dev.kord.common.entity/GuildVisibilityLevel.Restricted|null[0]
 }
 
 sealed class dev.kord.common.entity/IntegrationExpireBehavior { // dev.kord.common.entity/IntegrationExpireBehavior|null[0]
@@ -8352,6 +8837,33 @@ sealed class dev.kord.common.entity/MFALevel { // dev.kord.common.entity/MFALeve
     final object Elevated : dev.kord.common.entity/MFALevel // dev.kord.common.entity/MFALevel.Elevated|null[0]
 
     final object None : dev.kord.common.entity/MFALevel // dev.kord.common.entity/MFALevel.None|null[0]
+}
+
+sealed class dev.kord.common.entity/MemberVerificationFormFieldType { // dev.kord.common.entity/MemberVerificationFormFieldType|null[0]
+    final val value // dev.kord.common.entity/MemberVerificationFormFieldType.value|{}value[0]
+        final fun <get-value>(): kotlin/String // dev.kord.common.entity/MemberVerificationFormFieldType.value.<get-value>|<get-value>(){}[0]
+
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.common.entity/MemberVerificationFormFieldType.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.common.entity/MemberVerificationFormFieldType.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // dev.kord.common.entity/MemberVerificationFormFieldType.toString|toString(){}[0]
+
+    final class Unknown : dev.kord.common.entity/MemberVerificationFormFieldType // dev.kord.common.entity/MemberVerificationFormFieldType.Unknown|null[0]
+
+    final object Companion { // dev.kord.common.entity/MemberVerificationFormFieldType.Companion|null[0]
+        final val entries // dev.kord.common.entity/MemberVerificationFormFieldType.Companion.entries|{}entries[0]
+            final fun <get-entries>(): kotlin.collections/List<dev.kord.common.entity/MemberVerificationFormFieldType> // dev.kord.common.entity/MemberVerificationFormFieldType.Companion.entries.<get-entries>|<get-entries>(){}[0]
+
+        final fun from(kotlin/String): dev.kord.common.entity/MemberVerificationFormFieldType // dev.kord.common.entity/MemberVerificationFormFieldType.Companion.from|from(kotlin.String){}[0]
+        final fun serializer(): kotlinx.serialization/KSerializer<dev.kord.common.entity/MemberVerificationFormFieldType> // dev.kord.common.entity/MemberVerificationFormFieldType.Companion.serializer|serializer(){}[0]
+    }
+
+    final object MultipleChoice : dev.kord.common.entity/MemberVerificationFormFieldType // dev.kord.common.entity/MemberVerificationFormFieldType.MultipleChoice|null[0]
+
+    final object Paragraph : dev.kord.common.entity/MemberVerificationFormFieldType // dev.kord.common.entity/MemberVerificationFormFieldType.Paragraph|null[0]
+
+    final object Terms : dev.kord.common.entity/MemberVerificationFormFieldType // dev.kord.common.entity/MemberVerificationFormFieldType.Terms|null[0]
+
+    final object TextInput : dev.kord.common.entity/MemberVerificationFormFieldType // dev.kord.common.entity/MemberVerificationFormFieldType.TextInput|null[0]
 }
 
 sealed class dev.kord.common.entity/MessageActivityType { // dev.kord.common.entity/MessageActivityType|null[0]
