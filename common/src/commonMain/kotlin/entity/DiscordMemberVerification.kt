@@ -12,11 +12,9 @@ package dev.kord.common.entity
 
 import dev.kord.common.entity.optional.Optional
 import dev.kord.ksp.Generate
-import dev.kord.ksp.Generate.EntityType.*
+import dev.kord.ksp.Generate.EntityType.STRING_KORD_ENUM
 import dev.kord.ksp.Generate.Entry
 import kotlinx.datetime.Instant
-import kotlinx.serialization.Contextual
-import kotlinx.serialization.Required
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -36,11 +34,11 @@ public data class DiscordMemberVerificationFormField(
     val fieldType: MemberVerificationFormFieldType,
     val label: String?,
     val choices: Optional<List<String>> = Optional.Missing(),
-    val values: Optional<List<String>?> = Optional.Missing(),
+    val values: Optional<List<String?>> = Optional.Missing(),
     // FIXME This type can be String Int or Boolean, what type to put, any can't be serialized
-    val response: Optional<String>? = Optional.Missing(),
+    val response: Optional<String?> = Optional.Missing(),
     val required: Boolean,
     val description: String?,
-    val automations: List<String>?,
-    val placeholder: Optional<String>? = Optional.Missing()
+    val automations: List<String?>,
+    val placeholder: Optional<String?> = Optional.Missing()
 )
