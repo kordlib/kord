@@ -40,6 +40,31 @@ import dev.kord.ksp.Generate.Entry
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
+/**
+ * A representation of a [Discord Guild Profile]()
+ *
+ * @param id The ID of the guild
+ * @param name The name of the guild (2-100 characters)
+ * @param iconHash The guilds icon hash
+ * @param memberCount Approximate count of guild members
+ * @param onlineCount Approximate count of non-offline guild members
+ * @param description The description for the guild (max 300 characters)
+ * @param brandColorPrimary The guilds accent color as a hexadecimal color string
+ * @param bannerHash The guilds clan banner hash
+ * @param gameApplicationIds The IDs of the applications representing the games the guild plays (max 20)
+ * @param gameActivity The activity of the guild in each game
+ * @param tag The tag of the guild (2-4 characters)
+ * @param badge The badge shown on the guilds tag
+ * @param badgeColorPrimary The primary color of the badge as a hexadecimal color string
+ * @param badgeColorSecondary The secondary color of the badge a hexadecimal color string
+ * @param badgeHash The guild tag badge hash
+ * @param traits a list of terms used to describe the guilds interest and personality (max 5)
+ * @param features a list of enabled [GuildFeature]s
+ * @param visibility The [GuildVisibilityLevel] for the guild
+ * @param customBannerHash The guilds discovery splash hash
+ * @param premiumSubscriptionCount The number of premium subscriptions (boosts) the guild currently has
+ * @param premiumTier The guilds [PremiumTier] (boost level)
+ */
 @Serializable
 public data class DiscordGuildProfile(
     val id: Snowflake,
@@ -78,6 +103,12 @@ public data class DiscordGuildProfile(
     val premiumTier: PremiumTier
 )
 
+/**
+ * A representation of a (Guild activity structure)()
+ *
+ * @param activityLevel The activity level of the guild in the game
+ * @param activityScore The activity score of the guild in the game
+ */
 @Serializable
 public data class DiscordGameActivity(
     @SerialName("activity_level")
@@ -86,6 +117,15 @@ public data class DiscordGameActivity(
     val activityScore: Int
 )
 
+/**
+ * A representation of a [Discord guild trait structure]()
+ *
+ * @param emojiId The ID of the emoji associated with the trait
+ * @param emojiName The name of the emoji associated with the trait
+ * @param emojiAnimated Whether the associated emoji is animated
+ * @param label The name of the trait
+ * @param position The position of the trait in the array for sorting
+ */
 @Serializable
 public data class DiscordGuildTrait(
     @SerialName("emoji_id")

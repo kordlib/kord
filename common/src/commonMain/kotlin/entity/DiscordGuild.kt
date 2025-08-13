@@ -205,6 +205,7 @@ public data class DiscordUnavailableGuild(
  * @param iconHash The icon hash, returned when in the template object.
  * @param splash The splash hash.
  * @param discoverySplash The discovery splash hash; only present for guilds with the [GuildFeature.Discoverable] feature.
+ * @param homeHeader The home header hash; Used in new member welcome
  * @param owner True if [DiscordUser] is the owner of the guild.
  * @param ownerId The id of the owner.
  * @param permissions The total permissions for [DiscordUser] in the guild (excludes [overwrites][Overwrite]).
@@ -379,6 +380,22 @@ public data class DiscordIntegrationAccount(
     val name: String,
 )
 
+/**
+ * A representation of a [Discord Member Verification Guild structure]()
+ *
+ * @param id The guild ID
+ * @param name The name of the guild (2-100 characters)
+ * @param icon The guild icon hash
+ * @param description The description for the guild (max 300 characters)
+ * @param splash The guilds splash hash
+ * @param discoverySplash The guilds discovery splash hash
+ * @param homeHeader The guilds home header hash, used in new member welcome
+ * @param verificationLevel The [VerificationLevel] required for the guild
+ * @param features A list of enabled [GuildFeature]s
+ * @param emojis A List of custom guild emoji
+ * @param approximateMemberCount Approximate total of guild members
+ * @param approximatePresenceCount Approximate total of non-offline guild members
+ */
 @Serializable
 public data class DiscordMemberVerificationGuild(
     val id: Snowflake,

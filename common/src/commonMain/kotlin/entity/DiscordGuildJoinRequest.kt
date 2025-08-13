@@ -19,6 +19,23 @@ import kotlinx.datetime.Instant
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
+/**
+ * A representation of a [Discord Guild Join Request structure]()
+ *
+ * @param id
+ * @param joinRequestId The ID of the join request
+ * @param createdAt When the join request was created
+ * @param applicationStatus The [status of the join request](GuildJoinRequestStatus)
+ * @param guildId The ID of the guild this join request is for
+ * @param formResponses A list of [DiscordMemberVerificationFormField] responses from the guild member
+ * @param lastSeen When the request was acknowledged by the user
+ * @param actionedAt A snowflake representing when the join request was actioned
+ * @param actionedByUser The moderator who actioned the join request
+ * @param rejectionReason Why the join request was rejected
+ * @param userId The ID of the user who created the join request
+ * @param user The user who created the join request
+ * @param interviewChannelId The ID of the channel where an interview regarding the request can be conducted
+ */
 @Serializable
 public data class DiscordGuildJoinRequest(
     val id: Snowflake,

@@ -18,6 +18,15 @@ import kotlinx.datetime.Instant
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
+/**
+ * A representation of a [Discord member verification structure]()
+ *
+ * @param version Whe the member verification was last modified
+ * @param formFields A list of questions for the applicants to answer
+ * @param description A description of what the guild is about, can be different to guilds description (max 300 characters)
+ * @param guild The guild this member verification is for
+ * @param profile The profile of the guild this member verification is for
+ */
 @Serializable
 public data class DiscordMemberVerification(
     val version: Instant?,
@@ -28,6 +37,19 @@ public data class DiscordMemberVerification(
     val profile: DiscordGuildProfile,
 )
 
+/**
+ * A representation of the []Discord Member verification form field structure]()
+ *
+ * @param fieldType The [MemberVerificationFormFieldType] for the quest
+ * @param label the label for the field (max 300 characters)
+ * @param choices Multiple choice answers
+ * @param values The rules the user must agree too
+ * @param response The response for this field
+ * @param required Whether this field is required for a successful application
+ * @param description The subtext of the form field
+ * @param automations
+ * @param placeholder Placeholder text for the fields response area
+ */
 @Serializable
 public data class DiscordMemberVerificationFormField(
     @SerialName("field_type")

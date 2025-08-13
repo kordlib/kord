@@ -8,7 +8,13 @@ public class GameActivity(
     public val data: GameActivityData,
     override val kord: Kord
 ) : KordObject {
+    /**
+     * The activity level of the guild in the game
+     */
     public val activityLevel: Int = data.activityLevel
 
+    /**
+     * The activity score of the guild in the game
+     */
     public val activityScore: Int = data.activityScore
 }
