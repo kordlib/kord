@@ -256,6 +256,7 @@ public data class DiscordGuild(
     @SerialName("icon_hash") val iconHash: Optional<String?> = Optional.Missing(),
     val splash: Optional<String?> = Optional.Missing(),
     @SerialName("discovery_splash") val discoverySplash: Optional<String?> = Optional.Missing(),
+    @SerialName("home_header") val homeHeader: Optional<String?> = Optional.Missing(),
     val owner: OptionalBoolean = OptionalBoolean.Missing,
     @SerialName("owner_id") val ownerId: Snowflake,
     val permissions: Optional<Permissions> = Optional.Missing(),
@@ -337,6 +338,7 @@ public data class DiscordPartialGuild(
     val description: Optional<String?> = Optional.Missing(),
     val banner: Optional<String?> = Optional.Missing(),
     val splash: Optional<String?> = Optional.Missing(),
+    @SerialName("home_header") val homeHeader: Optional<String?> = Optional.Missing(),
     @SerialName("nsfw_level") val nsfwLevel: Optional<NsfwLevel> = Optional.Missing(),
     @SerialName("verification_level")
     val verificationLevel: Optional<VerificationLevel> = Optional.Missing(),
@@ -391,7 +393,7 @@ public data class DiscordMemberVerificationGuild(
     @SerialName("verification_level")
     val verificationLevel: VerificationLevel,
     val features: List<GuildFeature>,
-    val emojis: List<DiscordEmoji>,
+    val emojis: List<Snowflake>,
     val approximateMemberCount: Int,
     val approximatePresenceCount: Int
 )

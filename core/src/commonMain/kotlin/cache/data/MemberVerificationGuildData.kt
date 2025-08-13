@@ -14,7 +14,7 @@ public data class MemberVerificationGuildData(
     val homeHeader: String? = null,
     val verificationLevel: VerificationLevel,
     val features: List<GuildFeature>,
-    val emojis: List<DiscordEmoji>,
+    val emojis: List<Snowflake>,
     val approximateMemberCount: Int,
     val approximatePresenceCount: Int,
 ) {

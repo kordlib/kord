@@ -48,6 +48,12 @@ public class Asset private constructor(
         public fun guildBanner(guildId: Snowflake, hash: String, kord: Kord): Asset =
             Asset(hash.isAnimated, DiscordCdn.guildBanner(guildId, hash), kord)
 
+        public fun guildHomeHeader(guildId: Snowflake, hash: String, kord: Kord): Asset =
+            Asset(isAnimated = false, DiscordCdn.guildHomeHeader(guildId, hash), kord)
+
+        public fun guildTagBadge(guildId: Snowflake, hash: String, kord: Kord): Asset =
+            Asset(isAnimated = false, DiscordCdn.guildTagBadge(guildId, hash), kord)
+
         public fun userBanner(userId: Snowflake, hash: String, kord: Kord): Asset =
             Asset(hash.isAnimated, DiscordCdn.userBanner(userId, hash), kord)
 

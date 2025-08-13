@@ -21,7 +21,7 @@ public data class GuildProfileData(
     val badgeColorSecondary: String,
     val badgeHash: String,
     val traits: List<DiscordGuildTrait>,
-    val features: List<String>,
+    val features: List<GuildFeature>,
     val customBannerHash: String? = null,
     val premiumSubscriptionCount: Int,
     val premiumTier: PremiumTier

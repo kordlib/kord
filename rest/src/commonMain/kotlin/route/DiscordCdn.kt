@@ -18,6 +18,10 @@ public object DiscordCdn {
 
     public fun guildBanner(guildId: Snowflake, hash: String): CdnUrl = CdnUrl("$BASE_URL/banners/$guildId/$hash")
 
+    public fun guildHomeHeader(guildId: Snowflake, hash: String): CdnUrl = CdnUrl("$BASE_URL/guilds/$guildId/home-headers/$hash")
+
+    public fun guildTagBadge(guildId: Snowflake, hash: String): CdnUrl = CdnUrl("$BASE_URL/guild-tag-badge/$guildId/$hash")
+
     public fun userBanner(userId: Snowflake, hash: String): CdnUrl = CdnUrl("$BASE_URL/banners/$userId/$hash")
 
     public fun defaultUserAvatar(discriminator: Int): CdnUrl = CdnUrl("$BASE_URL/embed/avatars/${discriminator % 5}")

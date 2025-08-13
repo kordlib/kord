@@ -6473,9 +6473,11 @@ public final class dev/kord/rest/route/DiscordCdn {
 	public final fun emoji (Ldev/kord/common/entity/Snowflake;)Ldev/kord/rest/route/CdnUrl;
 	public final fun guildBanner (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;)Ldev/kord/rest/route/CdnUrl;
 	public final fun guildDiscoverySplash (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;)Ldev/kord/rest/route/CdnUrl;
+	public final fun guildHomeHeader (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;)Ldev/kord/rest/route/CdnUrl;
 	public final fun guildIcon (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;)Ldev/kord/rest/route/CdnUrl;
 	public final fun guildScheduledEventCover (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;)Ldev/kord/rest/route/CdnUrl;
 	public final fun guildSplash (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;)Ldev/kord/rest/route/CdnUrl;
+	public final fun guildTagBadge (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;)Ldev/kord/rest/route/CdnUrl;
 	public final fun memberAvatar (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;)Ldev/kord/rest/route/CdnUrl;
 	public final fun memberBanner (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;)Ldev/kord/rest/route/CdnUrl;
 	public final fun roleIcon (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;)Ldev/kord/rest/route/CdnUrl;

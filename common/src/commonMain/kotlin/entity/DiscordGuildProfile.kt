@@ -68,7 +68,7 @@ public data class DiscordGuildProfile(
     @SerialName("badge_hash")
     val badgeHash: String,
     val traits: List<DiscordGuildTrait>,
-    val features: List<String>,
+    val features: List<GuildFeature>,
     val visibility: GuildVisibilityLevel,
     @SerialName("custom_banner_hash")
     val customBannerHash: String?,
