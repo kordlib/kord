@@ -18,6 +18,7 @@ public class PartialGuildData(
     public val description: Optional<String?> = Optional.Missing(),
     public val banner: Optional<String?> = Optional.Missing(),
     public val splash: Optional<String?> = Optional.Missing(),
+    public val homeHeader: Optional<String?> = Optional.Missing(),
     @SerialName("nsfw_level") public val nsfwLevel: Optional<NsfwLevel> = Optional.Missing(),
     @SerialName("verification_level")
     public val verificationLevel: Optional<VerificationLevel> = Optional.Missing(),
@@ -42,6 +43,7 @@ public class PartialGuildData(
                 description,
                 banner,
                 splash,
+                homeHeader,
                 nsfwLevel,
                 verificationLevel,
                 stageInstances = stageInstances.mapList { StageInstanceData.from(it) },
