@@ -264,3 +264,38 @@ public data class GuildScheduledEventUsersResponse(
     val user: DiscordUser,
     val member: Optional<DiscordGuildMember> = Optional.Missing(),
 )
+
+@Serializable
+public data class GuildMemberVerificationModifyRequest(
+    val enabled: OptionalBoolean = OptionalBoolean.Missing,
+    @SerialName("form_fields")
+    val formFields: Optional<List<DiscordMemberVerificationFormField>> = Optional.Missing(),
+    val description: Optional<String?> = Optional.Missing()
+)
+
+@Serializable
+public data class GuildJoinRequestsResponse(
+    @SerialName("guild_join_requests")
+    val guildJoinRequests: Optional<List<DiscordGuildJoinRequest>> = Optional.Missing(),
+    val total: OptionalInt = OptionalInt.Missing,
+    val limit: Int
+)
+
+@Serializable
+public data class GuildJoinRequestCooldownResponse(
+    val cooldown: Int
+)
+
+@Serializable
+public data class GuildJoinRequestCreateRequest(
+    @SerialName("form_fields")
+    val formFields: List<DiscordMemberVerificationFormField>,
+    val version: Instant?
+)
+
+@Serializable
+public data class GuildJoinRequestActionRequest(
+    val action: GuildJoinRequestStatus,
+    @SerialName("rejection_reason")
+    val rejectionReason: Optional<String?> = Optional.Missing()
+)
