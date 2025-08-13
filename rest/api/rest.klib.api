@@ -1990,6 +1990,25 @@ final class dev.kord.rest.builder.guild/GuildWidgetModifyBuilder : dev.kord.rest
     final fun toRequest(): dev.kord.rest.json.request/GuildWidgetModifyRequest // dev.kord.rest.builder.guild/GuildWidgetModifyBuilder.toRequest|toRequest(){}[0]
 }
 
+final class dev.kord.rest.builder.guild/MemberVerificationModifyBuilder : dev.kord.rest.builder/AuditRequestBuilder<dev.kord.rest.json.request/GuildMemberVerificationModifyRequest> { // dev.kord.rest.builder.guild/MemberVerificationModifyBuilder|null[0]
+    constructor <init>() // dev.kord.rest.builder.guild/MemberVerificationModifyBuilder.<init>|<init>(){}[0]
+
+    final var description // dev.kord.rest.builder.guild/MemberVerificationModifyBuilder.description|{}description[0]
+        final fun <get-description>(): kotlin/String? // dev.kord.rest.builder.guild/MemberVerificationModifyBuilder.description.<get-description>|<get-description>(){}[0]
+        final fun <set-description>(kotlin/String?) // dev.kord.rest.builder.guild/MemberVerificationModifyBuilder.description.<set-description>|<set-description>(kotlin.String?){}[0]
+    final var enabled // dev.kord.rest.builder.guild/MemberVerificationModifyBuilder.enabled|{}enabled[0]
+        final fun <get-enabled>(): kotlin/Boolean? // dev.kord.rest.builder.guild/MemberVerificationModifyBuilder.enabled.<get-enabled>|<get-enabled>(){}[0]
+        final fun <set-enabled>(kotlin/Boolean?) // dev.kord.rest.builder.guild/MemberVerificationModifyBuilder.enabled.<set-enabled>|<set-enabled>(kotlin.Boolean?){}[0]
+    final var formFields // dev.kord.rest.builder.guild/MemberVerificationModifyBuilder.formFields|{}formFields[0]
+        final fun <get-formFields>(): kotlin.collections/List<dev.kord.common.entity/DiscordMemberVerificationFormField>? // dev.kord.rest.builder.guild/MemberVerificationModifyBuilder.formFields.<get-formFields>|<get-formFields>(){}[0]
+        final fun <set-formFields>(kotlin.collections/List<dev.kord.common.entity/DiscordMemberVerificationFormField>?) // dev.kord.rest.builder.guild/MemberVerificationModifyBuilder.formFields.<set-formFields>|<set-formFields>(kotlin.collections.List<dev.kord.common.entity.DiscordMemberVerificationFormField>?){}[0]
+    final var reason // dev.kord.rest.builder.guild/MemberVerificationModifyBuilder.reason|{}reason[0]
+        final fun <get-reason>(): kotlin/String? // dev.kord.rest.builder.guild/MemberVerificationModifyBuilder.reason.<get-reason>|<get-reason>(){}[0]
+        final fun <set-reason>(kotlin/String?) // dev.kord.rest.builder.guild/MemberVerificationModifyBuilder.reason.<set-reason>|<set-reason>(kotlin.String?){}[0]
+
+    final fun toRequest(): dev.kord.rest.json.request/GuildMemberVerificationModifyRequest // dev.kord.rest.builder.guild/MemberVerificationModifyBuilder.toRequest|toRequest(){}[0]
+}
+
 final class dev.kord.rest.builder.guild/OnboardingPromptBuilder : dev.kord.rest.builder/RequestBuilder<dev.kord.rest.json.request/OnboardingPromptRequest> { // dev.kord.rest.builder.guild/OnboardingPromptBuilder|null[0]
     constructor <init>(dev.kord.common.entity/OnboardingPromptType, kotlin/String, kotlin/Boolean, kotlin/Boolean, kotlin/Boolean) // dev.kord.rest.builder.guild/OnboardingPromptBuilder.<init>|<init>(dev.kord.common.entity.OnboardingPromptType;kotlin.String;kotlin.Boolean;kotlin.Boolean;kotlin.Boolean){}[0]
 
@@ -4518,6 +4537,128 @@ final class dev.kord.rest.json.request/GuildIntegrationModifyRequest { // dev.ko
     }
 }
 
+final class dev.kord.rest.json.request/GuildJoinRequestActionRequest { // dev.kord.rest.json.request/GuildJoinRequestActionRequest|null[0]
+    constructor <init>(dev.kord.common.entity/GuildJoinRequestStatus, dev.kord.common.entity.optional/Optional<kotlin/String?> = ...) // dev.kord.rest.json.request/GuildJoinRequestActionRequest.<init>|<init>(dev.kord.common.entity.GuildJoinRequestStatus;dev.kord.common.entity.optional.Optional<kotlin.String?>){}[0]
+
+    final val action // dev.kord.rest.json.request/GuildJoinRequestActionRequest.action|{}action[0]
+        final fun <get-action>(): dev.kord.common.entity/GuildJoinRequestStatus // dev.kord.rest.json.request/GuildJoinRequestActionRequest.action.<get-action>|<get-action>(){}[0]
+    final val rejectionReason // dev.kord.rest.json.request/GuildJoinRequestActionRequest.rejectionReason|{}rejectionReason[0]
+        final fun <get-rejectionReason>(): dev.kord.common.entity.optional/Optional<kotlin/String?> // dev.kord.rest.json.request/GuildJoinRequestActionRequest.rejectionReason.<get-rejectionReason>|<get-rejectionReason>(){}[0]
+
+    final fun component1(): dev.kord.common.entity/GuildJoinRequestStatus // dev.kord.rest.json.request/GuildJoinRequestActionRequest.component1|component1(){}[0]
+    final fun component2(): dev.kord.common.entity.optional/Optional<kotlin/String?> // dev.kord.rest.json.request/GuildJoinRequestActionRequest.component2|component2(){}[0]
+    final fun copy(dev.kord.common.entity/GuildJoinRequestStatus = ..., dev.kord.common.entity.optional/Optional<kotlin/String?> = ...): dev.kord.rest.json.request/GuildJoinRequestActionRequest // dev.kord.rest.json.request/GuildJoinRequestActionRequest.copy|copy(dev.kord.common.entity.GuildJoinRequestStatus;dev.kord.common.entity.optional.Optional<kotlin.String?>){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.json.request/GuildJoinRequestActionRequest.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.rest.json.request/GuildJoinRequestActionRequest.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // dev.kord.rest.json.request/GuildJoinRequestActionRequest.toString|toString(){}[0]
+
+    final object $serializer : kotlinx.serialization.internal/GeneratedSerializer<dev.kord.rest.json.request/GuildJoinRequestActionRequest> { // dev.kord.rest.json.request/GuildJoinRequestActionRequest.$serializer|null[0]
+        final val descriptor // dev.kord.rest.json.request/GuildJoinRequestActionRequest.$serializer.descriptor|{}descriptor[0]
+            final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // dev.kord.rest.json.request/GuildJoinRequestActionRequest.$serializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
+
+        final fun childSerializers(): kotlin/Array<kotlinx.serialization/KSerializer<*>> // dev.kord.rest.json.request/GuildJoinRequestActionRequest.$serializer.childSerializers|childSerializers(){}[0]
+        final fun deserialize(kotlinx.serialization.encoding/Decoder): dev.kord.rest.json.request/GuildJoinRequestActionRequest // dev.kord.rest.json.request/GuildJoinRequestActionRequest.$serializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
+        final fun serialize(kotlinx.serialization.encoding/Encoder, dev.kord.rest.json.request/GuildJoinRequestActionRequest) // dev.kord.rest.json.request/GuildJoinRequestActionRequest.$serializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;dev.kord.rest.json.request.GuildJoinRequestActionRequest){}[0]
+    }
+
+    final object Companion { // dev.kord.rest.json.request/GuildJoinRequestActionRequest.Companion|null[0]
+        final val $childSerializers // dev.kord.rest.json.request/GuildJoinRequestActionRequest.Companion.$childSerializers|{}$childSerializers[0]
+
+        final fun serializer(): kotlinx.serialization/KSerializer<dev.kord.rest.json.request/GuildJoinRequestActionRequest> // dev.kord.rest.json.request/GuildJoinRequestActionRequest.Companion.serializer|serializer(){}[0]
+    }
+}
+
+final class dev.kord.rest.json.request/GuildJoinRequestCooldownResponse { // dev.kord.rest.json.request/GuildJoinRequestCooldownResponse|null[0]
+    constructor <init>(kotlin/Int) // dev.kord.rest.json.request/GuildJoinRequestCooldownResponse.<init>|<init>(kotlin.Int){}[0]
+
+    final val cooldown // dev.kord.rest.json.request/GuildJoinRequestCooldownResponse.cooldown|{}cooldown[0]
+        final fun <get-cooldown>(): kotlin/Int // dev.kord.rest.json.request/GuildJoinRequestCooldownResponse.cooldown.<get-cooldown>|<get-cooldown>(){}[0]
+
+    final fun component1(): kotlin/Int // dev.kord.rest.json.request/GuildJoinRequestCooldownResponse.component1|component1(){}[0]
+    final fun copy(kotlin/Int = ...): dev.kord.rest.json.request/GuildJoinRequestCooldownResponse // dev.kord.rest.json.request/GuildJoinRequestCooldownResponse.copy|copy(kotlin.Int){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.json.request/GuildJoinRequestCooldownResponse.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.rest.json.request/GuildJoinRequestCooldownResponse.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // dev.kord.rest.json.request/GuildJoinRequestCooldownResponse.toString|toString(){}[0]
+
+    final object $serializer : kotlinx.serialization.internal/GeneratedSerializer<dev.kord.rest.json.request/GuildJoinRequestCooldownResponse> { // dev.kord.rest.json.request/GuildJoinRequestCooldownResponse.$serializer|null[0]
+        final val descriptor // dev.kord.rest.json.request/GuildJoinRequestCooldownResponse.$serializer.descriptor|{}descriptor[0]
+            final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // dev.kord.rest.json.request/GuildJoinRequestCooldownResponse.$serializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
+
+        final fun childSerializers(): kotlin/Array<kotlinx.serialization/KSerializer<*>> // dev.kord.rest.json.request/GuildJoinRequestCooldownResponse.$serializer.childSerializers|childSerializers(){}[0]
+        final fun deserialize(kotlinx.serialization.encoding/Decoder): dev.kord.rest.json.request/GuildJoinRequestCooldownResponse // dev.kord.rest.json.request/GuildJoinRequestCooldownResponse.$serializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
+        final fun serialize(kotlinx.serialization.encoding/Encoder, dev.kord.rest.json.request/GuildJoinRequestCooldownResponse) // dev.kord.rest.json.request/GuildJoinRequestCooldownResponse.$serializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;dev.kord.rest.json.request.GuildJoinRequestCooldownResponse){}[0]
+    }
+
+    final object Companion { // dev.kord.rest.json.request/GuildJoinRequestCooldownResponse.Companion|null[0]
+        final fun serializer(): kotlinx.serialization/KSerializer<dev.kord.rest.json.request/GuildJoinRequestCooldownResponse> // dev.kord.rest.json.request/GuildJoinRequestCooldownResponse.Companion.serializer|serializer(){}[0]
+    }
+}
+
+final class dev.kord.rest.json.request/GuildJoinRequestCreateRequest { // dev.kord.rest.json.request/GuildJoinRequestCreateRequest|null[0]
+    constructor <init>(kotlin.collections/List<dev.kord.common.entity/DiscordMemberVerificationFormField>, kotlinx.datetime/Instant?) // dev.kord.rest.json.request/GuildJoinRequestCreateRequest.<init>|<init>(kotlin.collections.List<dev.kord.common.entity.DiscordMemberVerificationFormField>;kotlinx.datetime.Instant?){}[0]
+
+    final val formFields // dev.kord.rest.json.request/GuildJoinRequestCreateRequest.formFields|{}formFields[0]
+        final fun <get-formFields>(): kotlin.collections/List<dev.kord.common.entity/DiscordMemberVerificationFormField> // dev.kord.rest.json.request/GuildJoinRequestCreateRequest.formFields.<get-formFields>|<get-formFields>(){}[0]
+    final val version // dev.kord.rest.json.request/GuildJoinRequestCreateRequest.version|{}version[0]
+        final fun <get-version>(): kotlinx.datetime/Instant? // dev.kord.rest.json.request/GuildJoinRequestCreateRequest.version.<get-version>|<get-version>(){}[0]
+
+    final fun component1(): kotlin.collections/List<dev.kord.common.entity/DiscordMemberVerificationFormField> // dev.kord.rest.json.request/GuildJoinRequestCreateRequest.component1|component1(){}[0]
+    final fun component2(): kotlinx.datetime/Instant? // dev.kord.rest.json.request/GuildJoinRequestCreateRequest.component2|component2(){}[0]
+    final fun copy(kotlin.collections/List<dev.kord.common.entity/DiscordMemberVerificationFormField> = ..., kotlinx.datetime/Instant? = ...): dev.kord.rest.json.request/GuildJoinRequestCreateRequest // dev.kord.rest.json.request/GuildJoinRequestCreateRequest.copy|copy(kotlin.collections.List<dev.kord.common.entity.DiscordMemberVerificationFormField>;kotlinx.datetime.Instant?){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.json.request/GuildJoinRequestCreateRequest.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.rest.json.request/GuildJoinRequestCreateRequest.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // dev.kord.rest.json.request/GuildJoinRequestCreateRequest.toString|toString(){}[0]
+
+    final object $serializer : kotlinx.serialization.internal/GeneratedSerializer<dev.kord.rest.json.request/GuildJoinRequestCreateRequest> { // dev.kord.rest.json.request/GuildJoinRequestCreateRequest.$serializer|null[0]
+        final val descriptor // dev.kord.rest.json.request/GuildJoinRequestCreateRequest.$serializer.descriptor|{}descriptor[0]
+            final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // dev.kord.rest.json.request/GuildJoinRequestCreateRequest.$serializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
+
+        final fun childSerializers(): kotlin/Array<kotlinx.serialization/KSerializer<*>> // dev.kord.rest.json.request/GuildJoinRequestCreateRequest.$serializer.childSerializers|childSerializers(){}[0]
+        final fun deserialize(kotlinx.serialization.encoding/Decoder): dev.kord.rest.json.request/GuildJoinRequestCreateRequest // dev.kord.rest.json.request/GuildJoinRequestCreateRequest.$serializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
+        final fun serialize(kotlinx.serialization.encoding/Encoder, dev.kord.rest.json.request/GuildJoinRequestCreateRequest) // dev.kord.rest.json.request/GuildJoinRequestCreateRequest.$serializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;dev.kord.rest.json.request.GuildJoinRequestCreateRequest){}[0]
+    }
+
+    final object Companion { // dev.kord.rest.json.request/GuildJoinRequestCreateRequest.Companion|null[0]
+        final val $childSerializers // dev.kord.rest.json.request/GuildJoinRequestCreateRequest.Companion.$childSerializers|{}$childSerializers[0]
+
+        final fun serializer(): kotlinx.serialization/KSerializer<dev.kord.rest.json.request/GuildJoinRequestCreateRequest> // dev.kord.rest.json.request/GuildJoinRequestCreateRequest.Companion.serializer|serializer(){}[0]
+    }
+}
+
+final class dev.kord.rest.json.request/GuildJoinRequestsResponse { // dev.kord.rest.json.request/GuildJoinRequestsResponse|null[0]
+    constructor <init>(dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.common.entity/DiscordGuildJoinRequest>> = ..., dev.kord.common.entity.optional/OptionalInt = ..., kotlin/Int) // dev.kord.rest.json.request/GuildJoinRequestsResponse.<init>|<init>(dev.kord.common.entity.optional.Optional<kotlin.collections.List<dev.kord.common.entity.DiscordGuildJoinRequest>>;dev.kord.common.entity.optional.OptionalInt;kotlin.Int){}[0]
+
+    final val guildJoinRequests // dev.kord.rest.json.request/GuildJoinRequestsResponse.guildJoinRequests|{}guildJoinRequests[0]
+        final fun <get-guildJoinRequests>(): dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.common.entity/DiscordGuildJoinRequest>> // dev.kord.rest.json.request/GuildJoinRequestsResponse.guildJoinRequests.<get-guildJoinRequests>|<get-guildJoinRequests>(){}[0]
+    final val limit // dev.kord.rest.json.request/GuildJoinRequestsResponse.limit|{}limit[0]
+        final fun <get-limit>(): kotlin/Int // dev.kord.rest.json.request/GuildJoinRequestsResponse.limit.<get-limit>|<get-limit>(){}[0]
+    final val total // dev.kord.rest.json.request/GuildJoinRequestsResponse.total|{}total[0]
+        final fun <get-total>(): dev.kord.common.entity.optional/OptionalInt // dev.kord.rest.json.request/GuildJoinRequestsResponse.total.<get-total>|<get-total>(){}[0]
+
+    final fun component1(): dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.common.entity/DiscordGuildJoinRequest>> // dev.kord.rest.json.request/GuildJoinRequestsResponse.component1|component1(){}[0]
+    final fun component2(): dev.kord.common.entity.optional/OptionalInt // dev.kord.rest.json.request/GuildJoinRequestsResponse.component2|component2(){}[0]
+    final fun component3(): kotlin/Int // dev.kord.rest.json.request/GuildJoinRequestsResponse.component3|component3(){}[0]
+    final fun copy(dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.common.entity/DiscordGuildJoinRequest>> = ..., dev.kord.common.entity.optional/OptionalInt = ..., kotlin/Int = ...): dev.kord.rest.json.request/GuildJoinRequestsResponse // dev.kord.rest.json.request/GuildJoinRequestsResponse.copy|copy(dev.kord.common.entity.optional.Optional<kotlin.collections.List<dev.kord.common.entity.DiscordGuildJoinRequest>>;dev.kord.common.entity.optional.OptionalInt;kotlin.Int){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.json.request/GuildJoinRequestsResponse.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.rest.json.request/GuildJoinRequestsResponse.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // dev.kord.rest.json.request/GuildJoinRequestsResponse.toString|toString(){}[0]
+
+    final object $serializer : kotlinx.serialization.internal/GeneratedSerializer<dev.kord.rest.json.request/GuildJoinRequestsResponse> { // dev.kord.rest.json.request/GuildJoinRequestsResponse.$serializer|null[0]
+        final val descriptor // dev.kord.rest.json.request/GuildJoinRequestsResponse.$serializer.descriptor|{}descriptor[0]
+            final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // dev.kord.rest.json.request/GuildJoinRequestsResponse.$serializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
+
+        final fun childSerializers(): kotlin/Array<kotlinx.serialization/KSerializer<*>> // dev.kord.rest.json.request/GuildJoinRequestsResponse.$serializer.childSerializers|childSerializers(){}[0]
+        final fun deserialize(kotlinx.serialization.encoding/Decoder): dev.kord.rest.json.request/GuildJoinRequestsResponse // dev.kord.rest.json.request/GuildJoinRequestsResponse.$serializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
+        final fun serialize(kotlinx.serialization.encoding/Encoder, dev.kord.rest.json.request/GuildJoinRequestsResponse) // dev.kord.rest.json.request/GuildJoinRequestsResponse.$serializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;dev.kord.rest.json.request.GuildJoinRequestsResponse){}[0]
+    }
+
+    final object Companion { // dev.kord.rest.json.request/GuildJoinRequestsResponse.Companion|null[0]
+        final val $childSerializers // dev.kord.rest.json.request/GuildJoinRequestsResponse.Companion.$childSerializers|{}$childSerializers[0]
+
+        final fun serializer(): kotlinx.serialization/KSerializer<dev.kord.rest.json.request/GuildJoinRequestsResponse> // dev.kord.rest.json.request/GuildJoinRequestsResponse.Companion.serializer|serializer(){}[0]
+    }
+}
+
 final class dev.kord.rest.json.request/GuildMFALevelModifyRequest { // dev.kord.rest.json.request/GuildMFALevelModifyRequest|null[0]
     constructor <init>(dev.kord.common.entity/MFALevel) // dev.kord.rest.json.request/GuildMFALevelModifyRequest.<init>|<init>(dev.kord.common.entity.MFALevel){}[0]
 
@@ -4630,6 +4771,40 @@ final class dev.kord.rest.json.request/GuildMemberModifyRequest { // dev.kord.re
         final val $childSerializers // dev.kord.rest.json.request/GuildMemberModifyRequest.Companion.$childSerializers|{}$childSerializers[0]
 
         final fun serializer(): kotlinx.serialization/KSerializer<dev.kord.rest.json.request/GuildMemberModifyRequest> // dev.kord.rest.json.request/GuildMemberModifyRequest.Companion.serializer|serializer(){}[0]
+    }
+}
+
+final class dev.kord.rest.json.request/GuildMemberVerificationModifyRequest { // dev.kord.rest.json.request/GuildMemberVerificationModifyRequest|null[0]
+    constructor <init>(dev.kord.common.entity.optional/OptionalBoolean = ..., dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.common.entity/DiscordMemberVerificationFormField>> = ..., dev.kord.common.entity.optional/Optional<kotlin/String?> = ...) // dev.kord.rest.json.request/GuildMemberVerificationModifyRequest.<init>|<init>(dev.kord.common.entity.optional.OptionalBoolean;dev.kord.common.entity.optional.Optional<kotlin.collections.List<dev.kord.common.entity.DiscordMemberVerificationFormField>>;dev.kord.common.entity.optional.Optional<kotlin.String?>){}[0]
+
+    final val description // dev.kord.rest.json.request/GuildMemberVerificationModifyRequest.description|{}description[0]
+        final fun <get-description>(): dev.kord.common.entity.optional/Optional<kotlin/String?> // dev.kord.rest.json.request/GuildMemberVerificationModifyRequest.description.<get-description>|<get-description>(){}[0]
+    final val enabled // dev.kord.rest.json.request/GuildMemberVerificationModifyRequest.enabled|{}enabled[0]
+        final fun <get-enabled>(): dev.kord.common.entity.optional/OptionalBoolean // dev.kord.rest.json.request/GuildMemberVerificationModifyRequest.enabled.<get-enabled>|<get-enabled>(){}[0]
+    final val formFields // dev.kord.rest.json.request/GuildMemberVerificationModifyRequest.formFields|{}formFields[0]
+        final fun <get-formFields>(): dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.common.entity/DiscordMemberVerificationFormField>> // dev.kord.rest.json.request/GuildMemberVerificationModifyRequest.formFields.<get-formFields>|<get-formFields>(){}[0]
+
+    final fun component1(): dev.kord.common.entity.optional/OptionalBoolean // dev.kord.rest.json.request/GuildMemberVerificationModifyRequest.component1|component1(){}[0]
+    final fun component2(): dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.common.entity/DiscordMemberVerificationFormField>> // dev.kord.rest.json.request/GuildMemberVerificationModifyRequest.component2|component2(){}[0]
+    final fun component3(): dev.kord.common.entity.optional/Optional<kotlin/String?> // dev.kord.rest.json.request/GuildMemberVerificationModifyRequest.component3|component3(){}[0]
+    final fun copy(dev.kord.common.entity.optional/OptionalBoolean = ..., dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.common.entity/DiscordMemberVerificationFormField>> = ..., dev.kord.common.entity.optional/Optional<kotlin/String?> = ...): dev.kord.rest.json.request/GuildMemberVerificationModifyRequest // dev.kord.rest.json.request/GuildMemberVerificationModifyRequest.copy|copy(dev.kord.common.entity.optional.OptionalBoolean;dev.kord.common.entity.optional.Optional<kotlin.collections.List<dev.kord.common.entity.DiscordMemberVerificationFormField>>;dev.kord.common.entity.optional.Optional<kotlin.String?>){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.json.request/GuildMemberVerificationModifyRequest.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.rest.json.request/GuildMemberVerificationModifyRequest.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // dev.kord.rest.json.request/GuildMemberVerificationModifyRequest.toString|toString(){}[0]
+
+    final object $serializer : kotlinx.serialization.internal/GeneratedSerializer<dev.kord.rest.json.request/GuildMemberVerificationModifyRequest> { // dev.kord.rest.json.request/GuildMemberVerificationModifyRequest.$serializer|null[0]
+        final val descriptor // dev.kord.rest.json.request/GuildMemberVerificationModifyRequest.$serializer.descriptor|{}descriptor[0]
+            final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // dev.kord.rest.json.request/GuildMemberVerificationModifyRequest.$serializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
+
+        final fun childSerializers(): kotlin/Array<kotlinx.serialization/KSerializer<*>> // dev.kord.rest.json.request/GuildMemberVerificationModifyRequest.$serializer.childSerializers|childSerializers(){}[0]
+        final fun deserialize(kotlinx.serialization.encoding/Decoder): dev.kord.rest.json.request/GuildMemberVerificationModifyRequest // dev.kord.rest.json.request/GuildMemberVerificationModifyRequest.$serializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
+        final fun serialize(kotlinx.serialization.encoding/Encoder, dev.kord.rest.json.request/GuildMemberVerificationModifyRequest) // dev.kord.rest.json.request/GuildMemberVerificationModifyRequest.$serializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;dev.kord.rest.json.request.GuildMemberVerificationModifyRequest){}[0]
+    }
+
+    final object Companion { // dev.kord.rest.json.request/GuildMemberVerificationModifyRequest.Companion|null[0]
+        final val $childSerializers // dev.kord.rest.json.request/GuildMemberVerificationModifyRequest.Companion.$childSerializers|{}$childSerializers[0]
+
+        final fun serializer(): kotlinx.serialization/KSerializer<dev.kord.rest.json.request/GuildMemberVerificationModifyRequest> // dev.kord.rest.json.request/GuildMemberVerificationModifyRequest.Companion.serializer|serializer(){}[0]
     }
 }
 
@@ -5460,6 +5635,64 @@ final class dev.kord.rest.json.request/ModalResponseCreateRequest { // dev.kord.
 
     final object Companion { // dev.kord.rest.json.request/ModalResponseCreateRequest.Companion|null[0]
         final fun serializer(): kotlinx.serialization/KSerializer<dev.kord.rest.json.request/ModalResponseCreateRequest> // dev.kord.rest.json.request/ModalResponseCreateRequest.Companion.serializer|serializer(){}[0]
+    }
+}
+
+final class dev.kord.rest.json.request/ModifyGuildProfileRequest { // dev.kord.rest.json.request/ModifyGuildProfileRequest|null[0]
+    constructor <init>(dev.kord.common.entity.optional/Optional<kotlin/String> = ..., dev.kord.common.entity.optional/Optional<kotlin/String?> = ..., dev.kord.common.entity.optional/Optional<kotlin/String?> = ..., dev.kord.common.entity.optional/Optional<kotlin/String> = ..., dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.common.entity/Snowflake>> = ..., dev.kord.common.entity.optional/Optional<kotlin/String> = ..., kotlin/Int, kotlin/String?, kotlin/String?, dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.common.entity/DiscordGuildTrait>> = ..., kotlin/String?) // dev.kord.rest.json.request/ModifyGuildProfileRequest.<init>|<init>(dev.kord.common.entity.optional.Optional<kotlin.String>;dev.kord.common.entity.optional.Optional<kotlin.String?>;dev.kord.common.entity.optional.Optional<kotlin.String?>;dev.kord.common.entity.optional.Optional<kotlin.String>;dev.kord.common.entity.optional.Optional<kotlin.collections.List<dev.kord.common.entity.Snowflake>>;dev.kord.common.entity.optional.Optional<kotlin.String>;kotlin.Int;kotlin.String?;kotlin.String?;dev.kord.common.entity.optional.Optional<kotlin.collections.List<dev.kord.common.entity.DiscordGuildTrait>>;kotlin.String?){}[0]
+
+    final val badge // dev.kord.rest.json.request/ModifyGuildProfileRequest.badge|{}badge[0]
+        final fun <get-badge>(): kotlin/Int // dev.kord.rest.json.request/ModifyGuildProfileRequest.badge.<get-badge>|<get-badge>(){}[0]
+    final val badgeColorPrimary // dev.kord.rest.json.request/ModifyGuildProfileRequest.badgeColorPrimary|{}badgeColorPrimary[0]
+        final fun <get-badgeColorPrimary>(): kotlin/String? // dev.kord.rest.json.request/ModifyGuildProfileRequest.badgeColorPrimary.<get-badgeColorPrimary>|<get-badgeColorPrimary>(){}[0]
+    final val badgeColorSecondary // dev.kord.rest.json.request/ModifyGuildProfileRequest.badgeColorSecondary|{}badgeColorSecondary[0]
+        final fun <get-badgeColorSecondary>(): kotlin/String? // dev.kord.rest.json.request/ModifyGuildProfileRequest.badgeColorSecondary.<get-badgeColorSecondary>|<get-badgeColorSecondary>(){}[0]
+    final val brandColorPrimary // dev.kord.rest.json.request/ModifyGuildProfileRequest.brandColorPrimary|{}brandColorPrimary[0]
+        final fun <get-brandColorPrimary>(): dev.kord.common.entity.optional/Optional<kotlin/String> // dev.kord.rest.json.request/ModifyGuildProfileRequest.brandColorPrimary.<get-brandColorPrimary>|<get-brandColorPrimary>(){}[0]
+    final val customBanner // dev.kord.rest.json.request/ModifyGuildProfileRequest.customBanner|{}customBanner[0]
+        final fun <get-customBanner>(): kotlin/String? // dev.kord.rest.json.request/ModifyGuildProfileRequest.customBanner.<get-customBanner>|<get-customBanner>(){}[0]
+    final val description // dev.kord.rest.json.request/ModifyGuildProfileRequest.description|{}description[0]
+        final fun <get-description>(): dev.kord.common.entity.optional/Optional<kotlin/String?> // dev.kord.rest.json.request/ModifyGuildProfileRequest.description.<get-description>|<get-description>(){}[0]
+    final val gameApplicationIds // dev.kord.rest.json.request/ModifyGuildProfileRequest.gameApplicationIds|{}gameApplicationIds[0]
+        final fun <get-gameApplicationIds>(): dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.common.entity/Snowflake>> // dev.kord.rest.json.request/ModifyGuildProfileRequest.gameApplicationIds.<get-gameApplicationIds>|<get-gameApplicationIds>(){}[0]
+    final val icon // dev.kord.rest.json.request/ModifyGuildProfileRequest.icon|{}icon[0]
+        final fun <get-icon>(): dev.kord.common.entity.optional/Optional<kotlin/String?> // dev.kord.rest.json.request/ModifyGuildProfileRequest.icon.<get-icon>|<get-icon>(){}[0]
+    final val name // dev.kord.rest.json.request/ModifyGuildProfileRequest.name|{}name[0]
+        final fun <get-name>(): dev.kord.common.entity.optional/Optional<kotlin/String> // dev.kord.rest.json.request/ModifyGuildProfileRequest.name.<get-name>|<get-name>(){}[0]
+    final val tag // dev.kord.rest.json.request/ModifyGuildProfileRequest.tag|{}tag[0]
+        final fun <get-tag>(): dev.kord.common.entity.optional/Optional<kotlin/String> // dev.kord.rest.json.request/ModifyGuildProfileRequest.tag.<get-tag>|<get-tag>(){}[0]
+    final val traits // dev.kord.rest.json.request/ModifyGuildProfileRequest.traits|{}traits[0]
+        final fun <get-traits>(): dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.common.entity/DiscordGuildTrait>> // dev.kord.rest.json.request/ModifyGuildProfileRequest.traits.<get-traits>|<get-traits>(){}[0]
+
+    final fun component1(): dev.kord.common.entity.optional/Optional<kotlin/String> // dev.kord.rest.json.request/ModifyGuildProfileRequest.component1|component1(){}[0]
+    final fun component10(): dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.common.entity/DiscordGuildTrait>> // dev.kord.rest.json.request/ModifyGuildProfileRequest.component10|component10(){}[0]
+    final fun component11(): kotlin/String? // dev.kord.rest.json.request/ModifyGuildProfileRequest.component11|component11(){}[0]
+    final fun component2(): dev.kord.common.entity.optional/Optional<kotlin/String?> // dev.kord.rest.json.request/ModifyGuildProfileRequest.component2|component2(){}[0]
+    final fun component3(): dev.kord.common.entity.optional/Optional<kotlin/String?> // dev.kord.rest.json.request/ModifyGuildProfileRequest.component3|component3(){}[0]
+    final fun component4(): dev.kord.common.entity.optional/Optional<kotlin/String> // dev.kord.rest.json.request/ModifyGuildProfileRequest.component4|component4(){}[0]
+    final fun component5(): dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.common.entity/Snowflake>> // dev.kord.rest.json.request/ModifyGuildProfileRequest.component5|component5(){}[0]
+    final fun component6(): dev.kord.common.entity.optional/Optional<kotlin/String> // dev.kord.rest.json.request/ModifyGuildProfileRequest.component6|component6(){}[0]
+    final fun component7(): kotlin/Int // dev.kord.rest.json.request/ModifyGuildProfileRequest.component7|component7(){}[0]
+    final fun component8(): kotlin/String? // dev.kord.rest.json.request/ModifyGuildProfileRequest.component8|component8(){}[0]
+    final fun component9(): kotlin/String? // dev.kord.rest.json.request/ModifyGuildProfileRequest.component9|component9(){}[0]
+    final fun copy(dev.kord.common.entity.optional/Optional<kotlin/String> = ..., dev.kord.common.entity.optional/Optional<kotlin/String?> = ..., dev.kord.common.entity.optional/Optional<kotlin/String?> = ..., dev.kord.common.entity.optional/Optional<kotlin/String> = ..., dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.common.entity/Snowflake>> = ..., dev.kord.common.entity.optional/Optional<kotlin/String> = ..., kotlin/Int = ..., kotlin/String? = ..., kotlin/String? = ..., dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.common.entity/DiscordGuildTrait>> = ..., kotlin/String? = ...): dev.kord.rest.json.request/ModifyGuildProfileRequest // dev.kord.rest.json.request/ModifyGuildProfileRequest.copy|copy(dev.kord.common.entity.optional.Optional<kotlin.String>;dev.kord.common.entity.optional.Optional<kotlin.String?>;dev.kord.common.entity.optional.Optional<kotlin.String?>;dev.kord.common.entity.optional.Optional<kotlin.String>;dev.kord.common.entity.optional.Optional<kotlin.collections.List<dev.kord.common.entity.Snowflake>>;dev.kord.common.entity.optional.Optional<kotlin.String>;kotlin.Int;kotlin.String?;kotlin.String?;dev.kord.common.entity.optional.Optional<kotlin.collections.List<dev.kord.common.entity.DiscordGuildTrait>>;kotlin.String?){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.json.request/ModifyGuildProfileRequest.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.rest.json.request/ModifyGuildProfileRequest.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // dev.kord.rest.json.request/ModifyGuildProfileRequest.toString|toString(){}[0]
+
+    final object $serializer : kotlinx.serialization.internal/GeneratedSerializer<dev.kord.rest.json.request/ModifyGuildProfileRequest> { // dev.kord.rest.json.request/ModifyGuildProfileRequest.$serializer|null[0]
+        final val descriptor // dev.kord.rest.json.request/ModifyGuildProfileRequest.$serializer.descriptor|{}descriptor[0]
+            final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // dev.kord.rest.json.request/ModifyGuildProfileRequest.$serializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
+
+        final fun childSerializers(): kotlin/Array<kotlinx.serialization/KSerializer<*>> // dev.kord.rest.json.request/ModifyGuildProfileRequest.$serializer.childSerializers|childSerializers(){}[0]
+        final fun deserialize(kotlinx.serialization.encoding/Decoder): dev.kord.rest.json.request/ModifyGuildProfileRequest // dev.kord.rest.json.request/ModifyGuildProfileRequest.$serializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
+        final fun serialize(kotlinx.serialization.encoding/Encoder, dev.kord.rest.json.request/ModifyGuildProfileRequest) // dev.kord.rest.json.request/ModifyGuildProfileRequest.$serializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;dev.kord.rest.json.request.ModifyGuildProfileRequest){}[0]
+    }
+
+    final object Companion { // dev.kord.rest.json.request/ModifyGuildProfileRequest.Companion|null[0]
+        final val $childSerializers // dev.kord.rest.json.request/ModifyGuildProfileRequest.Companion.$childSerializers|{}$childSerializers[0]
+
+        final fun serializer(): kotlinx.serialization/KSerializer<dev.kord.rest.json.request/ModifyGuildProfileRequest> // dev.kord.rest.json.request/ModifyGuildProfileRequest.Companion.serializer|serializer(){}[0]
     }
 }
 
@@ -6842,15 +7075,22 @@ final class dev.kord.rest.service/EntitlementService : dev.kord.rest.service/Res
 final class dev.kord.rest.service/GuildService : dev.kord.rest.service/RestService { // dev.kord.rest.service/GuildService|null[0]
     constructor <init>(dev.kord.rest.request/RequestHandler) // dev.kord.rest.service/GuildService.<init>|<init>(dev.kord.rest.request.RequestHandler){}[0]
 
+    final suspend fun ackGuildJoinRequest(dev.kord.common.entity/Snowflake, dev.kord.common.entity/Snowflake) // dev.kord.rest.service/GuildService.ackGuildJoinRequest|ackGuildJoinRequest(dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake){}[0]
+    final suspend fun actionGuildJoinRequest(dev.kord.common.entity/Snowflake, dev.kord.common.entity/Snowflake, dev.kord.rest.json.request/GuildJoinRequestActionRequest): dev.kord.common.entity/DiscordGuildJoinRequest // dev.kord.rest.service/GuildService.actionGuildJoinRequest|actionGuildJoinRequest(dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake;dev.kord.rest.json.request.GuildJoinRequestActionRequest){}[0]
+    final suspend fun actionGuildJoinRequestByUser(dev.kord.common.entity/Snowflake, dev.kord.common.entity/Snowflake, dev.kord.rest.json.request/GuildJoinRequestActionRequest): dev.kord.common.entity/DiscordGuildJoinRequest // dev.kord.rest.service/GuildService.actionGuildJoinRequestByUser|actionGuildJoinRequestByUser(dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake;dev.kord.rest.json.request.GuildJoinRequestActionRequest){}[0]
     final suspend fun addGuildMember(dev.kord.common.entity/Snowflake, dev.kord.common.entity/Snowflake, kotlin/String, kotlin/Function1<dev.kord.rest.builder.member/MemberAddBuilder, kotlin/Unit>) // dev.kord.rest.service/GuildService.addGuildMember|addGuildMember(dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake;kotlin.String;kotlin.Function1<dev.kord.rest.builder.member.MemberAddBuilder,kotlin.Unit>){}[0]
     final suspend fun addRoleToGuildMember(dev.kord.common.entity/Snowflake, dev.kord.common.entity/Snowflake, dev.kord.common.entity/Snowflake, kotlin/String? = ...) // dev.kord.rest.service/GuildService.addRoleToGuildMember|addRoleToGuildMember(dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake;kotlin.String?){}[0]
     final suspend fun beginGuildPrune(dev.kord.common.entity/Snowflake, kotlin/Int = ..., kotlin/Boolean = ..., kotlin/String? = ...): dev.kord.rest.json.response/PruneResponse // dev.kord.rest.service/GuildService.beginGuildPrune|beginGuildPrune(dev.kord.common.entity.Snowflake;kotlin.Int;kotlin.Boolean;kotlin.String?){}[0]
+    final suspend fun bulkActionGuildJoinRequest(dev.kord.common.entity/Snowflake, dev.kord.rest.json.request/GuildJoinRequestActionRequest) // dev.kord.rest.service/GuildService.bulkActionGuildJoinRequest|bulkActionGuildJoinRequest(dev.kord.common.entity.Snowflake;dev.kord.rest.json.request.GuildJoinRequestActionRequest){}[0]
     final suspend fun createGuildChannel(dev.kord.common.entity/Snowflake, dev.kord.rest.json.request/GuildChannelCreateRequest, kotlin/String? = ...): dev.kord.common.entity/DiscordChannel // dev.kord.rest.service/GuildService.createGuildChannel|createGuildChannel(dev.kord.common.entity.Snowflake;dev.kord.rest.json.request.GuildChannelCreateRequest;kotlin.String?){}[0]
     final suspend fun createGuildIntegration(dev.kord.common.entity/Snowflake, dev.kord.rest.json.request/GuildIntegrationCreateRequest) // dev.kord.rest.service/GuildService.createGuildIntegration|createGuildIntegration(dev.kord.common.entity.Snowflake;dev.kord.rest.json.request.GuildIntegrationCreateRequest){}[0]
+    final suspend fun createGuildJoinRequest(dev.kord.common.entity/Snowflake, dev.kord.rest.json.request/GuildJoinRequestCreateRequest): dev.kord.common.entity/DiscordGuildJoinRequest // dev.kord.rest.service/GuildService.createGuildJoinRequest|createGuildJoinRequest(dev.kord.common.entity.Snowflake;dev.kord.rest.json.request.GuildJoinRequestCreateRequest){}[0]
+    final suspend fun createGuildJoinRequestInterview(dev.kord.common.entity/Snowflake): dev.kord.common.entity/DiscordChannel // dev.kord.rest.service/GuildService.createGuildJoinRequestInterview|createGuildJoinRequestInterview(dev.kord.common.entity.Snowflake){}[0]
     final suspend fun createScheduledEvent(dev.kord.common.entity/Snowflake, dev.kord.rest.json.request/GuildScheduledEventCreateRequest, kotlin/String? = ...): dev.kord.common.entity/DiscordGuildScheduledEvent // dev.kord.rest.service/GuildService.createScheduledEvent|createScheduledEvent(dev.kord.common.entity.Snowflake;dev.kord.rest.json.request.GuildScheduledEventCreateRequest;kotlin.String?){}[0]
     final suspend fun deleteGuild(dev.kord.common.entity/Snowflake) // dev.kord.rest.service/GuildService.deleteGuild|deleteGuild(dev.kord.common.entity.Snowflake){}[0]
     final suspend fun deleteGuildBan(dev.kord.common.entity/Snowflake, dev.kord.common.entity/Snowflake, kotlin/String? = ...) // dev.kord.rest.service/GuildService.deleteGuildBan|deleteGuildBan(dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake;kotlin.String?){}[0]
     final suspend fun deleteGuildIntegration(dev.kord.common.entity/Snowflake, dev.kord.common.entity/Snowflake, kotlin/String? = ...) // dev.kord.rest.service/GuildService.deleteGuildIntegration|deleteGuildIntegration(dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake;kotlin.String?){}[0]
+    final suspend fun deleteGuildJoinRequest(dev.kord.common.entity/Snowflake) // dev.kord.rest.service/GuildService.deleteGuildJoinRequest|deleteGuildJoinRequest(dev.kord.common.entity.Snowflake){}[0]
     final suspend fun deleteGuildMember(dev.kord.common.entity/Snowflake, dev.kord.common.entity/Snowflake, kotlin/String? = ...) // dev.kord.rest.service/GuildService.deleteGuildMember|deleteGuildMember(dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake;kotlin.String?){}[0]
     final suspend fun deleteGuildRole(dev.kord.common.entity/Snowflake, dev.kord.common.entity/Snowflake, kotlin/String? = ...) // dev.kord.rest.service/GuildService.deleteGuildRole|deleteGuildRole(dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake;kotlin.String?){}[0]
     final suspend fun deleteRoleFromGuildMember(dev.kord.common.entity/Snowflake, dev.kord.common.entity/Snowflake, dev.kord.common.entity/Snowflake, kotlin/String? = ...) // dev.kord.rest.service/GuildService.deleteRoleFromGuildMember|deleteRoleFromGuildMember(dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake;kotlin.String?){}[0]
@@ -6861,11 +7101,18 @@ final class dev.kord.rest.service/GuildService : dev.kord.rest.service/RestServi
     final suspend fun getGuildChannels(dev.kord.common.entity/Snowflake): kotlin.collections/List<dev.kord.common.entity/DiscordChannel> // dev.kord.rest.service/GuildService.getGuildChannels|getGuildChannels(dev.kord.common.entity.Snowflake){}[0]
     final suspend fun getGuildIntegrations(dev.kord.common.entity/Snowflake): kotlin.collections/List<dev.kord.common.entity/DiscordIntegration> // dev.kord.rest.service/GuildService.getGuildIntegrations|getGuildIntegrations(dev.kord.common.entity.Snowflake){}[0]
     final suspend fun getGuildInvites(dev.kord.common.entity/Snowflake): kotlin.collections/List<dev.kord.common.entity/DiscordInviteWithMetadata> // dev.kord.rest.service/GuildService.getGuildInvites|getGuildInvites(dev.kord.common.entity.Snowflake){}[0]
+    final suspend fun getGuildJoinRequest(dev.kord.common.entity/Snowflake): dev.kord.common.entity/DiscordGuildJoinRequest // dev.kord.rest.service/GuildService.getGuildJoinRequest|getGuildJoinRequest(dev.kord.common.entity.Snowflake){}[0]
+    final suspend fun getGuildJoinRequestCooldown(dev.kord.common.entity/Snowflake): dev.kord.rest.json.request/GuildJoinRequestCooldownResponse // dev.kord.rest.service/GuildService.getGuildJoinRequestCooldown|getGuildJoinRequestCooldown(dev.kord.common.entity.Snowflake){}[0]
+    final suspend fun getGuildJoinRequests(dev.kord.common.entity/Snowflake, kotlin/String, kotlin/Int? = ..., dev.kord.rest.route/Position.BeforeOrAfter? = ...): dev.kord.rest.json.request/GuildJoinRequestsResponse // dev.kord.rest.service/GuildService.getGuildJoinRequests|getGuildJoinRequests(dev.kord.common.entity.Snowflake;kotlin.String;kotlin.Int?;dev.kord.rest.route.Position.BeforeOrAfter?){}[0]
+    final suspend fun getGuildJoinRequestsAfter(dev.kord.common.entity/Snowflake, kotlin/String, kotlin/Int? = ..., dev.kord.common.entity/Snowflake): dev.kord.rest.json.request/GuildJoinRequestsResponse // dev.kord.rest.service/GuildService.getGuildJoinRequestsAfter|getGuildJoinRequestsAfter(dev.kord.common.entity.Snowflake;kotlin.String;kotlin.Int?;dev.kord.common.entity.Snowflake){}[0]
+    final suspend fun getGuildJoinRequestsBefore(dev.kord.common.entity/Snowflake, kotlin/String, kotlin/Int? = ..., dev.kord.common.entity/Snowflake): dev.kord.rest.json.request/GuildJoinRequestsResponse // dev.kord.rest.service/GuildService.getGuildJoinRequestsBefore|getGuildJoinRequestsBefore(dev.kord.common.entity.Snowflake;kotlin.String;kotlin.Int?;dev.kord.common.entity.Snowflake){}[0]
     final suspend fun getGuildMember(dev.kord.common.entity/Snowflake, dev.kord.common.entity/Snowflake): dev.kord.common.entity/DiscordGuildMember // dev.kord.rest.service/GuildService.getGuildMember|getGuildMember(dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake){}[0]
+    final suspend fun getGuildMemberVerification(dev.kord.common.entity/Snowflake, kotlin/String? = ..., kotlin/Boolean? = ...): dev.kord.common.entity/DiscordMemberVerification // dev.kord.rest.service/GuildService.getGuildMemberVerification|getGuildMemberVerification(dev.kord.common.entity.Snowflake;kotlin.String?;kotlin.Boolean?){}[0]
     final suspend fun getGuildMembers(dev.kord.common.entity/Snowflake, dev.kord.rest.route/Position.After? = ..., kotlin/Int? = ...): kotlin.collections/List<dev.kord.common.entity/DiscordGuildMember> // dev.kord.rest.service/GuildService.getGuildMembers|getGuildMembers(dev.kord.common.entity.Snowflake;dev.kord.rest.route.Position.After?;kotlin.Int?){}[0]
     final suspend fun getGuildMembers(dev.kord.common.entity/Snowflake, kotlin/String, kotlin/Int? = ...): kotlin.collections/List<dev.kord.common.entity/DiscordGuildMember> // dev.kord.rest.service/GuildService.getGuildMembers|getGuildMembers(dev.kord.common.entity.Snowflake;kotlin.String;kotlin.Int?){}[0]
     final suspend fun getGuildOnboarding(dev.kord.common.entity/Snowflake): dev.kord.common.entity/DiscordGuildOnboarding // dev.kord.rest.service/GuildService.getGuildOnboarding|getGuildOnboarding(dev.kord.common.entity.Snowflake){}[0]
     final suspend fun getGuildPreview(dev.kord.common.entity/Snowflake): dev.kord.common.entity/DiscordGuildPreview // dev.kord.rest.service/GuildService.getGuildPreview|getGuildPreview(dev.kord.common.entity.Snowflake){}[0]
+    final suspend fun getGuildProfile(dev.kord.common.entity/Snowflake): dev.kord.common.entity/DiscordGuildProfile // dev.kord.rest.service/GuildService.getGuildProfile|getGuildProfile(dev.kord.common.entity.Snowflake){}[0]
     final suspend fun getGuildPruneCount(dev.kord.common.entity/Snowflake, kotlin/Int = ...): dev.kord.rest.json.response/GetPruneResponse // dev.kord.rest.service/GuildService.getGuildPruneCount|getGuildPruneCount(dev.kord.common.entity.Snowflake;kotlin.Int){}[0]
     final suspend fun getGuildRoles(dev.kord.common.entity/Snowflake): kotlin.collections/List<dev.kord.common.entity/DiscordRole> // dev.kord.rest.service/GuildService.getGuildRoles|getGuildRoles(dev.kord.common.entity.Snowflake){}[0]
     final suspend fun getGuildVoiceRegions(dev.kord.common.entity/Snowflake): kotlin.collections/List<dev.kord.common.entity/DiscordVoiceRegion> // dev.kord.rest.service/GuildService.getGuildVoiceRegions|getGuildVoiceRegions(dev.kord.common.entity.Snowflake){}[0]
@@ -6881,11 +7128,14 @@ final class dev.kord.rest.service/GuildService : dev.kord.rest.service/RestServi
     final suspend fun modifyCurrentUserNickname(dev.kord.common.entity/Snowflake, dev.kord.rest.json.request/CurrentUserNicknameModifyRequest, kotlin/String? = ...): dev.kord.rest.json.response/CurrentUserNicknameModifyResponse // dev.kord.rest.service/GuildService.modifyCurrentUserNickname|modifyCurrentUserNickname(dev.kord.common.entity.Snowflake;dev.kord.rest.json.request.CurrentUserNicknameModifyRequest;kotlin.String?){}[0]
     final suspend fun modifyCurrentVoiceState(dev.kord.common.entity/Snowflake, dev.kord.rest.json.request/CurrentVoiceStateModifyRequest) // dev.kord.rest.service/GuildService.modifyCurrentVoiceState|modifyCurrentVoiceState(dev.kord.common.entity.Snowflake;dev.kord.rest.json.request.CurrentVoiceStateModifyRequest){}[0]
     final suspend fun modifyGuildMFALevel(dev.kord.common.entity/Snowflake, dev.kord.common.entity/MFALevel, kotlin/String? = ...): dev.kord.rest.json.response/GuildMFALevelModifyResponse // dev.kord.rest.service/GuildService.modifyGuildMFALevel|modifyGuildMFALevel(dev.kord.common.entity.Snowflake;dev.kord.common.entity.MFALevel;kotlin.String?){}[0]
+    final suspend fun modifyGuildMemberVerification(dev.kord.common.entity/Snowflake, dev.kord.rest.json.request/GuildMemberVerificationModifyRequest, kotlin/String?): dev.kord.common.entity/DiscordMemberVerification // dev.kord.rest.service/GuildService.modifyGuildMemberVerification|modifyGuildMemberVerification(dev.kord.common.entity.Snowflake;dev.kord.rest.json.request.GuildMemberVerificationModifyRequest;kotlin.String?){}[0]
     final suspend fun modifyGuildOnboarding(dev.kord.common.entity/Snowflake, dev.kord.rest.json.request/GuildOnboardingModifyRequest, kotlin/String? = ...): dev.kord.common.entity/DiscordGuildOnboarding // dev.kord.rest.service/GuildService.modifyGuildOnboarding|modifyGuildOnboarding(dev.kord.common.entity.Snowflake;dev.kord.rest.json.request.GuildOnboardingModifyRequest;kotlin.String?){}[0]
+    final suspend fun modifyGuildProfile(dev.kord.common.entity/Snowflake, dev.kord.rest.json.request/ModifyGuildProfileRequest): dev.kord.common.entity/DiscordGuildProfile // dev.kord.rest.service/GuildService.modifyGuildProfile|modifyGuildProfile(dev.kord.common.entity.Snowflake;dev.kord.rest.json.request.ModifyGuildProfileRequest){}[0]
     final suspend fun modifyGuildWelcomeScreen(dev.kord.common.entity/Snowflake, dev.kord.rest.json.request/GuildWelcomeScreenModifyRequest, kotlin/String? = ...): dev.kord.common.entity/DiscordWelcomeScreen // dev.kord.rest.service/GuildService.modifyGuildWelcomeScreen|modifyGuildWelcomeScreen(dev.kord.common.entity.Snowflake;dev.kord.rest.json.request.GuildWelcomeScreenModifyRequest;kotlin.String?){}[0]
     final suspend fun modifyGuildWidget(dev.kord.common.entity/Snowflake, dev.kord.rest.json.request/GuildWidgetModifyRequest, kotlin/String? = ...): dev.kord.common.entity/DiscordGuildWidget // dev.kord.rest.service/GuildService.modifyGuildWidget|modifyGuildWidget(dev.kord.common.entity.Snowflake;dev.kord.rest.json.request.GuildWidgetModifyRequest;kotlin.String?){}[0]
     final suspend fun modifyScheduledEvent(dev.kord.common.entity/Snowflake, dev.kord.common.entity/Snowflake, dev.kord.rest.json.request/ScheduledEventModifyRequest, kotlin/String? = ...): dev.kord.common.entity/DiscordGuildScheduledEvent // dev.kord.rest.service/GuildService.modifyScheduledEvent|modifyScheduledEvent(dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake;dev.kord.rest.json.request.ScheduledEventModifyRequest;kotlin.String?){}[0]
     final suspend fun modifyVoiceState(dev.kord.common.entity/Snowflake, dev.kord.common.entity/Snowflake, dev.kord.rest.json.request/VoiceStateModifyRequest) // dev.kord.rest.service/GuildService.modifyVoiceState|modifyVoiceState(dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake;dev.kord.rest.json.request.VoiceStateModifyRequest){}[0]
+    final suspend fun resetGuildJoinRequest(dev.kord.common.entity/Snowflake): dev.kord.common.entity/DiscordGuildJoinRequest // dev.kord.rest.service/GuildService.resetGuildJoinRequest|resetGuildJoinRequest(dev.kord.common.entity.Snowflake){}[0]
     final suspend fun syncGuildIntegration(dev.kord.common.entity/Snowflake, dev.kord.common.entity/Snowflake) // dev.kord.rest.service/GuildService.syncGuildIntegration|syncGuildIntegration(dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake){}[0]
     final suspend inline fun addGuildBan(dev.kord.common.entity/Snowflake, dev.kord.common.entity/Snowflake, kotlin/Function1<dev.kord.rest.builder.ban/BanCreateBuilder, kotlin/Unit>) // dev.kord.rest.service/GuildService.addGuildBan|addGuildBan(dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake;kotlin.Function1<dev.kord.rest.builder.ban.BanCreateBuilder,kotlin.Unit>){}[0]
     final suspend inline fun createGuild(kotlin/String, kotlin/Function1<dev.kord.rest.builder.guild/GuildCreateBuilder, kotlin/Unit>): dev.kord.common.entity/DiscordGuild // dev.kord.rest.service/GuildService.createGuild|createGuild(kotlin.String;kotlin.Function1<dev.kord.rest.builder.guild.GuildCreateBuilder,kotlin.Unit>){}[0]
@@ -6894,6 +7144,7 @@ final class dev.kord.rest.service/GuildService : dev.kord.rest.service/RestServi
     final suspend inline fun modifyGuildChannelPosition(dev.kord.common.entity/Snowflake, kotlin/Function1<dev.kord.rest.builder.channel/GuildChannelPositionModifyBuilder, kotlin/Unit>) // dev.kord.rest.service/GuildService.modifyGuildChannelPosition|modifyGuildChannelPosition(dev.kord.common.entity.Snowflake;kotlin.Function1<dev.kord.rest.builder.channel.GuildChannelPositionModifyBuilder,kotlin.Unit>){}[0]
     final suspend inline fun modifyGuildIntegration(dev.kord.common.entity/Snowflake, dev.kord.common.entity/Snowflake, kotlin/Function1<dev.kord.rest.builder.integration/IntegrationModifyBuilder, kotlin/Unit>) // dev.kord.rest.service/GuildService.modifyGuildIntegration|modifyGuildIntegration(dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake;kotlin.Function1<dev.kord.rest.builder.integration.IntegrationModifyBuilder,kotlin.Unit>){}[0]
     final suspend inline fun modifyGuildMember(dev.kord.common.entity/Snowflake, dev.kord.common.entity/Snowflake, kotlin/Function1<dev.kord.rest.builder.member/MemberModifyBuilder, kotlin/Unit>): dev.kord.common.entity/DiscordGuildMember // dev.kord.rest.service/GuildService.modifyGuildMember|modifyGuildMember(dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake;kotlin.Function1<dev.kord.rest.builder.member.MemberModifyBuilder,kotlin.Unit>){}[0]
+    final suspend inline fun modifyGuildMemberVerification(dev.kord.common.entity/Snowflake, kotlin/Function1<dev.kord.rest.builder.guild/MemberVerificationModifyBuilder, kotlin/Unit>): dev.kord.common.entity/DiscordMemberVerification // dev.kord.rest.service/GuildService.modifyGuildMemberVerification|modifyGuildMemberVerification(dev.kord.common.entity.Snowflake;kotlin.Function1<dev.kord.rest.builder.guild.MemberVerificationModifyBuilder,kotlin.Unit>){}[0]
     final suspend inline fun modifyGuildOnboarding(dev.kord.common.entity/Snowflake, kotlin/Function1<dev.kord.rest.builder.guild/GuildOnboardingModifyBuilder, kotlin/Unit>): dev.kord.common.entity/DiscordGuildOnboarding // dev.kord.rest.service/GuildService.modifyGuildOnboarding|modifyGuildOnboarding(dev.kord.common.entity.Snowflake;kotlin.Function1<dev.kord.rest.builder.guild.GuildOnboardingModifyBuilder,kotlin.Unit>){}[0]
     final suspend inline fun modifyGuildRole(dev.kord.common.entity/Snowflake, dev.kord.common.entity/Snowflake, kotlin/Function1<dev.kord.rest.builder.role/RoleModifyBuilder, kotlin/Unit>): dev.kord.common.entity/DiscordRole // dev.kord.rest.service/GuildService.modifyGuildRole|modifyGuildRole(dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake;kotlin.Function1<dev.kord.rest.builder.role.RoleModifyBuilder,kotlin.Unit>){}[0]
     final suspend inline fun modifyGuildRolePosition(dev.kord.common.entity/Snowflake, kotlin/Function1<dev.kord.rest.builder.role/RolePositionsModifyBuilder, kotlin/Unit>): kotlin.collections/List<dev.kord.common.entity/DiscordRole> // dev.kord.rest.service/GuildService.modifyGuildRolePosition|modifyGuildRolePosition(dev.kord.common.entity.Snowflake;kotlin.Function1<dev.kord.rest.builder.role.RolePositionsModifyBuilder,kotlin.Unit>){}[0]
@@ -7453,6 +7704,30 @@ sealed class <#A: kotlin/Any?> dev.kord.rest.route/Route { // dev.kord.rest.rout
 
     final object GuildInvitesGet : dev.kord.rest.route/Route<kotlin.collections/List<dev.kord.common.entity/DiscordInviteWithMetadata>> // dev.kord.rest.route/Route.GuildInvitesGet|null[0]
 
+    final object GuildJoinRequestAck : dev.kord.rest.route/Route<kotlin/Unit> // dev.kord.rest.route/Route.GuildJoinRequestAck|null[0]
+
+    final object GuildJoinRequestAction : dev.kord.rest.route/Route<dev.kord.common.entity/DiscordGuildJoinRequest> // dev.kord.rest.route/Route.GuildJoinRequestAction|null[0]
+
+    final object GuildJoinRequestActionByUser : dev.kord.rest.route/Route<dev.kord.common.entity/DiscordGuildJoinRequest> // dev.kord.rest.route/Route.GuildJoinRequestActionByUser|null[0]
+
+    final object GuildJoinRequestBulkAction : dev.kord.rest.route/Route<kotlin/Unit> // dev.kord.rest.route/Route.GuildJoinRequestBulkAction|null[0]
+
+    final object GuildJoinRequestCooldownGet : dev.kord.rest.route/Route<dev.kord.rest.json.request/GuildJoinRequestCooldownResponse> // dev.kord.rest.route/Route.GuildJoinRequestCooldownGet|null[0]
+
+    final object GuildJoinRequestCreate : dev.kord.rest.route/Route<dev.kord.common.entity/DiscordGuildJoinRequest> // dev.kord.rest.route/Route.GuildJoinRequestCreate|null[0]
+
+    final object GuildJoinRequestDelete : dev.kord.rest.route/Route<kotlin/Unit> // dev.kord.rest.route/Route.GuildJoinRequestDelete|null[0]
+
+    final object GuildJoinRequestGet : dev.kord.rest.route/Route<dev.kord.common.entity/DiscordGuildJoinRequest> // dev.kord.rest.route/Route.GuildJoinRequestGet|null[0]
+
+    final object GuildJoinRequestId : dev.kord.rest.route/Route.Key // dev.kord.rest.route/Route.GuildJoinRequestId|null[0]
+
+    final object GuildJoinRequestInterviewCreate : dev.kord.rest.route/Route<dev.kord.common.entity/DiscordChannel> // dev.kord.rest.route/Route.GuildJoinRequestInterviewCreate|null[0]
+
+    final object GuildJoinRequestReset : dev.kord.rest.route/Route<dev.kord.common.entity/DiscordGuildJoinRequest> // dev.kord.rest.route/Route.GuildJoinRequestReset|null[0]
+
+    final object GuildJoinRequestsGet : dev.kord.rest.route/Route<dev.kord.rest.json.request/GuildJoinRequestsResponse> // dev.kord.rest.route/Route.GuildJoinRequestsGet|null[0]
+
     final object GuildLeave : dev.kord.rest.route/Route<kotlin/Unit> // dev.kord.rest.route/Route.GuildLeave|null[0]
 
     final object GuildMFALevelModify : dev.kord.rest.route/Route<dev.kord.rest.json.response/GuildMFALevelModifyResponse> // dev.kord.rest.route/Route.GuildMFALevelModify|null[0]
@@ -7469,6 +7744,10 @@ sealed class <#A: kotlin/Any?> dev.kord.rest.route/Route { // dev.kord.rest.rout
 
     final object GuildMemberRolePut : dev.kord.rest.route/Route<kotlin/Unit> // dev.kord.rest.route/Route.GuildMemberRolePut|null[0]
 
+    final object GuildMemberVerificationGet : dev.kord.rest.route/Route<dev.kord.common.entity/DiscordMemberVerification> // dev.kord.rest.route/Route.GuildMemberVerificationGet|null[0]
+
+    final object GuildMemberVerificationPatch : dev.kord.rest.route/Route<dev.kord.common.entity/DiscordMemberVerification> // dev.kord.rest.route/Route.GuildMemberVerificationPatch|null[0]
+
     final object GuildMembersGet : dev.kord.rest.route/Route<kotlin.collections/List<dev.kord.common.entity/DiscordGuildMember>> // dev.kord.rest.route/Route.GuildMembersGet|null[0]
 
     final object GuildMembersSearchGet : dev.kord.rest.route/Route<kotlin.collections/List<dev.kord.common.entity/DiscordGuildMember>> // dev.kord.rest.route/Route.GuildMembersSearchGet|null[0]
@@ -7482,6 +7761,10 @@ sealed class <#A: kotlin/Any?> dev.kord.rest.route/Route { // dev.kord.rest.rout
     final object GuildPost : dev.kord.rest.route/Route<dev.kord.common.entity/DiscordGuild> // dev.kord.rest.route/Route.GuildPost|null[0]
 
     final object GuildPreviewGet : dev.kord.rest.route/Route<dev.kord.common.entity/DiscordGuildPreview> // dev.kord.rest.route/Route.GuildPreviewGet|null[0]
+
+    final object GuildProfileGet : dev.kord.rest.route/Route<dev.kord.common.entity/DiscordGuildProfile> // dev.kord.rest.route/Route.GuildProfileGet|null[0]
+
+    final object GuildProfilePatch : dev.kord.rest.route/Route<dev.kord.common.entity/DiscordGuildProfile> // dev.kord.rest.route/Route.GuildProfilePatch|null[0]
 
     final object GuildPruneCountGet : dev.kord.rest.route/Route<dev.kord.rest.json.response/GetPruneResponse> // dev.kord.rest.route/Route.GuildPruneCountGet|null[0]
 

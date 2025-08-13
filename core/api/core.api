@@ -7114,7 +7114,7 @@ public final class dev/kord/core/entity/JoinRequest : dev/kord/core/entity/KordE
 	public synthetic fun compareTo (Ljava/lang/Object;)I
 	public final fun getActionedAt ()Ldev/kord/common/entity/Snowflake;
 	public final fun getActionedAtTime ()Lkotlinx/datetime/Instant;
-	public final fun getActionedByUser ()Ldev/kord/common/entity/DiscordUser;
+	public final fun getActionedByUser ()Ldev/kord/core/behavior/UserBehavior;
 	public final fun getApplicationStatus ()Ldev/kord/common/entity/GuildJoinRequestStatus;
 	public final fun getCreatedAt ()Lkotlinx/datetime/Instant;
 	public final fun getData ()Ldev/kord/core/cache/data/JoinRequestData;
@@ -7131,7 +7131,8 @@ public final class dev/kord/core/entity/JoinRequest : dev/kord/core/entity/KordE
 	public final fun getLastSeen ()Lkotlinx/datetime/Instant;
 	public final fun getRejectionReason ()Ljava/lang/String;
 	public final fun getSupplier ()Ldev/kord/core/supplier/EntitySupplier;
-	public final fun getUser ()Ldev/kord/common/entity/DiscordUser;
+	public final fun getUser ()Ldev/kord/core/behavior/UserBehavior;
+	public final fun getUserId ()Ldev/kord/common/entity/Snowflake;
 }
 
 public abstract interface class dev/kord/core/entity/KordEntity : dev/kord/core/KordObject, dev/kord/core/entity/Entity {
