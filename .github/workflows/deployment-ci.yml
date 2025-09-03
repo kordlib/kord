@@ -40,12 +40,12 @@ jobs:
       !contains(github.event.head_commit.message, '[publish skip]') && github.event_name != 'pull_request' &&  github.ref != 'refs/heads/master'
     env:
       KORD_TEST_TOKEN: ${{ secrets.KORD_TEST_TOKEN }}
-      NEXUS_USER: ${{ secrets.NEXUS_USER }}
-      NEXUS_PASSWORD: ${{ secrets.NEXUS_PASSWORD }}
+      ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.NEXUS_USER }}
+      ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.NEXUS_PASSWORD }}
       KORD_REPO_USER: ${{ secrets.KORD_REPO_USER }}
       KORD_REPO_PASSWORD: ${{ secrets.KORD_REPO_PASSWORD }}
-      SIGNING_KEY: ${{ secrets.signingKey }}
-      SIGNING_PASSWORD: ${{ secrets.signingPassword }}
+      ORG_GRADLE_PROJECT_signingInMemoryKey: ${{ secrets.signingKey }}
+      ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: ${{ secrets.signingPassword }}
     steps:
       - uses: actions/checkout@v5
         with:
@@ -57,7 +57,5 @@ jobs:
           java-version: 21
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v4
-      - name: Build with Gradle
-        run: ./gradlew --stacktrace --info build
       - name: Publish with Gradle
         run: ./gradlew --no-parallel -x test publish
