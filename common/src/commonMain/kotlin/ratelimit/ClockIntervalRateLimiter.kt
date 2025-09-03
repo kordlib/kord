@@ -1,8 +1,8 @@
 package dev.kord.common.ratelimit
 
 import kotlinx.coroutines.delay
-import kotlinx.datetime.Clock
-import kotlinx.datetime.Instant
+import kotlin.time.Clock
+import kotlin.time.Instant
 import kotlin.time.Duration
 
 internal class ClockIntervalRateLimiter(

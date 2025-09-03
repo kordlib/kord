@@ -9,7 +9,7 @@ import dev.kord.common.entity.optional.delegate.delegate
 import dev.kord.rest.builder.RequestBuilder
 import dev.kord.rest.json.request.CurrentVoiceStateModifyRequest
 import dev.kord.rest.json.request.VoiceStateModifyRequest
-import kotlinx.datetime.Instant
+import kotlin.time.Instant
 
 @KordDsl
 public class CurrentVoiceStateModifyBuilder : RequestBuilder<CurrentVoiceStateModifyRequest> {

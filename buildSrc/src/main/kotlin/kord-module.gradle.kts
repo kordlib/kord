@@ -3,7 +3,6 @@ plugins {
     org.jetbrains.kotlin.plugin.serialization
     org.jetbrains.dokka
     org.jetbrains.kotlinx.atomicfu
-    org.jetbrains.kotlinx.`binary-compatibility-validator`
     com.google.devtools.ksp
     `maven-publish`
 }
@@ -16,10 +15,6 @@ dependencies {
     ksp(project(":ksp-processors"))
 }
 
-apiValidation {
-    applyKordBCVOptions()
-}
-
 kotlin {
     explicitApi()
     compilerOptions {
@@ -29,6 +24,10 @@ kotlin {
 
     sourceSets {
         applyKordTestOptIns()
+    }
+
+    abiValidation {
+        applyKordBCVOptions()
     }
 }
 

@@ -14,73 +14,73 @@ import dev.kord.ksp.generation.shared.EXACTLY_ONCE
 import dev.kord.ksp.generation.shared.GenerationContext
 import dev.kord.ksp.returns
 
-context(BitFlags, GenerationContext)
+context(entity: BitFlags, _: GenerationContext)
 internal fun TypeSpec.Builder.addContains(parameterName: String, parameterType: TypeName) = addFunction("contains") {
-    addKdoc("Checks if this instance of [%T] has all bits set that are set in [$parameterName].", collectionCN)
+    addKdoc("Checks if this instance of [%T] has all bits set that are set in [$parameterName].", entity.collectionCN)
     addModifiers(PUBLIC, OPERATOR)
     addParameter(parameterName, parameterType)
     returns<Boolean>()
     addStatement(
-        when (valueType) {
-            INT -> "return this.$valueName·and·$parameterName.$valueName·==·$parameterName.$valueName"
-            BIT_SET -> "return $parameterName.$valueName·in·this.$valueName"
+        when (entity.valueType) {
+            INT -> "return this.${entity.valueName}·and·$parameterName.${entity.valueName}·==·$parameterName.${entity.valueName}"
+            BIT_SET -> "return $parameterName.${entity.valueName}·in·this.${entity.valueName}"
         }
     )
 }
 
-context(BitFlags, GenerationContext)
+context(entity: BitFlags, _: GenerationContext)
 internal fun TypeSpec.Builder.addPlus(parameterName: String, parameterType: TypeName) = addFunction("plus") {
     addKdoc(
         "Returns an instance of [%T] that has all bits set that are set in `this` and [$parameterName].",
-        collectionCN,
+        entity.collectionCN,
     )
     addModifiers(PUBLIC, OPERATOR)
     addParameter(parameterName, parameterType)
-    returns(collectionCN)
+    returns(entity.collectionCN)
     addStatement(
-        when (valueType) {
-            INT -> "return %T(this.$valueName·or·$parameterName.$valueName)"
-            BIT_SET -> "return %T(this.$valueName·+·$parameterName.$valueName)"
+        when (entity.valueType) {
+            INT -> "return %T(this.${entity.valueName}·or·$parameterName.${entity.valueName})"
+            BIT_SET -> "return %T(this.${entity.valueName}·+·$parameterName.${entity.valueName})"
         },
-        collectionCN,
+        entity.collectionCN,
     )
 }
 
-context(BitFlags, GenerationContext)
+context(entity: BitFlags, _: GenerationContext)
 internal fun TypeSpec.Builder.addMinus(parameterName: String, parameterType: TypeName) = addFunction("minus") {
     addKdoc(
         "Returns an instance of [%T] that has all bits set that are set in `this` except the bits that are set in " +
             "[$parameterName].",
-        collectionCN,
+        entity.collectionCN,
     )
     addModifiers(PUBLIC, OPERATOR)
     addParameter(parameterName, parameterType)
-    returns(collectionCN)
+    returns(entity.collectionCN)
     addStatement(
-        when (valueType) {
-            INT -> "return %T(this.$valueName·and·$parameterName.$valueName.inv())"
-            BIT_SET -> "return %T(this.$valueName·-·$parameterName.$valueName)"
+        when (entity.valueType) {
+            INT -> "return %T(this.${entity.valueName}·and·$parameterName.${entity.valueName}.inv())"
+            BIT_SET -> "return %T(this.${entity.valueName}·-·$parameterName.${entity.valueName})"
         },
-        collectionCN,
+        entity.collectionCN,
     )
 }
 
-context(BitFlags, GenerationContext)
+context(entity: BitFlags, _: GenerationContext)
 internal fun TypeSpec.Builder.addCopy() = addFunction("copy") {
-    addKdoc("Returns a copy of this instance of [%T] modified with [builder].", collectionCN)
+    addKdoc("Returns a copy of this instance of [%T] modified with [builder].", entity.collectionCN)
     addModifiers(PUBLIC, INLINE)
-    addParameter("builder", type = LambdaTypeName.get(receiver = builderCN, returnType = UNIT))
-    returns(collectionCN)
+    addParameter("builder", type = LambdaTypeName.get(receiver = entity.builderCN, returnType = UNIT))
+    returns(entity.collectionCN)
     addStatement("%M·{·callsInPlace(builder,·%M)·}", CONTRACT, EXACTLY_ONCE)
-    val valueCopy = when (valueType) {
+    val valueCopy = when (entity.valueType) {
         INT -> ""
         BIT_SET -> ".copy()"
     }
-    addStatement("return·%T($valueName$valueCopy).apply(builder).build()", builderCN)
+    addStatement("return·%T(${entity.valueName}$valueCopy).apply(builder).build()", entity.builderCN)
 }
 
 // TODO remove eventually
-context(BitFlags, GenerationContext)
+context(entity: BitFlags, _: GenerationContext)
 internal fun TypeSpec.Builder.addCopy0() = addFunction("copy0") {
     @OptIn(DelicateKotlinPoetApi::class)
     addAnnotation(
@@ -90,8 +90,8 @@ internal fun TypeSpec.Builder.addCopy0() = addFunction("copy0") {
         )
     )
     addModifiers(PUBLIC, INLINE)
-    addParameter("builder", type = LambdaTypeName.get(receiver = builderCN, returnType = UNIT))
-    returns(collectionCN)
+    addParameter("builder", type = LambdaTypeName.get(receiver = entity.builderCN, returnType = UNIT))
+    returns(entity.collectionCN)
     addStatement("%M·{·callsInPlace(builder,·%M)·}", CONTRACT, EXACTLY_ONCE)
     addStatement("return·copy(builder)")
 }

@@ -1,6 +1,5 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
-@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
-                "SpellCheckingInspection", "GrazieInspection"))
+@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
@@ -14,8 +13,9 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 /**
- * See [AuditLogEvent]s in the
- * [Discord Developer Documentation](https://discord.com/developers/docs/resources/audit-log#audit-log-entry-object-audit-log-events).
+ *
+ *
+ * See [AuditLogEvent]s in the [Discord Developer Documentation](https://discord.com/developers/docs/resources/audit-log#audit-log-entry-object-audit-log-events).
  */
 @Serializable(with = AuditLogEvent.Serializer::class)
 public sealed class AuditLogEvent(
@@ -24,14 +24,11 @@ public sealed class AuditLogEvent(
      */
     public val `value`: Int,
 ) {
-    final override fun equals(other: Any?): Boolean = this === other ||
-            (other is AuditLogEvent && this.value == other.value)
+    final override fun equals(other: Any?): Boolean = this === other || (other is AuditLogEvent && this.value == other.value)
 
     final override fun hashCode(): Int = value.hashCode()
 
-    final override fun toString(): String =
-            if (this is Unknown) "AuditLogEvent.Unknown(value=$value)"
-            else "AuditLogEvent.${this::class.simpleName}"
+    final override fun toString(): String = if (this is Unknown) "AuditLogEvent.Unknown(value=$value)" else "AuditLogEvent.${this::class.simpleName}"
 
     /**
      * An unknown [AuditLogEvent].
@@ -399,8 +396,7 @@ public sealed class AuditLogEvent(
         }
 
         /**
-         * Returns an instance of [AuditLogEvent] with [AuditLogEvent.value] equal to the specified
-         * [value].
+         * Returns an instance of [AuditLogEvent] with [AuditLogEvent.value] equal to the specified [value].
          */
         public fun from(`value`: Int): AuditLogEvent = when (value) {
             1 -> GuildUpdate

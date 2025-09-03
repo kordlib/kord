@@ -13,8 +13,7 @@ import io.ktor.client.engine.mock.*
 import io.ktor.client.request.forms.*
 import io.ktor.utils.io.*
 import kotlinx.coroutines.test.runTest
-import kotlinx.datetime.Clock
-import kotlinx.serialization.encodeToString
+import kotlin.time.Clock
 import kotlinx.serialization.json.Json
 import kotlin.js.JsName
 import kotlin.test.Test
