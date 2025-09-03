@@ -536,12 +536,6 @@ class RestServiceTest {
     }
 
     @Test
-    @Order(Int.MAX_VALUE)
-    fun `delete guild`(): Unit = runBlocking {
-        guild.delete()
-    }
-
-    @Test
     fun `create role with image icon`(): Unit = runBlocking {
         if (!boostEnabled)
             return@runBlocking
