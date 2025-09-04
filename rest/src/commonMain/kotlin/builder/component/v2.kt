@@ -52,6 +52,7 @@ public class MediaGalleryBuilder : ContainerComponentBuilder {
     public val items: MutableList<MediaGalleryItemBuilder> = mutableListOf()
 
     public fun item(url: String, builder: MediaGalleryItemBuilder.() -> Unit = {}) {
+        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
         items.add(MediaGalleryItemBuilder(url).apply(builder))
     }
 
