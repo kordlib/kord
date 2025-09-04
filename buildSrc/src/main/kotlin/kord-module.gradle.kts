@@ -4,7 +4,6 @@ plugins {
     org.jetbrains.dokka
     org.jetbrains.kotlinx.atomicfu
     com.google.devtools.ksp
-    `maven-publish`
 }
 
 repositories {
@@ -42,12 +41,5 @@ tasks {
 
     withType<JavaCompile>().configureEach {
         options.release = KORD_JVM_TARGET
-    }
-}
-
-publishing {
-    publications.register<MavenPublication>(Library.name) {
-        from(components["java"])
-        artifact(tasks.kotlinSourcesJar)
     }
 }
