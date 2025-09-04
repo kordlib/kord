@@ -2112,6 +2112,18 @@ public final class dev/kord/common/entity/ComponentType$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
+public final class dev/kord/common/entity/ComponentType$Container : dev/kord/common/entity/ComponentType {
+	public static final field INSTANCE Ldev/kord/common/entity/ComponentType$Container;
+}
+
+public final class dev/kord/common/entity/ComponentType$File : dev/kord/common/entity/ComponentType {
+	public static final field INSTANCE Ldev/kord/common/entity/ComponentType$File;
+}
+
+public final class dev/kord/common/entity/ComponentType$MediaGallery : dev/kord/common/entity/ComponentType {
+	public static final field INSTANCE Ldev/kord/common/entity/ComponentType$MediaGallery;
+}
+
 public final class dev/kord/common/entity/ComponentType$MentionableSelect : dev/kord/common/entity/ComponentType {
 	public static final field INSTANCE Ldev/kord/common/entity/ComponentType$MentionableSelect;
 }
@@ -2120,12 +2132,28 @@ public final class dev/kord/common/entity/ComponentType$RoleSelect : dev/kord/co
 	public static final field INSTANCE Ldev/kord/common/entity/ComponentType$RoleSelect;
 }
 
+public final class dev/kord/common/entity/ComponentType$Section : dev/kord/common/entity/ComponentType {
+	public static final field INSTANCE Ldev/kord/common/entity/ComponentType$Section;
+}
+
+public final class dev/kord/common/entity/ComponentType$Separator : dev/kord/common/entity/ComponentType {
+	public static final field INSTANCE Ldev/kord/common/entity/ComponentType$Separator;
+}
+
 public final class dev/kord/common/entity/ComponentType$StringSelect : dev/kord/common/entity/ComponentType {
 	public static final field INSTANCE Ldev/kord/common/entity/ComponentType$StringSelect;
 }
 
+public final class dev/kord/common/entity/ComponentType$TextDisplay : dev/kord/common/entity/ComponentType {
+	public static final field INSTANCE Ldev/kord/common/entity/ComponentType$TextDisplay;
+}
+
 public final class dev/kord/common/entity/ComponentType$TextInput : dev/kord/common/entity/ComponentType {
 	public static final field INSTANCE Ldev/kord/common/entity/ComponentType$TextInput;
+}
+
+public final class dev/kord/common/entity/ComponentType$Thumbnail : dev/kord/common/entity/ComponentType {
+	public static final field INSTANCE Ldev/kord/common/entity/ComponentType$Thumbnail;
 }
 
 public final class dev/kord/common/entity/ComponentType$Unknown : dev/kord/common/entity/ComponentType {
@@ -3152,8 +3180,8 @@ public final class dev/kord/common/entity/DiscordChannel$Companion {
 
 public final class dev/kord/common/entity/DiscordChatComponent : dev/kord/common/entity/DiscordComponent {
 	public static final field Companion Ldev/kord/common/entity/DiscordChatComponent$Companion;
-	public fun <init> (Ldev/kord/common/entity/ComponentType;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalSnowflake;)V
-	public synthetic fun <init> (Ldev/kord/common/entity/ComponentType;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalSnowflake;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Ldev/kord/common/entity/ComponentType;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;)V
+	public synthetic fun <init> (Ldev/kord/common/entity/ComponentType;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ldev/kord/common/entity/ComponentType;
 	public final fun component10 ()Ldev/kord/common/entity/optional/Optional;
 	public final fun component11 ()Ldev/kord/common/entity/optional/Optional;
@@ -3166,6 +3194,16 @@ public final class dev/kord/common/entity/DiscordChatComponent : dev/kord/common
 	public final fun component18 ()Ldev/kord/common/entity/optional/Optional;
 	public final fun component19 ()Ldev/kord/common/entity/optional/OptionalSnowflake;
 	public final fun component2 ()Ldev/kord/common/entity/optional/Optional;
+	public final fun component20 ()Ldev/kord/common/entity/optional/Optional;
+	public final fun component21 ()Ldev/kord/common/entity/optional/Optional;
+	public final fun component22 ()Ldev/kord/common/entity/optional/Optional;
+	public final fun component23 ()Ldev/kord/common/entity/optional/Optional;
+	public final fun component24 ()Ldev/kord/common/entity/optional/OptionalBoolean;
+	public final fun component25 ()Ldev/kord/common/entity/optional/Optional;
+	public final fun component26 ()Ldev/kord/common/entity/optional/OptionalBoolean;
+	public final fun component27 ()Ldev/kord/common/entity/optional/Optional;
+	public final fun component28 ()Ldev/kord/common/entity/optional/Optional;
+	public final fun component29 ()Ldev/kord/common/entity/optional/Optional;
 	public final fun component3 ()Ldev/kord/common/entity/optional/Optional;
 	public final fun component4 ()Ldev/kord/common/entity/optional/Optional;
 	public final fun component5 ()Ldev/kord/common/entity/optional/Optional;
@@ -3173,24 +3211,34 @@ public final class dev/kord/common/entity/DiscordChatComponent : dev/kord/common
 	public final fun component7 ()Ldev/kord/common/entity/optional/OptionalBoolean;
 	public final fun component8 ()Ldev/kord/common/entity/optional/Optional;
 	public final fun component9 ()Ldev/kord/common/entity/optional/Optional;
-	public final fun copy (Ldev/kord/common/entity/ComponentType;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalSnowflake;)Ldev/kord/common/entity/DiscordChatComponent;
-	public static synthetic fun copy$default (Ldev/kord/common/entity/DiscordChatComponent;Ldev/kord/common/entity/ComponentType;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalSnowflake;ILjava/lang/Object;)Ldev/kord/common/entity/DiscordChatComponent;
+	public final fun copy (Ldev/kord/common/entity/ComponentType;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;)Ldev/kord/common/entity/DiscordChatComponent;
+	public static synthetic fun copy$default (Ldev/kord/common/entity/DiscordChatComponent;Ldev/kord/common/entity/ComponentType;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;ILjava/lang/Object;)Ldev/kord/common/entity/DiscordChatComponent;
 	public fun equals (Ljava/lang/Object;)Z
+	public final fun getAccentColor ()Ldev/kord/common/entity/optional/Optional;
+	public final fun getAccessory ()Ldev/kord/common/entity/optional/Optional;
 	public fun getChannelTypes ()Ldev/kord/common/entity/optional/Optional;
 	public fun getComponents ()Ldev/kord/common/entity/optional/Optional;
+	public final fun getContent ()Ldev/kord/common/entity/optional/Optional;
 	public fun getCustomId ()Ldev/kord/common/entity/optional/Optional;
 	public fun getDefaultValues ()Ldev/kord/common/entity/optional/Optional;
+	public final fun getDescription ()Ldev/kord/common/entity/optional/Optional;
 	public fun getDisabled ()Ldev/kord/common/entity/optional/OptionalBoolean;
+	public final fun getDivider ()Ldev/kord/common/entity/optional/OptionalBoolean;
 	public fun getEmoji ()Ldev/kord/common/entity/optional/Optional;
+	public final fun getFile ()Ldev/kord/common/entity/optional/Optional;
+	public final fun getItems ()Ldev/kord/common/entity/optional/Optional;
 	public fun getLabel ()Ldev/kord/common/entity/optional/Optional;
 	public fun getMaxLength ()Ldev/kord/common/entity/optional/OptionalInt;
 	public fun getMaxValues ()Ldev/kord/common/entity/optional/OptionalInt;
+	public final fun getMedia ()Ldev/kord/common/entity/optional/Optional;
 	public fun getMinLength ()Ldev/kord/common/entity/optional/OptionalInt;
 	public fun getMinValues ()Ldev/kord/common/entity/optional/OptionalInt;
 	public fun getOptions ()Ldev/kord/common/entity/optional/Optional;
 	public fun getPlaceholder ()Ldev/kord/common/entity/optional/Optional;
 	public fun getRequired ()Ldev/kord/common/entity/optional/OptionalBoolean;
 	public final fun getSkuId ()Ldev/kord/common/entity/optional/OptionalSnowflake;
+	public final fun getSpacing ()Ldev/kord/common/entity/optional/Optional;
+	public final fun getSpoiler ()Ldev/kord/common/entity/optional/OptionalBoolean;
 	public final fun getStyle ()Ldev/kord/common/entity/optional/Optional;
 	public fun getType ()Ldev/kord/common/entity/ComponentType;
 	public fun getUrl ()Ldev/kord/common/entity/optional/Optional;
@@ -7318,6 +7366,38 @@ public final class dev/kord/common/entity/MFALevel$None : dev/kord/common/entity
 public final class dev/kord/common/entity/MFALevel$Unknown : dev/kord/common/entity/MFALevel {
 }
 
+public final class dev/kord/common/entity/MediaGalleryItem {
+	public static final field Companion Ldev/kord/common/entity/MediaGalleryItem$Companion;
+	public fun <init> (Ldev/kord/common/entity/UnfurledMediaItem;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;)V
+	public synthetic fun <init> (Ldev/kord/common/entity/UnfurledMediaItem;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ldev/kord/common/entity/UnfurledMediaItem;
+	public final fun component2 ()Ldev/kord/common/entity/optional/Optional;
+	public final fun component3 ()Ldev/kord/common/entity/optional/OptionalBoolean;
+	public final fun copy (Ldev/kord/common/entity/UnfurledMediaItem;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;)Ldev/kord/common/entity/MediaGalleryItem;
+	public static synthetic fun copy$default (Ldev/kord/common/entity/MediaGalleryItem;Ldev/kord/common/entity/UnfurledMediaItem;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;ILjava/lang/Object;)Ldev/kord/common/entity/MediaGalleryItem;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getDescription ()Ldev/kord/common/entity/optional/Optional;
+	public final fun getMedia ()Ldev/kord/common/entity/UnfurledMediaItem;
+	public final fun getSpoiler ()Ldev/kord/common/entity/optional/OptionalBoolean;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public synthetic class dev/kord/common/entity/MediaGalleryItem$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Ldev/kord/common/entity/MediaGalleryItem$$serializer;
+	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/common/entity/MediaGalleryItem;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/common/entity/MediaGalleryItem;)V
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class dev/kord/common/entity/MediaGalleryItem$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
 public final class dev/kord/common/entity/MessageActivity {
 	public static final field Companion Ldev/kord/common/entity/MessageActivity$Companion;
 	public fun <init> (Ldev/kord/common/entity/MessageActivityType;Ldev/kord/common/entity/optional/Optional;)V
@@ -7449,6 +7529,10 @@ public final class dev/kord/common/entity/MessageFlag$FailedToMentionSomeRolesIn
 
 public final class dev/kord/common/entity/MessageFlag$HasThread : dev/kord/common/entity/MessageFlag {
 	public static final field INSTANCE Ldev/kord/common/entity/MessageFlag$HasThread;
+}
+
+public final class dev/kord/common/entity/MessageFlag$IsComponentsV2 : dev/kord/common/entity/MessageFlag {
+	public static final field INSTANCE Ldev/kord/common/entity/MessageFlag$IsComponentsV2;
 }
 
 public final class dev/kord/common/entity/MessageFlag$IsCrossPost : dev/kord/common/entity/MessageFlag {
@@ -8493,6 +8577,32 @@ public final class dev/kord/common/entity/SelectDefaultValueType$User : dev/kord
 	public static final field INSTANCE Ldev/kord/common/entity/SelectDefaultValueType$User;
 }
 
+public abstract class dev/kord/common/entity/SeparatorSpacingSize {
+	public static final field Companion Ldev/kord/common/entity/SeparatorSpacingSize$Companion;
+	public synthetic fun <init> (ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun equals (Ljava/lang/Object;)Z
+	public final fun getValue ()I
+	public final fun hashCode ()I
+	public final fun toString ()Ljava/lang/String;
+}
+
+public final class dev/kord/common/entity/SeparatorSpacingSize$Companion {
+	public final fun from (I)Ldev/kord/common/entity/SeparatorSpacingSize;
+	public final fun getEntries ()Ljava/util/List;
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class dev/kord/common/entity/SeparatorSpacingSize$Large : dev/kord/common/entity/SeparatorSpacingSize {
+	public static final field INSTANCE Ldev/kord/common/entity/SeparatorSpacingSize$Large;
+}
+
+public final class dev/kord/common/entity/SeparatorSpacingSize$Small : dev/kord/common/entity/SeparatorSpacingSize {
+	public static final field INSTANCE Ldev/kord/common/entity/SeparatorSpacingSize$Small;
+}
+
+public final class dev/kord/common/entity/SeparatorSpacingSize$Unknown : dev/kord/common/entity/SeparatorSpacingSize {
+}
+
 public abstract class dev/kord/common/entity/SkuFlag {
 	public static final field Companion Ldev/kord/common/entity/SkuFlag$Companion;
 	public synthetic fun <init> (ILkotlin/jvm/internal/DefaultConstructorMarker;)V
@@ -8917,6 +9027,42 @@ public final class dev/kord/common/entity/TextInputStyle$Short : dev/kord/common
 }
 
 public final class dev/kord/common/entity/TextInputStyle$Unknown : dev/kord/common/entity/TextInputStyle {
+}
+
+public final class dev/kord/common/entity/UnfurledMediaItem {
+	public static final field Companion Ldev/kord/common/entity/UnfurledMediaItem$Companion;
+	public fun <init> (Ljava/lang/String;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/Optional;)V
+	public synthetic fun <init> (Ljava/lang/String;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/Optional;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ldev/kord/common/entity/optional/Optional;
+	public final fun component3 ()Ldev/kord/common/entity/optional/OptionalInt;
+	public final fun component4 ()Ldev/kord/common/entity/optional/OptionalInt;
+	public final fun component5 ()Ldev/kord/common/entity/optional/Optional;
+	public final fun copy (Ljava/lang/String;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/Optional;)Ldev/kord/common/entity/UnfurledMediaItem;
+	public static synthetic fun copy$default (Ldev/kord/common/entity/UnfurledMediaItem;Ljava/lang/String;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/Optional;ILjava/lang/Object;)Ldev/kord/common/entity/UnfurledMediaItem;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getContentType ()Ldev/kord/common/entity/optional/Optional;
+	public final fun getHeight ()Ldev/kord/common/entity/optional/OptionalInt;
+	public final fun getProxyUrl ()Ldev/kord/common/entity/optional/Optional;
+	public final fun getUrl ()Ljava/lang/String;
+	public final fun getWidth ()Ldev/kord/common/entity/optional/OptionalInt;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public synthetic class dev/kord/common/entity/UnfurledMediaItem$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Ldev/kord/common/entity/UnfurledMediaItem$$serializer;
+	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/common/entity/UnfurledMediaItem;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/common/entity/UnfurledMediaItem;)V
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class dev/kord/common/entity/UnfurledMediaItem$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
 public abstract class dev/kord/common/entity/UserFlag {

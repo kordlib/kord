@@ -1043,7 +1043,22 @@ public final class dev/kord/rest/builder/channel/thread/ThreadModifyBuilderKt {
 	public static final fun applyTag (Ldev/kord/rest/builder/channel/thread/ThreadModifyBuilder;Ldev/kord/common/entity/Snowflake;)V
 }
 
-public final class dev/kord/rest/builder/component/ActionRowBuilder : dev/kord/rest/builder/component/MessageComponentBuilder {
+public abstract interface class dev/kord/rest/builder/component/AccessoryComponentBuilder : dev/kord/rest/builder/component/ComponentBuilder {
+}
+
+public abstract interface class dev/kord/rest/builder/component/AccessoryHolder {
+	public abstract fun getAccessory ()Ldev/kord/rest/builder/component/AccessoryComponentBuilder;
+	public abstract fun setAccessory (Ldev/kord/rest/builder/component/AccessoryComponentBuilder;)V
+}
+
+public final class dev/kord/rest/builder/component/AccessoryHolderKt {
+	public static final fun interactionButtonAccessory (Ldev/kord/rest/builder/component/AccessoryHolder;Ldev/kord/common/entity/ButtonStyle;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+	public static synthetic fun interactionButtonAccessory$default (Ldev/kord/rest/builder/component/AccessoryHolder;Ldev/kord/common/entity/ButtonStyle;Ljava/lang/String;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
+	public static final fun linkButtonAccessory (Ldev/kord/rest/builder/component/AccessoryHolder;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+	public static synthetic fun linkButtonAccessory$default (Ldev/kord/rest/builder/component/AccessoryHolder;Ljava/lang/String;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
+}
+
+public final class dev/kord/rest/builder/component/ActionRowBuilder : dev/kord/rest/builder/component/ContainerComponentBuilder {
 	public fun <init> ()V
 	public fun build ()Ldev/kord/common/entity/DiscordChatComponent;
 	public synthetic fun build ()Ldev/kord/common/entity/DiscordComponent;
@@ -1065,13 +1080,13 @@ public final class dev/kord/rest/builder/component/ActionRowBuilder : dev/kord/r
 	public static synthetic fun userSelect$default (Ldev/kord/rest/builder/component/ActionRowBuilder;Ljava/lang/String;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
 }
 
-public abstract class dev/kord/rest/builder/component/ActionRowComponentBuilder : dev/kord/rest/builder/component/ComponentBuilder {
+public abstract class dev/kord/rest/builder/component/ActionRowComponentBuilder : dev/kord/rest/builder/component/ContainerComponentBuilder {
 	public final fun getDisabled ()Ljava/lang/Boolean;
 	protected final fun get_disabled ()Ldev/kord/common/entity/optional/OptionalBoolean;
 	public final fun setDisabled (Ljava/lang/Boolean;)V
 }
 
-public abstract class dev/kord/rest/builder/component/ButtonBuilder : dev/kord/rest/builder/component/ActionRowComponentBuilder {
+public abstract class dev/kord/rest/builder/component/ButtonBuilder : dev/kord/rest/builder/component/ActionRowComponentBuilder, dev/kord/rest/builder/component/AccessoryComponentBuilder {
 	public abstract fun build ()Ldev/kord/common/entity/DiscordChatComponent;
 	public final fun getEmoji ()Ldev/kord/common/entity/DiscordPartialEmoji;
 	public final fun getLabel ()Ljava/lang/String;
@@ -1110,6 +1125,70 @@ public abstract interface class dev/kord/rest/builder/component/ComponentBuilder
 	public abstract fun build ()Ldev/kord/common/entity/DiscordComponent;
 }
 
+public abstract interface class dev/kord/rest/builder/component/ComponentContainerBuilder {
+	public abstract fun separator (Ldev/kord/common/entity/SeparatorSpacingSize;)V
+	public abstract fun textDisplay (Ljava/lang/String;)V
+}
+
+public final class dev/kord/rest/builder/component/ComponentContainerBuilder$DefaultImpls {
+	public static fun separator (Ldev/kord/rest/builder/component/ComponentContainerBuilder;Ldev/kord/common/entity/SeparatorSpacingSize;)V
+	public static fun textDisplay (Ldev/kord/rest/builder/component/ComponentContainerBuilder;Ljava/lang/String;)V
+}
+
+public final class dev/kord/rest/builder/component/ComponentContainerBuilderKt {
+	public static final fun actionRow (Ldev/kord/rest/builder/component/ComponentContainerBuilder;Lkotlin/jvm/functions/Function1;)V
+	public static final fun file (Ldev/kord/rest/builder/component/ComponentContainerBuilder;Lkotlin/jvm/functions/Function1;)V
+	public static final fun mediaGallery (Ldev/kord/rest/builder/component/ComponentContainerBuilder;Lkotlin/jvm/functions/Function1;)V
+	public static final fun section (Ldev/kord/rest/builder/component/ComponentContainerBuilder;Lkotlin/jvm/functions/Function1;)V
+	public static final fun separator (Ldev/kord/rest/builder/component/ComponentContainerBuilder;Lkotlin/jvm/functions/Function1;)V
+	public static final fun textDisplay (Ldev/kord/rest/builder/component/ComponentContainerBuilder;Lkotlin/jvm/functions/Function1;)V
+}
+
+public final class dev/kord/rest/builder/component/ContainerBuilder : dev/kord/rest/builder/component/ComponentContainerBuilder, dev/kord/rest/builder/component/MessageComponentBuilder {
+	public fun <init> ()V
+	public fun addComponent (Ldev/kord/rest/builder/component/ContainerComponentBuilder;)V
+	public fun build ()Ldev/kord/common/entity/DiscordComponent;
+	public final fun getAccentColor ()Ldev/kord/common/Color;
+	public final fun getComponents ()Ljava/util/List;
+	public final fun getSpoiler ()Ljava/lang/Boolean;
+	public fun separator (Ldev/kord/common/entity/SeparatorSpacingSize;)V
+	public final fun setAccentColor (Ldev/kord/common/Color;)V
+	public final fun setComponents (Ljava/util/List;)V
+	public final fun setSpoiler (Ljava/lang/Boolean;)V
+	public fun textDisplay (Ljava/lang/String;)V
+}
+
+public abstract interface class dev/kord/rest/builder/component/ContainerComponentBuilder : dev/kord/rest/builder/component/MessageComponentBuilder {
+}
+
+public final class dev/kord/rest/builder/component/FileBuilder : dev/kord/rest/builder/component/ContainerComponentBuilder {
+	public fun <init> ()V
+	public fun build ()Ldev/kord/common/entity/DiscordComponent;
+	public final fun getSpoiler ()Ljava/lang/Boolean;
+	public final fun getUrl ()Ljava/lang/String;
+	public final fun setSpoiler (Ljava/lang/Boolean;)V
+	public final fun setUrl (Ljava/lang/String;)V
+}
+
+public final class dev/kord/rest/builder/component/MediaGalleryBuilder : dev/kord/rest/builder/component/ContainerComponentBuilder {
+	public fun <init> ()V
+	public fun build ()Ldev/kord/common/entity/DiscordComponent;
+	public final fun getItems ()Ljava/util/List;
+	public final fun item (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+	public static synthetic fun item$default (Ldev/kord/rest/builder/component/MediaGalleryBuilder;Ljava/lang/String;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
+}
+
+public final class dev/kord/rest/builder/component/MediaGalleryItemBuilder {
+	public fun <init> (Ljava/lang/String;)V
+	public final fun build ()Ldev/kord/common/entity/MediaGalleryItem;
+	public final fun getDescription ()Ljava/lang/String;
+	public final fun getSpoiler ()Ljava/lang/Boolean;
+	public final fun getUrl ()Ljava/lang/String;
+	public final fun setDescription (Ljava/lang/String;)V
+	public final fun setSpoiler (Ljava/lang/Boolean;)V
+	public final fun setUrl (Ljava/lang/String;)V
+}
+
 public final class dev/kord/rest/builder/component/MentionableSelectBuilder : dev/kord/rest/builder/component/SelectMenuBuilder {
 	public fun <init> (Ljava/lang/String;)V
 	public final fun getDefaultRoles ()Ljava/util/List;
@@ -1130,6 +1209,17 @@ public final class dev/kord/rest/builder/component/PremiumButtonBuilder : dev/ko
 public final class dev/kord/rest/builder/component/RoleSelectBuilder : dev/kord/rest/builder/component/SelectMenuBuilder {
 	public fun <init> (Ljava/lang/String;)V
 	public final fun getDefaultRoles ()Ljava/util/List;
+}
+
+public final class dev/kord/rest/builder/component/SectionBuilder : dev/kord/rest/builder/component/AccessoryHolder, dev/kord/rest/builder/component/ContainerComponentBuilder {
+	public fun <init> ()V
+	public fun build ()Ldev/kord/common/entity/DiscordComponent;
+	public fun getAccessory ()Ldev/kord/rest/builder/component/AccessoryComponentBuilder;
+	public final fun getComponents ()Ljava/util/List;
+	public fun setAccessory (Ldev/kord/rest/builder/component/AccessoryComponentBuilder;)V
+	public final fun textDisplay (Ljava/lang/String;)V
+	public final fun textDisplay (Lkotlin/jvm/functions/Function1;)V
+	public final fun thumbnailAccessory (Lkotlin/jvm/functions/Function1;)V
 }
 
 public abstract class dev/kord/rest/builder/component/SelectMenuBuilder : dev/kord/rest/builder/component/ActionRowComponentBuilder {
@@ -1169,10 +1259,26 @@ public final class dev/kord/rest/builder/component/SelectOptionBuilder {
 	public final fun setValue (Ljava/lang/String;)V
 }
 
+public final class dev/kord/rest/builder/component/SeparatorBuilder : dev/kord/rest/builder/component/ContainerComponentBuilder {
+	public fun <init> ()V
+	public fun build ()Ldev/kord/common/entity/DiscordComponent;
+	public final fun getDivider ()Ljava/lang/Boolean;
+	public final fun getSpacing ()Ldev/kord/common/entity/SeparatorSpacingSize;
+	public final fun setDivider (Ljava/lang/Boolean;)V
+	public final fun setSpacing (Ldev/kord/common/entity/SeparatorSpacingSize;)V
+}
+
 public final class dev/kord/rest/builder/component/StringSelectBuilder : dev/kord/rest/builder/component/SelectMenuBuilder {
 	public fun <init> (Ljava/lang/String;)V
 	public final fun getOptions ()Ljava/util/List;
 	public final fun setOptions (Ljava/util/List;)V
+}
+
+public final class dev/kord/rest/builder/component/TextDisplayBuilder : dev/kord/rest/builder/component/ContainerComponentBuilder {
+	public fun <init> ()V
+	public fun build ()Ldev/kord/common/entity/DiscordComponent;
+	public final fun getContent ()Ljava/lang/String;
+	public final fun setContent (Ljava/lang/String;)V
 }
 
 public final class dev/kord/rest/builder/component/TextInputBuilder : dev/kord/rest/builder/component/ActionRowComponentBuilder {
@@ -1193,6 +1299,17 @@ public final class dev/kord/rest/builder/component/TextInputBuilder : dev/kord/r
 	public final fun setRequired (Ljava/lang/Boolean;)V
 	public final fun setStyle (Ldev/kord/common/entity/TextInputStyle;)V
 	public final fun setValue (Ljava/lang/String;)V
+}
+
+public final class dev/kord/rest/builder/component/ThumbnailBuilder : dev/kord/rest/builder/component/AccessoryComponentBuilder {
+	public fun <init> ()V
+	public fun build ()Ldev/kord/common/entity/DiscordComponent;
+	public final fun getDescription ()Ljava/lang/String;
+	public final fun getSpoiler ()Ljava/lang/Boolean;
+	public final fun getUrl ()Ljava/lang/String;
+	public final fun setDescription (Ljava/lang/String;)V
+	public final fun setSpoiler (Ljava/lang/Boolean;)V
+	public final fun setUrl (Ljava/lang/String;)V
 }
 
 public final class dev/kord/rest/builder/component/UserSelectBuilder : dev/kord/rest/builder/component/SelectMenuBuilder {
@@ -2181,7 +2298,8 @@ public final class dev/kord/rest/builder/message/EmbedBuilder$Thumbnail : dev/ko
 	public synthetic fun toRequest ()Ljava/lang/Object;
 }
 
-public abstract interface class dev/kord/rest/builder/message/MessageBuilder {
+public abstract interface class dev/kord/rest/builder/message/MessageBuilder : dev/kord/rest/builder/component/ComponentContainerBuilder {
+	public abstract fun addComponent (Ldev/kord/rest/builder/component/ContainerComponentBuilder;)V
 	public abstract fun addFile (Ljava/lang/String;Lio/ktor/client/request/forms/ChannelProvider;)Ldev/kord/rest/NamedFile;
 	public abstract fun getAllowedMentions ()Ldev/kord/rest/builder/message/AllowedMentionsBuilder;
 	public abstract fun getAttachments ()Ljava/util/List;
@@ -2201,7 +2319,10 @@ public abstract interface class dev/kord/rest/builder/message/MessageBuilder {
 }
 
 public final class dev/kord/rest/builder/message/MessageBuilder$DefaultImpls {
+	public static fun addComponent (Ldev/kord/rest/builder/message/MessageBuilder;Ldev/kord/rest/builder/component/ContainerComponentBuilder;)V
 	public static fun addFile (Ldev/kord/rest/builder/message/MessageBuilder;Ljava/lang/String;Lio/ktor/client/request/forms/ChannelProvider;)Ldev/kord/rest/NamedFile;
+	public static fun separator (Ldev/kord/rest/builder/message/MessageBuilder;Ldev/kord/common/entity/SeparatorSpacingSize;)V
+	public static fun textDisplay (Ldev/kord/rest/builder/message/MessageBuilder;Ljava/lang/String;)V
 }
 
 public final class dev/kord/rest/builder/message/MessageBuilderJvmKt {
@@ -2214,11 +2335,13 @@ public final class dev/kord/rest/builder/message/MessageBuilderKt {
 	public static final fun addFile (Ldev/kord/rest/builder/message/MessageBuilder;Ljava/lang/String;Lio/ktor/client/request/forms/ChannelProvider;Lkotlin/jvm/functions/Function1;)Ldev/kord/rest/NamedFile;
 	public static final fun allowedMentions (Ldev/kord/rest/builder/message/MessageBuilder;Lkotlin/jvm/functions/Function1;)V
 	public static synthetic fun allowedMentions$default (Ldev/kord/rest/builder/message/MessageBuilder;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
+	public static final fun container (Ldev/kord/rest/builder/message/MessageBuilder;Lkotlin/jvm/functions/Function1;)V
 	public static final fun embed (Ldev/kord/rest/builder/message/MessageBuilder;Lkotlin/jvm/functions/Function1;)V
 	public static final fun messageFlags (Ldev/kord/rest/builder/message/MessageBuilder;Lkotlin/jvm/functions/Function1;)V
 }
 
 public abstract class dev/kord/rest/builder/message/create/AbstractMessageCreateBuilder : dev/kord/rest/builder/message/create/MessageCreateBuilder {
+	public fun addComponent (Ldev/kord/rest/builder/component/ContainerComponentBuilder;)V
 	public fun addFile (Ljava/lang/String;Lio/ktor/client/request/forms/ChannelProvider;)Ldev/kord/rest/NamedFile;
 	public final fun getAllowedMentions ()Ldev/kord/rest/builder/message/AllowedMentionsBuilder;
 	public final fun getAttachments ()Ljava/util/List;
@@ -2230,6 +2353,7 @@ public abstract class dev/kord/rest/builder/message/create/AbstractMessageCreate
 	public final fun getSuppressEmbeds ()Ljava/lang/Boolean;
 	public final fun getSuppressNotifications ()Ljava/lang/Boolean;
 	public final fun getTts ()Ljava/lang/Boolean;
+	public fun separator (Ldev/kord/common/entity/SeparatorSpacingSize;)V
 	public final fun setAllowedMentions (Ldev/kord/rest/builder/message/AllowedMentionsBuilder;)V
 	public final fun setAttachments (Ljava/util/List;)V
 	public final fun setComponents (Ljava/util/List;)V
@@ -2239,6 +2363,7 @@ public abstract class dev/kord/rest/builder/message/create/AbstractMessageCreate
 	public final fun setSuppressEmbeds (Ljava/lang/Boolean;)V
 	public final fun setSuppressNotifications (Ljava/lang/Boolean;)V
 	public final fun setTts (Ljava/lang/Boolean;)V
+	public fun textDisplay (Ljava/lang/String;)V
 }
 
 public final class dev/kord/rest/builder/message/create/FollowupMessageCreateBuilder : dev/kord/rest/builder/message/create/AbstractMessageCreateBuilder, dev/kord/rest/builder/RequestBuilder {
@@ -2279,7 +2404,10 @@ public abstract interface class dev/kord/rest/builder/message/create/MessageCrea
 }
 
 public final class dev/kord/rest/builder/message/create/MessageCreateBuilder$DefaultImpls {
+	public static fun addComponent (Ldev/kord/rest/builder/message/create/MessageCreateBuilder;Ldev/kord/rest/builder/component/ContainerComponentBuilder;)V
 	public static fun addFile (Ldev/kord/rest/builder/message/create/MessageCreateBuilder;Ljava/lang/String;Lio/ktor/client/request/forms/ChannelProvider;)Ldev/kord/rest/NamedFile;
+	public static fun separator (Ldev/kord/rest/builder/message/create/MessageCreateBuilder;Ldev/kord/common/entity/SeparatorSpacingSize;)V
+	public static fun textDisplay (Ldev/kord/rest/builder/message/create/MessageCreateBuilder;Ljava/lang/String;)V
 }
 
 public final class dev/kord/rest/builder/message/create/UpdateMessageInteractionResponseCreateBuilder : dev/kord/rest/builder/message/create/AbstractMessageCreateBuilder, dev/kord/rest/builder/RequestBuilder {
@@ -2327,6 +2455,7 @@ public final class dev/kord/rest/builder/message/create/WebhookMessageCreateBuil
 }
 
 public abstract class dev/kord/rest/builder/message/modify/AbstractMessageModifyBuilder : dev/kord/rest/builder/message/modify/MessageModifyBuilder {
+	public fun addComponent (Ldev/kord/rest/builder/component/ContainerComponentBuilder;)V
 	public fun addFile (Ljava/lang/String;Lio/ktor/client/request/forms/ChannelProvider;)Ldev/kord/rest/NamedFile;
 	public final fun getAllowedMentions ()Ldev/kord/rest/builder/message/AllowedMentionsBuilder;
 	public final fun getAttachments ()Ljava/util/List;
@@ -2336,6 +2465,7 @@ public abstract class dev/kord/rest/builder/message/modify/AbstractMessageModify
 	public final fun getFiles ()Ljava/util/List;
 	public final fun getFlags ()Ldev/kord/common/entity/MessageFlags;
 	public final fun getSuppressEmbeds ()Ljava/lang/Boolean;
+	public fun separator (Ldev/kord/common/entity/SeparatorSpacingSize;)V
 	public final fun setAllowedMentions (Ldev/kord/rest/builder/message/AllowedMentionsBuilder;)V
 	public final fun setAttachments (Ljava/util/List;)V
 	public final fun setComponents (Ljava/util/List;)V
@@ -2343,6 +2473,7 @@ public abstract class dev/kord/rest/builder/message/modify/AbstractMessageModify
 	public final fun setEmbeds (Ljava/util/List;)V
 	public final fun setFlags (Ldev/kord/common/entity/MessageFlags;)V
 	public final fun setSuppressEmbeds (Ljava/lang/Boolean;)V
+	public fun textDisplay (Ljava/lang/String;)V
 }
 
 public final class dev/kord/rest/builder/message/modify/FollowupMessageModifyBuilder : dev/kord/rest/builder/message/modify/AbstractMessageModifyBuilder, dev/kord/rest/builder/RequestBuilder {
@@ -2361,7 +2492,10 @@ public abstract interface class dev/kord/rest/builder/message/modify/MessageModi
 }
 
 public final class dev/kord/rest/builder/message/modify/MessageModifyBuilder$DefaultImpls {
+	public static fun addComponent (Ldev/kord/rest/builder/message/modify/MessageModifyBuilder;Ldev/kord/rest/builder/component/ContainerComponentBuilder;)V
 	public static fun addFile (Ldev/kord/rest/builder/message/modify/MessageModifyBuilder;Ljava/lang/String;Lio/ktor/client/request/forms/ChannelProvider;)Ldev/kord/rest/NamedFile;
+	public static fun separator (Ldev/kord/rest/builder/message/modify/MessageModifyBuilder;Ldev/kord/common/entity/SeparatorSpacingSize;)V
+	public static fun textDisplay (Ldev/kord/rest/builder/message/modify/MessageModifyBuilder;Ljava/lang/String;)V
 }
 
 public final class dev/kord/rest/builder/message/modify/MessageModifyBuilderKt {
