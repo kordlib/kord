@@ -44,8 +44,8 @@ jobs:
       ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.NEXUS_PASSWORD }}
       KORD_REPO_USER: ${{ secrets.KORD_REPO_USER }}
       KORD_REPO_PASSWORD: ${{ secrets.KORD_REPO_PASSWORD }}
-      ORG_GRADLE_PROJECT_signingInMemoryKey: ${{ secrets.signingKey }}
-      ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: ${{ secrets.signingPassword }}
+      ORG_GRADLE_PROJECT_signingInMemoryKey: ${{ secrets.SIGNING_KEY_ARMORED }}
+      ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: ${{ secrets.SIGNING_PASSWORD_RAW }}
     steps:
       - uses: actions/checkout@v5
         with:
