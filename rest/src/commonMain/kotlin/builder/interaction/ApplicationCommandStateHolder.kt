@@ -1,6 +1,7 @@
 package dev.kord.rest.builder.interaction
 
 import dev.kord.common.Locale
+import dev.kord.common.entity.InteractionContextType
 import dev.kord.common.entity.Permissions
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
@@ -22,8 +23,9 @@ internal class ApplicationCommandModifyStateHolder {
     var options: Optional<MutableList<OptionsBuilder>> = Optional.Missing()
 
     var defaultMemberPermissions: Optional<Permissions?> = Optional.Missing()
+    @Deprecated("'dmPermission' is deprecated in favor of 'contexts'.")
     var dmPermission: OptionalBoolean? = OptionalBoolean.Missing
-
+    var contexts: Optional<MutableList<InteractionContextType>> = Optional.Missing()
 
     @Deprecated("'defaultPermission' is deprecated in favor of 'defaultMemberPermissions' and 'dmPermission'. Setting 'defaultPermission' to false can be replaced by setting 'defaultMemberPermissions' to empty Permissions and 'dmPermission' to false ('dmPermission' is only available for global commands).")
     @SerialName("default_permission")

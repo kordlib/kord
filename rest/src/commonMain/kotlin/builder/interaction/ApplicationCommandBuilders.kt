@@ -2,6 +2,7 @@ package dev.kord.rest.builder.interaction
 
 import dev.kord.common.annotation.KordDsl
 import dev.kord.common.entity.ApplicationCommandType
+import dev.kord.common.entity.InteractionContextType
 import dev.kord.common.entity.Permissions
 import dev.kord.rest.builder.RequestBuilder
 import dev.kord.rest.json.request.ApplicationCommandCreateRequest
@@ -32,12 +33,16 @@ public interface ApplicationCommandCreateBuilder : LocalizedNameCreateBuilder,
 
 @KordDsl
 public interface GlobalApplicationCommandCreateBuilder : ApplicationCommandCreateBuilder {
+    @Deprecated("'dmPermission' is deprecated in favor of 'contexts'.")
     public var dmPermission: Boolean?
+    public var contexts: MutableList<InteractionContextType>?
 }
 
 @KordDsl
 public interface GlobalApplicationCommandModifyBuilder : ApplicationCommandModifyBuilder {
+    @Deprecated("'dmPermission' is deprecated in favor of 'contexts'.")
     public var dmPermission: Boolean?
+    public var contexts: MutableList<InteractionContextType>?
 }
 
 @KordDsl
