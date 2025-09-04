@@ -1,6 +1,5 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
-@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
-                "SpellCheckingInspection", "GrazieInspection"))
+@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
@@ -14,8 +13,9 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 /**
- * See [SubscriptionStatus]es in the
- * [Discord Developer Documentation](https://discord.com/developers/docs/resources/subscription#subscription-statuses).
+ *
+ *
+ * See [SubscriptionStatus]es in the [Discord Developer Documentation](https://discord.com/developers/docs/resources/subscription#subscription-statuses).
  */
 @Serializable(with = SubscriptionStatus.Serializer::class)
 public sealed class SubscriptionStatus(
@@ -24,14 +24,11 @@ public sealed class SubscriptionStatus(
      */
     public val `value`: Int,
 ) {
-    final override fun equals(other: Any?): Boolean = this === other ||
-            (other is SubscriptionStatus && this.value == other.value)
+    final override fun equals(other: Any?): Boolean = this === other || (other is SubscriptionStatus && this.value == other.value)
 
     final override fun hashCode(): Int = value.hashCode()
 
-    final override fun toString(): String =
-            if (this is Unknown) "SubscriptionStatus.Unknown(value=$value)"
-            else "SubscriptionStatus.${this::class.simpleName}"
+    final override fun toString(): String = if (this is Unknown) "SubscriptionStatus.Unknown(value=$value)" else "SubscriptionStatus.${this::class.simpleName}"
 
     /**
      * An unknown [SubscriptionStatus].
@@ -59,8 +56,7 @@ public sealed class SubscriptionStatus(
 
     internal object Serializer : KSerializer<SubscriptionStatus> {
         override val descriptor: SerialDescriptor =
-                PrimitiveSerialDescriptor("dev.kord.common.entity.SubscriptionStatus",
-                PrimitiveKind.INT)
+                PrimitiveSerialDescriptor("dev.kord.common.entity.SubscriptionStatus", PrimitiveKind.INT)
 
         override fun serialize(encoder: Encoder, `value`: SubscriptionStatus) {
             encoder.encodeInt(value.value)
@@ -82,8 +78,7 @@ public sealed class SubscriptionStatus(
         }
 
         /**
-         * Returns an instance of [SubscriptionStatus] with [SubscriptionStatus.value] equal to the
-         * specified [value].
+         * Returns an instance of [SubscriptionStatus] with [SubscriptionStatus.value] equal to the specified [value].
          */
         public fun from(`value`: Int): SubscriptionStatus = when (value) {
             0 -> Active

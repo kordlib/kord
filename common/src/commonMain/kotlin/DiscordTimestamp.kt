@@ -1,6 +1,6 @@
 package dev.kord.common
 
-import kotlinx.datetime.Instant
+import kotlin.time.Instant
 
 public fun Instant.toMessageFormat(style: DiscordTimestampStyle? = null): String =
     if (style == null) "<t:$epochSeconds>" else "<t:$epochSeconds:${style.style}>"

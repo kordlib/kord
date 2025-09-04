@@ -71,24 +71,12 @@ class RestServiceTest {
 
     @Test
     @Order(1)
-    fun `create guild`(): Unit = runBlocking {
-        val region = kord.regions.first()
-        val guilds = kord.guilds.toList()
-
-        guilds.filter { it.isOwner }.forEach {
-            it.delete()
-        }
-
-        val guild = kord.createGuild("TEST GUILD") {
-            this.region = region.id
-            verificationLevel = VerificationLevel.None
-            defaultMessageNotificationLevel = DefaultMessageNotificationLevel.AllMessages
-            explicitContentFilter = ExplicitContentFilter.AllMembers
-        }
+    fun `retrieve test guild`(): Unit = runBlocking {
+        val guild = kord.getGuild(Snowflake(1412915392891846717u))
 
         guildId = guild.id
 
-        this@RestServiceTest.guild = kord.getGuild(guildId)
+        this@RestServiceTest.guild = guild
 
         guild.edit {
             name = "Edited Guild Test"
@@ -545,12 +533,6 @@ class RestServiceTest {
     @Order(Int.MAX_VALUE - 1)
     fun `audit logs`(): Unit = runBlocking {
         guild.getAuditLogEntries().toList()
-    }
-
-    @Test
-    @Order(Int.MAX_VALUE)
-    fun `delete guild`(): Unit = runBlocking {
-        guild.delete()
     }
 
     @Test

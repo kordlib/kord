@@ -1,6 +1,5 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
-@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
-                "SpellCheckingInspection", "GrazieInspection"))
+@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
@@ -18,8 +17,9 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 /**
- * See [ChannelFlag]s in the
- * [Discord Developer Documentation](https://discord.com/developers/docs/resources/channel#channel-object-channel-flags).
+ *
+ *
+ * See [ChannelFlag]s in the [Discord Developer Documentation](https://discord.com/developers/docs/resources/channel#channel-object-channel-flags).
  */
 public sealed class ChannelFlag(
     /**
@@ -38,25 +38,20 @@ public sealed class ChannelFlag(
         get() = 1 shl shift
 
     /**
-     * Returns an instance of [ChannelFlags] that has all bits set that are set in `this` and
-     * [flag].
+     * Returns an instance of [ChannelFlags] that has all bits set that are set in `this` and [flag].
      */
     public operator fun plus(flag: ChannelFlag): ChannelFlags = ChannelFlags(this.code or flag.code)
 
     /**
-     * Returns an instance of [ChannelFlags] that has all bits set that are set in `this` and
-     * [flags].
+     * Returns an instance of [ChannelFlags] that has all bits set that are set in `this` and [flags].
      */
-    public operator fun plus(flags: ChannelFlags): ChannelFlags =
-            ChannelFlags(this.code or flags.code)
+    public operator fun plus(flags: ChannelFlags): ChannelFlags = ChannelFlags(this.code or flags.code)
 
-    final override fun equals(other: Any?): Boolean = this === other ||
-            (other is ChannelFlag && this.shift == other.shift)
+    final override fun equals(other: Any?): Boolean = this === other || (other is ChannelFlag && this.shift == other.shift)
 
     final override fun hashCode(): Int = shift.hashCode()
 
-    final override fun toString(): String = if (this is Unknown) "ChannelFlag.Unknown(shift=$shift)"
-            else "ChannelFlag.${this::class.simpleName}"
+    final override fun toString(): String = if (this is Unknown) "ChannelFlag.Unknown(shift=$shift)" else "ChannelFlag.${this::class.simpleName}"
 
     /**
      * An unknown [ChannelFlag].
@@ -68,20 +63,17 @@ public sealed class ChannelFlag(
     ) : ChannelFlag(shift)
 
     /**
-     * This thread is pinned to the top of its parent [GuildForum][ChannelType.GuildForum] or
-     * [GuildMedia][ChannelType.GuildMedia] channel.
+     * This thread is pinned to the top of its parent [GuildForum][ChannelType.GuildForum] or [GuildMedia][ChannelType.GuildMedia] channel.
      */
     public object Pinned : ChannelFlag(1)
 
     /**
-     * Whether a tag is required to be specified when creating a thread in a
-     * [GuildForum][ChannelType.GuildForum] or [GuildMedia][ChannelType.GuildMedia] channel.
+     * Whether a tag is required to be specified when creating a thread in a [GuildForum][ChannelType.GuildForum] or [GuildMedia][ChannelType.GuildMedia] channel.
      */
     public object RequireTag : ChannelFlag(4)
 
     /**
-     * When set hides the embedded media download options. Available only for
-     * [GuildMedia][ChannelType.GuildMedia] channels.
+     * When set hides the embedded media download options. Available only for [GuildMedia][ChannelType.GuildMedia] channels.
      */
     public object HideMediaDownloadOptions : ChannelFlag(15)
 
@@ -98,8 +90,7 @@ public sealed class ChannelFlag(
         }
 
         /**
-         * Returns an instance of [ChannelFlag] with [ChannelFlag.shift] equal to the specified
-         * [shift].
+         * Returns an instance of [ChannelFlag] with [ChannelFlag.shift] equal to the specified [shift].
          *
          * @throws IllegalArgumentException if [shift] is not in 0..30.
          */
@@ -154,8 +145,7 @@ public sealed class ChannelFlag(
  *
  * ## Checking for [ChannelFlag]s
  *
- * You can use the [contains] operator to check whether an instance of [ChannelFlags] contains
- * specific [ChannelFlag]s:
+ * You can use the [contains] operator to check whether an instance of [ChannelFlags] contains specific [ChannelFlag]s:
  * ```kotlin
  * val hasChannelFlag = ChannelFlag.Pinned in channelFlags
  * val hasChannelFlags = ChannelFlags(ChannelFlag.Pinned, ChannelFlag.RequireTag) in channelFlags
@@ -163,11 +153,9 @@ public sealed class ChannelFlag(
  *
  * ## Unknown [ChannelFlag]s
  *
- * Whenever [ChannelFlag]s haven't been added to Kord yet, they will be deserialized as instances of
- * [ChannelFlag.Unknown].
+ * Whenever [ChannelFlag]s haven't been added to Kord yet, they will be deserialized as instances of [ChannelFlag.Unknown].
  *
- * You can also use [ChannelFlag.fromShift] to check for [unknown][ChannelFlag.Unknown]
- * [ChannelFlag]s.
+ * You can also use [ChannelFlag.fromShift] to check for [unknown][ChannelFlag.Unknown] [ChannelFlag]s.
  * ```kotlin
  * val hasUnknownChannelFlag = ChannelFlag.fromShift(23) in channelFlags
  * ```
@@ -204,35 +192,27 @@ public class ChannelFlags internal constructor(
     /**
      * Checks if this instance of [ChannelFlags] has all bits set that are set in [flags].
      */
-    public operator fun contains(flags: ChannelFlags): Boolean =
-            this.code and flags.code == flags.code
+    public operator fun contains(flags: ChannelFlags): Boolean = this.code and flags.code == flags.code
 
     /**
-     * Returns an instance of [ChannelFlags] that has all bits set that are set in `this` and
-     * [flag].
+     * Returns an instance of [ChannelFlags] that has all bits set that are set in `this` and [flag].
      */
     public operator fun plus(flag: ChannelFlag): ChannelFlags = ChannelFlags(this.code or flag.code)
 
     /**
-     * Returns an instance of [ChannelFlags] that has all bits set that are set in `this` and
-     * [flags].
+     * Returns an instance of [ChannelFlags] that has all bits set that are set in `this` and [flags].
      */
-    public operator fun plus(flags: ChannelFlags): ChannelFlags =
-            ChannelFlags(this.code or flags.code)
+    public operator fun plus(flags: ChannelFlags): ChannelFlags = ChannelFlags(this.code or flags.code)
 
     /**
-     * Returns an instance of [ChannelFlags] that has all bits set that are set in `this` except the
-     * bits that are set in [flag].
+     * Returns an instance of [ChannelFlags] that has all bits set that are set in `this` except the bits that are set in [flag].
      */
-    public operator fun minus(flag: ChannelFlag): ChannelFlags =
-            ChannelFlags(this.code and flag.code.inv())
+    public operator fun minus(flag: ChannelFlag): ChannelFlags = ChannelFlags(this.code and flag.code.inv())
 
     /**
-     * Returns an instance of [ChannelFlags] that has all bits set that are set in `this` except the
-     * bits that are set in [flags].
+     * Returns an instance of [ChannelFlags] that has all bits set that are set in `this` except the bits that are set in [flags].
      */
-    public operator fun minus(flags: ChannelFlags): ChannelFlags =
-            ChannelFlags(this.code and flags.code.inv())
+    public operator fun minus(flags: ChannelFlags): ChannelFlags = ChannelFlags(this.code and flags.code.inv())
 
     /**
      * Returns a copy of this instance of [ChannelFlags] modified with [builder].
@@ -242,8 +222,7 @@ public class ChannelFlags internal constructor(
         return Builder(code).apply(builder).build()
     }
 
-    override fun equals(other: Any?): Boolean = this === other ||
-            (other is ChannelFlags && this.code == other.code)
+    override fun equals(other: Any?): Boolean = this === other || (other is ChannelFlags && this.code == other.code)
 
     override fun hashCode(): Int = code.hashCode()
 
@@ -281,8 +260,7 @@ public class ChannelFlags internal constructor(
         }
 
         /**
-         * Returns an instance of [ChannelFlags] that has all bits set that are currently set in
-         * this [Builder].
+         * Returns an instance of [ChannelFlags] that has all bits set that are currently set in this [Builder].
          */
         public fun build(): ChannelFlags = ChannelFlags(code)
     }
@@ -297,8 +275,7 @@ public class ChannelFlags internal constructor(
             encoder.encodeSerializableValue(delegate, value.code)
         }
 
-        override fun deserialize(decoder: Decoder): ChannelFlags =
-                ChannelFlags(decoder.decodeSerializableValue(delegate))
+        override fun deserialize(decoder: Decoder): ChannelFlags = ChannelFlags(decoder.decodeSerializableValue(delegate))
     }
 }
 
@@ -311,32 +288,28 @@ public inline fun ChannelFlags(builder: ChannelFlags.Builder.() -> Unit = {}): C
 }
 
 /**
- * Returns an instance of [ChannelFlags] that has all bits set that are set in any element of
- * [flags].
+ * Returns an instance of [ChannelFlags] that has all bits set that are set in any element of [flags].
  */
 public fun ChannelFlags(vararg flags: ChannelFlag): ChannelFlags = ChannelFlags {
     flags.forEach { +it }
 }
 
 /**
- * Returns an instance of [ChannelFlags] that has all bits set that are set in any element of
- * [flags].
+ * Returns an instance of [ChannelFlags] that has all bits set that are set in any element of [flags].
  */
 public fun ChannelFlags(vararg flags: ChannelFlags): ChannelFlags = ChannelFlags {
     flags.forEach { +it }
 }
 
 /**
- * Returns an instance of [ChannelFlags] that has all bits set that are set in any element of
- * [flags].
+ * Returns an instance of [ChannelFlags] that has all bits set that are set in any element of [flags].
  */
 public fun ChannelFlags(flags: Iterable<ChannelFlag>): ChannelFlags = ChannelFlags {
     flags.forEach { +it }
 }
 
 /**
- * Returns an instance of [ChannelFlags] that has all bits set that are set in any element of
- * [flags].
+ * Returns an instance of [ChannelFlags] that has all bits set that are set in any element of [flags].
  */
 @JvmName("ChannelFlags0")
 public fun ChannelFlags(flags: Iterable<ChannelFlags>): ChannelFlags = ChannelFlags {

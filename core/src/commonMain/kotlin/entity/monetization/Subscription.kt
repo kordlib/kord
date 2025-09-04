@@ -10,7 +10,7 @@ import dev.kord.core.cache.data.SubscriptionData
 import dev.kord.core.entity.KordEntity
 import dev.kord.core.entity.User
 import dev.kord.core.hash
-import kotlinx.datetime.Instant
+import kotlin.time.Instant
 
 /**
  * An instance of a [Subscription](https://discord.com/developers/docs/resources/subscription).

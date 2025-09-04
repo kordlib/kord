@@ -1,90 +1,55 @@
-import java.lang.System.getenv
-import java.util.Base64
+import com.vanniktech.maven.publish.JavadocJar
+import com.vanniktech.maven.publish.KotlinJvm
+import com.vanniktech.maven.publish.KotlinMultiplatform
 
 plugins {
-    `maven-publish`
-    signing
+    com.vanniktech.maven.publish
 }
 
-fun MavenPublication.registerDokkaJar() =
-    tasks.register<Jar>("${name}DokkaJar") {
-        archiveClassifier = "javadoc"
-        destinationDirectory = destinationDirectory.get().dir(name)
-        from(tasks.named("dokkaGeneratePublicationHtml"))
-    }
+mavenPublishing {
+    coordinates(Library.group, "kord-${project.name}", libraryVersion.get())
 
-publishing {
-    publications {
-        withType<MavenPublication>().configureEach {
-            if (project.name != "bom") artifact(registerDokkaJar())
+    publishToMavenCentral()
+    signAllPublications()
 
-            groupId = Library.group
-            artifactId = "kord-$artifactId"
-            version = libraryVersion
+    pom {
+        name = Library.name
+        description = Library.description
+        url = Library.projectUrl
 
-            pom {
-                name = Library.name
-                description = Library.description
-                url = Library.projectUrl
-
-                organization {
-                    name = "Kord"
-                    url = "https://github.com/kordlib"
-                }
-
-                developers {
-                    developer {
-                        name = "The Kord Team"
-                    }
-                }
-
-                issueManagement {
-                    system = "GitHub"
-                    url = "https://github.com/kordlib/kord/issues"
-                }
-
-                licenses {
-                    license {
-                        name = "MIT"
-                        url = "https://opensource.org/licenses/MIT"
-                    }
-                }
-
-                scm {
-                    connection = "scm:git:ssh://github.com/kordlib/kord.git"
-                    developerConnection = "scm:git:ssh://git@github.com:kordlib/kord.git"
-                    url = Library.projectUrl
-                }
-            }
+        organization {
+            name = "Kord"
+            url = "https://github.com/kordlib"
         }
-    }
 
-    repositories {
-        maven {
-            url = uri(if (isRelease) Repo.releasesUrl else Repo.snapshotsUrl)
-
-            credentials {
-                username = getenv("NEXUS_USER")
-                password = getenv("NEXUS_PASSWORD")
+        developers {
+            developer {
+                name = "The Kord Team"
             }
         }
 
-        if (!isRelease) {
-            maven {
-                name = "kordSnapshots"
-                url = uri("https://repo.kord.dev/snapshots")
-                credentials {
-                    username = getenv("KORD_REPO_USER")
-                    password = getenv("KORD_REPO_PASSWORD")
-                }
+        issueManagement {
+            system = "GitHub"
+            url = "https://github.com/kordlib/kord/issues"
+        }
+
+        licenses {
+            license {
+                name = "MIT"
+                url = "https://opensource.org/licenses/MIT"
             }
         }
-    }
-}
 
-signing {
-    val secretKey = getenv("SIGNING_KEY")?.let { String(Base64.getDecoder().decode(it)) }
-    val password = getenv("SIGNING_PASSWORD")
-    useInMemoryPgpKeys(secretKey, password)
-    sign(publishing.publications)
+        scm {
+            connection = "scm:git:ssh://github.com/kordlib/kord.git"
+            developerConnection = "scm:git:ssh://git@github.com:kordlib/kord.git"
+            url = Library.projectUrl
+        }
+    }
+
+    if (plugins.hasPlugin("org.jetbrains.kotlin.multiplatform")) {
+        configure(KotlinMultiplatform(JavadocJar.Dokka("dokkaGeneratePublicationHtml"), sourcesJar = true))
+    } else if(plugins.hasPlugin("org.jetbrains.kotlin.jvm")) {
+        configure(KotlinJvm(JavadocJar.Dokka("dokkaGeneratePublicationHtml"), sourcesJar = true))
+    }
 }

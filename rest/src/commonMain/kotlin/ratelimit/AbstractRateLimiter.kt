@@ -10,8 +10,8 @@ import kotlinx.atomicfu.atomic
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.sync.Mutex
-import kotlinx.datetime.Clock
-import kotlinx.datetime.Instant
+import kotlin.time.Clock
+import kotlin.time.Instant
 import kotlin.time.Duration.Companion.minutes
 
 public abstract class AbstractRateLimiter internal constructor(public val clock: Clock) : RequestRateLimiter {
