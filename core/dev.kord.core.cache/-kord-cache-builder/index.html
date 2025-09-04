@@ -31,41 +31,78 @@
 <script type="text/javascript" src="../../../scripts/platform-content-handler.js" async></script>
 <script type="text/javascript" src="../../../scripts/main.js" defer></script>
 <script type="text/javascript" src="../../../scripts/prism.js" async></script>
-<script type="text/javascript" src="../../../ui-kit/ui-kit.min.js" async></script>
+<script type="text/javascript" src="../../../ui-kit/ui-kit.min.js" defer></script>
 <script type="text/javascript" src="../../../scripts/symbol-parameters-wrapper_deferred.js" defer></script></head>
 <body>
     <div class="root">
-<nav class="navigation" id="navigation-wrapper">
-    <div class="navigation--inner">
-        <div class="navigation-title">
-            <button class="menu-toggle" id="menu-toggle" type="button">toggle menu</button>
-            <div class="library-name">
+    <nav class="navigation theme-dark" id="navigation-wrapper">
 <a class="library-name--link" href="../../../index.html">
-                            kord
-                    </a>            </div>
-            <div class="library-version">0.16.0-SNAPSHOT
-            </div>
+                    kord
+            </a>        <button class="navigation-controls--btn navigation-controls--btn_toc ui-kit_mobile-only" id="toc-toggle" type="button">Toggle table of contents
+        </button>
+        <div class="navigation-controls--break ui-kit_mobile-only"></div>
+        <div class="library-version" id="library-version">or(map(map(map(map(valueof(ProcessOutputValueSource))))), map(map(map(map(valueof(ProcessOutputValueSource))))))
         </div>
-        <div class="filter-section" id="filter-section">
+        <div class="navigation-controls">
+        <div class="filter-section filter-section_loading" id="filter-section">
                 <button class="platform-tag platform-selector common-like" data-active="" data-filter=":core/commonMain">common</button>
                 <button class="platform-tag platform-selector jvm-like" data-active="" data-filter=":core/jvmMain">jvm</button>
+            <div class="dropdown filter-section--dropdown" data-role="dropdown" id="filter-section-dropdown">
+                <button class="button button_dropdown filter-section--dropdown-toggle" role="combobox" data-role="dropdown-toggle" aria-controls="platform-tags-listbox" aria-haspopup="listbox" aria-expanded="false" aria-label="Toggle source sets"></button>
+                <ul role="listbox" id="platform-tags-listbox" class="dropdown--list" data-role="dropdown-listbox">
+                    <div class="dropdown--header"><span>Platform filter</span>
+                        <button class="button" data-role="dropdown-toggle" aria-label="Close platform filter">
+                            <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                        </button>
+                    </div>
+                        <li role="option" class="dropdown--option platform-selector-option common-like" tabindex="0">
+                            <label class="checkbox">
+                                <input type="checkbox" class="checkbox--input" id=":core/commonMain" data-filter=":core/commonMain">
+                                <span class="checkbox--icon"></span>
+                                common
+                            </label>
+                        </li>
+                        <li role="option" class="dropdown--option platform-selector-option jvm-like" tabindex="0">
+                            <label class="checkbox">
+                                <input type="checkbox" class="checkbox--input" id=":core/jvmMain" data-filter=":core/jvmMain">
+                                <span class="checkbox--icon"></span>
+                                jvm
+                            </label>
+                        </li>
+                </ul>
+                <div class="dropdown--overlay"></div>
+            </div>
         </div>
-    </div>
-    <div class="navigation-controls">
-        <button class="navigation-controls--btn navigation-controls--theme" id="theme-toggle-button" type="button">switch theme</button>
-        <div class="navigation-controls--btn navigation-controls--search" id="searchBar" role="button">search in API</div>
-    </div>
-</nav>
+            <button class="navigation-controls--btn navigation-controls--btn_theme" id="theme-toggle-button" type="button">Switch theme
+            </button>
+            <div class="navigation-controls--btn navigation-controls--btn_search" id="searchBar" role="button">Search in
+                API
+            </div>
+        </div>
+    </nav>
         <div id="container">
             <div class="sidebar" id="leftColumn">
-                <div class="sidebar--inner" id="sideMenu"></div>
+                <div class="dropdown theme-dark_mobile" data-role="dropdown" id="toc-dropdown">
+                    <ul role="listbox" id="toc-listbox" class="dropdown--list dropdown--list_toc-list" data-role="dropdown-listbox">
+                        <div class="dropdown--header">
+                            <span>
+                                    kord
+                            </span>
+                            <button class="button" data-role="dropdown-toggle" aria-label="Close table of contents">
+                                <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                            </button>
+                        </div>
+                        <div class="sidebar--inner" id="sideMenu"></div>
+                    </ul>
+                    <div class="dropdown--overlay"></div>
+                </div>
             </div>
             <div id="main">
 <div class="main-content" data-page-type="classlike" id="content" pageids="kord-core::dev.kord.core.cache/KordCacheBuilder///PointingToDeclaration//1239919082">
   <div class="breadcrumbs"><a href="../../index.html">kord-core</a><span class="delimiter">/</span><a href="../index.html">dev.kord.core.cache</a><span class="delimiter">/</span><span class="current">KordCacheBuilder</span></div>
   <div class="cover ">
     <h1 class="cover"><span>Kord</span><wbr><span>Cache</span><wbr><span><span>Builder</span></span></h1>
-    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">class </span><a href="index.html">KordCacheBuilder</a><span class="clearfix"><span class="floating-right">(<a href="https://github.com/kordlib/kord/blob/eaf5dbe1755a4b2005098c6a931465266fed0b65/core/src/commonMain/kotlin/cache/KordCache.kt#L16">source</a>)</span></span></div></div></div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">class </span><a href="index.html">KordCacheBuilder</a><span class="clearfix"><span class="floating-right">(<a href="https://github.com/kordlib/kord/blob/map(map(map(valueof(ProcessOutputValueSource))))/core/src/commonMain/kotlin/cache/KordCache.kt#L16">source</a>)</span></span></div></div></div>
   </div>
   <div class="tabbedcontent">
     <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="CONSTRUCTOR,TYPE,PROPERTY,FUNCTION">Members</button><button class="section-tab" data-togglable="CONSTRUCTOR,TYPE,PROPERTY,FUNCTION,EXTENSION_PROPERTY,EXTENSION_FUNCTION">Members &amp; Extensions</button></div>
@@ -101,7 +138,7 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">var </span><a href="default-generator.html">defaultGenerator</a><span class="token operator">: </span><a href="../-generator/index.html">Generator</a><span class="token operator">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token punctuation">, </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token operator">&gt;</span></div><div class="brief "><p class="paragraph">The default behavior for all types not explicitly configured, by default a <a href="../../../common/dev.kord.common/index.html">concurrentHashMap</a> is supplied.</p></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">var </span><a href="default-generator.html">defaultGenerator</a><span class="token operator">: </span><a href="../-generator/index.html">Generator</a><span class="token operator">&lt;</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token punctuation">, </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token operator">&gt;</span></div><div class="brief "><p class="paragraph">The default behavior for all types not explicitly configured, by default a <a href="../../../common/dev.kord.common/index.html">concurrentHashMap</a> is supplied.</p></div></div></div>
                 </div>
               </div>
             </div>
@@ -210,7 +247,7 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="for-description.html">T</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token punctuation">, </span><a href="for-description.html">I</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token operator">&gt; </span><a href="for-description.html"><span class="token function">forDescription</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">description<span class="token operator">: </span><span data-unresolved-link="dev.kord.cache.api.data/DataDescription///PointingToDeclaration/">DataDescription</span><span class="token operator">&lt;</span><a href="for-description.html">T</a><span class="token punctuation">, </span><a href="for-description.html">I</a><span class="token operator">&gt;</span><span class="token punctuation">, </span></span><span class="parameter ">generator<span class="token operator">: </span><a href="../-generator/index.html">Generator</a><span class="token operator">&lt;</span><a href="for-description.html">T</a><span class="token punctuation">, </span><a href="for-description.html">I</a><span class="token operator">&gt;</span><span class="token operator">?</span></span></span><span class="token punctuation">)</span></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="for-description.html">T</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token punctuation">, </span><a href="for-description.html">I</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token operator">&gt; </span><a href="for-description.html"><span class="token function">forDescription</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">description<span class="token operator">: </span><span data-unresolved-link="dev.kord.cache.api.data/DataDescription///PointingToDeclaration/">DataDescription</span><span class="token operator">&lt;</span><a href="for-description.html">T</a><span class="token punctuation">, </span><a href="for-description.html">I</a><span class="token operator">&gt;</span><span class="token punctuation">, </span></span><span class="parameter ">generator<span class="token operator">: </span><a href="../-generator/index.html">Generator</a><span class="token operator">&lt;</span><a href="for-description.html">T</a><span class="token punctuation">, </span><a href="for-description.html">I</a><span class="token operator">&gt;</span><span class="token operator">?</span></span></span><span class="token punctuation">)</span></div></div></div>
                 </div>
               </div>
             </div>
@@ -242,7 +279,7 @@
                 <div class="title">
                   <div class="platform-hinted  with-platform-tabs" data-platform-hinted="data-platform-hinted">
                     <div class="platform-bookmarks-row" data-toggle-list="data-toggle-list"><button class="platform-bookmark" data-filterable-current=":core/jvmMain" data-filterable-set=":core/jvmMain" data-active="" data-toggle=":core/jvmMain">jvm</button></div>
-<div class="content sourceset-dependent-content" data-active="" data-togglable=":core/jvmMain"><div class="symbol monospace"><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="../lru-cache.html">T</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token punctuation">, </span><a href="../lru-cache.html">I</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token operator">&gt; </span><a href="index.html">KordCacheBuilder</a><span class="token punctuation">.</span><a href="../lru-cache.html"><span class="token function">lruCache</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">size<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token operator"> = </span><span class="token constant">100</span></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../-generator/index.html">Generator</a><span class="token operator">&lt;</span><a href="../lru-cache.html">T</a><span class="token punctuation">, </span><a href="../lru-cache.html">I</a><span class="token operator">&gt;</span></div><div class="brief "><p class="paragraph">A Generator creating <span data-unresolved-link="dev.kord.cache.api/DataEntryCache///PointingToDeclaration/">DataEntryCaches</span> with a maximum <a href="../lru-cache.html">size</a>, removing items on last insertion. Shortcut for <span data-unresolved-link="dev.kord.cache.map//lruLinkedHashMap/dev.kord.cache.map.MapLikeCollection.Companion#kotlin.Int/PointingToDeclaration/">lruLinkedHashMap</span>.</p></div></div>                  </div>
+<div class="content sourceset-dependent-content" data-active="" data-togglable=":core/jvmMain"><div class="symbol monospace"><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="../lru-cache.html">T</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token punctuation">, </span><a href="../lru-cache.html">I</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token operator">&gt; </span><a href="index.html">KordCacheBuilder</a><span class="token punctuation">.</span><a href="../lru-cache.html"><span class="token function">lruCache</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">size<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token operator"> = </span><span class="token constant">100</span></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../-generator/index.html">Generator</a><span class="token operator">&lt;</span><a href="../lru-cache.html">T</a><span class="token punctuation">, </span><a href="../lru-cache.html">I</a><span class="token operator">&gt;</span></div><div class="brief "><p class="paragraph">A Generator creating <span data-unresolved-link="dev.kord.cache.api/DataEntryCache///PointingToDeclaration/">DataEntryCaches</span> with a maximum <a href="../lru-cache.html">size</a>, removing items on last insertion. Shortcut for <span data-unresolved-link="dev.kord.cache.map//lruLinkedHashMap/dev.kord.cache.map.MapLikeCollection.Companion#kotlin.Int/PointingToDeclaration/">lruLinkedHashMap</span>.</p></div></div>                  </div>
                 </div>
               </div>
             </div>
@@ -257,7 +294,7 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">fun </span><a href="members.html"><span class="token function">members</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">generator<span class="token operator">: </span><a href="../-generator/index.html">Generator</a><span class="token operator">&lt;</span><a href="../../dev.kord.core.cache.data/-member-data/index.html">MemberData</a><span class="token punctuation">, </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">&gt;</span></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Configures the caching for <a href="../../dev.kord.core.cache.data/-member-data/index.html">MemberData</a>. It's advised to configure user and member data similarly, so that every member in cache also has its user data cached. Failing to do so would result in a performance hit when fetching members.</p></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">fun </span><a href="members.html"><span class="token function">members</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">generator<span class="token operator">: </span><a href="../-generator/index.html">Generator</a><span class="token operator">&lt;</span><a href="../../dev.kord.core.cache.data/-member-data/index.html">MemberData</a><span class="token punctuation">, </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">&gt;</span></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Configures the caching for <a href="../../dev.kord.core.cache.data/-member-data/index.html">MemberData</a>. It's advised to configure user and member data similarly, so that every member in cache also has its user data cached. Failing to do so would result in a performance hit when fetching members.</p></div></div></div>
                 </div>
               </div>
             </div>
@@ -287,7 +324,7 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="none.html">T</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token punctuation">, </span><a href="none.html">I</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token operator">&gt; </span><a href="none.html"><span class="token function">none</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../-generator/index.html">Generator</a><span class="token operator">&lt;</span><a href="none.html">T</a><span class="token punctuation">, </span><a href="none.html">I</a><span class="token operator">&gt;</span></div><div class="brief "><p class="paragraph">A Generator creating <span data-unresolved-link="dev.kord.cache.api/DataEntryCache///PointingToDeclaration/">DataEntryCaches</span> that won't store any entities, can be used to disable caching.</p></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="none.html">T</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token punctuation">, </span><a href="none.html">I</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token operator">&gt; </span><a href="none.html"><span class="token function">none</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../-generator/index.html">Generator</a><span class="token operator">&lt;</span><a href="none.html">T</a><span class="token punctuation">, </span><a href="none.html">I</a><span class="token operator">&gt;</span></div><div class="brief "><p class="paragraph">A Generator creating <span data-unresolved-link="dev.kord.cache.api/DataEntryCache///PointingToDeclaration/">DataEntryCaches</span> that won't store any entities, can be used to disable caching.</p></div></div></div>
                 </div>
               </div>
             </div>
@@ -302,7 +339,7 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">fun </span><a href="presences.html"><span class="token function">presences</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">generator<span class="token operator">: </span><a href="../-generator/index.html">Generator</a><span class="token operator">&lt;</span><a href="../../dev.kord.core.cache.data/-presence-data/index.html">PresenceData</a><span class="token punctuation">, </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">&gt;</span></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Configures the caching for <a href="../../dev.kord.core.cache.data/-presence-data/index.html">PresenceData</a>.</p></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">fun </span><a href="presences.html"><span class="token function">presences</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">generator<span class="token operator">: </span><a href="../-generator/index.html">Generator</a><span class="token operator">&lt;</span><a href="../../dev.kord.core.cache.data/-presence-data/index.html">PresenceData</a><span class="token punctuation">, </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">&gt;</span></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Configures the caching for <a href="../../dev.kord.core.cache.data/-presence-data/index.html">PresenceData</a>.</p></div></div></div>
                 </div>
               </div>
             </div>
@@ -377,7 +414,7 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">fun </span><a href="voice-state.html"><span class="token function">voiceState</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">generator<span class="token operator">: </span><a href="../-generator/index.html">Generator</a><span class="token operator">&lt;</span><a href="../../dev.kord.core.cache.data/-voice-state-data/index.html">VoiceStateData</a><span class="token punctuation">, </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">&gt;</span></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Configures the caching for <a href="../../dev.kord.core.cache.data/-voice-state-data/index.html">VoiceStateData</a>.</p></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">fun </span><a href="voice-state.html"><span class="token function">voiceState</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">generator<span class="token operator">: </span><a href="../-generator/index.html">Generator</a><span class="token operator">&lt;</span><a href="../../dev.kord.core.cache.data/-voice-state-data/index.html">VoiceStateData</a><span class="token punctuation">, </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">&gt;</span></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Configures the caching for <a href="../../dev.kord.core.cache.data/-voice-state-data/index.html">VoiceStateData</a>.</p></div></div></div>
                 </div>
               </div>
             </div>
