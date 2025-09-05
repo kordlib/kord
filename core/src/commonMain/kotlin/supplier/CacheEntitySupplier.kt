@@ -148,6 +148,15 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
         return Member(memberData, userData, kord)
     }
 
+    override suspend fun getMemberVoiceStateOrNull(guildId: Snowflake, userId: Snowflake): VoiceState? {
+        val voiceStateData = cache.query {
+            idEq(VoiceStateData::userId, userId)
+            idEq(VoiceStateData::guildId, guildId)
+        }.singleOrNull() ?: return null
+
+        return VoiceState(voiceStateData, kord)
+    }
+
     override suspend fun getMessageOrNull(channelId: Snowflake, messageId: Snowflake): Message? {
         val data = cache.query { idEq(MessageData::id, messageId) }.singleOrNull()
             ?: return null
