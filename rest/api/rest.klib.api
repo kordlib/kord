@@ -882,6 +882,13 @@ abstract interface dev.kord.rest.builder.message/MessageBuilder { // dev.kord.re
         abstract fun <set-suppressEmbeds>(kotlin/Boolean?) // dev.kord.rest.builder.message/MessageBuilder.suppressEmbeds.<set-suppressEmbeds>|<set-suppressEmbeds>(kotlin.Boolean?){}[0]
 
     open fun addFile(kotlin/String, io.ktor.client.request.forms/ChannelProvider): dev.kord.rest/NamedFile // dev.kord.rest.builder.message/MessageBuilder.addFile|addFile(kotlin.String;io.ktor.client.request.forms.ChannelProvider){}[0]
+
+    final object Limits { // dev.kord.rest.builder.message/MessageBuilder.Limits|null[0]
+        final const val content // dev.kord.rest.builder.message/MessageBuilder.Limits.content|{}content[0]
+            final fun <get-content>(): kotlin/Int // dev.kord.rest.builder.message/MessageBuilder.Limits.content.<get-content>|<get-content>(){}[0]
+        final const val embedCount // dev.kord.rest.builder.message/MessageBuilder.Limits.embedCount|{}embedCount[0]
+            final fun <get-embedCount>(): kotlin/Int // dev.kord.rest.builder.message/MessageBuilder.Limits.embedCount.<get-embedCount>|<get-embedCount>(){}[0]
+    }
 }
 
 abstract interface dev.kord.rest.builder/AuditBuilder { // dev.kord.rest.builder/AuditBuilder|null[0]
