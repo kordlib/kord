@@ -23,6 +23,7 @@ public data class GuildData(
     val iconHash: Optional<String?> = Optional.Missing(),
     val splash: Optional<String?> = Optional.Missing(),
     val discoverySplash: Optional<String?> = Optional.Missing(),
+    val homeHeader: Optional<String?> = Optional.Missing(),
     //val owner: OptionalBoolean = OptionalBoolean.Missing, useless?
     val ownerId: Snowflake,
     val permissions: Optional<Permissions> = Optional.Missing(),
@@ -97,6 +98,7 @@ public data class GuildData(
                 iconHash = iconHash,
                 splash = splash,
                 discoverySplash = discoverySplash,
+                homeHeader = homeHeader,
                 //owner = owner,
                 ownerId = ownerId,
                 permissions = permissions,

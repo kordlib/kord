@@ -277,6 +277,13 @@ public class Guild(
     public val discoverySplash: Asset? get() = discoverySplashHash?.let { Asset.guildDiscoverySplash(id, it, kord) }
 
     /**
+     * The hash of the home header, if present.
+     */
+    public val homeHeaderHash: String? get() = data.homeHeader.value
+
+    public val homeHeader: Asset? get() = homeHeaderHash?.let { Asset.guildHomeHeader(id, it, kord) }
+
+    /**
      * The id of the channel to which system messages are sent.
      */
     public val systemChannelId: Snowflake? get() = data.systemChannelId

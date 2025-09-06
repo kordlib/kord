@@ -92,6 +92,13 @@ public class PartialGuild(
     public val banner: Asset? get() = bannerHash?.let { Asset.guildBanner(id, it, kord) }
 
     /**
+     * The hash of the home header, if present.
+     */
+    public val homeHeaderHash: String? get() = data.homeHeader.value
+
+    public val homeHeader: Asset? get() = homeHeaderHash?.let { Asset.guildHomeHeader(id, it, kord) }
+
+    /**
      * The approximate number of members in this guild.
      *
      * Present if this guild was requested through [rest][dev.kord.rest.service.RestClient] with the flag `with_counts`.

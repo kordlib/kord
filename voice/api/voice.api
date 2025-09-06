@@ -168,7 +168,7 @@ public final class dev/kord/voice/AudioFrame$Companion {
 
 public abstract interface class dev/kord/voice/AudioProvider {
 	public abstract fun provide-aSqDgro (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public abstract fun provideFrames (Lkotlinx/coroutines/CoroutineScope;Lkotlinx/coroutines/channels/SendChannel;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun provideFrames (Lkotlinx/coroutines/CoroutineScope;Lkotlinx/coroutines/channels/SendChannel;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class dev/kord/voice/AudioProvider$DefaultImpls {
@@ -550,7 +550,7 @@ public final class dev/kord/voice/gateway/Heartbeat : dev/kord/voice/gateway/Com
 	public fun toString ()Ljava/lang/String;
 }
 
-public synthetic class dev/kord/voice/gateway/Heartbeat$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+public final synthetic class dev/kord/voice/gateway/Heartbeat$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/voice/gateway/Heartbeat$$serializer;
 	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/voice/gateway/Heartbeat;
@@ -595,7 +595,7 @@ public final class dev/kord/voice/gateway/Hello : dev/kord/voice/gateway/VoiceEv
 	public fun toString ()Ljava/lang/String;
 }
 
-public synthetic class dev/kord/voice/gateway/Hello$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+public final synthetic class dev/kord/voice/gateway/Hello$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/voice/gateway/Hello$$serializer;
 	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/voice/gateway/Hello;
@@ -628,7 +628,7 @@ public final class dev/kord/voice/gateway/Identify : dev/kord/voice/gateway/Comm
 	public fun toString ()Ljava/lang/String;
 }
 
-public synthetic class dev/kord/voice/gateway/Identify$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+public final synthetic class dev/kord/voice/gateway/Identify$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/voice/gateway/Identify$$serializer;
 	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/voice/gateway/Identify;
@@ -685,7 +685,7 @@ public final class dev/kord/voice/gateway/Ready : dev/kord/voice/gateway/VoiceEv
 	public fun toString ()Ljava/lang/String;
 }
 
-public synthetic class dev/kord/voice/gateway/Ready$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+public final synthetic class dev/kord/voice/gateway/Ready$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/voice/gateway/Ready$$serializer;
 	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/voice/gateway/Ready;
@@ -716,7 +716,7 @@ public final class dev/kord/voice/gateway/Resume : dev/kord/voice/gateway/Comman
 	public fun toString ()Ljava/lang/String;
 }
 
-public synthetic class dev/kord/voice/gateway/Resume$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+public final synthetic class dev/kord/voice/gateway/Resume$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/voice/gateway/Resume$$serializer;
 	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/voice/gateway/Resume;
@@ -750,7 +750,7 @@ public final class dev/kord/voice/gateway/SelectProtocol : dev/kord/voice/gatewa
 	public fun toString ()Ljava/lang/String;
 }
 
-public synthetic class dev/kord/voice/gateway/SelectProtocol$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+public final synthetic class dev/kord/voice/gateway/SelectProtocol$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/voice/gateway/SelectProtocol$$serializer;
 	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/voice/gateway/SelectProtocol;
@@ -781,7 +781,7 @@ public final class dev/kord/voice/gateway/SelectProtocol$Data {
 	public fun toString ()Ljava/lang/String;
 }
 
-public synthetic class dev/kord/voice/gateway/SelectProtocol$Data$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+public final synthetic class dev/kord/voice/gateway/SelectProtocol$Data$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/voice/gateway/SelectProtocol$Data$$serializer;
 	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/voice/gateway/SelectProtocol$Data;
@@ -812,7 +812,7 @@ public final class dev/kord/voice/gateway/SendSpeaking : dev/kord/voice/gateway/
 	public fun toString ()Ljava/lang/String;
 }
 
-public synthetic class dev/kord/voice/gateway/SendSpeaking$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+public final synthetic class dev/kord/voice/gateway/SendSpeaking$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/voice/gateway/SendSpeaking$$serializer;
 	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/voice/gateway/SendSpeaking;
@@ -841,7 +841,7 @@ public final class dev/kord/voice/gateway/SessionDescription : dev/kord/voice/ga
 	public fun toString ()Ljava/lang/String;
 }
 
-public synthetic class dev/kord/voice/gateway/SessionDescription$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+public final synthetic class dev/kord/voice/gateway/SessionDescription$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/voice/gateway/SessionDescription$$serializer;
 	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/voice/gateway/SessionDescription;
@@ -872,7 +872,7 @@ public final class dev/kord/voice/gateway/Speaking : dev/kord/voice/gateway/Voic
 	public fun toString ()Ljava/lang/String;
 }
 
-public synthetic class dev/kord/voice/gateway/Speaking$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+public final synthetic class dev/kord/voice/gateway/Speaking$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/voice/gateway/Speaking$$serializer;
 	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/voice/gateway/Speaking;
