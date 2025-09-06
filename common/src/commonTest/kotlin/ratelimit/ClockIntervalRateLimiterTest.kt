@@ -1,7 +1,7 @@
 package dev.kord.common.ratelimit
 
 import dev.kord.common.fixed
-import kotlinx.datetime.Clock
+import kotlin.time.Clock
 import kotlin.time.Duration
 
 class ClockIntervalRateLimiterTest : AbstractIntervalRateLimiterTest() {

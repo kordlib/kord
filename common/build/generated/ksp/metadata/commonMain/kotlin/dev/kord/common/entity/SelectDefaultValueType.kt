@@ -1,6 +1,5 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
-@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
-                "SpellCheckingInspection", "GrazieInspection"))
+@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
@@ -14,8 +13,9 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 /**
- * See [SelectDefaultValueType]s in the
- * [Discord Developer Documentation](https://discord.com/developers/docs/interactions/message-components#select-menu-object-select-default-value-structure).
+ *
+ *
+ * See [SelectDefaultValueType]s in the [Discord Developer Documentation](https://discord.com/developers/docs/interactions/message-components#select-menu-object-select-default-value-structure).
  */
 @Serializable(with = SelectDefaultValueType.Serializer::class)
 public sealed class SelectDefaultValueType(
@@ -24,14 +24,11 @@ public sealed class SelectDefaultValueType(
      */
     public val `value`: String,
 ) {
-    final override fun equals(other: Any?): Boolean = this === other ||
-            (other is SelectDefaultValueType && this.value == other.value)
+    final override fun equals(other: Any?): Boolean = this === other || (other is SelectDefaultValueType && this.value == other.value)
 
     final override fun hashCode(): Int = value.hashCode()
 
-    final override fun toString(): String =
-            if (this is Unknown) "SelectDefaultValueType.Unknown(value=$value)"
-            else "SelectDefaultValueType.${this::class.simpleName}"
+    final override fun toString(): String = if (this is Unknown) "SelectDefaultValueType.Unknown(value=$value)" else "SelectDefaultValueType.${this::class.simpleName}"
 
     /**
      * An unknown [SelectDefaultValueType].
@@ -50,15 +47,13 @@ public sealed class SelectDefaultValueType(
 
     internal object Serializer : KSerializer<SelectDefaultValueType> {
         override val descriptor: SerialDescriptor =
-                PrimitiveSerialDescriptor("dev.kord.common.entity.SelectDefaultValueType",
-                PrimitiveKind.STRING)
+                PrimitiveSerialDescriptor("dev.kord.common.entity.SelectDefaultValueType", PrimitiveKind.STRING)
 
         override fun serialize(encoder: Encoder, `value`: SelectDefaultValueType) {
             encoder.encodeString(value.value)
         }
 
-        override fun deserialize(decoder: Decoder): SelectDefaultValueType =
-                from(decoder.decodeString())
+        override fun deserialize(decoder: Decoder): SelectDefaultValueType = from(decoder.decodeString())
     }
 
     public companion object {
@@ -74,8 +69,7 @@ public sealed class SelectDefaultValueType(
         }
 
         /**
-         * Returns an instance of [SelectDefaultValueType] with [SelectDefaultValueType.value] equal
-         * to the specified [value].
+         * Returns an instance of [SelectDefaultValueType] with [SelectDefaultValueType.value] equal to the specified [value].
          */
         public fun from(`value`: String): SelectDefaultValueType = when (value) {
             "user" -> User

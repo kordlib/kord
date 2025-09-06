@@ -15,7 +15,7 @@ import dev.kord.common.serialization.DurationInSeconds
 import dev.kord.ksp.Generate
 import dev.kord.ksp.Generate.EntityType.INT_KORD_ENUM
 import dev.kord.ksp.Generate.Entry
-import kotlinx.datetime.Instant
+import kotlin.time.Instant
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
