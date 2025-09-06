@@ -7,7 +7,7 @@ import dev.kord.common.entity.DiscordActivityEmoji
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.value
 import dev.kord.core.cache.data.ActivityData
-import kotlinx.datetime.Instant
+import kotlin.time.Instant
 
 public class Activity(public val data: ActivityData) {
 

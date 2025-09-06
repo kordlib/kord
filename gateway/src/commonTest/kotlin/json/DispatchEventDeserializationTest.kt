@@ -2,8 +2,8 @@ package dev.kord.gateway.json
 
 import dev.kord.common.entity.*
 import dev.kord.gateway.*
-import kotlinx.datetime.Clock
-import kotlinx.datetime.Instant
+import kotlin.time.Clock
+import kotlin.time.Instant
 import kotlinx.serialization.json.*
 import kotlin.random.Random
 import kotlin.test.Test

@@ -1,6 +1,5 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
-@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
-                "SpellCheckingInspection", "GrazieInspection"))
+@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.voice
 
@@ -14,8 +13,9 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 /**
- * See [EncryptionMode]s in the
- * [Discord Developer Documentation](https://discord.com/developers/docs/topics/voice-connections#establishing-a-voice-udp-connection-encryption-modes).
+ *
+ *
+ * See [EncryptionMode]s in the [Discord Developer Documentation](https://discord.com/developers/docs/topics/voice-connections#establishing-a-voice-udp-connection-encryption-modes).
  */
 @Serializable(with = EncryptionMode.Serializer::class)
 public sealed class EncryptionMode(
@@ -24,14 +24,11 @@ public sealed class EncryptionMode(
      */
     public val `value`: String,
 ) {
-    final override fun equals(other: Any?): Boolean = this === other ||
-            (other is EncryptionMode && this.value == other.value)
+    final override fun equals(other: Any?): Boolean = this === other || (other is EncryptionMode && this.value == other.value)
 
     final override fun hashCode(): Int = value.hashCode()
 
-    final override fun toString(): String =
-            if (this is Unknown) "EncryptionMode.Unknown(value=$value)"
-            else "EncryptionMode.${this::class.simpleName}"
+    final override fun toString(): String = if (this is Unknown) "EncryptionMode.Unknown(value=$value)" else "EncryptionMode.${this::class.simpleName}"
 
     /**
      * An unknown [EncryptionMode].
@@ -72,8 +69,7 @@ public sealed class EncryptionMode(
         }
 
         /**
-         * Returns an instance of [EncryptionMode] with [EncryptionMode.value] equal to the
-         * specified [value].
+         * Returns an instance of [EncryptionMode] with [EncryptionMode.value] equal to the specified [value].
          */
         public fun from(`value`: String): EncryptionMode = when (value) {
             "xsalsa20_poly1305" -> XSalsa20Poly1305

@@ -16,16 +16,16 @@ import dev.kord.ksp.generation.shared.*
 import kotlinx.serialization.Serializable
 import com.squareup.kotlinpoet.INT as INT_CN
 
-context(GenerationContext)
+context(context: GenerationContext)
 internal val BitFlags.collectionCN
-    get() = ClassName(entityCN.packageName, entityName + 's')
+    get() = ClassName(context.entityCN.packageName, entityName + 's')
 
-context(GenerationContext)
+context(_: GenerationContext)
 internal val BitFlags.builderCN
     get() = collectionCN.nestedClass("Builder")
 
 internal fun BitFlags.generateFileSpec(originatingFile: KSFile) = fileSpecForGenerationEntity(originatingFile) {
-    addClass(entityCN) {
+    addClass(currentContext.entityCN) {
         // for ksp incremental processing
         addOriginatingKSFile(originatingFile)
         addEntityKDoc()
@@ -38,13 +38,13 @@ internal fun BitFlags.generateFileSpec(originatingFile: KSFile) = fileSpecForGen
             addParameter<Int>("shift")
         }
         addProperty<Int>("shift", PUBLIC) {
-            addKdoc("The position of the bit that is set in this [%T]. This is always $shiftTest.", entityCN)
+            addKdoc("The position of the bit that is set in this [%T]. This is always $shiftTest.", currentContext.entityCN)
             initializer("shift")
         }
         addInitializerBlock {
             addStatement("require(shift·$shiftTest)·{ %P }", "shift has to be $shiftTest but was \$shift")
         }
-        addProperty(valueName, valueCN, PUBLIC) {
+        addProperty(valueName, currentContext.valueCN, PUBLIC) {
             addKdoc("The raw $valueName used by Discord.")
             getter {
                 when (valueType) {
@@ -53,9 +53,9 @@ internal fun BitFlags.generateFileSpec(originatingFile: KSFile) = fileSpecForGen
                 }
             }
         }
-        addPlus(parameterName = "flag", parameterType = entityCN)
+        addPlus(parameterName = "flag", parameterType = currentContext.entityCN)
         addPlus(parameterName = "flags", parameterType = collectionCN)
-        addEqualsAndHashCodeBasedOnClassAndSingleProperty(entityCN, property = "shift", isFinal = true)
+        addEqualsAndHashCodeBasedOnClassAndSingleProperty(currentContext.entityCN, property = "shift", isFinal = true)
         addEntityToString(property = "shift")
         addUnknownClass(constructorParameterName = "shift", constructorParameterType = INT_CN)
         addEntityEntries()
@@ -65,14 +65,14 @@ internal fun BitFlags.generateFileSpec(originatingFile: KSFile) = fileSpecForGen
                 addKdoc(
                     "Returns an instance of [%1T] with [%1T.shift] equal to the specified [shift].\n\n" +
                         "@throws IllegalArgumentException if [shift] is not $shiftTest.",
-                    entityCN,
+                    currentContext.entityCN,
                 )
                 addEntryOptIns()
                 addParameter<Int>("shift")
-                returns(entityCN)
+                returns(currentContext.entityCN)
                 withControlFlow("return when·(shift)") {
-                    for (entry in entriesDistinctByValue) {
-                        addStatement("$valueFormat·->·${entry.nameWithSuppressedDeprecation}", entry.value)
+                    for (entry in currentContext.entriesDistinctByValue) {
+                        addStatement("${currentContext.valueFormat}·->·${entry.nameWithSuppressedDeprecation}", entry.value)
                     }
                     addStatement("else·->·Unknown(shift)")
                 }
@@ -86,14 +86,14 @@ internal fun BitFlags.generateFileSpec(originatingFile: KSFile) = fileSpecForGen
         }
         primaryConstructor {
             addModifiers(INTERNAL)
-            addParameter(valueName, valueCN)
+            addParameter(valueName, currentContext.valueCN)
         }
-        addProperty(valueName, valueCN, PUBLIC) {
+        addProperty(valueName, currentContext.valueCN, PUBLIC) {
             addKdoc("The raw $valueName used by Discord.")
             initializer(valueName)
         }
-        addProperty("values", type = SET.parameterizedBy(entityCN), PUBLIC) {
-            addKdoc("A [Set] of all [%T]s contained in this instance of [%T].", entityCN, collectionCN)
+        addProperty("values", type = SET.parameterizedBy(currentContext.entityCN), PUBLIC) {
+            addKdoc("A [Set] of all [%T]s contained in this instance of [%T].", currentContext.entityCN, collectionCN)
             getter {
                 withControlFlow("return buildSet") {
                     when (valueType) {
@@ -101,23 +101,23 @@ internal fun BitFlags.generateFileSpec(originatingFile: KSFile) = fileSpecForGen
                             addStatement("var·remaining·=·$valueName")
                             addStatement("var·shift·=·0")
                             withControlFlow("while·(remaining·!=·0)") {
-                                addStatement("if·((remaining·and·1)·!=·0)·add(%T.fromShift(shift))", entityCN)
+                                addStatement("if·((remaining·and·1)·!=·0)·add(%T.fromShift(shift))", currentContext.entityCN)
                                 addStatement("remaining·=·remaining·ushr·1")
                                 addStatement("shift++")
                             }
                         }
                         BIT_SET -> withControlFlow("for·(shift·in·0..<$valueName.size)") {
-                            addStatement("if·($valueName[shift])·add(%T.fromShift(shift))", entityCN)
+                            addStatement("if·($valueName[shift])·add(%T.fromShift(shift))", currentContext.entityCN)
                         }
                     }
                 }
             }
         }
-        addContains(parameterName = "flag", parameterType = entityCN)
+        addContains(parameterName = "flag", parameterType = currentContext.entityCN)
         addContains(parameterName = "flags", parameterType = collectionCN)
-        addPlus(parameterName = "flag", parameterType = entityCN)
+        addPlus(parameterName = "flag", parameterType = currentContext.entityCN)
         addPlus(parameterName = "flags", parameterType = collectionCN)
-        addMinus(parameterName = "flag", parameterType = entityCN)
+        addMinus(parameterName = "flag", parameterType = currentContext.entityCN)
         addMinus(parameterName = "flags", parameterType = collectionCN)
         addCopy()
         if (collectionHadCopy0) {

@@ -19,7 +19,7 @@ import dev.kord.rest.json.request.EntitlementsListRequest
 import dev.kord.rest.json.request.SkuSubscriptionsListRequest
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.onEach
-import kotlinx.datetime.Instant
+import kotlin.time.Instant
 
 /**
  * [EntitySupplier] that delegates to another [EntitySupplier] to resolve entities.

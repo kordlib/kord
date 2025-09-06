@@ -1,6 +1,5 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
-@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
-                "SpellCheckingInspection", "GrazieInspection"))
+@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
@@ -14,8 +13,9 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 /**
- * See [MFALevel]s in the
- * [Discord Developer Documentation](https://discord.com/developers/docs/resources/guild#guild-object-mfa-level).
+ *
+ *
+ * See [MFALevel]s in the [Discord Developer Documentation](https://discord.com/developers/docs/resources/guild#guild-object-mfa-level).
  */
 @Serializable(with = MFALevel.Serializer::class)
 public sealed class MFALevel(
@@ -24,13 +24,11 @@ public sealed class MFALevel(
      */
     public val `value`: Int,
 ) {
-    final override fun equals(other: Any?): Boolean = this === other ||
-            (other is MFALevel && this.value == other.value)
+    final override fun equals(other: Any?): Boolean = this === other || (other is MFALevel && this.value == other.value)
 
     final override fun hashCode(): Int = value.hashCode()
 
-    final override fun toString(): String = if (this is Unknown) "MFALevel.Unknown(value=$value)"
-            else "MFALevel.${this::class.simpleName}"
+    final override fun toString(): String = if (this is Unknown) "MFALevel.Unknown(value=$value)" else "MFALevel.${this::class.simpleName}"
 
     /**
      * An unknown [MFALevel].

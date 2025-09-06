@@ -8,7 +8,7 @@ import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.delegate.delegate
 import dev.kord.gateway.DiscordPresence
 import dev.kord.gateway.UpdateStatus
-import kotlinx.datetime.Instant
+import kotlin.time.Instant
 
 @KordDsl
 public class PresenceBuilder {
