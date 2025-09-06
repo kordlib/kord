@@ -1,6 +1,5 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
-@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
-                "SpellCheckingInspection", "GrazieInspection"))
+@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
@@ -14,6 +13,8 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 /**
+ *
+ *
  * See [GuildVisibilityLevel]s in the [Discord Developer Documentation]().
  */
 @Serializable(with = GuildVisibilityLevel.Serializer::class)
@@ -23,14 +24,11 @@ public sealed class GuildVisibilityLevel(
      */
     public val `value`: Int,
 ) {
-    final override fun equals(other: Any?): Boolean = this === other ||
-            (other is GuildVisibilityLevel && this.value == other.value)
+    final override fun equals(other: Any?): Boolean = this === other || (other is GuildVisibilityLevel && this.value == other.value)
 
     final override fun hashCode(): Int = value.hashCode()
 
-    final override fun toString(): String =
-            if (this is Unknown) "GuildVisibilityLevel.Unknown(value=$value)"
-            else "GuildVisibilityLevel.${this::class.simpleName}"
+    final override fun toString(): String = if (this is Unknown) "GuildVisibilityLevel.Unknown(value=$value)" else "GuildVisibilityLevel.${this::class.simpleName}"
 
     /**
      * An unknown [GuildVisibilityLevel].
@@ -49,8 +47,7 @@ public sealed class GuildVisibilityLevel(
 
     internal object Serializer : KSerializer<GuildVisibilityLevel> {
         override val descriptor: SerialDescriptor =
-                PrimitiveSerialDescriptor("dev.kord.common.entity.GuildVisibilityLevel",
-                PrimitiveKind.INT)
+                PrimitiveSerialDescriptor("dev.kord.common.entity.GuildVisibilityLevel", PrimitiveKind.INT)
 
         override fun serialize(encoder: Encoder, `value`: GuildVisibilityLevel) {
             encoder.encodeInt(value.value)
@@ -72,8 +69,7 @@ public sealed class GuildVisibilityLevel(
         }
 
         /**
-         * Returns an instance of [GuildVisibilityLevel] with [GuildVisibilityLevel.value] equal to
-         * the specified [value].
+         * Returns an instance of [GuildVisibilityLevel] with [GuildVisibilityLevel.value] equal to the specified [value].
          */
         public fun from(`value`: Int): GuildVisibilityLevel = when (value) {
             1 -> Public

@@ -4,8 +4,8 @@ import dev.kord.common.entity.DiscordGuildProfile
 import dev.kord.common.entity.DiscordMemberVerification
 import dev.kord.common.entity.DiscordMemberVerificationFormField
 import dev.kord.common.entity.DiscordMemberVerificationGuild
-import kotlinx.datetime.Instant
 import kotlinx.serialization.Serializable
+import kotlin.time.Instant
 
 @Serializable
 public data class MemberVerificationData(

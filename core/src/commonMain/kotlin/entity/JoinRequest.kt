@@ -1,7 +1,6 @@
 package dev.kord.core.entity
 
 import dev.kord.common.entity.DiscordMemberVerificationFormField
-import dev.kord.common.entity.DiscordUser
 import dev.kord.common.entity.GuildJoinRequestStatus
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.exception.RequestException
@@ -11,9 +10,7 @@ import dev.kord.core.cache.data.JoinRequestData
 import dev.kord.core.entity.channel.Channel
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.supplier.EntitySupplier
-import dev.kord.core.supplier.getChannelOf
-import dev.kord.core.supplier.getChannelOfOrNull
-import kotlinx.datetime.Instant
+import kotlin.time.Instant
 
 public class JoinRequest(
     public val data: JoinRequestData,

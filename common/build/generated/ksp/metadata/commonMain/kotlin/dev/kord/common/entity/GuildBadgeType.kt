@@ -1,6 +1,5 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
-@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
-                "SpellCheckingInspection", "GrazieInspection"))
+@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
@@ -14,6 +13,8 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 /**
+ *
+ *
  * See [GuildBadgeType]s in the [Discord Developer Documentation]().
  */
 @Serializable(with = GuildBadgeType.Serializer::class)
@@ -23,14 +24,11 @@ public sealed class GuildBadgeType(
      */
     public val `value`: Int,
 ) {
-    final override fun equals(other: Any?): Boolean = this === other ||
-            (other is GuildBadgeType && this.value == other.value)
+    final override fun equals(other: Any?): Boolean = this === other || (other is GuildBadgeType && this.value == other.value)
 
     final override fun hashCode(): Int = value.hashCode()
 
-    final override fun toString(): String =
-            if (this is Unknown) "GuildBadgeType.Unknown(value=$value)"
-            else "GuildBadgeType.${this::class.simpleName}"
+    final override fun toString(): String = if (this is Unknown) "GuildBadgeType.Unknown(value=$value)" else "GuildBadgeType.${this::class.simpleName}"
 
     /**
      * An unknown [GuildBadgeType].
@@ -85,8 +83,7 @@ public sealed class GuildBadgeType(
 
     internal object Serializer : KSerializer<GuildBadgeType> {
         override val descriptor: SerialDescriptor =
-                PrimitiveSerialDescriptor("dev.kord.common.entity.GuildBadgeType",
-                PrimitiveKind.INT)
+                PrimitiveSerialDescriptor("dev.kord.common.entity.GuildBadgeType", PrimitiveKind.INT)
 
         override fun serialize(encoder: Encoder, `value`: GuildBadgeType) {
             encoder.encodeInt(value.value)
@@ -125,8 +122,7 @@ public sealed class GuildBadgeType(
         }
 
         /**
-         * Returns an instance of [GuildBadgeType] with [GuildBadgeType.value] equal to the
-         * specified [value].
+         * Returns an instance of [GuildBadgeType] with [GuildBadgeType.value] equal to the specified [value].
          */
         public fun from(`value`: Int): GuildBadgeType = when (value) {
             0 -> Sword

@@ -1,14 +1,12 @@
 package dev.kord.core.entity
 
-import dev.kord.common.entity.DiscordMemberVerificationFormField
-import dev.kord.common.entity.DiscordMemberVerificationGuild
 import dev.kord.core.Kord
 import dev.kord.core.KordObject
 import dev.kord.core.cache.data.GuildProfileData
 import dev.kord.core.cache.data.MemberVerificationData
 import dev.kord.core.cache.data.MemberVerificationFormFieldData
 import dev.kord.core.cache.data.MemberVerificationGuildData
-import kotlinx.datetime.Instant
+import kotlin.time.Instant
 
 public class MemberVerification(
     public val data: MemberVerificationData,

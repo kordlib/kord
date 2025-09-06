@@ -7,8 +7,8 @@ import dev.kord.common.entity.GuildJoinRequestStatus
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalSnowflake
-import kotlinx.datetime.Instant
 import kotlinx.serialization.Serializable
+import kotlin.time.Instant
 
 @Serializable
 public data class JoinRequestData(

@@ -15,9 +15,9 @@ import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.ksp.Generate
 import dev.kord.ksp.Generate.EntityType.*
 import dev.kord.ksp.Generate.Entry
-import kotlinx.datetime.Instant
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import kotlin.time.Instant
 
 /**
  * A representation of a [Discord Guild Join Request structure]()

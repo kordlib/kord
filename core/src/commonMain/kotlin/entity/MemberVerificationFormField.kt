@@ -4,6 +4,7 @@ import dev.kord.common.entity.MemberVerificationFormFieldType
 import dev.kord.core.Kord
 import dev.kord.core.KordObject
 import dev.kord.core.cache.data.MemberVerificationFormFieldData
+import kotlinx.serialization.json.JsonPrimitive
 
 public class MemberVerificationFormField(
     public val data: MemberVerificationFormFieldData,
@@ -34,7 +35,7 @@ public class MemberVerificationFormField(
     /**
      * The response for this field
      */
-    public val response: String? get() = data.response.value
+    public val response: JsonPrimitive? get() = data.response.value
 
     /**
      * Whether this field is required for a successful application

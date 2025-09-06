@@ -1,6 +1,5 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
-@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
-                "SpellCheckingInspection", "GrazieInspection"))
+@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
@@ -14,6 +13,8 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 /**
+ *
+ *
  * See [GuildJoinRequestStatus]es in the [Discord Developer Documentation]().
  */
 @Serializable(with = GuildJoinRequestStatus.Serializer::class)
@@ -23,20 +24,16 @@ public sealed class GuildJoinRequestStatus(
      */
     public val `value`: String,
 ) {
-    final override fun equals(other: Any?): Boolean = this === other ||
-            (other is GuildJoinRequestStatus && this.value == other.value)
+    final override fun equals(other: Any?): Boolean = this === other || (other is GuildJoinRequestStatus && this.value == other.value)
 
     final override fun hashCode(): Int = value.hashCode()
 
-    final override fun toString(): String =
-            if (this is Unknown) "GuildJoinRequestStatus.Unknown(value=$value)"
-            else "GuildJoinRequestStatus.${this::class.simpleName}"
+    final override fun toString(): String = if (this is Unknown) "GuildJoinRequestStatus.Unknown(value=$value)" else "GuildJoinRequestStatus.${this::class.simpleName}"
 
     /**
      * An unknown [GuildJoinRequestStatus].
      *
-     * This is used as a fallback for [GuildJoinRequestStatus]es that haven't been added to Kord
-     * yet.
+     * This is used as a fallback for [GuildJoinRequestStatus]es that haven't been added to Kord yet.
      */
     public class Unknown internal constructor(
         `value`: String,
@@ -64,15 +61,13 @@ public sealed class GuildJoinRequestStatus(
 
     internal object Serializer : KSerializer<GuildJoinRequestStatus> {
         override val descriptor: SerialDescriptor =
-                PrimitiveSerialDescriptor("dev.kord.common.entity.GuildJoinRequestStatus",
-                PrimitiveKind.STRING)
+                PrimitiveSerialDescriptor("dev.kord.common.entity.GuildJoinRequestStatus", PrimitiveKind.STRING)
 
         override fun serialize(encoder: Encoder, `value`: GuildJoinRequestStatus) {
             encoder.encodeString(value.value)
         }
 
-        override fun deserialize(decoder: Decoder): GuildJoinRequestStatus =
-                from(decoder.decodeString())
+        override fun deserialize(decoder: Decoder): GuildJoinRequestStatus = from(decoder.decodeString())
     }
 
     public companion object {
@@ -89,8 +84,7 @@ public sealed class GuildJoinRequestStatus(
         }
 
         /**
-         * Returns an instance of [GuildJoinRequestStatus] with [GuildJoinRequestStatus.value] equal
-         * to the specified [value].
+         * Returns an instance of [GuildJoinRequestStatus] with [GuildJoinRequestStatus.value] equal to the specified [value].
          */
         public fun from(`value`: String): GuildJoinRequestStatus = when (value) {
             "STARTED" -> Started
