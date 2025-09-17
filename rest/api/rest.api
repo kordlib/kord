@@ -5578,6 +5578,33 @@ public final class dev/kord/rest/json/request/WebhookModifyRequest$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
+public final class dev/kord/rest/json/response/ApplicationEmojisResponse {
+	public static final field Companion Ldev/kord/rest/json/response/ApplicationEmojisResponse$Companion;
+	public fun <init> (Ljava/util/List;)V
+	public final fun component1 ()Ljava/util/List;
+	public final fun copy (Ljava/util/List;)Ldev/kord/rest/json/response/ApplicationEmojisResponse;
+	public static synthetic fun copy$default (Ldev/kord/rest/json/response/ApplicationEmojisResponse;Ljava/util/List;ILjava/lang/Object;)Ldev/kord/rest/json/response/ApplicationEmojisResponse;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getItems ()Ljava/util/List;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public synthetic class dev/kord/rest/json/response/ApplicationEmojisResponse$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Ldev/kord/rest/json/response/ApplicationEmojisResponse$$serializer;
+	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/rest/json/response/ApplicationEmojisResponse;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/rest/json/response/ApplicationEmojisResponse;)V
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class dev/kord/rest/json/response/ApplicationEmojisResponse$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
 public final class dev/kord/rest/json/response/BanResponse {
 	public static final field Companion Ldev/kord/rest/json/response/BanResponse$Companion;
 	public fun <init> (Ljava/lang/String;Ldev/kord/common/entity/DiscordUser;)V
@@ -6544,6 +6571,10 @@ public final class dev/kord/rest/route/Route$DeleteAllReactionsForEmoji : dev/ko
 	public static final field INSTANCE Ldev/kord/rest/route/Route$DeleteAllReactionsForEmoji;
 }
 
+public final class dev/kord/rest/route/Route$DeleteApplicationEmoji : dev/kord/rest/route/Route {
+	public static final field INSTANCE Ldev/kord/rest/route/Route$DeleteApplicationEmoji;
+}
+
 public final class dev/kord/rest/route/Route$DeleteWebhookMessage : dev/kord/rest/route/Route {
 	public static final field INSTANCE Ldev/kord/rest/route/Route$DeleteWebhookMessage;
 }
@@ -6610,6 +6641,14 @@ public final class dev/kord/rest/route/Route$GatewayBotGet : dev/kord/rest/route
 
 public final class dev/kord/rest/route/Route$GatewayGet : dev/kord/rest/route/Route {
 	public static final field INSTANCE Ldev/kord/rest/route/Route$GatewayGet;
+}
+
+public final class dev/kord/rest/route/Route$GetApplicationEmoji : dev/kord/rest/route/Route {
+	public static final field INSTANCE Ldev/kord/rest/route/Route$GetApplicationEmoji;
+}
+
+public final class dev/kord/rest/route/Route$GetApplicationEmojis : dev/kord/rest/route/Route {
+	public static final field INSTANCE Ldev/kord/rest/route/Route$GetApplicationEmojis;
 }
 
 public final class dev/kord/rest/route/Route$GetWebhookMessage : dev/kord/rest/route/Route {
@@ -7048,6 +7087,10 @@ public final class dev/kord/rest/route/Route$OwnReactionDelete : dev/kord/rest/r
 	public static final field INSTANCE Ldev/kord/rest/route/Route$OwnReactionDelete;
 }
 
+public final class dev/kord/rest/route/Route$PatchApplicationEmoji : dev/kord/rest/route/Route {
+	public static final field INSTANCE Ldev/kord/rest/route/Route$PatchApplicationEmoji;
+}
+
 public final class dev/kord/rest/route/Route$PinDelete : dev/kord/rest/route/Route {
 	public static final field INSTANCE Ldev/kord/rest/route/Route$PinDelete;
 }
@@ -7058,6 +7101,10 @@ public final class dev/kord/rest/route/Route$PinPut : dev/kord/rest/route/Route 
 
 public final class dev/kord/rest/route/Route$PinsGet : dev/kord/rest/route/Route {
 	public static final field INSTANCE Ldev/kord/rest/route/Route$PinsGet;
+}
+
+public final class dev/kord/rest/route/Route$PostApplicationEmoji : dev/kord/rest/route/Route {
+	public static final field INSTANCE Ldev/kord/rest/route/Route$PostApplicationEmoji;
 }
 
 public final class dev/kord/rest/route/Route$PrivateArchivedThreadsGet : dev/kord/rest/route/Route {
@@ -7249,7 +7296,14 @@ public final class dev/kord/rest/service/ApplicationRoleConnectionMetadataServic
 
 public final class dev/kord/rest/service/ApplicationService : dev/kord/rest/service/RestService {
 	public fun <init> (Ldev/kord/rest/request/RequestHandler;)V
+	public final fun createApplicationEmoji (Ldev/kord/common/entity/Snowflake;Ldev/kord/rest/json/request/EmojiCreateRequest;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun createApplicationEmoji (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/rest/Image;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun deleteApplicationEmoji (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun getApplicationEmoji (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun getApplicationEmojis (Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun getCurrentApplicationInfo (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun modifyApplicationEmoji (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/rest/json/request/EmojiModifyRequest;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun modifyApplicationEmoji (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class dev/kord/rest/service/AuditLogService : dev/kord/rest/service/RestService {

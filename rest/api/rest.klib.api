@@ -6169,6 +6169,34 @@ final class dev.kord.rest.json.request/WebhookModifyRequest { // dev.kord.rest.j
     }
 }
 
+final class dev.kord.rest.json.response/ApplicationEmojisResponse { // dev.kord.rest.json.response/ApplicationEmojisResponse|null[0]
+    constructor <init>(kotlin.collections/List<dev.kord.common.entity/DiscordEmoji>) // dev.kord.rest.json.response/ApplicationEmojisResponse.<init>|<init>(kotlin.collections.List<dev.kord.common.entity.DiscordEmoji>){}[0]
+
+    final val items // dev.kord.rest.json.response/ApplicationEmojisResponse.items|{}items[0]
+        final fun <get-items>(): kotlin.collections/List<dev.kord.common.entity/DiscordEmoji> // dev.kord.rest.json.response/ApplicationEmojisResponse.items.<get-items>|<get-items>(){}[0]
+
+    final fun component1(): kotlin.collections/List<dev.kord.common.entity/DiscordEmoji> // dev.kord.rest.json.response/ApplicationEmojisResponse.component1|component1(){}[0]
+    final fun copy(kotlin.collections/List<dev.kord.common.entity/DiscordEmoji> = ...): dev.kord.rest.json.response/ApplicationEmojisResponse // dev.kord.rest.json.response/ApplicationEmojisResponse.copy|copy(kotlin.collections.List<dev.kord.common.entity.DiscordEmoji>){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.json.response/ApplicationEmojisResponse.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.rest.json.response/ApplicationEmojisResponse.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // dev.kord.rest.json.response/ApplicationEmojisResponse.toString|toString(){}[0]
+
+    final object $serializer : kotlinx.serialization.internal/GeneratedSerializer<dev.kord.rest.json.response/ApplicationEmojisResponse> { // dev.kord.rest.json.response/ApplicationEmojisResponse.$serializer|null[0]
+        final val descriptor // dev.kord.rest.json.response/ApplicationEmojisResponse.$serializer.descriptor|{}descriptor[0]
+            final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // dev.kord.rest.json.response/ApplicationEmojisResponse.$serializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
+
+        final fun childSerializers(): kotlin/Array<kotlinx.serialization/KSerializer<*>> // dev.kord.rest.json.response/ApplicationEmojisResponse.$serializer.childSerializers|childSerializers(){}[0]
+        final fun deserialize(kotlinx.serialization.encoding/Decoder): dev.kord.rest.json.response/ApplicationEmojisResponse // dev.kord.rest.json.response/ApplicationEmojisResponse.$serializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
+        final fun serialize(kotlinx.serialization.encoding/Encoder, dev.kord.rest.json.response/ApplicationEmojisResponse) // dev.kord.rest.json.response/ApplicationEmojisResponse.$serializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;dev.kord.rest.json.response.ApplicationEmojisResponse){}[0]
+    }
+
+    final object Companion { // dev.kord.rest.json.response/ApplicationEmojisResponse.Companion|null[0]
+        final val $childSerializers // dev.kord.rest.json.response/ApplicationEmojisResponse.Companion.$childSerializers|{}$childSerializers[0]
+
+        final fun serializer(): kotlinx.serialization/KSerializer<dev.kord.rest.json.response/ApplicationEmojisResponse> // dev.kord.rest.json.response/ApplicationEmojisResponse.Companion.serializer|serializer(){}[0]
+    }
+}
+
 final class dev.kord.rest.json.response/BanResponse { // dev.kord.rest.json.response/BanResponse|null[0]
     constructor <init>(kotlin/String?, dev.kord.common.entity/DiscordUser) // dev.kord.rest.json.response/BanResponse.<init>|<init>(kotlin.String?;dev.kord.common.entity.DiscordUser){}[0]
 
@@ -6701,7 +6729,14 @@ final class dev.kord.rest.service/ApplicationRoleConnectionMetadataService : dev
 final class dev.kord.rest.service/ApplicationService : dev.kord.rest.service/RestService { // dev.kord.rest.service/ApplicationService|null[0]
     constructor <init>(dev.kord.rest.request/RequestHandler) // dev.kord.rest.service/ApplicationService.<init>|<init>(dev.kord.rest.request.RequestHandler){}[0]
 
+    final suspend fun createApplicationEmoji(dev.kord.common.entity/Snowflake, dev.kord.rest.json.request/EmojiCreateRequest): dev.kord.common.entity/DiscordEmoji // dev.kord.rest.service/ApplicationService.createApplicationEmoji|createApplicationEmoji(dev.kord.common.entity.Snowflake;dev.kord.rest.json.request.EmojiCreateRequest){}[0]
+    final suspend fun createApplicationEmoji(dev.kord.common.entity/Snowflake, kotlin/String, dev.kord.rest/Image): dev.kord.common.entity/DiscordEmoji // dev.kord.rest.service/ApplicationService.createApplicationEmoji|createApplicationEmoji(dev.kord.common.entity.Snowflake;kotlin.String;dev.kord.rest.Image){}[0]
+    final suspend fun deleteApplicationEmoji(dev.kord.common.entity/Snowflake, dev.kord.common.entity/Snowflake) // dev.kord.rest.service/ApplicationService.deleteApplicationEmoji|deleteApplicationEmoji(dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake){}[0]
+    final suspend fun getApplicationEmoji(dev.kord.common.entity/Snowflake, dev.kord.common.entity/Snowflake): dev.kord.common.entity/DiscordEmoji // dev.kord.rest.service/ApplicationService.getApplicationEmoji|getApplicationEmoji(dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake){}[0]
+    final suspend fun getApplicationEmojis(dev.kord.common.entity/Snowflake): dev.kord.rest.json.response/ApplicationEmojisResponse // dev.kord.rest.service/ApplicationService.getApplicationEmojis|getApplicationEmojis(dev.kord.common.entity.Snowflake){}[0]
     final suspend fun getCurrentApplicationInfo(): dev.kord.common.entity/DiscordApplication // dev.kord.rest.service/ApplicationService.getCurrentApplicationInfo|getCurrentApplicationInfo(){}[0]
+    final suspend fun modifyApplicationEmoji(dev.kord.common.entity/Snowflake, dev.kord.common.entity/Snowflake, dev.kord.rest.json.request/EmojiModifyRequest): dev.kord.common.entity/DiscordEmoji // dev.kord.rest.service/ApplicationService.modifyApplicationEmoji|modifyApplicationEmoji(dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake;dev.kord.rest.json.request.EmojiModifyRequest){}[0]
+    final suspend inline fun modifyApplicationEmoji(dev.kord.common.entity/Snowflake, dev.kord.common.entity/Snowflake, kotlin/Function1<dev.kord.rest.builder.guild/EmojiModifyBuilder, kotlin/Unit>): dev.kord.common.entity/DiscordEmoji // dev.kord.rest.service/ApplicationService.modifyApplicationEmoji|modifyApplicationEmoji(dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake;kotlin.Function1<dev.kord.rest.builder.guild.EmojiModifyBuilder,kotlin.Unit>){}[0]
 }
 
 final class dev.kord.rest.service/AuditLogService : dev.kord.rest.service/RestService { // dev.kord.rest.service/AuditLogService|null[0]
@@ -7300,6 +7335,8 @@ sealed class <#A: kotlin/Any?> dev.kord.rest.route/Route { // dev.kord.rest.rout
 
     final object DeleteAllReactionsForEmoji : dev.kord.rest.route/Route<kotlin/Unit> // dev.kord.rest.route/Route.DeleteAllReactionsForEmoji|null[0]
 
+    final object DeleteApplicationEmoji : dev.kord.rest.route/Route<kotlin/Unit> // dev.kord.rest.route/Route.DeleteApplicationEmoji|null[0]
+
     final object DeleteWebhookMessage : dev.kord.rest.route/Route<kotlin/Unit> // dev.kord.rest.route/Route.DeleteWebhookMessage|null[0]
 
     final object EditMessagePatch : dev.kord.rest.route/Route<dev.kord.common.entity/DiscordMessage> // dev.kord.rest.route/Route.EditMessagePatch|null[0]
@@ -7333,6 +7370,10 @@ sealed class <#A: kotlin/Any?> dev.kord.rest.route/Route { // dev.kord.rest.rout
     final object GatewayBotGet : dev.kord.rest.route/Route<dev.kord.rest.json.response/BotGatewayResponse> // dev.kord.rest.route/Route.GatewayBotGet|null[0]
 
     final object GatewayGet : dev.kord.rest.route/Route<dev.kord.rest.json.response/GatewayResponse> // dev.kord.rest.route/Route.GatewayGet|null[0]
+
+    final object GetApplicationEmoji : dev.kord.rest.route/Route<dev.kord.common.entity/DiscordEmoji> // dev.kord.rest.route/Route.GetApplicationEmoji|null[0]
+
+    final object GetApplicationEmojis : dev.kord.rest.route/Route<dev.kord.rest.json.response/ApplicationEmojisResponse> // dev.kord.rest.route/Route.GetApplicationEmojis|null[0]
 
     final object GetWebhookMessage : dev.kord.rest.route/Route<dev.kord.common.entity/DiscordMessage> // dev.kord.rest.route/Route.GetWebhookMessage|null[0]
 
@@ -7548,11 +7589,15 @@ sealed class <#A: kotlin/Any?> dev.kord.rest.route/Route { // dev.kord.rest.rout
 
     final object OwnReactionDelete : dev.kord.rest.route/Route<kotlin/Unit> // dev.kord.rest.route/Route.OwnReactionDelete|null[0]
 
+    final object PatchApplicationEmoji : dev.kord.rest.route/Route<dev.kord.common.entity/DiscordEmoji> // dev.kord.rest.route/Route.PatchApplicationEmoji|null[0]
+
     final object PinDelete : dev.kord.rest.route/Route<kotlin/Unit> // dev.kord.rest.route/Route.PinDelete|null[0]
 
     final object PinPut : dev.kord.rest.route/Route<kotlin/Unit> // dev.kord.rest.route/Route.PinPut|null[0]
 
     final object PinsGet : dev.kord.rest.route/Route<kotlin.collections/List<dev.kord.common.entity/DiscordMessage>> // dev.kord.rest.route/Route.PinsGet|null[0]
+
+    final object PostApplicationEmoji : dev.kord.rest.route/Route<dev.kord.common.entity/DiscordEmoji> // dev.kord.rest.route/Route.PostApplicationEmoji|null[0]
 
     final object PrivateArchivedThreadsGet : dev.kord.rest.route/Route<dev.kord.rest.json.response/ListThreadsResponse> // dev.kord.rest.route/Route.PrivateArchivedThreadsGet|null[0]
 
