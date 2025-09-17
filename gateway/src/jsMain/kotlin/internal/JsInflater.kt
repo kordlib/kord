@@ -2,12 +2,12 @@
 
 package dev.kord.gateway.internal
 
+import js.buffer.ArrayBuffer
 import js.buffer.ArrayBufferLike
-import js.typedarrays.Uint8Array
 import node.buffer.Buffer
 
 internal external class Inflate {
-    fun process(data: Uint8Array<ArrayBufferLike>): Buffer<ArrayBufferLike>
+    fun process(@Suppress("unused") data: Buffer<ArrayBuffer>): Buffer<ArrayBufferLike>
 
     fun close()
 }

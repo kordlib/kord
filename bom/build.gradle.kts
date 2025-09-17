@@ -1,3 +1,5 @@
+import com.vanniktech.maven.publish.JavaPlatform
+
 plugins {
     `java-platform`
     `kord-publishing`
@@ -26,8 +28,6 @@ dependencies {
     }
 }
 
-publishing {
-    publications.register<MavenPublication>(Library.name) {
-        from(components["javaPlatform"])
-    }
+mavenPublishing {
+    configure(JavaPlatform())
 }

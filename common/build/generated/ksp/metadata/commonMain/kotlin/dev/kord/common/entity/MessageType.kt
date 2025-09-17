@@ -13,6 +13,8 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 /**
+ *
+ *
  * See [MessageType]s in the [Discord Developer Documentation](https://discord.com/developers/docs/resources/channel#message-object-message-types).
  */
 @Serializable(with = MessageType.Serializer::class)

@@ -5,7 +5,7 @@ import dev.kord.common.entity.Permission.*
 import dev.kord.common.readFile
 import dev.kord.test.IgnoreOnSimulatorPlatforms
 import kotlinx.coroutines.test.runTest
-import kotlinx.datetime.Instant
+import kotlin.time.Instant
 import kotlinx.serialization.json.Json
 import kotlin.js.JsName
 import kotlin.test.Test

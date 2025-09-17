@@ -8,7 +8,7 @@ import dev.kord.common.entity.optional.value
 import dev.kord.gateway.*
 import dev.kord.test.IgnoreOnSimulatorPlatforms
 import kotlinx.coroutines.test.runTest
-import kotlinx.datetime.Instant
+import kotlin.time.Instant
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.MissingFieldException
 import kotlinx.serialization.json.Json

@@ -13,6 +13,8 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 /**
+ *
+ *
  * See [EmbedType]s in the [Discord Developer Documentation](https://discord.com/developers/docs/resources/channel#embed-object-embed-types).
  */
 @Serializable(with = EmbedType.Serializer::class)

@@ -17,6 +17,8 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 /**
+ *
+ *
  * See [MessageFlag]s in the [Discord Developer Documentation](https://discord.com/developers/docs/resources/channel#message-object-message-flags).
  */
 public sealed class MessageFlag(

@@ -17,6 +17,8 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 /**
+ *
+ *
  * See [UserFlag]s in the [Discord Developer Documentation](https://discord.com/developers/docs/resources/user#user-object-user-flags).
  */
 public sealed class UserFlag(

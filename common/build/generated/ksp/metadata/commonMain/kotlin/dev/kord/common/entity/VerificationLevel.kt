@@ -13,6 +13,8 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 /**
+ *
+ *
  * See [VerificationLevel]s in the [Discord Developer Documentation](https://discord.com/developers/docs/resources/guild#guild-object-verification-level).
  */
 @Serializable(with = VerificationLevel.Serializer::class)

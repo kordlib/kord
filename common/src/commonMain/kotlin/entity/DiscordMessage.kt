@@ -133,7 +133,7 @@ import dev.kord.common.serialization.LongOrStringSerializer
 import dev.kord.ksp.Generate
 import dev.kord.ksp.Generate.EntityType.*
 import dev.kord.ksp.Generate.Entry
-import kotlinx.datetime.Instant
+import kotlin.time.Instant
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 

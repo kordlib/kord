@@ -13,6 +13,8 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 /**
+ *
+ *
  * See [EncryptionMode]s in the [Discord Developer Documentation](https://discord.com/developers/docs/topics/voice-connections#establishing-a-voice-udp-connection-encryption-modes).
  */
 @Serializable(with = EncryptionMode.Serializer::class)

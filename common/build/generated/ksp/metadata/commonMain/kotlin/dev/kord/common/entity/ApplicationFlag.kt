@@ -17,6 +17,8 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 /**
+ *
+ *
  * See [ApplicationFlag]s in the [Discord Developer Documentation](https://discord.com/developers/docs/resources/application#application-object-application-flags).
  */
 public sealed class ApplicationFlag(

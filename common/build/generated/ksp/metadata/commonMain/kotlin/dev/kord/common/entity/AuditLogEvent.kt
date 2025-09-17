@@ -13,6 +13,8 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 /**
+ *
+ *
  * See [AuditLogEvent]s in the [Discord Developer Documentation](https://discord.com/developers/docs/resources/audit-log#audit-log-entry-object-audit-log-events).
  */
 @Serializable(with = AuditLogEvent.Serializer::class)

@@ -19,6 +19,8 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 /**
+ *
+ *
  * See [Permission]s in the [Discord Developer Documentation](https://discord.com/developers/docs/topics/permissions).
  */
 public sealed class Permission(

@@ -1,14 +1,14 @@
-import org.jetbrains.dokka.gradle.AbstractDokkaLeafTask
+@file:OptIn(ExperimentalAbiValidation::class)
+
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
+import org.jetbrains.kotlin.gradle.dsl.abi.ExperimentalAbiValidation
 import org.jetbrains.kotlin.gradle.targets.js.testing.KotlinJsTest
-import org.jetbrains.kotlin.gradle.targets.native.tasks.KotlinNativeTest
 
 plugins {
     org.jetbrains.kotlin.multiplatform
     org.jetbrains.kotlin.plugin.serialization
     org.jetbrains.dokka
     org.jetbrains.kotlinx.atomicfu
-    org.jetbrains.kotlinx.`binary-compatibility-validator`
     com.google.devtools.ksp
 }
 
@@ -20,31 +20,25 @@ dependencies {
     kspCommonMainMetadata(project(":ksp-processors"))
 }
 
-apiValidation {
-    applyKordBCVOptions()
-}
-
 @OptIn(ExperimentalKotlinGradlePluginApi::class)
 kotlin {
-    applyDefaultHierarchyTemplate {
-        common {
-            group("nonJvm") {
-                withNative()
-                withJs()
-            }
-
-            group("nonJs") {
-                withNative()
-                withJvm()
-            }
-        }
+    explicitApi()
+    compilerOptions {
+        applyKordCommonCompilerOptions()
+        optIn.addAll(kordOptIns)
     }
 
     targets()
-    explicitApi()
-    compilerOptions {
-        optIn.addAll(kordOptIns)
-        applyKordCommonCompilerOptions()
+
+    applyDefaultHierarchyTemplate {
+        common {
+            group("nonJvm") {
+                withJs()
+                withWasmJs()
+                withWasmWasi()
+                withNative()
+            }
+        }
     }
 
     sourceSets {
@@ -57,6 +51,13 @@ kotlin {
             dependencies {
                 implementation(project(":test-kit"))
             }
+        }
+    }
+
+    abiValidation {
+        applyKordBCVOptions()
+        klib {
+            enabled = true
         }
     }
 }
@@ -74,22 +75,11 @@ tasks {
         environment("PROJECT_ROOT", rootProject.projectDir.absolutePath)
     }
 
-    withType<KotlinNativeTest>().configureEach {
-        environment("PROJECT_ROOT", rootProject.projectDir.absolutePath)
+    val compileTasks = (kotlin.targets.names - "metadata").flatMap {
+        listOf("compileKotlin${it.replaceFirstChar { char -> char.uppercase() }}", "${it}SourcesJar")
     }
 
-    withType<JavaCompile>().configureEach {
-        options.release = KORD_JVM_TARGET
-    }
-
-    val compilationTasks = kotlin.targets.flatMap {
-        listOf("compileKotlin${it.name.replaceFirstChar(Char::titlecase)}", "${it.name}SourcesJar")
-    }
-
-    for (task in listOf(
-        "dokkaGenerateModuleHtml",
-        "dokkaGeneratePublicationHtml",
-    ) + compilationTasks) {
+    for (task in compileTasks + listOf("dokkaGenerateModuleHtml", "dokkaGeneratePublicationHtml")) {
         named(task) {
             dependsOn("kspCommonMainKotlinMetadata")
         }
@@ -100,6 +90,4 @@ tasks {
             dependsOn("kspCommonMainKotlinMetadata")
         }
     }
-
-    disableLinuxLinkTestTasksOnWindows()
 }

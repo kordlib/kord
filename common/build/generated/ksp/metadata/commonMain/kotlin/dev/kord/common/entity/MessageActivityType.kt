@@ -13,6 +13,8 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 /**
+ *
+ *
  * See [MessageActivityType]s in the [Discord Developer Documentation](https://discord.com/developers/docs/resources/channel#message-object-message-activity-types).
  */
 @Serializable(with = MessageActivityType.Serializer::class)

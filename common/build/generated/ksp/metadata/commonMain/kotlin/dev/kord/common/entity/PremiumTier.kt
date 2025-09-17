@@ -13,6 +13,8 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 /**
+ *
+ *
  * See [PremiumTier]s in the [Discord Developer Documentation](https://discord.com/developers/docs/resources/guild#guild-object-premium-tier).
  */
 @Serializable(with = PremiumTier.Serializer::class)

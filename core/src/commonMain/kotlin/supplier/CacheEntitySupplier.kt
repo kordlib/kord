@@ -30,8 +30,8 @@ import dev.kord.rest.json.request.EntitlementsListRequest
 import dev.kord.rest.json.request.SkuSubscriptionsListRequest
 import dev.kord.rest.route.Position
 import kotlinx.coroutines.flow.*
-import kotlinx.datetime.Clock
-import kotlinx.datetime.Instant
+import kotlin.time.Clock
+import kotlin.time.Instant
 
 /**
  * [EntitySupplier] that uses a [DataCache] to resolve entities.

@@ -13,6 +13,8 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 /**
+ *
+ *
  * See [SortOrderType]s in the [Discord Developer Documentation](https://discord.com/developers/docs/resources/channel#channel-object-sort-order-types).
  */
 @Serializable(with = SortOrderType.Serializer::class)

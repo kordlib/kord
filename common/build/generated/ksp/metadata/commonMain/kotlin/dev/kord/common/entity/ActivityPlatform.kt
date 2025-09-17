@@ -13,6 +13,8 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 /**
+ *
+ *
  * See [ActivityPlatform]s in the [Discord Developer Documentation](https://discord.com/developers/docs/events/gateway-events#activity-object).
  */
 @Serializable(with = ActivityPlatform.Serializer::class)

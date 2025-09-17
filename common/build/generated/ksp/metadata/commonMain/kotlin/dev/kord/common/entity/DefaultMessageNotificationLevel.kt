@@ -13,6 +13,8 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 /**
+ *
+ *
  * See [DefaultMessageNotificationLevel]s in the [Discord Developer Documentation](https://discord.com/developers/docs/resources/guild#guild-object-default-message-notification-level).
  */
 @Serializable(with = DefaultMessageNotificationLevel.Serializer::class)

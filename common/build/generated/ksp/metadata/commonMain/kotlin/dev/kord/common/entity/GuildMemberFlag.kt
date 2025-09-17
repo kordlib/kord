@@ -17,6 +17,8 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 /**
+ *
+ *
  * See [GuildMemberFlag]s in the [Discord Developer Documentation](https://discord.com/developers/docs/resources/guild#guild-member-object-guild-member-flags).
  */
 public sealed class GuildMemberFlag(

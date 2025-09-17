@@ -13,6 +13,8 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 /**
+ *
+ *
  * See [WebhookType]s in the [Discord Developer Documentation](https://discord.com/developers/docs/resources/webhook#webhook-object-webhook-types).
  */
 @Serializable(with = WebhookType.Serializer::class)

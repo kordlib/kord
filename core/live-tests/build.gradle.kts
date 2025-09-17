@@ -1,4 +1,5 @@
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
+import org.jetbrains.kotlin.gradle.dsl.abi.ExperimentalAbiValidation
 
 plugins {
     org.jetbrains.kotlin.multiplatform
@@ -17,6 +18,11 @@ kotlin {
                 implementation(projects.testKit)
             }
         }
+    }
+
+    @OptIn(ExperimentalAbiValidation::class)
+    abiValidation {
+        enabled = false
     }
 }
 

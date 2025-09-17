@@ -13,6 +13,8 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 /**
+ *
+ *
  * See [EntitlementOwnerType]s in the [Discord Developer Documentation](https://discord.com/developers/docs/resources/entitlement#create-test-entitlement-json-params).
  */
 @Serializable(with = EntitlementOwnerType.Serializer::class)

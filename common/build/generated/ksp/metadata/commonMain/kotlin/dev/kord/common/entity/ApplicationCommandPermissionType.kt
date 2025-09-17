@@ -13,6 +13,8 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 /**
+ *
+ *
  * See [ApplicationCommandPermissionType]s in the [Discord Developer Documentation](https://discord.com/developers/docs/interactions/application-commands#application-command-permissions-object-application-command-permission-type).
  */
 @Serializable(with = ApplicationCommandPermissionType.Serializer::class)

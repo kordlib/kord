@@ -17,6 +17,8 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 /**
+ *
+ *
  * See [RoleFlag]s in the [Discord Developer Documentation](https://discord.com/developers/docs/topics/permissions#role-object-role-flags).
  */
 public sealed class RoleFlag(

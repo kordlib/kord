@@ -13,6 +13,8 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 /**
+ *
+ *
  * See [SubscriptionStatus]es in the [Discord Developer Documentation](https://discord.com/developers/docs/resources/subscription#subscription-statuses).
  */
 @Serializable(with = SubscriptionStatus.Serializer::class)

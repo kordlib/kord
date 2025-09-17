@@ -13,6 +13,8 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 /**
+ *
+ *
  * See [ApplicationCommandOptionType]s in the [Discord Developer Documentation](https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-option-type).
  */
 @Serializable(with = ApplicationCommandOptionType.Serializer::class)

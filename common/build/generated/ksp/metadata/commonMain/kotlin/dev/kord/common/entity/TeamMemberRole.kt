@@ -13,6 +13,8 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 /**
+ *
+ *
  * See [TeamMemberRole]s in the [Discord Developer Documentation](https://discord.com/developers/docs/topics/teams#team-member-roles).
  */
 @Serializable(with = TeamMemberRole.Serializer::class)

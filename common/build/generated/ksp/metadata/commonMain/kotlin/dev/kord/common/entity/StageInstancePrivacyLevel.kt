@@ -13,6 +13,8 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 /**
+ *
+ *
  * See [StageInstancePrivacyLevel]s in the [Discord Developer Documentation](https://discord.com/developers/docs/resources/stage-instance#stage-instance-object-privacy-level).
  */
 @Serializable(with = StageInstancePrivacyLevel.Serializer::class)

@@ -13,6 +13,8 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 /**
+ *
+ *
  * See [GuildFeature]s in the [Discord Developer Documentation](https://discord.com/developers/docs/resources/guild#guild-object-guild-features).
  */
 @Serializable(with = GuildFeature.Serializer::class)

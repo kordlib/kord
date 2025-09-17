@@ -1,3 +1,7 @@
+@file:OptIn(ExperimentalAbiValidation::class)
+
+import org.jetbrains.kotlin.gradle.dsl.abi.ExperimentalAbiValidation
+
 plugins {
     `kord-multiplatform-module`
     `kord-publishing`
@@ -33,9 +37,5 @@ kotlin {
             }
         }
     }
-}
 
-apiValidation {
-    // https://github.com/Kotlin/binary-compatibility-validator/issues/88
-    ignoredProjects += "live-tests"
 }

@@ -4,10 +4,6 @@ plugins {
 }
 
 kotlin {
-    jvm {
-        withJava()
-    }
-
     sourceSets {
         commonMain.dependencies {
             api(projects.common)

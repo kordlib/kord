@@ -17,6 +17,8 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 /**
+ *
+ *
  * See [AttachmentFlag]s in the [Discord Developer Documentation](https://discord.com/developers/docs/resources/channel#attachment-object-attachment-flags).
  */
 public sealed class AttachmentFlag(

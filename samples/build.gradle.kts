@@ -59,6 +59,10 @@ kotlin {
             }
         }
     }
+
+    compilerOptions {
+        optIn.addAll(kordOptIns)
+    }
 }
 
 tasks {

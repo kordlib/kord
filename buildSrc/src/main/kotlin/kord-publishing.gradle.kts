@@ -1,32 +1,18 @@
-import org.jetbrains.kotlin.konan.target.Family
-import java.lang.System.getenv
-import java.util.Base64
+import com.vanniktech.maven.publish.JavadocJar
+import com.vanniktech.maven.publish.KotlinJvm
+import com.vanniktech.maven.publish.KotlinMultiplatform
+import dev.kord.gradle.tools.util.libraryVersion
 
 plugins {
-    id("com.vanniktech.maven.publish.base")
+    com.vanniktech.maven.publish
     dev.kord.`gradle-tools`
 }
 
-fun MavenPublication.registerDokkaJar() =
-    tasks.register<Jar>("${name}DokkaJar") {
-        archiveClassifier = "javadoc"
-        destinationDirectory = destinationDirectory.get().dir(name)
-        from(tasks.named("dokkaGeneratePublicationHtml"))
-    }
-
-kord {
-    publicationName = "mavenCentral"
-    metadataHost = Family.OSX
-}
-
 mavenPublishing {
-    coordinates(Library.group, "kord-${project.name}")
+    coordinates(Library.group, "kord-${project.name}", libraryVersion)
+
     publishToMavenCentral()
     signAllPublications()
-
-    if (plugins.hasPlugin("org.jetbrains.kotlin.multiplatform")) {
-//        configure(KotlinMultipla(javadocJar = JavadocJar.Dokka("dokkaHtml")))
-    }
 
     pom {
         name = Library.name
@@ -63,16 +49,9 @@ mavenPublishing {
         }
     }
 
-    repositories {
-        if (true) {
-            maven {
-                name = "kordSnapshots"
-                url = uri("https://repo.kord.dev/snapshots")
-                credentials {
-                    username = getenv("KORD_REPO_USER")
-                    password = getenv("KORD_REPO_PASSWORD")
-                }
-            }
-        }
+    if (plugins.hasPlugin("org.jetbrains.kotlin.multiplatform")) {
+        configure(KotlinMultiplatform(JavadocJar.Dokka("dokkaGeneratePublicationHtml"), sourcesJar = true))
+    } else if(plugins.hasPlugin("org.jetbrains.kotlin.jvm")) {
+        configure(KotlinJvm(JavadocJar.Dokka("dokkaGeneratePublicationHtml"), sourcesJar = true))
     }
 }

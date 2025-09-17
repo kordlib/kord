@@ -13,6 +13,8 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 /**
+ *
+ *
  * See [SelectDefaultValueType]s in the [Discord Developer Documentation](https://discord.com/developers/docs/interactions/message-components#select-menu-object-select-default-value-structure).
  */
 @Serializable(with = SelectDefaultValueType.Serializer::class)

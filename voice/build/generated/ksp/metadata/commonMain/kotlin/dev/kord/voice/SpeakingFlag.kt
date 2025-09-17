@@ -17,6 +17,8 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 /**
+ *
+ *
  * See [SpeakingFlag]s in the [Discord Developer Documentation](https://discord.com/developers/docs/topics/voice-connections#speaking).
  */
 public sealed class SpeakingFlag(

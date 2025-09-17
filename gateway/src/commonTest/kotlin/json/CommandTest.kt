@@ -9,8 +9,7 @@ import dev.kord.common.entity.optional.coerceToMissing
 import dev.kord.common.entity.optional.optional
 import dev.kord.common.entity.optional.optionalInt
 import dev.kord.gateway.*
-import dev.kord.test.IgnoreOnSimulatorPlatforms
-import kotlinx.datetime.Instant
+import kotlin.time.Instant
 import kotlinx.serialization.json.*
 import kotlin.js.JsName
 import kotlin.test.Test
@@ -18,7 +17,6 @@ import kotlin.test.assertEquals
 
 private val json = Json { encodeDefaults = false }
 
-@IgnoreOnSimulatorPlatforms
 class CommandTest {
     @Test
     @JsName("test1")
