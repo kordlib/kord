@@ -47,10 +47,16 @@ mavenPublishing {
         }
     }
 
+    val javadocJar = if (plugins.hasPlugin("org.jetbrains.dokka")) {
+        JavadocJar.Dokka("dokkaGeneratePublicationHtml")
+    } else {
+        JavadocJar.Empty()
+    }
+
     if (plugins.hasPlugin("org.jetbrains.kotlin.multiplatform")) {
-        configure(KotlinMultiplatform(JavadocJar.Dokka("dokkaGeneratePublicationHtml"), sourcesJar = true))
+        configure(KotlinMultiplatform(javadocJar, sourcesJar = true))
     } else if(plugins.hasPlugin("org.jetbrains.kotlin.jvm")) {
-        configure(KotlinJvm(JavadocJar.Dokka("dokkaGeneratePublicationHtml"), sourcesJar = true))
+        configure(KotlinJvm(javadocJar, sourcesJar = true))
     }
 }
 
