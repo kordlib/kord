@@ -1,6 +1,5 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
-@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
-                "SpellCheckingInspection", "GrazieInspection"))
+@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
@@ -14,8 +13,9 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 /**
- * See [PrimaryEntryPointCommandHandlerType]s in the
- * [Discord Developer Documentation](https://discord.com/developers/docs/interactions/application-commands#application-command-object-entry-point-command-handler-types).
+ *
+ *
+ * See [PrimaryEntryPointCommandHandlerType]s in the [Discord Developer Documentation](https://discord.com/developers/docs/interactions/application-commands#application-command-object-entry-point-command-handler-types).
  */
 @Serializable(with = PrimaryEntryPointCommandHandlerType.Serializer::class)
 public sealed class PrimaryEntryPointCommandHandlerType(
@@ -24,20 +24,16 @@ public sealed class PrimaryEntryPointCommandHandlerType(
      */
     public val `value`: Int,
 ) {
-    final override fun equals(other: Any?): Boolean = this === other ||
-            (other is PrimaryEntryPointCommandHandlerType && this.value == other.value)
+    final override fun equals(other: Any?): Boolean = this === other || (other is PrimaryEntryPointCommandHandlerType && this.value == other.value)
 
     final override fun hashCode(): Int = value.hashCode()
 
-    final override fun toString(): String =
-            if (this is Unknown) "PrimaryEntryPointCommandHandlerType.Unknown(value=$value)"
-            else "PrimaryEntryPointCommandHandlerType.${this::class.simpleName}"
+    final override fun toString(): String = if (this is Unknown) "PrimaryEntryPointCommandHandlerType.Unknown(value=$value)" else "PrimaryEntryPointCommandHandlerType.${this::class.simpleName}"
 
     /**
      * An unknown [PrimaryEntryPointCommandHandlerType].
      *
-     * This is used as a fallback for [PrimaryEntryPointCommandHandlerType]s that haven't been added
-     * to Kord yet.
+     * This is used as a fallback for [PrimaryEntryPointCommandHandlerType]s that haven't been added to Kord yet.
      */
     public class Unknown internal constructor(
         `value`: Int,
@@ -49,22 +45,19 @@ public sealed class PrimaryEntryPointCommandHandlerType(
     public object AppHandler : PrimaryEntryPointCommandHandlerType(1)
 
     /**
-     * Discord handles the interaction by launching an Activity and sending a follow-up message
-     * without coordinating with the app
+     * Discord handles the interaction by launching an Activity and sending a follow-up message without coordinating with the app
      */
     public object DiscordLaunchActivity : PrimaryEntryPointCommandHandlerType(2)
 
     internal object Serializer : KSerializer<PrimaryEntryPointCommandHandlerType> {
         override val descriptor: SerialDescriptor =
-                PrimitiveSerialDescriptor("dev.kord.common.entity.PrimaryEntryPointCommandHandlerType",
-                PrimitiveKind.INT)
+                PrimitiveSerialDescriptor("dev.kord.common.entity.PrimaryEntryPointCommandHandlerType", PrimitiveKind.INT)
 
         override fun serialize(encoder: Encoder, `value`: PrimaryEntryPointCommandHandlerType) {
             encoder.encodeInt(value.value)
         }
 
-        override fun deserialize(decoder: Decoder): PrimaryEntryPointCommandHandlerType =
-                from(decoder.decodeInt())
+        override fun deserialize(decoder: Decoder): PrimaryEntryPointCommandHandlerType = from(decoder.decodeInt())
     }
 
     public companion object {
@@ -79,8 +72,7 @@ public sealed class PrimaryEntryPointCommandHandlerType(
         }
 
         /**
-         * Returns an instance of [PrimaryEntryPointCommandHandlerType] with
-         * [PrimaryEntryPointCommandHandlerType.value] equal to the specified [value].
+         * Returns an instance of [PrimaryEntryPointCommandHandlerType] with [PrimaryEntryPointCommandHandlerType.value] equal to the specified [value].
          */
         public fun from(`value`: Int): PrimaryEntryPointCommandHandlerType = when (value) {
             1 -> AppHandler

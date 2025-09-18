@@ -302,9 +302,7 @@ public sealed class Permission(
     public object SendVoiceMessages : Permission(46)
 
     /**
-     * Allows user-installed apps to send public responses. When disabled, users will still be
-     * allowed to use their apps but the responses will be ephemeral. This only applies to apps not
-     * also installed to the server.
+     * Allows user-installed apps to send public responses. When disabled, users will still be allowed to use their apps but the responses will be ephemeral. This only applies to apps not also installed to the server.
      */
     public object USE_EXTERNAL_APPS : Permission(50)
 

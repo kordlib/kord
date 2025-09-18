@@ -238,6 +238,8 @@ public class Message(
     /**
      * The [Message.Interaction] sent on this message object when it is a response to an [ActionInteraction].
      */
+    @Suppress("DEPRECATION")
+    @Deprecated("Deprecated in favor of interactionMetadata", ReplaceWith("interactionMetadata"))
     public val interaction: Interaction? get() = data.interaction.mapNullable { Interaction(it, kord) }.value
 
     /**

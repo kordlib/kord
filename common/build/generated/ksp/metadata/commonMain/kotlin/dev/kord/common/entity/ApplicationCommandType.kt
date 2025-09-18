@@ -55,8 +55,7 @@ public sealed class ApplicationCommandType(
     public object Message : ApplicationCommandType(3)
 
     /**
-     * A UI-based command that represents the primary way to invoke an app's
-     * [Activity](https://discord.com/developers/docs/activities/overview)
+     * A UI-based command that represents the primary way to invoke an app's [Activity](https://discord.com/developers/docs/activities/overview)
      */
     public object PrimaryEntryPoint : ApplicationCommandType(4)
 
