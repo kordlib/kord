@@ -1,9 +1,22 @@
+@file:Generate(
+    Generate.EntityType.INT_KORD_ENUM,
+    "AnimationType",
+    "https://discord.com/developers/docs/events/gateway-events#voice-channel-effect-send-animation-types",
+    entries = [
+        Generate.Entry("Basic", intValue = 0),
+        Generate.Entry("Premium", intValue = 1),
+    ]
+)
+
 package dev.kord.gateway
 
 import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.Optional
+import dev.kord.common.entity.optional.OptionalDouble
+import dev.kord.common.entity.optional.OptionalInt
 import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.common.serialization.DurationInSeconds
+import dev.kord.ksp.Generate
 import io.github.oshai.kotlinlogging.KotlinLogging
 import kotlin.time.Instant
 import kotlinx.serialization.*
@@ -70,7 +83,7 @@ public sealed class Event {
                 }
                 // OpCodes for Commands (aka send events), they shouldn't be received
                 OpCode.Identify, OpCode.StatusUpdate, OpCode.VoiceStateUpdate, OpCode.Resume,
-                OpCode.RequestGuildMembers,
+                OpCode.RequestGuildMembers, OpCode.RequestSoundboardSounds
                 -> throw IllegalArgumentException("Illegal opcode for gateway event: $op")
                 OpCode.Unknown -> throw IllegalArgumentException("Unknown opcode for gateway event")
             }
@@ -205,6 +218,12 @@ public sealed class Event {
                 "APPLICATION_COMMAND_DELETE" ->
                     @Suppress("DEPRECATION_ERROR")
                     ApplicationCommandDelete(decode(DiscordApplicationCommand.serializer()), sequence)
+                "GUILD_SOUNDBOARD_SOUND_CREATE" -> GuildSoundboardSoundCreate(decode(DiscordSoundboardSound.serializer()), sequence)
+                "GUILD_SOUNDBOARD_SOUND_UPDATE" -> GuildSoundboardSoundUpdate(decode(DiscordSoundboardSound.serializer()), sequence)
+                "GUILD_SOUNDBOARD_SOUNDS_UPDATE" -> GuildSoundboardSoundsUpdate(decode(SoundboardSoundsChunk.serializer()), sequence)
+                "GUILD_SOUNDBOARD_SOUNDS_DELETE" -> GuildSoundboardSoundDelete(decode(DeletedSound.serializer()), sequence)
+                "VOICE_CHANNEL_EFFECT_SEND" -> VoiceEffectSend(decode(VoiceChannelEffect.serializer()), sequence)
+                "SOUNDBOARD_SOUNDS" -> SoundboardSounds(decode(SoundboardSoundsChunk.serializer()), sequence)
                 else -> {
                     jsonLogger.debug { "Unknown gateway event name: $eventName" }
                     UnknownDispatchEvent(eventName, eventData, sequence)
@@ -662,3 +681,57 @@ public data class SubscriptionUpdate(val subscription: DiscordSubscription, over
 
 public data class SubscriptionDelete(val subscription: DiscordSubscription, override val sequence: Int?) :
     DispatchEvent()
+
+@Serializable
+public data class SoundboardSoundsChunk(
+    @SerialName("soundboard_sounds") val soundboardSounds: List<DiscordSoundboardSound>,
+    @SerialName("guild_id") val guildId: Snowflake
+)
+
+@Serializable
+public data class DeletedSound(
+    @SerialName("sound_id")
+    val soundId: Snowflake,
+    @SerialName("guild_id")
+    val guildId: Snowflake
+)
+
+@Serializable
+public data class VoiceChannelEffect(
+    @SerialName("channel_id")
+    val channelId: Snowflake,
+    @SerialName("guild_id")
+    val guildId: Snowflake,
+    @SerialName("user_id")
+    val userId: Snowflake,
+    val emoji: Optional<DiscordEmoji?> = Optional.Missing(),
+    @SerialName("animation_type")
+    val animationType: Optional<AnimationType?> = Optional.Missing(),
+    @SerialName("animation_id")
+    val animationId: OptionalInt = OptionalInt.Missing,
+    @SerialName("sound_id")
+    val soundId: OptionalSnowflake = OptionalSnowflake.Missing,
+    @SerialName("sound_volume")
+    val soundVolume: OptionalDouble = OptionalDouble.Missing
+)
+
+/**
+ * Event sent in response to [RequestSoundboardSounds] containing the [sounds][data] for [guildId].
+ */
+public data class SoundboardSounds(
+    val data: SoundboardSoundsChunk,
+    override val sequence: Int?
+) : DispatchEvent()
+
+public data class GuildSoundboardSoundCreate(val sound: DiscordSoundboardSound, override val sequence: Int?) :
+    DispatchEvent()
+
+public data class GuildSoundboardSoundUpdate(val sound: DiscordSoundboardSound, override val sequence: Int?) :
+    DispatchEvent()
+
+public data class GuildSoundboardSoundsUpdate(val data: SoundboardSoundsChunk, override val sequence: Int?) :
+    DispatchEvent()
+
+public data class GuildSoundboardSoundDelete(val sound: DeletedSound, override val sequence: Int?) : DispatchEvent()
+
+public data class VoiceEffectSend(val effect: VoiceChannelEffect, override val sequence: Int?) : DispatchEvent()

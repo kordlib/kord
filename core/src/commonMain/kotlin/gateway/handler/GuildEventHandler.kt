@@ -17,10 +17,12 @@ import dev.kord.core.event.role.RoleDeleteEvent
 import dev.kord.core.event.role.RoleUpdateEvent
 import dev.kord.core.event.user.PresenceUpdateEvent
 import dev.kord.gateway.*
+import dev.kord.gateway.SoundboardSounds
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.singleOrNull
 import kotlinx.coroutines.flow.toSet
 import dev.kord.core.event.Event as CoreEvent
+import dev.kord.core.event.guild.SoundboardSounds as CoreSoundboardSounds
 
 internal class GuildEventHandler : BaseGatewayEventHandler() {
 
@@ -49,6 +51,11 @@ internal class GuildEventHandler : BaseGatewayEventHandler() {
             is GuildScheduledEventDelete -> handle(event, shard, kord, context)
             is GuildScheduledEventUserAdd -> handle(event, shard, kord, context)
             is GuildScheduledEventUserRemove -> handle(event, shard, kord, context)
+            is GuildSoundboardSoundCreate -> handle(event, shard, kord, context)
+            is GuildSoundboardSoundsUpdate -> handle(event, shard, kord, context)
+            is GuildSoundboardSoundUpdate -> handle(event, shard, kord, context)
+            is GuildSoundboardSoundDelete -> handle(event, shard, kord, context)
+            is SoundboardSounds -> handle(event, shard, kord, context)
             is PresenceUpdate -> handle(event, shard, kord, context)
             is InviteCreate -> handle(event, shard, kord, context)
             is InviteDelete -> handle(event, shard, kord, context)
@@ -489,5 +496,109 @@ internal class GuildEventHandler : BaseGatewayEventHandler() {
     ): InviteDeleteEvent = with(event) {
         val data = InviteDeleteData.from(invite)
         InviteDeleteEvent(data, kord, shard, context?.get())
+    }
+
+    private suspend fun handle(
+        event: GuildSoundboardSoundCreate,
+        shard: Int,
+        kord: Kord,
+        context: LazyContext?,
+    ) = with(event) {
+        val data = SoundboardSoundData.from(event.sound)
+
+        kord.cache.put(data)
+
+        GuildSoundboardSoundCreateEvent(GuildSoundboardSound(data, kord), shard, context?.get(), kord)
+    }
+
+    private suspend fun handle(
+        event: GuildSoundboardSoundUpdate,
+        shard: Int,
+        kord: Kord,
+        context: LazyContext?,
+    ) = with(event) {
+        val data = SoundboardSoundData.from(event.sound)
+
+        val old = kord.cache.query {
+            idEq(SoundboardSoundData::id, event.sound.soundId)
+           // this is a guild event, so guild_id will be present
+            idEq(SoundboardSoundData::guildId, event.sound.guildId.value!!)
+        }.singleOrNull()
+
+        kord.cache.put(data)
+
+        GuildSoundboardSoundUpdateEvent(
+            old?.let { GuildSoundboardSound(it, kord) },
+            GuildSoundboardSound(data, kord),
+            shard,
+            context?.get(),
+            kord
+        )
+    }
+
+    private suspend fun handle(
+        event: GuildSoundboardSoundsUpdate,
+        shard: Int,
+        kord: Kord,
+        context: LazyContext?,
+    ) = with(event) {
+        val data = event.data.soundboardSounds.map(SoundboardSoundData::from)
+
+        val updates = data.map {
+            val oldData = kord.cache.query {
+                idEq(SoundboardSoundData::id, it.id)
+                idEq(SoundboardSoundData::guildId, it.guildId.value!!)
+            }.singleOrNull()
+            val old = oldData?.let {GuildSoundboardSound(it, kord)}
+
+            GuildSoundboardSoundsUpdateEvent.UpdatedGuildSoundboardSound(old, GuildSoundboardSound(it, kord))
+        }
+
+        kord.cache.putAll(data)
+
+
+        GuildSoundboardSoundsUpdateEvent(updates, shard, context?.get(), kord)
+    }
+
+    private suspend fun handle(
+        event: GuildSoundboardSoundDelete,
+        shard: Int,
+        kord: Kord,
+        context: LazyContext?,
+    ) = with(event) {
+        val query = kord.cache.query<SoundboardSoundData> {
+            idEq(SoundboardSoundData::id, event.sound.soundId)
+            idEq(SoundboardSoundData::guildId, event.sound.guildId)
+        }
+        val data = query.singleOrNull()
+        query.remove()
+
+        GuildSoundboardSoundDeletEvent(
+            data?.let { GuildSoundboardSound(it, kord) },
+            event.sound.soundId,
+            event.sound.guildId,
+            shard,
+            context?.get(),
+            kord
+        )
+    }
+
+    private suspend fun handle(
+        event: SoundboardSounds,
+        shard: Int,
+        kord: Kord,
+        context: LazyContext?,
+    ): CoreSoundboardSounds {
+        val data = event.data.soundboardSounds.map(SoundboardSoundData::from)
+
+        kord.cache.putAll(data)
+
+        return CoreSoundboardSounds(
+            data.map { GuildSoundboardSound(it, kord) },
+            event.data.guildId,
+            shard,
+            context?.get(),
+            kord
+        )
     }
 }

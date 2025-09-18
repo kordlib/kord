@@ -224,6 +224,24 @@ public fun Gateway.requestGuildMembers(request: RequestGuildMembers): Flow<Guild
 }
 
 /**
+ * Requests the sounds for [guilds][guildIds].
+ *
+ * The returned flow is cold, and will execute the request only on subscription.
+ * Collection of this flow on a [Gateway] that is not [running][Gateway.start]
+ * will result in an [IllegalStateException] being thrown.
+ */
+public fun Gateway.requestSoundboardSounds(guildIds: List<Snowflake>): Flow<SoundboardSoundsChunk> {
+    val receivedGuilds = ArrayList<Snowflake>(guildIds.size)
+    return events
+        .onSubscription { send(RequestSoundboardSounds(guildIds)) }
+        .filterIsInstance<SoundboardSounds>()
+        .transformWhile {
+            emit(it.data)
+            receivedGuilds.size < guildIds.size
+        }
+}
+
+/**
  * Enum representation of Discord's [Gateway close event codes](https://discord.com/developers/docs/topics/opcodes-and-status-codes#gateway-gateway-close-event-codes).
  */
 public enum class GatewayCloseCode(public val code: Int) {
