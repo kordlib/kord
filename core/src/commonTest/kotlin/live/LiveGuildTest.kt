@@ -12,7 +12,7 @@ import dev.kord.core.randomId
 import dev.kord.gateway.*
 import kotlinx.coroutines.job
 import kotlinx.coroutines.test.runTest
-import kotlinx.datetime.Instant
+import kotlin.time.Instant
 import kotlinx.serialization.json.JsonObject
 import kotlin.js.JsName
 import kotlin.test.BeforeTest

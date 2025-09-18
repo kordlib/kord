@@ -1,6 +1,5 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
-@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
-                "SpellCheckingInspection", "GrazieInspection"))
+@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
@@ -14,8 +13,9 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 /**
- * See [OverwriteType]s in the
- * [Discord Developer Documentation](https://discord.com/developers/docs/resources/channel#overwrite-object-overwrite-structure).
+ *
+ *
+ * See [OverwriteType]s in the [Discord Developer Documentation](https://discord.com/developers/docs/resources/channel#overwrite-object-overwrite-structure).
  */
 @Serializable(with = OverwriteType.Serializer::class)
 public sealed class OverwriteType(
@@ -24,14 +24,11 @@ public sealed class OverwriteType(
      */
     public val `value`: Int,
 ) {
-    final override fun equals(other: Any?): Boolean = this === other ||
-            (other is OverwriteType && this.value == other.value)
+    final override fun equals(other: Any?): Boolean = this === other || (other is OverwriteType && this.value == other.value)
 
     final override fun hashCode(): Int = value.hashCode()
 
-    final override fun toString(): String =
-            if (this is Unknown) "OverwriteType.Unknown(value=$value)"
-            else "OverwriteType.${this::class.simpleName}"
+    final override fun toString(): String = if (this is Unknown) "OverwriteType.Unknown(value=$value)" else "OverwriteType.${this::class.simpleName}"
 
     /**
      * An unknown [OverwriteType].
@@ -69,8 +66,7 @@ public sealed class OverwriteType(
         }
 
         /**
-         * Returns an instance of [OverwriteType] with [OverwriteType.value] equal to the specified
-         * [value].
+         * Returns an instance of [OverwriteType] with [OverwriteType.value] equal to the specified [value].
          */
         public fun from(`value`: Int): OverwriteType = when (value) {
             0 -> Role

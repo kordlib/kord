@@ -17,7 +17,7 @@ import dev.kord.core.switchIfEmpty
 import dev.kord.rest.json.request.EntitlementsListRequest
 import dev.kord.rest.json.request.SkuSubscriptionsListRequest
 import kotlinx.coroutines.flow.Flow
-import kotlinx.datetime.Instant
+import kotlin.time.Instant
 
 /**
  * Creates supplier providing a strategy which will first operate on this supplier. When an entity

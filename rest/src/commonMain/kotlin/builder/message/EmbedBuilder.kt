@@ -9,7 +9,7 @@ import dev.kord.common.entity.optional.map
 import dev.kord.common.entity.optional.mapList
 import dev.kord.rest.builder.RequestBuilder
 import dev.kord.rest.json.request.*
-import kotlinx.datetime.Instant
+import kotlin.time.Instant
 
 /**
  * A builder for discord embeds.

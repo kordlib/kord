@@ -133,7 +133,7 @@ import dev.kord.common.serialization.LongOrStringSerializer
 import dev.kord.ksp.Generate
 import dev.kord.ksp.Generate.EntityType.*
 import dev.kord.ksp.Generate.Entry
-import kotlinx.datetime.Instant
+import kotlin.time.Instant
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -285,7 +285,8 @@ public data class DiscordMessageSticker(
     val description: String?,
     val tags: Optional<String> = Optional.Missing(),
     @SerialName("format_type")
-    val formatType: MessageStickerType,
+    // The docs says this is non-nullable, non optional, but it still returns null in our tests
+    val formatType: MessageStickerType?,
     val available: OptionalBoolean = OptionalBoolean.Missing,
     @SerialName("guild_id")
     val guildId: OptionalSnowflake = OptionalSnowflake.Missing,

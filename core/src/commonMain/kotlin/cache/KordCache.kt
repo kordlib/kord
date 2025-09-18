@@ -11,7 +11,7 @@ import dev.kord.common.concurrentHashMap
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.cache.data.*
 
-public typealias Generator<I, T> = (cache: DataCache, description: DataDescription<T, I>) -> DataEntryCache<out T>
+public typealias Generator<T, I> = (cache: DataCache, description: DataDescription<T, I>) -> DataEntryCache<out T>
 
 public class KordCacheBuilder {
 

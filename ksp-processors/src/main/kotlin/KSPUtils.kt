@@ -28,9 +28,11 @@ internal class AnnotationArguments<A : Annotation> private constructor(
     private fun getArgument(parameter: KProperty1<A, Any>) = arguments.getValue(parameter.name)
     private val KProperty1<A, Any>.value get() = getArgument(this).value
 
-    fun isDefault(parameter: KProperty1<A, Any>) = getArgument(parameter).isDefault()
+    // https://github.com/google/ksp/issues/2491
+    fun isDefault(parameter: KProperty1<A, Any>) = arguments[parameter.name]?.isDefault() != false
 
     // can't return non-nullable values because of https://github.com/google/ksp/issues/885
+    operator fun get(parameter: KProperty1<A, Boolean>) = arguments[parameter.name]?.value as Boolean?
     operator fun get(parameter: KProperty1<A, Annotation>) = parameter.value as KSAnnotation?
     operator fun get(parameter: KProperty1<A, Array<out Annotation>>) =
         @Suppress("UNCHECKED_CAST") (parameter.value as List<KSAnnotation>?)
@@ -41,7 +43,6 @@ internal class AnnotationArguments<A : Annotation> private constructor(
     }
 }
 
-@Suppress("RecursivePropertyAccessor")
 internal val KSReferenceElement.isClassifierReference: Boolean
     get() = when (this) {
         is KSDynamicReference, is KSCallableReference -> false

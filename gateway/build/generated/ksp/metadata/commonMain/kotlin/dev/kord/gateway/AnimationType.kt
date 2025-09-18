@@ -1,6 +1,5 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
-@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
-                "SpellCheckingInspection", "GrazieInspection"))
+@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.gateway
 
@@ -14,8 +13,9 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 /**
- * See [AnimationType]s in the
- * [Discord Developer Documentation](https://discord.com/developers/docs/events/gateway-events#voice-channel-effect-send-animation-types).
+ *
+ *
+ * See [AnimationType]s in the [Discord Developer Documentation](https://discord.com/developers/docs/events/gateway-events#voice-channel-effect-send-animation-types).
  */
 @Serializable(with = AnimationType.Serializer::class)
 public sealed class AnimationType(
@@ -24,14 +24,11 @@ public sealed class AnimationType(
      */
     public val `value`: Int,
 ) {
-    final override fun equals(other: Any?): Boolean = this === other ||
-            (other is AnimationType && this.value == other.value)
+    final override fun equals(other: Any?): Boolean = this === other || (other is AnimationType && this.value == other.value)
 
     final override fun hashCode(): Int = value.hashCode()
 
-    final override fun toString(): String =
-            if (this is Unknown) "AnimationType.Unknown(value=$value)"
-            else "AnimationType.${this::class.simpleName}"
+    final override fun toString(): String = if (this is Unknown) "AnimationType.Unknown(value=$value)" else "AnimationType.${this::class.simpleName}"
 
     /**
      * An unknown [AnimationType].
@@ -69,8 +66,7 @@ public sealed class AnimationType(
         }
 
         /**
-         * Returns an instance of [AnimationType] with [AnimationType.value] equal to the specified
-         * [value].
+         * Returns an instance of [AnimationType] with [AnimationType.value] equal to the specified [value].
          */
         public fun from(`value`: Int): AnimationType = when (value) {
             0 -> Basic
