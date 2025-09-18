@@ -12,6 +12,7 @@ val kordOptIns = listOf(
     "dev.kord.common.annotation.KordPreview",
     "dev.kord.common.annotation.KordExperimental",
     "dev.kord.common.annotation.KordVoice",
+    "kotlin.time.ExperimentalTime"
 )
 
 internal fun KotlinCommonCompilerOptions.applyKordCommonCompilerOptions() {

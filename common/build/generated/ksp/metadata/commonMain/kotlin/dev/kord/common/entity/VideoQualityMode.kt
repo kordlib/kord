@@ -1,6 +1,5 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
-@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
-                "SpellCheckingInspection", "GrazieInspection"))
+@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
@@ -14,8 +13,9 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 /**
- * See [VideoQualityMode]s in the
- * [Discord Developer Documentation](https://discord.com/developers/docs/resources/channel#channel-object-video-quality-modes).
+ *
+ *
+ * See [VideoQualityMode]s in the [Discord Developer Documentation](https://discord.com/developers/docs/resources/channel#channel-object-video-quality-modes).
  */
 @Serializable(with = VideoQualityMode.Serializer::class)
 public sealed class VideoQualityMode(
@@ -24,14 +24,11 @@ public sealed class VideoQualityMode(
      */
     public val `value`: Int,
 ) {
-    final override fun equals(other: Any?): Boolean = this === other ||
-            (other is VideoQualityMode && this.value == other.value)
+    final override fun equals(other: Any?): Boolean = this === other || (other is VideoQualityMode && this.value == other.value)
 
     final override fun hashCode(): Int = value.hashCode()
 
-    final override fun toString(): String =
-            if (this is Unknown) "VideoQualityMode.Unknown(value=$value)"
-            else "VideoQualityMode.${this::class.simpleName}"
+    final override fun toString(): String = if (this is Unknown) "VideoQualityMode.Unknown(value=$value)" else "VideoQualityMode.${this::class.simpleName}"
 
     /**
      * An unknown [VideoQualityMode].
@@ -54,8 +51,7 @@ public sealed class VideoQualityMode(
 
     internal object Serializer : KSerializer<VideoQualityMode> {
         override val descriptor: SerialDescriptor =
-                PrimitiveSerialDescriptor("dev.kord.common.entity.VideoQualityMode",
-                PrimitiveKind.INT)
+                PrimitiveSerialDescriptor("dev.kord.common.entity.VideoQualityMode", PrimitiveKind.INT)
 
         override fun serialize(encoder: Encoder, `value`: VideoQualityMode) {
             encoder.encodeInt(value.value)
@@ -76,8 +72,7 @@ public sealed class VideoQualityMode(
         }
 
         /**
-         * Returns an instance of [VideoQualityMode] with [VideoQualityMode.value] equal to the
-         * specified [value].
+         * Returns an instance of [VideoQualityMode] with [VideoQualityMode.value] equal to the specified [value].
          */
         public fun from(`value`: Int): VideoQualityMode = when (value) {
             1 -> Auto

@@ -18,7 +18,7 @@ import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.common.serialization.DurationInSeconds
 import dev.kord.ksp.Generate
 import io.github.oshai.kotlinlogging.KotlinLogging
-import kotlinx.datetime.Instant
+import kotlin.time.Instant
 import kotlinx.serialization.*
 import kotlinx.serialization.builtins.nullable
 import kotlinx.serialization.builtins.serializer

@@ -10,6 +10,7 @@ import dev.kord.core.builder.kord.KordBuilder
 import dev.kord.core.builder.kord.KordProxyBuilder
 import dev.kord.core.builder.kord.KordRestOnlyBuilder
 import dev.kord.core.cache.data.ApplicationCommandData
+import dev.kord.core.cache.data.EmojiData
 import dev.kord.core.cache.data.GuildData
 import dev.kord.core.cache.data.SoundboardSoundData
 import dev.kord.core.cache.data.UserData
@@ -115,6 +116,16 @@ public class Kord(
             rest.soundboard.getDefaultSounds()
                 .forEach { emit(DefaultSoundboardSound(SoundboardSoundData.from(it), this@Kord)) }
         }
+
+    /**
+     * Flow of [application emojis][ApplicationEmoji].
+     */
+    public val emojis: Flow<ApplicationEmoji> = flow {
+        rest.application.getApplicationEmojis(selfId).items.forEach {
+            val data = EmojiData.from(selfId, it.id!!, it)
+            emit(ApplicationEmoji(data, this@Kord))
+        }
+    }
 
     init {
         gateway.events
@@ -698,6 +709,16 @@ public class Kord(
                 emit(GuildApplicationCommand(data, rest.interaction))
             }
         }
+    }
+
+    /**
+     * Retrieves an [ApplicationEmoji] by its [id].
+     */
+    public suspend fun getApplicationEmoji(id: Snowflake): ApplicationEmoji {
+        val emoji = rest.application.getApplicationEmoji(selfId, id)
+        val data = EmojiData.from(selfId, id, emoji)
+
+        return ApplicationEmoji(data, this)
     }
 }
 

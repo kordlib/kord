@@ -13,7 +13,7 @@ import dev.kord.core.entity.KordEntity
 import dev.kord.core.entity.User
 import dev.kord.core.hash
 import dev.kord.rest.request.RestRequestException
-import kotlinx.datetime.Instant
+import kotlin.time.Instant
 
 /**
  * An instance of an [Entitlement](https://discord.com/developers/docs/resources/entitlement).
