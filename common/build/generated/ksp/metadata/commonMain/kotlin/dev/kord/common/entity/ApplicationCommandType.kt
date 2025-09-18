@@ -54,6 +54,11 @@ public sealed class ApplicationCommandType(
      */
     public object Message : ApplicationCommandType(3)
 
+    /**
+     * A UI-based command that represents the primary way to invoke an app's [Activity](https://discord.com/developers/docs/activities/overview)
+     */
+    public object PrimaryEntryPoint : ApplicationCommandType(4)
+
     internal object Serializer : KSerializer<ApplicationCommandType> {
         override val descriptor: SerialDescriptor =
                 PrimitiveSerialDescriptor("dev.kord.common.entity.ApplicationCommandType", PrimitiveKind.INT)
@@ -74,6 +79,7 @@ public sealed class ApplicationCommandType(
                 ChatInput,
                 User,
                 Message,
+                PrimaryEntryPoint,
             )
         }
 
@@ -84,6 +90,7 @@ public sealed class ApplicationCommandType(
             1 -> ChatInput
             2 -> User
             3 -> Message
+            4 -> PrimaryEntryPoint
             else -> Unknown(value)
         }
     }

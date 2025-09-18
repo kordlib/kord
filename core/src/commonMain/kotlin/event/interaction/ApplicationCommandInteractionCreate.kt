@@ -87,3 +87,24 @@ public class GlobalChatInputCommandInteractionCreateEvent(
     override val shard: Int,
     override val customContext: Any?,
 ) : GlobalApplicationCommandInteractionCreateEvent, ChatInputCommandInteractionCreateEvent
+
+/** An [Event] that fires when a [PrimaryEntryPointCommandInteraction] is created. */
+public sealed interface PrimaryEntryPointCommandInteractionCreateEvent : ApplicationCommandInteractionCreateEvent {
+    override val interaction: PrimaryEntryPointCommandInteraction
+}
+
+/** An [Event] that fires when a [GuildPrimaryEntryPointCommandInteraction] is created. */
+public class GuildPrimaryEntryPointCommandInteractionCreateEvent(
+    override val interaction: GuildPrimaryEntryPointCommandInteraction,
+    override val kord: Kord,
+    override val shard: Int,
+    override val customContext: Any?
+) : PrimaryEntryPointCommandInteractionCreateEvent, GuildApplicationCommandInteractionCreateEvent
+
+/** An [Event] that fires when a [GlobalPrimaryEntryPointCommandInteraction] is created. */
+public class GlobalPrimaryEntryPointCommandInteractionCreateEvent(
+    override val interaction: GlobalPrimaryEntryPointCommandInteraction,
+    override val kord: Kord,
+    override val shard: Int,
+    override val customContext: Any?
+) : PrimaryEntryPointCommandInteractionCreateEvent, GlobalApplicationCommandInteractionCreateEvent

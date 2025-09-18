@@ -10,9 +10,9 @@ import dev.kord.core.entity.Strategizable
 import dev.kord.core.entity.channel.GuildChannel
 import dev.kord.core.entity.channel.TopGuildChannel
 import dev.kord.core.exception.EntityNotFoundException
+import dev.kord.core.hash
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
-import dev.kord.core.hash
 
 /**
  * The behavior of a Discord channel associated to a [guild].

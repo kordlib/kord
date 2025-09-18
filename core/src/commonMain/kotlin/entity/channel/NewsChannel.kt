@@ -2,12 +2,12 @@ package dev.kord.core.entity.channel
 
 import dev.kord.core.Kord
 import dev.kord.core.behavior.channel.ChannelBehavior
-import dev.kord.core.behavior.channel.TopGuildChannelBehavior
 import dev.kord.core.behavior.channel.NewsChannelBehavior
+import dev.kord.core.behavior.channel.TopGuildChannelBehavior
 import dev.kord.core.cache.data.ChannelData
+import dev.kord.core.hash
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
-import dev.kord.core.hash
 
 /**
  * An instance of a Discord News Channel associated to a guild.

@@ -96,6 +96,11 @@
             kDoc = "Allows the usage of custom soundboard sounds from other servers."
         ),
         Entry("SendVoiceMessages", shift = 46, kDoc = "Allows sending voice messages."),
+        Entry(
+            "USE_EXTERNAL_APPS",
+            shift = 50,
+            kDoc = "Allows user-installed apps to send public responses. When disabled, users will still be allowed to use their apps but the responses will be ephemeral. This only applies to apps not also installed to the server."
+        )
     ],
 )
 

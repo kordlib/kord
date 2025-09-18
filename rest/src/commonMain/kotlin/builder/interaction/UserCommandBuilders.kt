@@ -3,7 +3,10 @@ package dev.kord.rest.builder.interaction
 import dev.kord.common.Locale
 import dev.kord.common.annotation.KordDsl
 import dev.kord.common.entity.ApplicationCommandType
+import dev.kord.common.entity.ApplicationIntegrationType
+import dev.kord.common.entity.InteractionContextType
 import dev.kord.common.entity.Permissions
+import dev.kord.common.entity.optional.Optional.Companion.missingOnEmpty
 import dev.kord.common.entity.optional.delegate.delegate
 import dev.kord.rest.json.request.ApplicationCommandCreateRequest
 import dev.kord.rest.json.request.ApplicationCommandModifyRequest
@@ -23,12 +26,16 @@ internal class UserCommandModifyBuilderImpl : GlobalUserCommandModifyBuilder {
     override var nameLocalizations: MutableMap<Locale, String>? by state::nameLocalizations.delegate()
 
     override var defaultMemberPermissions: Permissions? by state::defaultMemberPermissions.delegate()
+    @Suppress("OVERRIDE_DEPRECATION")
     override var dmPermission: Boolean? by state::dmPermission.delegate()
 
     @Deprecated("'defaultPermission' is deprecated in favor of 'defaultMemberPermissions' and 'dmPermission'. Setting 'defaultPermission' to false can be replaced by setting 'defaultMemberPermissions' to empty Permissions and 'dmPermission' to false ('dmPermission' is only available for global commands).")
     override var defaultPermission: Boolean? by @Suppress("DEPRECATION") state::defaultPermission.delegate()
 
     override var nsfw: Boolean? by state::nsfw.delegate()
+
+    override var integrationTypes: MutableList<ApplicationIntegrationType>? by state::integrationTypes.delegate()
+    override var contexts: MutableList<InteractionContextType>? by state::contexts.delegate()
 
     override fun toRequest(): ApplicationCommandModifyRequest {
         return ApplicationCommandModifyRequest(
@@ -38,6 +45,8 @@ internal class UserCommandModifyBuilderImpl : GlobalUserCommandModifyBuilder {
             defaultMemberPermissions = state.defaultMemberPermissions,
             defaultPermission = @Suppress("DEPRECATION") state.defaultPermission,
             nsfw = state.nsfw,
+            integrationTypes = state.integrationTypes.missingOnEmpty(),
+            contexts = state.contexts.missingOnEmpty(),
         )
     }
 }
@@ -57,7 +66,10 @@ internal class UserCommandCreateBuilderImpl(override var name: String) : GlobalU
     override var nameLocalizations: MutableMap<Locale, String>? by state::nameLocalizations.delegate()
 
     override var defaultMemberPermissions: Permissions? by state::defaultMemberPermissions.delegate()
+    @Suppress("OVERRIDE_DEPRECATION")
     override var dmPermission: Boolean? by state::dmPermission.delegate()
+    override var integrationTypes: MutableList<ApplicationIntegrationType>? by state::integrationTypes.delegate()
+    override var contexts: MutableList<InteractionContextType>? by state::contexts.delegate()
 
     @Deprecated("'defaultPermission' is deprecated in favor of 'defaultMemberPermissions' and 'dmPermission'. Setting 'defaultPermission' to false can be replaced by setting 'defaultMemberPermissions' to empty Permissions and 'dmPermission' to false ('dmPermission' is only available for global commands).")
     override var defaultPermission: Boolean? by @Suppress("DEPRECATION") state::defaultPermission.delegate()
@@ -73,6 +85,8 @@ internal class UserCommandCreateBuilderImpl(override var name: String) : GlobalU
             dmPermission = state.dmPermission,
             defaultPermission = @Suppress("DEPRECATION") state.defaultPermission,
             nsfw = state.nsfw,
+            integrationTypes = state.integrationTypes.missingOnEmpty(),
+            contexts = state.contexts.missingOnEmpty(),
         )
     }
 }

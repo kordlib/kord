@@ -57,6 +57,7 @@
 package dev.kord.common.entity
 
 import dev.kord.common.entity.optional.Optional
+import dev.kord.common.entity.optional.OptionalInt
 import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.ksp.Generate
 import dev.kord.ksp.Generate.EntityType.INT_FLAGS
@@ -101,6 +102,7 @@ public data class DiscordApplication(
     val botPublic: Boolean,
     @SerialName("bot_require_code_grant")
     val botRequireCodeGrant: Boolean,
+    val bot: Optional<DiscordUser> = Optional.Missing(),
     @SerialName("terms_of_service_url")
     override val termsOfServiceUrl: Optional<String> = Optional.Missing(),
     @SerialName("privacy_policy_url")
@@ -111,15 +113,22 @@ public data class DiscordApplication(
     val team: DiscordTeam?,
     @SerialName("guild_id")
     override val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
+    val guild: Optional<DiscordPartialGuild> = Optional.Missing(),
     @SerialName("primary_sku_id")
     override val primarySkuId: OptionalSnowflake = OptionalSnowflake.Missing,
     override val slug: Optional<String> = Optional.Missing(),
     @SerialName("cover_image")
     override val coverImage: Optional<String> = Optional.Missing(),
     override val flags: Optional<ApplicationFlags> = Optional.Missing(),
+    @SerialName("approximate_guild_count")
+    val approximateGuildCount: OptionalInt = OptionalInt.Missing,
+    @SerialName("approximate_user_install_count")
+    val approximateUserInstallCount: OptionalInt = OptionalInt.Missing,
     override val tags: Optional<List<String>> = Optional.Missing(),
     @SerialName("install_params")
     override val installParams: Optional<InstallParams> = Optional.Missing(),
+    @SerialName("integration_types_config")
+    val integrationTypesConfig: Optional<Map<ApplicationIntegrationType, ApplicationIntegrationTypeConfig>> = Optional.Missing(),
     @SerialName("custom_install_url")
     override val customInstallUrl: Optional<String> = Optional.Missing(),
     @SerialName("role_connections_verification_url")
@@ -169,4 +178,11 @@ public data class InstallParams(
     val scopes: List<String>,
     /** The permissions to request for the bot role. */
     val permissions: Permissions,
+)
+
+@Serializable
+public data class ApplicationIntegrationTypeConfig(
+    /** Install params for each installation context's default in-app authorization link */
+    @SerialName("oauth2_install_params")
+    val oauth2InstallParams: Optional<InstallParams> = Optional.Missing()
 )

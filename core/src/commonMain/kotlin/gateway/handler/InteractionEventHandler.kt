@@ -50,6 +50,8 @@ internal class InteractionEventHandler : BaseGatewayEventHandler() {
             is GuildButtonInteraction -> GuildButtonInteractionCreateEvent(interaction, kord, shard, context?.get())
             is GuildSelectMenuInteraction -> GuildSelectMenuInteractionCreateEvent(interaction, kord, shard, context?.get())
             is GuildModalSubmitInteraction -> GuildModalSubmitInteractionCreateEvent(interaction, kord, shard, context?.get())
+            is GlobalPrimaryEntryPointCommandInteraction -> GlobalPrimaryEntryPointCommandInteractionCreateEvent(interaction, kord, shard, context?.get())
+            is GuildPrimaryEntryPointCommandInteraction -> GuildPrimaryEntryPointCommandInteractionCreateEvent(interaction, kord, shard, context?.get())
         }
         return coreEvent
     }
@@ -68,6 +70,7 @@ internal class InteractionEventHandler : BaseGatewayEventHandler() {
             is GuildMessageCommand -> MessageCommandCreateEvent(application, kord, shard, context?.get())
             is GuildUserCommand -> UserCommandCreateEvent(application, kord, shard, context?.get())
             is UnknownGuildApplicationCommand -> UnknownApplicationCommandCreateEvent(application, kord, shard, context?.get())
+            else -> error("Got unexpected command type: ${data.type}")
         }
         return coreEvent
     }
@@ -88,6 +91,7 @@ internal class InteractionEventHandler : BaseGatewayEventHandler() {
             is GuildMessageCommand -> MessageCommandUpdateEvent(application, kord, shard, context?.get())
             is GuildUserCommand -> UserCommandUpdateEvent(application, kord, shard, context?.get())
             is UnknownGuildApplicationCommand -> UnknownApplicationCommandUpdateEvent(application, kord, shard, context?.get())
+            else -> error("Got unexpected command type: ${data.type}")
         }
         return coreEvent
     }
@@ -106,6 +110,7 @@ internal class InteractionEventHandler : BaseGatewayEventHandler() {
             is GuildMessageCommand -> MessageCommandDeleteEvent(application, kord, shard, context?.get())
             is GuildUserCommand -> UserCommandDeleteEvent(application, kord, shard, context?.get())
             is UnknownGuildApplicationCommand -> UnknownApplicationCommandDeleteEvent(application, kord, shard, context?.get())
+            else -> error("Got unexpected command type: ${data.type}")
         }
         return coreEvent
     }
