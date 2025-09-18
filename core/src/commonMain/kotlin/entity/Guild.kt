@@ -28,7 +28,7 @@ import dev.kord.core.supplier.getChannelOfOrNull
 import dev.kord.core.switchIfEmpty
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import kotlinx.datetime.Instant
+import kotlin.time.Instant
 import kotlin.time.Duration
 
 /**

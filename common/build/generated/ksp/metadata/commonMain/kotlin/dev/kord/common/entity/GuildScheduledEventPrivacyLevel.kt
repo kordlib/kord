@@ -1,6 +1,5 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
-@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
-                "SpellCheckingInspection", "GrazieInspection"))
+@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
@@ -14,8 +13,9 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 /**
- * See [GuildScheduledEventPrivacyLevel]s in the
- * [Discord Developer Documentation](https://discord.com/developers/docs/resources/guild-scheduled-event#guild-scheduled-event-object-guild-scheduled-event-privacy-level).
+ *
+ *
+ * See [GuildScheduledEventPrivacyLevel]s in the [Discord Developer Documentation](https://discord.com/developers/docs/resources/guild-scheduled-event#guild-scheduled-event-object-guild-scheduled-event-privacy-level).
  */
 @Serializable(with = GuildScheduledEventPrivacyLevel.Serializer::class)
 public sealed class GuildScheduledEventPrivacyLevel(
@@ -24,20 +24,16 @@ public sealed class GuildScheduledEventPrivacyLevel(
      */
     public val `value`: Int,
 ) {
-    final override fun equals(other: Any?): Boolean = this === other ||
-            (other is GuildScheduledEventPrivacyLevel && this.value == other.value)
+    final override fun equals(other: Any?): Boolean = this === other || (other is GuildScheduledEventPrivacyLevel && this.value == other.value)
 
     final override fun hashCode(): Int = value.hashCode()
 
-    final override fun toString(): String =
-            if (this is Unknown) "GuildScheduledEventPrivacyLevel.Unknown(value=$value)"
-            else "GuildScheduledEventPrivacyLevel.${this::class.simpleName}"
+    final override fun toString(): String = if (this is Unknown) "GuildScheduledEventPrivacyLevel.Unknown(value=$value)" else "GuildScheduledEventPrivacyLevel.${this::class.simpleName}"
 
     /**
      * An unknown [GuildScheduledEventPrivacyLevel].
      *
-     * This is used as a fallback for [GuildScheduledEventPrivacyLevel]s that haven't been added to
-     * Kord yet.
+     * This is used as a fallback for [GuildScheduledEventPrivacyLevel]s that haven't been added to Kord yet.
      */
     public class Unknown internal constructor(
         `value`: Int,
@@ -50,15 +46,13 @@ public sealed class GuildScheduledEventPrivacyLevel(
 
     internal object Serializer : KSerializer<GuildScheduledEventPrivacyLevel> {
         override val descriptor: SerialDescriptor =
-                PrimitiveSerialDescriptor("dev.kord.common.entity.GuildScheduledEventPrivacyLevel",
-                PrimitiveKind.INT)
+                PrimitiveSerialDescriptor("dev.kord.common.entity.GuildScheduledEventPrivacyLevel", PrimitiveKind.INT)
 
         override fun serialize(encoder: Encoder, `value`: GuildScheduledEventPrivacyLevel) {
             encoder.encodeInt(value.value)
         }
 
-        override fun deserialize(decoder: Decoder): GuildScheduledEventPrivacyLevel =
-                from(decoder.decodeInt())
+        override fun deserialize(decoder: Decoder): GuildScheduledEventPrivacyLevel = from(decoder.decodeInt())
     }
 
     public companion object {
@@ -72,8 +66,7 @@ public sealed class GuildScheduledEventPrivacyLevel(
         }
 
         /**
-         * Returns an instance of [GuildScheduledEventPrivacyLevel] with
-         * [GuildScheduledEventPrivacyLevel.value] equal to the specified [value].
+         * Returns an instance of [GuildScheduledEventPrivacyLevel] with [GuildScheduledEventPrivacyLevel.value] equal to the specified [value].
          */
         public fun from(`value`: Int): GuildScheduledEventPrivacyLevel = when (value) {
             2 -> GuildOnly

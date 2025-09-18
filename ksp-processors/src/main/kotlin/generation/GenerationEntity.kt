@@ -78,7 +78,13 @@ internal fun Generate.toGenerationEntityOrNull(logger: KSPLogger, annotation: KS
     return if (!validParameters || mappedEntries.size != entries.size) {
         null
     } else {
-        val kDoc = kDoc.toKDoc()
+        val kDoc = if (args.isDefault(Generate::kDoc)) "" else kDoc.toKDoc()
+        val valueName = if (args.isDefault(Generate::valueName)) "value" else valueName
+
+        val collectionHadCopy0 = args[Generate::collectionHadCopy0] ?: false
+        val collectionHadNewCompanion = args[Generate::collectionHadNewCompanion] ?: false
+        val hadBuilderFactoryFunction0 = args[Generate::hadBuilderFactoryFunction0] ?: false
+
         when (entityType) {
             INT_KORD_ENUM -> KordEnum(name, kDoc, docUrl, valueName, mappedEntries, KordEnum.ValueType.INT)
             STRING_KORD_ENUM -> KordEnum(name, kDoc, docUrl, valueName, mappedEntries, KordEnum.ValueType.STRING)
@@ -141,15 +147,25 @@ private fun Entry.toGenerationEntityEntryOrNull(
         }
     } ?: return null
 
+    val deprecated = if (args.isDefault(Entry::deprecated)) {
+        null
+    } else {
+        deprecated
+    }
+    val kDoc = if (args.isDefault(Entry::kDoc)) "" else kDoc.toKDoc()
+
     return GenerationEntity.Entry(
         name,
-        kDoc.toKDoc(),
+        kDoc,
         value,
         // copy annotation, the proxy instance ksp creates does not implement
         // java.lang.annotation.Annotation.annotationType() which is needed for kotlinpoet
         deprecated
-            .run { Deprecated(message, replaceWith.run { ReplaceWith(expression, *imports) }, level) }
-            .takeUnless { args.isDefault(Entry::deprecated) },
+            ?.run {
+                val replaceWith = runCatching { replaceWith }.getOrElse { ReplaceWith("") }
+                val level = runCatching { level }.getOrElse { DeprecationLevel.WARNING }
+                Deprecated(message, replaceWith.run { ReplaceWith(expression, *imports) }, level)
+            },
         // because of https://github.com/google/ksp/pull/1330#issuecomment-1616066129
         if (args.isDefault(Entry::requiresOptInAnnotations)) {
             emptyList()

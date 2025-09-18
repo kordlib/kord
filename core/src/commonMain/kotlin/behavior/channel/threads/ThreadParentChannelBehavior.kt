@@ -19,7 +19,7 @@ import dev.kord.rest.builder.channel.thread.StartThreadBuilder
 import dev.kord.rest.builder.channel.thread.StartThreadWithMessageBuilder
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filter
-import kotlinx.datetime.Instant
+import kotlin.time.Instant
 
 /**
  * Behavior of channels that can contain public threads.

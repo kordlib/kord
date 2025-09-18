@@ -14,7 +14,7 @@ public data class StickerData(
     val name: String,
     val description: String?,
     val tags: Optional<String> = Optional.Missing(),
-    val formatType: MessageStickerType,
+    val formatType: MessageStickerType?,
     val available: OptionalBoolean = OptionalBoolean.Missing,
     @SerialName("guild_id")
     val guildId: OptionalSnowflake = OptionalSnowflake.Missing,

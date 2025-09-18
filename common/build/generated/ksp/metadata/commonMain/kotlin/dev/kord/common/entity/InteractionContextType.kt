@@ -1,6 +1,5 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
-@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
-                "SpellCheckingInspection", "GrazieInspection"))
+@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
@@ -16,8 +15,7 @@ import kotlinx.serialization.encoding.Encoder
 /**
  * Context in Discord where an interaction can be used, or where it was triggered from.
  *
- * See [InteractionContextType]s in the
- * [Discord Developer Documentation](https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-interaction-context-types).
+ * See [InteractionContextType]s in the [Discord Developer Documentation](https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-interaction-context-types).
  */
 @Serializable(with = InteractionContextType.Serializer::class)
 public sealed class InteractionContextType(
@@ -26,14 +24,11 @@ public sealed class InteractionContextType(
      */
     public val `value`: Int,
 ) {
-    final override fun equals(other: Any?): Boolean = this === other ||
-            (other is InteractionContextType && this.value == other.value)
+    final override fun equals(other: Any?): Boolean = this === other || (other is InteractionContextType && this.value == other.value)
 
     final override fun hashCode(): Int = value.hashCode()
 
-    final override fun toString(): String =
-            if (this is Unknown) "InteractionContextType.Unknown(value=$value)"
-            else "InteractionContextType.${this::class.simpleName}"
+    final override fun toString(): String = if (this is Unknown) "InteractionContextType.Unknown(value=$value)" else "InteractionContextType.${this::class.simpleName}"
 
     /**
      * An unknown [InteractionContextType].
@@ -61,15 +56,13 @@ public sealed class InteractionContextType(
 
     internal object Serializer : KSerializer<InteractionContextType> {
         override val descriptor: SerialDescriptor =
-                PrimitiveSerialDescriptor("dev.kord.common.entity.InteractionContextType",
-                PrimitiveKind.INT)
+                PrimitiveSerialDescriptor("dev.kord.common.entity.InteractionContextType", PrimitiveKind.INT)
 
         override fun serialize(encoder: Encoder, `value`: InteractionContextType) {
             encoder.encodeInt(value.value)
         }
 
-        override fun deserialize(decoder: Decoder): InteractionContextType =
-                from(decoder.decodeInt())
+        override fun deserialize(decoder: Decoder): InteractionContextType = from(decoder.decodeInt())
     }
 
     public companion object {
@@ -85,8 +78,7 @@ public sealed class InteractionContextType(
         }
 
         /**
-         * Returns an instance of [InteractionContextType] with [InteractionContextType.value] equal
-         * to the specified [value].
+         * Returns an instance of [InteractionContextType] with [InteractionContextType.value] equal to the specified [value].
          */
         public fun from(`value`: Int): InteractionContextType = when (value) {
             0 -> Guild

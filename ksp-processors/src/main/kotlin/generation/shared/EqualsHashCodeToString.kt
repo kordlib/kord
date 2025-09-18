@@ -30,12 +30,12 @@ internal fun TypeSpec.Builder.addEqualsAndHashCodeBasedOnClassAndSingleProperty(
     }
 }
 
-context(GenerationEntity)
+context(entity: GenerationEntity)
 internal fun TypeSpec.Builder.addEntityToString(property: String) = addFunction("toString") {
     addModifiers(FINAL, OVERRIDE)
     returns<String>()
     addStatement(
-        "return if·(this·is·Unknown)·\"$entityName.Unknown($property=$$property)\" " +
-            "else·\"$entityName.\${this::class.simpleName}\""
+        "return if·(this·is·Unknown)·\"${entity.entityName}.Unknown($property=$$property)\" " +
+            "else·\"${entity.entityName}.\${this::class.simpleName}\""
     )
 }

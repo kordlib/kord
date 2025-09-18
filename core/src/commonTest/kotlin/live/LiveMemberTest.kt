@@ -16,7 +16,7 @@ import dev.kord.gateway.GuildMemberRemove
 import dev.kord.gateway.GuildMemberUpdate
 import kotlinx.coroutines.job
 import kotlinx.coroutines.test.runTest
-import kotlinx.datetime.Instant
+import kotlin.time.Instant
 import kotlin.js.JsName
 import kotlin.test.BeforeTest
 import kotlin.test.Ignore

@@ -1,7 +1,7 @@
 package dev.kord.common
 
-import kotlinx.datetime.Clock
-import kotlinx.datetime.Instant
+import kotlin.time.Clock
+import kotlin.time.Instant
 
 fun Clock.Companion.fixed(instant: Instant): Clock = FixedClock(instant)
 

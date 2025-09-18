@@ -16,7 +16,8 @@ import dev.kord.core.hash
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import kotlinx.coroutines.flow.*
-import kotlinx.datetime.Instant
+import kotlin.time.Instant
+import dev.kord.core.hash
 
 /**
  * An instance of a [Discord Member](https://discord.com/developers/docs/resources/guild#guild-member-object).

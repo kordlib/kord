@@ -10,7 +10,8 @@ import dev.kord.core.entity.channel.VoiceChannel
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
-import kotlinx.datetime.Instant
+import dev.kord.core.supplier.getChannelOfOrNull
+import kotlin.time.Instant
 
 public class VoiceState(
     public val data: VoiceStateData,

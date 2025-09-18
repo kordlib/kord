@@ -1,6 +1,5 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
-@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
-                "SpellCheckingInspection", "GrazieInspection"))
+@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
@@ -16,8 +15,7 @@ import kotlinx.serialization.encoding.Encoder
 /**
  * Where an app can be installed, also called its supported installation contexts
  *
- * See [ApplicationIntegrationType]s in the
- * [Discord Developer Documentation](https://discord.com/developers/docs/resources/application#application-object-application-integration-types).
+ * See [ApplicationIntegrationType]s in the [Discord Developer Documentation](https://discord.com/developers/docs/resources/application#application-object-application-integration-types).
  */
 @Serializable(with = ApplicationIntegrationType.Serializer::class)
 public sealed class ApplicationIntegrationType(
@@ -26,20 +24,16 @@ public sealed class ApplicationIntegrationType(
      */
     public val `value`: Int,
 ) {
-    final override fun equals(other: Any?): Boolean = this === other ||
-            (other is ApplicationIntegrationType && this.value == other.value)
+    final override fun equals(other: Any?): Boolean = this === other || (other is ApplicationIntegrationType && this.value == other.value)
 
     final override fun hashCode(): Int = value.hashCode()
 
-    final override fun toString(): String =
-            if (this is Unknown) "ApplicationIntegrationType.Unknown(value=$value)"
-            else "ApplicationIntegrationType.${this::class.simpleName}"
+    final override fun toString(): String = if (this is Unknown) "ApplicationIntegrationType.Unknown(value=$value)" else "ApplicationIntegrationType.${this::class.simpleName}"
 
     /**
      * An unknown [ApplicationIntegrationType].
      *
-     * This is used as a fallback for [ApplicationIntegrationType]s that haven't been added to Kord
-     * yet.
+     * This is used as a fallback for [ApplicationIntegrationType]s that haven't been added to Kord yet.
      */
     public class Unknown internal constructor(
         `value`: Int,
@@ -57,15 +51,13 @@ public sealed class ApplicationIntegrationType(
 
     internal object Serializer : KSerializer<ApplicationIntegrationType> {
         override val descriptor: SerialDescriptor =
-                PrimitiveSerialDescriptor("dev.kord.common.entity.ApplicationIntegrationType",
-                PrimitiveKind.INT)
+                PrimitiveSerialDescriptor("dev.kord.common.entity.ApplicationIntegrationType", PrimitiveKind.INT)
 
         override fun serialize(encoder: Encoder, `value`: ApplicationIntegrationType) {
             encoder.encodeInt(value.value)
         }
 
-        override fun deserialize(decoder: Decoder): ApplicationIntegrationType =
-                from(decoder.decodeInt())
+        override fun deserialize(decoder: Decoder): ApplicationIntegrationType = from(decoder.decodeInt())
     }
 
     public companion object {
@@ -80,8 +72,7 @@ public sealed class ApplicationIntegrationType(
         }
 
         /**
-         * Returns an instance of [ApplicationIntegrationType] with
-         * [ApplicationIntegrationType.value] equal to the specified [value].
+         * Returns an instance of [ApplicationIntegrationType] with [ApplicationIntegrationType.value] equal to the specified [value].
          */
         public fun from(`value`: Int): ApplicationIntegrationType = when (value) {
             0 -> GuildInstall
