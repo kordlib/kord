@@ -67,6 +67,10 @@ dokka {
     applyKordDokkaOptions(project)
 }
 
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+}
+
 tasks {
     withType<Test>().configureEach {
         useJUnitPlatform()
