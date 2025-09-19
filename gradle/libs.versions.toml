@@ -19,7 +19,7 @@ fastZlib = "2.0.1" # https://github.com/timotejroiko/fast-zlib
 sodium = "0.9.2" # https://github.com/ionspin/kotlin-multiplatform-libsodium
 
 # code generation
-ksp = "2.2.10-2.0.2" # https://github.com/google/ksp
+ksp = "2.2.20-2.0.3" # https://github.com/google/ksp
 kotlinpoet = "2.2.0" # https://github.com/square/kotlinpoet
 
 # tests
@@ -33,7 +33,7 @@ dokka = "2.0.0" # https://github.com/Kotlin/dokka
 kotlinx-atomicfu = "0.29.0" # https://github.com/Kotlin/kotlinx-atomicfu
 buildconfig = "5.6.7" # https://github.com/gmazzo/gradle-buildconfig-plugin
 maven-publish = "0.34.0" # https://github.com/vanniktech/gradle-maven-publish-plugin/
-kord-gradle-tools = "1.9.2" # https://github.com/kordlib/gradle-tools/blob/main/build.gradle.kts#L10
+kord-gradle-tools = "1.10.1-SNAPSHOT" # https://github.com/kordlib/gradle-tools/blob/main/build.gradle.kts#L10
 
 [libraries]
 

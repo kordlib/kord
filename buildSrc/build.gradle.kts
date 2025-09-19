@@ -12,6 +12,8 @@ repositories {
 kotlin {
     compilerOptions {
         allWarningsAsErrors = true
+
+        optIn.add("org.jetbrains.kotlin.gradle.swiftexport.ExperimentalSwiftExportDsl")
     }
 }
 
