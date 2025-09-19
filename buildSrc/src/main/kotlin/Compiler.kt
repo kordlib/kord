@@ -15,13 +15,13 @@ val kordOptIns = listOf(
     "kotlin.time.ExperimentalTime"
 )
 
-internal fun KotlinCommonCompilerOptions.applyKordCommonCompilerOptions() {
+fun KotlinCommonCompilerOptions.applyKordCommonCompilerOptions() {
     allWarningsAsErrors = true
     progressiveMode = true
     freeCompilerArgs.add("-Xexpect-actual-classes")
 }
 
-internal const val KORD_JVM_TARGET = 8
+const val KORD_JVM_TARGET = 8
 
 internal fun KotlinJvmCompilerOptions.applyKordJvmCompilerOptions() {
     applyKordCommonCompilerOptions()

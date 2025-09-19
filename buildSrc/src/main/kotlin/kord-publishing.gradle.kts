@@ -1,15 +1,17 @@
 import com.vanniktech.maven.publish.JavadocJar
 import com.vanniktech.maven.publish.KotlinJvm
 import com.vanniktech.maven.publish.KotlinMultiplatform
+import dev.kord.gradle.tools.util.libraryVersion
 
 plugins {
     com.vanniktech.maven.publish
+    dev.kord.`gradle-tools`
 }
 
 mavenPublishing {
-    coordinates(Library.group, "kord-${project.name}", libraryVersion.get())
+    coordinates(Library.group, "kord-${project.name}", libraryVersion)
 
-    publishToMavenCentral()
+//    publishToMavenCentral()
     signAllPublications()
 
     pom {
@@ -47,10 +49,16 @@ mavenPublishing {
         }
     }
 
+    val javadocJar = if (plugins.hasPlugin("org.jetbrains.dokka")) {
+        JavadocJar.Dokka("dokkaGeneratePublicationHtml")
+    } else {
+        JavadocJar.Empty()
+    }
+
     if (plugins.hasPlugin("org.jetbrains.kotlin.multiplatform")) {
-        configure(KotlinMultiplatform(JavadocJar.Dokka("dokkaGeneratePublicationHtml"), sourcesJar = true))
+        configure(KotlinMultiplatform(javadocJar, sourcesJar = true))
     } else if(plugins.hasPlugin("org.jetbrains.kotlin.jvm")) {
-        configure(KotlinJvm(JavadocJar.Dokka("dokkaGeneratePublicationHtml"), sourcesJar = true))
+        configure(KotlinJvm(javadocJar, sourcesJar = true))
     }
 }
 

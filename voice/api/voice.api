@@ -317,7 +317,7 @@ public final class dev/kord/voice/SpeakingFlags$Companion {
 }
 
 public final class dev/kord/voice/VoiceConnection {
-	public synthetic fun <init> (Ldev/kord/voice/VoiceConnectionData;Ldev/kord/gateway/Gateway;Ldev/kord/voice/gateway/VoiceGateway;Ldev/kord/voice/udp/VoiceUdpSocket;Ldev/kord/voice/gateway/VoiceGatewayConfiguration;Ldev/kord/voice/streams/Streams;Ldev/kord/voice/AudioProvider;Ldev/kord/voice/FrameInterceptor;Ldev/kord/voice/udp/AudioFrameSender;Ldev/kord/voice/encryption/strategies/NonceStrategy;JLkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (Lkotlinx/coroutines/CoroutineScope;Ldev/kord/voice/VoiceConnectionData;Ldev/kord/gateway/Gateway;Ldev/kord/voice/gateway/VoiceGateway;Ldev/kord/voice/udp/VoiceUdpSocket;Ldev/kord/voice/gateway/VoiceGatewayConfiguration;Ldev/kord/voice/streams/Streams;Ldev/kord/voice/AudioProvider;Ldev/kord/voice/FrameInterceptor;Ldev/kord/voice/udp/AudioFrameSender;Ldev/kord/voice/encryption/strategies/NonceStrategy;JLkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun connect (Lkotlinx/coroutines/CoroutineScope;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static synthetic fun connect$default (Ldev/kord/voice/VoiceConnection;Lkotlinx/coroutines/CoroutineScope;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public final fun disconnect (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -348,6 +348,7 @@ public final class dev/kord/voice/VoiceConnectionBuilder {
 	public final fun getAudioSender ()Ldev/kord/voice/udp/AudioFrameSender;
 	public final fun getChannelId ()Ldev/kord/common/entity/Snowflake;
 	public final fun getConnectionDetachDuration-UwyO8pc ()J
+	public final fun getDispatcher ()Lkotlinx/coroutines/CoroutineDispatcher;
 	public final fun getFrameInterceptor ()Ldev/kord/voice/FrameInterceptor;
 	public final fun getGateway ()Ldev/kord/gateway/Gateway;
 	public final fun getGuildId ()Ldev/kord/common/entity/Snowflake;
@@ -363,6 +364,7 @@ public final class dev/kord/voice/VoiceConnectionBuilder {
 	public final fun setAudioSender (Ldev/kord/voice/udp/AudioFrameSender;)V
 	public final fun setChannelId (Ldev/kord/common/entity/Snowflake;)V
 	public final fun setConnectionDetachDuration-LRDsOJo (J)V
+	public final fun setDispatcher (Lkotlinx/coroutines/CoroutineDispatcher;)V
 	public final fun setFrameInterceptor (Ldev/kord/voice/FrameInterceptor;)V
 	public final fun setGateway (Ldev/kord/gateway/Gateway;)V
 	public final fun setGuildId (Ldev/kord/common/entity/Snowflake;)V
@@ -558,7 +560,6 @@ public final synthetic class dev/kord/voice/gateway/Heartbeat$$serializer : kotl
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/voice/gateway/Heartbeat;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/voice/gateway/Heartbeat$Companion {
@@ -603,7 +604,6 @@ public final synthetic class dev/kord/voice/gateway/Hello$$serializer : kotlinx/
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/voice/gateway/Hello;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/voice/gateway/Hello$Companion {
@@ -636,7 +636,6 @@ public final synthetic class dev/kord/voice/gateway/Identify$$serializer : kotli
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/voice/gateway/Identify;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/voice/gateway/Identify$Companion {
@@ -693,7 +692,6 @@ public final synthetic class dev/kord/voice/gateway/Ready$$serializer : kotlinx/
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/voice/gateway/Ready;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/voice/gateway/Ready$Companion {
@@ -724,7 +722,6 @@ public final synthetic class dev/kord/voice/gateway/Resume$$serializer : kotlinx
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/voice/gateway/Resume;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/voice/gateway/Resume$Companion {
@@ -758,7 +755,6 @@ public final synthetic class dev/kord/voice/gateway/SelectProtocol$$serializer :
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/voice/gateway/SelectProtocol;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/voice/gateway/SelectProtocol$Companion {
@@ -789,7 +785,6 @@ public final synthetic class dev/kord/voice/gateway/SelectProtocol$Data$$seriali
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/voice/gateway/SelectProtocol$Data;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/voice/gateway/SelectProtocol$Data$Companion {
@@ -820,7 +815,6 @@ public final synthetic class dev/kord/voice/gateway/SendSpeaking$$serializer : k
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/voice/gateway/SendSpeaking;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/voice/gateway/SendSpeaking$Companion {
@@ -849,7 +843,6 @@ public final synthetic class dev/kord/voice/gateway/SessionDescription$$serializ
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/voice/gateway/SessionDescription;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/voice/gateway/SessionDescription$Companion {
@@ -880,7 +873,6 @@ public final synthetic class dev/kord/voice/gateway/Speaking$$serializer : kotli
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/voice/gateway/Speaking;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/voice/gateway/Speaking$Companion {
@@ -1068,7 +1060,7 @@ public final class dev/kord/voice/streams/DefaultStreams : dev/kord/voice/stream
 	public synthetic fun getIncomingUserStreams ()Lkotlinx/coroutines/flow/Flow;
 	public fun getIncomingUserStreams ()Lkotlinx/coroutines/flow/SharedFlow;
 	public fun getSsrcToUser ()Ljava/util/Map;
-	public fun listen ([BLio/ktor/network/sockets/SocketAddress;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun listen ([BLio/ktor/network/sockets/InetSocketAddress;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class dev/kord/voice/streams/NOPStreams : dev/kord/voice/streams/Streams {
@@ -1077,7 +1069,7 @@ public final class dev/kord/voice/streams/NOPStreams : dev/kord/voice/streams/St
 	public fun getIncomingAudioPackets ()Lkotlinx/coroutines/flow/Flow;
 	public fun getIncomingUserStreams ()Lkotlinx/coroutines/flow/Flow;
 	public fun getSsrcToUser ()Ljava/util/Map;
-	public fun listen ([BLio/ktor/network/sockets/SocketAddress;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun listen ([BLio/ktor/network/sockets/InetSocketAddress;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public abstract interface class dev/kord/voice/streams/Streams {
@@ -1085,7 +1077,7 @@ public abstract interface class dev/kord/voice/streams/Streams {
 	public abstract fun getIncomingAudioPackets ()Lkotlinx/coroutines/flow/Flow;
 	public abstract fun getIncomingUserStreams ()Lkotlinx/coroutines/flow/Flow;
 	public abstract fun getSsrcToUser ()Ljava/util/Map;
-	public abstract fun listen ([BLio/ktor/network/sockets/SocketAddress;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun listen ([BLio/ktor/network/sockets/InetSocketAddress;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public abstract interface class dev/kord/voice/udp/AudioFrameSender {
@@ -1093,17 +1085,17 @@ public abstract interface class dev/kord/voice/udp/AudioFrameSender {
 }
 
 public final class dev/kord/voice/udp/AudioFrameSenderConfiguration {
-	public synthetic fun <init> (Lio/ktor/network/sockets/SocketAddress;I[BLdev/kord/voice/FrameInterceptorConfiguration;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun component1 ()Lio/ktor/network/sockets/SocketAddress;
+	public synthetic fun <init> (Lio/ktor/network/sockets/InetSocketAddress;I[BLdev/kord/voice/FrameInterceptorConfiguration;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Lio/ktor/network/sockets/InetSocketAddress;
 	public final fun component2-pVg5ArA ()I
 	public final fun component3 ()[B
 	public final fun component4 ()Ldev/kord/voice/FrameInterceptorConfiguration;
-	public final fun copy-Yuhug_o (Lio/ktor/network/sockets/SocketAddress;I[BLdev/kord/voice/FrameInterceptorConfiguration;)Ldev/kord/voice/udp/AudioFrameSenderConfiguration;
-	public static synthetic fun copy-Yuhug_o$default (Ldev/kord/voice/udp/AudioFrameSenderConfiguration;Lio/ktor/network/sockets/SocketAddress;I[BLdev/kord/voice/FrameInterceptorConfiguration;ILjava/lang/Object;)Ldev/kord/voice/udp/AudioFrameSenderConfiguration;
+	public final fun copy-Yuhug_o (Lio/ktor/network/sockets/InetSocketAddress;I[BLdev/kord/voice/FrameInterceptorConfiguration;)Ldev/kord/voice/udp/AudioFrameSenderConfiguration;
+	public static synthetic fun copy-Yuhug_o$default (Ldev/kord/voice/udp/AudioFrameSenderConfiguration;Lio/ktor/network/sockets/InetSocketAddress;I[BLdev/kord/voice/FrameInterceptorConfiguration;ILjava/lang/Object;)Ldev/kord/voice/udp/AudioFrameSenderConfiguration;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getInterceptorConfiguration ()Ldev/kord/voice/FrameInterceptorConfiguration;
 	public final fun getKey ()[B
-	public final fun getServer ()Lio/ktor/network/sockets/SocketAddress;
+	public final fun getServer ()Lio/ktor/network/sockets/InetSocketAddress;
 	public final fun getSsrc-pVg5ArA ()I
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
@@ -1139,17 +1131,17 @@ public final class dev/kord/voice/udp/DefaultAudioFrameSenderData {
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class dev/kord/voice/udp/DefaultAudioPacketProvider : dev/kord/voice/udp/AudioPacketProvider {
+public final class dev/kord/voice/udp/DefaultAudioPacketProviderKt {
+	public static final fun DefaultAudioPacketProvider ([BLdev/kord/voice/encryption/strategies/NonceStrategy;)Ldev/kord/voice/udp/AudioPacketProvider;
+}
+
+public final class dev/kord/voice/udp/DefaultJvmAudioPacketProvider : dev/kord/voice/udp/AudioPacketProvider {
 	public fun <init> ([BLdev/kord/voice/encryption/strategies/NonceStrategy;)V
 	public fun provide-jfaDVJw (SII[B)Ldev/kord/voice/io/ByteArrayView;
 }
 
-public final class dev/kord/voice/udp/GlobalVoiceUdpSocket : dev/kord/voice/udp/VoiceUdpSocket {
-	public static final field INSTANCE Ldev/kord/voice/udp/GlobalVoiceUdpSocket;
-	public fun discoverIp (Lio/ktor/network/sockets/InetSocketAddress;ILkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun getIncoming ()Lkotlinx/coroutines/flow/SharedFlow;
-	public fun send (Lio/ktor/network/sockets/Datagram;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun stop (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+public final class dev/kord/voice/udp/IpDiscoveryKt {
+	public static final fun discoverIP (Ldev/kord/voice/udp/VoiceUdpSocket;Lio/ktor/network/sockets/InetSocketAddress;ILkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public abstract class dev/kord/voice/udp/PayloadType {
@@ -1172,6 +1164,7 @@ public final class dev/kord/voice/udp/PayloadType$Companion {
 
 public final class dev/kord/voice/udp/PayloadType$Unknown : dev/kord/voice/udp/PayloadType {
 	public fun <init> (B)V
+	public fun toString ()Ljava/lang/String;
 }
 
 public final class dev/kord/voice/udp/RTPPacket {
@@ -1241,9 +1234,8 @@ public final class dev/kord/voice/udp/RTPPacketKt {
 
 public abstract interface class dev/kord/voice/udp/VoiceUdpSocket {
 	public static final field Companion Ldev/kord/voice/udp/VoiceUdpSocket$Companion;
-	public abstract fun discoverIp (Lio/ktor/network/sockets/InetSocketAddress;ILkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public abstract fun getIncoming ()Lkotlinx/coroutines/flow/SharedFlow;
-	public abstract fun send (Lio/ktor/network/sockets/Datagram;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun all (Lio/ktor/network/sockets/InetSocketAddress;)Lkotlinx/coroutines/flow/Flow;
+	public abstract fun send (Lio/ktor/network/sockets/InetSocketAddress;Ldev/kord/voice/io/ByteArrayView;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun stop (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
@@ -1252,6 +1244,7 @@ public final class dev/kord/voice/udp/VoiceUdpSocket$Companion {
 }
 
 public final class dev/kord/voice/udp/VoiceUdpSocketKt {
-	public static final fun receiveFrom (Ldev/kord/voice/udp/VoiceUdpSocket;Lio/ktor/network/sockets/InetSocketAddress;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static final fun getGlobalVoiceUdpSocket ()Ldev/kord/voice/udp/VoiceUdpSocket;
+	public static final fun recv (Ldev/kord/voice/udp/VoiceUdpSocket;Lio/ktor/network/sockets/InetSocketAddress;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 

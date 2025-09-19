@@ -1,9 +1,12 @@
+import gradle.kotlin.dsl.accessors._6cf8ffb9e5fa3d9dd0ed334a95f1dc9c.java
+
 plugins {
     org.jetbrains.kotlin.jvm
     org.jetbrains.kotlin.plugin.serialization
     org.jetbrains.dokka
     org.jetbrains.kotlinx.atomicfu
     com.google.devtools.ksp
+    dev.kord.`gradle-tools`
 }
 
 repositories {
@@ -28,6 +31,10 @@ kotlin {
     abiValidation {
         applyKordBCVOptions()
     }
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
 }
 
 dokka {
