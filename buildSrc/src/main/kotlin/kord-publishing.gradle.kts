@@ -11,7 +11,7 @@ plugins {
 mavenPublishing {
     coordinates(Library.group, "kord-${project.name}", libraryVersion)
 
-    publishToMavenCentral()
+//    publishToMavenCentral()
     signAllPublications()
 
     pom {

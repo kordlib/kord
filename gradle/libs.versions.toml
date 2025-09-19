@@ -1,7 +1,7 @@
 [versions]
 
 # api dependencies
-kotlin = "2.2.10" # https://github.com/JetBrains/kotlin
+kotlin = "2.2.20" # https://github.com/JetBrains/kotlin
 ktor = "3.2.3" # https://github.com/ktorio/ktor
 kotlinx-coroutines = "1.10.2" # https://github.com/Kotlin/kotlinx.coroutines
 kotlinx-serialization = "1.9.0" # https://github.com/Kotlin/kotlinx.serialization
