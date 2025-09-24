@@ -1,6 +1,6 @@
 package dev.kord.common.ratelimit
 
-import kotlinx.datetime.Clock
+import kotlin.time.Clock
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 import kotlin.time.Duration

@@ -1,7 +1,7 @@
 package dev.kord.rest.ratelimit
 
 import dev.kord.rest.request.Request
-import kotlinx.datetime.Instant
+import kotlin.time.Instant
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 import kotlin.jvm.JvmInline

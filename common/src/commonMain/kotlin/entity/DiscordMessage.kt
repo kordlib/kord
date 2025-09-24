@@ -140,7 +140,7 @@ import dev.kord.ksp.Generate.EntityType.INT_FLAGS
 import dev.kord.ksp.Generate.EntityType.INT_KORD_ENUM
 import dev.kord.ksp.Generate.EntityType.STRING_KORD_ENUM
 import dev.kord.ksp.Generate.Entry
-import kotlinx.datetime.Instant
+import kotlin.time.Instant
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 

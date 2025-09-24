@@ -1,13 +1,10 @@
 import org.gradle.api.Project
+import org.gradle.api.provider.Provider
 import java.io.ByteArrayOutputStream
 
-internal fun Project.git(vararg command: String): String {
-    val output = ByteArrayOutputStream()
-    exec {
+internal fun Project.git(vararg command: String): Provider<String> {
+    return providers.exec {
         commandLine("git", *command)
-        standardOutput = output
-        errorOutput = output
         workingDir = rootDir
-    }.rethrowFailure().assertNormalExitValue()
-    return output.toString().trim()
+    }.standardOutput.asText.map { it.trim() }
 }

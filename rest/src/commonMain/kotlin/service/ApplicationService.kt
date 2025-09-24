@@ -1,6 +1,5 @@
 package dev.kord.rest.service
 
-import dev.kord.common.entity.ApplicationEmojis
 import dev.kord.common.entity.DiscordApplication
 import dev.kord.common.entity.DiscordEmoji
 import dev.kord.common.entity.Snowflake
@@ -9,6 +8,7 @@ import dev.kord.rest.builder.guild.EmojiCreateBuilder
 import dev.kord.rest.builder.guild.EmojiModifyBuilder
 import dev.kord.rest.json.request.EmojiCreateRequest
 import dev.kord.rest.json.request.EmojiModifyRequest
+import dev.kord.rest.json.response.ApplicationEmojisResponse
 import dev.kord.rest.request.RequestHandler
 import dev.kord.rest.route.Route
 import kotlin.contracts.InvocationKind
@@ -18,7 +18,8 @@ public class ApplicationService(handler: RequestHandler) : RestService(handler) 
 
     public suspend fun getCurrentApplicationInfo(): DiscordApplication = call(Route.CurrentApplicationInfo)
 
-    public suspend fun getApplicationEmojis(appId: Snowflake): ApplicationEmojis = call(Route.GetApplicationEmojis) {
+    public suspend fun getApplicationEmojis(appId: Snowflake): ApplicationEmojisResponse =
+        call(Route.GetApplicationEmojis) {
         keys[Route.ApplicationId] = appId
     }
 
@@ -41,7 +42,7 @@ public class ApplicationService(handler: RequestHandler) : RestService(handler) 
         image: Image,
     ): DiscordEmoji = createApplicationEmoji(appId, EmojiCreateBuilder(name, image).toRequest())
 
-    public suspend inline fun modifyApplicationEmoji(
+    public suspend fun modifyApplicationEmoji(
         appId: Snowflake,
         emojiId: Snowflake,
         request: EmojiModifyRequest
@@ -62,7 +63,7 @@ public class ApplicationService(handler: RequestHandler) : RestService(handler) 
         return modifyApplicationEmoji(appId, emojiId, EmojiModifyBuilder().apply(builder).toRequest())
     }
 
-    public suspend inline fun deleteApplicationEmoji(
+    public suspend fun deleteApplicationEmoji(
         appId: Snowflake,
         emojiId: Snowflake,
     ): Unit = call(Route.DeleteApplicationEmoji) {

@@ -16,7 +16,7 @@ import dev.kord.core.entity.channel.GuildMessageChannel
 import dev.kord.core.entity.channel.MediaChannel
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
-import kotlinx.datetime.Instant
+import kotlin.time.Instant
 import kotlin.time.Duration
 
 public interface ThreadChannel : GuildMessageChannel, ThreadChannelBehavior {

@@ -10,6 +10,8 @@ import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.delegate.delegate
 import dev.kord.common.entity.optional.map
+import kotlin.contracts.InvocationKind
+import kotlin.contracts.contract
 
 public class ThumbnailBuilder : AccessoryComponentBuilder {
     private var _url: Optional<String> = Optional.Missing()
