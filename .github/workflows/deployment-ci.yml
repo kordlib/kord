@@ -31,7 +31,7 @@ jobs:
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v4
       - name: Build with Gradle
-        run: ./gradlew --stacktrace --info build
+        run: ./gradlew --stacktrace --info checkLegacyAbi check
   release:
     name: Publish artifacts
     runs-on: ubuntu-latest
@@ -42,10 +42,11 @@ jobs:
       KORD_TEST_TOKEN: ${{ secrets.KORD_TEST_TOKEN }}
       ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.NEXUS_USER }}
       ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.NEXUS_PASSWORD }}
-      KORD_REPO_USER: ${{ secrets.KORD_REPO_USER }}
-      KORD_REPO_PASSWORD: ${{ secrets.KORD_REPO_PASSWORD }}
+      GITHUB_USERNAME: ${{ github.actor }}
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       ORG_GRADLE_PROJECT_signingInMemoryKey: ${{ secrets.SIGNING_KEY_ARMORED }}
       ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: ${{ secrets.SIGNING_PASSWORD_RAW }}
+
     steps:
       - uses: actions/checkout@v5
         with:
