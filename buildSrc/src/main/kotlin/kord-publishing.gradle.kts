@@ -53,3 +53,16 @@ mavenPublishing {
         configure(KotlinJvm(JavadocJar.Dokka("dokkaGeneratePublicationHtml"), sourcesJar = true))
     }
 }
+
+publishing {
+    repositories {
+        maven {
+            url = uri("https://maven.pkg.github.com/kordlib/kord")
+
+            credentials {
+                username = System.getenv("GITHUB_USERNAME")
+                password = System.getenv("GITHUB_TOKEN")
+            }
+        }
+    }
+}
