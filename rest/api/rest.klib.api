@@ -8111,9 +8111,9 @@ sealed class <#A: kotlin/Any?> dev.kord.rest.route/Route { // dev.kord.rest.rout
 
     final object GetApplicationEmojis : dev.kord.rest.route/Route<dev.kord.rest.json.response/ApplicationEmojisResponse> // dev.kord.rest.route/Route.GetApplicationEmojis|null[0]
 
-    final object GetGuildsSoundboardSound : dev.kord.rest.route/Route<dev.kord.common.entity/DiscordSoundboardSound> // dev.kord.rest.route/Route.GetGuildsSoundboardSound|null[0]
+    final object GetGuildSoundboardSounds : dev.kord.rest.route/Route<dev.kord.rest.json.response/GuildSoundboardSoundsResponse> // dev.kord.rest.route/Route.GetGuildSoundboardSounds|null[0]
 
-    final object GetGuildsSoundboardSounds : dev.kord.rest.route/Route<dev.kord.rest.json.response/GuildSoundboardSoundsResponse> // dev.kord.rest.route/Route.GetGuildsSoundboardSounds|null[0]
+    final object GetGuildsSoundboardSound : dev.kord.rest.route/Route<dev.kord.common.entity/DiscordSoundboardSound> // dev.kord.rest.route/Route.GetGuildsSoundboardSound|null[0]
 
     final object GetSoundboardDefaultSounds : dev.kord.rest.route/Route<kotlin.collections/List<dev.kord.common.entity/DiscordSoundboardSound>> // dev.kord.rest.route/Route.GetSoundboardDefaultSounds|null[0]
 

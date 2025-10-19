@@ -7444,12 +7444,12 @@ public final class dev/kord/rest/route/Route$GetApplicationEmojis : dev/kord/res
 	public static final field INSTANCE Ldev/kord/rest/route/Route$GetApplicationEmojis;
 }
 
-public final class dev/kord/rest/route/Route$GetGuildsSoundboardSound : dev/kord/rest/route/Route {
-	public static final field INSTANCE Ldev/kord/rest/route/Route$GetGuildsSoundboardSound;
+public final class dev/kord/rest/route/Route$GetGuildSoundboardSounds : dev/kord/rest/route/Route {
+	public static final field INSTANCE Ldev/kord/rest/route/Route$GetGuildSoundboardSounds;
 }
 
-public final class dev/kord/rest/route/Route$GetGuildsSoundboardSounds : dev/kord/rest/route/Route {
-	public static final field INSTANCE Ldev/kord/rest/route/Route$GetGuildsSoundboardSounds;
+public final class dev/kord/rest/route/Route$GetGuildsSoundboardSound : dev/kord/rest/route/Route {
+	public static final field INSTANCE Ldev/kord/rest/route/Route$GetGuildsSoundboardSound;
 }
 
 public final class dev/kord/rest/route/Route$GetSoundboardDefaultSounds : dev/kord/rest/route/Route {
