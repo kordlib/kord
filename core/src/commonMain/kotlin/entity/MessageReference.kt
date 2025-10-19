@@ -12,7 +12,7 @@ import dev.kord.core.cache.data.EmbedData
 import dev.kord.core.cache.data.MessageData
 import dev.kord.core.cache.data.MessageReferenceData
 import dev.kord.core.cache.data.MessageSnapshotData
-import kotlinx.datetime.Instant
+import kotlin.time.Instant
 
 public class MessageReference(public val data: MessageReferenceData, override val kord: Kord) : KordObject {
 

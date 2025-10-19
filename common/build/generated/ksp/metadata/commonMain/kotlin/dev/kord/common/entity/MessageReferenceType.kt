@@ -1,6 +1,5 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
-@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
-                "SpellCheckingInspection", "GrazieInspection"))
+@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
@@ -14,8 +13,9 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 /**
- * See [MessageReferenceType]s in the
- * [Discord Developer Documentation](https://discord.com/developers/docs/resources/message#message-reference-structure).
+ *
+ *
+ * See [MessageReferenceType]s in the [Discord Developer Documentation](https://discord.com/developers/docs/resources/message#message-reference-structure).
  */
 @Serializable(with = MessageReferenceType.Serializer::class)
 public sealed class MessageReferenceType(
@@ -24,14 +24,11 @@ public sealed class MessageReferenceType(
      */
     public val `value`: Int,
 ) {
-    final override fun equals(other: Any?): Boolean = this === other ||
-            (other is MessageReferenceType && this.value == other.value)
+    final override fun equals(other: Any?): Boolean = this === other || (other is MessageReferenceType && this.value == other.value)
 
     final override fun hashCode(): Int = value.hashCode()
 
-    final override fun toString(): String =
-            if (this is Unknown) "MessageReferenceType.Unknown(value=$value)"
-            else "MessageReferenceType.${this::class.simpleName}"
+    final override fun toString(): String = if (this is Unknown) "MessageReferenceType.Unknown(value=$value)" else "MessageReferenceType.${this::class.simpleName}"
 
     /**
      * An unknown [MessageReferenceType].
@@ -54,8 +51,7 @@ public sealed class MessageReferenceType(
 
     internal object Serializer : KSerializer<MessageReferenceType> {
         override val descriptor: SerialDescriptor =
-                PrimitiveSerialDescriptor("dev.kord.common.entity.MessageReferenceType",
-                PrimitiveKind.INT)
+                PrimitiveSerialDescriptor("dev.kord.common.entity.MessageReferenceType", PrimitiveKind.INT)
 
         override fun serialize(encoder: Encoder, `value`: MessageReferenceType) {
             encoder.encodeInt(value.value)
@@ -76,8 +72,7 @@ public sealed class MessageReferenceType(
         }
 
         /**
-         * Returns an instance of [MessageReferenceType] with [MessageReferenceType.value] equal to
-         * the specified [value].
+         * Returns an instance of [MessageReferenceType] with [MessageReferenceType.value] equal to the specified [value].
          */
         public fun from(`value`: Int): MessageReferenceType = when (value) {
             0 -> Default
