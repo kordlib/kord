@@ -224,6 +224,19 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
         }
     }
 
+    override suspend fun getGuildSoundboardSoundOrNull(guildId: Snowflake, soundId: Snowflake): GuildSoundboardSound? = catchNotFound {
+        val data = SoundboardSoundData.from(guild.getGuildSoundboardSound(guildId, soundId))
+
+        return GuildSoundboardSound(data, kord)
+    }
+
+    override fun getGuildSoundboardSounds(guildId: Snowflake): Flow<GuildSoundboardSound> = flow {
+        for (sound in guild.listGuildSoundboardSounds(guildId).items) {
+            val data = SoundboardSoundData.from(sound)
+            emit(GuildSoundboardSound(data, kord))
+        }
+    }
+
     // maxBatchSize: see https://discord.com/developers/docs/resources/user#get-current-user-guilds
     override fun getCurrentUserGuilds(limit: Int?): Flow<Guild> =
         limitedPagination(limit, maxBatchSize = 200) { batchSize ->

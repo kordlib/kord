@@ -4629,6 +4629,55 @@ final class dev.kord.common.entity/DiscordSku { // dev.kord.common.entity/Discor
     }
 }
 
+final class dev.kord.common.entity/DiscordSoundboardSound { // dev.kord.common.entity/DiscordSoundboardSound|null[0]
+    constructor <init>(kotlin/String, dev.kord.common.entity/Snowflake, kotlin/Double, dev.kord.common.entity/Snowflake?, kotlin/String?, dev.kord.common.entity.optional/OptionalSnowflake = ..., kotlin/Boolean, dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordUser> = ...) // dev.kord.common.entity/DiscordSoundboardSound.<init>|<init>(kotlin.String;dev.kord.common.entity.Snowflake;kotlin.Double;dev.kord.common.entity.Snowflake?;kotlin.String?;dev.kord.common.entity.optional.OptionalSnowflake;kotlin.Boolean;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.DiscordUser>){}[0]
+
+    final val available // dev.kord.common.entity/DiscordSoundboardSound.available|{}available[0]
+        final fun <get-available>(): kotlin/Boolean // dev.kord.common.entity/DiscordSoundboardSound.available.<get-available>|<get-available>(){}[0]
+    final val emojiId // dev.kord.common.entity/DiscordSoundboardSound.emojiId|{}emojiId[0]
+        final fun <get-emojiId>(): dev.kord.common.entity/Snowflake? // dev.kord.common.entity/DiscordSoundboardSound.emojiId.<get-emojiId>|<get-emojiId>(){}[0]
+    final val emojiName // dev.kord.common.entity/DiscordSoundboardSound.emojiName|{}emojiName[0]
+        final fun <get-emojiName>(): kotlin/String? // dev.kord.common.entity/DiscordSoundboardSound.emojiName.<get-emojiName>|<get-emojiName>(){}[0]
+    final val guildId // dev.kord.common.entity/DiscordSoundboardSound.guildId|{}guildId[0]
+        final fun <get-guildId>(): dev.kord.common.entity.optional/OptionalSnowflake // dev.kord.common.entity/DiscordSoundboardSound.guildId.<get-guildId>|<get-guildId>(){}[0]
+    final val name // dev.kord.common.entity/DiscordSoundboardSound.name|{}name[0]
+        final fun <get-name>(): kotlin/String // dev.kord.common.entity/DiscordSoundboardSound.name.<get-name>|<get-name>(){}[0]
+    final val soundId // dev.kord.common.entity/DiscordSoundboardSound.soundId|{}soundId[0]
+        final fun <get-soundId>(): dev.kord.common.entity/Snowflake // dev.kord.common.entity/DiscordSoundboardSound.soundId.<get-soundId>|<get-soundId>(){}[0]
+    final val user // dev.kord.common.entity/DiscordSoundboardSound.user|{}user[0]
+        final fun <get-user>(): dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordUser> // dev.kord.common.entity/DiscordSoundboardSound.user.<get-user>|<get-user>(){}[0]
+    final val volume // dev.kord.common.entity/DiscordSoundboardSound.volume|{}volume[0]
+        final fun <get-volume>(): kotlin/Double // dev.kord.common.entity/DiscordSoundboardSound.volume.<get-volume>|<get-volume>(){}[0]
+
+    final fun component1(): kotlin/String // dev.kord.common.entity/DiscordSoundboardSound.component1|component1(){}[0]
+    final fun component2(): dev.kord.common.entity/Snowflake // dev.kord.common.entity/DiscordSoundboardSound.component2|component2(){}[0]
+    final fun component3(): kotlin/Double // dev.kord.common.entity/DiscordSoundboardSound.component3|component3(){}[0]
+    final fun component4(): dev.kord.common.entity/Snowflake? // dev.kord.common.entity/DiscordSoundboardSound.component4|component4(){}[0]
+    final fun component5(): kotlin/String? // dev.kord.common.entity/DiscordSoundboardSound.component5|component5(){}[0]
+    final fun component6(): dev.kord.common.entity.optional/OptionalSnowflake // dev.kord.common.entity/DiscordSoundboardSound.component6|component6(){}[0]
+    final fun component7(): kotlin/Boolean // dev.kord.common.entity/DiscordSoundboardSound.component7|component7(){}[0]
+    final fun component8(): dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordUser> // dev.kord.common.entity/DiscordSoundboardSound.component8|component8(){}[0]
+    final fun copy(kotlin/String = ..., dev.kord.common.entity/Snowflake = ..., kotlin/Double = ..., dev.kord.common.entity/Snowflake? = ..., kotlin/String? = ..., dev.kord.common.entity.optional/OptionalSnowflake = ..., kotlin/Boolean = ..., dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordUser> = ...): dev.kord.common.entity/DiscordSoundboardSound // dev.kord.common.entity/DiscordSoundboardSound.copy|copy(kotlin.String;dev.kord.common.entity.Snowflake;kotlin.Double;dev.kord.common.entity.Snowflake?;kotlin.String?;dev.kord.common.entity.optional.OptionalSnowflake;kotlin.Boolean;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.DiscordUser>){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.common.entity/DiscordSoundboardSound.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.common.entity/DiscordSoundboardSound.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // dev.kord.common.entity/DiscordSoundboardSound.toString|toString(){}[0]
+
+    final object $serializer : kotlinx.serialization.internal/GeneratedSerializer<dev.kord.common.entity/DiscordSoundboardSound> { // dev.kord.common.entity/DiscordSoundboardSound.$serializer|null[0]
+        final val descriptor // dev.kord.common.entity/DiscordSoundboardSound.$serializer.descriptor|{}descriptor[0]
+            final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // dev.kord.common.entity/DiscordSoundboardSound.$serializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
+
+        final fun childSerializers(): kotlin/Array<kotlinx.serialization/KSerializer<*>> // dev.kord.common.entity/DiscordSoundboardSound.$serializer.childSerializers|childSerializers(){}[0]
+        final fun deserialize(kotlinx.serialization.encoding/Decoder): dev.kord.common.entity/DiscordSoundboardSound // dev.kord.common.entity/DiscordSoundboardSound.$serializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
+        final fun serialize(kotlinx.serialization.encoding/Encoder, dev.kord.common.entity/DiscordSoundboardSound) // dev.kord.common.entity/DiscordSoundboardSound.$serializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;dev.kord.common.entity.DiscordSoundboardSound){}[0]
+    }
+
+    final object Companion { // dev.kord.common.entity/DiscordSoundboardSound.Companion|null[0]
+        final val $childSerializers // dev.kord.common.entity/DiscordSoundboardSound.Companion.$childSerializers|{}$childSerializers[0]
+
+        final fun serializer(): kotlinx.serialization/KSerializer<dev.kord.common.entity/DiscordSoundboardSound> // dev.kord.common.entity/DiscordSoundboardSound.Companion.serializer|serializer(){}[0]
+    }
+}
+
 final class dev.kord.common.entity/DiscordStageInstance { // dev.kord.common.entity/DiscordStageInstance|null[0]
     constructor <init>(dev.kord.common.entity/Snowflake, dev.kord.common.entity/Snowflake, dev.kord.common.entity/Snowflake, kotlin/String, dev.kord.common.entity/StageInstancePrivacyLevel, kotlin/Boolean, dev.kord.common.entity/Snowflake?) // dev.kord.common.entity/DiscordStageInstance.<init>|<init>(dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake;kotlin.String;dev.kord.common.entity.StageInstancePrivacyLevel;kotlin.Boolean;dev.kord.common.entity.Snowflake?){}[0]
 
@@ -6995,6 +7044,35 @@ sealed class dev.kord.common.entity.optional/OptionalBoolean { // dev.kord.commo
 
     final object Missing : dev.kord.common.entity.optional/OptionalBoolean { // dev.kord.common.entity.optional/OptionalBoolean.Missing|null[0]
         final fun toString(): kotlin/String // dev.kord.common.entity.optional/OptionalBoolean.Missing.toString|toString(){}[0]
+    }
+}
+
+sealed class dev.kord.common.entity.optional/OptionalDouble { // dev.kord.common.entity.optional/OptionalDouble|null[0]
+    final val asNullable // dev.kord.common.entity.optional/OptionalDouble.asNullable|{}asNullable[0]
+        final fun <get-asNullable>(): kotlin/Double? // dev.kord.common.entity.optional/OptionalDouble.asNullable.<get-asNullable>|<get-asNullable>(){}[0]
+    final val asOptional // dev.kord.common.entity.optional/OptionalDouble.asOptional|{}asOptional[0]
+        final fun <get-asOptional>(): dev.kord.common.entity.optional/Optional<kotlin/Double> // dev.kord.common.entity.optional/OptionalDouble.asOptional.<get-asOptional>|<get-asOptional>(){}[0]
+
+    final fun orElse(kotlin/Double): kotlin/Double // dev.kord.common.entity.optional/OptionalDouble.orElse|orElse(kotlin.Double){}[0]
+
+    final class Value : dev.kord.common.entity.optional/OptionalDouble { // dev.kord.common.entity.optional/OptionalDouble.Value|null[0]
+        constructor <init>(kotlin/Double) // dev.kord.common.entity.optional/OptionalDouble.Value.<init>|<init>(kotlin.Double){}[0]
+
+        final val value // dev.kord.common.entity.optional/OptionalDouble.Value.value|{}value[0]
+            final fun <get-value>(): kotlin/Double // dev.kord.common.entity.optional/OptionalDouble.Value.value.<get-value>|<get-value>(){}[0]
+
+        final fun component1(): kotlin/Double // dev.kord.common.entity.optional/OptionalDouble.Value.component1|component1(){}[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.common.entity.optional/OptionalDouble.Value.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // dev.kord.common.entity.optional/OptionalDouble.Value.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // dev.kord.common.entity.optional/OptionalDouble.Value.toString|toString(){}[0]
+    }
+
+    final object Companion { // dev.kord.common.entity.optional/OptionalDouble.Companion|null[0]
+        final fun serializer(): kotlinx.serialization/KSerializer<dev.kord.common.entity.optional/OptionalDouble> // dev.kord.common.entity.optional/OptionalDouble.Companion.serializer|serializer(){}[0]
+    }
+
+    final object Missing : dev.kord.common.entity.optional/OptionalDouble { // dev.kord.common.entity.optional/OptionalDouble.Missing|null[0]
+        final fun toString(): kotlin/String // dev.kord.common.entity.optional/OptionalDouble.Missing.toString|toString(){}[0]
     }
 }
 
@@ -9407,12 +9485,18 @@ final object dev.kord.common/KordConstants { // dev.kord.common/KordConstants|nu
 
 final val dev.kord.common.entity.optional/asNullable // dev.kord.common.entity.optional/asNullable|@dev.kord.common.entity.optional.OptionalBoolean?{}asNullable[0]
     final fun (dev.kord.common.entity.optional/OptionalBoolean?).<get-asNullable>(): kotlin/Boolean? // dev.kord.common.entity.optional/asNullable.<get-asNullable>|<get-asNullable>@dev.kord.common.entity.optional.OptionalBoolean?(){}[0]
+final val dev.kord.common.entity.optional/asNullable // dev.kord.common.entity.optional/asNullable|@dev.kord.common.entity.optional.OptionalDouble?{}asNullable[0]
+    final fun (dev.kord.common.entity.optional/OptionalDouble?).<get-asNullable>(): kotlin/Double? // dev.kord.common.entity.optional/asNullable.<get-asNullable>|<get-asNullable>@dev.kord.common.entity.optional.OptionalDouble?(){}[0]
 final val dev.kord.common.entity.optional/asNullable // dev.kord.common.entity.optional/asNullable|@dev.kord.common.entity.optional.OptionalInt?{}asNullable[0]
     final fun (dev.kord.common.entity.optional/OptionalInt?).<get-asNullable>(): kotlin/Int? // dev.kord.common.entity.optional/asNullable.<get-asNullable>|<get-asNullable>@dev.kord.common.entity.optional.OptionalInt?(){}[0]
 final val dev.kord.common.entity.optional/asNullable // dev.kord.common.entity.optional/asNullable|@dev.kord.common.entity.optional.OptionalLong?{}asNullable[0]
     final fun (dev.kord.common.entity.optional/OptionalLong?).<get-asNullable>(): kotlin/Long? // dev.kord.common.entity.optional/asNullable.<get-asNullable>|<get-asNullable>@dev.kord.common.entity.optional.OptionalLong?(){}[0]
+final val dev.kord.common.entity.optional/missingIfNull // dev.kord.common.entity.optional/missingIfNull|@dev.kord.common.entity.Snowflake?{}missingIfNull[0]
+    final fun (dev.kord.common.entity/Snowflake?).<get-missingIfNull>(): dev.kord.common.entity.optional/OptionalSnowflake // dev.kord.common.entity.optional/missingIfNull.<get-missingIfNull>|<get-missingIfNull>@dev.kord.common.entity.Snowflake?(){}[0]
 final val dev.kord.common.entity.optional/value // dev.kord.common.entity.optional/value|@dev.kord.common.entity.optional.OptionalBoolean?{}value[0]
     final fun (dev.kord.common.entity.optional/OptionalBoolean?).<get-value>(): kotlin/Boolean? // dev.kord.common.entity.optional/value.<get-value>|<get-value>@dev.kord.common.entity.optional.OptionalBoolean?(){}[0]
+final val dev.kord.common.entity.optional/value // dev.kord.common.entity.optional/value|@dev.kord.common.entity.optional.OptionalDouble?{}value[0]
+    final fun (dev.kord.common.entity.optional/OptionalDouble?).<get-value>(): kotlin/Double? // dev.kord.common.entity.optional/value.<get-value>|<get-value>@dev.kord.common.entity.optional.OptionalDouble?(){}[0]
 final val dev.kord.common.entity.optional/value // dev.kord.common.entity.optional/value|@dev.kord.common.entity.optional.OptionalInt?{}value[0]
     final fun (dev.kord.common.entity.optional/OptionalInt?).<get-value>(): kotlin/Int? // dev.kord.common.entity.optional/value.<get-value>|<get-value>@dev.kord.common.entity.optional.OptionalInt?(){}[0]
 final val dev.kord.common.entity.optional/value // dev.kord.common.entity.optional/value|@dev.kord.common.entity.optional.OptionalLong?{}value[0]
@@ -9426,12 +9510,16 @@ final val dev.kord.common.entity/ALL // dev.kord.common.entity/ALL|@dev.kord.com
 
 final fun (dev.kord.common.entity.optional/Optional<kotlin/Boolean>).dev.kord.common.entity.optional/toPrimitive(): dev.kord.common.entity.optional/OptionalBoolean // dev.kord.common.entity.optional/toPrimitive|toPrimitive@dev.kord.common.entity.optional.Optional<kotlin.Boolean>(){}[0]
 final fun (dev.kord.common.entity.optional/OptionalBoolean?).dev.kord.common.entity.optional/orElse(kotlin/Boolean): kotlin/Boolean // dev.kord.common.entity.optional/orElse|orElse@dev.kord.common.entity.optional.OptionalBoolean?(kotlin.Boolean){}[0]
+final fun (dev.kord.common.entity.optional/OptionalDouble?).dev.kord.common.entity.optional/getOrThrow(): kotlin/Double // dev.kord.common.entity.optional/getOrThrow|getOrThrow@dev.kord.common.entity.optional.OptionalDouble?(){}[0]
+final fun (dev.kord.common.entity.optional/OptionalDouble?).dev.kord.common.entity.optional/orElse(kotlin/Int): kotlin/Int // dev.kord.common.entity.optional/orElse|orElse@dev.kord.common.entity.optional.OptionalDouble?(kotlin.Int){}[0]
 final fun (dev.kord.common.entity.optional/OptionalInt?).dev.kord.common.entity.optional/getOrThrow(): kotlin/Int // dev.kord.common.entity.optional/getOrThrow|getOrThrow@dev.kord.common.entity.optional.OptionalInt?(){}[0]
 final fun (dev.kord.common.entity.optional/OptionalInt?).dev.kord.common.entity.optional/orElse(kotlin/Int): kotlin/Int // dev.kord.common.entity.optional/orElse|orElse@dev.kord.common.entity.optional.OptionalInt?(kotlin.Int){}[0]
 final fun (dev.kord.common.entity.optional/OptionalLong?).dev.kord.common.entity.optional/orElse(kotlin/Long): kotlin/Long // dev.kord.common.entity.optional/orElse|orElse@dev.kord.common.entity.optional.OptionalLong?(kotlin.Long){}[0]
 final fun (dev.kord.common.entity/Snowflake).dev.kord.common.entity.optional/optionalSnowflake(): dev.kord.common.entity.optional/OptionalSnowflake.Value // dev.kord.common.entity.optional/optionalSnowflake|optionalSnowflake@dev.kord.common.entity.Snowflake(){}[0]
 final fun (dev.kord.common.entity/Snowflake?).dev.kord.common.entity.optional/optionalSnowflake(): dev.kord.common.entity.optional/OptionalSnowflake.Value? // dev.kord.common.entity.optional/optionalSnowflake|optionalSnowflake@dev.kord.common.entity.Snowflake?(){}[0]
 final fun (kotlin.reflect/KMutableProperty0<dev.kord.common.entity.optional/OptionalBoolean>).dev.kord.common.entity.optional.delegate/delegate(): kotlin.properties/ReadWriteProperty<kotlin/Any?, kotlin/Boolean?> // dev.kord.common.entity.optional.delegate/delegate|delegate@kotlin.reflect.KMutableProperty0<dev.kord.common.entity.optional.OptionalBoolean>(){}[0]
+final fun (kotlin.reflect/KMutableProperty0<dev.kord.common.entity.optional/OptionalDouble>).dev.kord.common.entity.optional.delegate/delegate(): kotlin.properties/ReadWriteProperty<kotlin/Any?, kotlin/Double?> // dev.kord.common.entity.optional.delegate/delegate|delegate@kotlin.reflect.KMutableProperty0<dev.kord.common.entity.optional.OptionalDouble>(){}[0]
+final fun (kotlin.reflect/KMutableProperty0<dev.kord.common.entity.optional/OptionalDouble?>).dev.kord.common.entity.optional.delegate/delegate(): kotlin.properties/ReadWriteProperty<kotlin/Any?, kotlin/Double?> // dev.kord.common.entity.optional.delegate/delegate|delegate@kotlin.reflect.KMutableProperty0<dev.kord.common.entity.optional.OptionalDouble?>(){}[0]
 final fun (kotlin.reflect/KMutableProperty0<dev.kord.common.entity.optional/OptionalInt>).dev.kord.common.entity.optional.delegate/delegate(): kotlin.properties/ReadWriteProperty<kotlin/Any?, kotlin/Int?> // dev.kord.common.entity.optional.delegate/delegate|delegate@kotlin.reflect.KMutableProperty0<dev.kord.common.entity.optional.OptionalInt>(){}[0]
 final fun (kotlin.reflect/KMutableProperty0<dev.kord.common.entity.optional/OptionalInt?>).dev.kord.common.entity.optional.delegate/delegate(): kotlin.properties/ReadWriteProperty<kotlin/Any?, kotlin/Int?> // dev.kord.common.entity.optional.delegate/delegate|delegate@kotlin.reflect.KMutableProperty0<dev.kord.common.entity.optional.OptionalInt?>(){}[0]
 final fun (kotlin.reflect/KMutableProperty0<dev.kord.common.entity.optional/OptionalLong>).dev.kord.common.entity.optional.delegate/delegate(): kotlin.properties/ReadWriteProperty<kotlin/Any?, kotlin/Long?> // dev.kord.common.entity.optional.delegate/delegate|delegate@kotlin.reflect.KMutableProperty0<dev.kord.common.entity.optional.OptionalLong>(){}[0]
@@ -9440,6 +9528,7 @@ final fun (kotlin.reflect/KMutableProperty0<dev.kord.common.entity.optional/Opti
 final fun (kotlin.reflect/KMutableProperty0<dev.kord.common.entity.optional/OptionalSnowflake?>).dev.kord.common.entity.optional.delegate/delegate(): kotlin.properties/ReadWriteProperty<kotlin/Any?, dev.kord.common.entity/Snowflake?> // dev.kord.common.entity.optional.delegate/delegate|delegate@kotlin.reflect.KMutableProperty0<dev.kord.common.entity.optional.OptionalSnowflake?>(){}[0]
 final fun (kotlin.time/Instant).dev.kord.common/toMessageFormat(dev.kord.common/DiscordTimestampStyle? = ...): kotlin/String // dev.kord.common/toMessageFormat|toMessageFormat@kotlin.time.Instant(dev.kord.common.DiscordTimestampStyle?){}[0]
 final fun (kotlin/Boolean).dev.kord.common.entity.optional/optional(): dev.kord.common.entity.optional/OptionalBoolean.Value // dev.kord.common.entity.optional/optional|optional@kotlin.Boolean(){}[0]
+final fun (kotlin/Double).dev.kord.common.entity.optional/optionalDouble(): dev.kord.common.entity.optional/OptionalDouble.Value // dev.kord.common.entity.optional/optionalDouble|optionalDouble@kotlin.Double(){}[0]
 final fun (kotlin/Int).dev.kord.common.entity.optional/optionalInt(): dev.kord.common.entity.optional/OptionalInt.Value // dev.kord.common.entity.optional/optionalInt|optionalInt@kotlin.Int(){}[0]
 final fun (kotlin/Long?).dev.kord.common.entity.optional/optional(): dev.kord.common.entity.optional/OptionalLong // dev.kord.common.entity.optional/optional|optional@kotlin.Long?(){}[0]
 final fun <#A: kotlin/Any> (#A).dev.kord.common.entity.optional/optional(): dev.kord.common.entity.optional/Optional.Value<#A> // dev.kord.common.entity.optional/optional|optional@0:0(){0§<kotlin.Any>}[0]
@@ -9505,6 +9594,7 @@ final fun dev.kord.common.ratelimit/IntervalRateLimiter(kotlin/Int, kotlin.time/
 final fun dev.kord.common/DiscordBitSet(kotlin/LongArray...): dev.kord.common/DiscordBitSet // dev.kord.common/DiscordBitSet|DiscordBitSet(kotlin.LongArray...){}[0]
 final fun dev.kord.common/DiscordBitSet(kotlin/String): dev.kord.common/DiscordBitSet // dev.kord.common/DiscordBitSet|DiscordBitSet(kotlin.String){}[0]
 final fun dev.kord.common/EmptyBitSet(): dev.kord.common/DiscordBitSet // dev.kord.common/EmptyBitSet|EmptyBitSet(){}[0]
+final inline fun (dev.kord.common.entity.optional/OptionalDouble).dev.kord.common.entity.optional/map(kotlin/Function1<kotlin/Double, kotlin/Double>): dev.kord.common.entity.optional/OptionalDouble // dev.kord.common.entity.optional/map|map@dev.kord.common.entity.optional.OptionalDouble(kotlin.Function1<kotlin.Double,kotlin.Double>){}[0]
 final inline fun (dev.kord.common.entity.optional/OptionalInt).dev.kord.common.entity.optional/map(kotlin/Function1<kotlin/Int, kotlin/Int>): dev.kord.common.entity.optional/OptionalInt // dev.kord.common.entity.optional/map|map@dev.kord.common.entity.optional.OptionalInt(kotlin.Function1<kotlin.Int,kotlin.Int>){}[0]
 final inline fun <#A: kotlin/Any, #B: kotlin/Any> (dev.kord.common.entity.optional/Optional<#A>).dev.kord.common.entity.optional/flatMap(kotlin/Function1<#A, dev.kord.common.entity.optional/Optional<#B>>): dev.kord.common.entity.optional/Optional<#B> // dev.kord.common.entity.optional/flatMap|flatMap@dev.kord.common.entity.optional.Optional<0:0>(kotlin.Function1<0:0,dev.kord.common.entity.optional.Optional<0:1>>){0§<kotlin.Any>;1§<kotlin.Any>}[0]
 final inline fun <#A: kotlin/Any, #B: kotlin/Any> (dev.kord.common.entity.optional/Optional<#A>).dev.kord.common.entity.optional/map(kotlin/Function1<#A, #B>): dev.kord.common.entity.optional/Optional<#B> // dev.kord.common.entity.optional/map|map@dev.kord.common.entity.optional.Optional<0:0>(kotlin.Function1<0:0,0:1>){0§<kotlin.Any>;1§<kotlin.Any>}[0]

@@ -2,6 +2,7 @@ package dev.kord.rest.service
 
 import dev.kord.common.annotation.KordExperimental
 import dev.kord.common.entity.*
+import dev.kord.rest.Sound
 import dev.kord.rest.builder.ban.BanCreateBuilder
 import dev.kord.rest.builder.channel.*
 import dev.kord.rest.builder.guild.*
@@ -543,6 +544,68 @@ public class GuildService(requestHandler: RequestHandler) : RestService(requestH
         withMember,
         limit,
     )
+
+    /**
+     * Returns the [sounds][GuildSoundboardSoundsResponse] of [guild][guildId].
+     */
+    public suspend fun listGuildSoundboardSounds(guildId: Snowflake): GuildSoundboardSoundsResponse =
+        call(Route.GetGuildSoundboardSounds) {
+            keys[Route.GuildId] = guildId
+        }
+
+    /**
+     * Returns the [sound][soundId] on [guild][guildId].
+     *
+     * @see DiscordSoundboardSound
+     */
+    public suspend fun getGuildSoundboardSound(guildId: Snowflake, soundId: Snowflake): DiscordSoundboardSound =
+        call(Route.GetGuildsSoundboardSound) {
+            keys[Route.GuildId] = guildId
+            keys[Route.SoundId] = soundId
+        }
+
+    /**
+     * Creates a new [sound][request] on [guild][guildId].
+     *
+     * @param reason the audit log reason for this change
+     */
+    public suspend fun createGuildSoundboardSound(guildId: Snowflake, request: CreateSoundboardSoundRequest, reason: String? = null): DiscordSoundboardSound =
+        call(Route.GetGuildsSoundboardSound) {
+            keys[Route.GuildId] = guildId
+            auditLogReason(reason)
+            body(CreateSoundboardSoundRequest.serializer(), request)
+        }
+
+    /**
+     * Modifies [sound][soundId] on [guild][guildId].
+     *
+     * @param request the data to change
+     * @param reason the audit log reason for this change
+     */
+    public suspend fun modifyGuildSoundboardSound(guildId: Snowflake, soundId: Snowflake, request: UpdateSoundboardSoundRequest, reason: String? = null): DiscordSoundboardSound =
+        call(Route.GetGuildsSoundboardSound) {
+            keys[Route.GuildId] = guildId
+            keys[Route.SoundId] = soundId
+            auditLogReason(reason)
+
+            body(UpdateSoundboardSoundRequest.serializer(), request)
+        }
+
+    /**
+     * Deletes [sound][soundId] on [guild][guildId].
+     *
+     * @param reason the audit log reason for this change
+     */
+    public suspend fun deleteGuildSoundboardSound(
+        guildId: Snowflake,
+        soundId: Snowflake,
+        reason: String? = null
+    ): Unit =
+        call(Route.DeleteGuildsSoundboardSound) {
+            keys[Route.GuildId] = guildId
+            keys[Route.SoundId] = soundId
+            auditLogReason(reason)
+        }
 }
 
 public suspend inline fun GuildService.modifyGuildWelcomeScreen(
@@ -678,4 +741,45 @@ public suspend inline fun GuildService.modifyScheduledEvent(
     val appliedBuilder = ScheduledEventModifyBuilder().apply(builder)
 
     return modifyScheduledEvent(guildId, eventId, appliedBuilder.toRequest(), appliedBuilder.reason)
+}
+
+/**
+ * Creates a new sound on [guild][guildId].
+ *
+ * @param name the name of the sound
+ * @param sound the [audio data][Sound] of the sound
+ * @param builder additional data for the sound
+ */
+public suspend inline fun GuildService.createGuildSoundboardSound(
+    guildId: Snowflake,
+    name: String,
+    sound: Sound,
+    builder: SoundboardSoundCreateBuilder.() -> Unit = {}
+): DiscordSoundboardSound {
+    contract {
+        callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+    }
+
+    val appliedBuilder = SoundboardSoundCreateBuilder(name, sound).apply(builder)
+
+    return createGuildSoundboardSound(guildId, appliedBuilder.toRequest(), appliedBuilder.reason)
+}
+
+/**
+ * Updates [sound][soundId] on [guild][guildId].
+ *
+ * @param builder the data to update
+ */
+public suspend inline fun GuildService.modifyGuildSoundboardSound(
+    guildId: Snowflake,
+    soundId: Snowflake,
+    builder: SoundboardSoundModifyBuilder.() -> Unit = {}
+): DiscordSoundboardSound {
+    contract {
+        callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+    }
+
+    val appliedBuilder = SoundboardSoundModifyBuilder().apply(builder)
+
+    return modifyGuildSoundboardSound(guildId, soundId, appliedBuilder.toRequest(), appliedBuilder.reason)
 }

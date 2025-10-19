@@ -107,6 +107,16 @@ public sealed class Intent(
     /**
      * Enables the following events:
      * - [GuildEmojisUpdate]
+     * - [GuildSoundboardSoundCreate]
+     * - [GuildSoundboardSoundUpdate]
+     * - [GuildSoundboardSoundsUpdate]
+     * - [GuildSoundboardSoundDelete]
+     */
+    public object GuildExpressions : Intent(3)
+
+    /**
+     * Enables the following events:
+     * - [GuildEmojisUpdate]
      */
     public object GuildEmojis : Intent(3)
 
@@ -241,7 +251,7 @@ public sealed class Intent(
                 Guilds,
                 GuildMembers,
                 GuildModeration,
-                GuildEmojis,
+                GuildExpressions,
                 GuildIntegrations,
                 GuildWebhooks,
                 GuildInvites,
@@ -270,7 +280,7 @@ public sealed class Intent(
             0 -> Guilds
             1 -> GuildMembers
             2 -> GuildModeration
-            3 -> GuildEmojis
+            3 -> GuildExpressions
             4 -> GuildIntegrations
             5 -> GuildWebhooks
             6 -> GuildInvites
