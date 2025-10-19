@@ -1135,7 +1135,7 @@ public sealed class Route<T>(
             ListSerializer(DiscordSoundboardSound.serializer())
         )
 
-    public object GetGuildsSoundboardSounds :
+    public object GetGuildSoundboardSounds :
         Route<GuildSoundboardSoundsResponse>(
             HttpMethod.Get,
             "/guilds/$GuildId/soundboard-sounds",
@@ -1144,8 +1144,8 @@ public sealed class Route<T>(
 
     public object GetGuildsSoundboardSound :
         Route<DiscordSoundboardSound>(
-            HttpMethod.Post,
-            "/guilds/$GuildId/soundboard-sounds/$GuildId",
+            HttpMethod.Get,
+            "/guilds/$GuildId/soundboard-sounds/$SoundId",
             DiscordSoundboardSound.serializer()
         )
 
@@ -1159,14 +1159,14 @@ public sealed class Route<T>(
     public object PatchGuildsSoundboardSound :
         Route<DiscordSoundboardSound>(
             HttpMethod.Patch,
-            "/guilds/$GuildId/soundboard-sounds/$GuildId",
+            "/guilds/$GuildId/soundboard-sounds/$SoundId",
             DiscordSoundboardSound.serializer()
         )
 
     public object DeleteGuildsSoundboardSound :
         Route<Unit>(
             HttpMethod.Delete,
-            "/guilds/$GuildId/soundboard-sounds/$GuildId",
+            "/guilds/$GuildId/soundboard-sounds/$SoundId",
             NoStrategy
         )
 

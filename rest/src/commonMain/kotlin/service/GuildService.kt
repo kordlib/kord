@@ -549,7 +549,7 @@ public class GuildService(requestHandler: RequestHandler) : RestService(requestH
      * Returns the [sounds][GuildSoundboardSoundsResponse] of [guild][guildId].
      */
     public suspend fun listGuildSoundboardSounds(guildId: Snowflake): GuildSoundboardSoundsResponse =
-        call(Route.GetGuildsSoundboardSounds) {
+        call(Route.GetGuildSoundboardSounds) {
             keys[Route.GuildId] = guildId
         }
 
