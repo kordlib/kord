@@ -1,6 +1,8 @@
 import org.gradle.api.NamedDomainObjectSet
 import org.gradle.kotlin.dsl.assign
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_1_8
 import org.jetbrains.kotlin.gradle.dsl.KotlinCommonCompilerOptions
+import org.jetbrains.kotlin.gradle.dsl.KotlinJvmCompilerOptions
 import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet
 
 val kordOptIns = listOf(
@@ -10,16 +12,21 @@ val kordOptIns = listOf(
     "dev.kord.common.annotation.KordPreview",
     "dev.kord.common.annotation.KordExperimental",
     "dev.kord.common.annotation.KordVoice",
+    "kotlin.time.ExperimentalTime"
 )
 
-object Jvm {
-    const val target = 8
-}
-
-fun KotlinCommonCompilerOptions.applyKordCompilerOptions() {
+internal fun KotlinCommonCompilerOptions.applyKordCommonCompilerOptions() {
     allWarningsAsErrors = true
     progressiveMode = true
     freeCompilerArgs.add("-Xexpect-actual-classes")
+}
+
+internal const val KORD_JVM_TARGET = 8
+
+internal fun KotlinJvmCompilerOptions.applyKordJvmCompilerOptions() {
+    applyKordCommonCompilerOptions()
+    jvmTarget = JVM_1_8
+    freeCompilerArgs.add("-Xjdk-release=1.8")
 }
 
 internal fun NamedDomainObjectSet<KotlinSourceSet>.applyKordTestOptIns() {

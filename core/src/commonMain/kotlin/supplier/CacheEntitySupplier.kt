@@ -22,10 +22,16 @@ import dev.kord.core.entity.channel.TopGuildChannel
 import dev.kord.core.entity.channel.thread.ThreadChannel
 import dev.kord.core.entity.channel.thread.ThreadMember
 import dev.kord.core.entity.interaction.followup.FollowupMessage
+import dev.kord.core.entity.monetization.Entitlement
+import dev.kord.core.entity.monetization.Subscription
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.gateway.Gateway
+import dev.kord.rest.json.request.EntitlementsListRequest
+import dev.kord.rest.json.request.SkuSubscriptionsListRequest
+import dev.kord.rest.route.Position
 import kotlinx.coroutines.flow.*
-import kotlinx.datetime.Instant
+import kotlin.time.Clock
+import kotlin.time.Instant
 
 /**
  * [EntitySupplier] that uses a [DataCache] to resolve entities.
@@ -598,6 +604,73 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
             }
             .singleOrNull()
             ?.let { AutoModerationRule(it, kord) }
+
+    /**
+     * Requests to get all [Entitlement]s for the [Application] with the given [applicationId].
+     *
+     * The returned flow is lazily executed, any [RequestException] will be thrown on
+     * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
+     *
+     * Queries that use [EntitlementsListRequest.excludeEnded] may be susceptible to Clock drift as the
+     * [System Clock][Clock.System] is required.
+     */
+    override fun getEntitlements(applicationId: Snowflake, request: EntitlementsListRequest): Flow<Entitlement> {
+        checkLimit(request.limit)
+        return cache
+            .query {
+                idEq(EntitlementData::applicationId, applicationId)
+
+                request.userId?.let { idEq(EntitlementData::userId, it) }
+
+                if (request.skuIds.isNotEmpty()) {
+                    EntitlementData::skuId `in` request.skuIds
+                }
+
+                when (val pos = request.position) {
+                    null -> {}
+                    is Position.Before -> idLt(EntitlementData::id, pos.value)
+                    is Position.After -> idGt(EntitlementData::id, pos.value)
+                }
+
+                request.guildId?.let { idEq(EntitlementData::guildId, it) }
+
+                if (request.excludeEnded == true) {
+                    val now = Clock.System.now()
+                    EntitlementData::endsAt predicate { endsAt -> endsAt.value?.let { it < now } ?: true }
+                }
+            }
+            .asFlow()
+            .map { Entitlement(it, kord) }
+            .limit(request.limit)
+    }
+
+    override fun getSubscriptions(skuId: Snowflake, request: SkuSubscriptionsListRequest): Flow<Subscription> {
+        checkLimit(request.limit)
+        return cache
+            .query {
+                SubscriptionData::skuIds predicate { skuIds -> skuId in skuIds }
+
+                when (val pos = request.position) {
+                    null -> {}
+                    is Position.Before -> idLt(SubscriptionData::id, pos.value)
+                    is Position.After -> idGt(SubscriptionData::id, pos.value)
+                }
+
+                request.userId?.let { idEq(SubscriptionData::userId, it) }
+            }
+            .asFlow()
+            .map { Subscription(it, kord) }
+            .limit(request.limit)
+    }
+
+    override suspend fun getSubscriptionOrNull(skuId: Snowflake, subscriptionId: Snowflake): Subscription? =
+        cache
+            .query {
+                idEq(SubscriptionData::id, subscriptionId)
+                SubscriptionData::skuIds predicate { skuIds -> skuId in skuIds }
+            }
+            .singleOrNull()
+            ?.let { Subscription(it, kord) }
 
 
     override fun toString(): String = "CacheEntitySupplier(cache=$cache)"

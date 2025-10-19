@@ -13,7 +13,7 @@ import kotlinx.serialization.encoding.Encoder
  * @property language A language code representing the language.
  * @property country A country code representing the country.
  */
-@Serializable(with = Locale.NewSerializer::class)
+@Serializable(with = Locale.Serializer::class)
 public data class Locale(val language: String, val country: String? = null) {
     public companion object {
 
@@ -236,15 +236,7 @@ public data class Locale(val language: String, val country: String? = null) {
         }
     }
 
-    @Deprecated(
-        "Replaced by 'Locale.serializer()'. This declaration will be removed in 0.16.0.",
-        ReplaceWith("Locale.serializer()", imports = ["dev.kord.common.Locale"]),
-        DeprecationLevel.HIDDEN,
-    )
-    public object Serializer : KSerializer<Locale> by NewSerializer
-
-    // TODO rename to 'Serializer' once deprecated public serializer is removed
-    internal object NewSerializer : KSerializer<Locale> {
+    internal object Serializer : KSerializer<Locale> {
         override val descriptor = PrimitiveSerialDescriptor("dev.kord.common.Locale", PrimitiveKind.STRING)
 
         override fun serialize(encoder: Encoder, value: Locale) =

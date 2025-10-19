@@ -5,7 +5,7 @@ import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.rest.NamedFile
-import kotlinx.datetime.Instant
+import kotlin.time.Instant
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -23,7 +23,9 @@ public data class MessageCreateRequest(
     @SerialName("sticker_ids")
     val stickerIds: Optional<List<Snowflake>> = Optional.Missing(),
     val attachments: Optional<List<AttachmentRequest>> = Optional.Missing(),
-    val flags: Optional<MessageFlags> = Optional.Missing()
+    val flags: Optional<MessageFlags> = Optional.Missing(),
+    @SerialName("enforce_nonce")
+    val enforceNonce: OptionalBoolean = OptionalBoolean.Missing,
 )
 
 public data class MultipartMessageCreateRequest(

@@ -11,7 +11,7 @@ import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.core.supplier.getChannelOfOrNull
-import kotlinx.datetime.Instant
+import kotlin.time.Instant
 
 public class VoiceState(
     public val data: VoiceStateData,
@@ -60,7 +60,8 @@ public class VoiceState(
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
-    public suspend fun getChannelOrNull(): BaseVoiceChannelBehavior? = channelId?.let { supplier.getChannelOfOrNull(it) }
+    public suspend fun getChannelOrNull(): BaseVoiceChannelBehavior? =
+        channelId?.let { supplier.getChannelOrNull(it) as? BaseVoiceChannelBehavior }
 
 
     /**

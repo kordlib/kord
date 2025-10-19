@@ -1,3 +1,5 @@
+@file:Suppress("CONTEXT_RECEIVERS_DEPRECATED")
+
 package dev.kord.ksp.generation.bitflags
 
 import com.squareup.kotlinpoet.CodeBlock
@@ -5,20 +7,20 @@ import com.squareup.kotlinpoet.TypeSpec
 import dev.kord.ksp.generation.GenerationEntity.BitFlags
 import dev.kord.ksp.generation.shared.GenerationContext
 
-context(BitFlags, GenerationContext)
+context(entity: BitFlags, context: GenerationContext)
 internal fun TypeSpec.Builder.addCollectionKDoc() = addKdoc(
-    docStringFormat,
-    entityCN, // %1T: flag ClassName
-    collectionCN, // %2T: collection ClassName
-    entityCN.nestedClass(entriesDistinctByValue[0].name), // %3T: entry 0 ClassName
+    entity.docStringFormat,
+    context.entityCN, // %1T: flag ClassName
+    entity.collectionCN, // %2T: collection ClassName
+    context.entityCN.nestedClass(context.entriesDistinctByValue[0].name), // %3T: entry 0 ClassName
     // %4L: CodeBlock with entry 1 ClassName or `Flag.fromShift(22)`
-    entriesDistinctByValue.getOrNull(1)?.let { CodeBlock.of("%T", entityCN.nestedClass(it.name)) }
-        ?: CodeBlock.of("%T.fromShift(22)", entityCN),
-    entityCN.nestedClass("Unknown"), // %5T: Unknown ClassName
-    builderCN, // %6T: Builder ClassName
+    context.entriesDistinctByValue.getOrNull(1)?.let { CodeBlock.of("%T", context.entityCN.nestedClass(it.name)) }
+        ?: CodeBlock.of("%T.fromShift(22)", context.entityCN),
+    context.entityCN.nestedClass("Unknown"), // %5T: Unknown ClassName
+    entity.builderCN, // %6T: Builder ClassName
 )
 
-context(GenerationContext)
+context(_: GenerationContext)
 private val BitFlags.docStringFormat: String
     get() {
         val collection = collectionCN.simpleName.replaceFirstChar(Char::lowercase)

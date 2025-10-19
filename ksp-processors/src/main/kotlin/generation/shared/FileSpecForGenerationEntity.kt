@@ -1,3 +1,5 @@
+@file:Suppress("CONTEXT_RECEIVERS_DEPRECATED")
+
 package dev.kord.ksp.generation.shared
 
 import com.google.devtools.ksp.symbol.KSFile
@@ -14,6 +16,9 @@ internal class GenerationContext(
     val valueFormat: String,
     val entriesDistinctByValue: List<GenerationEntity.Entry>,
 )
+
+context(context: GenerationContext)
+internal val currentContext: GenerationContext get() = context
 
 internal fun GenerationEntity.fileSpecForGenerationEntity(
     originatingFile: KSFile,

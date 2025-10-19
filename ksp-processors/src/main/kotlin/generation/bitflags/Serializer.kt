@@ -1,3 +1,5 @@
+@file:Suppress("CONTEXT_RECEIVERS_DEPRECATED")
+
 package dev.kord.ksp.generation.bitflags
 
 import com.squareup.kotlinpoet.KModifier.OVERRIDE
@@ -20,25 +22,25 @@ import kotlinx.serialization.encoding.Encoder
 
 private val SERIALIZER_METHOD = MemberName("kotlinx.serialization.builtins", "serializer")
 
-context(BitFlags, GenerationContext)
+context(entity: BitFlags, context: GenerationContext)
 internal fun TypeSpec.Builder.addSerializer() = addObject("Serializer") {
-    addSharedSerializerContent(collectionCN)
-    addProperty("delegate", K_SERIALIZER.parameterizedBy(valueCN), PRIVATE) {
-        when (valueType) {
-            INT -> initializer("%T.%M()", valueCN, SERIALIZER_METHOD)
-            BIT_SET -> initializer("%T.serializer()", valueCN)
+    addSharedSerializerContent(entity.collectionCN)
+    addProperty("delegate", K_SERIALIZER.parameterizedBy(context.valueCN), PRIVATE) {
+        when (entity.valueType) {
+            INT -> initializer("%T.%M()", context.valueCN, SERIALIZER_METHOD)
+            BIT_SET -> initializer("%T.serializer()", context.valueCN)
         }
     }
     addFunction("serialize") {
         addModifiers(OVERRIDE)
         addParameter<Encoder>("encoder")
-        addParameter("value", collectionCN)
-        addStatement("encoder.encodeSerializableValue(delegate, value.$valueName)")
+        addParameter("value", entity.collectionCN)
+        addStatement("encoder.encodeSerializableValue(delegate, value.${entity.valueName})")
     }
     addFunction("deserialize") {
         addModifiers(OVERRIDE)
         addParameter<Decoder>("decoder")
-        returns(collectionCN)
-        addStatement("return %T(decoder.decodeSerializableValue(delegate))", collectionCN)
+        returns(entity.collectionCN)
+        addStatement("return %T(decoder.decodeSerializableValue(delegate))", entity.collectionCN)
     }
 }

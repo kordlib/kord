@@ -6,7 +6,7 @@ import dev.kord.core.supplier.EntitySupplyStrategy.Companion.cache
 /**
  *  A supplier that accepts a [Kord] instance and returns an [EntitySupplier] of type [T].
  */
-public interface EntitySupplyStrategy<T : EntitySupplier> {
+public interface EntitySupplyStrategy<out T : EntitySupplier> {
 
     /**
      * Returns an [EntitySupplier] of type [T] that operates on the [kord] instance.

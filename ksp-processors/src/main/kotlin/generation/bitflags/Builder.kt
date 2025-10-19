@@ -1,3 +1,5 @@
+@file:Suppress("CONTEXT_RECEIVERS_DEPRECATED")
+
 package dev.kord.ksp.generation.bitflags
 
 import com.squareup.kotlinpoet.ClassName
@@ -10,70 +12,70 @@ import dev.kord.ksp.generation.GenerationEntity.BitFlags.ValueType.INT
 import dev.kord.ksp.generation.shared.EMPTY_BIT_SET
 import dev.kord.ksp.generation.shared.GenerationContext
 
-context(BitFlags, GenerationContext)
-internal fun TypeSpec.Builder.addBuilder() = addClass(builderCN) {
+context(flags: BitFlags, context: GenerationContext)
+internal fun TypeSpec.Builder.addBuilder() = addClass(flags.builderCN) {
     primaryConstructor {
-        addParameter(valueName, valueCN) {
-            when (valueType) {
+        addParameter(flags.valueName, context.valueCN) {
+            when (flags.valueType) {
                 INT -> defaultValue("0")
                 BIT_SET -> defaultValue("%M()", EMPTY_BIT_SET)
             }
         }
     }
-    addProperty(valueName, valueCN, PRIVATE) {
+    addProperty(flags.valueName, context.valueCN, PRIVATE) {
         mutable(
-            when (valueType) {
+            when (flags.valueType) {
                 INT -> true
                 BIT_SET -> false
             }
         )
-        initializer(valueName)
+        initializer(flags.valueName)
     }
-    addUnaryPlus(receiver = entityCN)
-    addUnaryPlus(receiver = collectionCN)
-    addUnaryMinus(receiver = entityCN)
-    addUnaryMinus(receiver = collectionCN)
+    addUnaryPlus(receiver = context.entityCN)
+    addUnaryPlus(receiver = flags.collectionCN)
+    addUnaryMinus(receiver = context.entityCN)
+    addUnaryMinus(receiver = flags.collectionCN)
     addFunction("build") {
         addKdoc(
             "Returns an instance of [%T] that has all bits set that are currently set in this [%T].",
-            collectionCN, builderCN,
+            flags.collectionCN, flags.builderCN,
         )
         addModifiers(PUBLIC)
-        returns(collectionCN)
-        val valueCopy = when (valueType) {
+        returns(flags.collectionCN)
+        val valueCopy = when (flags.valueType) {
             INT -> ""
             BIT_SET -> ".copy()"
         }
-        addStatement("return %T($valueName$valueCopy)", collectionCN)
+        addStatement("return %T(${flags.valueName}$valueCopy)", flags.collectionCN)
     }
 }
 
-context(GenerationContext)
+context(_: GenerationContext)
 private val BitFlags.builder
     get() = builderCN.simpleName
 
-context(BitFlags, GenerationContext)
+context(entity: BitFlags, context: GenerationContext)
 private fun TypeSpec.Builder.addUnaryPlus(receiver: ClassName) = addFunction("unaryPlus") {
-    addKdoc("Sets all bits in the [%T] that are set in this [%T].", builderCN, receiver)
+    addKdoc("Sets all bits in the [%T] that are set in this [%T].", entity.builderCN, receiver)
     addModifiers(PUBLIC, OPERATOR)
     receiver(receiver)
     addStatement(
-        when (valueType) {
-            INT -> "this@$builder.$valueName·=·this@$builder.$valueName·or·this.$valueName"
-            BIT_SET -> "this@$builder.$valueName.add(this.$valueName)"
+        when (entity.valueType) {
+            INT -> "this@${entity.builder}.${entity.valueName}·=·this@${entity.builder}.${entity.valueName}·or·this.${entity.valueName}"
+            BIT_SET -> "this@${entity.builder}.${entity.valueName}.add(this.${entity.valueName})"
         }
     )
 }
 
-context(BitFlags, GenerationContext)
+context(entity: BitFlags, context: GenerationContext)
 private fun TypeSpec.Builder.addUnaryMinus(receiver: ClassName) = addFunction("unaryMinus") {
-    addKdoc("Unsets all bits in the [%T] that are set in this [%T].", builderCN, receiver)
+    addKdoc("Unsets all bits in the [%T] that are set in this [%T].", entity.builderCN, receiver)
     addModifiers(PUBLIC, OPERATOR)
     receiver(receiver)
     addStatement(
-        when (valueType) {
-            INT -> "this@$builder.$valueName·=·this@$builder.$valueName·and·this.$valueName.inv()"
-            BIT_SET -> "this@$builder.$valueName.remove(this.$valueName)"
+        when (entity.valueType) {
+            INT -> "this@${entity.builder}.${entity.valueName}·=·this@${entity.builder}.${entity.valueName}·and·this.${entity.valueName}.inv()"
+            BIT_SET -> "this@${entity.builder}.${entity.valueName}.remove(this.${entity.valueName})"
         }
     )
 }

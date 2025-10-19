@@ -51,7 +51,8 @@ public open class Sticker(public val data: StickerData, override val kord: Kord)
      * The type of sticker image.
      */
     public val formatType: MessageStickerType
-        get() = data.formatType
+        // For some reason Discord returns null for the format type sometimes, even though the docs don't specify when
+        get() = data.formatType ?: error("Discord returned null for formatType for sticker with id: $id.")
 
     public val asset: Asset get() = Asset.sticker(id, formatType, kord)
 

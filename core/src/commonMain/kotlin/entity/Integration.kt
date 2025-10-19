@@ -15,7 +15,7 @@ import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.rest.builder.integration.IntegrationModifyBuilder
 import dev.kord.rest.request.RestRequestException
-import kotlinx.datetime.Instant
+import kotlin.time.Instant
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 import kotlin.time.Duration

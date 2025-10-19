@@ -1,6 +1,5 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
-@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
-                "SpellCheckingInspection", "GrazieInspection"))
+@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
@@ -20,8 +19,9 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 /**
- * See [Permission]s in the
- * [Discord Developer Documentation](https://discord.com/developers/docs/topics/permissions).
+ *
+ *
+ * See [Permission]s in the [Discord Developer Documentation](https://discord.com/developers/docs/topics/permissions).
  */
 public sealed class Permission(
     /**
@@ -45,18 +45,15 @@ public sealed class Permission(
     public operator fun plus(flag: Permission): Permissions = Permissions(this.code + flag.code)
 
     /**
-     * Returns an instance of [Permissions] that has all bits set that are set in `this` and
-     * [flags].
+     * Returns an instance of [Permissions] that has all bits set that are set in `this` and [flags].
      */
     public operator fun plus(flags: Permissions): Permissions = Permissions(this.code + flags.code)
 
-    final override fun equals(other: Any?): Boolean = this === other ||
-            (other is Permission && this.shift == other.shift)
+    final override fun equals(other: Any?): Boolean = this === other || (other is Permission && this.shift == other.shift)
 
     final override fun hashCode(): Int = shift.hashCode()
 
-    final override fun toString(): String = if (this is Unknown) "Permission.Unknown(shift=$shift)"
-            else "Permission.${this::class.simpleName}"
+    final override fun toString(): String = if (this is Unknown) "Permission.Unknown(shift=$shift)" else "Permission.${this::class.simpleName}"
 
     /**
      * An unknown [Permission].
@@ -118,14 +115,12 @@ public sealed class Permission(
     public object Stream : Permission(9)
 
     /**
-     * Allows guild members to view a channel, which includes reading messages in text channels and
-     * joining voice channels.
+     * Allows guild members to view a channel, which includes reading messages in text channels and joining voice channels.
      */
     public object ViewChannel : Permission(10)
 
     /**
-     * Allows for sending messages in a channel and creating threads in a forum (does not allow
-     * sending messages in threads).
+     * Allows for sending messages in a channel and creating threads in a forum (does not allow sending messages in threads).
      */
     public object SendMessages : Permission(11)
 
@@ -155,8 +150,7 @@ public sealed class Permission(
     public object ReadMessageHistory : Permission(16)
 
     /**
-     * Allows for using the `@everyone` tag to notify all users in a channel, and the `@here` tag to
-     * notify all online users in a channel.
+     * Allows for using the `@everyone` tag to notify all users in a channel, and the `@here` tag to notify all online users in a channel.
      */
     public object MentionEveryone : Permission(17)
 
@@ -226,8 +220,7 @@ public sealed class Permission(
     public object ManageGuildExpressions : Permission(30)
 
     /**
-     * Allows members to use application commands, including slash commands and context menu
-     * commands.
+     * Allows members to use application commands, including slash commands and context menu commands.
      */
     public object UseApplicationCommands : Permission(31)
 
@@ -269,14 +262,12 @@ public sealed class Permission(
     public object SendMessagesInThreads : Permission(38)
 
     /**
-     * Allows for using Activities (applications with the [Embedded][ApplicationFlag.Embedded] flag)
-     * in a voice channel.
+     * Allows for using Activities (applications with the [Embedded][ApplicationFlag.Embedded] flag) in a voice channel.
      */
     public object UseEmbeddedActivities : Permission(39)
 
     /**
-     * Allows for timing out users to prevent them from sending or reacting to messages in chat and
-     * threads, and from speaking in voice and stage channels.
+     * Allows for timing out users to prevent them from sending or reacting to messages in chat and threads, and from speaking in voice and stage channels.
      */
     public object ModerateMembers : Permission(40)
 
@@ -291,14 +282,12 @@ public sealed class Permission(
     public object UseSoundboard : Permission(42)
 
     /**
-     * Allows for creating emojis, stickers, and soundboard sounds, and editing and deleting those
-     * created by the current user.
+     * Allows for creating emojis, stickers, and soundboard sounds, and editing and deleting those created by the current user.
      */
     public object CreateGuildExpressions : Permission(43)
 
     /**
-     * Allows for creating scheduled events, and editing and deleting those created by the current
-     * user.
+     * Allows for creating scheduled events, and editing and deleting those created by the current user.
      */
     public object CreateEvents : Permission(44)
 
@@ -369,8 +358,7 @@ public sealed class Permission(
         }
 
         /**
-         * Returns an instance of [Permission] with [Permission.shift] equal to the specified
-         * [shift].
+         * Returns an instance of [Permission] with [Permission.shift] equal to the specified [shift].
          *
          * @throws IllegalArgumentException if [shift] is not >= 0.
          */
@@ -469,8 +457,7 @@ public sealed class Permission(
  *
  * ## Checking for [Permission]s
  *
- * You can use the [contains] operator to check whether an instance of [Permissions] contains
- * specific [Permission]s:
+ * You can use the [contains] operator to check whether an instance of [Permissions] contains specific [Permission]s:
  * ```kotlin
  * val hasPermission = Permission.CreateInstantInvite in permissions
  * val hasPermissions = Permissions(Permission.CreateInstantInvite, Permission.KickMembers) in permissions
@@ -478,8 +465,7 @@ public sealed class Permission(
  *
  * ## Unknown [Permission]s
  *
- * Whenever [Permission]s haven't been added to Kord yet, they will be deserialized as instances of
- * [Permission.Unknown].
+ * Whenever [Permission]s haven't been added to Kord yet, they will be deserialized as instances of [Permission.Unknown].
  *
  * You can also use [Permission.fromShift] to check for [unknown][Permission.Unknown] [Permission]s.
  * ```kotlin
@@ -522,20 +508,17 @@ public class Permissions internal constructor(
     public operator fun plus(flag: Permission): Permissions = Permissions(this.code + flag.code)
 
     /**
-     * Returns an instance of [Permissions] that has all bits set that are set in `this` and
-     * [flags].
+     * Returns an instance of [Permissions] that has all bits set that are set in `this` and [flags].
      */
     public operator fun plus(flags: Permissions): Permissions = Permissions(this.code + flags.code)
 
     /**
-     * Returns an instance of [Permissions] that has all bits set that are set in `this` except the
-     * bits that are set in [flag].
+     * Returns an instance of [Permissions] that has all bits set that are set in `this` except the bits that are set in [flag].
      */
     public operator fun minus(flag: Permission): Permissions = Permissions(this.code - flag.code)
 
     /**
-     * Returns an instance of [Permissions] that has all bits set that are set in `this` except the
-     * bits that are set in [flags].
+     * Returns an instance of [Permissions] that has all bits set that are set in `this` except the bits that are set in [flags].
      */
     public operator fun minus(flags: Permissions): Permissions = Permissions(this.code - flags.code)
 
@@ -556,8 +539,7 @@ public class Permissions internal constructor(
         return copy(builder)
     }
 
-    override fun equals(other: Any?): Boolean = this === other ||
-            (other is Permissions && this.code == other.code)
+    override fun equals(other: Any?): Boolean = this === other || (other is Permissions && this.code == other.code)
 
     override fun hashCode(): Int = code.hashCode()
 
@@ -595,16 +577,14 @@ public class Permissions internal constructor(
         }
 
         /**
-         * Returns an instance of [Permissions] that has all bits set that are currently set in this
-         * [Builder].
+         * Returns an instance of [Permissions] that has all bits set that are currently set in this [Builder].
          */
         public fun build(): Permissions = Permissions(code.copy())
     }
 
     internal object Serializer : KSerializer<Permissions> {
         override val descriptor: SerialDescriptor =
-                PrimitiveSerialDescriptor("dev.kord.common.entity.Permissions",
-                PrimitiveKind.STRING)
+                PrimitiveSerialDescriptor("dev.kord.common.entity.Permissions", PrimitiveKind.STRING)
 
         private val `delegate`: KSerializer<DiscordBitSet> = DiscordBitSet.serializer()
 
@@ -612,29 +592,24 @@ public class Permissions internal constructor(
             encoder.encodeSerializableValue(delegate, value.code)
         }
 
-        override fun deserialize(decoder: Decoder): Permissions =
-                Permissions(decoder.decodeSerializableValue(delegate))
+        override fun deserialize(decoder: Decoder): Permissions = Permissions(decoder.decodeSerializableValue(delegate))
     }
 
     public companion object {
         @Suppress(names = arrayOf("DEPRECATION_ERROR"))
         @Deprecated(
-            level = DeprecationLevel.ERROR,
-            message =
-                    "Renamed to 'Companion'. The deprecation level will be raised to HIDDEN in 0.16.0 and this declaration will be removed in 0.17.0.",
-            replaceWith = ReplaceWith(expression = "Permissions.Companion", imports =
-                        arrayOf("dev.kord.common.entity.Permissions")),
+            level = DeprecationLevel.HIDDEN,
+            message = "Renamed to 'Companion'. This declaration will be removed in 0.17.0.",
+            replaceWith = ReplaceWith(expression = "Permissions.Companion", imports = arrayOf("dev.kord.common.entity.Permissions")),
         )
         @JvmField
         public val NewCompanion: NewCompanion = NewCompanion()
     }
 
     @Deprecated(
-        level = DeprecationLevel.ERROR,
-        message =
-                "Renamed to 'Companion'. The deprecation level will be raised to HIDDEN in 0.16.0 and this declaration will be removed in 0.17.0.",
-        replaceWith = ReplaceWith(expression = "Permissions.Companion", imports =
-                    arrayOf("dev.kord.common.entity.Permissions")),
+        level = DeprecationLevel.HIDDEN,
+        message = "Renamed to 'Companion'. This declaration will be removed in 0.17.0.",
+        replaceWith = ReplaceWith(expression = "Permissions.Companion", imports = arrayOf("dev.kord.common.entity.Permissions")),
     )
     public class NewCompanion internal constructor() {
         public fun serializer(): KSerializer<Permissions> = Permissions.serializer()
@@ -660,32 +635,28 @@ public inline fun Permissions0(builder: Permissions.Builder.() -> Unit = {}): Pe
 }
 
 /**
- * Returns an instance of [Permissions] that has all bits set that are set in any element of
- * [flags].
+ * Returns an instance of [Permissions] that has all bits set that are set in any element of [flags].
  */
 public fun Permissions(vararg flags: Permission): Permissions = Permissions {
     flags.forEach { +it }
 }
 
 /**
- * Returns an instance of [Permissions] that has all bits set that are set in any element of
- * [flags].
+ * Returns an instance of [Permissions] that has all bits set that are set in any element of [flags].
  */
 public fun Permissions(vararg flags: Permissions): Permissions = Permissions {
     flags.forEach { +it }
 }
 
 /**
- * Returns an instance of [Permissions] that has all bits set that are set in any element of
- * [flags].
+ * Returns an instance of [Permissions] that has all bits set that are set in any element of [flags].
  */
 public fun Permissions(flags: Iterable<Permission>): Permissions = Permissions {
     flags.forEach { +it }
 }
 
 /**
- * Returns an instance of [Permissions] that has all bits set that are set in any element of
- * [flags].
+ * Returns an instance of [Permissions] that has all bits set that are set in any element of [flags].
  */
 @JvmName("Permissions0")
 public fun Permissions(flags: Iterable<Permissions>): Permissions = Permissions {

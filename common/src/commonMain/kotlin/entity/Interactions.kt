@@ -260,6 +260,8 @@ public data class DiscordInteraction(
     val locale: Optional<Locale> = Optional.Missing(),
     @SerialName("guild_locale")
     val guildLocale: Optional<Locale> = Optional.Missing(),
+    // Don't trust the docs: This can be missing
+    val entitlements: Optional<List<DiscordEntitlement>> = Optional.Missing(),
 ) {
 
     /**

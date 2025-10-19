@@ -1,6 +1,5 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
-@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
-                "SpellCheckingInspection", "GrazieInspection"))
+@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
@@ -14,8 +13,9 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 /**
- * See [MessageType]s in the
- * [Discord Developer Documentation](https://discord.com/developers/docs/resources/channel#message-object-message-types).
+ *
+ *
+ * See [MessageType]s in the [Discord Developer Documentation](https://discord.com/developers/docs/resources/channel#message-object-message-types).
  */
 @Serializable(with = MessageType.Serializer::class)
 public sealed class MessageType(
@@ -24,13 +24,11 @@ public sealed class MessageType(
      */
     public val code: Int,
 ) {
-    final override fun equals(other: Any?): Boolean = this === other ||
-            (other is MessageType && this.code == other.code)
+    final override fun equals(other: Any?): Boolean = this === other || (other is MessageType && this.code == other.code)
 
     final override fun hashCode(): Int = code.hashCode()
 
-    final override fun toString(): String = if (this is Unknown) "MessageType.Unknown(code=$code)"
-            else "MessageType.${this::class.simpleName}"
+    final override fun toString(): String = if (this is Unknown) "MessageType.Unknown(code=$code)" else "MessageType.${this::class.simpleName}"
 
     /**
      * An unknown [MessageType].
@@ -103,6 +101,8 @@ public sealed class MessageType(
 
     public object GuildApplicationPremiumSubscription : MessageType(32)
 
+    public object PurchaseNotification : MessageType(44)
+
     internal object Serializer : KSerializer<MessageType> {
         override val descriptor: SerialDescriptor =
                 PrimitiveSerialDescriptor("dev.kord.common.entity.MessageType", PrimitiveKind.INT)
@@ -151,12 +151,12 @@ public sealed class MessageType(
                 StageSpeaker,
                 StageTopic,
                 GuildApplicationPremiumSubscription,
+                PurchaseNotification,
             )
         }
 
         /**
-         * Returns an instance of [MessageType] with [MessageType.code] equal to the specified
-         * [code].
+         * Returns an instance of [MessageType] with [MessageType.code] equal to the specified [code].
          */
         public fun from(code: Int): MessageType = when (code) {
             0 -> Default
@@ -190,6 +190,7 @@ public sealed class MessageType(
             29 -> StageSpeaker
             31 -> StageTopic
             32 -> GuildApplicationPremiumSubscription
+            44 -> PurchaseNotification
             else -> Unknown(code)
         }
     }

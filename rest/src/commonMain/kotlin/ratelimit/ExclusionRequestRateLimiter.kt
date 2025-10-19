@@ -6,7 +6,7 @@ import dev.kord.rest.request.identifier
 import io.github.oshai.kotlinlogging.KLogger
 import io.github.oshai.kotlinlogging.KotlinLogging
 import kotlinx.coroutines.sync.Mutex
-import kotlinx.datetime.Clock
+import kotlin.time.Clock
 
 private val requestLogger = KotlinLogging.logger {}
 
