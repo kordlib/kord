@@ -91,6 +91,7 @@ public sealed class Route<T>(
     public object StickerId : Key("{sticker.id}")
     public object AutoModerationRuleId : Key("{auto_moderation_rule.id}")
     public object GuildJoinRequestId : Key("{guild_join_request.id}")
+    public object SoundId : Key("{sound.id}")
 
 
     protected constructor(
@@ -1214,6 +1215,54 @@ public sealed class Route<T>(
             HttpMethod.Patch,
             "/guilds/$GuildId/stickers/$StickerId",
             DiscordMessageSticker.serializer()
+        )
+
+    public object SendSoundboardSound : Route<Unit>(
+        HttpMethod.Post,
+        "/channels/$ChannelId/send-soundboard-sound",
+        NoStrategy,
+    )
+
+    public object GetSoundboardDefaultSounds :
+        Route<List<DiscordSoundboardSound>>(
+            HttpMethod.Get,
+            "/soundboard-default-sounds",
+            ListSerializer(DiscordSoundboardSound.serializer())
+        )
+
+    public object GetGuildSoundboardSounds :
+        Route<GuildSoundboardSoundsResponse>(
+            HttpMethod.Get,
+            "/guilds/$GuildId/soundboard-sounds",
+            GuildSoundboardSoundsResponse.serializer()
+        )
+
+    public object GetGuildsSoundboardSound :
+        Route<DiscordSoundboardSound>(
+            HttpMethod.Get,
+            "/guilds/$GuildId/soundboard-sounds/$SoundId",
+            DiscordSoundboardSound.serializer()
+        )
+
+    public object PostGuildsSoundboardSounds :
+        Route<DiscordSoundboardSound>(
+            HttpMethod.Post,
+            "/guilds/$GuildId/soundboard-sounds",
+            DiscordSoundboardSound.serializer()
+        )
+
+    public object PatchGuildsSoundboardSound :
+        Route<DiscordSoundboardSound>(
+            HttpMethod.Patch,
+            "/guilds/$GuildId/soundboard-sounds/$SoundId",
+            DiscordSoundboardSound.serializer()
+        )
+
+    public object DeleteGuildsSoundboardSound :
+        Route<Unit>(
+            HttpMethod.Delete,
+            "/guilds/$GuildId/soundboard-sounds/$SoundId",
+            NoStrategy
         )
 
     public object GetApplicationEmojis : Route<ApplicationEmojisResponse>(

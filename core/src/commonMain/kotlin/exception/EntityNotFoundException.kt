@@ -49,6 +49,9 @@ public class EntityNotFoundException : Exception {
         public inline fun emojiNotFound(guildId: Snowflake, emojiId: Snowflake): Nothing =
             guildEntityNotFound("GuildEmoji", guildId = guildId, id = emojiId)
 
+        public inline fun soundboardSoundNotFound(guildId: Snowflake, soundId: Snowflake): Nothing =
+            guildEntityNotFound("SoundboardSound", guildId = guildId, id = soundId)
+
         public inline fun webhookNotFound(webhookId: Snowflake): Nothing =
             entityNotFound("Webhook", webhookId)
 

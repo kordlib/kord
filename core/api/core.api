@@ -37,6 +37,7 @@ public final class dev/kord/core/Kord : kotlinx/coroutines/CoroutineScope {
 	public final fun getChannel (Ldev/kord/common/entity/Snowflake;Ldev/kord/core/supplier/EntitySupplyStrategy;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static synthetic fun getChannel$default (Ldev/kord/core/Kord;Ldev/kord/common/entity/Snowflake;Ldev/kord/core/supplier/EntitySupplyStrategy;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public fun getCoroutineContext ()Lkotlin/coroutines/CoroutineContext;
+	public final fun getDefaultSoundboardSounds ()Lkotlinx/coroutines/flow/Flow;
 	public final fun getDefaultSupplier ()Ldev/kord/core/supplier/EntitySupplier;
 	public final fun getEmojis ()Lkotlinx/coroutines/flow/Flow;
 	public final fun getEntitlements (Ldev/kord/core/supplier/EntitySupplyStrategy;Lkotlin/jvm/functions/Function1;)Lkotlinx/coroutines/flow/Flow;
@@ -90,6 +91,7 @@ public final class dev/kord/core/Kord : kotlinx/coroutines/CoroutineScope {
 	public final fun login (Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static synthetic fun login$default (Ldev/kord/core/Kord;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public final fun logout (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun requestSoundboardSounds (Ljava/util/List;)Lkotlinx/coroutines/flow/Flow;
 	public final fun shutdown (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun toString ()Ljava/lang/String;
 	public final fun updateApplicationRoleConnectionMetadataRecords (Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -180,6 +182,15 @@ public abstract interface class dev/kord/core/behavior/ChatInputCommandBehavior 
 
 public final class dev/kord/core/behavior/ChatInputCommandBehavior$DefaultImpls {
 	public static fun compareTo (Ldev/kord/core/behavior/ChatInputCommandBehavior;Ldev/kord/core/entity/Entity;)I
+}
+
+public abstract interface class dev/kord/core/behavior/DefaultSoundboardSoundBehavior : dev/kord/core/behavior/SoundboardSoundBehavior {
+	public fun send (Ldev/kord/core/behavior/channel/VoiceChannelBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class dev/kord/core/behavior/DefaultSoundboardSoundBehavior$DefaultImpls {
+	public static fun compareTo (Ldev/kord/core/behavior/DefaultSoundboardSoundBehavior;Ldev/kord/core/entity/Entity;)I
+	public static fun send (Ldev/kord/core/behavior/DefaultSoundboardSoundBehavior;Ldev/kord/core/behavior/channel/VoiceChannelBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public abstract interface class dev/kord/core/behavior/GlobalApplicationCommandBehavior : dev/kord/core/behavior/ApplicationCommandBehavior {
@@ -290,6 +301,9 @@ public abstract interface class dev/kord/core/behavior/GuildBehavior : dev/kord/
 	public fun getRoleOrNull (Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getRoles ()Lkotlinx/coroutines/flow/Flow;
 	public fun getScheduledEvents ()Lkotlinx/coroutines/flow/Flow;
+	public fun getSoundboardSound (Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getSoundboardSoundOrNull (Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getSoundboardSounds ()Lkotlinx/coroutines/flow/Flow;
 	public fun getSticker (Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getStickerOrNull (Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getStickers ()Lkotlinx/coroutines/flow/Flow;
@@ -309,6 +323,7 @@ public abstract interface class dev/kord/core/behavior/GuildBehavior : dev/kord/
 	public fun prune (ILjava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static synthetic fun prune$default (Ldev/kord/core/behavior/GuildBehavior;ILjava/lang/String;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public fun requestMembers (Ldev/kord/gateway/RequestGuildMembers;)Lkotlinx/coroutines/flow/Flow;
+	public fun requestSoundboardSounds ()Lkotlinx/coroutines/flow/Flow;
 	public fun unban (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static synthetic fun unban$default (Ldev/kord/core/behavior/GuildBehavior;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/GuildBehavior;
@@ -370,6 +385,9 @@ public final class dev/kord/core/behavior/GuildBehavior$DefaultImpls {
 	public static fun getRoleOrNull (Ldev/kord/core/behavior/GuildBehavior;Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun getRoles (Ldev/kord/core/behavior/GuildBehavior;)Lkotlinx/coroutines/flow/Flow;
 	public static fun getScheduledEvents (Ldev/kord/core/behavior/GuildBehavior;)Lkotlinx/coroutines/flow/Flow;
+	public static fun getSoundboardSound (Ldev/kord/core/behavior/GuildBehavior;Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static fun getSoundboardSoundOrNull (Ldev/kord/core/behavior/GuildBehavior;Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static fun getSoundboardSounds (Ldev/kord/core/behavior/GuildBehavior;)Lkotlinx/coroutines/flow/Flow;
 	public static fun getSticker (Ldev/kord/core/behavior/GuildBehavior;Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun getStickerOrNull (Ldev/kord/core/behavior/GuildBehavior;Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun getStickers (Ldev/kord/core/behavior/GuildBehavior;)Lkotlinx/coroutines/flow/Flow;
@@ -389,6 +407,7 @@ public final class dev/kord/core/behavior/GuildBehavior$DefaultImpls {
 	public static fun prune (Ldev/kord/core/behavior/GuildBehavior;ILjava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static synthetic fun prune$default (Ldev/kord/core/behavior/GuildBehavior;ILjava/lang/String;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public static fun requestMembers (Ldev/kord/core/behavior/GuildBehavior;Ldev/kord/gateway/RequestGuildMembers;)Lkotlinx/coroutines/flow/Flow;
+	public static fun requestSoundboardSounds (Ldev/kord/core/behavior/GuildBehavior;)Lkotlinx/coroutines/flow/Flow;
 	public static fun unban (Ldev/kord/core/behavior/GuildBehavior;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static synthetic fun unban$default (Ldev/kord/core/behavior/GuildBehavior;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public static fun withStrategy (Ldev/kord/core/behavior/GuildBehavior;Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/GuildBehavior;
@@ -424,6 +443,8 @@ public final class dev/kord/core/behavior/GuildBehaviorKt {
 	public static final fun createRole (Ldev/kord/core/behavior/GuildBehavior;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static synthetic fun createRole$default (Ldev/kord/core/behavior/GuildBehavior;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public static final fun createScheduledEvent (Ldev/kord/core/behavior/GuildBehavior;Ljava/lang/String;Ldev/kord/common/entity/GuildScheduledEventPrivacyLevel;Lkotlin/time/Instant;Ldev/kord/common/entity/ScheduledEntityType;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static final fun createSoundboardSound (Ldev/kord/core/behavior/GuildBehavior;Ljava/lang/String;Ldev/kord/rest/Sound;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static synthetic fun createSoundboardSound$default (Ldev/kord/core/behavior/GuildBehavior;Ljava/lang/String;Ldev/kord/rest/Sound;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public static final fun createSpamAutoModerationRule (Ldev/kord/core/behavior/GuildBehavior;Ljava/lang/String;Ldev/kord/common/entity/AutoModerationRuleEventType;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static synthetic fun createSpamAutoModerationRule$default (Ldev/kord/core/behavior/GuildBehavior;Ljava/lang/String;Ldev/kord/common/entity/AutoModerationRuleEventType;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public static final fun createStageChannel (Ldev/kord/core/behavior/GuildBehavior;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -526,6 +547,31 @@ public final class dev/kord/core/behavior/GuildScheduledEventBehavior$DefaultImp
 
 public final class dev/kord/core/behavior/GuildScheduledEventBehaviorKt {
 	public static final fun edit (Ldev/kord/core/behavior/GuildScheduledEventBehavior;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public abstract interface class dev/kord/core/behavior/GuildSoundboardSoundBehavior : dev/kord/core/behavior/SoundboardSoundBehavior {
+	public fun asGuildSoundboardSound (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun asGuildSoundboardSoundOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun delete (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static synthetic fun delete$default (Ldev/kord/core/behavior/GuildSoundboardSoundBehavior;Ljava/lang/String;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+	public fun fetchGuildSoundboardSound (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun fetchGuildSoundboardSoundOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getGuild ()Ldev/kord/core/behavior/GuildBehavior;
+	public abstract fun getGuildId ()Ldev/kord/common/entity/Snowflake;
+	public fun send (Ldev/kord/core/behavior/channel/VoiceChannelBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/GuildSoundboardSoundBehavior;
+}
+
+public final class dev/kord/core/behavior/GuildSoundboardSoundBehavior$DefaultImpls {
+	public static fun asGuildSoundboardSound (Ldev/kord/core/behavior/GuildSoundboardSoundBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static fun asGuildSoundboardSoundOrNull (Ldev/kord/core/behavior/GuildSoundboardSoundBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static fun compareTo (Ldev/kord/core/behavior/GuildSoundboardSoundBehavior;Ldev/kord/core/entity/Entity;)I
+	public static fun delete (Ldev/kord/core/behavior/GuildSoundboardSoundBehavior;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static synthetic fun delete$default (Ldev/kord/core/behavior/GuildSoundboardSoundBehavior;Ljava/lang/String;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+	public static fun fetchGuildSoundboardSound (Ldev/kord/core/behavior/GuildSoundboardSoundBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static fun fetchGuildSoundboardSoundOrNull (Ldev/kord/core/behavior/GuildSoundboardSoundBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static fun getGuild (Ldev/kord/core/behavior/GuildSoundboardSoundBehavior;)Ldev/kord/core/behavior/GuildBehavior;
+	public static fun send (Ldev/kord/core/behavior/GuildSoundboardSoundBehavior;Ldev/kord/core/behavior/channel/VoiceChannelBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public abstract interface class dev/kord/core/behavior/GuildUserCommandBehavior : dev/kord/core/behavior/GuildApplicationCommandBehavior, dev/kord/core/behavior/UserCommandBehavior {
@@ -712,6 +758,19 @@ public final class dev/kord/core/behavior/RoleBehaviorKt {
 	public static final fun RoleBehavior (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/core/Kord;Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/RoleBehavior;
 	public static synthetic fun RoleBehavior$default (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/core/Kord;Ldev/kord/core/supplier/EntitySupplyStrategy;ILjava/lang/Object;)Ldev/kord/core/behavior/RoleBehavior;
 	public static final fun edit (Ldev/kord/core/behavior/RoleBehavior;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public abstract interface class dev/kord/core/behavior/SoundboardSoundBehavior : dev/kord/core/entity/KordEntity, dev/kord/core/entity/Strategizable {
+	public abstract fun send (Ldev/kord/core/behavior/channel/VoiceChannelBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/SoundboardSoundBehavior;
+}
+
+public final class dev/kord/core/behavior/SoundboardSoundBehavior$DefaultImpls {
+	public static fun compareTo (Ldev/kord/core/behavior/SoundboardSoundBehavior;Ldev/kord/core/entity/Entity;)I
+}
+
+public final class dev/kord/core/behavior/SoundboardSoundBehaviorKt {
+	public static final fun edit (Ldev/kord/core/behavior/GuildSoundboardSoundBehavior;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public abstract interface class dev/kord/core/behavior/StageInstanceBehavior : dev/kord/core/entity/KordEntity, dev/kord/core/entity/Strategizable {
@@ -1667,6 +1726,7 @@ public abstract interface class dev/kord/core/behavior/channel/VoiceChannelBehav
 	public fun asChannelOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun fetchChannel (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun fetchChannelOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun playSound (Ldev/kord/core/behavior/SoundboardSoundBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/channel/CategorizableChannelBehavior;
 	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/channel/ChannelBehavior;
 	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/channel/GuildChannelBehavior;
@@ -1704,6 +1764,7 @@ public final class dev/kord/core/behavior/channel/VoiceChannelBehavior$DefaultIm
 	public static fun getPosition (Ldev/kord/core/behavior/channel/VoiceChannelBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun getVoiceStates (Ldev/kord/core/behavior/channel/VoiceChannelBehavior;)Lkotlinx/coroutines/flow/Flow;
 	public static fun getWebhooks (Ldev/kord/core/behavior/channel/VoiceChannelBehavior;)Lkotlinx/coroutines/flow/Flow;
+	public static fun playSound (Ldev/kord/core/behavior/channel/VoiceChannelBehavior;Ldev/kord/core/behavior/SoundboardSoundBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun type (Ldev/kord/core/behavior/channel/VoiceChannelBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun typeUntil (Ldev/kord/core/behavior/channel/VoiceChannelBehavior;Lkotlin/time/Instant;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun typeUntil (Ldev/kord/core/behavior/channel/VoiceChannelBehavior;Lkotlin/time/TimeMark;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -2453,6 +2514,7 @@ public final class dev/kord/core/cache/KordCacheBuilder {
 	public final fun presences (Lkotlin/jvm/functions/Function2;)V
 	public final fun roles (Lkotlin/jvm/functions/Function2;)V
 	public final fun setDefaultGenerator (Lkotlin/jvm/functions/Function2;)V
+	public final fun soundboardSounds (Lkotlin/jvm/functions/Function2;)V
 	public final fun stickers (Lkotlin/jvm/functions/Function2;)V
 	public final fun subscriptions (Lkotlin/jvm/functions/Function2;)V
 	public final fun users (Lkotlin/jvm/functions/Function2;)V
@@ -4883,8 +4945,8 @@ public final class dev/kord/core/cache/data/MembersChunkData$Companion {
 
 public final class dev/kord/core/cache/data/MessageData {
 	public static final field Companion Ldev/kord/core/cache/data/MessageData$Companion;
-	public fun <init> (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/core/cache/data/UserData;Ljava/lang/String;Lkotlin/time/Instant;Lkotlin/time/Instant;ZZLjava/util/List;Ljava/util/List;Ldev/kord/common/entity/optional/Optional;Ljava/util/List;Ljava/util/List;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;ZLdev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/MessageType;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalInt;)V
-	public synthetic fun <init> (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/core/cache/data/UserData;Ljava/lang/String;Lkotlin/time/Instant;Lkotlin/time/Instant;ZZLjava/util/List;Ljava/util/List;Ldev/kord/common/entity/optional/Optional;Ljava/util/List;Ljava/util/List;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;ZLdev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/MessageType;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalInt;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/core/cache/data/UserData;Ljava/lang/String;Lkotlin/time/Instant;Lkotlin/time/Instant;ZZLjava/util/List;Ljava/util/List;Ldev/kord/common/entity/optional/Optional;Ljava/util/List;Ljava/util/List;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;ZLdev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/MessageType;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalInt;)V
+	public synthetic fun <init> (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/core/cache/data/UserData;Ljava/lang/String;Lkotlin/time/Instant;Lkotlin/time/Instant;ZZLjava/util/List;Ljava/util/List;Ldev/kord/common/entity/optional/Optional;Ljava/util/List;Ljava/util/List;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;ZLdev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/MessageType;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalInt;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ldev/kord/common/entity/Snowflake;
 	public final fun component10 ()Ljava/util/List;
 	public final fun component11 ()Ljava/util/List;
@@ -4908,15 +4970,16 @@ public final class dev/kord/core/cache/data/MessageData {
 	public final fun component28 ()Ldev/kord/common/entity/optional/Optional;
 	public final fun component29 ()Ldev/kord/common/entity/optional/Optional;
 	public final fun component3 ()Ldev/kord/common/entity/optional/OptionalSnowflake;
-	public final fun component30 ()Ldev/kord/common/entity/optional/OptionalInt;
+	public final fun component30 ()Ldev/kord/common/entity/optional/Optional;
+	public final fun component31 ()Ldev/kord/common/entity/optional/OptionalInt;
 	public final fun component4 ()Ldev/kord/core/cache/data/UserData;
 	public final fun component5 ()Ljava/lang/String;
 	public final fun component6 ()Lkotlin/time/Instant;
 	public final fun component7 ()Lkotlin/time/Instant;
 	public final fun component8 ()Z
 	public final fun component9 ()Z
-	public final fun copy (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/core/cache/data/UserData;Ljava/lang/String;Lkotlin/time/Instant;Lkotlin/time/Instant;ZZLjava/util/List;Ljava/util/List;Ldev/kord/common/entity/optional/Optional;Ljava/util/List;Ljava/util/List;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;ZLdev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/MessageType;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalInt;)Ldev/kord/core/cache/data/MessageData;
-	public static synthetic fun copy$default (Ldev/kord/core/cache/data/MessageData;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/core/cache/data/UserData;Ljava/lang/String;Lkotlin/time/Instant;Lkotlin/time/Instant;ZZLjava/util/List;Ljava/util/List;Ldev/kord/common/entity/optional/Optional;Ljava/util/List;Ljava/util/List;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;ZLdev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/MessageType;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalInt;ILjava/lang/Object;)Ldev/kord/core/cache/data/MessageData;
+	public final fun copy (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/core/cache/data/UserData;Ljava/lang/String;Lkotlin/time/Instant;Lkotlin/time/Instant;ZZLjava/util/List;Ljava/util/List;Ldev/kord/common/entity/optional/Optional;Ljava/util/List;Ljava/util/List;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;ZLdev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/MessageType;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalInt;)Ldev/kord/core/cache/data/MessageData;
+	public static synthetic fun copy$default (Ldev/kord/core/cache/data/MessageData;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/core/cache/data/UserData;Ljava/lang/String;Lkotlin/time/Instant;Lkotlin/time/Instant;ZZLjava/util/List;Ljava/util/List;Ldev/kord/common/entity/optional/Optional;Ljava/util/List;Ljava/util/List;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;ZLdev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/MessageType;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalInt;ILjava/lang/Object;)Ldev/kord/core/cache/data/MessageData;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getActivity ()Ldev/kord/common/entity/optional/Optional;
 	public final fun getApplication ()Ldev/kord/common/entity/optional/Optional;
@@ -4937,6 +5000,7 @@ public final class dev/kord/core/cache/data/MessageData {
 	public final fun getMentionedChannels ()Ldev/kord/common/entity/optional/Optional;
 	public final fun getMentions ()Ljava/util/List;
 	public final fun getMessageReference ()Ldev/kord/common/entity/optional/Optional;
+	public final fun getMessageSnapshots ()Ldev/kord/common/entity/optional/Optional;
 	public final fun getNonce ()Ldev/kord/common/entity/optional/Optional;
 	public final fun getPinned ()Z
 	public final fun getPosition ()Ldev/kord/common/entity/optional/OptionalInt;
@@ -5040,6 +5104,34 @@ public final synthetic class dev/kord/core/cache/data/MessageReferenceData$$seri
 
 public final class dev/kord/core/cache/data/MessageReferenceData$Companion {
 	public final fun from (Ldev/kord/common/entity/DiscordMessageReference;)Ldev/kord/core/cache/data/MessageReferenceData;
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class dev/kord/core/cache/data/MessageSnapshotData {
+	public static final field Companion Ldev/kord/core/cache/data/MessageSnapshotData$Companion;
+	public fun <init> (Ldev/kord/core/cache/data/MessageData;)V
+	public final fun component1 ()Ldev/kord/core/cache/data/MessageData;
+	public final fun copy (Ldev/kord/core/cache/data/MessageData;)Ldev/kord/core/cache/data/MessageSnapshotData;
+	public static synthetic fun copy$default (Ldev/kord/core/cache/data/MessageSnapshotData;Ldev/kord/core/cache/data/MessageData;ILjava/lang/Object;)Ldev/kord/core/cache/data/MessageSnapshotData;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getMessage ()Ldev/kord/core/cache/data/MessageData;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final synthetic class dev/kord/core/cache/data/MessageSnapshotData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Ldev/kord/core/cache/data/MessageSnapshotData$$serializer;
+	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/core/cache/data/MessageSnapshotData;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/core/cache/data/MessageSnapshotData;)V
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class dev/kord/core/cache/data/MessageSnapshotData$Companion {
+	public final fun from (Ldev/kord/common/entity/DiscordMessageSnapshot;)Ldev/kord/core/cache/data/MessageSnapshotData;
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
@@ -5583,6 +5675,37 @@ public final synthetic class dev/kord/core/cache/data/SelectOptionData$$serializ
 
 public final class dev/kord/core/cache/data/SelectOptionData$Companion {
 	public final fun from (Ldev/kord/common/entity/DiscordSelectOption;)Ldev/kord/core/cache/data/SelectOptionData;
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class dev/kord/core/cache/data/SoundboardSoundData {
+	public static final field Companion Ldev/kord/core/cache/data/SoundboardSoundData$Companion;
+	public fun <init> (Ljava/lang/String;Ldev/kord/common/entity/Snowflake;DLdev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/common/entity/optional/OptionalSnowflake;ZLdev/kord/common/entity/optional/Optional;)V
+	public synthetic fun <init> (Ljava/lang/String;Ldev/kord/common/entity/Snowflake;DLdev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/common/entity/optional/OptionalSnowflake;ZLdev/kord/common/entity/optional/Optional;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun getAvailable ()Z
+	public final fun getEmojiId ()Ldev/kord/common/entity/Snowflake;
+	public final fun getEmojiName ()Ljava/lang/String;
+	public final fun getGuildId ()Ldev/kord/common/entity/optional/OptionalSnowflake;
+	public final fun getId ()Ldev/kord/common/entity/Snowflake;
+	public final fun getName ()Ljava/lang/String;
+	public final fun getUser ()Ldev/kord/common/entity/optional/Optional;
+	public final fun getVolume ()D
+}
+
+public final synthetic class dev/kord/core/cache/data/SoundboardSoundData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Ldev/kord/core/cache/data/SoundboardSoundData$$serializer;
+	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/core/cache/data/SoundboardSoundData;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/core/cache/data/SoundboardSoundData;)V
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class dev/kord/core/cache/data/SoundboardSoundData$Companion {
+	public final fun from (Ldev/kord/common/entity/DiscordSoundboardSound;)Ldev/kord/core/cache/data/SoundboardSoundData;
+	public final fun getDescription ()Ldev/kord/cache/api/data/DataDescription;
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
@@ -6620,6 +6743,27 @@ public final class dev/kord/core/entity/CustomEmoji$DefaultImpls {
 	public static fun isManaged (Ldev/kord/core/entity/CustomEmoji;)Z
 }
 
+public final class dev/kord/core/entity/DefaultSoundboardSound : dev/kord/core/behavior/DefaultSoundboardSoundBehavior, dev/kord/core/entity/SoundboardSound {
+	public fun <init> (Ldev/kord/core/cache/data/SoundboardSoundData;Ldev/kord/core/Kord;Ldev/kord/core/supplier/EntitySupplier;)V
+	public synthetic fun <init> (Ldev/kord/core/cache/data/SoundboardSoundData;Ldev/kord/core/Kord;Ldev/kord/core/supplier/EntitySupplier;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun compareTo (Ldev/kord/core/entity/Entity;)I
+	public synthetic fun compareTo (Ljava/lang/Object;)I
+	public fun getAvailable ()Z
+	public fun getData ()Ldev/kord/core/cache/data/SoundboardSoundData;
+	public fun getEmojiName ()Ljava/lang/String;
+	public fun getId ()Ldev/kord/common/entity/Snowflake;
+	public fun getKord ()Ldev/kord/core/Kord;
+	public fun getName ()Ljava/lang/String;
+	public fun getSoundId ()Ldev/kord/common/entity/Snowflake;
+	public fun getSupplier ()Ldev/kord/core/supplier/EntitySupplier;
+	public fun getVolume ()D
+	public fun send (Ldev/kord/core/behavior/channel/VoiceChannelBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/SoundboardSoundBehavior;
+	public fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/DefaultSoundboardSound;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/SoundboardSound;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/Strategizable;
+}
+
 public final class dev/kord/core/entity/Embed : dev/kord/core/KordObject {
 	public fun <init> (Ldev/kord/core/cache/data/EmbedData;Ldev/kord/core/Kord;)V
 	public final fun apply (Ldev/kord/rest/builder/message/EmbedBuilder;)V
@@ -6901,6 +7045,9 @@ public final class dev/kord/core/entity/Guild : dev/kord/core/behavior/GuildBeha
 	public final fun getSafetyAlertsChannel ()Ldev/kord/core/behavior/channel/TextChannelBehavior;
 	public final fun getSafetyAlertsChannelId ()Ldev/kord/common/entity/Snowflake;
 	public fun getScheduledEvents ()Lkotlinx/coroutines/flow/Flow;
+	public fun getSoundboardSound (Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getSoundboardSoundOrNull (Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getSoundboardSounds ()Lkotlinx/coroutines/flow/Flow;
 	public final fun getSplash ()Ldev/kord/core/entity/Asset;
 	public final fun getSplashHash ()Ljava/lang/String;
 	public final fun getStageInstances ()Ljava/util/Set;
@@ -6937,6 +7084,7 @@ public final class dev/kord/core/entity/Guild : dev/kord/core/behavior/GuildBeha
 	public fun leave (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun prune (ILjava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun requestMembers (Ldev/kord/gateway/RequestGuildMembers;)Lkotlinx/coroutines/flow/Flow;
+	public fun requestSoundboardSounds ()Lkotlinx/coroutines/flow/Flow;
 	public fun toString ()Ljava/lang/String;
 	public fun unban (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/GuildBehavior;
@@ -7142,6 +7290,37 @@ public final class dev/kord/core/entity/GuildScheduledEvent : dev/kord/core/beha
 	public fun getUsersAfter (Ldev/kord/common/entity/Snowflake;Ljava/lang/Integer;)Lkotlinx/coroutines/flow/Flow;
 	public fun getUsersBefore (Ldev/kord/common/entity/Snowflake;Ljava/lang/Integer;)Lkotlinx/coroutines/flow/Flow;
 	public fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/Strategizable;
+}
+
+public final class dev/kord/core/entity/GuildSoundboardSound : dev/kord/core/behavior/GuildSoundboardSoundBehavior, dev/kord/core/entity/SoundboardSound {
+	public fun <init> (Ldev/kord/core/cache/data/SoundboardSoundData;Ldev/kord/core/Kord;Ldev/kord/core/supplier/EntitySupplier;)V
+	public synthetic fun <init> (Ldev/kord/core/cache/data/SoundboardSoundData;Ldev/kord/core/Kord;Ldev/kord/core/supplier/EntitySupplier;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun asGuildSoundboardSound (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun asGuildSoundboardSoundOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun compareTo (Ldev/kord/core/entity/Entity;)I
+	public synthetic fun compareTo (Ljava/lang/Object;)I
+	public fun delete (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun fetchGuildSoundboardSound (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun fetchGuildSoundboardSoundOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getAvailable ()Z
+	public fun getData ()Ldev/kord/core/cache/data/SoundboardSoundData;
+	public final fun getEmojiId ()Ldev/kord/common/entity/Snowflake;
+	public fun getEmojiName ()Ljava/lang/String;
+	public fun getGuild ()Ldev/kord/core/behavior/GuildBehavior;
+	public fun getGuildId ()Ldev/kord/common/entity/Snowflake;
+	public fun getId ()Ldev/kord/common/entity/Snowflake;
+	public fun getKord ()Ldev/kord/core/Kord;
+	public fun getName ()Ljava/lang/String;
+	public fun getSoundId ()Ldev/kord/common/entity/Snowflake;
+	public fun getSupplier ()Ldev/kord/core/supplier/EntitySupplier;
+	public final fun getUser ()Ldev/kord/core/entity/User;
+	public fun getVolume ()D
+	public fun send (Ldev/kord/core/behavior/channel/VoiceChannelBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/GuildSoundboardSoundBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/SoundboardSoundBehavior;
+	public fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/GuildSoundboardSound;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/SoundboardSound;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/Strategizable;
 }
 
 public final class dev/kord/core/entity/GuildSticker : dev/kord/core/entity/Sticker, dev/kord/core/behavior/StickerBehavior {
@@ -7461,6 +7640,7 @@ public final class dev/kord/core/entity/Message : dev/kord/core/behavior/Message
 	public final fun getMentionedUsers ()Lkotlinx/coroutines/flow/Flow;
 	public final fun getMentionsEveryone ()Z
 	public final fun getMessageReference ()Ldev/kord/core/entity/MessageReference;
+	public final fun getMessageSnapshots ()Ljava/util/List;
 	public final fun getPosition ()Ljava/lang/Integer;
 	public final fun getReactions ()Ljava/util/Set;
 	public fun getReactors (Ldev/kord/core/entity/ReactionEmoji;)Lkotlinx/coroutines/flow/Flow;
@@ -7508,6 +7688,21 @@ public final class dev/kord/core/entity/MessageReference : dev/kord/core/KordObj
 	public final fun getGuild ()Ldev/kord/core/behavior/GuildBehavior;
 	public fun getKord ()Ldev/kord/core/Kord;
 	public final fun getMessage ()Ldev/kord/core/behavior/MessageBehavior;
+}
+
+public final class dev/kord/core/entity/MessageSnapshot : dev/kord/core/KordObject {
+	public fun <init> (Ldev/kord/core/cache/data/MessageSnapshotData;Ldev/kord/core/Kord;)V
+	public final fun getAttachments ()Ljava/util/List;
+	public final fun getContent ()Ljava/lang/String;
+	public final fun getData ()Ldev/kord/core/cache/data/MessageSnapshotData;
+	public final fun getEditedTimestamp ()Lkotlin/time/Instant;
+	public final fun getEmbeds ()Ljava/util/List;
+	public final fun getFlags ()Ldev/kord/common/entity/MessageFlags;
+	public fun getKord ()Ldev/kord/core/Kord;
+	public final fun getMentionRoles ()Ljava/util/List;
+	public final fun getMentions ()Ljava/util/List;
+	public final fun getTimestamp ()Lkotlin/time/Instant;
+	public final fun getType ()Ldev/kord/common/entity/MessageType;
 }
 
 public final class dev/kord/core/entity/PartialApplication : dev/kord/core/entity/BaseApplication {
@@ -7591,6 +7786,9 @@ public final class dev/kord/core/entity/PartialGuild : dev/kord/core/behavior/Gu
 	public fun getRoleOrNull (Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getRoles ()Lkotlinx/coroutines/flow/Flow;
 	public fun getScheduledEvents ()Lkotlinx/coroutines/flow/Flow;
+	public fun getSoundboardSound (Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getSoundboardSoundOrNull (Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getSoundboardSounds ()Lkotlinx/coroutines/flow/Flow;
 	public final fun getSplash ()Ldev/kord/core/entity/Asset;
 	public final fun getSplashHash ()Ljava/lang/String;
 	public fun getSticker (Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -7616,6 +7814,7 @@ public final class dev/kord/core/entity/PartialGuild : dev/kord/core/behavior/Gu
 	public fun leave (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun prune (ILjava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun requestMembers (Ldev/kord/gateway/RequestGuildMembers;)Lkotlinx/coroutines/flow/Flow;
+	public fun requestSoundboardSounds ()Lkotlinx/coroutines/flow/Flow;
 	public fun toString ()Ljava/lang/String;
 	public fun unban (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/GuildBehavior;
@@ -7814,6 +8013,25 @@ public final class dev/kord/core/entity/RoleTags : dev/kord/core/KordObject, dev
 	public final fun isLinkedRole ()Z
 	public final fun isPremiumRole ()Z
 	public fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/Strategizable;
+}
+
+public abstract interface class dev/kord/core/entity/SoundboardSound : dev/kord/core/behavior/SoundboardSoundBehavior {
+	public fun getAvailable ()Z
+	public abstract fun getData ()Ldev/kord/core/cache/data/SoundboardSoundData;
+	public fun getEmojiName ()Ljava/lang/String;
+	public fun getName ()Ljava/lang/String;
+	public fun getSoundId ()Ldev/kord/common/entity/Snowflake;
+	public fun getVolume ()D
+	public abstract fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/SoundboardSound;
+}
+
+public final class dev/kord/core/entity/SoundboardSound$DefaultImpls {
+	public static fun compareTo (Ldev/kord/core/entity/SoundboardSound;Ldev/kord/core/entity/Entity;)I
+	public static fun getAvailable (Ldev/kord/core/entity/SoundboardSound;)Z
+	public static fun getEmojiName (Ldev/kord/core/entity/SoundboardSound;)Ljava/lang/String;
+	public static fun getName (Ldev/kord/core/entity/SoundboardSound;)Ljava/lang/String;
+	public static fun getSoundId (Ldev/kord/core/entity/SoundboardSound;)Ldev/kord/common/entity/Snowflake;
+	public static fun getVolume (Ldev/kord/core/entity/SoundboardSound;)D
 }
 
 public final class dev/kord/core/entity/StageInstance : dev/kord/core/behavior/StageInstanceBehavior {
@@ -9500,6 +9718,7 @@ public final class dev/kord/core/entity/channel/VoiceChannel : dev/kord/core/beh
 	public fun getVoiceStates ()Lkotlinx/coroutines/flow/Flow;
 	public fun getWebhooks ()Lkotlinx/coroutines/flow/Flow;
 	public fun hashCode ()I
+	public fun playSound (Ldev/kord/core/behavior/SoundboardSoundBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun toString ()Ljava/lang/String;
 	public fun type (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun typeUntil (Lkotlin/time/Instant;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -13037,6 +13256,58 @@ public final class dev/kord/core/event/guild/GuildScheduledEventUserRemoveEvent 
 	public fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/event/guild/GuildScheduledEventUserRemoveEvent;
 }
 
+public final class dev/kord/core/event/guild/GuildSoundboardSoundCreateEvent : dev/kord/core/event/Event {
+	public fun <init> (Ldev/kord/core/entity/GuildSoundboardSound;ILjava/lang/Object;Ldev/kord/core/Kord;)V
+	public fun getCustomContext ()Ljava/lang/Object;
+	public fun getGateway ()Ldev/kord/gateway/Gateway;
+	public fun getKord ()Ldev/kord/core/Kord;
+	public fun getShard ()I
+	public final fun getSound ()Ldev/kord/core/entity/GuildSoundboardSound;
+}
+
+public final class dev/kord/core/event/guild/GuildSoundboardSoundDeletEvent : dev/kord/core/event/Event {
+	public fun <init> (Ldev/kord/core/entity/GuildSoundboardSound;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;ILjava/lang/Object;Ldev/kord/core/Kord;)V
+	public fun getCustomContext ()Ljava/lang/Object;
+	public fun getGateway ()Ldev/kord/gateway/Gateway;
+	public final fun getGuildId ()Ldev/kord/common/entity/Snowflake;
+	public fun getKord ()Ldev/kord/core/Kord;
+	public final fun getOld ()Ldev/kord/core/entity/GuildSoundboardSound;
+	public fun getShard ()I
+	public final fun getSoundId ()Ldev/kord/common/entity/Snowflake;
+}
+
+public final class dev/kord/core/event/guild/GuildSoundboardSoundUpdateEvent : dev/kord/core/event/Event {
+	public fun <init> (Ldev/kord/core/entity/GuildSoundboardSound;Ldev/kord/core/entity/GuildSoundboardSound;ILjava/lang/Object;Ldev/kord/core/Kord;)V
+	public fun getCustomContext ()Ljava/lang/Object;
+	public fun getGateway ()Ldev/kord/gateway/Gateway;
+	public fun getKord ()Ldev/kord/core/Kord;
+	public final fun getOld ()Ldev/kord/core/entity/GuildSoundboardSound;
+	public fun getShard ()I
+	public final fun getSound ()Ldev/kord/core/entity/GuildSoundboardSound;
+}
+
+public final class dev/kord/core/event/guild/GuildSoundboardSoundsUpdateEvent : dev/kord/core/event/Event {
+	public fun <init> (Ljava/util/List;ILjava/lang/Object;Ldev/kord/core/Kord;)V
+	public fun getCustomContext ()Ljava/lang/Object;
+	public fun getGateway ()Ldev/kord/gateway/Gateway;
+	public fun getKord ()Ldev/kord/core/Kord;
+	public fun getShard ()I
+	public final fun getSounds ()Ljava/util/List;
+}
+
+public final class dev/kord/core/event/guild/GuildSoundboardSoundsUpdateEvent$UpdatedGuildSoundboardSound {
+	public fun <init> (Ldev/kord/core/entity/GuildSoundboardSound;Ldev/kord/core/entity/GuildSoundboardSound;)V
+	public final fun component1 ()Ldev/kord/core/entity/GuildSoundboardSound;
+	public final fun component2 ()Ldev/kord/core/entity/GuildSoundboardSound;
+	public final fun copy (Ldev/kord/core/entity/GuildSoundboardSound;Ldev/kord/core/entity/GuildSoundboardSound;)Ldev/kord/core/event/guild/GuildSoundboardSoundsUpdateEvent$UpdatedGuildSoundboardSound;
+	public static synthetic fun copy$default (Ldev/kord/core/event/guild/GuildSoundboardSoundsUpdateEvent$UpdatedGuildSoundboardSound;Ldev/kord/core/entity/GuildSoundboardSound;Ldev/kord/core/entity/GuildSoundboardSound;ILjava/lang/Object;)Ldev/kord/core/event/guild/GuildSoundboardSoundsUpdateEvent$UpdatedGuildSoundboardSound;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getOld ()Ldev/kord/core/entity/GuildSoundboardSound;
+	public final fun getSound ()Ldev/kord/core/entity/GuildSoundboardSound;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
 public final class dev/kord/core/event/guild/GuildUpdateEvent : dev/kord/core/event/Event {
 	public fun <init> (Ldev/kord/core/entity/Guild;Ldev/kord/core/entity/Guild;ILjava/lang/Object;)V
 	public fun getCustomContext ()Ljava/lang/Object;
@@ -13257,6 +13528,29 @@ public final class dev/kord/core/event/guild/MembersChunkEvent : dev/kord/core/e
 	public fun toString ()Ljava/lang/String;
 	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/Strategizable;
 	public fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/event/guild/MembersChunkEvent;
+}
+
+public final class dev/kord/core/event/guild/SoundboardSounds : dev/kord/core/entity/Strategizable, dev/kord/core/event/Event {
+	public fun <init> (Ljava/util/List;Ldev/kord/common/entity/Snowflake;ILjava/lang/Object;Ldev/kord/core/Kord;Ldev/kord/core/supplier/EntitySupplier;)V
+	public synthetic fun <init> (Ljava/util/List;Ldev/kord/common/entity/Snowflake;ILjava/lang/Object;Ldev/kord/core/Kord;Ldev/kord/core/supplier/EntitySupplier;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun getCustomContext ()Ljava/lang/Object;
+	public fun getGateway ()Ldev/kord/gateway/Gateway;
+	public final fun getGuild (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun getGuildId ()Ldev/kord/common/entity/Snowflake;
+	public fun getKord ()Ldev/kord/core/Kord;
+	public fun getShard ()I
+	public final fun getSounds ()Ljava/util/List;
+	public fun getSupplier ()Ldev/kord/core/supplier/EntitySupplier;
+	public fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/Strategizable;
+}
+
+public final class dev/kord/core/event/guild/VoiceChannelEffectSentEvent : dev/kord/core/event/Event {
+	public fun <init> (Ldev/kord/gateway/VoiceChannelEffect;ILjava/lang/Object;Ldev/kord/core/Kord;)V
+	public fun getCustomContext ()Ljava/lang/Object;
+	public final fun getEffect ()Ldev/kord/gateway/VoiceChannelEffect;
+	public fun getGateway ()Ldev/kord/gateway/Gateway;
+	public fun getKord ()Ldev/kord/core/Kord;
+	public fun getShard ()I
 }
 
 public final class dev/kord/core/event/guild/VoiceServerUpdateEvent : dev/kord/core/entity/Strategizable, dev/kord/core/event/Event {
@@ -14158,6 +14452,7 @@ public final class dev/kord/core/exception/EntityNotFoundException$Companion {
 	public final fun onboardingNotFound (Ldev/kord/common/entity/Snowflake;)Ljava/lang/Void;
 	public final fun roleNotFound (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;)Ljava/lang/Void;
 	public final fun selfNotFound ()Ljava/lang/Void;
+	public final fun soundboardSoundNotFound (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;)Ljava/lang/Void;
 	public final fun stageInstanceNotFound (Ldev/kord/common/entity/Snowflake;)Ljava/lang/Void;
 	public final fun stickerNotFound (Ldev/kord/common/entity/Snowflake;)Ljava/lang/Void;
 	public final fun subscriptionNotFound (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;)Ljava/lang/Void;
@@ -14592,6 +14887,9 @@ public final class dev/kord/core/supplier/CacheEntitySupplier : dev/kord/core/su
 	public fun getGuildScheduledEventUsersAfter (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ljava/lang/Integer;)Lkotlinx/coroutines/flow/Flow;
 	public fun getGuildScheduledEventUsersBefore (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ljava/lang/Integer;)Lkotlinx/coroutines/flow/Flow;
 	public fun getGuildScheduledEvents (Ldev/kord/common/entity/Snowflake;)Lkotlinx/coroutines/flow/Flow;
+	public fun getGuildSoundboardSound (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getGuildSoundboardSoundOrNull (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getGuildSoundboardSounds (Ldev/kord/common/entity/Snowflake;)Lkotlinx/coroutines/flow/Flow;
 	public fun getGuildSticker (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getGuildStickerOrNull (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getGuildStickers (Ldev/kord/common/entity/Snowflake;)Lkotlinx/coroutines/flow/Flow;
@@ -14697,6 +14995,9 @@ public abstract interface class dev/kord/core/supplier/EntitySupplier {
 	public abstract fun getGuildScheduledEventUsersBefore (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ljava/lang/Integer;)Lkotlinx/coroutines/flow/Flow;
 	public static synthetic fun getGuildScheduledEventUsersBefore$default (Ldev/kord/core/supplier/EntitySupplier;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ljava/lang/Integer;ILjava/lang/Object;)Lkotlinx/coroutines/flow/Flow;
 	public abstract fun getGuildScheduledEvents (Ldev/kord/common/entity/Snowflake;)Lkotlinx/coroutines/flow/Flow;
+	public fun getGuildSoundboardSound (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun getGuildSoundboardSoundOrNull (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun getGuildSoundboardSounds (Ldev/kord/common/entity/Snowflake;)Lkotlinx/coroutines/flow/Flow;
 	public fun getGuildSticker (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun getGuildStickerOrNull (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun getGuildStickers (Ldev/kord/common/entity/Snowflake;)Lkotlinx/coroutines/flow/Flow;
@@ -14775,6 +15076,7 @@ public final class dev/kord/core/supplier/EntitySupplier$DefaultImpls {
 	public static synthetic fun getGuildScheduledEventUsers$default (Ldev/kord/core/supplier/EntitySupplier;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ljava/lang/Integer;ILjava/lang/Object;)Lkotlinx/coroutines/flow/Flow;
 	public static synthetic fun getGuildScheduledEventUsersAfter$default (Ldev/kord/core/supplier/EntitySupplier;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ljava/lang/Integer;ILjava/lang/Object;)Lkotlinx/coroutines/flow/Flow;
 	public static synthetic fun getGuildScheduledEventUsersBefore$default (Ldev/kord/core/supplier/EntitySupplier;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ljava/lang/Integer;ILjava/lang/Object;)Lkotlinx/coroutines/flow/Flow;
+	public static fun getGuildSoundboardSound (Ldev/kord/core/supplier/EntitySupplier;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun getGuildSticker (Ldev/kord/core/supplier/EntitySupplier;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun getGuildWidget (Ldev/kord/core/supplier/EntitySupplier;Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static synthetic fun getJoinedPrivateArchivedThreads$default (Ldev/kord/core/supplier/EntitySupplier;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ljava/lang/Integer;ILjava/lang/Object;)Lkotlinx/coroutines/flow/Flow;
@@ -14868,6 +15170,9 @@ public final class dev/kord/core/supplier/RestEntitySupplier : dev/kord/core/sup
 	public fun getGuildScheduledEventUsersAfter (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ljava/lang/Integer;)Lkotlinx/coroutines/flow/Flow;
 	public fun getGuildScheduledEventUsersBefore (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ljava/lang/Integer;)Lkotlinx/coroutines/flow/Flow;
 	public fun getGuildScheduledEvents (Ldev/kord/common/entity/Snowflake;)Lkotlinx/coroutines/flow/Flow;
+	public fun getGuildSoundboardSound (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getGuildSoundboardSoundOrNull (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getGuildSoundboardSounds (Ldev/kord/common/entity/Snowflake;)Lkotlinx/coroutines/flow/Flow;
 	public fun getGuildSticker (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getGuildStickerOrNull (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getGuildStickers (Ldev/kord/common/entity/Snowflake;)Lkotlinx/coroutines/flow/Flow;
@@ -14969,6 +15274,9 @@ public final class dev/kord/core/supplier/StoreEntitySupplier : dev/kord/core/su
 	public fun getGuildScheduledEventUsersAfter (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ljava/lang/Integer;)Lkotlinx/coroutines/flow/Flow;
 	public fun getGuildScheduledEventUsersBefore (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ljava/lang/Integer;)Lkotlinx/coroutines/flow/Flow;
 	public fun getGuildScheduledEvents (Ldev/kord/common/entity/Snowflake;)Lkotlinx/coroutines/flow/Flow;
+	public fun getGuildSoundboardSound (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getGuildSoundboardSoundOrNull (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getGuildSoundboardSounds (Ldev/kord/common/entity/Snowflake;)Lkotlinx/coroutines/flow/Flow;
 	public fun getGuildSticker (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getGuildStickerOrNull (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getGuildStickers (Ldev/kord/common/entity/Snowflake;)Lkotlinx/coroutines/flow/Flow;
