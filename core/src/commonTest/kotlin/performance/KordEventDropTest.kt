@@ -73,6 +73,7 @@ class KordEventDropTest {
                 "discord guild",
                 afkTimeout = 0.seconds,
                 defaultMessageNotifications = DefaultMessageNotificationLevel.AllMessages,
+                homeHeader = null,
                 emojis = emptyList(),
                 explicitContentFilter = ExplicitContentFilter.AllMembers,
                 features = emptyList(),

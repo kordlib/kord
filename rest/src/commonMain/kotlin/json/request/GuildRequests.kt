@@ -270,7 +270,9 @@ public data class GuildMemberVerificationModifyRequest(
     val enabled: OptionalBoolean = OptionalBoolean.Missing,
     @SerialName("form_fields")
     val formFields: Optional<List<DiscordMemberVerificationFormField>> = Optional.Missing(),
-    val description: Optional<String?> = Optional.Missing()
+    val description: Optional<String?> = Optional.Missing(),
+    @SerialName("bulk_action")
+    val bulkAction: Optional<String> = Optional.Missing(),
 )
 
 @Serializable

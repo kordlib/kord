@@ -279,7 +279,7 @@ public class Guild(
     /**
      * The hash of the home header, if present.
      */
-    public val homeHeaderHash: String? get() = data.homeHeader.value
+    public val homeHeaderHash: String? get() = data.homeHeader
 
     public val homeHeader: Asset? get() = homeHeaderHash?.let { Asset.guildHomeHeader(id, it, kord) }
 

@@ -15,7 +15,7 @@ import kotlinx.serialization.encoding.Encoder
 /**
  *
  *
- * See [GuildBadgeType]s in the [Discord Developer Documentation]().
+ * See [GuildBadgeType]s in the [Discord Developer Documentation](https://docs.discord.food/resources/discovery#guild-badge-type).
  */
 @Serializable(with = GuildBadgeType.Serializer::class)
 public sealed class GuildBadgeType(
@@ -81,6 +81,26 @@ public sealed class GuildBadgeType(
 
     public object Wind : GuildBadgeType(20)
 
+    public object Bunny : GuildBadgeType(21)
+
+    public object Dog : GuildBadgeType(22)
+
+    public object Frog : GuildBadgeType(23)
+
+    public object Goat : GuildBadgeType(24)
+
+    public object Cat : GuildBadgeType(25)
+
+    public object Diamond : GuildBadgeType(26)
+
+    public object Crown : GuildBadgeType(27)
+
+    public object Trophy : GuildBadgeType(28)
+
+    public object MoneyBag : GuildBadgeType(29)
+
+    public object DollarSign : GuildBadgeType(30)
+
     internal object Serializer : KSerializer<GuildBadgeType> {
         override val descriptor: SerialDescriptor =
                 PrimitiveSerialDescriptor("dev.kord.common.entity.GuildBadgeType", PrimitiveKind.INT)
@@ -118,6 +138,16 @@ public sealed class GuildBadgeType(
                 Snow,
                 Sun,
                 Wind,
+                Bunny,
+                Dog,
+                Frog,
+                Goat,
+                Cat,
+                Diamond,
+                Crown,
+                Trophy,
+                MoneyBag,
+                DollarSign,
             )
         }
 
@@ -145,6 +175,16 @@ public sealed class GuildBadgeType(
             17 -> Snow
             19 -> Sun
             20 -> Wind
+            21 -> Bunny
+            22 -> Dog
+            23 -> Frog
+            24 -> Goat
+            25 -> Cat
+            26 -> Diamond
+            27 -> Crown
+            28 -> Trophy
+            29 -> MoneyBag
+            30 -> DollarSign
             else -> Unknown(value)
         }
     }

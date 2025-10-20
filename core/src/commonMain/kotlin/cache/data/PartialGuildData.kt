@@ -18,7 +18,7 @@ public class PartialGuildData(
     public val description: Optional<String?> = Optional.Missing(),
     public val banner: Optional<String?> = Optional.Missing(),
     public val splash: Optional<String?> = Optional.Missing(),
-    public val homeHeader: Optional<String?> = Optional.Missing(),
+    public val homeHeader: String? = null,
     @SerialName("nsfw_level") public val nsfwLevel: Optional<NsfwLevel> = Optional.Missing(),
     @SerialName("verification_level")
     public val verificationLevel: Optional<VerificationLevel> = Optional.Missing(),

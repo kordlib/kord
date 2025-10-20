@@ -1,5 +1,5 @@
 @file:Generate(
-    INT_KORD_ENUM, name = "GuildBadgeType", docUrl = "", entries = [
+    INT_KORD_ENUM, name = "GuildBadgeType", docUrl = "https://docs.discord.food/resources/discovery#guild-badge-type", entries = [
         Entry("Sword", 0),
         Entry("WaterDrop", 1),
         Entry("Skull", 2),
@@ -20,12 +20,22 @@
         Entry("Snow", 17),
         Entry("Sound", 17),
         Entry("Sun", 19),
-        Entry("Wind", 20)
+        Entry("Wind", 20),
+        Entry("Bunny", 21),
+        Entry("Dog", 22),
+        Entry("Frog", 23),
+        Entry("Goat", 24),
+        Entry("Cat", 25),
+        Entry("Diamond", 26),
+        Entry("Crown", 27),
+        Entry("Trophy", 28),
+        Entry("MoneyBag", 29),
+        Entry("DollarSign", 30),
     ]
 )
 
 @file:Generate(
-    INT_KORD_ENUM, name = "GuildVisibilityLevel", docUrl = "", entries = [
+    INT_KORD_ENUM, name = "GuildVisibilityLevel", docUrl = "https://docs.discord.food/resources/discovery#guild-visibility", entries = [
         Entry("Public", 1),
         Entry("Restricted", 2),
         Entry("PublicWithRecruitment", 3)
@@ -34,6 +44,7 @@
 
 package dev.kord.common.entity
 
+import dev.kord.common.Color
 import dev.kord.ksp.Generate
 import dev.kord.ksp.Generate.EntityType.*
 import dev.kord.ksp.Generate.Entry
@@ -77,7 +88,7 @@ public data class DiscordGuildProfile(
     val onlineCount: Int,
     val description: String,
     @SerialName("brand_color_primary")
-    val brandColorPrimary: String,
+    val brandColorPrimary: Color,
     @SerialName("banner_hash")
     val bannerHash: String?,
     @SerialName("game_application_ids")
@@ -87,9 +98,9 @@ public data class DiscordGuildProfile(
     val tag: String?,
     val badge: GuildBadgeType,
     @SerialName("badge_color_primary")
-    val badgeColorPrimary: String,
+    val badgeColorPrimary: Color,
     @SerialName("badge_color_secondary")
-    val badgeColorSecondary: String,
+    val badgeColorSecondary: Color,
     @SerialName("badge_hash")
     val badgeHash: String,
     val traits: List<DiscordGuildTrait>,

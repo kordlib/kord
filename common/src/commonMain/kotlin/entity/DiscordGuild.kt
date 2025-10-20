@@ -257,7 +257,7 @@ public data class DiscordGuild(
     @SerialName("icon_hash") val iconHash: Optional<String?> = Optional.Missing(),
     val splash: Optional<String?> = Optional.Missing(),
     @SerialName("discovery_splash") val discoverySplash: Optional<String?> = Optional.Missing(),
-    @SerialName("home_header") val homeHeader: Optional<String?> = Optional.Missing(),
+    @SerialName("home_header") val homeHeader: String?,
     val owner: OptionalBoolean = OptionalBoolean.Missing,
     @SerialName("owner_id") val ownerId: Snowflake,
     val permissions: Optional<Permissions> = Optional.Missing(),
@@ -339,7 +339,7 @@ public data class DiscordPartialGuild(
     val description: Optional<String?> = Optional.Missing(),
     val banner: Optional<String?> = Optional.Missing(),
     val splash: Optional<String?> = Optional.Missing(),
-    @SerialName("home_header") val homeHeader: Optional<String?> = Optional.Missing(),
+    @SerialName("home_header") val homeHeader: String?,
     @SerialName("nsfw_level") val nsfwLevel: Optional<NsfwLevel> = Optional.Missing(),
     @SerialName("verification_level")
     val verificationLevel: Optional<VerificationLevel> = Optional.Missing(),
@@ -381,7 +381,7 @@ public data class DiscordIntegrationAccount(
 )
 
 /**
- * A representation of a [Discord Member Verification Guild structure]()
+ * A representation of a [Discord Member Verification Guild structure](https://docs.discord.food/resources/guild#member-verification-guild-structure)
  *
  * @param id The guild ID
  * @param name The name of the guild (2-100 characters)

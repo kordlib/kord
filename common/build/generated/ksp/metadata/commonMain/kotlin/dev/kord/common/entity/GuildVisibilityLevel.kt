@@ -15,7 +15,7 @@ import kotlinx.serialization.encoding.Encoder
 /**
  *
  *
- * See [GuildVisibilityLevel]s in the [Discord Developer Documentation]().
+ * See [GuildVisibilityLevel]s in the [Discord Developer Documentation](https://docs.discord.food/resources/discovery#guild-visibility).
  */
 @Serializable(with = GuildVisibilityLevel.Serializer::class)
 public sealed class GuildVisibilityLevel(

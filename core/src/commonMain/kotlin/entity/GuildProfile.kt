@@ -48,12 +48,12 @@ public class GuildProfile(
     /**
      * The hexadecimal color code for the guild accent
      */
-    public val primaryBrandColorCode: String get() = data.brandColorPrimary
+    public val primaryBrandColorCode: String get() = data.brandColorPrimary.rgb.toHexString()
 
     /**
      * The guild accent color as a [Color]
      */
-    public val primaryBrandColor: Color get() = Color(primaryBrandColorCode.hexToInt())
+    public val primaryBrandColor: Color get() = data.badgeColorPrimary
 
     /**
      * The banner hash, if present
@@ -91,22 +91,22 @@ public class GuildProfile(
     /**
      * The hexadecimal color code for the badges primary color
      */
-    public val primaryBadgeColorCode: String get() = data.badgeColorPrimary
+    public val primaryBadgeColorCode: String get() = data.badgeColorPrimary.rgb.toHexString()
 
     /**
      * The primary badge color as [Color]
      */
-    public val primaryBadgeColor: Color get() = Color(primaryBadgeColorCode.hexToInt())
+    public val primaryBadgeColor: Color get() = data.badgeColorPrimary
 
     /**
      * The hexadecimal color code for the badges secondary color
      */
-    public val secondaryBadgeColorCode: String get() = data.badgeColorSecondary
+    public val secondaryBadgeColorCode: String get() = data.badgeColorSecondary.rgb.toHexString()
 
     /**
      * The secondary badge color as [Color]
      */
-    public val secondaryBadgeColor: Color get() = Color(secondaryBadgeColorCode.hexToInt())
+    public val secondaryBadgeColor: Color get() = data.badgeColorSecondary
 
     /**
      * The guild tag badge hash

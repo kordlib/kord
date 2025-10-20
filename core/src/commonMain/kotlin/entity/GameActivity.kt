@@ -11,10 +11,10 @@ public class GameActivity(
     /**
      * The activity level of the guild in the game
      */
-    public val activityLevel: Int = data.activityLevel
+    public val activityLevel: Int get() = data.activityLevel
 
     /**
      * The activity score of the guild in the game
      */
-    public val activityScore: Int = data.activityScore
+    public val activityScore: Int get() = data.activityScore
 }

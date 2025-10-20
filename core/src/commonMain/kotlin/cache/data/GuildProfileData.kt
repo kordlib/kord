@@ -1,5 +1,6 @@
 package dev.kord.core.cache.data
 
+import dev.kord.common.Color
 import dev.kord.common.entity.*
 import kotlinx.serialization.Serializable
 
@@ -11,14 +12,14 @@ public data class GuildProfileData(
     val memberCount: Int,
     val onlineCount: Int,
     val description: String,
-    val brandColorPrimary: String,
+    val brandColorPrimary: Color,
     val bannerHash: String? = null,
     val gameApplicationIds: List<Snowflake>,
     val gameActivity: Map<Snowflake, DiscordGameActivity>,
     val tag: String? = null,
     val badge: GuildBadgeType,
-    val badgeColorPrimary: String,
-    val badgeColorSecondary: String,
+    val badgeColorPrimary: Color,
+    val badgeColorSecondary: Color,
     val badgeHash: String,
     val traits: List<DiscordGuildTrait>,
     val features: List<GuildFeature>,

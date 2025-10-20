@@ -55,7 +55,7 @@ public data class DiscordMemberVerification(
 public data class DiscordMemberVerificationFormField(
     @SerialName("field_type")
     val fieldType: MemberVerificationFormFieldType,
-    val label: String?,
+    val label: String,
     val choices: Optional<List<String>> = Optional.Missing(),
     val values: Optional<List<String?>> = Optional.Missing(),
     val response: Optional<JsonPrimitive?> = Optional.Missing(),
