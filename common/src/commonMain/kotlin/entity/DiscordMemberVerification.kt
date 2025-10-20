@@ -1,5 +1,5 @@
 @file:Generate(STRING_KORD_ENUM, name = "MemberVerificationFormFieldType",
-    docUrl = "", entries = [
+    docUrl = "https://docs.discord.food/resources/guild#member-verification-form-field-type", entries = [
         Entry("Terms", stringValue = "TERMS", kDoc = "User must agree to the guild rules"),
         Entry("TextInput", stringValue = "TEXT_INPUT", kDoc = "User must respond with a short answer (max 150 characters)"),
         Entry("Paragraph", stringValue = "PARAGRAPH", kDoc = "User must respond with a paragraph (max 1000 characters"),
@@ -10,6 +10,7 @@
 
 package dev.kord.common.entity
 
+import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.optional.Optional
 import dev.kord.ksp.Generate
 import dev.kord.ksp.Generate.EntityType.STRING_KORD_ENUM
@@ -20,7 +21,7 @@ import kotlinx.serialization.json.JsonPrimitive
 import kotlin.time.Instant
 
 /**
- * A representation of a [Discord member verification structure]()
+ * A representation of a [Discord member verification structure](https://docs.discord.food/resources/guild#member-verification-structure)
  *
  * @param version Whe the member verification was last modified
  * @param formFields A list of questions for the applicants to answer
@@ -28,6 +29,7 @@ import kotlin.time.Instant
  * @param guild The guild this member verification is for
  * @param profile The profile of the guild this member verification is for
  */
+@KordPreview
 @Serializable
 public data class DiscordMemberVerification(
     val version: Instant?,
@@ -39,7 +41,7 @@ public data class DiscordMemberVerification(
 )
 
 /**
- * A representation of the []Discord Member verification form field structure]()
+ * A representation of the [Discord Member verification form field structure](https://docs.discord.food/resources/guild#member-verification-form-field-structure)
  *
  * @param fieldType The [MemberVerificationFormFieldType] for the quest
  * @param label the label for the field (max 300 characters)
@@ -51,6 +53,7 @@ public data class DiscordMemberVerification(
  * @param automations
  * @param placeholder Placeholder text for the fields response area
  */
+@KordPreview
 @Serializable
 public data class DiscordMemberVerificationFormField(
     @SerialName("field_type")

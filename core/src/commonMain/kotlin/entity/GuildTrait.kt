@@ -1,10 +1,12 @@
 package dev.kord.core.entity
 
+import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.Kord
 import dev.kord.core.KordObject
 import dev.kord.core.cache.data.GuildTraitData
 
+@KordPreview
 public class GuildTrait(
     public val data: GuildTraitData,
     override val kord: Kord,

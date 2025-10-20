@@ -15,7 +15,7 @@ import kotlinx.serialization.encoding.Encoder
 /**
  *
  *
- * See [MemberVerificationFormFieldType]s in the [Discord Developer Documentation]().
+ * See [MemberVerificationFormFieldType]s in the [Discord Developer Documentation](https://docs.discord.food/resources/guild#member-verification-form-field-type).
  */
 @Serializable(with = MemberVerificationFormFieldType.Serializer::class)
 public sealed class MemberVerificationFormFieldType(

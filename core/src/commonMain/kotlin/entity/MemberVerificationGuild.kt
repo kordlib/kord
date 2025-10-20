@@ -1,5 +1,6 @@
 package dev.kord.core.entity
 
+import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.GuildFeature
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.VerificationLevel
@@ -10,6 +11,7 @@ import dev.kord.core.cache.data.MemberVerificationGuildData
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.supplier.EntitySupplier
 
+@KordPreview
 public class MemberVerificationGuild(
     public val data: MemberVerificationGuildData,
     override val kord: Kord,

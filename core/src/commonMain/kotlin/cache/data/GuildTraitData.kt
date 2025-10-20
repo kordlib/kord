@@ -1,9 +1,11 @@
 package dev.kord.core.cache.data
 
+import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.DiscordGuildTrait
 import dev.kord.common.entity.Snowflake
 import kotlinx.serialization.Serializable
 
+@KordPreview
 @Serializable
 public data class GuildTraitData(
     val emojiId: Snowflake? = null,
@@ -25,4 +27,5 @@ public data class GuildTraitData(
     }
 }
 
+@KordPreview
 public fun DiscordGuildTrait.toData(): GuildTraitData = GuildTraitData.from(this)

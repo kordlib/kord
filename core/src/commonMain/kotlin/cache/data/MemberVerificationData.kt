@@ -1,5 +1,6 @@
 package dev.kord.core.cache.data
 
+import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.DiscordGuildProfile
 import dev.kord.common.entity.DiscordMemberVerification
 import dev.kord.common.entity.DiscordMemberVerificationFormField
@@ -7,6 +8,7 @@ import dev.kord.common.entity.DiscordMemberVerificationGuild
 import kotlinx.serialization.Serializable
 import kotlin.time.Instant
 
+@KordPreview
 @Serializable
 public data class MemberVerificationData(
     val version: Instant? = null,
@@ -28,4 +30,5 @@ public data class MemberVerificationData(
     }
 }
 
+@KordPreview
 public fun DiscordMemberVerification.toData(): MemberVerificationData = MemberVerificationData.from(this)

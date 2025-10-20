@@ -10,6 +10,7 @@
 
 package dev.kord.common.entity
 
+import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.ksp.Generate
@@ -36,6 +37,7 @@ import kotlin.time.Instant
  * @param user The user who created the join request
  * @param interviewChannelId The ID of the channel where an interview regarding the request can be conducted
  */
+@KordPreview
 @Serializable
 public data class DiscordGuildJoinRequest(
     val id: Snowflake,

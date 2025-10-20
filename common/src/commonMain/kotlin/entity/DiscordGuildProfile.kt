@@ -45,6 +45,7 @@
 package dev.kord.common.entity
 
 import dev.kord.common.Color
+import dev.kord.common.annotation.KordPreview
 import dev.kord.ksp.Generate
 import dev.kord.ksp.Generate.EntityType.*
 import dev.kord.ksp.Generate.Entry
@@ -52,7 +53,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 /**
- * A representation of a [Discord Guild Profile]()
+ * A representation of a [Discord Guild Profile](https://docs.discord.food/resources/discovery#guild-profile-structure)
  *
  * @param id The ID of the guild
  * @param name The name of the guild (2-100 characters)
@@ -76,6 +77,7 @@ import kotlinx.serialization.Serializable
  * @param premiumSubscriptionCount The number of premium subscriptions (boosts) the guild currently has
  * @param premiumTier The guilds [PremiumTier] (boost level)
  */
+@KordPreview
 @Serializable
 public data class DiscordGuildProfile(
     val id: Snowflake,
@@ -115,11 +117,12 @@ public data class DiscordGuildProfile(
 )
 
 /**
- * A representation of a (Guild activity structure)()
+ * A representation of a [Guild activity structure](https://docs.discord.food/resources/discovery#game-activity-structure)
  *
  * @param activityLevel The activity level of the guild in the game
  * @param activityScore The activity score of the guild in the game
  */
+@KordPreview
 @Serializable
 public data class DiscordGameActivity(
     @SerialName("activity_level")
@@ -129,7 +132,7 @@ public data class DiscordGameActivity(
 )
 
 /**
- * A representation of a [Discord guild trait structure]()
+ * A representation of a [Discord guild trait structure](https://docs.discord.food/resources/discovery#guild-trait-structure)
  *
  * @param emojiId The ID of the emoji associated with the trait
  * @param emojiName The name of the emoji associated with the trait
@@ -137,6 +140,7 @@ public data class DiscordGameActivity(
  * @param label The name of the trait
  * @param position The position of the trait in the array for sorting
  */
+@KordPreview
 @Serializable
 public data class DiscordGuildTrait(
     @SerialName("emoji_id")

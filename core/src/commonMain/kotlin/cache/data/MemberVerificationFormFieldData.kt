@@ -1,5 +1,6 @@
 package dev.kord.core.cache.data
 
+import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.DiscordMemberVerificationFormField
 import dev.kord.common.entity.MemberVerificationFormFieldType
 import dev.kord.common.entity.optional.Optional
@@ -7,6 +8,7 @@ import io.ktor.util.StringValues
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.JsonPrimitive
 
+@KordPreview
 @Serializable
 public data class MemberVerificationFormFieldData(
     val fieldType: MemberVerificationFormFieldType,
@@ -36,5 +38,6 @@ public data class MemberVerificationFormFieldData(
     }
 }
 
+@KordPreview
 public fun DiscordMemberVerificationFormField.toData(): MemberVerificationFormFieldData =
     MemberVerificationFormFieldData.from(this)

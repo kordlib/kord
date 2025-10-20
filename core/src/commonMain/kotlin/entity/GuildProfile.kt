@@ -1,6 +1,7 @@
 package dev.kord.core.entity
 
 import dev.kord.common.Color
+import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.GuildBadgeType
 import dev.kord.common.entity.GuildFeature
 import dev.kord.common.entity.PremiumTier
@@ -12,6 +13,7 @@ import dev.kord.core.cache.data.GuildProfileData
 import dev.kord.core.cache.data.GuildTraitData
 
 @OptIn(ExperimentalStdlibApi::class)
+@KordPreview
 public class GuildProfile(
     public val data: GuildProfileData,
     override val kord: Kord

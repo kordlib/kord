@@ -172,6 +172,7 @@
 
 package dev.kord.common.entity
 
+import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalInt
@@ -396,6 +397,7 @@ public data class DiscordIntegrationAccount(
  * @param approximateMemberCount Approximate total of guild members
  * @param approximatePresenceCount Approximate total of non-offline guild members
  */
+@KordPreview
 @Serializable
 public data class DiscordMemberVerificationGuild(
     val id: Snowflake,
