@@ -3,6 +3,7 @@ package dev.kord.rest.builder.interaction
 import dev.kord.common.Locale
 import dev.kord.common.annotation.KordDsl
 import dev.kord.common.entity.ApplicationCommandType
+import dev.kord.common.entity.InteractionContextType
 import dev.kord.common.entity.Permissions
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.delegate.delegate
@@ -147,7 +148,9 @@ internal class ChatInputCreateBuilderImpl(
 
     override var options: MutableList<OptionsBuilder>? by state::options.delegate()
     override var defaultMemberPermissions: Permissions? by state::defaultMemberPermissions.delegate()
-    override var dmPermission: Boolean? by state::dmPermission.delegate()
+    @Deprecated("'dmPermission' is deprecated in favor of 'contexts'.")
+    override var dmPermission: Boolean? by @Suppress("DEPRECATION") state::dmPermission.delegate()
+    override var contexts: MutableList<InteractionContextType>? by state::contexts.delegate()
 
     @Deprecated("'defaultPermission' is deprecated in favor of 'defaultMemberPermissions' and 'dmPermission'. Setting 'defaultPermission' to false can be replaced by setting 'defaultMemberPermissions' to empty Permissions and 'dmPermission' to false ('dmPermission' is only available for global commands).")
     override var defaultPermission: Boolean? by @Suppress("DEPRECATION") state::defaultPermission.delegate()
@@ -163,7 +166,8 @@ internal class ChatInputCreateBuilderImpl(
             state.descriptionLocalizations,
             state.options.mapList { it.toRequest() },
             state.defaultMemberPermissions,
-            state.dmPermission,
+            @Suppress("DEPRECATION") state.dmPermission,
+            state.contexts,
             @Suppress("DEPRECATION") state.defaultPermission,
             nsfw = state.nsfw,
         )
@@ -192,7 +196,9 @@ internal class ChatInputModifyBuilderImpl : GlobalChatInputModifyBuilder {
     override var options: MutableList<OptionsBuilder>? by state::options.delegate()
 
     override var defaultMemberPermissions: Permissions? by state::defaultMemberPermissions.delegate()
-    override var dmPermission: Boolean? by state::dmPermission.delegate()
+    @Deprecated("'dmPermission' is deprecated in favor of 'contexts'.")
+    override var dmPermission: Boolean? by @Suppress("DEPRECATION") state::dmPermission.delegate()
+    override var contexts: MutableList<InteractionContextType>? by state::contexts.delegate()
 
     @Deprecated("'defaultPermission' is deprecated in favor of 'defaultMemberPermissions' and 'dmPermission'. Setting 'defaultPermission' to false can be replaced by setting 'defaultMemberPermissions' to empty Permissions and 'dmPermission' to false ('dmPermission' is only available for global commands).")
     override var defaultPermission: Boolean? by @Suppress("DEPRECATION") state::defaultPermission.delegate()
@@ -207,7 +213,8 @@ internal class ChatInputModifyBuilderImpl : GlobalChatInputModifyBuilder {
             state.descriptionLocalizations,
             state.options.mapList { it.toRequest() },
             state.defaultMemberPermissions,
-            state.dmPermission,
+            @Suppress("DEPRECATION") state.dmPermission,
+            state.contexts,
             @Suppress("DEPRECATION") state.defaultPermission,
             nsfw = state.nsfw,
         )

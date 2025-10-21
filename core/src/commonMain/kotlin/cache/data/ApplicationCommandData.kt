@@ -20,7 +20,9 @@ public data class ApplicationCommandData(
     val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
     val options: Optional<List<ApplicationCommandOptionData>> = Optional.Missing(),
     val defaultMemberPermissions: Permissions?,
+    @Deprecated("'dmPermission' is deprecated in favor of 'contexts'.")
     val dmPermission: OptionalBoolean = OptionalBoolean.Missing,
+    val contexts: Optional<List<InteractionContextType>> = Optional.Missing(),
     @Deprecated("'defaultPermission' is deprecated in favor of 'defaultMemberPermissions' and 'dmPermission'.")
     val defaultPermission: OptionalBoolean? = OptionalBoolean.Missing,
     val nsfw: OptionalBoolean = OptionalBoolean.Missing,
@@ -45,7 +47,8 @@ public data class ApplicationCommandData(
                     guildId,
                     options.mapList { ApplicationCommandOptionData.from(it) },
                     defaultMemberPermissions,
-                    dmPermission,
+                    @Suppress("DEPRECATION") dmPermission,
+                    contexts,
                     @Suppress("DEPRECATION") defaultPermission,
                     nsfw,
                     version
