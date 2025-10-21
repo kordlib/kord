@@ -1,6 +1,7 @@
 package dev.kord.core.entity
 
 import dev.kord.common.Locale
+import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.orElse
 import dev.kord.common.entity.optional.orEmpty
@@ -275,6 +276,15 @@ public class Guild(
     public val discoverySplashHash: String? get() = data.discoverySplash.value
 
     public val discoverySplash: Asset? get() = discoverySplashHash?.let { Asset.guildDiscoverySplash(id, it, kord) }
+
+    /**
+     * The hash of the home header, if present.
+     */
+    @KordPreview
+    public val homeHeaderHash: String? get() = data.homeHeader
+
+    @KordPreview
+    public val homeHeader: Asset? get() = homeHeaderHash?.let { Asset.guildHomeHeader(id, it, kord) }
 
     /**
      * The id of the channel to which system messages are sent.

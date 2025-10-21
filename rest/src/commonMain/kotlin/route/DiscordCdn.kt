@@ -1,5 +1,6 @@
 package dev.kord.rest.route
 
+import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.Snowflake
 
 public object DiscordCdn {
@@ -17,6 +18,12 @@ public object DiscordCdn {
         CdnUrl("$BASE_URL/discovery-splashes/$guildId/$hash")
 
     public fun guildBanner(guildId: Snowflake, hash: String): CdnUrl = CdnUrl("$BASE_URL/banners/$guildId/$hash")
+
+    @KordPreview
+    public fun guildHomeHeader(guildId: Snowflake, hash: String): CdnUrl = CdnUrl("$BASE_URL/guilds/$guildId/home-headers/$hash")
+
+    @KordPreview
+    public fun guildTagBadge(guildId: Snowflake, hash: String): CdnUrl = CdnUrl("$BASE_URL/guild-tag-badge/$guildId/$hash")
 
     public fun userBanner(userId: Snowflake, hash: String): CdnUrl = CdnUrl("$BASE_URL/banners/$userId/$hash")
 
