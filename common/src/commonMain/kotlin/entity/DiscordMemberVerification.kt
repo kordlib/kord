@@ -6,7 +6,8 @@
         Entry("MultipleChoice", stringValue = "MULTIPLE_CHOICE", kDoc = "User must select one of the provided choices"),
         // Crossed out in unofficial docs, here as a placeholder until real docs exist or unofficial updates
         //Entry("Verification", stringValue = "VERIFICATION", kDoc = "User must verify their email or phone number")
-    ])
+    ], isPreview = true
+)
 
 package dev.kord.common.entity
 

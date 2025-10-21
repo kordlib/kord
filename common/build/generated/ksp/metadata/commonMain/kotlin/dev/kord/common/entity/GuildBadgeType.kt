@@ -3,6 +3,7 @@
 
 package dev.kord.common.entity
 
+import dev.kord.common.`annotation`.KordPreview
 import kotlin.LazyThreadSafetyMode.PUBLICATION
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
@@ -18,6 +19,7 @@ import kotlinx.serialization.encoding.Encoder
  * See [GuildBadgeType]s in the [Discord Developer Documentation](https://docs.discord.food/resources/discovery#guild-badge-type).
  */
 @Serializable(with = GuildBadgeType.Serializer::class)
+@KordPreview
 public sealed class GuildBadgeType(
     /**
      * The raw value used by Discord.

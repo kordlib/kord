@@ -18,25 +18,26 @@ internal sealed class GenerationEntity(
     val docUrl: String,
     val valueName: String,
     val entries: List<Entry>,
+    val isPreview: Boolean
 ) {
     abstract val valueType: ValueType
 
     sealed interface ValueType
 
     class KordEnum(
-        name: String, kDoc: String?, docUrl: String, valueName: String, entries: List<Entry>,
+        name: String, kDoc: String?, docUrl: String, valueName: String, entries: List<Entry>, isPreview: Boolean,
         override val valueType: ValueType,
-    ) : GenerationEntity(name, kDoc, docUrl, valueName, entries) {
+    ) : GenerationEntity(name, kDoc, docUrl, valueName, entries, isPreview) {
         enum class ValueType : GenerationEntity.ValueType { INT, STRING }
     }
 
     class BitFlags(
-        name: String, kDoc: String?, docUrl: String, valueName: String, entries: List<Entry>,
+        name: String, kDoc: String?, docUrl: String, valueName: String, entries: List<Entry>, isPreview: Boolean,
         override val valueType: ValueType,
         val collectionHadCopy0: Boolean,
         val collectionHadNewCompanion: Boolean,
         val hadBuilderFactoryFunction0: Boolean,
-    ) : GenerationEntity(name, kDoc, docUrl, valueName, entries) {
+    ) : GenerationEntity(name, kDoc, docUrl, valueName, entries, isPreview) {
         enum class ValueType : GenerationEntity.ValueType { INT, BIT_SET }
     }
 
@@ -81,19 +82,21 @@ internal fun Generate.toGenerationEntityOrNull(logger: KSPLogger, annotation: KS
         val kDoc = if (args.isDefault(Generate::kDoc)) "" else kDoc.toKDoc()
         val valueName = if (args.isDefault(Generate::valueName)) "value" else valueName
 
+        val isPreview = args[Generate::isPreview] ?: false
+
         val collectionHadCopy0 = args[Generate::collectionHadCopy0] ?: false
         val collectionHadNewCompanion = args[Generate::collectionHadNewCompanion] ?: false
         val hadBuilderFactoryFunction0 = args[Generate::hadBuilderFactoryFunction0] ?: false
 
         when (entityType) {
-            INT_KORD_ENUM -> KordEnum(name, kDoc, docUrl, valueName, mappedEntries, KordEnum.ValueType.INT)
-            STRING_KORD_ENUM -> KordEnum(name, kDoc, docUrl, valueName, mappedEntries, KordEnum.ValueType.STRING)
+            INT_KORD_ENUM -> KordEnum(name, kDoc, docUrl, valueName, mappedEntries, isPreview, KordEnum.ValueType.INT)
+            STRING_KORD_ENUM -> KordEnum(name, kDoc, docUrl, valueName, mappedEntries, isPreview, KordEnum.ValueType.STRING)
             INT_FLAGS -> BitFlags(
-                name, kDoc, docUrl, valueName, mappedEntries, BitFlags.ValueType.INT, collectionHadCopy0,
+                name, kDoc, docUrl, valueName, mappedEntries, isPreview, BitFlags.ValueType.INT, collectionHadCopy0,
                 collectionHadNewCompanion, hadBuilderFactoryFunction0,
             )
             BIT_SET_FLAGS -> BitFlags(
-                name, kDoc, docUrl, valueName, mappedEntries, BitFlags.ValueType.BIT_SET, collectionHadCopy0,
+                name, kDoc, docUrl, valueName, mappedEntries, isPreview, BitFlags.ValueType.BIT_SET, collectionHadCopy0,
                 collectionHadNewCompanion, hadBuilderFactoryFunction0,
             )
         }

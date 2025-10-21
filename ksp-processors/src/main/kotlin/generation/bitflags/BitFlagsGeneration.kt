@@ -4,6 +4,7 @@ package dev.kord.ksp.generation.bitflags
 
 import com.google.devtools.ksp.symbol.KSFile
 import com.squareup.kotlinpoet.ClassName
+import com.squareup.kotlinpoet.DelicateKotlinPoetApi
 import com.squareup.kotlinpoet.KModifier.*
 import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
 import com.squareup.kotlinpoet.SET
@@ -26,6 +27,7 @@ internal val BitFlags.builderCN
 
 internal fun BitFlags.generateFileSpec(originatingFile: KSFile) = fileSpecForGenerationEntity(originatingFile) {
     addClass(currentContext.entityCN) {
+        if (isPreview) addAnnotation(ClassName("dev.kord.common.annotation", "KordPreview"))
         // for ksp incremental processing
         addOriginatingKSFile(originatingFile)
         addEntityKDoc()

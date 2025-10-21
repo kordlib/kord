@@ -31,7 +31,7 @@
         Entry("Trophy", 28),
         Entry("MoneyBag", 29),
         Entry("DollarSign", 30),
-    ]
+    ], isPreview = true
 )
 
 @file:Generate(
@@ -39,7 +39,7 @@
         Entry("Public", 1),
         Entry("Restricted", 2),
         Entry("PublicWithRecruitment", 3)
-    ]
+    ], isPreview = true
 )
 
 package dev.kord.common.entity

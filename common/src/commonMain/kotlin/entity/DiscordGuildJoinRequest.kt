@@ -5,7 +5,8 @@
         Entry("Submitted", stringValue = "SUBMITTED", kDoc = "The request has been submitted"),
         Entry("Rejected", stringValue = "REJECTED", kDoc = "The request has been rejected"),
         Entry("Approved", stringValue = "APPROVED", kDoc = "The request has been approved")
-    ]
+    ],
+    isPreview = true
 )
 
 package dev.kord.common.entity

@@ -1,7 +1,6 @@
 package dev.kord.ksp
 
 import dev.kord.ksp.Generate.EntityType.*
-import dev.kord.ksp.Generate.Entry
 import kotlin.annotation.AnnotationRetention.SOURCE
 import kotlin.annotation.AnnotationTarget.FILE
 
@@ -22,6 +21,8 @@ annotation class Generate(
     val kDoc: String = "",
     /** Name of the value of the entity. */
     val valueName: String = "value",
+    /** Whether the class is a KordPreview or not. */
+    val isPreview: Boolean = false,
 
     // for migration only, will be removed eventually
     val collectionHadCopy0: Boolean = false,
