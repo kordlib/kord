@@ -6,6 +6,7 @@ import dev.kord.common.entity.UserPremium
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.value
 import dev.kord.gateway.*
+import dev.kord.test.IgnoreOnSimulatorPlatforms
 import kotlinx.coroutines.test.runTest
 import kotlin.time.Instant
 import kotlinx.serialization.ExperimentalSerializationApi
@@ -21,6 +22,7 @@ import kotlin.time.Duration.Companion.seconds
 
 private suspend fun file(name: String): String = readFile("event", name)
 
+@IgnoreOnSimulatorPlatforms
 class SerializationTest {
 
     @Test

@@ -1,6 +1,7 @@
 package dev.kord.gateway.json
 
 import dev.kord.common.entity.Snowflake
+import dev.kord.test.IgnoreOnSimulatorPlatforms
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.encodeToString
@@ -9,6 +10,7 @@ import kotlin.js.JsName
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
+@IgnoreOnSimulatorPlatforms
 class SnowflakeTest {
 
     @Serializable

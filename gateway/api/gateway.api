@@ -377,7 +377,6 @@ public final synthetic class dev/kord/gateway/DiscordAutoModerationActionExecuti
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/gateway/DiscordAutoModerationActionExecution;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/gateway/DiscordAutoModerationActionExecution$Companion {
@@ -427,7 +426,6 @@ public final synthetic class dev/kord/gateway/DiscordCreatedInvite$$serializer :
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/gateway/DiscordCreatedInvite;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/gateway/DiscordCreatedInvite$Companion {
@@ -459,7 +457,6 @@ public final synthetic class dev/kord/gateway/DiscordDeletedInvite$$serializer :
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/gateway/DiscordDeletedInvite;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/gateway/DiscordDeletedInvite$Companion {
@@ -493,7 +490,6 @@ public final synthetic class dev/kord/gateway/DiscordPresence$$serializer : kotl
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/gateway/DiscordPresence;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/gateway/DiscordPresence$Companion {
@@ -526,7 +522,6 @@ public final synthetic class dev/kord/gateway/DiscordRemovedEmoji$$serializer : 
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/gateway/DiscordRemovedEmoji;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/gateway/DiscordRemovedEmoji$Companion {
@@ -555,7 +550,6 @@ public final synthetic class dev/kord/gateway/DiscordRemovedReactionEmoji$$seria
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/gateway/DiscordRemovedReactionEmoji;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/gateway/DiscordRemovedReactionEmoji$Companion {
@@ -589,7 +583,6 @@ public final synthetic class dev/kord/gateway/DiscordThreadListSync$$serializer 
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/gateway/DiscordThreadListSync;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/gateway/DiscordThreadListSync$Companion {
@@ -625,7 +618,6 @@ public final synthetic class dev/kord/gateway/DiscordThreadMembersUpdate$$serial
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/gateway/DiscordThreadMembersUpdate;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/gateway/DiscordThreadMembersUpdate$Companion {
@@ -947,7 +939,6 @@ public final synthetic class dev/kord/gateway/GuildMembersChunkData$$serializer 
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/gateway/GuildMembersChunkData;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/gateway/GuildMembersChunkData$Companion {
@@ -1069,7 +1060,6 @@ public final synthetic class dev/kord/gateway/GuildScheduledEventUserMetadata$$s
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/gateway/GuildScheduledEventUserMetadata;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/gateway/GuildScheduledEventUserMetadata$Companion {
@@ -1204,7 +1194,6 @@ public final synthetic class dev/kord/gateway/Hello$$serializer : kotlinx/serial
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/gateway/Hello;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/gateway/Hello$Companion {
@@ -1244,7 +1233,6 @@ public final synthetic class dev/kord/gateway/Identify$$serializer : kotlinx/ser
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/gateway/Identify;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/gateway/Identify$Companion {
@@ -1275,7 +1263,6 @@ public final synthetic class dev/kord/gateway/IdentifyProperties$$serializer : k
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/gateway/IdentifyProperties;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/gateway/IdentifyProperties$Companion {
@@ -1725,7 +1712,6 @@ public final synthetic class dev/kord/gateway/ReadyData$$serializer : kotlinx/se
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/gateway/ReadyData;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/gateway/ReadyData$Companion {
@@ -1767,7 +1753,6 @@ public final synthetic class dev/kord/gateway/RequestGuildMembers$$serializer : 
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/gateway/RequestGuildMembers;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/gateway/RequestGuildMembers$Companion {
@@ -1830,7 +1815,6 @@ public final synthetic class dev/kord/gateway/Resume$$serializer : kotlinx/seria
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/gateway/Resume;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/gateway/Resume$Companion {
@@ -1857,7 +1841,6 @@ public final synthetic class dev/kord/gateway/Resumed$$serializer : kotlinx/seri
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/gateway/Resumed;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/gateway/Resumed$Companion {
@@ -2086,7 +2069,6 @@ public final synthetic class dev/kord/gateway/UpdateStatus$$serializer : kotlinx
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/gateway/UpdateStatus;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/gateway/UpdateStatus$Companion {
@@ -2119,7 +2101,6 @@ public final synthetic class dev/kord/gateway/UpdateVoiceStatus$$serializer : ko
 	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/gateway/UpdateVoiceStatus;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/gateway/UpdateVoiceStatus$Companion {

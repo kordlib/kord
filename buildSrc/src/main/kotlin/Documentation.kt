@@ -1,6 +1,7 @@
+import dev.kord.gradle.tools.util.commitHash
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.assign
-import org.gradle.kotlin.dsl.invoke
+import java.net.URI
 import org.jetbrains.dokka.gradle.DokkaExtension
 import org.jetbrains.dokka.gradle.workers.ProcessIsolation
 
@@ -27,7 +28,7 @@ internal fun DokkaExtension.applyKordDokkaOptions(project: Project) {
             remoteLineSuffix = "#L"
         }
 
-        externalDocumentationLinks {
+        externalDocumentationLinks.apply {
             register("kotlinx.coroutines") {
                 url("https://kotlinlang.org/api/kotlinx.coroutines/")
             }

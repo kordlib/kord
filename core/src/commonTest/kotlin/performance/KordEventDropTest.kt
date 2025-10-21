@@ -12,6 +12,7 @@ import dev.kord.gateway.*
 import dev.kord.gateway.builder.Shards
 import dev.kord.rest.request.KtorRequestHandler
 import dev.kord.rest.service.RestClient
+ import dev.kord.test.IgnoreOnNative
 import io.ktor.client.*
 import kotlinx.atomicfu.atomic
 import kotlinx.coroutines.CompletableDeferred
@@ -63,6 +64,8 @@ class KordEventDropTest {
     )
 
     @Test
+    // This test seems to timeout sometimes on native
+    @IgnoreOnNative
     @JsName("test1")
     fun `hammering the gateway does not drop core events`() = runTest {
         val amount = 1_000

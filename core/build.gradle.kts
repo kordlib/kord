@@ -21,6 +21,11 @@ kotlin {
                 implementation(libs.kotlin.logging)
             }
         }
+        nonJvmMain {
+            dependencies {
+                implementation(libs.stately.collections)
+            }
+        }
         jvmMain {
             dependencies {
                 implementation(libs.slf4j.api)

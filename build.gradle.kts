@@ -2,12 +2,14 @@ plugins {
     org.jetbrains.dokka // for dokkaGeneratePublicationHtml task
 }
 
-repositories {
-    mavenCentral()
+allprojects {
+    repositories {
+        mavenCentral()
+        maven("https://oss.sonatype.org/content/repositories/snapshots/")
+    }
 }
 
 group = Library.group
-version = libraryVersion
 
 dependencies {
     dokka(projects.common)
