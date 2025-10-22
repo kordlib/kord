@@ -40,6 +40,16 @@ public sealed class GuildFeature(
     ) : GuildFeature(value)
 
     /**
+     * Guild has disabled the activity feed.
+     */
+    public object ActivityFeedDisabled : GuildFeature("ACTIVITY_FEED_DISABLED_BY_USER")
+
+    /**
+     * Guild has enabled the activity feed.
+     */
+    public object ActivityFeedEnabled : GuildFeature("ACTIVITY_FEED_ENABLED_BY_USER")
+
+    /**
      * Guild has access to set an animated guild banner image.
      */
     public object AnimatedBanner : GuildFeature("ANIMATED_BANNER")
@@ -191,6 +201,8 @@ public sealed class GuildFeature(
          */
         public val entries: List<GuildFeature> by lazy(mode = PUBLICATION) {
             listOf(
+                ActivityFeedDisabled,
+                ActivityFeedEnabled,
                 AnimatedBanner,
                 AnimatedIcon,
                 ApplicationCommandPermissionsV2,
@@ -225,6 +237,8 @@ public sealed class GuildFeature(
          * Returns an instance of [GuildFeature] with [GuildFeature.value] equal to the specified [value].
          */
         public fun from(`value`: String): GuildFeature = when (value) {
+            "ACTIVITY_FEED_DISABLED_BY_USER" -> ActivityFeedDisabled
+            "ACTIVITY_FEED_ENABLED_BY_USER" -> ActivityFeedEnabled
             "ANIMATED_BANNER" -> AnimatedBanner
             "ANIMATED_ICON" -> AnimatedIcon
             "APPLICATION_COMMAND_PERMISSIONS_V2" -> ApplicationCommandPermissionsV2
