@@ -33,6 +33,7 @@ public class Image private constructor(public val data: ByteArray, public val fo
         public object JPEG : Format("jpeg", "jpg")
         public object PNG : Format("png")
         public object WEBP : Format("webp")
+        public object WEBM : Format("webm")
         public object GIF : Format("gif")
         public object LOTTIE : Format("json")
 
@@ -42,6 +43,7 @@ public class Image private constructor(public val data: ByteArray, public val fo
                     JPEG,
                     PNG,
                     WEBP,
+                    WEBM,
                     GIF,
                     LOTTIE,
                 )
@@ -56,6 +58,7 @@ public class Image private constructor(public val data: ByteArray, public val fo
                 "image/jpeg" -> JPEG
                 "image/png" -> PNG
                 "image/webp" -> WEBP
+                "image/webm" -> WEBM
                 "image/gif" -> GIF
                 "application/json" -> LOTTIE
                 else -> error(type)
