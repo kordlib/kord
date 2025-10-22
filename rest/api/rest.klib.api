@@ -7835,6 +7835,8 @@ final class dev.kord.rest/Image { // dev.kord.rest/Image|null[0]
 
         final object PNG : dev.kord.rest/Image.Format // dev.kord.rest/Image.Format.PNG|null[0]
 
+        final object WEBM : dev.kord.rest/Image.Format // dev.kord.rest/Image.Format.WEBM|null[0]
+
         final object WEBP : dev.kord.rest/Image.Format // dev.kord.rest/Image.Format.WEBP|null[0]
     }
 
@@ -8798,8 +8800,10 @@ sealed class dev.kord.rest.request/RequestIdentifier { // dev.kord.rest.request/
 }
 
 final object dev.kord.rest.route/DiscordCdn { // dev.kord.rest.route/DiscordCdn|null[0]
+    final fun animatedNameplate(kotlin/String): dev.kord.rest.route/CdnUrl // dev.kord.rest.route/DiscordCdn.animatedNameplate|animatedNameplate(kotlin.String){}[0]
     final fun applicationCover(dev.kord.common.entity/Snowflake, kotlin/String): dev.kord.rest.route/CdnUrl // dev.kord.rest.route/DiscordCdn.applicationCover|applicationCover(dev.kord.common.entity.Snowflake;kotlin.String){}[0]
     final fun applicationIcon(dev.kord.common.entity/Snowflake, kotlin/String): dev.kord.rest.route/CdnUrl // dev.kord.rest.route/DiscordCdn.applicationIcon|applicationIcon(dev.kord.common.entity.Snowflake;kotlin.String){}[0]
+    final fun avatarDecoration(kotlin/String): dev.kord.rest.route/CdnUrl // dev.kord.rest.route/DiscordCdn.avatarDecoration|avatarDecoration(kotlin.String){}[0]
     final fun defaultUserAvatar(dev.kord.common.entity/Snowflake): dev.kord.rest.route/CdnUrl // dev.kord.rest.route/DiscordCdn.defaultUserAvatar|defaultUserAvatar(dev.kord.common.entity.Snowflake){}[0]
     final fun defaultUserAvatar(kotlin/Int): dev.kord.rest.route/CdnUrl // dev.kord.rest.route/DiscordCdn.defaultUserAvatar|defaultUserAvatar(kotlin.Int){}[0]
     final fun emoji(dev.kord.common.entity/Snowflake): dev.kord.rest.route/CdnUrl // dev.kord.rest.route/DiscordCdn.emoji|emoji(dev.kord.common.entity.Snowflake){}[0]
@@ -8811,11 +8815,12 @@ final object dev.kord.rest.route/DiscordCdn { // dev.kord.rest.route/DiscordCdn|
     final fun memberAvatar(dev.kord.common.entity/Snowflake, dev.kord.common.entity/Snowflake, kotlin/String): dev.kord.rest.route/CdnUrl // dev.kord.rest.route/DiscordCdn.memberAvatar|memberAvatar(dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake;kotlin.String){}[0]
     final fun memberBanner(dev.kord.common.entity/Snowflake, dev.kord.common.entity/Snowflake, kotlin/String): dev.kord.rest.route/CdnUrl // dev.kord.rest.route/DiscordCdn.memberBanner|memberBanner(dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake;kotlin.String){}[0]
     final fun roleIcon(dev.kord.common.entity/Snowflake, kotlin/String): dev.kord.rest.route/CdnUrl // dev.kord.rest.route/DiscordCdn.roleIcon|roleIcon(dev.kord.common.entity.Snowflake;kotlin.String){}[0]
+    final fun staticNameplate(kotlin/String): dev.kord.rest.route/CdnUrl // dev.kord.rest.route/DiscordCdn.staticNameplate|staticNameplate(kotlin.String){}[0]
     final fun sticker(dev.kord.common.entity/Snowflake): dev.kord.rest.route/CdnUrl // dev.kord.rest.route/DiscordCdn.sticker|sticker(dev.kord.common.entity.Snowflake){}[0]
     final fun stickerPackBanner(dev.kord.common.entity/Snowflake): dev.kord.rest.route/CdnUrl // dev.kord.rest.route/DiscordCdn.stickerPackBanner|stickerPackBanner(dev.kord.common.entity.Snowflake){}[0]
+    final fun tagBadge(dev.kord.common.entity/Snowflake, kotlin/String): dev.kord.rest.route/CdnUrl // dev.kord.rest.route/DiscordCdn.tagBadge|tagBadge(dev.kord.common.entity.Snowflake;kotlin.String){}[0]
     final fun teamIcon(dev.kord.common.entity/Snowflake, kotlin/String): dev.kord.rest.route/CdnUrl // dev.kord.rest.route/DiscordCdn.teamIcon|teamIcon(dev.kord.common.entity.Snowflake;kotlin.String){}[0]
     final fun userAvatar(dev.kord.common.entity/Snowflake, kotlin/String): dev.kord.rest.route/CdnUrl // dev.kord.rest.route/DiscordCdn.userAvatar|userAvatar(dev.kord.common.entity.Snowflake;kotlin.String){}[0]
-    final fun userAvatarDecoration(dev.kord.common.entity/Snowflake, kotlin/String): dev.kord.rest.route/CdnUrl // dev.kord.rest.route/DiscordCdn.userAvatarDecoration|userAvatarDecoration(dev.kord.common.entity.Snowflake;kotlin.String){}[0]
     final fun userBanner(dev.kord.common.entity/Snowflake, kotlin/String): dev.kord.rest.route/CdnUrl // dev.kord.rest.route/DiscordCdn.userBanner|userBanner(dev.kord.common.entity.Snowflake;kotlin.String){}[0]
 }
 
