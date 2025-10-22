@@ -2,6 +2,7 @@ package dev.kord.core.cache.data
 
 import dev.kord.cache.api.data.DataDescription
 import dev.kord.cache.api.data.description
+import dev.kord.common.entity.DiscordAvatarDecoration
 import dev.kord.common.entity.DiscordOptionallyMemberUser
 import dev.kord.common.entity.DiscordUser
 import dev.kord.common.entity.Snowflake
@@ -24,7 +25,7 @@ public data class UserData(
     val publicFlags: Optional<UserFlags> = Optional.Missing(),
     val banner: String? = null,
     val accentColor: Int? = null,
-    val avatarDecoration: Optional<String?> = Optional.Missing()
+    val avatarDecorationData: Optional<DiscordAvatarDecoration?> = Optional.Missing()
 ) {
     public companion object {
 
@@ -38,7 +39,7 @@ public data class UserData(
         }
 
         public fun from(entity: DiscordUser): UserData = with(entity) {
-            UserData(id, username, discriminator, globalName, avatar, bot, publicFlags, banner, accentColor, avatarDecoration)
+            UserData(id, username, discriminator, globalName, avatar, bot, publicFlags, banner, accentColor, avatarDecorationData)
         }
 
         public fun from(entity: DiscordOptionallyMemberUser): UserData = with(entity) {
