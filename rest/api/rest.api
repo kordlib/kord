@@ -1143,6 +1143,8 @@ public final class dev/kord/rest/builder/component/ComponentContainerBuilder$Def
 public final class dev/kord/rest/builder/component/ComponentContainerBuilderKt {
 	public static final fun actionRow (Ldev/kord/rest/builder/component/ComponentContainerBuilder;Lkotlin/jvm/functions/Function1;)V
 	public static final fun file (Ldev/kord/rest/builder/component/ComponentContainerBuilder;Lkotlin/jvm/functions/Function1;)V
+	public static final fun fileUpload (Ldev/kord/rest/builder/component/ComponentContainerBuilder;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+	public static final fun label (Ldev/kord/rest/builder/component/ComponentContainerBuilder;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
 	public static final fun mediaGallery (Ldev/kord/rest/builder/component/ComponentContainerBuilder;Lkotlin/jvm/functions/Function1;)V
 	public static final fun section (Ldev/kord/rest/builder/component/ComponentContainerBuilder;Lkotlin/jvm/functions/Function1;)V
 	public static final fun separator (Ldev/kord/rest/builder/component/ComponentContainerBuilder;Lkotlin/jvm/functions/Function1;)V
@@ -1187,7 +1189,7 @@ public final class dev/kord/rest/builder/component/FileUploadBuilder : dev/kord/
 	public final fun setRequired (Ljava/lang/Boolean;)V
 }
 
-public final class dev/kord/rest/builder/component/LabelComponent : dev/kord/rest/builder/component/ContainerComponentBuilder {
+public final class dev/kord/rest/builder/component/LabelComponentBuilder : dev/kord/rest/builder/component/ContainerComponentBuilder {
 	public fun <init> (Ljava/lang/String;)V
 	public fun build ()Ldev/kord/common/entity/DiscordComponent;
 	public final fun getComponent ()Ljava/util/List;

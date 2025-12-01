@@ -6,7 +6,7 @@ import dev.kord.common.entity.DiscordComponent
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.delegate.delegate
 
-public class LabelComponent(public val label: String) : ContainerComponentBuilder {
+public class LabelComponentBuilder(public val label: String) : ContainerComponentBuilder {
     private var _description: Optional<String> = Optional.Missing()
 
     /** An optional description text for the label; max 100 characters. */
