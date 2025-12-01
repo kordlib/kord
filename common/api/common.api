@@ -2120,6 +2120,14 @@ public final class dev/kord/common/entity/ComponentType$File : dev/kord/common/e
 	public static final field INSTANCE Ldev/kord/common/entity/ComponentType$File;
 }
 
+public final class dev/kord/common/entity/ComponentType$FileUpload : dev/kord/common/entity/ComponentType {
+	public static final field INSTANCE Ldev/kord/common/entity/ComponentType$FileUpload;
+}
+
+public final class dev/kord/common/entity/ComponentType$Label : dev/kord/common/entity/ComponentType {
+	public static final field INSTANCE Ldev/kord/common/entity/ComponentType$Label;
+}
+
 public final class dev/kord/common/entity/ComponentType$MediaGallery : dev/kord/common/entity/ComponentType {
 	public static final field INSTANCE Ldev/kord/common/entity/ComponentType$MediaGallery;
 }

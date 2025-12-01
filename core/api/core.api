@@ -9445,6 +9445,27 @@ public final class dev/kord/core/entity/component/FileComponent : dev/kord/core/
 	public final fun getUrl ()Ldev/kord/core/entity/component/UnfurledMediaItem;
 }
 
+public final class dev/kord/core/entity/component/FileUploadComponent : dev/kord/core/entity/component/Component {
+	public fun <init> (Ldev/kord/core/cache/data/ChatComponentData;)V
+	public final fun getCustomId ()Ljava/lang/String;
+	public fun getData ()Ldev/kord/core/cache/data/ChatComponentData;
+	public synthetic fun getData ()Ldev/kord/core/cache/data/ComponentData;
+	public final fun getMaxValues ()Ljava/lang/Integer;
+	public final fun getMinValues ()Ljava/lang/Integer;
+	public final fun getRequired ()Z
+	public fun getType ()Ldev/kord/common/entity/ComponentType;
+}
+
+public final class dev/kord/core/entity/component/LabelComponent : dev/kord/core/entity/component/Component {
+	public fun <init> (Ldev/kord/core/cache/data/ChatComponentData;)V
+	public final fun getComponent ()Ldev/kord/core/cache/data/ComponentData;
+	public fun getData ()Ldev/kord/core/cache/data/ChatComponentData;
+	public synthetic fun getData ()Ldev/kord/core/cache/data/ComponentData;
+	public final fun getDescription ()Ljava/lang/String;
+	public final fun getLabel ()Ljava/lang/String;
+	public fun getType ()Ldev/kord/common/entity/ComponentType;
+}
+
 public final class dev/kord/core/entity/component/MediaGalleryComponent : dev/kord/core/entity/component/Component {
 	public fun <init> (Ldev/kord/core/cache/data/ChatComponentData;)V
 	public fun getData ()Ldev/kord/core/cache/data/ChatComponentData;

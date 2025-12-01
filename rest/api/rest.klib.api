@@ -2236,6 +2236,40 @@ final class dev.kord.rest.builder.component/FileBuilder : dev.kord.rest.builder.
     final fun build(): dev.kord.common.entity/DiscordComponent // dev.kord.rest.builder.component/FileBuilder.build|build(){}[0]
 }
 
+final class dev.kord.rest.builder.component/FileUploadBuilder : dev.kord.rest.builder.component/ContainerComponentBuilder { // dev.kord.rest.builder.component/FileUploadBuilder|null[0]
+    constructor <init>(kotlin/String) // dev.kord.rest.builder.component/FileUploadBuilder.<init>|<init>(kotlin.String){}[0]
+
+    final val customId // dev.kord.rest.builder.component/FileUploadBuilder.customId|{}customId[0]
+        final fun <get-customId>(): kotlin/String // dev.kord.rest.builder.component/FileUploadBuilder.customId.<get-customId>|<get-customId>(){}[0]
+
+    final var maxValues // dev.kord.rest.builder.component/FileUploadBuilder.maxValues|{}maxValues[0]
+        final fun <get-maxValues>(): kotlin/Int? // dev.kord.rest.builder.component/FileUploadBuilder.maxValues.<get-maxValues>|<get-maxValues>(){}[0]
+        final fun <set-maxValues>(kotlin/Int?) // dev.kord.rest.builder.component/FileUploadBuilder.maxValues.<set-maxValues>|<set-maxValues>(kotlin.Int?){}[0]
+    final var minValues // dev.kord.rest.builder.component/FileUploadBuilder.minValues|{}minValues[0]
+        final fun <get-minValues>(): kotlin/Int? // dev.kord.rest.builder.component/FileUploadBuilder.minValues.<get-minValues>|<get-minValues>(){}[0]
+        final fun <set-minValues>(kotlin/Int?) // dev.kord.rest.builder.component/FileUploadBuilder.minValues.<set-minValues>|<set-minValues>(kotlin.Int?){}[0]
+    final var required // dev.kord.rest.builder.component/FileUploadBuilder.required|{}required[0]
+        final fun <get-required>(): kotlin/Boolean? // dev.kord.rest.builder.component/FileUploadBuilder.required.<get-required>|<get-required>(){}[0]
+        final fun <set-required>(kotlin/Boolean?) // dev.kord.rest.builder.component/FileUploadBuilder.required.<set-required>|<set-required>(kotlin.Boolean?){}[0]
+
+    final fun build(): dev.kord.common.entity/DiscordComponent // dev.kord.rest.builder.component/FileUploadBuilder.build|build(){}[0]
+}
+
+final class dev.kord.rest.builder.component/LabelComponent : dev.kord.rest.builder.component/ContainerComponentBuilder { // dev.kord.rest.builder.component/LabelComponent|null[0]
+    constructor <init>(kotlin/String) // dev.kord.rest.builder.component/LabelComponent.<init>|<init>(kotlin.String){}[0]
+
+    final val component // dev.kord.rest.builder.component/LabelComponent.component|{}component[0]
+        final fun <get-component>(): kotlin.collections/MutableList<dev.kord.rest.builder.component/ContainerComponentBuilder> // dev.kord.rest.builder.component/LabelComponent.component.<get-component>|<get-component>(){}[0]
+    final val label // dev.kord.rest.builder.component/LabelComponent.label|{}label[0]
+        final fun <get-label>(): kotlin/String // dev.kord.rest.builder.component/LabelComponent.label.<get-label>|<get-label>(){}[0]
+
+    final var description // dev.kord.rest.builder.component/LabelComponent.description|{}description[0]
+        final fun <get-description>(): kotlin/String? // dev.kord.rest.builder.component/LabelComponent.description.<get-description>|<get-description>(){}[0]
+        final fun <set-description>(kotlin/String?) // dev.kord.rest.builder.component/LabelComponent.description.<set-description>|<set-description>(kotlin.String?){}[0]
+
+    final fun build(): dev.kord.common.entity/DiscordComponent // dev.kord.rest.builder.component/LabelComponent.build|build(){}[0]
+}
+
 final class dev.kord.rest.builder.component/MediaGalleryBuilder : dev.kord.rest.builder.component/ContainerComponentBuilder { // dev.kord.rest.builder.component/MediaGalleryBuilder|null[0]
     constructor <init>() // dev.kord.rest.builder.component/MediaGalleryBuilder.<init>|<init>(){}[0]
 
