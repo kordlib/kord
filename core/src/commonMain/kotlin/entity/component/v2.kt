@@ -8,6 +8,8 @@ import dev.kord.common.entity.optional.mapList
 import dev.kord.common.entity.optional.orEmpty
 import dev.kord.common.entity.optional.value
 import dev.kord.core.cache.data.ChatComponentData
+import dev.kord.core.cache.data.ComponentData
+import dev.kord.core.cache.data.TextInputComponentData
 import dev.kord.common.entity.UnfurledMediaItem as UnfurledMediaItemData
 
 /**
@@ -176,4 +178,44 @@ public class SeparatorComponent(override val data: ChatComponentData) : Componen
     public val spacing: SeparatorSpacingSize?
         get() = data.spacing.value
 
+}
+
+public class LabelComponent(override val data: ChatComponentData) : Component {
+
+    override val type: ComponentType
+        get() = ComponentType.Label
+
+    /** The label text; max 45 characters. */
+    public val label: String
+        get() = data.label.value!!
+
+    /** An optional description text for the label; max 100 characters. */
+    public val description: String?
+        get() = data.description.value
+
+    /** The component within the label. Cannot be null. */
+    public val component: ComponentData
+        get() = data.components.value!!.first()
+}
+
+public class FileUploadComponent(override val data: ChatComponentData) : Component {
+
+    override val type: ComponentType
+        get() = ComponentType.FileUpload
+
+    /** ID for the file upload; 1-100 characters. */
+    public val customId: String?
+        get() = data.customId.value
+
+    /** Minimum number of items that must be uploaded (defaults to 1); min 0, max 10. */
+    public val minValues: Int?
+        get() = data.minValues.value
+
+    /** Maximum number of items that can be uploaded (defaults to 1); max 10. */
+    public val maxValues: Int?
+        get() = data.maxValues.value
+
+    /** whether the file upload requires files to be uploaded before submitting the modal (defaults to `true`). */
+    public val required: Boolean
+        get() = data.required.discordBoolean
 }

@@ -66,3 +66,15 @@ public inline fun ComponentContainerBuilder.file(builder: FileBuilder.() -> Unit
     val component = FileBuilder().apply(builder)
     addComponent(component)
 }
+
+public inline fun ComponentContainerBuilder.label(label: String, builder: LabelComponentBuilder.() -> Unit) {
+    contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+    val component = LabelComponentBuilder(label).apply(builder)
+    addComponent(component)
+}
+
+public inline fun ComponentContainerBuilder.fileUpload(customId: String, builder: FileUploadBuilder.() -> Unit) {
+    contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+    val component = FileUploadBuilder(customId).apply(builder)
+    addComponent(component)
+}

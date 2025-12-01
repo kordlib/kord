@@ -114,6 +114,16 @@ public sealed class ComponentType(
      */
     public object Container : ComponentType(17)
 
+    /**
+     * Container associating a label and description with a component
+     */
+    public object Label : ComponentType(18)
+
+    /**
+     * Component for uploading files
+     */
+    public object FileUpload : ComponentType(19)
+
     internal object Serializer : KSerializer<ComponentType> {
         override val descriptor: SerialDescriptor =
                 PrimitiveSerialDescriptor("dev.kord.common.entity.ComponentType", PrimitiveKind.INT)
@@ -146,6 +156,8 @@ public sealed class ComponentType(
                 File,
                 Separator,
                 Container,
+                Label,
+                FileUpload,
             )
         }
 
@@ -168,6 +180,8 @@ public sealed class ComponentType(
             13 -> File
             14 -> Separator
             17 -> Container
+            18 -> Label
+            19 -> FileUpload
             else -> Unknown(value)
         }
     }

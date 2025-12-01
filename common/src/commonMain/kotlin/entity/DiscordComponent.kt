@@ -18,6 +18,8 @@
         Entry("File", intValue = 13, kDoc = "Displays an attached file"),
         Entry("Separator", intValue = 14, kDoc = "Component to add vertical padding between other components"),
         Entry("Container", intValue = 17, kDoc = "Container that visually groups a set of components"),
+        Entry("Label", intValue = 18, kDoc = "Container associating a label and description with a component"),
+        Entry("FileUpload", intValue = 19, kDoc = "Component for uploading files")
     ],
 )
 

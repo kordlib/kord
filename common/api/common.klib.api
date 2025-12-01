@@ -7943,6 +7943,10 @@ sealed class dev.kord.common.entity/ComponentType { // dev.kord.common.entity/Co
 
     final object File : dev.kord.common.entity/ComponentType // dev.kord.common.entity/ComponentType.File|null[0]
 
+    final object FileUpload : dev.kord.common.entity/ComponentType // dev.kord.common.entity/ComponentType.FileUpload|null[0]
+
+    final object Label : dev.kord.common.entity/ComponentType // dev.kord.common.entity/ComponentType.Label|null[0]
+
     final object MediaGallery : dev.kord.common.entity/ComponentType // dev.kord.common.entity/ComponentType.MediaGallery|null[0]
 
     final object MentionableSelect : dev.kord.common.entity/ComponentType // dev.kord.common.entity/ComponentType.MentionableSelect|null[0]

@@ -6527,6 +6527,38 @@ final class dev.kord.core.entity.component/FileComponent : dev.kord.core.entity.
         final fun <get-url>(): dev.kord.core.entity.component/UnfurledMediaItem // dev.kord.core.entity.component/FileComponent.url.<get-url>|<get-url>(){}[0]
 }
 
+final class dev.kord.core.entity.component/FileUploadComponent : dev.kord.core.entity.component/Component { // dev.kord.core.entity.component/FileUploadComponent|null[0]
+    constructor <init>(dev.kord.core.cache.data/ChatComponentData) // dev.kord.core.entity.component/FileUploadComponent.<init>|<init>(dev.kord.core.cache.data.ChatComponentData){}[0]
+
+    final val customId // dev.kord.core.entity.component/FileUploadComponent.customId|{}customId[0]
+        final fun <get-customId>(): kotlin/String? // dev.kord.core.entity.component/FileUploadComponent.customId.<get-customId>|<get-customId>(){}[0]
+    final val data // dev.kord.core.entity.component/FileUploadComponent.data|{}data[0]
+        final fun <get-data>(): dev.kord.core.cache.data/ChatComponentData // dev.kord.core.entity.component/FileUploadComponent.data.<get-data>|<get-data>(){}[0]
+    final val maxValues // dev.kord.core.entity.component/FileUploadComponent.maxValues|{}maxValues[0]
+        final fun <get-maxValues>(): kotlin/Int? // dev.kord.core.entity.component/FileUploadComponent.maxValues.<get-maxValues>|<get-maxValues>(){}[0]
+    final val minValues // dev.kord.core.entity.component/FileUploadComponent.minValues|{}minValues[0]
+        final fun <get-minValues>(): kotlin/Int? // dev.kord.core.entity.component/FileUploadComponent.minValues.<get-minValues>|<get-minValues>(){}[0]
+    final val required // dev.kord.core.entity.component/FileUploadComponent.required|{}required[0]
+        final fun <get-required>(): kotlin/Boolean // dev.kord.core.entity.component/FileUploadComponent.required.<get-required>|<get-required>(){}[0]
+    final val type // dev.kord.core.entity.component/FileUploadComponent.type|{}type[0]
+        final fun <get-type>(): dev.kord.common.entity/ComponentType // dev.kord.core.entity.component/FileUploadComponent.type.<get-type>|<get-type>(){}[0]
+}
+
+final class dev.kord.core.entity.component/LabelComponent : dev.kord.core.entity.component/Component { // dev.kord.core.entity.component/LabelComponent|null[0]
+    constructor <init>(dev.kord.core.cache.data/ChatComponentData) // dev.kord.core.entity.component/LabelComponent.<init>|<init>(dev.kord.core.cache.data.ChatComponentData){}[0]
+
+    final val component // dev.kord.core.entity.component/LabelComponent.component|{}component[0]
+        final fun <get-component>(): dev.kord.core.cache.data/ComponentData // dev.kord.core.entity.component/LabelComponent.component.<get-component>|<get-component>(){}[0]
+    final val data // dev.kord.core.entity.component/LabelComponent.data|{}data[0]
+        final fun <get-data>(): dev.kord.core.cache.data/ChatComponentData // dev.kord.core.entity.component/LabelComponent.data.<get-data>|<get-data>(){}[0]
+    final val description // dev.kord.core.entity.component/LabelComponent.description|{}description[0]
+        final fun <get-description>(): kotlin/String? // dev.kord.core.entity.component/LabelComponent.description.<get-description>|<get-description>(){}[0]
+    final val label // dev.kord.core.entity.component/LabelComponent.label|{}label[0]
+        final fun <get-label>(): kotlin/String // dev.kord.core.entity.component/LabelComponent.label.<get-label>|<get-label>(){}[0]
+    final val type // dev.kord.core.entity.component/LabelComponent.type|{}type[0]
+        final fun <get-type>(): dev.kord.common.entity/ComponentType // dev.kord.core.entity.component/LabelComponent.type.<get-type>|<get-type>(){}[0]
+}
+
 final class dev.kord.core.entity.component/MediaGalleryComponent : dev.kord.core.entity.component/Component { // dev.kord.core.entity.component/MediaGalleryComponent|null[0]
     constructor <init>(dev.kord.core.cache.data/ChatComponentData) // dev.kord.core.entity.component/MediaGalleryComponent.<init>|<init>(dev.kord.core.cache.data.ChatComponentData){}[0]
 

@@ -8,6 +8,7 @@ import dev.kord.common.entity.SeparatorSpacingSize
 import dev.kord.common.entity.UnfurledMediaItem
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
+import dev.kord.common.entity.optional.OptionalInt
 import dev.kord.common.entity.optional.delegate.delegate
 import dev.kord.common.entity.optional.map
 import kotlin.contracts.InvocationKind
@@ -91,6 +92,26 @@ public class FileBuilder : ContainerComponentBuilder {
         type = ComponentType.File,
         media = _url.map { UnfurledMediaItem(it) },
         spoiler = _spoiler
+    )
+}
+
+public class FileUploadBuilder(public val customId: String) : ContainerComponentBuilder {
+    private var _minValues: OptionalInt = OptionalInt.Missing
+    private var _maxValues: OptionalInt = OptionalInt.Missing
+    private var _required: OptionalBoolean = OptionalBoolean.Missing
+
+    public var minValues: Int? by ::_minValues.delegate()
+
+    public var maxValues: Int? by ::_maxValues.delegate()
+
+    public var required: Boolean? by ::_required.delegate()
+
+    override fun build(): DiscordComponent = DiscordChatComponent(
+        type = ComponentType.FileUpload,
+        customId = Optional(customId),
+        minValues = _minValues,
+        maxValues = _maxValues,
+        required = _required
     )
 }
 
