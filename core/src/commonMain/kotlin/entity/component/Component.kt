@@ -47,5 +47,7 @@ public fun Component(data: ComponentData): Component = when (data.type) {
     ComponentType.Separator -> SeparatorComponent(data as ChatComponentData)
     ComponentType.TextDisplay -> TextDisplayComponent(data as ChatComponentData)
     ComponentType.Thumbnail -> ThumbnailComponent(data as ChatComponentData)
+    ComponentType.Label -> LabelComponent(data as ChatComponentData)
+    ComponentType.FileUpload -> FileUploadComponent(data as ChatComponentData)
     is ComponentType.Unknown -> UnknownComponent(data)
 }

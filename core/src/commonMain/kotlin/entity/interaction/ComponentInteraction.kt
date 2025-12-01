@@ -89,6 +89,8 @@ public fun ComponentInteraction(
         ComponentType.TextDisplay -> throwNoInteractions()
         ComponentType.Thumbnail -> throwNoInteractions()
         ComponentType.ActionRow -> throwNoInteractions()
+        ComponentType.FileUpload -> throwNoInteractions()
+        ComponentType.Label -> throwNoInteractions()
         is ComponentType.Unknown -> error("Unknown component type: ${type.value}")
         null -> error("Component type was null")
     }
