@@ -12,6 +12,7 @@ import dev.kord.core.behavior.MessageBehavior
 import dev.kord.core.behavior.UserBehavior
 import dev.kord.core.behavior.channel.ChannelBehavior
 import dev.kord.core.behavior.interaction.response.InteractionResponseBehavior
+import dev.kord.core.cache.data.ChannelData
 import dev.kord.core.cache.data.MessageData
 import dev.kord.core.cache.data.MessageInteractionData
 import dev.kord.core.entity.application.ApplicationCommand
@@ -30,7 +31,6 @@ import dev.kord.core.supplier.getChannelOf
 import dev.kord.core.supplier.getChannelOfOrNull
 import kotlinx.coroutines.flow.*
 import kotlin.time.Instant
-import dev.kord.core.hash
 
 /**
  * An instance of a [Discord Message][https://discord.com/developers/docs/resources/channel#message-object].
@@ -303,6 +303,9 @@ public class Message(
      * Can be used to estimate the relative position along with total_message_sent on the parent thread,
      */
     public val position: Int? get() = data.position.value
+
+    /** The thread that was started from this message, includes thread member object. */
+    public val thread: ChannelData? get() = data.thread.value
 
     /** The [ActionRowComponent]s of this message. */
     public val actionRows: List<ActionRowComponent>
