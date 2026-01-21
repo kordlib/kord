@@ -12,6 +12,7 @@ import dev.kord.core.behavior.MessageBehavior
 import dev.kord.core.behavior.UserBehavior
 import dev.kord.core.behavior.channel.ChannelBehavior
 import dev.kord.core.behavior.interaction.response.InteractionResponseBehavior
+import dev.kord.core.cache.data.ChannelData
 import dev.kord.core.cache.data.MessageData
 import dev.kord.core.cache.data.MessageInteractionData
 import dev.kord.core.entity.application.ApplicationCommand
@@ -19,6 +20,7 @@ import dev.kord.core.entity.channel.Channel
 import dev.kord.core.entity.channel.GuildChannel
 import dev.kord.core.entity.channel.MessageChannel
 import dev.kord.core.entity.channel.TopGuildMessageChannel
+import dev.kord.core.entity.channel.thread.ThreadChannel
 import dev.kord.core.entity.component.ActionRowComponent
 import dev.kord.core.entity.interaction.ActionInteraction
 import dev.kord.core.entity.interaction.followup.FollowupMessage
@@ -303,6 +305,9 @@ public class Message(
      * Can be used to estimate the relative position along with total_message_sent on the parent thread,
      */
     public val position: Int? get() = data.position.value
+
+    /** The thread that was started from this message, includes thread member object. */
+    public val thread: ChannelData? get() = data.thread.value
 
     /** The [ActionRowComponent]s of this message. */
     public val actionRows: List<ActionRowComponent>
