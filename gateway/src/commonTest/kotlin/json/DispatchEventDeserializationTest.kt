@@ -73,6 +73,7 @@ class DispatchEventDeserializationTest {
         id = Snowflake.min,
         name = "name",
         icon = null,
+        homeHeader = null,
         ownerId = Snowflake.min,
         region = "nice-region",
         afkChannelId = null,
@@ -98,13 +99,13 @@ class DispatchEventDeserializationTest {
         premiumProgressBarEnabled = false,
         safetyAlertsChannelId = null,
     )
-    private val guildJson = """{"id":"0","name":"name","icon":null,"owner_id":"0","region":"nice-region",""" +
-        """"afk_channel_id":null,"afk_timeout":2520,"verification_level":2,"default_message_notifications":1,""" +
-        """"explicit_content_filter":1,"roles":[],"emojis":[],"features":[],"mfa_level":0,"application_id":null,""" +
-        """"system_channel_id":null,"system_channel_flags":0,"rules_channel_id":null,"vanity_url_code":null,""" +
-        """"description":null,"banner":null,"premium_tier":1,"preferred_locale":"en-US",""" +
-        """"public_updates_channel_id":null,"nsfw_level":0,"premium_progress_bar_enabled":false,""" +
-        """"safety_alerts_channel_id":null}"""
+    private val guildJson = """{"id":"0","name":"name","icon":null,"home_header":null,"owner_id":"0",""" +
+        """"region":"nice-region","afk_channel_id":null,"afk_timeout":2520,"verification_level":2,""" +
+        """"default_message_notifications":1,"explicit_content_filter":1,"roles":[],"emojis":[],"features":[],""" +
+        """"mfa_level":0,"application_id":null,"system_channel_id":null,"system_channel_flags":0,""" +
+        """"rules_channel_id":null,"vanity_url_code":null,"description":null,"banner":null,"premium_tier":1,""" +
+        """"preferred_locale":"en-US","public_updates_channel_id":null,"nsfw_level":0,""" +
+        """"premium_progress_bar_enabled":false,"safety_alerts_channel_id":null}"""
     private val user = DiscordUser(id = Snowflake.min, username = "username", avatar = null)
     private val userJson = """{"id":"0","username":"username","avatar":null}"""
     private val guildBan = DiscordGuildBan(guildId = Snowflake.min, user = user)
