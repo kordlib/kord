@@ -3,13 +3,13 @@ package dev.kord.core.entity.component
 import dev.kord.common.entity.ComponentType
 import dev.kord.common.entity.MediaGalleryItem
 import dev.kord.common.entity.SeparatorSpacingSize
+import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.map
 import dev.kord.common.entity.optional.mapList
 import dev.kord.common.entity.optional.orEmpty
 import dev.kord.common.entity.optional.value
 import dev.kord.core.cache.data.ChatComponentData
 import dev.kord.core.cache.data.ComponentData
-import dev.kord.core.cache.data.TextInputComponentData
 import dev.kord.common.entity.UnfurledMediaItem as UnfurledMediaItemData
 
 /**
@@ -32,6 +32,7 @@ public class UnfurledMediaItem(private val data: UnfurledMediaItemData) {
     public val height: Int? get() = data.height.value
     public val width: Int? get() = data.width.value
     public val contentType: String? get() = data.contentType.value
+    public val attachmentId: Snowflake? get() = data.attachmentId.value
 }
 
 /**

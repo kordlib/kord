@@ -9615,6 +9615,7 @@ public final class dev/kord/core/entity/component/ThumbnailComponent : dev/kord/
 
 public final class dev/kord/core/entity/component/UnfurledMediaItem {
 	public fun <init> (Ldev/kord/common/entity/UnfurledMediaItem;)V
+	public final fun getAttachmentId ()Ldev/kord/common/entity/Snowflake;
 	public final fun getContentType ()Ljava/lang/String;
 	public final fun getHeight ()Ljava/lang/Integer;
 	public final fun getProxyUrl ()Ljava/lang/String;

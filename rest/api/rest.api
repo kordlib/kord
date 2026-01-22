@@ -1192,10 +1192,17 @@ public final class dev/kord/rest/builder/component/FileUploadBuilder : dev/kord/
 public final class dev/kord/rest/builder/component/LabelComponentBuilder : dev/kord/rest/builder/component/ContainerComponentBuilder {
 	public fun <init> (Ljava/lang/String;)V
 	public fun build ()Ldev/kord/common/entity/DiscordComponent;
+	public final fun channelSelect (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+	public final fun fileUpload (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
 	public final fun getComponent ()Ljava/util/List;
 	public final fun getDescription ()Ljava/lang/String;
 	public final fun getLabel ()Ljava/lang/String;
+	public final fun mentionableSelect (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+	public final fun roleSelect (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
 	public final fun setDescription (Ljava/lang/String;)V
+	public final fun stringSelect (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+	public final fun textDisplay (Lkotlin/jvm/functions/Function1;)V
+	public final fun userSelect (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
 }
 
 public final class dev/kord/rest/builder/component/MediaGalleryBuilder : dev/kord/rest/builder/component/ContainerComponentBuilder {
@@ -2020,6 +2027,7 @@ public final class dev/kord/rest/builder/interaction/ModalBuilder : dev/kord/res
 	public final fun getComponents ()Ljava/util/List;
 	public final fun getCustomId ()Ljava/lang/String;
 	public final fun getTitle ()Ljava/lang/String;
+	public final fun label (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
 	public final fun setCustomId (Ljava/lang/String;)V
 	public final fun setTitle (Ljava/lang/String;)V
 	public fun toRequest ()Ldev/kord/common/entity/DiscordModal;

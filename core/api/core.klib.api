@@ -6700,6 +6700,8 @@ final class dev.kord.core.entity.component/ThumbnailComponent : dev.kord.core.en
 final class dev.kord.core.entity.component/UnfurledMediaItem { // dev.kord.core.entity.component/UnfurledMediaItem|null[0]
     constructor <init>(dev.kord.common.entity/UnfurledMediaItem) // dev.kord.core.entity.component/UnfurledMediaItem.<init>|<init>(dev.kord.common.entity.UnfurledMediaItem){}[0]
 
+    final val attachmentId // dev.kord.core.entity.component/UnfurledMediaItem.attachmentId|{}attachmentId[0]
+        final fun <get-attachmentId>(): dev.kord.common.entity/Snowflake? // dev.kord.core.entity.component/UnfurledMediaItem.attachmentId.<get-attachmentId>|<get-attachmentId>(){}[0]
     final val contentType // dev.kord.core.entity.component/UnfurledMediaItem.contentType|{}contentType[0]
         final fun <get-contentType>(): kotlin/String? // dev.kord.core.entity.component/UnfurledMediaItem.contentType.<get-contentType>|<get-contentType>(){}[0]
     final val height // dev.kord.core.entity.component/UnfurledMediaItem.height|{}height[0]

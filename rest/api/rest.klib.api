@@ -2268,6 +2268,13 @@ final class dev.kord.rest.builder.component/LabelComponentBuilder : dev.kord.res
         final fun <set-description>(kotlin/String?) // dev.kord.rest.builder.component/LabelComponentBuilder.description.<set-description>|<set-description>(kotlin.String?){}[0]
 
     final fun build(): dev.kord.common.entity/DiscordComponent // dev.kord.rest.builder.component/LabelComponentBuilder.build|build(){}[0]
+    final inline fun channelSelect(kotlin/String, kotlin/Function1<dev.kord.rest.builder.component/ChannelSelectBuilder, kotlin/Unit>) // dev.kord.rest.builder.component/LabelComponentBuilder.channelSelect|channelSelect(kotlin.String;kotlin.Function1<dev.kord.rest.builder.component.ChannelSelectBuilder,kotlin.Unit>){}[0]
+    final inline fun fileUpload(kotlin/String, kotlin/Function1<dev.kord.rest.builder.component/FileUploadBuilder, kotlin/Unit>) // dev.kord.rest.builder.component/LabelComponentBuilder.fileUpload|fileUpload(kotlin.String;kotlin.Function1<dev.kord.rest.builder.component.FileUploadBuilder,kotlin.Unit>){}[0]
+    final inline fun mentionableSelect(kotlin/String, kotlin/Function1<dev.kord.rest.builder.component/MentionableSelectBuilder, kotlin/Unit>) // dev.kord.rest.builder.component/LabelComponentBuilder.mentionableSelect|mentionableSelect(kotlin.String;kotlin.Function1<dev.kord.rest.builder.component.MentionableSelectBuilder,kotlin.Unit>){}[0]
+    final inline fun roleSelect(kotlin/String, kotlin/Function1<dev.kord.rest.builder.component/RoleSelectBuilder, kotlin/Unit>) // dev.kord.rest.builder.component/LabelComponentBuilder.roleSelect|roleSelect(kotlin.String;kotlin.Function1<dev.kord.rest.builder.component.RoleSelectBuilder,kotlin.Unit>){}[0]
+    final inline fun stringSelect(kotlin/String, kotlin/Function1<dev.kord.rest.builder.component/StringSelectBuilder, kotlin/Unit>) // dev.kord.rest.builder.component/LabelComponentBuilder.stringSelect|stringSelect(kotlin.String;kotlin.Function1<dev.kord.rest.builder.component.StringSelectBuilder,kotlin.Unit>){}[0]
+    final inline fun textDisplay(kotlin/Function1<dev.kord.rest.builder.component/TextDisplayBuilder, kotlin/Unit>) // dev.kord.rest.builder.component/LabelComponentBuilder.textDisplay|textDisplay(kotlin.Function1<dev.kord.rest.builder.component.TextDisplayBuilder,kotlin.Unit>){}[0]
+    final inline fun userSelect(kotlin/String, kotlin/Function1<dev.kord.rest.builder.component/UserSelectBuilder, kotlin/Unit>) // dev.kord.rest.builder.component/LabelComponentBuilder.userSelect|userSelect(kotlin.String;kotlin.Function1<dev.kord.rest.builder.component.UserSelectBuilder,kotlin.Unit>){}[0]
 }
 
 final class dev.kord.rest.builder.component/MediaGalleryBuilder : dev.kord.rest.builder.component/ContainerComponentBuilder { // dev.kord.rest.builder.component/MediaGalleryBuilder|null[0]
@@ -3006,7 +3013,7 @@ final class dev.kord.rest.builder.interaction/ModalBuilder : dev.kord.rest.build
     constructor <init>(kotlin/String, kotlin/String) // dev.kord.rest.builder.interaction/ModalBuilder.<init>|<init>(kotlin.String;kotlin.String){}[0]
 
     final val components // dev.kord.rest.builder.interaction/ModalBuilder.components|{}components[0]
-        final fun <get-components>(): kotlin.collections/MutableList<dev.kord.rest.builder.component/ActionRowBuilder> // dev.kord.rest.builder.interaction/ModalBuilder.components.<get-components>|<get-components>(){}[0]
+        final fun <get-components>(): kotlin.collections/MutableList<dev.kord.rest.builder.component/ContainerComponentBuilder> // dev.kord.rest.builder.interaction/ModalBuilder.components.<get-components>|<get-components>(){}[0]
 
     final var customId // dev.kord.rest.builder.interaction/ModalBuilder.customId|{}customId[0]
         final fun <get-customId>(): kotlin/String // dev.kord.rest.builder.interaction/ModalBuilder.customId.<get-customId>|<get-customId>(){}[0]
@@ -3017,6 +3024,7 @@ final class dev.kord.rest.builder.interaction/ModalBuilder : dev.kord.rest.build
 
     final fun toRequest(): dev.kord.common.entity/DiscordModal // dev.kord.rest.builder.interaction/ModalBuilder.toRequest|toRequest(){}[0]
     final inline fun actionRow(kotlin/Function1<dev.kord.rest.builder.component/ActionRowBuilder, kotlin/Unit>) // dev.kord.rest.builder.interaction/ModalBuilder.actionRow|actionRow(kotlin.Function1<dev.kord.rest.builder.component.ActionRowBuilder,kotlin.Unit>){}[0]
+    final inline fun label(kotlin/String, kotlin/Function1<dev.kord.rest.builder.component/LabelComponentBuilder, kotlin/Unit>) // dev.kord.rest.builder.interaction/ModalBuilder.label|label(kotlin.String;kotlin.Function1<dev.kord.rest.builder.component.LabelComponentBuilder,kotlin.Unit>){}[0]
 }
 
 final class dev.kord.rest.builder.interaction/NumberOptionBuilder : dev.kord.rest.builder.interaction/NumericOptionBuilder<kotlin/Double, dev.kord.common.entity/Choice.NumberChoice> { // dev.kord.rest.builder.interaction/NumberOptionBuilder|null[0]

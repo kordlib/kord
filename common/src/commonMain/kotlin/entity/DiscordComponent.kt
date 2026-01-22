@@ -152,7 +152,10 @@ public data class UnfurledMediaItem(
     val proxyUrl: Optional<String> = Optional.Missing(),
     val height: OptionalInt? = OptionalInt.Missing,
     val width: OptionalInt? = OptionalInt.Missing,
-    val contentType: Optional<String> = Optional.Missing()
+    @SerialName("content_type")
+    val contentType: Optional<String> = Optional.Missing(),
+    @SerialName("attachment_id")
+    val attachmentId: OptionalSnowflake = OptionalSnowflake.Missing
 )
 
 @Serializable

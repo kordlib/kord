@@ -4,6 +4,8 @@ import dev.kord.common.annotation.KordDsl
 import dev.kord.common.entity.DiscordModal
 import dev.kord.rest.builder.RequestBuilder
 import dev.kord.rest.builder.component.ActionRowBuilder
+import dev.kord.rest.builder.component.ContainerComponentBuilder
+import dev.kord.rest.builder.component.LabelComponentBuilder
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -12,7 +14,7 @@ public class ModalBuilder(
     public var title: String,
     public var customId: String
 ) : RequestBuilder<DiscordModal> {
-    public val components: MutableList<ActionRowBuilder> = mutableListOf()
+    public val components: MutableList<ContainerComponentBuilder> = mutableListOf()
 
     /**
      * Adds an Action Row to the modal, configured by the [builder].
@@ -23,6 +25,17 @@ public class ModalBuilder(
         }
 
         components.add(ActionRowBuilder().apply(builder))
+    }
+
+    /**
+     * Adds a Label to the modal, configured by the [builder]
+     */
+    public inline fun label(label: String, builder: LabelComponentBuilder.() -> Unit) {
+        contract {
+            callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+        }
+
+        components.add(LabelComponentBuilder(label).apply(builder))
     }
 
     override fun toRequest(): DiscordModal = DiscordModal(
