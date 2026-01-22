@@ -6,15 +6,14 @@ import dev.kord.common.entity.MessageFlags
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.Optional
 import dev.kord.rest.NamedFile
-import dev.kord.rest.builder.component.ActionRowBuilder
-import dev.kord.rest.builder.component.MessageComponentBuilder
+import dev.kord.rest.builder.component.*
 import dev.kord.rest.request.MultipartRequest
 import io.ktor.client.request.forms.*
 import kotlin.contracts.InvocationKind.EXACTLY_ONCE
 import kotlin.contracts.contract
 
 @KordDsl
-public interface MessageBuilder {
+public interface MessageBuilder : ComponentContainerBuilder {
 
     /** The message contents (up to 2000 characters). */
     public var content: String?
@@ -57,6 +56,10 @@ public interface MessageBuilder {
         files.add(file)
         return file
     }
+
+    override fun addComponent(component: ContainerComponentBuilder) {
+        components?.add(component) ?: run { components = mutableListOf(component) }
+    }
 }
 
 /**
@@ -86,12 +89,25 @@ public inline fun MessageBuilder.allowedMentions(builder: AllowedMentionsBuilder
  * Adds an [action row][ActionRowBuilder] configured by the [builder] to the [components][MessageBuilder.components] of
  * the message.
  *
- * A message can have up to five action rows.
+ * A message can have up to ten top-level components.
  */
+@Deprecated("Use ComponentContainerBuilder#actionRow instead.")
 public inline fun MessageBuilder.actionRow(builder: ActionRowBuilder.() -> Unit) {
     contract { callsInPlace(builder, EXACTLY_ONCE) }
     val actionRow = ActionRowBuilder().apply(builder)
     components?.add(actionRow) ?: run { components = mutableListOf(actionRow) }
+}
+
+/**
+ * Adds an [container][ContainerBuilder] configured by the [builder] to the [components][MessageBuilder.components] of
+ * the message.
+ *
+ * A message can have up to ten top-level components.
+ */
+public inline fun MessageBuilder.container(builder: ContainerBuilder.() -> Unit) {
+    contract { callsInPlace(builder, EXACTLY_ONCE) }
+    val container = ContainerBuilder().apply(builder)
+    components?.add(container) ?: run { components = mutableListOf(container) }
 }
 
 /**
