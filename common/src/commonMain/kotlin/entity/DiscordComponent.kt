@@ -93,7 +93,7 @@ import kotlinx.serialization.json.*
 @Serializable(with = DiscordComponent.Serializer::class)
 public sealed class DiscordComponent {
     public abstract val type: ComponentType
-    public abstract val label: Optional<String>
+    public abstract val label: Optional<String?>
     public abstract val emoji: Optional<DiscordPartialEmoji>
 
     @SerialName("custom_id")
@@ -204,7 +204,7 @@ public data class DiscordChatComponent(
 public data class DiscordTextInputComponent(
     override val type: ComponentType,
     public val style: Optional<TextInputStyle> = Optional.Missing(),
-    override val label: Optional<String> = Optional.Missing(),
+    override val label: Optional<String?> = Optional.Missing(),
     override val emoji: Optional<DiscordPartialEmoji> = Optional.Missing(),
     @SerialName("custom_id")
     override val customId: Optional<String> = Optional.Missing(),

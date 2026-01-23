@@ -3,6 +3,7 @@ package dev.kord.core.entity.component
 import dev.kord.common.entity.ComponentType
 import dev.kord.core.cache.data.ChatComponentData
 import dev.kord.core.cache.data.ComponentData
+import dev.kord.core.cache.data.LabelComponentData
 import dev.kord.core.cache.data.TextInputComponentData
 import dev.kord.core.entity.Message
 
@@ -47,7 +48,7 @@ public fun Component(data: ComponentData): Component = when (data.type) {
     ComponentType.Separator -> SeparatorComponent(data as ChatComponentData)
     ComponentType.TextDisplay -> TextDisplayComponent(data as ChatComponentData)
     ComponentType.Thumbnail -> ThumbnailComponent(data as ChatComponentData)
-    ComponentType.Label -> LabelComponent(data as ChatComponentData)
+    ComponentType.Label -> LabelComponent(data as LabelComponentData)
     ComponentType.FileUpload -> FileUploadComponent(data as ChatComponentData)
     is ComponentType.Unknown -> UnknownComponent(data)
 }

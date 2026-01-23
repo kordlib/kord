@@ -1,9 +1,9 @@
 package dev.kord.rest.builder.component
 
 import dev.kord.common.entity.ComponentType
-import dev.kord.common.entity.DiscordChatComponent
 import dev.kord.common.entity.DiscordComponent
 import dev.kord.common.entity.DiscordModalComponent
+import dev.kord.common.entity.TextInputStyle
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.delegate.delegate
 import dev.kord.common.entity.optional.map
@@ -19,6 +19,17 @@ public class LabelComponentBuilder(public val label: String) : ContainerComponen
     private var _component: Optional<ContainerComponentBuilder> = Optional.Missing()
 
     public var component: ContainerComponentBuilder? by ::_component.delegate()
+
+    /**
+     * Adds a Text input to the label, configured by the [builder]
+     */
+    public inline fun textInput(style: TextInputStyle, customId: String, builder: TextInputBuilder.() -> Unit) {
+        contract {
+            callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+        }
+
+        component = TextInputBuilder(style, customId).apply(builder)
+    }
 
     /**
      * Adds a String select menu to the label, configured by the [builder]

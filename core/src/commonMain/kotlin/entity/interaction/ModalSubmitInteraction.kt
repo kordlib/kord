@@ -6,6 +6,7 @@ import dev.kord.common.entity.optional.unwrap
 import dev.kord.core.Kord
 import dev.kord.core.behavior.interaction.ComponentInteractionBehavior
 import dev.kord.core.cache.data.InteractionData
+import dev.kord.core.cache.data.LabelComponentData
 import dev.kord.core.entity.Guild
 import dev.kord.core.entity.Message
 import dev.kord.core.entity.component.ActionRowComponent
@@ -30,6 +31,22 @@ public sealed interface ModalSubmitInteraction : ActionInteraction, ComponentInt
     /** The [ActionRowComponent]s of the modal containing the values submitted by the user. */
     public val actionRows: List<ActionRowComponent>
         get() = data.data.components.orEmpty().map { ActionRowComponent(it) }
+
+    /**
+     * The [Component]s of the modal, containing the values submitted by the user in their respective subclasses, indexed by their customId (if present).
+     */
+    public val responseComponents: Map<String, Component>
+        get() = actionRows.mapNotNull { actionRow ->
+            if (actionRow.data is LabelComponentData) {
+                val component = Component(actionRow.data.component.value!!)
+                val customId = component.data.customId.value
+                customId?.let { it to component }
+            } else {
+                val component = Component(actionRow.data.components.orEmpty().first())
+                val customId = component.data.customId.value
+                customId?.let { it to component }
+            }
+        }.associate { it }
 
     /**
      * The [TextInputComponent]s of the modal, indexed by their [customId][TextInputComponent.customId]. They contain

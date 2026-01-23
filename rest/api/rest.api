@@ -1203,6 +1203,7 @@ public final class dev/kord/rest/builder/component/LabelComponentBuilder : dev/k
 	public final fun setDescription (Ljava/lang/String;)V
 	public final fun stringSelect (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
 	public final fun textDisplay (Lkotlin/jvm/functions/Function1;)V
+	public final fun textInput (Ldev/kord/common/entity/TextInputStyle;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
 	public final fun userSelect (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
 }
 
@@ -1319,6 +1320,7 @@ public final class dev/kord/rest/builder/component/TextDisplayBuilder : dev/kord
 
 public final class dev/kord/rest/builder/component/TextInputBuilder : dev/kord/rest/builder/component/ActionRowComponentBuilder {
 	public fun <init> (Ldev/kord/common/entity/TextInputStyle;Ljava/lang/String;Ljava/lang/String;)V
+	public synthetic fun <init> (Ldev/kord/common/entity/TextInputStyle;Ljava/lang/String;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public synthetic fun build ()Ldev/kord/common/entity/DiscordComponent;
 	public fun build ()Ldev/kord/common/entity/DiscordTextInputComponent;
 	public final fun getAllowedLength ()Lkotlin/ranges/ClosedRange;

@@ -2275,6 +2275,7 @@ final class dev.kord.rest.builder.component/LabelComponentBuilder : dev.kord.res
     final inline fun roleSelect(kotlin/String, kotlin/Function1<dev.kord.rest.builder.component/RoleSelectBuilder, kotlin/Unit>) // dev.kord.rest.builder.component/LabelComponentBuilder.roleSelect|roleSelect(kotlin.String;kotlin.Function1<dev.kord.rest.builder.component.RoleSelectBuilder,kotlin.Unit>){}[0]
     final inline fun stringSelect(kotlin/String, kotlin/Function1<dev.kord.rest.builder.component/StringSelectBuilder, kotlin/Unit>) // dev.kord.rest.builder.component/LabelComponentBuilder.stringSelect|stringSelect(kotlin.String;kotlin.Function1<dev.kord.rest.builder.component.StringSelectBuilder,kotlin.Unit>){}[0]
     final inline fun textDisplay(kotlin/Function1<dev.kord.rest.builder.component/TextDisplayBuilder, kotlin/Unit>) // dev.kord.rest.builder.component/LabelComponentBuilder.textDisplay|textDisplay(kotlin.Function1<dev.kord.rest.builder.component.TextDisplayBuilder,kotlin.Unit>){}[0]
+    final inline fun textInput(dev.kord.common.entity/TextInputStyle, kotlin/String, kotlin/Function1<dev.kord.rest.builder.component/TextInputBuilder, kotlin/Unit>) // dev.kord.rest.builder.component/LabelComponentBuilder.textInput|textInput(dev.kord.common.entity.TextInputStyle;kotlin.String;kotlin.Function1<dev.kord.rest.builder.component.TextInputBuilder,kotlin.Unit>){}[0]
     final inline fun userSelect(kotlin/String, kotlin/Function1<dev.kord.rest.builder.component/UserSelectBuilder, kotlin/Unit>) // dev.kord.rest.builder.component/LabelComponentBuilder.userSelect|userSelect(kotlin.String;kotlin.Function1<dev.kord.rest.builder.component.UserSelectBuilder,kotlin.Unit>){}[0]
 }
 
@@ -2400,7 +2401,7 @@ final class dev.kord.rest.builder.component/TextDisplayBuilder : dev.kord.rest.b
 }
 
 final class dev.kord.rest.builder.component/TextInputBuilder : dev.kord.rest.builder.component/ActionRowComponentBuilder { // dev.kord.rest.builder.component/TextInputBuilder|null[0]
-    constructor <init>(dev.kord.common.entity/TextInputStyle, kotlin/String, kotlin/String) // dev.kord.rest.builder.component/TextInputBuilder.<init>|<init>(dev.kord.common.entity.TextInputStyle;kotlin.String;kotlin.String){}[0]
+    constructor <init>(dev.kord.common.entity/TextInputStyle, kotlin/String, kotlin/String? = ...) // dev.kord.rest.builder.component/TextInputBuilder.<init>|<init>(dev.kord.common.entity.TextInputStyle;kotlin.String;kotlin.String?){}[0]
 
     final var allowedLength // dev.kord.rest.builder.component/TextInputBuilder.allowedLength|{}allowedLength[0]
         final fun <get-allowedLength>(): kotlin.ranges/ClosedRange<kotlin/Int>? // dev.kord.rest.builder.component/TextInputBuilder.allowedLength.<get-allowedLength>|<get-allowedLength>(){}[0]
@@ -2409,8 +2410,8 @@ final class dev.kord.rest.builder.component/TextInputBuilder : dev.kord.rest.bui
         final fun <get-customId>(): kotlin/String // dev.kord.rest.builder.component/TextInputBuilder.customId.<get-customId>|<get-customId>(){}[0]
         final fun <set-customId>(kotlin/String) // dev.kord.rest.builder.component/TextInputBuilder.customId.<set-customId>|<set-customId>(kotlin.String){}[0]
     final var label // dev.kord.rest.builder.component/TextInputBuilder.label|{}label[0]
-        final fun <get-label>(): kotlin/String // dev.kord.rest.builder.component/TextInputBuilder.label.<get-label>|<get-label>(){}[0]
-        final fun <set-label>(kotlin/String) // dev.kord.rest.builder.component/TextInputBuilder.label.<set-label>|<set-label>(kotlin.String){}[0]
+        final fun <get-label>(): kotlin/String? // dev.kord.rest.builder.component/TextInputBuilder.label.<get-label>|<get-label>(){}[0]
+        final fun <set-label>(kotlin/String?) // dev.kord.rest.builder.component/TextInputBuilder.label.<set-label>|<set-label>(kotlin.String?){}[0]
     final var placeholder // dev.kord.rest.builder.component/TextInputBuilder.placeholder|{}placeholder[0]
         final fun <get-placeholder>(): kotlin/String? // dev.kord.rest.builder.component/TextInputBuilder.placeholder.<get-placeholder>|<get-placeholder>(){}[0]
         final fun <set-placeholder>(kotlin/String?) // dev.kord.rest.builder.component/TextInputBuilder.placeholder.<set-placeholder>|<set-placeholder>(kotlin.String?){}[0]

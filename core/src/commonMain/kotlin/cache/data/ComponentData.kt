@@ -29,7 +29,7 @@ import kotlinx.serialization.json.JsonClassDiscriminator
 @JsonClassDiscriminator("_type") // would otherwise conflict with `type` property
 public sealed class ComponentData {
     public abstract val type: ComponentType
-    public abstract val label: Optional<String>
+    public abstract val label: Optional<String?>
 
     //TODO: turn this emoji into a EmojiData, it's lacking the guild id
     public abstract val emoji: Optional<DiscordPartialEmoji>
@@ -108,7 +108,7 @@ public sealed class ComponentData {
             }
 
             is DiscordModalComponent -> with(entity) {
-                ModalComponentData(
+                LabelComponentData(
                     type,
                     label,
                     emoji,
@@ -169,7 +169,7 @@ public data class ChatComponentData(
 public data class TextInputComponentData(
     override val type: ComponentType,
     val style: Optional<TextInputStyle> = Optional.Missing(),
-    override val label: Optional<String> = Optional.Missing(),
+    override val label: Optional<String?> = Optional.Missing(),
     //TODO: turn this emoji into a EmojiData, it's lacking the guild id
     override val emoji: Optional<DiscordPartialEmoji> = Optional.Missing(),
     override val customId: Optional<String> = Optional.Missing(),
@@ -189,7 +189,7 @@ public data class TextInputComponentData(
 ) : ComponentData()
 
 @Serializable
-public data class ModalComponentData(
+public data class LabelComponentData(
     override val type: ComponentType,
     override val label: Optional<String> = Optional.Missing(),
     override val emoji: Optional<DiscordPartialEmoji> = Optional.Missing(),

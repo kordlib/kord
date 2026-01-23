@@ -10,6 +10,7 @@ import dev.kord.common.entity.optional.orEmpty
 import dev.kord.common.entity.optional.value
 import dev.kord.core.cache.data.ChatComponentData
 import dev.kord.core.cache.data.ComponentData
+import dev.kord.core.cache.data.LabelComponentData
 import dev.kord.common.entity.UnfurledMediaItem as UnfurledMediaItemData
 
 /**
@@ -181,7 +182,7 @@ public class SeparatorComponent(override val data: ChatComponentData) : Componen
 
 }
 
-public class LabelComponent(override val data: ChatComponentData) : Component {
+public class LabelComponent(override val data: LabelComponentData) : Component {
 
     override val type: ComponentType
         get() = ComponentType.Label
@@ -196,7 +197,7 @@ public class LabelComponent(override val data: ChatComponentData) : Component {
 
     /** The component within the label. Cannot be null. */
     public val component: ComponentData
-        get() = data.components.value!!.first()
+        get() = data.component.value!!
 }
 
 public class FileUploadComponent(override val data: ChatComponentData) : Component {

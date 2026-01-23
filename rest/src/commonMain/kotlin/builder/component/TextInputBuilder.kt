@@ -20,7 +20,7 @@ import dev.kord.common.entity.optional.delegate.delegate
 public class TextInputBuilder(
     public var style: TextInputStyle,
     public var customId: String,
-    public var label: String,
+    public var label: String? = null,
 ) : ActionRowComponentBuilder() {
     /**
      * The range of lengths that can be accepted. Accepts any range between [0,4000].
@@ -53,7 +53,7 @@ public class TextInputBuilder(
             type = ComponentType.TextInput,
             style = Optional(style),
             customId = Optional(customId),
-            label = Optional(label),
+            label = if (label == null) Optional.Missing() else Optional(label),
             minLength = allowedLength?.let { OptionalInt.Value(it.start) } ?: OptionalInt.Missing,
             maxLength = allowedLength?.let { OptionalInt.Value(it.endInclusive) } ?: OptionalInt.Missing,
             placeholder = _placeholder,
