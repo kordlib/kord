@@ -3,8 +3,10 @@ package dev.kord.rest.builder.component
 import dev.kord.common.entity.ComponentType
 import dev.kord.common.entity.DiscordChatComponent
 import dev.kord.common.entity.DiscordComponent
+import dev.kord.common.entity.DiscordModalComponent
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.delegate.delegate
+import dev.kord.common.entity.optional.map
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -14,7 +16,9 @@ public class LabelComponentBuilder(public val label: String) : ContainerComponen
     /** An optional description text for the label; max 100 characters. */
     public var description: String? by ::_description.delegate()
 
-    public val component: MutableList<ContainerComponentBuilder> = mutableListOf()
+    private var _component: Optional<ContainerComponentBuilder> = Optional.Missing()
+
+    public var component: ContainerComponentBuilder? by ::_component.delegate()
 
     /**
      * Adds a String select menu to the label, configured by the [builder]
@@ -24,7 +28,7 @@ public class LabelComponentBuilder(public val label: String) : ContainerComponen
             callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
         }
 
-        component.add(StringSelectBuilder(customId).apply(builder))
+        component = StringSelectBuilder(customId).apply(builder)
     }
 
     /**
@@ -35,7 +39,7 @@ public class LabelComponentBuilder(public val label: String) : ContainerComponen
             callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
         }
 
-        component.add(UserSelectBuilder(customId).apply(builder))
+        component = UserSelectBuilder(customId).apply(builder)
     }
 
     /**
@@ -46,7 +50,7 @@ public class LabelComponentBuilder(public val label: String) : ContainerComponen
             callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
         }
 
-        component.add(RoleSelectBuilder(customId).apply(builder))
+        component = RoleSelectBuilder(customId).apply(builder)
     }
 
     /**
@@ -57,7 +61,7 @@ public class LabelComponentBuilder(public val label: String) : ContainerComponen
             callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
         }
 
-        component.add(MentionableSelectBuilder(customId).apply(builder))
+        component = MentionableSelectBuilder(customId).apply(builder)
     }
 
     /**
@@ -68,7 +72,7 @@ public class LabelComponentBuilder(public val label: String) : ContainerComponen
             callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
         }
 
-        component.add(ChannelSelectBuilder(customId).apply(builder))
+        component = ChannelSelectBuilder(customId).apply(builder)
     }
 
     /**
@@ -79,7 +83,7 @@ public class LabelComponentBuilder(public val label: String) : ContainerComponen
             callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
         }
 
-        component.add(TextDisplayBuilder().apply(builder))
+        component = TextDisplayBuilder().apply(builder)
     }
 
     /**
@@ -90,14 +94,14 @@ public class LabelComponentBuilder(public val label: String) : ContainerComponen
             callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
         }
 
-        component.add(FileUploadBuilder(customId).apply(builder))
+        component = FileUploadBuilder(customId).apply(builder)
     }
 
 
-    override fun build(): DiscordComponent = DiscordChatComponent(
+    override fun build(): DiscordComponent = DiscordModalComponent(
         type = ComponentType.Label,
         label = Optional(label),
         description = _description,
-        components = Optional(component.map { it.build() })
+        component = _component.map { it.build() }
     )
 }

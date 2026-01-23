@@ -19,6 +19,8 @@ public class ModalBuilder(
     /**
      * Adds an Action Row to the modal, configured by the [builder].
      */
+    @Deprecated("[label] is recommended for use over an Action Row in modals. Action Row with Text Inputs in modals are now deprecated.",
+        ReplaceWith("label() {}"), DeprecationLevel.WARNING)
     public inline fun actionRow(builder: ActionRowBuilder.() -> Unit) {
         contract {
             callsInPlace(builder, InvocationKind.EXACTLY_ONCE)

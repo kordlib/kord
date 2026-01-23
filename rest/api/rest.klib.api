@@ -2258,11 +2258,12 @@ final class dev.kord.rest.builder.component/FileUploadBuilder : dev.kord.rest.bu
 final class dev.kord.rest.builder.component/LabelComponentBuilder : dev.kord.rest.builder.component/ContainerComponentBuilder { // dev.kord.rest.builder.component/LabelComponentBuilder|null[0]
     constructor <init>(kotlin/String) // dev.kord.rest.builder.component/LabelComponentBuilder.<init>|<init>(kotlin.String){}[0]
 
-    final val component // dev.kord.rest.builder.component/LabelComponentBuilder.component|{}component[0]
-        final fun <get-component>(): kotlin.collections/MutableList<dev.kord.rest.builder.component/ContainerComponentBuilder> // dev.kord.rest.builder.component/LabelComponentBuilder.component.<get-component>|<get-component>(){}[0]
     final val label // dev.kord.rest.builder.component/LabelComponentBuilder.label|{}label[0]
         final fun <get-label>(): kotlin/String // dev.kord.rest.builder.component/LabelComponentBuilder.label.<get-label>|<get-label>(){}[0]
 
+    final var component // dev.kord.rest.builder.component/LabelComponentBuilder.component|{}component[0]
+        final fun <get-component>(): dev.kord.rest.builder.component/ContainerComponentBuilder? // dev.kord.rest.builder.component/LabelComponentBuilder.component.<get-component>|<get-component>(){}[0]
+        final fun <set-component>(dev.kord.rest.builder.component/ContainerComponentBuilder?) // dev.kord.rest.builder.component/LabelComponentBuilder.component.<set-component>|<set-component>(dev.kord.rest.builder.component.ContainerComponentBuilder?){}[0]
     final var description // dev.kord.rest.builder.component/LabelComponentBuilder.description|{}description[0]
         final fun <get-description>(): kotlin/String? // dev.kord.rest.builder.component/LabelComponentBuilder.description.<get-description>|<get-description>(){}[0]
         final fun <set-description>(kotlin/String?) // dev.kord.rest.builder.component/LabelComponentBuilder.description.<set-description>|<set-description>(kotlin.String?){}[0]
