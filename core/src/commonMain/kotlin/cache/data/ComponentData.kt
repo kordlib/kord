@@ -36,6 +36,7 @@ public sealed class ComponentData {
     public abstract val customId: Optional<String>
     public abstract val url: Optional<String>
     public abstract val disabled: OptionalBoolean
+    public abstract val components: Optional<List<ComponentData>>
     public abstract val defaultValues: Optional<List<DiscordSelectDefaultValue>>
     public abstract val placeholder: Optional<String>
     public abstract val minValues: OptionalInt
@@ -140,7 +141,7 @@ public data class ChatComponentData(
     override val customId: Optional<String> = Optional.Missing(),
     override val url: Optional<String> = Optional.Missing(),
     override val disabled: OptionalBoolean = OptionalBoolean.Missing,
-    val components: Optional<List<ComponentData>> = Optional.Missing(),
+    override val components: Optional<List<ComponentData>> = Optional.Missing(),
     override val defaultValues: Optional<List<DiscordSelectDefaultValue>> = Optional.Missing(),
     override val placeholder: Optional<String> = Optional.Missing(),
     override val minValues: OptionalInt = OptionalInt.Missing,
@@ -174,7 +175,7 @@ public data class TextInputComponentData(
     override val customId: Optional<String> = Optional.Missing(),
     override val url: Optional<String> = Optional.Missing(),
     override val disabled: OptionalBoolean = OptionalBoolean.Missing,
-    val components: Optional<List<ComponentData>> = Optional.Missing(),
+    override val components: Optional<List<ComponentData>> = Optional.Missing(),
     override val defaultValues: Optional<List<DiscordSelectDefaultValue>> = Optional.Missing(),
     override val placeholder: Optional<String> = Optional.Missing(),
     override val minValues: OptionalInt = OptionalInt.Missing,
@@ -195,6 +196,7 @@ public data class ModalComponentData(
     override val customId: Optional<String> = Optional.Missing(),
     override val url: Optional<String> = Optional.Missing(),
     override val disabled: OptionalBoolean = OptionalBoolean.Missing,
+    override val components: Optional<List<ComponentData>> = Optional.Missing(),
     public val component: Optional<ComponentData> = Optional.Missing(),
     override val options: Optional<List<SelectOptionData>> = Optional.Missing(),
     override val placeholder: Optional<String> = Optional.Missing(),
