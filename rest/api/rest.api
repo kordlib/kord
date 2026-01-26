@@ -1202,7 +1202,6 @@ public final class dev/kord/rest/builder/component/LabelComponentBuilder : dev/k
 	public final fun setComponent (Ldev/kord/rest/builder/component/ContainerComponentBuilder;)V
 	public final fun setDescription (Ljava/lang/String;)V
 	public final fun stringSelect (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
-	public final fun textDisplay (Lkotlin/jvm/functions/Function1;)V
 	public final fun textInput (Ldev/kord/common/entity/TextInputStyle;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
 	public final fun userSelect (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
 }
@@ -2033,6 +2032,7 @@ public final class dev/kord/rest/builder/interaction/ModalBuilder : dev/kord/res
 	public final fun label (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
 	public final fun setCustomId (Ljava/lang/String;)V
 	public final fun setTitle (Ljava/lang/String;)V
+	public final fun textDisplay (Lkotlin/jvm/functions/Function1;)V
 	public fun toRequest ()Ldev/kord/common/entity/DiscordModal;
 	public synthetic fun toRequest ()Ljava/lang/Object;
 }
