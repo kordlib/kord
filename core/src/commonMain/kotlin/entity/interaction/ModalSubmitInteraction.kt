@@ -32,6 +32,10 @@ public sealed interface ModalSubmitInteraction : ActionInteraction, ComponentInt
     public val actionRows: List<ActionRowComponent>
         get() = data.data.components.orEmpty().map { ActionRowComponent(it) }
 
+    /** The [ResolvedObjects] for the interaction event. */
+    public val resolvedObjects: ResolvedObjects?
+        get() = data.data.resolvedObjectsData.unwrap { ResolvedObjects(it, kord) }
+
     /**
      * The [Component]s of the modal, containing the values submitted by the user in their respective subclasses, indexed by their customId (if present).
      */

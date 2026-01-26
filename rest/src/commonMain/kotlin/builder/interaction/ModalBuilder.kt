@@ -6,6 +6,7 @@ import dev.kord.rest.builder.RequestBuilder
 import dev.kord.rest.builder.component.ActionRowBuilder
 import dev.kord.rest.builder.component.ContainerComponentBuilder
 import dev.kord.rest.builder.component.LabelComponentBuilder
+import dev.kord.rest.builder.component.TextDisplayBuilder
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -38,6 +39,17 @@ public class ModalBuilder(
         }
 
         components.add(LabelComponentBuilder(label).apply(builder))
+    }
+
+    /**
+     * Adds a text display to the modal, configured by the [builder]
+     */
+    public inline fun textDisplay(builder: TextDisplayBuilder.() -> Unit) {
+        contract {
+            callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+        }
+
+        components.add(TextDisplayBuilder().apply(builder))
     }
 
     override fun toRequest(): DiscordModal = DiscordModal(

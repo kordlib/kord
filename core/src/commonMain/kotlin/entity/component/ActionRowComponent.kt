@@ -15,7 +15,6 @@ public class ActionRowComponent(override val data: ComponentData) : Component {
     /**
      * All [Component]s that are nested inside this action row.
      */
-    // FIXME now that I've removed `components` from `ComponentData` something needs to be done about this
     public val components: List<Component>
         get() = data.components.orEmpty().map { Component(it) }
 

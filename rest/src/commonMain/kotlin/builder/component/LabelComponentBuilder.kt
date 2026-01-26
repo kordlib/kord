@@ -43,7 +43,7 @@ public class LabelComponentBuilder(public val label: String) : ContainerComponen
     }
 
     /**
-     * Adds a String select menu to the label, configured by the [builder]
+     * Adds a User select menu to the label, configured by the [builder]
      */
     public inline fun userSelect(customId: String, builder: UserSelectBuilder.() -> Unit) {
         contract {
@@ -54,7 +54,7 @@ public class LabelComponentBuilder(public val label: String) : ContainerComponen
     }
 
     /**
-     * Adds a String select menu to the label, configured by the [builder]
+     * Adds a Role select menu to the label, configured by the [builder]
      */
     public inline fun roleSelect(customId: String, builder: RoleSelectBuilder.() -> Unit) {
         contract {
@@ -65,7 +65,7 @@ public class LabelComponentBuilder(public val label: String) : ContainerComponen
     }
 
     /**
-     * Adds a String select menu to the label, configured by the [builder]
+     * Adds a Mentionable select menu to the label, configured by the [builder]
      */
     public inline fun mentionableSelect(customId: String, builder: MentionableSelectBuilder.() -> Unit) {
         contract {
@@ -76,7 +76,7 @@ public class LabelComponentBuilder(public val label: String) : ContainerComponen
     }
 
     /**
-     * Adds a String select menu to the label, configured by the [builder]
+     * Adds a Channel select menu to the label, configured by the [builder]
      */
     public inline fun channelSelect(customId: String, builder: ChannelSelectBuilder.() -> Unit) {
         contract {
@@ -87,18 +87,7 @@ public class LabelComponentBuilder(public val label: String) : ContainerComponen
     }
 
     /**
-     * Adds a String select menu to the label, configured by the [builder]
-     */
-    public inline fun textDisplay(builder: TextDisplayBuilder.() -> Unit) {
-        contract {
-            callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
-        }
-
-        component = TextDisplayBuilder().apply(builder)
-    }
-
-    /**
-     * Adds a String select menu to the label, configured by the [builder]
+     * Adds a file upload to the label, configured by the [builder]
      */
     public inline fun fileUpload(customId: String, builder: FileUploadBuilder.() -> Unit) {
         contract {
