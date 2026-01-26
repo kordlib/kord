@@ -11,6 +11,9 @@ import dev.kord.common.entity.optional.value
 import dev.kord.core.cache.data.ChatComponentData
 import dev.kord.core.cache.data.ComponentData
 import dev.kord.core.cache.data.LabelComponentData
+import dev.kord.core.cache.data.SelectComponentData
+import dev.kord.rest.builder.component.SelectMenuBuilder
+import kotlin.collections.map
 import dev.kord.common.entity.UnfurledMediaItem as UnfurledMediaItemData
 
 /**
@@ -200,7 +203,7 @@ public class LabelComponent(override val data: LabelComponentData) : Component {
         get() = data.component.value!!
 }
 
-public class FileUploadComponent(override val data: ChatComponentData) : Component {
+public class FileUploadComponent(override val data: SelectComponentData) : Component {
 
     override val type: ComponentType
         get() = ComponentType.FileUpload
@@ -220,4 +223,11 @@ public class FileUploadComponent(override val data: ChatComponentData) : Compone
     /** whether the file upload requires files to be uploaded before submitting the modal (defaults to `true`). */
     public val required: Boolean
         get() = data.required.discordBoolean
+
+    /**
+     * The selected values, the expected range should between 0 and 25.
+     *
+     * @see SelectMenuBuilder.allowedValues
+     */
+    public val valueIds: List<Snowflake> get() = data.values.orEmpty().map { Snowflake(it) }
 }

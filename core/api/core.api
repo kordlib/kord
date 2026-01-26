@@ -9573,14 +9573,15 @@ public final class dev/kord/core/entity/component/FileComponent : dev/kord/core/
 }
 
 public final class dev/kord/core/entity/component/FileUploadComponent : dev/kord/core/entity/component/Component {
-	public fun <init> (Ldev/kord/core/cache/data/ChatComponentData;)V
+	public fun <init> (Ldev/kord/core/cache/data/SelectComponentData;)V
 	public final fun getCustomId ()Ljava/lang/String;
-	public fun getData ()Ldev/kord/core/cache/data/ChatComponentData;
 	public synthetic fun getData ()Ldev/kord/core/cache/data/ComponentData;
+	public fun getData ()Ldev/kord/core/cache/data/SelectComponentData;
 	public final fun getMaxValues ()Ljava/lang/Integer;
 	public final fun getMinValues ()Ljava/lang/Integer;
 	public final fun getRequired ()Z
 	public fun getType ()Ldev/kord/common/entity/ComponentType;
+	public final fun getValueIds ()Ljava/util/List;
 }
 
 public final class dev/kord/core/entity/component/LabelComponent : dev/kord/core/entity/component/Component {

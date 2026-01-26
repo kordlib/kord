@@ -50,6 +50,6 @@ public fun Component(data: ComponentData): Component = when (data.type) {
     ComponentType.TextDisplay -> TextDisplayComponent(data as ChatComponentData)
     ComponentType.Thumbnail -> ThumbnailComponent(data as ChatComponentData)
     ComponentType.Label -> LabelComponent(data as LabelComponentData)
-    ComponentType.FileUpload -> FileUploadComponent(data as ChatComponentData)
+    ComponentType.FileUpload -> FileUploadComponent(data as SelectComponentData)
     is ComponentType.Unknown -> UnknownComponent(data)
 }
