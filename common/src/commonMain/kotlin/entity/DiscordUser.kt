@@ -70,7 +70,9 @@ import kotlinx.serialization.json.JsonNames
  * @param publicFlags The public flags on a user's account. Unlike [flags], these **are** visible ot other users.
  * @param banner The user's banner hash.
  * @param accentColor The user's banner color encoded as an integer representation of hexadecimal color code
- * @param avatarDecoration The user's avatar decoration hash.
+ * @param avatarDecorationData The user's avatar decoration data.
+ * @param collectibles The user's collectibles.
+ * @param primaryGuild The User's primary guild.
  */
 @Serializable
 public data class DiscordUser(
@@ -95,8 +97,11 @@ public data class DiscordUser(
     val banner: String? = null,
     @SerialName("accent_color")
     val accentColor: Int? = null,
-    @SerialName("avatar_decoration")
-    val avatarDecoration: Optional<String?> = Optional.Missing(),
+    @SerialName("avatar_decoration_data")
+    val avatarDecorationData: Optional<DiscordAvatarDecoration?> = Optional.Missing(),
+    val collectibles: Optional<DiscordCollectible?> = Optional.Missing(),
+    @SerialName("primary_guild")
+    val primaryGuild: Optional<DiscordPrimaryGuild?> = Optional.Missing()
 )
 
 /**
