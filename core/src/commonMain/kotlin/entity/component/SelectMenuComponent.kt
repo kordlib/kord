@@ -2,15 +2,16 @@ package dev.kord.core.entity.component
 
 import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.orEmpty
-import dev.kord.core.cache.data.ComponentData
+import dev.kord.core.cache.data.SelectComponentData
 import dev.kord.core.cache.data.SelectOptionData
 import dev.kord.core.entity.Message
 import dev.kord.core.entity.interaction.SelectMenuInteraction
+import dev.kord.rest.builder.component.SelectMenuBuilder
 
 /**
  * An interactive dropdown menu rendered on a [Message].
  */
-public sealed class SelectMenuComponent(override val data: ComponentData) : Component {
+public sealed class SelectMenuComponent(override val data: SelectComponentData) : Component {
 
     /**
      * The custom identifier for any [ComponentInteractions][SelectMenuInteraction]
@@ -38,6 +39,13 @@ public sealed class SelectMenuComponent(override val data: ComponentData) : Comp
      */
     public val disabled: Boolean get() = data.disabled.discordBoolean
 
+    /**
+     * The selected values, the expected range should between 0 and 25.
+     *
+     * @see SelectMenuBuilder.allowedValues
+     */
+    public val values: List<String> get() = data.values.orEmpty()
+
     override fun equals(other: Any?): Boolean {
         if (other !is SelectMenuComponent) return false
 
@@ -51,14 +59,14 @@ public sealed class SelectMenuComponent(override val data: ComponentData) : Comp
     override fun toString(): String = "SelectMenuComponent(data=$data)"
 }
 
-public class StringSelectComponent(data: ComponentData) : SelectMenuComponent(data) {
+public class StringSelectComponent(data: SelectComponentData) : SelectMenuComponent(data) {
     override val type: ComponentType.StringSelect get() = ComponentType.StringSelect
 
     /** The possible options to choose from. */
     public val options: List<SelectOption> get() = data.options.orEmpty().map { SelectOption(it) }
 }
 
-public class UserSelectComponent(data: ComponentData) : SelectMenuComponent(data) {
+public class UserSelectComponent(data: SelectComponentData) : SelectMenuComponent(data) {
     override val type: ComponentType.UserSelect get() = ComponentType.UserSelect
 
     /** The list of [default values][SelectDefaultValue.User] for this select menu. */
@@ -69,9 +77,16 @@ public class UserSelectComponent(data: ComponentData) : SelectMenuComponent(data
                 else -> error("Did not expect $type")
             }
         }
+
+    /**
+     * The selected values, the expected range should between 0 and 25.
+     *
+     * @see SelectMenuBuilder.allowedValues
+     */
+    public val valueIds: List<Snowflake> get() = values.map { Snowflake(it) }
 }
 
-public class RoleSelectComponent(data: ComponentData) : SelectMenuComponent(data) {
+public class RoleSelectComponent(data: SelectComponentData) : SelectMenuComponent(data) {
     override val type: ComponentType.RoleSelect get() = ComponentType.RoleSelect
 
     /** The list of [default values][SelectDefaultValue.Role] for this select menu. */
@@ -82,9 +97,16 @@ public class RoleSelectComponent(data: ComponentData) : SelectMenuComponent(data
                 else -> error("Did not expect $type")
             }
         }
+
+    /**
+     * The selected values, the expected range should between 0 and 25.
+     *
+     * @see SelectMenuBuilder.allowedValues
+     */
+    public val valueIds: List<Snowflake> get() = values.map { Snowflake(it) }
 }
 
-public class MentionableSelectComponent(data: ComponentData) : SelectMenuComponent(data) {
+public class MentionableSelectComponent(data: SelectComponentData) : SelectMenuComponent(data) {
     override val type: ComponentType.MentionableSelect get() = ComponentType.MentionableSelect
 
     /** The list of [default values][SelectDefaultValue.Mentionable] for this select menu. */
@@ -96,9 +118,16 @@ public class MentionableSelectComponent(data: ComponentData) : SelectMenuCompone
                 else -> error("Did not expect $type")
             }
         }
+
+    /**
+     * The selected values, the expected range should between 0 and 25.
+     *
+     * @see SelectMenuBuilder.allowedValues
+     */
+    public val valueIds: List<Snowflake> get() = values.map { Snowflake(it) }
 }
 
-public class ChannelSelectComponent(data: ComponentData) : SelectMenuComponent(data) {
+public class ChannelSelectComponent(data: SelectComponentData) : SelectMenuComponent(data) {
     override val type: ComponentType.StringSelect get() = ComponentType.StringSelect
 
     public val channelTypes: List<ChannelType>? get() = data.channelTypes.value
@@ -111,6 +140,13 @@ public class ChannelSelectComponent(data: ComponentData) : SelectMenuComponent(d
                 else -> error("Did not expect $type")
             }
         }
+
+    /**
+     * The selected values, the expected range should between 0 and 25.
+     *
+     * @see SelectMenuBuilder.allowedValues
+     */
+    public val valueIds: List<Snowflake> get() = values.map { Snowflake(it) }
 }
 
 /**
