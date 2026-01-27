@@ -20,7 +20,9 @@ public class ModalBuilder(
     /**
      * Adds an Action Row to the modal, configured by the [builder].
      */
-    @Deprecated("[label] is recommended for use over an Action Row in modals. Action Row with Text Inputs in modals are now deprecated.",
+    @Deprecated("[label] is recommended for use over an Action Row in modals. Action Row with Text Inputs " +
+            "in modals are now deprecated. The deprecation level will be raised to ERROR in 0.18.0, to HIDDEN in " +
+            "0.19.0 and this declaration will be removed in 0.20.0",
         ReplaceWith("label() {}"), DeprecationLevel.WARNING)
     public inline fun actionRow(builder: ActionRowBuilder.() -> Unit) {
         contract {

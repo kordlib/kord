@@ -1,6 +1,5 @@
 package dev.kord.core.entity.interaction
 
-import dev.kord.common.entity.ComponentType
 import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.common.entity.optional.orEmpty
 import dev.kord.common.entity.optional.unwrap
@@ -10,15 +9,7 @@ import dev.kord.core.cache.data.InteractionData
 import dev.kord.core.cache.data.LabelComponentData
 import dev.kord.core.entity.Guild
 import dev.kord.core.entity.Message
-import dev.kord.core.entity.component.ActionRowComponent
-import dev.kord.core.entity.component.ChannelSelectComponent
-import dev.kord.core.entity.component.Component
-import dev.kord.core.entity.component.FileUploadComponent
-import dev.kord.core.entity.component.MentionableSelectComponent
-import dev.kord.core.entity.component.RoleSelectComponent
-import dev.kord.core.entity.component.StringSelectComponent
-import dev.kord.core.entity.component.TextInputComponent
-import dev.kord.core.entity.component.UserSelectComponent
+import dev.kord.core.entity.component.*
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 
@@ -62,10 +53,25 @@ public sealed interface ModalSubmitInteraction : ActionInteraction, ComponentInt
     /**
      * The [TextInputComponent]s of the modal, indexed by their [customId][TextInputComponent.customId]. They contain
      * the [value][TextInputComponent.value]s submitted by the user.
+     *
+     * @see textInputs
      */
-    public val textInputs: Map<String, TextInputComponent>
+    @Deprecated("Action Rows with text inputs in modals are now deprecated. Kept for binary compatibility." +
+            " The deprecation level will be raised to ERROR in 0.18.0, to HIDDEN in 0.19.0 and this declaration will" +
+            " be removed in 0.20.0",
+        ReplaceWith("textInputs"), DeprecationLevel.WARNING)
+    public val textInputs0: Map<String, TextInputComponent>
         get() = actionRows
             .flatMap { it.components }
+            .filterIsInstance<TextInputComponent>()
+            .associateBy { it.customId }
+
+    /**
+     * The [TextInputComponent]s of the modal, indexed by their [customId][TextInputComponent.customId]. They contain
+     * the [value][TextInputComponent.value]s submitted by the user.
+     */
+    public val textInputs: Map<String, TextInputComponent>
+        get() = responseComponents.values
             .filterIsInstance<TextInputComponent>()
             .associateBy { it.customId }
 

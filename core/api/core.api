@@ -10345,6 +10345,7 @@ public final class dev/kord/core/entity/interaction/GlobalModalSubmitInteraction
 	public fun getStringSelects ()Ljava/util/Map;
 	public fun getSupplier ()Ldev/kord/core/supplier/EntitySupplier;
 	public fun getTextInputs ()Ljava/util/Map;
+	public fun getTextInputs0 ()Ljava/util/Map;
 	public fun getToken ()Ljava/lang/String;
 	public fun getType ()Ldev/kord/common/entity/InteractionType;
 	public fun getUser ()Ldev/kord/core/entity/User;
@@ -10881,6 +10882,7 @@ public final class dev/kord/core/entity/interaction/GuildModalSubmitInteraction 
 	public fun getStringSelects ()Ljava/util/Map;
 	public fun getSupplier ()Ldev/kord/core/supplier/EntitySupplier;
 	public fun getTextInputs ()Ljava/util/Map;
+	public fun getTextInputs0 ()Ljava/util/Map;
 	public fun getToken ()Ljava/lang/String;
 	public fun getType ()Ldev/kord/common/entity/InteractionType;
 	public fun getUser ()Ldev/kord/core/entity/Member;
@@ -11177,6 +11179,7 @@ public abstract interface class dev/kord/core/entity/interaction/ModalSubmitInte
 	public fun getRoleSelects ()Ljava/util/Map;
 	public fun getStringSelects ()Ljava/util/Map;
 	public fun getTextInputs ()Ljava/util/Map;
+	public fun getTextInputs0 ()Ljava/util/Map;
 	public fun getUserSelects ()Ljava/util/Map;
 	public abstract fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/interaction/ModalSubmitInteraction;
 }
@@ -11211,6 +11214,7 @@ public final class dev/kord/core/entity/interaction/ModalSubmitInteraction$Defau
 	public static fun getRoleSelects (Ldev/kord/core/entity/interaction/ModalSubmitInteraction;)Ljava/util/Map;
 	public static fun getStringSelects (Ldev/kord/core/entity/interaction/ModalSubmitInteraction;)Ljava/util/Map;
 	public static fun getTextInputs (Ldev/kord/core/entity/interaction/ModalSubmitInteraction;)Ljava/util/Map;
+	public static fun getTextInputs0 (Ldev/kord/core/entity/interaction/ModalSubmitInteraction;)Ljava/util/Map;
 	public static fun getToken (Ldev/kord/core/entity/interaction/ModalSubmitInteraction;)Ljava/lang/String;
 	public static fun getType (Ldev/kord/core/entity/interaction/ModalSubmitInteraction;)Ldev/kord/common/entity/InteractionType;
 	public static fun getUserSelects (Ldev/kord/core/entity/interaction/ModalSubmitInteraction;)Ljava/util/Map;

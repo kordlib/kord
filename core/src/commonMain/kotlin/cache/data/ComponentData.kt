@@ -221,7 +221,7 @@ public data class LabelComponentData(
     override val url: Optional<String> = Optional.Missing(),
     override val disabled: OptionalBoolean = OptionalBoolean.Missing,
     override val components: Optional<List<ComponentData>> = Optional.Missing(),
-    public val component: Optional<ComponentData> = Optional.Missing(),
+    val component: Optional<ComponentData> = Optional.Missing(),
     override val options: Optional<List<SelectOptionData>> = Optional.Missing(),
     override val placeholder: Optional<String> = Optional.Missing(),
     override val defaultValues: Optional<List<DiscordSelectDefaultValue>> = Optional.Missing(),
@@ -232,7 +232,7 @@ public data class LabelComponentData(
     override val required: OptionalBoolean = OptionalBoolean.Missing,
     override val value: Optional<String> = Optional.Missing(),
     override val channelTypes: Optional<List<ChannelType>> = Optional.Missing(),
-    public val description: Optional<String> = Optional.Missing(),
+    val description: Optional<String> = Optional.Missing(),
 ) : ComponentData()
 
 @Serializable
@@ -253,6 +253,6 @@ public data class SelectComponentData(
     override val maxLength: OptionalInt = OptionalInt.Missing,
     override val required: OptionalBoolean = OptionalBoolean.Missing,
     override val value: Optional<String> = Optional.Missing(),
-    public val values: Optional<List<String>> = Optional.Missing(),
+    val values: Optional<List<String>> = Optional.Missing(),
     override val channelTypes: Optional<List<ChannelType>> = Optional.Missing(),
 ) : ComponentData()

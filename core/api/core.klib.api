@@ -1472,6 +1472,8 @@ sealed interface dev.kord.core.entity.interaction/ModalSubmitInteraction : dev.k
         open fun <get-stringSelects>(): kotlin.collections/Map<kotlin/String, dev.kord.core.entity.component/StringSelectComponent> // dev.kord.core.entity.interaction/ModalSubmitInteraction.stringSelects.<get-stringSelects>|<get-stringSelects>(){}[0]
     open val textInputs // dev.kord.core.entity.interaction/ModalSubmitInteraction.textInputs|{}textInputs[0]
         open fun <get-textInputs>(): kotlin.collections/Map<kotlin/String, dev.kord.core.entity.component/TextInputComponent> // dev.kord.core.entity.interaction/ModalSubmitInteraction.textInputs.<get-textInputs>|<get-textInputs>(){}[0]
+    open val textInputs0 // dev.kord.core.entity.interaction/ModalSubmitInteraction.textInputs0|{}textInputs0[0]
+        open fun <get-textInputs0>(): kotlin.collections/Map<kotlin/String, dev.kord.core.entity.component/TextInputComponent> // dev.kord.core.entity.interaction/ModalSubmitInteraction.textInputs0.<get-textInputs0>|<get-textInputs0>(){}[0]
     open val userSelects // dev.kord.core.entity.interaction/ModalSubmitInteraction.userSelects|{}userSelects[0]
         open fun <get-userSelects>(): kotlin.collections/Map<kotlin/String, dev.kord.core.entity.component/UserSelectComponent> // dev.kord.core.entity.interaction/ModalSubmitInteraction.userSelects.<get-userSelects>|<get-userSelects>(){}[0]
 
