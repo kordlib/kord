@@ -10326,23 +10326,29 @@ public final class dev/kord/core/entity/interaction/GlobalModalSubmitInteraction
 	public fun getChannel (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getChannelId ()Ldev/kord/common/entity/Snowflake;
 	public fun getChannelOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getChannelSelects ()Ljava/util/Map;
 	public fun getData ()Ldev/kord/core/cache/data/InteractionData;
 	public fun getEntitlements ()Ljava/util/List;
+	public fun getFileUploads ()Ljava/util/Map;
 	public fun getGuildLocale ()Ldev/kord/common/Locale;
 	public fun getId ()Ldev/kord/common/entity/Snowflake;
 	public fun getKord ()Ldev/kord/core/Kord;
 	public fun getLocale ()Ldev/kord/common/Locale;
+	public fun getMentionableSelects ()Ljava/util/Map;
 	public fun getMessage ()Ldev/kord/core/entity/Message;
 	public fun getModalId ()Ljava/lang/String;
 	public fun getOriginalInteractionResponse (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getOriginalInteractionResponseOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getResolvedObjects ()Ldev/kord/core/entity/interaction/ResolvedObjects;
 	public fun getResponseComponents ()Ljava/util/Map;
+	public fun getRoleSelects ()Ljava/util/Map;
+	public fun getStringSelects ()Ljava/util/Map;
 	public fun getSupplier ()Ldev/kord/core/supplier/EntitySupplier;
 	public fun getTextInputs ()Ljava/util/Map;
 	public fun getToken ()Ljava/lang/String;
 	public fun getType ()Ldev/kord/common/entity/InteractionType;
 	public fun getUser ()Ldev/kord/core/entity/User;
+	public fun getUserSelects ()Ljava/util/Map;
 	public fun getVersion ()I
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
@@ -10851,8 +10857,10 @@ public final class dev/kord/core/entity/interaction/GuildModalSubmitInteraction 
 	public fun getChannel (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getChannelId ()Ldev/kord/common/entity/Snowflake;
 	public fun getChannelOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getChannelSelects ()Ljava/util/Map;
 	public fun getData ()Ldev/kord/core/cache/data/InteractionData;
 	public fun getEntitlements ()Ljava/util/List;
+	public fun getFileUploads ()Ljava/util/Map;
 	public fun getGuild ()Ldev/kord/core/behavior/GuildBehavior;
 	public fun getGuild (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getGuildId ()Ldev/kord/common/entity/Snowflake;
@@ -10861,6 +10869,7 @@ public final class dev/kord/core/entity/interaction/GuildModalSubmitInteraction 
 	public fun getId ()Ldev/kord/common/entity/Snowflake;
 	public fun getKord ()Ldev/kord/core/Kord;
 	public fun getLocale ()Ldev/kord/common/Locale;
+	public fun getMentionableSelects ()Ljava/util/Map;
 	public fun getMessage ()Ldev/kord/core/entity/Message;
 	public fun getModalId ()Ljava/lang/String;
 	public fun getOriginalInteractionResponse (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -10868,12 +10877,15 @@ public final class dev/kord/core/entity/interaction/GuildModalSubmitInteraction 
 	public fun getPermissions ()Ldev/kord/common/entity/Permissions;
 	public fun getResolvedObjects ()Ldev/kord/core/entity/interaction/ResolvedObjects;
 	public fun getResponseComponents ()Ljava/util/Map;
+	public fun getRoleSelects ()Ljava/util/Map;
+	public fun getStringSelects ()Ljava/util/Map;
 	public fun getSupplier ()Ldev/kord/core/supplier/EntitySupplier;
 	public fun getTextInputs ()Ljava/util/Map;
 	public fun getToken ()Ljava/lang/String;
 	public fun getType ()Ldev/kord/common/entity/InteractionType;
 	public fun getUser ()Ldev/kord/core/entity/Member;
 	public synthetic fun getUser ()Ldev/kord/core/entity/User;
+	public fun getUserSelects ()Ljava/util/Map;
 	public fun getVersion ()I
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
@@ -11155,11 +11167,17 @@ public final class dev/kord/core/entity/interaction/MessageCommandInteraction$De
 
 public abstract interface class dev/kord/core/entity/interaction/ModalSubmitInteraction : dev/kord/core/behavior/interaction/ComponentInteractionBehavior, dev/kord/core/entity/interaction/ActionInteraction {
 	public fun getActionRows ()Ljava/util/List;
+	public fun getChannelSelects ()Ljava/util/Map;
+	public fun getFileUploads ()Ljava/util/Map;
+	public fun getMentionableSelects ()Ljava/util/Map;
 	public fun getMessage ()Ldev/kord/core/entity/Message;
 	public fun getModalId ()Ljava/lang/String;
 	public fun getResolvedObjects ()Ldev/kord/core/entity/interaction/ResolvedObjects;
 	public fun getResponseComponents ()Ljava/util/Map;
+	public fun getRoleSelects ()Ljava/util/Map;
+	public fun getStringSelects ()Ljava/util/Map;
 	public fun getTextInputs ()Ljava/util/Map;
+	public fun getUserSelects ()Ljava/util/Map;
 	public abstract fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/interaction/ModalSubmitInteraction;
 }
 
@@ -11177,19 +11195,25 @@ public final class dev/kord/core/entity/interaction/ModalSubmitInteraction$Defau
 	public static fun getChannel (Ldev/kord/core/entity/interaction/ModalSubmitInteraction;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun getChannelId (Ldev/kord/core/entity/interaction/ModalSubmitInteraction;)Ldev/kord/common/entity/Snowflake;
 	public static fun getChannelOrNull (Ldev/kord/core/entity/interaction/ModalSubmitInteraction;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static fun getChannelSelects (Ldev/kord/core/entity/interaction/ModalSubmitInteraction;)Ljava/util/Map;
 	public static fun getEntitlements (Ldev/kord/core/entity/interaction/ModalSubmitInteraction;)Ljava/util/List;
+	public static fun getFileUploads (Ldev/kord/core/entity/interaction/ModalSubmitInteraction;)Ljava/util/Map;
 	public static fun getGuildLocale (Ldev/kord/core/entity/interaction/ModalSubmitInteraction;)Ldev/kord/common/Locale;
 	public static fun getId (Ldev/kord/core/entity/interaction/ModalSubmitInteraction;)Ldev/kord/common/entity/Snowflake;
 	public static fun getLocale (Ldev/kord/core/entity/interaction/ModalSubmitInteraction;)Ldev/kord/common/Locale;
+	public static fun getMentionableSelects (Ldev/kord/core/entity/interaction/ModalSubmitInteraction;)Ljava/util/Map;
 	public static fun getMessage (Ldev/kord/core/entity/interaction/ModalSubmitInteraction;)Ldev/kord/core/entity/Message;
 	public static fun getModalId (Ldev/kord/core/entity/interaction/ModalSubmitInteraction;)Ljava/lang/String;
 	public static fun getOriginalInteractionResponse (Ldev/kord/core/entity/interaction/ModalSubmitInteraction;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun getOriginalInteractionResponseOrNull (Ldev/kord/core/entity/interaction/ModalSubmitInteraction;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun getResolvedObjects (Ldev/kord/core/entity/interaction/ModalSubmitInteraction;)Ldev/kord/core/entity/interaction/ResolvedObjects;
 	public static fun getResponseComponents (Ldev/kord/core/entity/interaction/ModalSubmitInteraction;)Ljava/util/Map;
+	public static fun getRoleSelects (Ldev/kord/core/entity/interaction/ModalSubmitInteraction;)Ljava/util/Map;
+	public static fun getStringSelects (Ldev/kord/core/entity/interaction/ModalSubmitInteraction;)Ljava/util/Map;
 	public static fun getTextInputs (Ldev/kord/core/entity/interaction/ModalSubmitInteraction;)Ljava/util/Map;
 	public static fun getToken (Ldev/kord/core/entity/interaction/ModalSubmitInteraction;)Ljava/lang/String;
 	public static fun getType (Ldev/kord/core/entity/interaction/ModalSubmitInteraction;)Ldev/kord/common/entity/InteractionType;
+	public static fun getUserSelects (Ldev/kord/core/entity/interaction/ModalSubmitInteraction;)Ljava/util/Map;
 	public static fun getVersion (Ldev/kord/core/entity/interaction/ModalSubmitInteraction;)I
 }
 

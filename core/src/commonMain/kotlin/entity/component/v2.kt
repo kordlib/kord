@@ -209,8 +209,8 @@ public class FileUploadComponent(override val data: SelectComponentData) : Compo
         get() = ComponentType.FileUpload
 
     /** ID for the file upload; 1-100 characters. */
-    public val customId: String?
-        get() = data.customId.value
+    public val customId: String
+        get() = data.customId.value!!
 
     /** Minimum number of items that must be uploaded (defaults to 1); min 0, max 10. */
     public val minValues: Int?

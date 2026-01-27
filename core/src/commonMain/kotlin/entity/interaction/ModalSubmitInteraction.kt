@@ -1,5 +1,6 @@
 package dev.kord.core.entity.interaction
 
+import dev.kord.common.entity.ComponentType
 import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.common.entity.optional.orEmpty
 import dev.kord.common.entity.optional.unwrap
@@ -10,8 +11,14 @@ import dev.kord.core.cache.data.LabelComponentData
 import dev.kord.core.entity.Guild
 import dev.kord.core.entity.Message
 import dev.kord.core.entity.component.ActionRowComponent
+import dev.kord.core.entity.component.ChannelSelectComponent
 import dev.kord.core.entity.component.Component
+import dev.kord.core.entity.component.FileUploadComponent
+import dev.kord.core.entity.component.MentionableSelectComponent
+import dev.kord.core.entity.component.RoleSelectComponent
+import dev.kord.core.entity.component.StringSelectComponent
 import dev.kord.core.entity.component.TextInputComponent
+import dev.kord.core.entity.component.UserSelectComponent
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 
@@ -60,6 +67,60 @@ public sealed interface ModalSubmitInteraction : ActionInteraction, ComponentInt
         get() = actionRows
             .flatMap { it.components }
             .filterIsInstance<TextInputComponent>()
+            .associateBy { it.customId }
+
+    /**
+     * The [StringSelectComponent]s of the modal, indexed by their [customId][StringSelectComponent.customId]. They
+     * contain the [values][StringSelectComponent.values] submitted by the user.
+     */
+    public val stringSelects: Map<String, StringSelectComponent>
+        get() = responseComponents.values
+            .filterIsInstance<StringSelectComponent>()
+            .associateBy { it.customId }
+
+    /**
+     * The [UserSelectComponent]s of the modal, indexed by their [customId][UserSelectComponent.customId]. They
+     * contain the [values][UserSelectComponent.values] submitted by the user.
+     */
+    public val userSelects: Map<String, UserSelectComponent>
+        get() = responseComponents.values
+            .filterIsInstance<UserSelectComponent>()
+            .associateBy { it.customId }
+
+    /**
+     * The [RoleSelectComponent]s of the modal, indexed by their [customId][RoleSelectComponent.customId]. They contain
+     * the [values][RoleSelectComponent.values] submitted by the user.
+     */
+    public val roleSelects: Map<String, RoleSelectComponent>
+        get() = responseComponents.values
+            .filterIsInstance<RoleSelectComponent>()
+            .associateBy { it.customId }
+
+    /**
+     * The [MentionableSelectComponent]s of the modal, indexed by their [customId][MentionableSelectComponent.customId].
+     * They contain the [values][MentionableSelectComponent.values] submitted by the user.
+     */
+    public val mentionableSelects: Map<String, MentionableSelectComponent>
+        get() = responseComponents.values
+            .filterIsInstance<MentionableSelectComponent>()
+            .associateBy { it.customId }
+
+    /**
+     * The [ChannelSelectComponent]s of the modal, indexed by their [customId][ChannelSelectComponent.customId]. They
+     * contain the [values][ChannelSelectComponent.values] submitted by the user.
+     */
+    public val channelSelects: Map<String, ChannelSelectComponent>
+        get() = responseComponents.values
+            .filterIsInstance<ChannelSelectComponent>()
+            .associateBy { it.customId }
+
+    /**
+     * The [FileUploadComponent]s of the modal, indexed by their [customId][FileUploadComponent.customId]. They
+     * contain the [value ids][FileUploadComponent.valueIds] submitted by the user.
+     */
+    public val fileUploads: Map<String, FileUploadComponent>
+        get() = responseComponents.values
+            .filterIsInstance<FileUploadComponent>()
             .associateBy { it.customId }
 
     /**
