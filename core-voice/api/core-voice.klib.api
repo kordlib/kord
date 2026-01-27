@@ -1,0 +1,9 @@
+// Klib ABI Dump
+// Targets: [iosArm64, iosSimulatorArm64, iosX64, js, linuxArm64, linuxX64, macosArm64, macosX64, mingwX64, tvosArm64, tvosSimulatorArm64, tvosX64, watchosArm64, watchosSimulatorArm64]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <kord:core-voice>
+final suspend fun (dev.kord.core.behavior.channel/BaseVoiceChannelBehavior).dev.kord.core.behavior.channel/connect(kotlin/Function1<dev.kord.voice/VoiceConnectionBuilder, kotlin/Unit>): dev.kord.voice/VoiceConnection // dev.kord.core.behavior.channel/connect|connect@dev.kord.core.behavior.channel.BaseVoiceChannelBehavior(kotlin.Function1<dev.kord.voice.VoiceConnectionBuilder,kotlin.Unit>){}[0]

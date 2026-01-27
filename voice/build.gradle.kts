@@ -1,18 +1,26 @@
 plugins {
-    java // for TweetNaclFast
-    `kord-module`
-    `kord-sampled-module`
+    `kord-multiplatform-module`
     `kord-publishing`
 }
 
-dependencies {
-    api(projects.common)
-    api(projects.gateway)
+kotlin {
+    sourceSets {
+        commonMain.dependencies {
+            api(projects.common)
+            api(projects.gateway)
+            api(libs.ktor.network)
 
-    implementation(libs.kotlin.logging)
-    implementation(libs.slf4j.api)
+            implementation(libs.kotlin.logging)
 
-    compileOnly(projects.kspAnnotations)
+            compileOnly(projects.kspAnnotations)
+        }
 
-    api(libs.ktor.network)
+        nonJvmMain.dependencies {
+            implementation(libs.libsodium)
+        }
+
+        jvmMain.dependencies {
+            implementation(libs.slf4j.api)
+        }
+    }
 }

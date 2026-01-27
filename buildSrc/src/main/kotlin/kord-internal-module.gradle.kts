@@ -1,3 +1,5 @@
+import gradle.kotlin.dsl.accessors._6cf8ffb9e5fa3d9dd0ed334a95f1dc9c.java
+
 plugins {
     org.jetbrains.kotlin.jvm
 }
@@ -10,6 +12,10 @@ kotlin {
     compilerOptions {
         applyKordJvmCompilerOptions()
     }
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
 }
 
 tasks {

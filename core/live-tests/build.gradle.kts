@@ -2,7 +2,7 @@ import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.abi.ExperimentalAbiValidation
 
 plugins {
-    `kord-internal-multiplatform-module`
+    org.jetbrains.kotlin.multiplatform
 }
 
 kotlin {
@@ -10,6 +10,7 @@ kotlin {
     compilerOptions {
         optIn.addAll(kordOptIns)
     }
+    targets()
     sourceSets {
         commonTest {
             dependencies {
@@ -29,4 +30,8 @@ tasks {
     withType<AbstractTestTask>().configureEach {
         enabled = !System.getenv("KORD_TEST_TOKEN").isNullOrBlank()
     }
+    withType<Test>().configureEach {
+        useJUnitPlatform()
+    }
+    disableLinuxLinkTestTasksOnWindows()
 }

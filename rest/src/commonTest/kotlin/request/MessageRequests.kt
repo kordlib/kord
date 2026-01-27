@@ -8,10 +8,12 @@ import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.Optional
 import dev.kord.rest.json.readFile
 import dev.kord.rest.service.ChannelService
+import dev.kord.test.IgnoreOnSimulatorPlatforms
+import dev.kord.test.Platform
 import io.ktor.client.*
 import io.ktor.client.engine.mock.*
 import io.ktor.client.request.forms.*
-import io.ktor.utils.io.*
+import io.ktor.utils.io.counted
 import kotlinx.coroutines.test.runTest
 import kotlin.time.Clock
 import kotlinx.serialization.json.Json
@@ -51,6 +53,7 @@ private val mockMessage = DiscordMessage(
 class MessageRequests {
     @Test
     @JsName("test1")
+    @IgnoreOnSimulatorPlatforms
     fun `attachment channel is read and closed lazily`() = runTest {
 
         val mockEngine = MockEngine { request ->

@@ -3,6 +3,7 @@
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.abi.ExperimentalAbiValidation
 import org.jetbrains.kotlin.gradle.targets.js.testing.KotlinJsTest
+import org.jetbrains.kotlin.gradle.targets.native.tasks.KotlinNativeTest
 
 plugins {
     org.jetbrains.kotlin.multiplatform
@@ -28,25 +29,18 @@ kotlin {
         optIn.addAll(kordOptIns)
     }
 
-    jvm {
-        compilerOptions {
-            applyKordJvmCompilerOptions()
-        }
-    }
-    js {
-        nodejs {
-            testTask {
-                useMocha {
-                    // disable timeouts, some tests are too slow for default 2-second timeout:
-                    // https://mochajs.org/#-timeout-ms-t-ms
-                    timeout = "0"
-                }
+    targets()
+
+    applyDefaultHierarchyTemplate {
+        common {
+            group("nonJvm") {
+                withJs()
+                withWasmJs()
+                withWasmWasi()
+                withNative()
             }
         }
-        useCommonJs()
     }
-
-    applyDefaultHierarchyTemplate()
 
     sourceSets {
         applyKordTestOptIns()
@@ -58,12 +52,6 @@ kotlin {
             dependencies {
                 implementation(project(":test-kit"))
             }
-        }
-        val nonJvmMain by creating {
-            dependsOn(commonMain.get())
-        }
-        jsMain {
-            dependsOn(nonJvmMain)
         }
     }
 
@@ -79,6 +67,10 @@ dokka {
     applyKordDokkaOptions(project)
 }
 
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+}
+
 tasks {
     withType<Test>().configureEach {
         useJUnitPlatform()
@@ -88,14 +80,15 @@ tasks {
         environment("PROJECT_ROOT", rootProject.projectDir.absolutePath)
     }
 
-    for (task in listOf(
-        "compileKotlinJvm",
-        "compileKotlinJs",
-        "jvmSourcesJar",
-        "jsSourcesJar",
-        "dokkaGenerateModuleHtml",
-        "dokkaGeneratePublicationHtml",
-    )) {
+    withType<KotlinNativeTest>().configureEach {
+        environment("PROJECT_ROOT", rootProject.projectDir.absolutePath)
+    }
+
+    val compileTasks = (kotlin.targets.names - "metadata").flatMap {
+        listOf("compileKotlin${it.replaceFirstChar { char -> char.uppercase() }}", "${it}SourcesJar")
+    }
+
+    for (task in compileTasks + listOf("dokkaGenerateModuleHtml", "dokkaGeneratePublicationHtml")) {
         named(task) {
             dependsOn("kspCommonMainKotlinMetadata")
         }

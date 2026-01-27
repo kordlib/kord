@@ -2,6 +2,7 @@ package dev.kord.common
 
 import com.ionspin.kotlin.bignum.integer.BigInteger
 import com.ionspin.kotlin.bignum.integer.Sign
+import io.ktor.utils.io.core.*
 
 internal actual fun formatIntegerFromLittleEndianLongArray(data: LongArray): String {
     // need to convert from little-endian data to big-endian expected by BigInteger
