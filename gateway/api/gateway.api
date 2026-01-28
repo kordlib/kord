@@ -24,32 +24,6 @@ public final class dev/kord/gateway/AnimationType$Premium : dev/kord/gateway/Ani
 public final class dev/kord/gateway/AnimationType$Unknown : dev/kord/gateway/AnimationType {
 }
 
-public final class dev/kord/gateway/ApplicationCommandCreate : dev/kord/gateway/DispatchEvent {
-	public fun <init> (Ldev/kord/common/entity/DiscordApplicationCommand;Ljava/lang/Integer;)V
-	public final fun component1 ()Ldev/kord/common/entity/DiscordApplicationCommand;
-	public final fun component2 ()Ljava/lang/Integer;
-	public final fun copy (Ldev/kord/common/entity/DiscordApplicationCommand;Ljava/lang/Integer;)Ldev/kord/gateway/ApplicationCommandCreate;
-	public static synthetic fun copy$default (Ldev/kord/gateway/ApplicationCommandCreate;Ldev/kord/common/entity/DiscordApplicationCommand;Ljava/lang/Integer;ILjava/lang/Object;)Ldev/kord/gateway/ApplicationCommandCreate;
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getApplication ()Ldev/kord/common/entity/DiscordApplicationCommand;
-	public fun getSequence ()Ljava/lang/Integer;
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-}
-
-public final class dev/kord/gateway/ApplicationCommandDelete : dev/kord/gateway/DispatchEvent {
-	public fun <init> (Ldev/kord/common/entity/DiscordApplicationCommand;Ljava/lang/Integer;)V
-	public final fun component1 ()Ldev/kord/common/entity/DiscordApplicationCommand;
-	public final fun component2 ()Ljava/lang/Integer;
-	public final fun copy (Ldev/kord/common/entity/DiscordApplicationCommand;Ljava/lang/Integer;)Ldev/kord/gateway/ApplicationCommandDelete;
-	public static synthetic fun copy$default (Ldev/kord/gateway/ApplicationCommandDelete;Ldev/kord/common/entity/DiscordApplicationCommand;Ljava/lang/Integer;ILjava/lang/Object;)Ldev/kord/gateway/ApplicationCommandDelete;
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getApplication ()Ldev/kord/common/entity/DiscordApplicationCommand;
-	public fun getSequence ()Ljava/lang/Integer;
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-}
-
 public final class dev/kord/gateway/ApplicationCommandPermissionsUpdate : dev/kord/gateway/DispatchEvent {
 	public fun <init> (Ldev/kord/common/entity/DiscordGuildApplicationCommandPermissions;Ljava/lang/Integer;)V
 	public final fun component1 ()Ldev/kord/common/entity/DiscordGuildApplicationCommandPermissions;
@@ -58,19 +32,6 @@ public final class dev/kord/gateway/ApplicationCommandPermissionsUpdate : dev/ko
 	public static synthetic fun copy$default (Ldev/kord/gateway/ApplicationCommandPermissionsUpdate;Ldev/kord/common/entity/DiscordGuildApplicationCommandPermissions;Ljava/lang/Integer;ILjava/lang/Object;)Ldev/kord/gateway/ApplicationCommandPermissionsUpdate;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getPermissions ()Ldev/kord/common/entity/DiscordGuildApplicationCommandPermissions;
-	public fun getSequence ()Ljava/lang/Integer;
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-}
-
-public final class dev/kord/gateway/ApplicationCommandUpdate : dev/kord/gateway/DispatchEvent {
-	public fun <init> (Ldev/kord/common/entity/DiscordApplicationCommand;Ljava/lang/Integer;)V
-	public final fun component1 ()Ldev/kord/common/entity/DiscordApplicationCommand;
-	public final fun component2 ()Ljava/lang/Integer;
-	public final fun copy (Ldev/kord/common/entity/DiscordApplicationCommand;Ljava/lang/Integer;)Ldev/kord/gateway/ApplicationCommandUpdate;
-	public static synthetic fun copy$default (Ldev/kord/gateway/ApplicationCommandUpdate;Ldev/kord/common/entity/DiscordApplicationCommand;Ljava/lang/Integer;ILjava/lang/Object;)Ldev/kord/gateway/ApplicationCommandUpdate;
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getApplication ()Ldev/kord/common/entity/DiscordApplicationCommand;
 	public fun getSequence ()Ljava/lang/Integer;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
@@ -1156,27 +1117,19 @@ public final class dev/kord/gateway/GuildUpdate : dev/kord/gateway/DispatchEvent
 
 public final class dev/kord/gateway/Heartbeat : dev/kord/gateway/Event {
 	public static final field Companion Ldev/kord/gateway/Heartbeat$Companion;
-	public static final field NewCompanion Ldev/kord/gateway/Heartbeat$NewCompanion;
-	public synthetic fun <init> (J)V
 	public fun <init> (Ljava/lang/Long;)V
-	public final synthetic fun component1 ()J
 	public final fun component1 ()Ljava/lang/Long;
-	public final synthetic fun copy (J)Ldev/kord/gateway/Heartbeat;
+	public final fun copy (J)Ldev/kord/gateway/Heartbeat;
 	public final fun copy (Ljava/lang/Long;)Ldev/kord/gateway/Heartbeat;
 	public static synthetic fun copy$default (Ldev/kord/gateway/Heartbeat;JILjava/lang/Object;)Ldev/kord/gateway/Heartbeat;
 	public static synthetic fun copy$default (Ldev/kord/gateway/Heartbeat;Ljava/lang/Long;ILjava/lang/Object;)Ldev/kord/gateway/Heartbeat;
 	public fun equals (Ljava/lang/Object;)Z
-	public final synthetic fun getData ()J
 	public final fun getData ()Ljava/lang/Long;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }
 
 public final class dev/kord/gateway/Heartbeat$Companion {
-	public final fun serializer ()Lkotlinx/serialization/KSerializer;
-}
-
-public final class dev/kord/gateway/Heartbeat$NewCompanion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
@@ -1428,8 +1381,6 @@ public final class dev/kord/gateway/IntentKt {
 	public static final fun Intents ([Ldev/kord/gateway/Intents;)Ldev/kord/gateway/Intents;
 	public static synthetic fun Intents$default (Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Ldev/kord/gateway/Intents;
 	public static final fun Intents0 (Ljava/lang/Iterable;)Ldev/kord/gateway/Intents;
-	public static final synthetic fun Intents0 (Lkotlin/jvm/functions/Function1;)Ldev/kord/gateway/Intents;
-	public static synthetic fun Intents0$default (Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Ldev/kord/gateway/Intents;
 }
 
 public final class dev/kord/gateway/Intents {
@@ -1437,7 +1388,6 @@ public final class dev/kord/gateway/Intents {
 	public final fun contains (Ldev/kord/gateway/Intent;)Z
 	public final fun contains (Ldev/kord/gateway/Intents;)Z
 	public final fun copy (Lkotlin/jvm/functions/Function1;)Ldev/kord/gateway/Intents;
-	public final synthetic fun copy0 (Lkotlin/jvm/functions/Function1;)Ldev/kord/gateway/Intents;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getCode ()Ldev/kord/common/DiscordBitSet;
 	public final fun getValues ()Ljava/util/Set;
@@ -2239,7 +2189,6 @@ public final class dev/kord/gateway/builder/LoginBuilder {
 	public final fun getName ()Ljava/lang/String;
 	public final fun getPresence ()Ldev/kord/gateway/DiscordPresence;
 	public final fun intents (Lkotlin/jvm/functions/Function1;)V
-	public final synthetic fun intents0 (Lkotlin/jvm/functions/Function1;)V
 	public final fun presence (Lkotlin/jvm/functions/Function1;)V
 	public final fun setIntents (Ldev/kord/gateway/Intents;)V
 	public final fun setName (Ljava/lang/String;)V
