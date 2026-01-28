@@ -8,7 +8,6 @@ import dev.kord.common.EmptyBitSet
 import kotlin.LazyThreadSafetyMode.PUBLICATION
 import kotlin.contracts.InvocationKind.EXACTLY_ONCE
 import kotlin.contracts.contract
-import kotlin.jvm.JvmField
 import kotlin.jvm.JvmName
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
@@ -530,15 +529,6 @@ public class Permissions internal constructor(
         return Builder(code.copy()).apply(builder).build()
     }
 
-    @Deprecated(
-        level = DeprecationLevel.HIDDEN,
-        message = "Kept for binary compatibility, this declaration will be removed in 0.17.0.",
-    )
-    public inline fun copy0(builder: Builder.() -> Unit): Permissions {
-        contract { callsInPlace(builder, EXACTLY_ONCE) }
-        return copy(builder)
-    }
-
     override fun equals(other: Any?): Boolean = this === other || (other is Permissions && this.code == other.code)
 
     override fun hashCode(): Int = code.hashCode()
@@ -594,26 +584,6 @@ public class Permissions internal constructor(
 
         override fun deserialize(decoder: Decoder): Permissions = Permissions(decoder.decodeSerializableValue(delegate))
     }
-
-    public companion object {
-        @Suppress(names = arrayOf("DEPRECATION_ERROR"))
-        @Deprecated(
-            level = DeprecationLevel.HIDDEN,
-            message = "Renamed to 'Companion'. This declaration will be removed in 0.17.0.",
-            replaceWith = ReplaceWith(expression = "Permissions.Companion", imports = arrayOf("dev.kord.common.entity.Permissions")),
-        )
-        @JvmField
-        public val NewCompanion: NewCompanion = NewCompanion()
-    }
-
-    @Deprecated(
-        level = DeprecationLevel.HIDDEN,
-        message = "Renamed to 'Companion'. This declaration will be removed in 0.17.0.",
-        replaceWith = ReplaceWith(expression = "Permissions.Companion", imports = arrayOf("dev.kord.common.entity.Permissions")),
-    )
-    public class NewCompanion internal constructor() {
-        public fun serializer(): KSerializer<Permissions> = Permissions.serializer()
-    }
 }
 
 /**
@@ -622,16 +592,6 @@ public class Permissions internal constructor(
 public inline fun Permissions(builder: Permissions.Builder.() -> Unit = {}): Permissions {
     contract { callsInPlace(builder, EXACTLY_ONCE) }
     return Permissions.Builder().apply(builder).build()
-}
-
-@Suppress(names = arrayOf("FunctionName"))
-@Deprecated(
-    level = DeprecationLevel.HIDDEN,
-    message = "Kept for binary compatibility, this declaration will be removed in 0.17.0.",
-)
-public inline fun Permissions0(builder: Permissions.Builder.() -> Unit = {}): Permissions {
-    contract { callsInPlace(builder, EXACTLY_ONCE) }
-    return Permissions(builder)
 }
 
 /**

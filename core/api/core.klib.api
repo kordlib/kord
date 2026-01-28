@@ -1656,24 +1656,9 @@ sealed interface dev.kord.core.event.interaction/ActionInteractionCreateEvent : 
         abstract fun <get-interaction>(): dev.kord.core.entity.interaction/ActionInteraction // dev.kord.core.event.interaction/ActionInteractionCreateEvent.interaction.<get-interaction>|<get-interaction>(){}[0]
 }
 
-sealed interface dev.kord.core.event.interaction/ApplicationCommandCreateEvent : dev.kord.core.event/Event { // dev.kord.core.event.interaction/ApplicationCommandCreateEvent|null[0]
-    abstract val command // dev.kord.core.event.interaction/ApplicationCommandCreateEvent.command|{}command[0]
-        abstract fun <get-command>(): dev.kord.core.entity.application/GuildApplicationCommand // dev.kord.core.event.interaction/ApplicationCommandCreateEvent.command.<get-command>|<get-command>(){}[0]
-}
-
-sealed interface dev.kord.core.event.interaction/ApplicationCommandDeleteEvent : dev.kord.core.event/Event { // dev.kord.core.event.interaction/ApplicationCommandDeleteEvent|null[0]
-    abstract val command // dev.kord.core.event.interaction/ApplicationCommandDeleteEvent.command|{}command[0]
-        abstract fun <get-command>(): dev.kord.core.entity.application/GuildApplicationCommand // dev.kord.core.event.interaction/ApplicationCommandDeleteEvent.command.<get-command>|<get-command>(){}[0]
-}
-
 sealed interface dev.kord.core.event.interaction/ApplicationCommandInteractionCreateEvent : dev.kord.core.event.interaction/ActionInteractionCreateEvent { // dev.kord.core.event.interaction/ApplicationCommandInteractionCreateEvent|null[0]
     abstract val interaction // dev.kord.core.event.interaction/ApplicationCommandInteractionCreateEvent.interaction|{}interaction[0]
         abstract fun <get-interaction>(): dev.kord.core.entity.interaction/ApplicationCommandInteraction // dev.kord.core.event.interaction/ApplicationCommandInteractionCreateEvent.interaction.<get-interaction>|<get-interaction>(){}[0]
-}
-
-sealed interface dev.kord.core.event.interaction/ApplicationCommandUpdateEvent : dev.kord.core.event/Event { // dev.kord.core.event.interaction/ApplicationCommandUpdateEvent|null[0]
-    abstract val command // dev.kord.core.event.interaction/ApplicationCommandUpdateEvent.command|{}command[0]
-        abstract fun <get-command>(): dev.kord.core.entity.application/GuildApplicationCommand // dev.kord.core.event.interaction/ApplicationCommandUpdateEvent.command.<get-command>|<get-command>(){}[0]
 }
 
 sealed interface dev.kord.core.event.interaction/AutoCompleteInteractionCreateEvent : dev.kord.core.event.interaction/DataInteractionCreateEvent { // dev.kord.core.event.interaction/AutoCompleteInteractionCreateEvent|null[0]
@@ -10685,45 +10670,6 @@ final class dev.kord.core.event.interaction/ApplicationCommandPermissionsUpdateE
         final fun <get-shard>(): kotlin/Int // dev.kord.core.event.interaction/ApplicationCommandPermissionsUpdateEvent.shard.<get-shard>|<get-shard>(){}[0]
 }
 
-final class dev.kord.core.event.interaction/ChatInputCommandCreateEvent : dev.kord.core.event.interaction/ApplicationCommandCreateEvent { // dev.kord.core.event.interaction/ChatInputCommandCreateEvent|null[0]
-    constructor <init>(dev.kord.core.entity.application/GuildChatInputCommand, dev.kord.core/Kord, kotlin/Int, kotlin/Any?) // dev.kord.core.event.interaction/ChatInputCommandCreateEvent.<init>|<init>(dev.kord.core.entity.application.GuildChatInputCommand;dev.kord.core.Kord;kotlin.Int;kotlin.Any?){}[0]
-
-    final val command // dev.kord.core.event.interaction/ChatInputCommandCreateEvent.command|{}command[0]
-        final fun <get-command>(): dev.kord.core.entity.application/GuildChatInputCommand // dev.kord.core.event.interaction/ChatInputCommandCreateEvent.command.<get-command>|<get-command>(){}[0]
-    final val customContext // dev.kord.core.event.interaction/ChatInputCommandCreateEvent.customContext|{}customContext[0]
-        final fun <get-customContext>(): kotlin/Any? // dev.kord.core.event.interaction/ChatInputCommandCreateEvent.customContext.<get-customContext>|<get-customContext>(){}[0]
-    final val kord // dev.kord.core.event.interaction/ChatInputCommandCreateEvent.kord|{}kord[0]
-        final fun <get-kord>(): dev.kord.core/Kord // dev.kord.core.event.interaction/ChatInputCommandCreateEvent.kord.<get-kord>|<get-kord>(){}[0]
-    final val shard // dev.kord.core.event.interaction/ChatInputCommandCreateEvent.shard|{}shard[0]
-        final fun <get-shard>(): kotlin/Int // dev.kord.core.event.interaction/ChatInputCommandCreateEvent.shard.<get-shard>|<get-shard>(){}[0]
-}
-
-final class dev.kord.core.event.interaction/ChatInputCommandDeleteEvent : dev.kord.core.event.interaction/ApplicationCommandDeleteEvent { // dev.kord.core.event.interaction/ChatInputCommandDeleteEvent|null[0]
-    constructor <init>(dev.kord.core.entity.application/GuildChatInputCommand, dev.kord.core/Kord, kotlin/Int, kotlin/Any?) // dev.kord.core.event.interaction/ChatInputCommandDeleteEvent.<init>|<init>(dev.kord.core.entity.application.GuildChatInputCommand;dev.kord.core.Kord;kotlin.Int;kotlin.Any?){}[0]
-
-    final val command // dev.kord.core.event.interaction/ChatInputCommandDeleteEvent.command|{}command[0]
-        final fun <get-command>(): dev.kord.core.entity.application/GuildChatInputCommand // dev.kord.core.event.interaction/ChatInputCommandDeleteEvent.command.<get-command>|<get-command>(){}[0]
-    final val customContext // dev.kord.core.event.interaction/ChatInputCommandDeleteEvent.customContext|{}customContext[0]
-        final fun <get-customContext>(): kotlin/Any? // dev.kord.core.event.interaction/ChatInputCommandDeleteEvent.customContext.<get-customContext>|<get-customContext>(){}[0]
-    final val kord // dev.kord.core.event.interaction/ChatInputCommandDeleteEvent.kord|{}kord[0]
-        final fun <get-kord>(): dev.kord.core/Kord // dev.kord.core.event.interaction/ChatInputCommandDeleteEvent.kord.<get-kord>|<get-kord>(){}[0]
-    final val shard // dev.kord.core.event.interaction/ChatInputCommandDeleteEvent.shard|{}shard[0]
-        final fun <get-shard>(): kotlin/Int // dev.kord.core.event.interaction/ChatInputCommandDeleteEvent.shard.<get-shard>|<get-shard>(){}[0]
-}
-
-final class dev.kord.core.event.interaction/ChatInputCommandUpdateEvent : dev.kord.core.event.interaction/ApplicationCommandUpdateEvent { // dev.kord.core.event.interaction/ChatInputCommandUpdateEvent|null[0]
-    constructor <init>(dev.kord.core.entity.application/GuildChatInputCommand, dev.kord.core/Kord, kotlin/Int, kotlin/Any?) // dev.kord.core.event.interaction/ChatInputCommandUpdateEvent.<init>|<init>(dev.kord.core.entity.application.GuildChatInputCommand;dev.kord.core.Kord;kotlin.Int;kotlin.Any?){}[0]
-
-    final val command // dev.kord.core.event.interaction/ChatInputCommandUpdateEvent.command|{}command[0]
-        final fun <get-command>(): dev.kord.core.entity.application/GuildChatInputCommand // dev.kord.core.event.interaction/ChatInputCommandUpdateEvent.command.<get-command>|<get-command>(){}[0]
-    final val customContext // dev.kord.core.event.interaction/ChatInputCommandUpdateEvent.customContext|{}customContext[0]
-        final fun <get-customContext>(): kotlin/Any? // dev.kord.core.event.interaction/ChatInputCommandUpdateEvent.customContext.<get-customContext>|<get-customContext>(){}[0]
-    final val kord // dev.kord.core.event.interaction/ChatInputCommandUpdateEvent.kord|{}kord[0]
-        final fun <get-kord>(): dev.kord.core/Kord // dev.kord.core.event.interaction/ChatInputCommandUpdateEvent.kord.<get-kord>|<get-kord>(){}[0]
-    final val shard // dev.kord.core.event.interaction/ChatInputCommandUpdateEvent.shard|{}shard[0]
-        final fun <get-shard>(): kotlin/Int // dev.kord.core.event.interaction/ChatInputCommandUpdateEvent.shard.<get-shard>|<get-shard>(){}[0]
-}
-
 final class dev.kord.core.event.interaction/GlobalAutoCompleteInteractionCreateEvent : dev.kord.core.event.interaction/AutoCompleteInteractionCreateEvent { // dev.kord.core.event.interaction/GlobalAutoCompleteInteractionCreateEvent|null[0]
     constructor <init>(dev.kord.core/Kord, kotlin/Int, dev.kord.core.entity.interaction/GlobalAutoCompleteInteraction, kotlin/Any?) // dev.kord.core.event.interaction/GlobalAutoCompleteInteractionCreateEvent.<init>|<init>(dev.kord.core.Kord;kotlin.Int;dev.kord.core.entity.interaction.GlobalAutoCompleteInteraction;kotlin.Any?){}[0]
 
@@ -10904,123 +10850,6 @@ final class dev.kord.core.event.interaction/GuildUserCommandInteractionCreateEve
         final fun <get-kord>(): dev.kord.core/Kord // dev.kord.core.event.interaction/GuildUserCommandInteractionCreateEvent.kord.<get-kord>|<get-kord>(){}[0]
     final val shard // dev.kord.core.event.interaction/GuildUserCommandInteractionCreateEvent.shard|{}shard[0]
         final fun <get-shard>(): kotlin/Int // dev.kord.core.event.interaction/GuildUserCommandInteractionCreateEvent.shard.<get-shard>|<get-shard>(){}[0]
-}
-
-final class dev.kord.core.event.interaction/MessageCommandCreateEvent : dev.kord.core.event.interaction/ApplicationCommandCreateEvent { // dev.kord.core.event.interaction/MessageCommandCreateEvent|null[0]
-    constructor <init>(dev.kord.core.entity.application/GuildMessageCommand, dev.kord.core/Kord, kotlin/Int, kotlin/Any?) // dev.kord.core.event.interaction/MessageCommandCreateEvent.<init>|<init>(dev.kord.core.entity.application.GuildMessageCommand;dev.kord.core.Kord;kotlin.Int;kotlin.Any?){}[0]
-
-    final val command // dev.kord.core.event.interaction/MessageCommandCreateEvent.command|{}command[0]
-        final fun <get-command>(): dev.kord.core.entity.application/GuildMessageCommand // dev.kord.core.event.interaction/MessageCommandCreateEvent.command.<get-command>|<get-command>(){}[0]
-    final val customContext // dev.kord.core.event.interaction/MessageCommandCreateEvent.customContext|{}customContext[0]
-        final fun <get-customContext>(): kotlin/Any? // dev.kord.core.event.interaction/MessageCommandCreateEvent.customContext.<get-customContext>|<get-customContext>(){}[0]
-    final val kord // dev.kord.core.event.interaction/MessageCommandCreateEvent.kord|{}kord[0]
-        final fun <get-kord>(): dev.kord.core/Kord // dev.kord.core.event.interaction/MessageCommandCreateEvent.kord.<get-kord>|<get-kord>(){}[0]
-    final val shard // dev.kord.core.event.interaction/MessageCommandCreateEvent.shard|{}shard[0]
-        final fun <get-shard>(): kotlin/Int // dev.kord.core.event.interaction/MessageCommandCreateEvent.shard.<get-shard>|<get-shard>(){}[0]
-}
-
-final class dev.kord.core.event.interaction/MessageCommandDeleteEvent : dev.kord.core.event.interaction/ApplicationCommandDeleteEvent { // dev.kord.core.event.interaction/MessageCommandDeleteEvent|null[0]
-    constructor <init>(dev.kord.core.entity.application/GuildMessageCommand, dev.kord.core/Kord, kotlin/Int, kotlin/Any?) // dev.kord.core.event.interaction/MessageCommandDeleteEvent.<init>|<init>(dev.kord.core.entity.application.GuildMessageCommand;dev.kord.core.Kord;kotlin.Int;kotlin.Any?){}[0]
-
-    final val command // dev.kord.core.event.interaction/MessageCommandDeleteEvent.command|{}command[0]
-        final fun <get-command>(): dev.kord.core.entity.application/GuildMessageCommand // dev.kord.core.event.interaction/MessageCommandDeleteEvent.command.<get-command>|<get-command>(){}[0]
-    final val customContext // dev.kord.core.event.interaction/MessageCommandDeleteEvent.customContext|{}customContext[0]
-        final fun <get-customContext>(): kotlin/Any? // dev.kord.core.event.interaction/MessageCommandDeleteEvent.customContext.<get-customContext>|<get-customContext>(){}[0]
-    final val kord // dev.kord.core.event.interaction/MessageCommandDeleteEvent.kord|{}kord[0]
-        final fun <get-kord>(): dev.kord.core/Kord // dev.kord.core.event.interaction/MessageCommandDeleteEvent.kord.<get-kord>|<get-kord>(){}[0]
-    final val shard // dev.kord.core.event.interaction/MessageCommandDeleteEvent.shard|{}shard[0]
-        final fun <get-shard>(): kotlin/Int // dev.kord.core.event.interaction/MessageCommandDeleteEvent.shard.<get-shard>|<get-shard>(){}[0]
-}
-
-final class dev.kord.core.event.interaction/MessageCommandUpdateEvent : dev.kord.core.event.interaction/ApplicationCommandUpdateEvent { // dev.kord.core.event.interaction/MessageCommandUpdateEvent|null[0]
-    constructor <init>(dev.kord.core.entity.application/GuildMessageCommand, dev.kord.core/Kord, kotlin/Int, kotlin/Any?) // dev.kord.core.event.interaction/MessageCommandUpdateEvent.<init>|<init>(dev.kord.core.entity.application.GuildMessageCommand;dev.kord.core.Kord;kotlin.Int;kotlin.Any?){}[0]
-
-    final val command // dev.kord.core.event.interaction/MessageCommandUpdateEvent.command|{}command[0]
-        final fun <get-command>(): dev.kord.core.entity.application/GuildMessageCommand // dev.kord.core.event.interaction/MessageCommandUpdateEvent.command.<get-command>|<get-command>(){}[0]
-    final val customContext // dev.kord.core.event.interaction/MessageCommandUpdateEvent.customContext|{}customContext[0]
-        final fun <get-customContext>(): kotlin/Any? // dev.kord.core.event.interaction/MessageCommandUpdateEvent.customContext.<get-customContext>|<get-customContext>(){}[0]
-    final val kord // dev.kord.core.event.interaction/MessageCommandUpdateEvent.kord|{}kord[0]
-        final fun <get-kord>(): dev.kord.core/Kord // dev.kord.core.event.interaction/MessageCommandUpdateEvent.kord.<get-kord>|<get-kord>(){}[0]
-    final val shard // dev.kord.core.event.interaction/MessageCommandUpdateEvent.shard|{}shard[0]
-        final fun <get-shard>(): kotlin/Int // dev.kord.core.event.interaction/MessageCommandUpdateEvent.shard.<get-shard>|<get-shard>(){}[0]
-}
-
-final class dev.kord.core.event.interaction/UnknownApplicationCommandCreateEvent : dev.kord.core.event.interaction/ApplicationCommandCreateEvent { // dev.kord.core.event.interaction/UnknownApplicationCommandCreateEvent|null[0]
-    constructor <init>(dev.kord.core.entity.application/UnknownGuildApplicationCommand, dev.kord.core/Kord, kotlin/Int, kotlin/Any?) // dev.kord.core.event.interaction/UnknownApplicationCommandCreateEvent.<init>|<init>(dev.kord.core.entity.application.UnknownGuildApplicationCommand;dev.kord.core.Kord;kotlin.Int;kotlin.Any?){}[0]
-
-    final val command // dev.kord.core.event.interaction/UnknownApplicationCommandCreateEvent.command|{}command[0]
-        final fun <get-command>(): dev.kord.core.entity.application/UnknownGuildApplicationCommand // dev.kord.core.event.interaction/UnknownApplicationCommandCreateEvent.command.<get-command>|<get-command>(){}[0]
-    final val customContext // dev.kord.core.event.interaction/UnknownApplicationCommandCreateEvent.customContext|{}customContext[0]
-        final fun <get-customContext>(): kotlin/Any? // dev.kord.core.event.interaction/UnknownApplicationCommandCreateEvent.customContext.<get-customContext>|<get-customContext>(){}[0]
-    final val kord // dev.kord.core.event.interaction/UnknownApplicationCommandCreateEvent.kord|{}kord[0]
-        final fun <get-kord>(): dev.kord.core/Kord // dev.kord.core.event.interaction/UnknownApplicationCommandCreateEvent.kord.<get-kord>|<get-kord>(){}[0]
-    final val shard // dev.kord.core.event.interaction/UnknownApplicationCommandCreateEvent.shard|{}shard[0]
-        final fun <get-shard>(): kotlin/Int // dev.kord.core.event.interaction/UnknownApplicationCommandCreateEvent.shard.<get-shard>|<get-shard>(){}[0]
-}
-
-final class dev.kord.core.event.interaction/UnknownApplicationCommandDeleteEvent : dev.kord.core.event.interaction/ApplicationCommandDeleteEvent { // dev.kord.core.event.interaction/UnknownApplicationCommandDeleteEvent|null[0]
-    constructor <init>(dev.kord.core.entity.application/UnknownGuildApplicationCommand, dev.kord.core/Kord, kotlin/Int, kotlin/Any?) // dev.kord.core.event.interaction/UnknownApplicationCommandDeleteEvent.<init>|<init>(dev.kord.core.entity.application.UnknownGuildApplicationCommand;dev.kord.core.Kord;kotlin.Int;kotlin.Any?){}[0]
-
-    final val command // dev.kord.core.event.interaction/UnknownApplicationCommandDeleteEvent.command|{}command[0]
-        final fun <get-command>(): dev.kord.core.entity.application/UnknownGuildApplicationCommand // dev.kord.core.event.interaction/UnknownApplicationCommandDeleteEvent.command.<get-command>|<get-command>(){}[0]
-    final val customContext // dev.kord.core.event.interaction/UnknownApplicationCommandDeleteEvent.customContext|{}customContext[0]
-        final fun <get-customContext>(): kotlin/Any? // dev.kord.core.event.interaction/UnknownApplicationCommandDeleteEvent.customContext.<get-customContext>|<get-customContext>(){}[0]
-    final val kord // dev.kord.core.event.interaction/UnknownApplicationCommandDeleteEvent.kord|{}kord[0]
-        final fun <get-kord>(): dev.kord.core/Kord // dev.kord.core.event.interaction/UnknownApplicationCommandDeleteEvent.kord.<get-kord>|<get-kord>(){}[0]
-    final val shard // dev.kord.core.event.interaction/UnknownApplicationCommandDeleteEvent.shard|{}shard[0]
-        final fun <get-shard>(): kotlin/Int // dev.kord.core.event.interaction/UnknownApplicationCommandDeleteEvent.shard.<get-shard>|<get-shard>(){}[0]
-}
-
-final class dev.kord.core.event.interaction/UnknownApplicationCommandUpdateEvent : dev.kord.core.event.interaction/ApplicationCommandUpdateEvent { // dev.kord.core.event.interaction/UnknownApplicationCommandUpdateEvent|null[0]
-    constructor <init>(dev.kord.core.entity.application/UnknownGuildApplicationCommand, dev.kord.core/Kord, kotlin/Int, kotlin/Any?) // dev.kord.core.event.interaction/UnknownApplicationCommandUpdateEvent.<init>|<init>(dev.kord.core.entity.application.UnknownGuildApplicationCommand;dev.kord.core.Kord;kotlin.Int;kotlin.Any?){}[0]
-
-    final val command // dev.kord.core.event.interaction/UnknownApplicationCommandUpdateEvent.command|{}command[0]
-        final fun <get-command>(): dev.kord.core.entity.application/UnknownGuildApplicationCommand // dev.kord.core.event.interaction/UnknownApplicationCommandUpdateEvent.command.<get-command>|<get-command>(){}[0]
-    final val customContext // dev.kord.core.event.interaction/UnknownApplicationCommandUpdateEvent.customContext|{}customContext[0]
-        final fun <get-customContext>(): kotlin/Any? // dev.kord.core.event.interaction/UnknownApplicationCommandUpdateEvent.customContext.<get-customContext>|<get-customContext>(){}[0]
-    final val kord // dev.kord.core.event.interaction/UnknownApplicationCommandUpdateEvent.kord|{}kord[0]
-        final fun <get-kord>(): dev.kord.core/Kord // dev.kord.core.event.interaction/UnknownApplicationCommandUpdateEvent.kord.<get-kord>|<get-kord>(){}[0]
-    final val shard // dev.kord.core.event.interaction/UnknownApplicationCommandUpdateEvent.shard|{}shard[0]
-        final fun <get-shard>(): kotlin/Int // dev.kord.core.event.interaction/UnknownApplicationCommandUpdateEvent.shard.<get-shard>|<get-shard>(){}[0]
-}
-
-final class dev.kord.core.event.interaction/UserCommandCreateEvent : dev.kord.core.event.interaction/ApplicationCommandCreateEvent { // dev.kord.core.event.interaction/UserCommandCreateEvent|null[0]
-    constructor <init>(dev.kord.core.entity.application/GuildUserCommand, dev.kord.core/Kord, kotlin/Int, kotlin/Any?) // dev.kord.core.event.interaction/UserCommandCreateEvent.<init>|<init>(dev.kord.core.entity.application.GuildUserCommand;dev.kord.core.Kord;kotlin.Int;kotlin.Any?){}[0]
-
-    final val command // dev.kord.core.event.interaction/UserCommandCreateEvent.command|{}command[0]
-        final fun <get-command>(): dev.kord.core.entity.application/GuildUserCommand // dev.kord.core.event.interaction/UserCommandCreateEvent.command.<get-command>|<get-command>(){}[0]
-    final val customContext // dev.kord.core.event.interaction/UserCommandCreateEvent.customContext|{}customContext[0]
-        final fun <get-customContext>(): kotlin/Any? // dev.kord.core.event.interaction/UserCommandCreateEvent.customContext.<get-customContext>|<get-customContext>(){}[0]
-    final val kord // dev.kord.core.event.interaction/UserCommandCreateEvent.kord|{}kord[0]
-        final fun <get-kord>(): dev.kord.core/Kord // dev.kord.core.event.interaction/UserCommandCreateEvent.kord.<get-kord>|<get-kord>(){}[0]
-    final val shard // dev.kord.core.event.interaction/UserCommandCreateEvent.shard|{}shard[0]
-        final fun <get-shard>(): kotlin/Int // dev.kord.core.event.interaction/UserCommandCreateEvent.shard.<get-shard>|<get-shard>(){}[0]
-}
-
-final class dev.kord.core.event.interaction/UserCommandDeleteEvent : dev.kord.core.event.interaction/ApplicationCommandDeleteEvent { // dev.kord.core.event.interaction/UserCommandDeleteEvent|null[0]
-    constructor <init>(dev.kord.core.entity.application/GuildUserCommand, dev.kord.core/Kord, kotlin/Int, kotlin/Any?) // dev.kord.core.event.interaction/UserCommandDeleteEvent.<init>|<init>(dev.kord.core.entity.application.GuildUserCommand;dev.kord.core.Kord;kotlin.Int;kotlin.Any?){}[0]
-
-    final val command // dev.kord.core.event.interaction/UserCommandDeleteEvent.command|{}command[0]
-        final fun <get-command>(): dev.kord.core.entity.application/GuildUserCommand // dev.kord.core.event.interaction/UserCommandDeleteEvent.command.<get-command>|<get-command>(){}[0]
-    final val customContext // dev.kord.core.event.interaction/UserCommandDeleteEvent.customContext|{}customContext[0]
-        final fun <get-customContext>(): kotlin/Any? // dev.kord.core.event.interaction/UserCommandDeleteEvent.customContext.<get-customContext>|<get-customContext>(){}[0]
-    final val kord // dev.kord.core.event.interaction/UserCommandDeleteEvent.kord|{}kord[0]
-        final fun <get-kord>(): dev.kord.core/Kord // dev.kord.core.event.interaction/UserCommandDeleteEvent.kord.<get-kord>|<get-kord>(){}[0]
-    final val shard // dev.kord.core.event.interaction/UserCommandDeleteEvent.shard|{}shard[0]
-        final fun <get-shard>(): kotlin/Int // dev.kord.core.event.interaction/UserCommandDeleteEvent.shard.<get-shard>|<get-shard>(){}[0]
-}
-
-final class dev.kord.core.event.interaction/UserCommandUpdateEvent : dev.kord.core.event.interaction/ApplicationCommandUpdateEvent { // dev.kord.core.event.interaction/UserCommandUpdateEvent|null[0]
-    constructor <init>(dev.kord.core.entity.application/GuildUserCommand, dev.kord.core/Kord, kotlin/Int, kotlin/Any?) // dev.kord.core.event.interaction/UserCommandUpdateEvent.<init>|<init>(dev.kord.core.entity.application.GuildUserCommand;dev.kord.core.Kord;kotlin.Int;kotlin.Any?){}[0]
-
-    final val command // dev.kord.core.event.interaction/UserCommandUpdateEvent.command|{}command[0]
-        final fun <get-command>(): dev.kord.core.entity.application/GuildUserCommand // dev.kord.core.event.interaction/UserCommandUpdateEvent.command.<get-command>|<get-command>(){}[0]
-    final val customContext // dev.kord.core.event.interaction/UserCommandUpdateEvent.customContext|{}customContext[0]
-        final fun <get-customContext>(): kotlin/Any? // dev.kord.core.event.interaction/UserCommandUpdateEvent.customContext.<get-customContext>|<get-customContext>(){}[0]
-    final val kord // dev.kord.core.event.interaction/UserCommandUpdateEvent.kord|{}kord[0]
-        final fun <get-kord>(): dev.kord.core/Kord // dev.kord.core.event.interaction/UserCommandUpdateEvent.kord.<get-kord>|<get-kord>(){}[0]
-    final val shard // dev.kord.core.event.interaction/UserCommandUpdateEvent.shard|{}shard[0]
-        final fun <get-shard>(): kotlin/Int // dev.kord.core.event.interaction/UserCommandUpdateEvent.shard.<get-shard>|<get-shard>(){}[0]
 }
 
 final class dev.kord.core.event.message/MessageBulkDeleteEvent : dev.kord.core.entity/Strategizable, dev.kord.core.event/Event { // dev.kord.core.event.message/MessageBulkDeleteEvent|null[0]
@@ -12055,8 +11884,6 @@ final class dev.kord.core/Kord : kotlinx.coroutines/CoroutineScope { // dev.kord
     final fun requestSoundboardSounds(kotlin.collections/List<dev.kord.common.entity/Snowflake>): kotlinx.coroutines.flow/Flow<dev.kord.core.entity/GuildSoundboardSound> // dev.kord.core/Kord.requestSoundboardSounds|requestSoundboardSounds(kotlin.collections.List<dev.kord.common.entity.Snowflake>){}[0]
     final fun toString(): kotlin/String // dev.kord.core/Kord.toString|toString(){}[0]
     final inline fun getEntitlements(dev.kord.core.supplier/EntitySupplyStrategy<*> = ..., kotlin/Function1<dev.kord.rest.builder.monetization/EntitlementsListRequestBuilder, kotlin/Unit> = ...): kotlinx.coroutines.flow/Flow<dev.kord.core.entity.monetization/Entitlement> // dev.kord.core/Kord.getEntitlements|getEntitlements(dev.kord.core.supplier.EntitySupplyStrategy<*>;kotlin.Function1<dev.kord.rest.builder.monetization.EntitlementsListRequestBuilder,kotlin.Unit>){}[0]
-    final suspend fun <#A1: kotlin/Any?> getGlobalApplicationCommandOf(dev.kord.common.entity/Snowflake): #A1 // dev.kord.core/Kord.getGlobalApplicationCommandOf|getGlobalApplicationCommandOf(dev.kord.common.entity.Snowflake){0§<kotlin.Any?>}[0]
-    final suspend fun <#A1: kotlin/Any?> getGlobalApplicationCommandOfOrNull(dev.kord.common.entity/Snowflake): #A1? // dev.kord.core/Kord.getGlobalApplicationCommandOfOrNull|getGlobalApplicationCommandOfOrNull(dev.kord.common.entity.Snowflake){0§<kotlin.Any?>}[0]
     final suspend fun editSelf(kotlin/Function1<dev.kord.rest.builder.user/CurrentUserModifyBuilder, kotlin/Unit>): dev.kord.core.entity/User // dev.kord.core/Kord.editSelf|editSelf(kotlin.Function1<dev.kord.rest.builder.user.CurrentUserModifyBuilder,kotlin.Unit>){}[0]
     final suspend fun getApplicationEmoji(dev.kord.common.entity/Snowflake): dev.kord.core.entity/ApplicationEmoji // dev.kord.core/Kord.getApplicationEmoji|getApplicationEmoji(dev.kord.common.entity.Snowflake){}[0]
     final suspend fun getApplicationInfo(): dev.kord.core.entity/Application // dev.kord.core/Kord.getApplicationInfo|getApplicationInfo(){}[0]

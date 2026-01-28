@@ -5658,7 +5658,6 @@ public final class dev/kord/common/entity/DiscordSelectOption$Companion {
 
 public final class dev/kord/common/entity/DiscordShard {
 	public static final field Companion Ldev/kord/common/entity/DiscordShard$Companion;
-	public static final field NewCompanion Ldev/kord/common/entity/DiscordShard$NewCompanion;
 	public fun <init> (II)V
 	public final fun component1 ()I
 	public final fun component2 ()I
@@ -5672,10 +5671,6 @@ public final class dev/kord/common/entity/DiscordShard {
 }
 
 public final class dev/kord/common/entity/DiscordShard$Companion {
-	public final fun serializer ()Lkotlinx/serialization/KSerializer;
-}
-
-public final class dev/kord/common/entity/DiscordShard$NewCompanion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
@@ -8247,17 +8242,13 @@ public final class dev/kord/common/entity/PermissionKt {
 	public static final fun Permissions ([Ldev/kord/common/entity/Permissions;)Ldev/kord/common/entity/Permissions;
 	public static synthetic fun Permissions$default (Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Ldev/kord/common/entity/Permissions;
 	public static final fun Permissions0 (Ljava/lang/Iterable;)Ldev/kord/common/entity/Permissions;
-	public static final synthetic fun Permissions0 (Lkotlin/jvm/functions/Function1;)Ldev/kord/common/entity/Permissions;
-	public static synthetic fun Permissions0$default (Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Ldev/kord/common/entity/Permissions;
 }
 
 public final class dev/kord/common/entity/Permissions {
 	public static final field Companion Ldev/kord/common/entity/Permissions$Companion;
-	public static final field NewCompanion Ldev/kord/common/entity/Permissions$NewCompanion;
 	public final fun contains (Ldev/kord/common/entity/Permission;)Z
 	public final fun contains (Ldev/kord/common/entity/Permissions;)Z
 	public final fun copy (Lkotlin/jvm/functions/Function1;)Ldev/kord/common/entity/Permissions;
-	public final synthetic fun copy0 (Lkotlin/jvm/functions/Function1;)Ldev/kord/common/entity/Permissions;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getCode ()Ldev/kord/common/DiscordBitSet;
 	public final fun getValues ()Ljava/util/Set;
@@ -8284,13 +8275,8 @@ public final class dev/kord/common/entity/Permissions$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
-public final class dev/kord/common/entity/Permissions$NewCompanion {
-	public final fun serializer ()Lkotlinx/serialization/KSerializer;
-}
-
 public final class dev/kord/common/entity/PermissionsKt {
 	public static final fun getALL (Ldev/kord/common/entity/Permissions$Companion;)Ldev/kord/common/entity/Permissions;
-	public static final synthetic fun getALL (Ldev/kord/common/entity/Permissions$NewCompanion;)Ldev/kord/common/entity/Permissions;
 }
 
 public abstract class dev/kord/common/entity/PremiumTier {
@@ -8902,7 +8888,6 @@ public final class dev/kord/common/entity/SystemChannelFlagKt {
 
 public final class dev/kord/common/entity/SystemChannelFlags {
 	public static final field Companion Ldev/kord/common/entity/SystemChannelFlags$Companion;
-	public static final field NewCompanion Ldev/kord/common/entity/SystemChannelFlags$NewCompanion;
 	public final fun contains (Ldev/kord/common/entity/SystemChannelFlag;)Z
 	public final fun contains (Ldev/kord/common/entity/SystemChannelFlags;)Z
 	public final fun copy (Lkotlin/jvm/functions/Function1;)Ldev/kord/common/entity/SystemChannelFlags;
@@ -8929,10 +8914,6 @@ public final class dev/kord/common/entity/SystemChannelFlags$Builder {
 }
 
 public final class dev/kord/common/entity/SystemChannelFlags$Companion {
-	public final fun serializer ()Lkotlinx/serialization/KSerializer;
-}
-
-public final class dev/kord/common/entity/SystemChannelFlags$NewCompanion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
@@ -9112,7 +9093,6 @@ public final class dev/kord/common/entity/UserFlags {
 	public final fun contains (Ldev/kord/common/entity/UserFlag;)Z
 	public final fun contains (Ldev/kord/common/entity/UserFlags;)Z
 	public final fun copy (Lkotlin/jvm/functions/Function1;)Ldev/kord/common/entity/UserFlags;
-	public final synthetic fun copy0 (Lkotlin/jvm/functions/Function1;)Ldev/kord/common/entity/UserFlags;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getCode ()I
 	public final fun getValues ()Ljava/util/Set;

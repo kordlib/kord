@@ -6,7 +6,6 @@ package dev.kord.common.entity
 import kotlin.LazyThreadSafetyMode.PUBLICATION
 import kotlin.contracts.InvocationKind.EXACTLY_ONCE
 import kotlin.contracts.contract
-import kotlin.jvm.JvmField
 import kotlin.jvm.JvmName
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
@@ -298,26 +297,6 @@ public class SystemChannelFlags internal constructor(
         }
 
         override fun deserialize(decoder: Decoder): SystemChannelFlags = SystemChannelFlags(decoder.decodeSerializableValue(delegate))
-    }
-
-    public companion object {
-        @Suppress(names = arrayOf("DEPRECATION_ERROR"))
-        @Deprecated(
-            level = DeprecationLevel.HIDDEN,
-            message = "Renamed to 'Companion'. This declaration will be removed in 0.17.0.",
-            replaceWith = ReplaceWith(expression = "SystemChannelFlags.Companion", imports = arrayOf("dev.kord.common.entity.SystemChannelFlags")),
-        )
-        @JvmField
-        public val NewCompanion: NewCompanion = NewCompanion()
-    }
-
-    @Deprecated(
-        level = DeprecationLevel.HIDDEN,
-        message = "Renamed to 'Companion'. This declaration will be removed in 0.17.0.",
-        replaceWith = ReplaceWith(expression = "SystemChannelFlags.Companion", imports = arrayOf("dev.kord.common.entity.SystemChannelFlags")),
-    )
-    public class NewCompanion internal constructor() {
-        public fun serializer(): KSerializer<SystemChannelFlags> = SystemChannelFlags.serializer()
     }
 }
 

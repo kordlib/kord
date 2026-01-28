@@ -42,7 +42,10 @@ public sealed class StageInstancePrivacyLevel(
     /**
      * The Stage instance is visible publicly.
      */
-    @Deprecated(message = "Stages are no longer discoverable")
+    @Deprecated(
+        level = DeprecationLevel.ERROR,
+        message = "Stages are no longer discoverable. The deprecation level will be raised to HIDDEN in 0.19.0 and this declaration will be removed in 0.20.0",
+    )
     public object Public : StageInstancePrivacyLevel(1)
 
     /**
@@ -67,7 +70,7 @@ public sealed class StageInstancePrivacyLevel(
          */
         public val entries: List<StageInstancePrivacyLevel> by lazy(mode = PUBLICATION) {
             listOf(
-                @Suppress("DEPRECATION") Public,
+                @Suppress("DEPRECATION_ERROR") Public,
                 GuildOnly,
             )
         }
@@ -76,7 +79,7 @@ public sealed class StageInstancePrivacyLevel(
          * Returns an instance of [StageInstancePrivacyLevel] with [StageInstancePrivacyLevel.value] equal to the specified [value].
          */
         public fun from(`value`: Int): StageInstancePrivacyLevel = when (value) {
-            1 -> @Suppress("DEPRECATION") Public
+            1 -> @Suppress("DEPRECATION_ERROR") Public
             2 -> GuildOnly
             else -> Unknown(value)
         }
