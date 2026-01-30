@@ -16,10 +16,10 @@ import kotlin.contracts.contract
 @KordDsl
 public interface MessageBuilder {
 
-    /** The message contents (up to 2000 characters). */
+    /** The message contents. Limited to the length of [Limits.content]. */
     public var content: String?
 
-    /** Up to 10 embeds (up to 6000 characters). */
+    /** The embeds in the message. Limited to [Limits.embedCount] embeds. */
     public var embeds: MutableList<EmbedBuilder>?
 
     /**
@@ -56,6 +56,18 @@ public interface MessageBuilder {
         val file = NamedFile(name, contentProvider)
         files.add(file)
         return file
+    }
+
+    public object Limits {
+        /**
+         * The maximum length of the [MessageBuilder.content] field.
+         */
+        public const val content: Int = 2000
+
+        /**
+         * The maximum amount of [MessageBuilder.embeds] in a [MessageBuilder].
+         */
+        public const val embedCount: Int = 10
     }
 }
 
