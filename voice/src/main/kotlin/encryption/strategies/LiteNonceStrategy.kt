@@ -1,5 +1,6 @@
 package dev.kord.voice.encryption.strategies
 
+import dev.kord.voice.EncryptionMode
 import dev.kord.voice.io.ByteArrayView
 import dev.kord.voice.io.MutableByteArrayCursor
 import dev.kord.voice.io.mutableCursor
@@ -8,8 +9,6 @@ import dev.kord.voice.udp.RTPPacket
 import kotlinx.atomicfu.atomic
 
 public class LiteNonceStrategy : NonceStrategy {
-    override val nonceLength: Int = 4
-
     private var count: Int by atomic(0)
     private val nonceBuffer: ByteArray = ByteArray(4)
     private val nonceView = nonceBuffer.view()
@@ -32,5 +31,13 @@ public class LiteNonceStrategy : NonceStrategy {
 
     override fun append(nonce: ByteArrayView, cursor: MutableByteArrayCursor) {
         cursor.writeByteView(nonce)
+    }
+
+    public companion object Factory : NonceStrategy.Factory {
+        override val length: Int get() = 4
+
+        override val mode: EncryptionMode get() = EncryptionMode.XSalsa20Poly1305Lite
+
+        override fun create(): NonceStrategy = LiteNonceStrategy()
     }
 }
