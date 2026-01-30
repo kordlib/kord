@@ -13506,40 +13506,80 @@ public final class dev/kord/core/event/message/MessageUpdateEvent : dev/kord/cor
 	public fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/event/message/MessageUpdateEvent;
 }
 
-public final class dev/kord/core/event/message/ReactionAddEvent : dev/kord/core/entity/Strategizable, dev/kord/core/event/Event {
+public final class dev/kord/core/event/message/ReactionAddEvent : dev/kord/core/event/message/ReactionEvent {
 	public fun <init> (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/core/entity/ReactionEmoji;Ldev/kord/common/entity/Snowflake;Ldev/kord/core/Kord;ILjava/lang/Object;Ldev/kord/core/supplier/EntitySupplier;)V
 	public synthetic fun <init> (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/core/entity/ReactionEmoji;Ldev/kord/common/entity/Snowflake;Ldev/kord/core/Kord;ILjava/lang/Object;Ldev/kord/core/supplier/EntitySupplier;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun getChannel ()Ldev/kord/core/behavior/channel/MessageChannelBehavior;
-	public final fun getChannel (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public final fun getChannelId ()Ldev/kord/common/entity/Snowflake;
-	public final fun getChannelOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getChannel ()Ldev/kord/core/behavior/channel/MessageChannelBehavior;
+	public fun getChannel (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getChannelId ()Ldev/kord/common/entity/Snowflake;
+	public fun getChannelOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getCustomContext ()Ljava/lang/Object;
-	public final fun getEmoji ()Ldev/kord/core/entity/ReactionEmoji;
+	public fun getEmoji ()Ldev/kord/core/entity/ReactionEmoji;
 	public fun getGateway ()Ldev/kord/gateway/Gateway;
-	public final fun getGuild ()Ldev/kord/core/behavior/GuildBehavior;
-	public final fun getGuildId ()Ldev/kord/common/entity/Snowflake;
-	public final fun getGuildOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getGuild ()Ldev/kord/core/behavior/GuildBehavior;
+	public fun getGuildId ()Ldev/kord/common/entity/Snowflake;
+	public fun getGuildOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getKord ()Ldev/kord/core/Kord;
-	public final fun getMessage ()Ldev/kord/core/behavior/MessageBehavior;
-	public final fun getMessage (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getMessage ()Ldev/kord/core/behavior/MessageBehavior;
+	public fun getMessage (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun getMessageAuthor ()Ldev/kord/core/behavior/UserBehavior;
 	public final fun getMessageAuthorAsMember ()Ldev/kord/core/behavior/MemberBehavior;
 	public final fun getMessageAuthorAsMemberOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun getMessageAuthorId ()Ldev/kord/common/entity/Snowflake;
 	public final fun getMessageAuthorOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public final fun getMessageId ()Ldev/kord/common/entity/Snowflake;
-	public final fun getMessageOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getMessageId ()Ldev/kord/common/entity/Snowflake;
+	public fun getMessageOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getShard ()I
 	public fun getSupplier ()Ldev/kord/core/supplier/EntitySupplier;
-	public final fun getUser ()Ldev/kord/core/behavior/UserBehavior;
-	public final fun getUser (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public final fun getUserAsMember ()Ldev/kord/core/behavior/MemberBehavior;
-	public final fun getUserAsMember (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public final fun getUserId ()Ldev/kord/common/entity/Snowflake;
-	public final fun getUserOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getUser ()Ldev/kord/core/behavior/UserBehavior;
+	public fun getUser (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getUserAsMember ()Ldev/kord/core/behavior/MemberBehavior;
+	public fun getUserAsMember (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getUserId ()Ldev/kord/common/entity/Snowflake;
+	public fun getUserOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun toString ()Ljava/lang/String;
 	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/Strategizable;
 	public fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/event/message/ReactionAddEvent;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/event/message/ReactionEvent;
+}
+
+public abstract interface class dev/kord/core/event/message/ReactionEvent : dev/kord/core/entity/Strategizable, dev/kord/core/event/Event {
+	public abstract fun getChannel ()Ldev/kord/core/behavior/channel/MessageChannelBehavior;
+	public abstract fun getChannel (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun getChannelId ()Ldev/kord/common/entity/Snowflake;
+	public abstract fun getChannelOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun getEmoji ()Ldev/kord/core/entity/ReactionEmoji;
+	public abstract fun getGuild ()Ldev/kord/core/behavior/GuildBehavior;
+	public abstract fun getGuildId ()Ldev/kord/common/entity/Snowflake;
+	public abstract fun getGuildOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun getMessage ()Ldev/kord/core/behavior/MessageBehavior;
+	public abstract fun getMessage (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun getMessageId ()Ldev/kord/common/entity/Snowflake;
+	public abstract fun getMessageOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun getUser ()Ldev/kord/core/behavior/UserBehavior;
+	public abstract fun getUser (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun getUserAsMember ()Ldev/kord/core/behavior/MemberBehavior;
+	public abstract fun getUserAsMember (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun getUserId ()Ldev/kord/common/entity/Snowflake;
+	public abstract fun getUserOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/event/message/ReactionEvent;
+}
+
+public final class dev/kord/core/event/message/ReactionEvent$DefaultImpls {
+	public static fun getChannel (Ldev/kord/core/event/message/ReactionEvent;)Ldev/kord/core/behavior/channel/MessageChannelBehavior;
+	public static fun getChannel (Ldev/kord/core/event/message/ReactionEvent;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static fun getChannelOrNull (Ldev/kord/core/event/message/ReactionEvent;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static fun getGateway (Ldev/kord/core/event/message/ReactionEvent;)Ldev/kord/gateway/Gateway;
+	public static fun getGuild (Ldev/kord/core/event/message/ReactionEvent;)Ldev/kord/core/behavior/GuildBehavior;
+	public static fun getGuildOrNull (Ldev/kord/core/event/message/ReactionEvent;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static fun getMessage (Ldev/kord/core/event/message/ReactionEvent;)Ldev/kord/core/behavior/MessageBehavior;
+	public static fun getMessage (Ldev/kord/core/event/message/ReactionEvent;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static fun getMessageOrNull (Ldev/kord/core/event/message/ReactionEvent;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static fun getUser (Ldev/kord/core/event/message/ReactionEvent;)Ldev/kord/core/behavior/UserBehavior;
+	public static fun getUser (Ldev/kord/core/event/message/ReactionEvent;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static fun getUserAsMember (Ldev/kord/core/event/message/ReactionEvent;)Ldev/kord/core/behavior/MemberBehavior;
+	public static fun getUserAsMember (Ldev/kord/core/event/message/ReactionEvent;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static fun getUserOrNull (Ldev/kord/core/event/message/ReactionEvent;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class dev/kord/core/event/message/ReactionRemoveAllEvent : dev/kord/core/entity/Strategizable, dev/kord/core/event/Event {
@@ -13593,34 +13633,35 @@ public final class dev/kord/core/event/message/ReactionRemoveEmojiEvent : dev/ko
 	public fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/event/message/ReactionRemoveEmojiEvent;
 }
 
-public final class dev/kord/core/event/message/ReactionRemoveEvent : dev/kord/core/entity/Strategizable, dev/kord/core/event/Event {
+public final class dev/kord/core/event/message/ReactionRemoveEvent : dev/kord/core/event/message/ReactionEvent {
 	public fun <init> (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/core/entity/ReactionEmoji;Ldev/kord/core/Kord;ILjava/lang/Object;Ldev/kord/core/supplier/EntitySupplier;)V
 	public synthetic fun <init> (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/core/entity/ReactionEmoji;Ldev/kord/core/Kord;ILjava/lang/Object;Ldev/kord/core/supplier/EntitySupplier;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun getChannel ()Ldev/kord/core/behavior/channel/MessageChannelBehavior;
-	public final fun getChannel (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public final fun getChannelId ()Ldev/kord/common/entity/Snowflake;
-	public final fun getChannelOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getChannel ()Ldev/kord/core/behavior/channel/MessageChannelBehavior;
+	public fun getChannel (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getChannelId ()Ldev/kord/common/entity/Snowflake;
+	public fun getChannelOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getCustomContext ()Ljava/lang/Object;
-	public final fun getEmoji ()Ldev/kord/core/entity/ReactionEmoji;
+	public fun getEmoji ()Ldev/kord/core/entity/ReactionEmoji;
 	public fun getGateway ()Ldev/kord/gateway/Gateway;
-	public final fun getGuild ()Ldev/kord/core/behavior/GuildBehavior;
-	public final fun getGuildId ()Ldev/kord/common/entity/Snowflake;
-	public final fun getGuildOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getGuild ()Ldev/kord/core/behavior/GuildBehavior;
+	public fun getGuildId ()Ldev/kord/common/entity/Snowflake;
+	public fun getGuildOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getKord ()Ldev/kord/core/Kord;
-	public final fun getMessage ()Ldev/kord/core/behavior/MessageBehavior;
-	public final fun getMessage (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public final fun getMessageId ()Ldev/kord/common/entity/Snowflake;
-	public final fun getMessageOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getMessage ()Ldev/kord/core/behavior/MessageBehavior;
+	public fun getMessage (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getMessageId ()Ldev/kord/common/entity/Snowflake;
+	public fun getMessageOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getShard ()I
 	public fun getSupplier ()Ldev/kord/core/supplier/EntitySupplier;
-	public final fun getUser ()Ldev/kord/core/behavior/UserBehavior;
-	public final fun getUser (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public final fun getUserAsMember ()Ldev/kord/core/behavior/MemberBehavior;
-	public final fun getUserAsMember (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public final fun getUserId ()Ldev/kord/common/entity/Snowflake;
-	public final fun getUserOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getUser ()Ldev/kord/core/behavior/UserBehavior;
+	public fun getUser (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getUserAsMember ()Ldev/kord/core/behavior/MemberBehavior;
+	public fun getUserAsMember (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getUserId ()Ldev/kord/common/entity/Snowflake;
+	public fun getUserOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun toString ()Ljava/lang/String;
 	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/Strategizable;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/event/message/ReactionEvent;
 	public fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/event/message/ReactionRemoveEvent;
 }
 
