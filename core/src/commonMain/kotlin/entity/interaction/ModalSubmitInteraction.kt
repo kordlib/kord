@@ -44,7 +44,7 @@ public sealed interface ModalSubmitInteraction : ActionInteraction, ComponentInt
                 val customId = component.data.customId.value
                 customId?.let { it to component }
             } else {
-                val component = Component(actionRow.data.components.orEmpty().first())
+                val component = actionRow.components.firstOrNull() ?: return@mapNotNull null
                 val customId = component.data.customId.value
                 customId?.let { it to component }
             }
