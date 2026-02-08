@@ -7,8 +7,8 @@ import io.ktor.client.*
 import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.plugins.websocket.*
 import io.ktor.serialization.kotlinx.json.*
-import io.ktor.util.*
 import kotlinx.serialization.json.Json
+import kotlin.io.encoding.Base64
 
 internal fun HttpClientConfig<*>.defaultConfig() {
     expectSuccess = false
@@ -44,7 +44,16 @@ public fun HttpClient?.configure(): HttpClient {
 /** @suppress */
 @KordInternal
 public fun getBotIdFromToken(token: String): Snowflake = try {
-    Snowflake(token.substringBefore('.').decodeBase64String())
+    val encodedId = token.substringBefore('.')
+    val paddedId = when (encodedId.length % 4) {
+        0 -> encodedId
+        2 -> "$encodedId=="
+        3 -> "$encodedId="
+        else -> throw IllegalArgumentException("Invalid token")
+    }
+
+    val decodedId = Base64.Default.decode(paddedId).decodeToString()
+    Snowflake(decodedId)
 } catch (exception: IllegalArgumentException) {
     throw IllegalArgumentException("Malformed bot token: '$token'. Make sure that your token is correct.")
 }
