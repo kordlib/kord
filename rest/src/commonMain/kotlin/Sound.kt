@@ -4,13 +4,13 @@ import io.ktor.client.*
 import io.ktor.client.call.*
 import io.ktor.client.request.*
 import io.ktor.http.*
-import io.ktor.util.*
 import kotlinx.io.Source
 import kotlinx.io.buffered
 import kotlinx.io.files.FileSystem
 import kotlinx.io.files.Path
 import kotlinx.io.files.SystemFileSystem
 import kotlinx.io.readByteArray
+import kotlin.io.encoding.Base64
 
 /**
  * Representation of a Discord sound.
@@ -26,7 +26,7 @@ public class Sound private constructor(public val data: ByteArray, public val fo
      * The [data uri](https://en.wikipedia.org/wiki/Data_URI_scheme) representation of this sound, which is used
      * by Discord.
      */
-    public val dataUri: String get() = "data:${format.mimeType};base64,${data.encodeBase64()}"
+    public val dataUri: String get() = "data:${format.mimeType};base64,${Base64.encode(data)}"
 
     public companion object {
         /**
