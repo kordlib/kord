@@ -109,7 +109,6 @@ final class dev.kord.gateway.builder/LoginBuilder { // dev.kord.gateway.builder/
         final fun <set-presence>(dev.kord.gateway/DiscordPresence) // dev.kord.gateway.builder/LoginBuilder.presence.<set-presence>|<set-presence>(dev.kord.gateway.DiscordPresence){}[0]
 
     final inline fun intents(kotlin/Function1<dev.kord.gateway/Intents.Builder, kotlin/Unit>) // dev.kord.gateway.builder/LoginBuilder.intents|intents(kotlin.Function1<dev.kord.gateway.Intents.Builder,kotlin.Unit>){}[0]
-    final inline fun intents0(kotlin/Function1<dev.kord.gateway/Intents.Builder, kotlin/Unit>) // dev.kord.gateway.builder/LoginBuilder.intents0|intents0(kotlin.Function1<dev.kord.gateway.Intents.Builder,kotlin.Unit>){}[0]
     final inline fun presence(kotlin/Function1<dev.kord.gateway.builder/PresenceBuilder, kotlin/Unit>) // dev.kord.gateway.builder/LoginBuilder.presence|presence(kotlin.Function1<dev.kord.gateway.builder.PresenceBuilder,kotlin.Unit>){}[0]
 }
 
@@ -190,38 +189,6 @@ final class dev.kord.gateway.retry/LinearRetry : dev.kord.gateway.retry/Retry { 
     final suspend fun retry() // dev.kord.gateway.retry/LinearRetry.retry|retry(){}[0]
 }
 
-final class dev.kord.gateway/ApplicationCommandCreate : dev.kord.gateway/DispatchEvent { // dev.kord.gateway/ApplicationCommandCreate|null[0]
-    constructor <init>(dev.kord.common.entity/DiscordApplicationCommand, kotlin/Int?) // dev.kord.gateway/ApplicationCommandCreate.<init>|<init>(dev.kord.common.entity.DiscordApplicationCommand;kotlin.Int?){}[0]
-
-    final val application // dev.kord.gateway/ApplicationCommandCreate.application|{}application[0]
-        final fun <get-application>(): dev.kord.common.entity/DiscordApplicationCommand // dev.kord.gateway/ApplicationCommandCreate.application.<get-application>|<get-application>(){}[0]
-    final val sequence // dev.kord.gateway/ApplicationCommandCreate.sequence|{}sequence[0]
-        final fun <get-sequence>(): kotlin/Int? // dev.kord.gateway/ApplicationCommandCreate.sequence.<get-sequence>|<get-sequence>(){}[0]
-
-    final fun component1(): dev.kord.common.entity/DiscordApplicationCommand // dev.kord.gateway/ApplicationCommandCreate.component1|component1(){}[0]
-    final fun component2(): kotlin/Int? // dev.kord.gateway/ApplicationCommandCreate.component2|component2(){}[0]
-    final fun copy(dev.kord.common.entity/DiscordApplicationCommand = ..., kotlin/Int? = ...): dev.kord.gateway/ApplicationCommandCreate // dev.kord.gateway/ApplicationCommandCreate.copy|copy(dev.kord.common.entity.DiscordApplicationCommand;kotlin.Int?){}[0]
-    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.gateway/ApplicationCommandCreate.equals|equals(kotlin.Any?){}[0]
-    final fun hashCode(): kotlin/Int // dev.kord.gateway/ApplicationCommandCreate.hashCode|hashCode(){}[0]
-    final fun toString(): kotlin/String // dev.kord.gateway/ApplicationCommandCreate.toString|toString(){}[0]
-}
-
-final class dev.kord.gateway/ApplicationCommandDelete : dev.kord.gateway/DispatchEvent { // dev.kord.gateway/ApplicationCommandDelete|null[0]
-    constructor <init>(dev.kord.common.entity/DiscordApplicationCommand, kotlin/Int?) // dev.kord.gateway/ApplicationCommandDelete.<init>|<init>(dev.kord.common.entity.DiscordApplicationCommand;kotlin.Int?){}[0]
-
-    final val application // dev.kord.gateway/ApplicationCommandDelete.application|{}application[0]
-        final fun <get-application>(): dev.kord.common.entity/DiscordApplicationCommand // dev.kord.gateway/ApplicationCommandDelete.application.<get-application>|<get-application>(){}[0]
-    final val sequence // dev.kord.gateway/ApplicationCommandDelete.sequence|{}sequence[0]
-        final fun <get-sequence>(): kotlin/Int? // dev.kord.gateway/ApplicationCommandDelete.sequence.<get-sequence>|<get-sequence>(){}[0]
-
-    final fun component1(): dev.kord.common.entity/DiscordApplicationCommand // dev.kord.gateway/ApplicationCommandDelete.component1|component1(){}[0]
-    final fun component2(): kotlin/Int? // dev.kord.gateway/ApplicationCommandDelete.component2|component2(){}[0]
-    final fun copy(dev.kord.common.entity/DiscordApplicationCommand = ..., kotlin/Int? = ...): dev.kord.gateway/ApplicationCommandDelete // dev.kord.gateway/ApplicationCommandDelete.copy|copy(dev.kord.common.entity.DiscordApplicationCommand;kotlin.Int?){}[0]
-    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.gateway/ApplicationCommandDelete.equals|equals(kotlin.Any?){}[0]
-    final fun hashCode(): kotlin/Int // dev.kord.gateway/ApplicationCommandDelete.hashCode|hashCode(){}[0]
-    final fun toString(): kotlin/String // dev.kord.gateway/ApplicationCommandDelete.toString|toString(){}[0]
-}
-
 final class dev.kord.gateway/ApplicationCommandPermissionsUpdate : dev.kord.gateway/DispatchEvent { // dev.kord.gateway/ApplicationCommandPermissionsUpdate|null[0]
     constructor <init>(dev.kord.common.entity/DiscordGuildApplicationCommandPermissions, kotlin/Int?) // dev.kord.gateway/ApplicationCommandPermissionsUpdate.<init>|<init>(dev.kord.common.entity.DiscordGuildApplicationCommandPermissions;kotlin.Int?){}[0]
 
@@ -236,22 +203,6 @@ final class dev.kord.gateway/ApplicationCommandPermissionsUpdate : dev.kord.gate
     final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.gateway/ApplicationCommandPermissionsUpdate.equals|equals(kotlin.Any?){}[0]
     final fun hashCode(): kotlin/Int // dev.kord.gateway/ApplicationCommandPermissionsUpdate.hashCode|hashCode(){}[0]
     final fun toString(): kotlin/String // dev.kord.gateway/ApplicationCommandPermissionsUpdate.toString|toString(){}[0]
-}
-
-final class dev.kord.gateway/ApplicationCommandUpdate : dev.kord.gateway/DispatchEvent { // dev.kord.gateway/ApplicationCommandUpdate|null[0]
-    constructor <init>(dev.kord.common.entity/DiscordApplicationCommand, kotlin/Int?) // dev.kord.gateway/ApplicationCommandUpdate.<init>|<init>(dev.kord.common.entity.DiscordApplicationCommand;kotlin.Int?){}[0]
-
-    final val application // dev.kord.gateway/ApplicationCommandUpdate.application|{}application[0]
-        final fun <get-application>(): dev.kord.common.entity/DiscordApplicationCommand // dev.kord.gateway/ApplicationCommandUpdate.application.<get-application>|<get-application>(){}[0]
-    final val sequence // dev.kord.gateway/ApplicationCommandUpdate.sequence|{}sequence[0]
-        final fun <get-sequence>(): kotlin/Int? // dev.kord.gateway/ApplicationCommandUpdate.sequence.<get-sequence>|<get-sequence>(){}[0]
-
-    final fun component1(): dev.kord.common.entity/DiscordApplicationCommand // dev.kord.gateway/ApplicationCommandUpdate.component1|component1(){}[0]
-    final fun component2(): kotlin/Int? // dev.kord.gateway/ApplicationCommandUpdate.component2|component2(){}[0]
-    final fun copy(dev.kord.common.entity/DiscordApplicationCommand = ..., kotlin/Int? = ...): dev.kord.gateway/ApplicationCommandUpdate // dev.kord.gateway/ApplicationCommandUpdate.copy|copy(dev.kord.common.entity.DiscordApplicationCommand;kotlin.Int?){}[0]
-    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.gateway/ApplicationCommandUpdate.equals|equals(kotlin.Any?){}[0]
-    final fun hashCode(): kotlin/Int // dev.kord.gateway/ApplicationCommandUpdate.hashCode|hashCode(){}[0]
-    final fun toString(): kotlin/String // dev.kord.gateway/ApplicationCommandUpdate.toString|toString(){}[0]
 }
 
 final class dev.kord.gateway/AutoModerationActionExecution : dev.kord.gateway/DispatchEvent { // dev.kord.gateway/AutoModerationActionExecution|null[0]
@@ -1378,30 +1329,19 @@ final class dev.kord.gateway/GuildUpdate : dev.kord.gateway/DispatchEvent { // d
 }
 
 final class dev.kord.gateway/Heartbeat : dev.kord.gateway/Event { // dev.kord.gateway/Heartbeat|null[0]
-    constructor <init>(kotlin/Long) // dev.kord.gateway/Heartbeat.<init>|<init>(kotlin.Long){}[0]
     constructor <init>(kotlin/Long?) // dev.kord.gateway/Heartbeat.<init>|<init>(kotlin.Long?){}[0]
 
     final val data // dev.kord.gateway/Heartbeat.data|{}data[0]
         final fun <get-data>(): kotlin/Long? // dev.kord.gateway/Heartbeat.data.<get-data>|<get-data>(){}[0]
-    final val data_ // dev.kord.gateway/Heartbeat.data_|{}data_[0]
-        final fun <get-data_>(): kotlin/Long // dev.kord.gateway/Heartbeat.data_.<get-data_>|<get-data_>(){}[0]
 
     final fun component1(): kotlin/Long? // dev.kord.gateway/Heartbeat.component1|component1(){}[0]
-    final fun component1_(): kotlin/Long // dev.kord.gateway/Heartbeat.component1_|component1_(){}[0]
+    final fun copy(kotlin/Long = ...): dev.kord.gateway/Heartbeat // dev.kord.gateway/Heartbeat.copy|copy(kotlin.Long){}[0]
     final fun copy(kotlin/Long? = ...): dev.kord.gateway/Heartbeat // dev.kord.gateway/Heartbeat.copy|copy(kotlin.Long?){}[0]
-    final fun copy_(kotlin/Long = ...): dev.kord.gateway/Heartbeat // dev.kord.gateway/Heartbeat.copy_|copy_(kotlin.Long){}[0]
     final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.gateway/Heartbeat.equals|equals(kotlin.Any?){}[0]
     final fun hashCode(): kotlin/Int // dev.kord.gateway/Heartbeat.hashCode|hashCode(){}[0]
     final fun toString(): kotlin/String // dev.kord.gateway/Heartbeat.toString|toString(){}[0]
 
-    final class NewCompanion { // dev.kord.gateway/Heartbeat.NewCompanion|null[0]
-        final fun serializer(): kotlinx.serialization/KSerializer<dev.kord.gateway/Heartbeat> // dev.kord.gateway/Heartbeat.NewCompanion.serializer|serializer(){}[0]
-    }
-
     final object Companion { // dev.kord.gateway/Heartbeat.Companion|null[0]
-        final val NewCompanion // dev.kord.gateway/Heartbeat.Companion.NewCompanion|{}NewCompanion[0]
-            final fun <get-NewCompanion>(): dev.kord.gateway/Heartbeat.NewCompanion // dev.kord.gateway/Heartbeat.Companion.NewCompanion.<get-NewCompanion>|<get-NewCompanion>(){}[0]
-
         final fun serializer(): kotlinx.serialization/KSerializer<dev.kord.gateway/Heartbeat> // dev.kord.gateway/Heartbeat.Companion.serializer|serializer(){}[0]
     }
 }
@@ -1574,7 +1514,6 @@ final class dev.kord.gateway/Intents { // dev.kord.gateway/Intents|null[0]
     final fun plus(dev.kord.gateway/Intents): dev.kord.gateway/Intents // dev.kord.gateway/Intents.plus|plus(dev.kord.gateway.Intents){}[0]
     final fun toString(): kotlin/String // dev.kord.gateway/Intents.toString|toString(){}[0]
     final inline fun copy(kotlin/Function1<dev.kord.gateway/Intents.Builder, kotlin/Unit>): dev.kord.gateway/Intents // dev.kord.gateway/Intents.copy|copy(kotlin.Function1<dev.kord.gateway.Intents.Builder,kotlin.Unit>){}[0]
-    final inline fun copy0(kotlin/Function1<dev.kord.gateway/Intents.Builder, kotlin/Unit>): dev.kord.gateway/Intents // dev.kord.gateway/Intents.copy0|copy0(kotlin.Function1<dev.kord.gateway.Intents.Builder,kotlin.Unit>){}[0]
 
     final class Builder { // dev.kord.gateway/Intents.Builder|null[0]
         constructor <init>(dev.kord.common/DiscordBitSet = ...) // dev.kord.gateway/Intents.Builder.<init>|<init>(dev.kord.common.DiscordBitSet){}[0]
@@ -2622,6 +2561,5 @@ final fun dev.kord.gateway/logCaughtThrowable(kotlin/Throwable) // dev.kord.gate
 final inline fun <#A: reified dev.kord.gateway/Event> (dev.kord.gateway/Gateway).dev.kord.gateway/on(kotlinx.coroutines/CoroutineScope = ..., crossinline kotlin.coroutines/SuspendFunction1<#A, kotlin/Unit>): kotlinx.coroutines/Job // dev.kord.gateway/on|on@dev.kord.gateway.Gateway(kotlinx.coroutines.CoroutineScope;kotlin.coroutines.SuspendFunction1<0:0,kotlin.Unit>){0§<dev.kord.gateway.Event>}[0]
 final inline fun dev.kord.gateway/DefaultGateway(kotlin/Function1<dev.kord.gateway/DefaultGatewayBuilder, kotlin/Unit> = ...): dev.kord.gateway/DefaultGateway // dev.kord.gateway/DefaultGateway|DefaultGateway(kotlin.Function1<dev.kord.gateway.DefaultGatewayBuilder,kotlin.Unit>){}[0]
 final inline fun dev.kord.gateway/Intents(kotlin/Function1<dev.kord.gateway/Intents.Builder, kotlin/Unit> = ...): dev.kord.gateway/Intents // dev.kord.gateway/Intents|Intents(kotlin.Function1<dev.kord.gateway.Intents.Builder,kotlin.Unit>){}[0]
-final inline fun dev.kord.gateway/Intents0(kotlin/Function1<dev.kord.gateway/Intents.Builder, kotlin/Unit> = ...): dev.kord.gateway/Intents // dev.kord.gateway/Intents0|Intents0(kotlin.Function1<dev.kord.gateway.Intents.Builder,kotlin.Unit>){}[0]
 final suspend inline fun (dev.kord.gateway/Gateway).dev.kord.gateway/editPresence(kotlin/Function1<dev.kord.gateway.builder/PresenceBuilder, kotlin/Unit>) // dev.kord.gateway/editPresence|editPresence@dev.kord.gateway.Gateway(kotlin.Function1<dev.kord.gateway.builder.PresenceBuilder,kotlin.Unit>){}[0]
 final suspend inline fun (dev.kord.gateway/Gateway).dev.kord.gateway/start(kotlin/String, kotlin/Function1<dev.kord.gateway/GatewayConfigurationBuilder, kotlin/Unit> = ...) // dev.kord.gateway/start|start@dev.kord.gateway.Gateway(kotlin.String;kotlin.Function1<dev.kord.gateway.GatewayConfigurationBuilder,kotlin.Unit>){}[0]

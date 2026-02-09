@@ -1,6 +1,5 @@
 @file:Generate(
     BIT_SET_FLAGS, name = "Intent", valueName = "code",
-    collectionHadCopy0 = true, hadBuilderFactoryFunction0 = true,
     kDoc = "Values that enable a group of events as defined by Discord.",
     docUrl = "https://discord.com/developers/docs/topics/gateway#gateway-intents",
     entries = [

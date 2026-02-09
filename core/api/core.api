@@ -45,8 +45,6 @@ public final class dev/kord/core/Kord : kotlinx/coroutines/CoroutineScope {
 	public final fun getEvents ()Lkotlinx/coroutines/flow/SharedFlow;
 	public final fun getGateway ()Ldev/kord/core/gateway/MasterGateway;
 	public final fun getGlobalApplicationCommand (Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public final synthetic fun getGlobalApplicationCommandOf (Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public final synthetic fun getGlobalApplicationCommandOfOrNull (Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun getGlobalApplicationCommandOrNull (Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun getGlobalApplicationCommands (Ljava/lang/Boolean;)Lkotlinx/coroutines/flow/Flow;
 	public static synthetic fun getGlobalApplicationCommands$default (Ldev/kord/core/Kord;Ljava/lang/Boolean;ILjava/lang/Object;)Lkotlinx/coroutines/flow/Flow;
@@ -4945,8 +4943,8 @@ public final class dev/kord/core/cache/data/MembersChunkData$Companion {
 
 public final class dev/kord/core/cache/data/MessageData {
 	public static final field Companion Ldev/kord/core/cache/data/MessageData$Companion;
-	public fun <init> (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/core/cache/data/UserData;Ljava/lang/String;Lkotlin/time/Instant;Lkotlin/time/Instant;ZZLjava/util/List;Ljava/util/List;Ldev/kord/common/entity/optional/Optional;Ljava/util/List;Ljava/util/List;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;ZLdev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/MessageType;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalInt;)V
-	public synthetic fun <init> (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/core/cache/data/UserData;Ljava/lang/String;Lkotlin/time/Instant;Lkotlin/time/Instant;ZZLjava/util/List;Ljava/util/List;Ldev/kord/common/entity/optional/Optional;Ljava/util/List;Ljava/util/List;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;ZLdev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/MessageType;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalInt;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/core/cache/data/UserData;Ljava/lang/String;Lkotlin/time/Instant;Lkotlin/time/Instant;ZZLjava/util/List;Ljava/util/List;Ldev/kord/common/entity/optional/Optional;Ljava/util/List;Ljava/util/List;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;ZLdev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/MessageType;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalInt;)V
+	public synthetic fun <init> (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/core/cache/data/UserData;Ljava/lang/String;Lkotlin/time/Instant;Lkotlin/time/Instant;ZZLjava/util/List;Ljava/util/List;Ldev/kord/common/entity/optional/Optional;Ljava/util/List;Ljava/util/List;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;ZLdev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/MessageType;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalInt;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ldev/kord/common/entity/Snowflake;
 	public final fun component10 ()Ljava/util/List;
 	public final fun component11 ()Ljava/util/List;
@@ -4971,15 +4969,16 @@ public final class dev/kord/core/cache/data/MessageData {
 	public final fun component29 ()Ldev/kord/common/entity/optional/Optional;
 	public final fun component3 ()Ldev/kord/common/entity/optional/OptionalSnowflake;
 	public final fun component30 ()Ldev/kord/common/entity/optional/Optional;
-	public final fun component31 ()Ldev/kord/common/entity/optional/OptionalInt;
+	public final fun component31 ()Ldev/kord/common/entity/optional/Optional;
+	public final fun component32 ()Ldev/kord/common/entity/optional/OptionalInt;
 	public final fun component4 ()Ldev/kord/core/cache/data/UserData;
 	public final fun component5 ()Ljava/lang/String;
 	public final fun component6 ()Lkotlin/time/Instant;
 	public final fun component7 ()Lkotlin/time/Instant;
 	public final fun component8 ()Z
 	public final fun component9 ()Z
-	public final fun copy (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/core/cache/data/UserData;Ljava/lang/String;Lkotlin/time/Instant;Lkotlin/time/Instant;ZZLjava/util/List;Ljava/util/List;Ldev/kord/common/entity/optional/Optional;Ljava/util/List;Ljava/util/List;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;ZLdev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/MessageType;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalInt;)Ldev/kord/core/cache/data/MessageData;
-	public static synthetic fun copy$default (Ldev/kord/core/cache/data/MessageData;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/core/cache/data/UserData;Ljava/lang/String;Lkotlin/time/Instant;Lkotlin/time/Instant;ZZLjava/util/List;Ljava/util/List;Ldev/kord/common/entity/optional/Optional;Ljava/util/List;Ljava/util/List;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;ZLdev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/MessageType;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalInt;ILjava/lang/Object;)Ldev/kord/core/cache/data/MessageData;
+	public final fun copy (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/core/cache/data/UserData;Ljava/lang/String;Lkotlin/time/Instant;Lkotlin/time/Instant;ZZLjava/util/List;Ljava/util/List;Ldev/kord/common/entity/optional/Optional;Ljava/util/List;Ljava/util/List;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;ZLdev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/MessageType;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalInt;)Ldev/kord/core/cache/data/MessageData;
+	public static synthetic fun copy$default (Ldev/kord/core/cache/data/MessageData;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/core/cache/data/UserData;Ljava/lang/String;Lkotlin/time/Instant;Lkotlin/time/Instant;ZZLjava/util/List;Ljava/util/List;Ldev/kord/common/entity/optional/Optional;Ljava/util/List;Ljava/util/List;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;ZLdev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/MessageType;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalInt;ILjava/lang/Object;)Ldev/kord/core/cache/data/MessageData;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getActivity ()Ldev/kord/common/entity/optional/Optional;
 	public final fun getApplication ()Ldev/kord/common/entity/optional/Optional;
@@ -5008,6 +5007,7 @@ public final class dev/kord/core/cache/data/MessageData {
 	public final fun getReferencedMessage ()Ldev/kord/common/entity/optional/Optional;
 	public final fun getRoleSubscriptionData ()Ldev/kord/common/entity/optional/Optional;
 	public final fun getStickers ()Ldev/kord/common/entity/optional/Optional;
+	public final fun getThread ()Ldev/kord/common/entity/optional/Optional;
 	public final fun getTimestamp ()Lkotlin/time/Instant;
 	public final fun getTts ()Z
 	public final fun getType ()Ldev/kord/common/entity/MessageType;
@@ -7648,6 +7648,7 @@ public final class dev/kord/core/entity/Message : dev/kord/core/behavior/Message
 	public final fun getRoleSubscriptionData ()Ldev/kord/common/entity/RoleSubscription;
 	public final fun getStickers ()Ljava/util/List;
 	public fun getSupplier ()Ldev/kord/core/supplier/EntitySupplier;
+	public final fun getThread ()Ldev/kord/core/cache/data/ChannelData;
 	public final fun getTimestamp ()Lkotlin/time/Instant;
 	public final fun getTts ()Z
 	public final fun getType ()Ldev/kord/common/entity/MessageType;
@@ -13601,22 +13602,6 @@ public final class dev/kord/core/event/interaction/ActionInteractionCreateEvent$
 	public static fun getGateway (Ldev/kord/core/event/interaction/ActionInteractionCreateEvent;)Ldev/kord/gateway/Gateway;
 }
 
-public abstract interface class dev/kord/core/event/interaction/ApplicationCommandCreateEvent : dev/kord/core/event/Event {
-	public abstract fun getCommand ()Ldev/kord/core/entity/application/GuildApplicationCommand;
-}
-
-public final class dev/kord/core/event/interaction/ApplicationCommandCreateEvent$DefaultImpls {
-	public static fun getGateway (Ldev/kord/core/event/interaction/ApplicationCommandCreateEvent;)Ldev/kord/gateway/Gateway;
-}
-
-public abstract interface class dev/kord/core/event/interaction/ApplicationCommandDeleteEvent : dev/kord/core/event/Event {
-	public abstract fun getCommand ()Ldev/kord/core/entity/application/GuildApplicationCommand;
-}
-
-public final class dev/kord/core/event/interaction/ApplicationCommandDeleteEvent$DefaultImpls {
-	public static fun getGateway (Ldev/kord/core/event/interaction/ApplicationCommandDeleteEvent;)Ldev/kord/gateway/Gateway;
-}
-
 public abstract interface class dev/kord/core/event/interaction/ApplicationCommandInteractionCreateEvent : dev/kord/core/event/interaction/ActionInteractionCreateEvent {
 	public abstract fun getInteraction ()Ldev/kord/core/entity/interaction/ApplicationCommandInteraction;
 }
@@ -13632,14 +13617,6 @@ public final class dev/kord/core/event/interaction/ApplicationCommandPermissions
 	public fun getKord ()Ldev/kord/core/Kord;
 	public final fun getPermissions ()Ldev/kord/core/entity/application/ApplicationCommandPermissions;
 	public fun getShard ()I
-}
-
-public abstract interface class dev/kord/core/event/interaction/ApplicationCommandUpdateEvent : dev/kord/core/event/Event {
-	public abstract fun getCommand ()Ldev/kord/core/entity/application/GuildApplicationCommand;
-}
-
-public final class dev/kord/core/event/interaction/ApplicationCommandUpdateEvent$DefaultImpls {
-	public static fun getGateway (Ldev/kord/core/event/interaction/ApplicationCommandUpdateEvent;)Ldev/kord/gateway/Gateway;
 }
 
 public abstract interface class dev/kord/core/event/interaction/AutoCompleteInteractionCreateEvent : dev/kord/core/event/interaction/DataInteractionCreateEvent {
@@ -13658,42 +13635,12 @@ public final class dev/kord/core/event/interaction/ButtonInteractionCreateEvent$
 	public static fun getGateway (Ldev/kord/core/event/interaction/ButtonInteractionCreateEvent;)Ldev/kord/gateway/Gateway;
 }
 
-public final class dev/kord/core/event/interaction/ChatInputCommandCreateEvent : dev/kord/core/event/interaction/ApplicationCommandCreateEvent {
-	public fun <init> (Ldev/kord/core/entity/application/GuildChatInputCommand;Ldev/kord/core/Kord;ILjava/lang/Object;)V
-	public synthetic fun getCommand ()Ldev/kord/core/entity/application/GuildApplicationCommand;
-	public fun getCommand ()Ldev/kord/core/entity/application/GuildChatInputCommand;
-	public fun getCustomContext ()Ljava/lang/Object;
-	public fun getGateway ()Ldev/kord/gateway/Gateway;
-	public fun getKord ()Ldev/kord/core/Kord;
-	public fun getShard ()I
-}
-
-public final class dev/kord/core/event/interaction/ChatInputCommandDeleteEvent : dev/kord/core/event/interaction/ApplicationCommandDeleteEvent {
-	public fun <init> (Ldev/kord/core/entity/application/GuildChatInputCommand;Ldev/kord/core/Kord;ILjava/lang/Object;)V
-	public synthetic fun getCommand ()Ldev/kord/core/entity/application/GuildApplicationCommand;
-	public fun getCommand ()Ldev/kord/core/entity/application/GuildChatInputCommand;
-	public fun getCustomContext ()Ljava/lang/Object;
-	public fun getGateway ()Ldev/kord/gateway/Gateway;
-	public fun getKord ()Ldev/kord/core/Kord;
-	public fun getShard ()I
-}
-
 public abstract interface class dev/kord/core/event/interaction/ChatInputCommandInteractionCreateEvent : dev/kord/core/event/interaction/ApplicationCommandInteractionCreateEvent {
 	public abstract fun getInteraction ()Ldev/kord/core/entity/interaction/ChatInputCommandInteraction;
 }
 
 public final class dev/kord/core/event/interaction/ChatInputCommandInteractionCreateEvent$DefaultImpls {
 	public static fun getGateway (Ldev/kord/core/event/interaction/ChatInputCommandInteractionCreateEvent;)Ldev/kord/gateway/Gateway;
-}
-
-public final class dev/kord/core/event/interaction/ChatInputCommandUpdateEvent : dev/kord/core/event/interaction/ApplicationCommandUpdateEvent {
-	public fun <init> (Ldev/kord/core/entity/application/GuildChatInputCommand;Ldev/kord/core/Kord;ILjava/lang/Object;)V
-	public synthetic fun getCommand ()Ldev/kord/core/entity/application/GuildApplicationCommand;
-	public fun getCommand ()Ldev/kord/core/entity/application/GuildChatInputCommand;
-	public fun getCustomContext ()Ljava/lang/Object;
-	public fun getGateway ()Ldev/kord/gateway/Gateway;
-	public fun getKord ()Ldev/kord/core/Kord;
-	public fun getShard ()I
 }
 
 public abstract interface class dev/kord/core/event/interaction/ComponentInteractionCreateEvent : dev/kord/core/event/interaction/ActionInteractionCreateEvent {
@@ -13940,42 +13887,12 @@ public final class dev/kord/core/event/interaction/InteractionCreateEvent$Defaul
 	public static fun getGateway (Ldev/kord/core/event/interaction/InteractionCreateEvent;)Ldev/kord/gateway/Gateway;
 }
 
-public final class dev/kord/core/event/interaction/MessageCommandCreateEvent : dev/kord/core/event/interaction/ApplicationCommandCreateEvent {
-	public fun <init> (Ldev/kord/core/entity/application/GuildMessageCommand;Ldev/kord/core/Kord;ILjava/lang/Object;)V
-	public synthetic fun getCommand ()Ldev/kord/core/entity/application/GuildApplicationCommand;
-	public fun getCommand ()Ldev/kord/core/entity/application/GuildMessageCommand;
-	public fun getCustomContext ()Ljava/lang/Object;
-	public fun getGateway ()Ldev/kord/gateway/Gateway;
-	public fun getKord ()Ldev/kord/core/Kord;
-	public fun getShard ()I
-}
-
-public final class dev/kord/core/event/interaction/MessageCommandDeleteEvent : dev/kord/core/event/interaction/ApplicationCommandDeleteEvent {
-	public fun <init> (Ldev/kord/core/entity/application/GuildMessageCommand;Ldev/kord/core/Kord;ILjava/lang/Object;)V
-	public synthetic fun getCommand ()Ldev/kord/core/entity/application/GuildApplicationCommand;
-	public fun getCommand ()Ldev/kord/core/entity/application/GuildMessageCommand;
-	public fun getCustomContext ()Ljava/lang/Object;
-	public fun getGateway ()Ldev/kord/gateway/Gateway;
-	public fun getKord ()Ldev/kord/core/Kord;
-	public fun getShard ()I
-}
-
 public abstract interface class dev/kord/core/event/interaction/MessageCommandInteractionCreateEvent : dev/kord/core/event/interaction/ApplicationCommandInteractionCreateEvent {
 	public abstract fun getInteraction ()Ldev/kord/core/entity/interaction/MessageCommandInteraction;
 }
 
 public final class dev/kord/core/event/interaction/MessageCommandInteractionCreateEvent$DefaultImpls {
 	public static fun getGateway (Ldev/kord/core/event/interaction/MessageCommandInteractionCreateEvent;)Ldev/kord/gateway/Gateway;
-}
-
-public final class dev/kord/core/event/interaction/MessageCommandUpdateEvent : dev/kord/core/event/interaction/ApplicationCommandUpdateEvent {
-	public fun <init> (Ldev/kord/core/entity/application/GuildMessageCommand;Ldev/kord/core/Kord;ILjava/lang/Object;)V
-	public synthetic fun getCommand ()Ldev/kord/core/entity/application/GuildApplicationCommand;
-	public fun getCommand ()Ldev/kord/core/entity/application/GuildMessageCommand;
-	public fun getCustomContext ()Ljava/lang/Object;
-	public fun getGateway ()Ldev/kord/gateway/Gateway;
-	public fun getKord ()Ldev/kord/core/Kord;
-	public fun getShard ()I
 }
 
 public abstract interface class dev/kord/core/event/interaction/ModalSubmitInteractionCreateEvent : dev/kord/core/event/interaction/ActionInteractionCreateEvent {
@@ -13994,72 +13911,12 @@ public final class dev/kord/core/event/interaction/SelectMenuInteractionCreateEv
 	public static fun getGateway (Ldev/kord/core/event/interaction/SelectMenuInteractionCreateEvent;)Ldev/kord/gateway/Gateway;
 }
 
-public final class dev/kord/core/event/interaction/UnknownApplicationCommandCreateEvent : dev/kord/core/event/interaction/ApplicationCommandCreateEvent {
-	public fun <init> (Ldev/kord/core/entity/application/UnknownGuildApplicationCommand;Ldev/kord/core/Kord;ILjava/lang/Object;)V
-	public synthetic fun getCommand ()Ldev/kord/core/entity/application/GuildApplicationCommand;
-	public fun getCommand ()Ldev/kord/core/entity/application/UnknownGuildApplicationCommand;
-	public fun getCustomContext ()Ljava/lang/Object;
-	public fun getGateway ()Ldev/kord/gateway/Gateway;
-	public fun getKord ()Ldev/kord/core/Kord;
-	public fun getShard ()I
-}
-
-public final class dev/kord/core/event/interaction/UnknownApplicationCommandDeleteEvent : dev/kord/core/event/interaction/ApplicationCommandDeleteEvent {
-	public fun <init> (Ldev/kord/core/entity/application/UnknownGuildApplicationCommand;Ldev/kord/core/Kord;ILjava/lang/Object;)V
-	public synthetic fun getCommand ()Ldev/kord/core/entity/application/GuildApplicationCommand;
-	public fun getCommand ()Ldev/kord/core/entity/application/UnknownGuildApplicationCommand;
-	public fun getCustomContext ()Ljava/lang/Object;
-	public fun getGateway ()Ldev/kord/gateway/Gateway;
-	public fun getKord ()Ldev/kord/core/Kord;
-	public fun getShard ()I
-}
-
-public final class dev/kord/core/event/interaction/UnknownApplicationCommandUpdateEvent : dev/kord/core/event/interaction/ApplicationCommandUpdateEvent {
-	public fun <init> (Ldev/kord/core/entity/application/UnknownGuildApplicationCommand;Ldev/kord/core/Kord;ILjava/lang/Object;)V
-	public synthetic fun getCommand ()Ldev/kord/core/entity/application/GuildApplicationCommand;
-	public fun getCommand ()Ldev/kord/core/entity/application/UnknownGuildApplicationCommand;
-	public fun getCustomContext ()Ljava/lang/Object;
-	public fun getGateway ()Ldev/kord/gateway/Gateway;
-	public fun getKord ()Ldev/kord/core/Kord;
-	public fun getShard ()I
-}
-
-public final class dev/kord/core/event/interaction/UserCommandCreateEvent : dev/kord/core/event/interaction/ApplicationCommandCreateEvent {
-	public fun <init> (Ldev/kord/core/entity/application/GuildUserCommand;Ldev/kord/core/Kord;ILjava/lang/Object;)V
-	public synthetic fun getCommand ()Ldev/kord/core/entity/application/GuildApplicationCommand;
-	public fun getCommand ()Ldev/kord/core/entity/application/GuildUserCommand;
-	public fun getCustomContext ()Ljava/lang/Object;
-	public fun getGateway ()Ldev/kord/gateway/Gateway;
-	public fun getKord ()Ldev/kord/core/Kord;
-	public fun getShard ()I
-}
-
-public final class dev/kord/core/event/interaction/UserCommandDeleteEvent : dev/kord/core/event/interaction/ApplicationCommandDeleteEvent {
-	public fun <init> (Ldev/kord/core/entity/application/GuildUserCommand;Ldev/kord/core/Kord;ILjava/lang/Object;)V
-	public synthetic fun getCommand ()Ldev/kord/core/entity/application/GuildApplicationCommand;
-	public fun getCommand ()Ldev/kord/core/entity/application/GuildUserCommand;
-	public fun getCustomContext ()Ljava/lang/Object;
-	public fun getGateway ()Ldev/kord/gateway/Gateway;
-	public fun getKord ()Ldev/kord/core/Kord;
-	public fun getShard ()I
-}
-
 public abstract interface class dev/kord/core/event/interaction/UserCommandInteractionCreateEvent : dev/kord/core/event/interaction/ApplicationCommandInteractionCreateEvent {
 	public abstract fun getInteraction ()Ldev/kord/core/entity/interaction/UserCommandInteraction;
 }
 
 public final class dev/kord/core/event/interaction/UserCommandInteractionCreateEvent$DefaultImpls {
 	public static fun getGateway (Ldev/kord/core/event/interaction/UserCommandInteractionCreateEvent;)Ldev/kord/gateway/Gateway;
-}
-
-public final class dev/kord/core/event/interaction/UserCommandUpdateEvent : dev/kord/core/event/interaction/ApplicationCommandUpdateEvent {
-	public fun <init> (Ldev/kord/core/entity/application/GuildUserCommand;Ldev/kord/core/Kord;ILjava/lang/Object;)V
-	public synthetic fun getCommand ()Ldev/kord/core/entity/application/GuildApplicationCommand;
-	public fun getCommand ()Ldev/kord/core/entity/application/GuildUserCommand;
-	public fun getCustomContext ()Ljava/lang/Object;
-	public fun getGateway ()Ldev/kord/gateway/Gateway;
-	public fun getKord ()Ldev/kord/core/Kord;
-	public fun getShard ()I
 }
 
 public final class dev/kord/core/event/message/MessageBulkDeleteEvent : dev/kord/core/entity/Strategizable, dev/kord/core/event/Event {

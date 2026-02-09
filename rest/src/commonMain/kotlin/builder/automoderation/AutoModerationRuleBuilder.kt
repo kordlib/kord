@@ -304,18 +304,6 @@ public sealed interface KeywordPresetAutoModerationRuleBuilder :
 
     /** The internally pre-defined wordsets which will be searched for in content. */
     public var presets: MutableList<AutoModerationRuleKeywordPresetType>?
-
-    /**
-     * Use this to set [presets][KeywordPresetAutoModerationRuleBuilder.presets] for
-     * [KeywordPresetAutoModerationRuleBuilder].
-     */
-    @Deprecated(
-        "This can be replaced with 'presets', it is now a 'var'. The deprecation level will be raised to HIDDEN in " +
-            "0.17.0 and this declaration will be removed in 0.18.0.",
-        ReplaceWith("this.run { this@run.presets = presets }", imports = ["kotlin.run"]),
-        DeprecationLevel.ERROR,
-    )
-    public fun assignPresets(presets: MutableList<AutoModerationRuleKeywordPresetType>)
 }
 
 /** Add a [preset] to [presets][KeywordPresetAutoModerationRuleBuilder.presets]. */
@@ -356,52 +344,3 @@ public inline fun MemberProfileAutoModerationRuleBuilder.blockMemberInteraction(
     val action = BlockMemberInteractionAutoModerationActionBuilder().apply(builder)
     actions?.add(action) ?: assignActions(mutableListOf(action))
 }
-
-
-// -------- deprecated stuff --------
-
-/** Add a [BlockMessage] action which will execute whenever the rule is triggered. */
-@Deprecated(
-    "Not all Auto Moderation Rules can have a 'BlockMessage' action (e.g. 'MemberProfile' rules can't), so this " +
-        "extension function is deprecated for 'AutoModerationRuleBuilder'. Use the extension function on " +
-        "'BlockMessageAutoModerationRuleBuilder' instead. The deprecation level will be raised to HIDDEN in 0.17.0 " +
-        "and this declaration will be removed in 0.18.0.",
-    ReplaceWith(
-        "(this as? BlockMessageAutoModerationRuleBuilder)?.blockMessage { builder() } ?: Unit",
-        imports = [
-            "dev.kord.rest.builder.automoderation.BlockMessageAutoModerationRuleBuilder",
-            "dev.kord.rest.builder.automoderation.blockMessage", "kotlin.Unit",
-        ],
-    ),
-    DeprecationLevel.ERROR,
-)
-public inline fun AutoModerationRuleBuilder.blockMessage(
-    builder: BlockMessageAutoModerationActionBuilder.() -> Unit = {},
-) {
-    contract { callsInPlace(builder, EXACTLY_ONCE) }
-    val action = BlockMessageAutoModerationActionBuilder().apply(builder)
-    actions?.add(action) ?: assignActions(mutableListOf(action))
-}
-
-private const val MESSAGE = "This extension is now defined on 'FilteredKeywordsAutoModerationRuleBuilder'. The " +
-    "declaration is kept for binary compatibility, it will be removed in 0.18.0."
-
-@Deprecated(MESSAGE, level = DeprecationLevel.HIDDEN)
-public fun KeywordAutoModerationRuleBuilder.keyword(keyword: String): Unit =
-    (this as FilteredKeywordsAutoModerationRuleBuilder).keyword(keyword)
-
-@Deprecated(MESSAGE, level = DeprecationLevel.HIDDEN)
-public fun KeywordAutoModerationRuleBuilder.prefixKeyword(keyword: String): Unit =
-    (this as FilteredKeywordsAutoModerationRuleBuilder).prefixKeyword(keyword)
-
-@Deprecated(MESSAGE, level = DeprecationLevel.HIDDEN)
-public fun KeywordAutoModerationRuleBuilder.suffixKeyword(keyword: String): Unit =
-    (this as FilteredKeywordsAutoModerationRuleBuilder).suffixKeyword(keyword)
-
-@Deprecated(MESSAGE, level = DeprecationLevel.HIDDEN)
-public fun KeywordAutoModerationRuleBuilder.anywhereKeyword(keyword: String): Unit =
-    (this as FilteredKeywordsAutoModerationRuleBuilder).anywhereKeyword(keyword)
-
-@Deprecated(MESSAGE, level = DeprecationLevel.HIDDEN)
-public fun KeywordAutoModerationRuleBuilder.regexPattern(pattern: String): Unit =
-    (this as FilteredKeywordsAutoModerationRuleBuilder).regexPattern(pattern)

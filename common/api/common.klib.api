@@ -4954,14 +4954,7 @@ final class dev.kord.common.entity/DiscordShard { // dev.kord.common.entity/Disc
     final fun hashCode(): kotlin/Int // dev.kord.common.entity/DiscordShard.hashCode|hashCode(){}[0]
     final fun toString(): kotlin/String // dev.kord.common.entity/DiscordShard.toString|toString(){}[0]
 
-    final class NewCompanion { // dev.kord.common.entity/DiscordShard.NewCompanion|null[0]
-        final fun serializer(): kotlinx.serialization/KSerializer<dev.kord.common.entity/DiscordShard> // dev.kord.common.entity/DiscordShard.NewCompanion.serializer|serializer(){}[0]
-    }
-
     final object Companion { // dev.kord.common.entity/DiscordShard.Companion|null[0]
-        final val NewCompanion // dev.kord.common.entity/DiscordShard.Companion.NewCompanion|{}NewCompanion[0]
-            final fun <get-NewCompanion>(): dev.kord.common.entity/DiscordShard.NewCompanion // dev.kord.common.entity/DiscordShard.Companion.NewCompanion.<get-NewCompanion>|<get-NewCompanion>(){}[0]
-
         final fun serializer(): kotlinx.serialization/KSerializer<dev.kord.common.entity/DiscordShard> // dev.kord.common.entity/DiscordShard.Companion.serializer|serializer(){}[0]
     }
 }
@@ -6495,7 +6488,6 @@ final class dev.kord.common.entity/Permissions { // dev.kord.common.entity/Permi
     final fun plus(dev.kord.common.entity/Permissions): dev.kord.common.entity/Permissions // dev.kord.common.entity/Permissions.plus|plus(dev.kord.common.entity.Permissions){}[0]
     final fun toString(): kotlin/String // dev.kord.common.entity/Permissions.toString|toString(){}[0]
     final inline fun copy(kotlin/Function1<dev.kord.common.entity/Permissions.Builder, kotlin/Unit>): dev.kord.common.entity/Permissions // dev.kord.common.entity/Permissions.copy|copy(kotlin.Function1<dev.kord.common.entity.Permissions.Builder,kotlin.Unit>){}[0]
-    final inline fun copy0(kotlin/Function1<dev.kord.common.entity/Permissions.Builder, kotlin/Unit>): dev.kord.common.entity/Permissions // dev.kord.common.entity/Permissions.copy0|copy0(kotlin.Function1<dev.kord.common.entity.Permissions.Builder,kotlin.Unit>){}[0]
 
     final class Builder { // dev.kord.common.entity/Permissions.Builder|null[0]
         constructor <init>(dev.kord.common/DiscordBitSet = ...) // dev.kord.common.entity/Permissions.Builder.<init>|<init>(dev.kord.common.DiscordBitSet){}[0]
@@ -6507,14 +6499,7 @@ final class dev.kord.common.entity/Permissions { // dev.kord.common.entity/Permi
         final fun build(): dev.kord.common.entity/Permissions // dev.kord.common.entity/Permissions.Builder.build|build(){}[0]
     }
 
-    final class NewCompanion { // dev.kord.common.entity/Permissions.NewCompanion|null[0]
-        final fun serializer(): kotlinx.serialization/KSerializer<dev.kord.common.entity/Permissions> // dev.kord.common.entity/Permissions.NewCompanion.serializer|serializer(){}[0]
-    }
-
     final object Companion { // dev.kord.common.entity/Permissions.Companion|null[0]
-        final val NewCompanion // dev.kord.common.entity/Permissions.Companion.NewCompanion|{}NewCompanion[0]
-            final fun <get-NewCompanion>(): dev.kord.common.entity/Permissions.NewCompanion // dev.kord.common.entity/Permissions.Companion.NewCompanion.<get-NewCompanion>|<get-NewCompanion>(){}[0]
-
         final fun serializer(): kotlinx.serialization/KSerializer<dev.kord.common.entity/Permissions> // dev.kord.common.entity/Permissions.Companion.serializer|serializer(){}[0]
     }
 }
@@ -6798,14 +6783,7 @@ final class dev.kord.common.entity/SystemChannelFlags { // dev.kord.common.entit
         final fun build(): dev.kord.common.entity/SystemChannelFlags // dev.kord.common.entity/SystemChannelFlags.Builder.build|build(){}[0]
     }
 
-    final class NewCompanion { // dev.kord.common.entity/SystemChannelFlags.NewCompanion|null[0]
-        final fun serializer(): kotlinx.serialization/KSerializer<dev.kord.common.entity/SystemChannelFlags> // dev.kord.common.entity/SystemChannelFlags.NewCompanion.serializer|serializer(){}[0]
-    }
-
     final object Companion { // dev.kord.common.entity/SystemChannelFlags.Companion|null[0]
-        final val NewCompanion // dev.kord.common.entity/SystemChannelFlags.Companion.NewCompanion|{}NewCompanion[0]
-            final fun <get-NewCompanion>(): dev.kord.common.entity/SystemChannelFlags.NewCompanion // dev.kord.common.entity/SystemChannelFlags.Companion.NewCompanion.<get-NewCompanion>|<get-NewCompanion>(){}[0]
-
         final fun serializer(): kotlinx.serialization/KSerializer<dev.kord.common.entity/SystemChannelFlags> // dev.kord.common.entity/SystemChannelFlags.Companion.serializer|serializer(){}[0]
     }
 }
@@ -6826,7 +6804,6 @@ final class dev.kord.common.entity/UserFlags { // dev.kord.common.entity/UserFla
     final fun plus(dev.kord.common.entity/UserFlags): dev.kord.common.entity/UserFlags // dev.kord.common.entity/UserFlags.plus|plus(dev.kord.common.entity.UserFlags){}[0]
     final fun toString(): kotlin/String // dev.kord.common.entity/UserFlags.toString|toString(){}[0]
     final inline fun copy(kotlin/Function1<dev.kord.common.entity/UserFlags.Builder, kotlin/Unit>): dev.kord.common.entity/UserFlags // dev.kord.common.entity/UserFlags.copy|copy(kotlin.Function1<dev.kord.common.entity.UserFlags.Builder,kotlin.Unit>){}[0]
-    final inline fun copy0(kotlin/Function1<dev.kord.common.entity/UserFlags.Builder, kotlin/Unit>): dev.kord.common.entity/UserFlags // dev.kord.common.entity/UserFlags.copy0|copy0(kotlin.Function1<dev.kord.common.entity.UserFlags.Builder,kotlin.Unit>){}[0]
 
     final class Builder { // dev.kord.common.entity/UserFlags.Builder|null[0]
         constructor <init>(kotlin/Int = ...) // dev.kord.common.entity/UserFlags.Builder.<init>|<init>(kotlin.Int){}[0]
@@ -10043,8 +10020,6 @@ final val dev.kord.common.entity.optional/value // dev.kord.common.entity.option
     final fun (dev.kord.common.entity.optional/OptionalSnowflake?).<get-value>(): dev.kord.common.entity/Snowflake? // dev.kord.common.entity.optional/value.<get-value>|<get-value>@dev.kord.common.entity.optional.OptionalSnowflake?(){}[0]
 final val dev.kord.common.entity/ALL // dev.kord.common.entity/ALL|@dev.kord.common.entity.Permissions.Companion{}ALL[0]
     final fun (dev.kord.common.entity/Permissions.Companion).<get-ALL>(): dev.kord.common.entity/Permissions // dev.kord.common.entity/ALL.<get-ALL>|<get-ALL>@dev.kord.common.entity.Permissions.Companion(){}[0]
-final val dev.kord.common.entity/ALL // dev.kord.common.entity/ALL|@dev.kord.common.entity.Permissions.NewCompanion{}ALL[0]
-    final fun (dev.kord.common.entity/Permissions.NewCompanion).<get-ALL>(): dev.kord.common.entity/Permissions // dev.kord.common.entity/ALL.<get-ALL>|<get-ALL>@dev.kord.common.entity.Permissions.NewCompanion(){}[0]
 
 final fun (dev.kord.common.entity.optional/Optional<kotlin/Boolean>).dev.kord.common.entity.optional/toPrimitive(): dev.kord.common.entity.optional/OptionalBoolean // dev.kord.common.entity.optional/toPrimitive|toPrimitive@dev.kord.common.entity.optional.Optional<kotlin.Boolean>(){}[0]
 final fun (dev.kord.common.entity.optional/OptionalBoolean?).dev.kord.common.entity.optional/orElse(kotlin/Boolean): kotlin/Boolean // dev.kord.common.entity.optional/orElse|orElse@dev.kord.common.entity.optional.OptionalBoolean?(kotlin.Boolean){}[0]
@@ -10157,7 +10132,6 @@ final inline fun dev.kord.common.entity/ChannelFlags(kotlin/Function1<dev.kord.c
 final inline fun dev.kord.common.entity/GuildMemberFlags(kotlin/Function1<dev.kord.common.entity/GuildMemberFlags.Builder, kotlin/Unit> = ...): dev.kord.common.entity/GuildMemberFlags // dev.kord.common.entity/GuildMemberFlags|GuildMemberFlags(kotlin.Function1<dev.kord.common.entity.GuildMemberFlags.Builder,kotlin.Unit>){}[0]
 final inline fun dev.kord.common.entity/MessageFlags(kotlin/Function1<dev.kord.common.entity/MessageFlags.Builder, kotlin/Unit> = ...): dev.kord.common.entity/MessageFlags // dev.kord.common.entity/MessageFlags|MessageFlags(kotlin.Function1<dev.kord.common.entity.MessageFlags.Builder,kotlin.Unit>){}[0]
 final inline fun dev.kord.common.entity/Permissions(kotlin/Function1<dev.kord.common.entity/Permissions.Builder, kotlin/Unit> = ...): dev.kord.common.entity/Permissions // dev.kord.common.entity/Permissions|Permissions(kotlin.Function1<dev.kord.common.entity.Permissions.Builder,kotlin.Unit>){}[0]
-final inline fun dev.kord.common.entity/Permissions0(kotlin/Function1<dev.kord.common.entity/Permissions.Builder, kotlin/Unit> = ...): dev.kord.common.entity/Permissions // dev.kord.common.entity/Permissions0|Permissions0(kotlin.Function1<dev.kord.common.entity.Permissions.Builder,kotlin.Unit>){}[0]
 final inline fun dev.kord.common.entity/RoleFlags(kotlin/Function1<dev.kord.common.entity/RoleFlags.Builder, kotlin/Unit> = ...): dev.kord.common.entity/RoleFlags // dev.kord.common.entity/RoleFlags|RoleFlags(kotlin.Function1<dev.kord.common.entity.RoleFlags.Builder,kotlin.Unit>){}[0]
 final inline fun dev.kord.common.entity/SkuFlags(kotlin/Function1<dev.kord.common.entity/SkuFlags.Builder, kotlin/Unit> = ...): dev.kord.common.entity/SkuFlags // dev.kord.common.entity/SkuFlags|SkuFlags(kotlin.Function1<dev.kord.common.entity.SkuFlags.Builder,kotlin.Unit>){}[0]
 final inline fun dev.kord.common.entity/SystemChannelFlags(kotlin/Function1<dev.kord.common.entity/SystemChannelFlags.Builder, kotlin/Unit> = ...): dev.kord.common.entity/SystemChannelFlags // dev.kord.common.entity/SystemChannelFlags|SystemChannelFlags(kotlin.Function1<dev.kord.common.entity.SystemChannelFlags.Builder,kotlin.Unit>){}[0]

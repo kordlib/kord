@@ -34,10 +34,7 @@ internal sealed class GenerationEntity(
     class BitFlags(
         name: String, kDoc: String?, docUrl: String, valueName: String, entries: List<Entry>, isPreview: Boolean,
         override val valueType: ValueType,
-        val collectionHadCopy0: Boolean,
-        val collectionHadNewCompanion: Boolean,
-        val hadBuilderFactoryFunction0: Boolean,
-    ) : GenerationEntity(name, kDoc, docUrl, valueName, entries, isPreview) {
+    ) : GenerationEntity(name, kDoc, docUrl, valueName, entries) {
         enum class ValueType : GenerationEntity.ValueType { INT, BIT_SET }
     }
 
@@ -60,23 +57,11 @@ private fun String.toKDoc() = trimIndent().ifBlank { null }
 internal fun Generate.toGenerationEntityOrNull(logger: KSPLogger, annotation: KSAnnotation): GenerationEntity? {
     val args = annotation.arguments<Generate>()
 
-    fun areNotSpecified(vararg disallowedParameters: KProperty1<Generate, Any>) = disallowedParameters
-        .filterNot { param -> args.isDefault(param) }
-        .onEach { logger.error("${it.name} is not allowed for entityType $entityType", annotation) }
-        .isEmpty()
-
-    val validParameters = when (entityType) {
-        INT_KORD_ENUM, STRING_KORD_ENUM -> areNotSpecified(
-            Generate::collectionHadCopy0, Generate::collectionHadNewCompanion, Generate::hadBuilderFactoryFunction0,
-        )
-        INT_FLAGS, BIT_SET_FLAGS -> true
-    }
-
     val mappedEntries = (entries zip args[Generate::entries]!!).mapNotNull { (entry, annotation) ->
         entry.toGenerationEntityEntryOrNull(entityType, logger, annotation)
     }
 
-    return if (!validParameters || mappedEntries.size != entries.size) {
+    return if (mappedEntries.size != entries.size) {
         null
     } else {
         val kDoc = if (args.isDefault(Generate::kDoc)) "" else kDoc.toKDoc()
@@ -84,21 +69,11 @@ internal fun Generate.toGenerationEntityOrNull(logger: KSPLogger, annotation: KS
 
         val isPreview = args[Generate::isPreview] ?: false
 
-        val collectionHadCopy0 = args[Generate::collectionHadCopy0] ?: false
-        val collectionHadNewCompanion = args[Generate::collectionHadNewCompanion] ?: false
-        val hadBuilderFactoryFunction0 = args[Generate::hadBuilderFactoryFunction0] ?: false
-
         when (entityType) {
             INT_KORD_ENUM -> KordEnum(name, kDoc, docUrl, valueName, mappedEntries, isPreview, KordEnum.ValueType.INT)
             STRING_KORD_ENUM -> KordEnum(name, kDoc, docUrl, valueName, mappedEntries, isPreview, KordEnum.ValueType.STRING)
-            INT_FLAGS -> BitFlags(
-                name, kDoc, docUrl, valueName, mappedEntries, isPreview, BitFlags.ValueType.INT, collectionHadCopy0,
-                collectionHadNewCompanion, hadBuilderFactoryFunction0,
-            )
-            BIT_SET_FLAGS -> BitFlags(
-                name, kDoc, docUrl, valueName, mappedEntries, isPreview, BitFlags.ValueType.BIT_SET, collectionHadCopy0,
-                collectionHadNewCompanion, hadBuilderFactoryFunction0,
-            )
+            INT_FLAGS -> BitFlags(name, kDoc, docUrl, valueName, mappedEntries, isPreview, BitFlags.ValueType.INT)
+            BIT_SET_FLAGS -> BitFlags(name, kDoc, docUrl, valueName, mappedEntries, isPreview, BitFlags.ValueType.BIT_SET)
         }
     }
 }

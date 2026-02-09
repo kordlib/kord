@@ -38,6 +38,7 @@ public data class MessageData(
     val referencedMessage: Optional<MessageData?> = Optional.Missing(),
     val interaction: Optional<MessageInteractionData> = Optional.Missing(),
     val components: Optional<List<ComponentData>> = Optional.Missing(),
+    val thread: Optional<ChannelData> = Optional.Missing(),
     val roleSubscriptionData: Optional<RoleSubscription> = Optional.Missing(),
     val position: OptionalInt = OptionalInt.Missing,
 ) {
@@ -111,6 +112,7 @@ public data class MessageData(
             components = components,
             roleSubscriptionData = roleSubscriptionData,
             position = position,
+            thread = thread
         )
     }
 
@@ -150,6 +152,7 @@ public data class MessageData(
                 components = components.mapList { ComponentData.from(it) },
                 roleSubscriptionData = roleSubscriptionData,
                 position = position,
+                thread = thread.map { it.toData() }
             )
         }
     }
