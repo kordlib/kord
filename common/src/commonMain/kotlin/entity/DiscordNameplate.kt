@@ -26,11 +26,24 @@ import dev.kord.ksp.Generate.Entry
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
+/**
+ * The representation for a users collectible
+ *
+ * @property nameplate The users nameplate
+ */
 @Serializable
 public data class DiscordCollectible(
     val nameplate: Optional<DiscordNameplate> = Optional.Missing()
 )
 
+/**
+ * The representation of a user's nameplate.
+ *
+ * @property skuId The ID of the nameplate SKU
+ * @property asset The path to the nameplate asset
+ * @property label The label of this nameplate. Currently unused
+ * @property palette The background color of the nameplate
+ */
 @Serializable
 public data class DiscordNameplate(
     @SerialName("sku_id")
