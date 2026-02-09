@@ -18,23 +18,36 @@ internal sealed class GenerationEntity(
     val docUrl: String,
     val valueName: String,
     val entries: List<Entry>,
-    val isPreview: Boolean
+    val isKordPreview: Boolean,
+    val isDiscordPreview: Boolean
 ) {
     abstract val valueType: ValueType
 
     sealed interface ValueType
 
     class KordEnum(
-        name: String, kDoc: String?, docUrl: String, valueName: String, entries: List<Entry>, isPreview: Boolean,
+        name: String,
+        kDoc: String?,
+        docUrl: String,
+        valueName: String,
+        entries: List<Entry>,
+        isKordPreview: Boolean,
+        isDiscordPreview: Boolean,
         override val valueType: ValueType,
-    ) : GenerationEntity(name, kDoc, docUrl, valueName, entries, isPreview) {
+    ) : GenerationEntity(name, kDoc, docUrl, valueName, entries, isKordPreview, isDiscordPreview) {
         enum class ValueType : GenerationEntity.ValueType { INT, STRING }
     }
 
     class BitFlags(
-        name: String, kDoc: String?, docUrl: String, valueName: String, entries: List<Entry>, isPreview: Boolean,
+        name: String,
+        kDoc: String?,
+        docUrl: String,
+        valueName: String,
+        entries: List<Entry>,
+        isKordPreview: Boolean,
+        isDiscordPreview: Boolean,
         override val valueType: ValueType,
-    ) : GenerationEntity(name, kDoc, docUrl, valueName, entries) {
+    ) : GenerationEntity(name, kDoc, docUrl, valueName, entries, isKordPreview, isDiscordPreview) {
         enum class ValueType : GenerationEntity.ValueType { INT, BIT_SET }
     }
 
@@ -67,13 +80,53 @@ internal fun Generate.toGenerationEntityOrNull(logger: KSPLogger, annotation: KS
         val kDoc = if (args.isDefault(Generate::kDoc)) "" else kDoc.toKDoc()
         val valueName = if (args.isDefault(Generate::valueName)) "value" else valueName
 
-        val isPreview = args[Generate::isPreview] ?: false
+        val isKordPreview = args[Generate::isKordPreview] ?: false
+        val isDiscordPreview = args[Generate::isDiscordPreview] ?: false
 
         when (entityType) {
-            INT_KORD_ENUM -> KordEnum(name, kDoc, docUrl, valueName, mappedEntries, isPreview, KordEnum.ValueType.INT)
-            STRING_KORD_ENUM -> KordEnum(name, kDoc, docUrl, valueName, mappedEntries, isPreview, KordEnum.ValueType.STRING)
-            INT_FLAGS -> BitFlags(name, kDoc, docUrl, valueName, mappedEntries, isPreview, BitFlags.ValueType.INT)
-            BIT_SET_FLAGS -> BitFlags(name, kDoc, docUrl, valueName, mappedEntries, isPreview, BitFlags.ValueType.BIT_SET)
+            INT_KORD_ENUM -> KordEnum(
+                name,
+                kDoc,
+                docUrl,
+                valueName,
+                mappedEntries,
+                isKordPreview,
+                isDiscordPreview,
+                KordEnum.ValueType.INT
+            )
+
+            STRING_KORD_ENUM -> KordEnum(
+                name,
+                kDoc,
+                docUrl,
+                valueName,
+                mappedEntries,
+                isKordPreview,
+                isDiscordPreview,
+                KordEnum.ValueType.STRING
+            )
+
+            INT_FLAGS -> BitFlags(
+                name,
+                kDoc,
+                docUrl,
+                valueName,
+                mappedEntries,
+                isKordPreview,
+                isDiscordPreview,
+                BitFlags.ValueType.INT
+            )
+
+            BIT_SET_FLAGS -> BitFlags(
+                name,
+                kDoc,
+                docUrl,
+                valueName,
+                mappedEntries,
+                isKordPreview,
+                isDiscordPreview,
+                BitFlags.ValueType.BIT_SET
+            )
         }
     }
 }

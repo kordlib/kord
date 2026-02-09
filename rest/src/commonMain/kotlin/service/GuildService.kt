@@ -1,7 +1,7 @@
 package dev.kord.rest.service
 
 import dev.kord.common.annotation.KordExperimental
-import dev.kord.common.annotation.KordPreview
+import dev.kord.common.annotation.DiscordAPIPreview
 import dev.kord.common.entity.*
 import dev.kord.rest.Sound
 import dev.kord.rest.builder.ban.BanCreateBuilder
@@ -417,7 +417,7 @@ public class GuildService(requestHandler: RequestHandler) : RestService(requestH
         keys[Route.GuildId] = guildId
     }
 
-    @KordPreview
+    @DiscordAPIPreview
     public suspend fun getGuildMemberVerification(
         guildId: Snowflake, inviteCode: String? = null, withGuild: Boolean? = false
     ): DiscordMemberVerification = call(Route.GuildMemberVerificationGet) {
@@ -426,7 +426,7 @@ public class GuildService(requestHandler: RequestHandler) : RestService(requestH
         withGuild?.let { parameter("with_guild", it) }
     }
 
-    @KordPreview
+    @DiscordAPIPreview
     public suspend fun modifyGuildMemberVerification(
         guildId: Snowflake,
         memberVerification: GuildMemberVerificationModifyRequest,
@@ -437,7 +437,7 @@ public class GuildService(requestHandler: RequestHandler) : RestService(requestH
         auditLogReason(reason)
     }
 
-    @KordPreview
+    @DiscordAPIPreview
     public suspend inline fun modifyGuildMemberVerification(
         guildId: Snowflake,
         builder: MemberVerificationModifyBuilder.() -> Unit
@@ -447,7 +447,7 @@ public class GuildService(requestHandler: RequestHandler) : RestService(requestH
         return modifyGuildMemberVerification(guildId, modifyBuilder.toRequest(), modifyBuilder.reason)
     }
 
-    @KordPreview
+    @DiscordAPIPreview
     public suspend fun getGuildJoinRequests(
         guildId: Snowflake,
         status: String,
@@ -460,7 +460,7 @@ public class GuildService(requestHandler: RequestHandler) : RestService(requestH
         position?.let { parameter(it.key, it.value) }
     }
 
-    @KordPreview
+    @DiscordAPIPreview
     public suspend fun getGuildJoinRequestsBefore(
         guildId: Snowflake,
         status: String,
@@ -470,7 +470,7 @@ public class GuildService(requestHandler: RequestHandler) : RestService(requestH
         guildId, status, limit, Position.Before(before)
     )
 
-    @KordPreview
+    @DiscordAPIPreview
     public suspend fun getGuildJoinRequestsAfter(
         guildId: Snowflake,
         status: String,
@@ -480,19 +480,19 @@ public class GuildService(requestHandler: RequestHandler) : RestService(requestH
         guildId, status, limit, Position.After(after)
     )
 
-    @KordPreview
+    @DiscordAPIPreview
     public suspend fun getGuildJoinRequest(joinRequestId: Snowflake): DiscordGuildJoinRequest =
         call(Route.GuildJoinRequestGet) {
             keys[Route.GuildJoinRequestId] = joinRequestId
         }
 
-    @KordPreview
+    @DiscordAPIPreview
     public suspend fun getGuildJoinRequestCooldown(guildId: Snowflake): GuildJoinRequestCooldownResponse =
         call(Route.GuildJoinRequestCooldownGet) {
             keys[Route.GuildId] = guildId
         }
 
-    @KordPreview
+    @DiscordAPIPreview
     public suspend fun createGuildJoinRequest(
         guildId: Snowflake,
         request: GuildJoinRequestCreateRequest
@@ -501,31 +501,31 @@ public class GuildService(requestHandler: RequestHandler) : RestService(requestH
         body(GuildJoinRequestCreateRequest.serializer(), request)
     }
 
-    @KordPreview
+    @DiscordAPIPreview
     public suspend fun resetGuildJoinRequest(guildId: Snowflake): DiscordGuildJoinRequest =
         call(Route.GuildJoinRequestReset) {
             keys[Route.GuildId] = guildId
         }
 
-    @KordPreview
+    @DiscordAPIPreview
     public suspend fun ackGuildJoinRequest(guildId: Snowflake, joinRequestId: Snowflake): Unit =
         call(Route.GuildJoinRequestAck) {
             keys[Route.GuildId] = guildId
             keys[Route.GuildJoinRequestId] = joinRequestId
         }
 
-    @KordPreview
+    @DiscordAPIPreview
     public suspend fun deleteGuildJoinRequest(guildId: Snowflake): Unit = call(Route.GuildJoinRequestDelete) {
         keys[Route.GuildId] = guildId
     }
 
-    @KordPreview
+    @DiscordAPIPreview
     public suspend fun createGuildJoinRequestInterview(joinRequestId: Snowflake): DiscordChannel =
         call(Route.GuildJoinRequestInterviewCreate) {
             keys[Route.GuildJoinRequestId] = joinRequestId
         }
 
-    @KordPreview
+    @DiscordAPIPreview
     public suspend fun actionGuildJoinRequest(
         guildId: Snowflake,
         joinRequestId: Snowflake,
@@ -536,7 +536,7 @@ public class GuildService(requestHandler: RequestHandler) : RestService(requestH
         body(GuildJoinRequestActionRequest.serializer(), action)
     }
 
-    @KordPreview
+    @DiscordAPIPreview
     public suspend fun actionGuildJoinRequestByUser(
         guildId: Snowflake,
         userId: Snowflake,
@@ -547,7 +547,7 @@ public class GuildService(requestHandler: RequestHandler) : RestService(requestH
         body(GuildJoinRequestActionRequest.serializer(), action)
     }
 
-    @KordPreview
+    @DiscordAPIPreview
     public suspend fun bulkActionGuildJoinRequest(guildId: Snowflake, action: GuildJoinRequestActionRequest): Unit =
         call(Route.GuildJoinRequestBulkAction) {
             keys[Route.GuildId] = guildId
@@ -683,12 +683,12 @@ public class GuildService(requestHandler: RequestHandler) : RestService(requestH
         limit,
     )
 
-    @KordPreview
+    @DiscordAPIPreview
     public suspend fun getGuildProfile(guildId: Snowflake): DiscordGuildProfile = call(Route.GuildProfileGet) {
         keys[Route.GuildId] = guildId
     }
 
-    @KordPreview
+    @DiscordAPIPreview
     public suspend fun modifyGuildProfile(guildId: Snowflake, request: ModifyGuildProfileRequest): DiscordGuildProfile =
         call(Route.GuildProfilePatch) {
             keys[Route.GuildId] = guildId

@@ -1,11 +1,11 @@
 package dev.kord.core.entity
 
-import dev.kord.common.annotation.KordPreview
+import dev.kord.common.annotation.DiscordAPIPreview
 import dev.kord.core.Kord
 import dev.kord.core.KordObject
 import dev.kord.core.cache.data.GameActivityData
 
-@KordPreview
+@DiscordAPIPreview
 public class GameActivity(
     public val data: GameActivityData,
     override val kord: Kord

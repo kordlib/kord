@@ -1,5 +1,6 @@
 package dev.kord.core.cache.data
 
+import dev.kord.common.annotation.DiscordAPIPreview
 import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.DiscordGuildJoinRequest
 import dev.kord.common.entity.DiscordMemberVerificationFormField
@@ -11,7 +12,7 @@ import dev.kord.common.entity.optional.OptionalSnowflake
 import kotlinx.serialization.Serializable
 import kotlin.time.Instant
 
-@KordPreview
+@DiscordAPIPreview
 @Serializable
 public data class JoinRequestData(
     val id: Snowflake,
@@ -50,5 +51,5 @@ public data class JoinRequestData(
     }
 }
 
-@KordPreview
+@DiscordAPIPreview
 public fun DiscordGuildJoinRequest.toData(): JoinRequestData = JoinRequestData.from(this)

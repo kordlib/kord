@@ -3,7 +3,7 @@
 
 package dev.kord.common.entity
 
-import dev.kord.common.`annotation`.KordPreview
+import dev.kord.common.`annotation`.DiscordAPIPreview
 import kotlin.LazyThreadSafetyMode.PUBLICATION
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
@@ -19,7 +19,7 @@ import kotlinx.serialization.encoding.Encoder
  * See [MemberVerificationFormFieldType]s in the [Discord Developer Documentation](https://docs.discord.food/resources/guild#member-verification-form-field-type).
  */
 @Serializable(with = MemberVerificationFormFieldType.Serializer::class)
-@KordPreview
+@DiscordAPIPreview
 public sealed class MemberVerificationFormFieldType(
     /**
      * The raw value used by Discord.

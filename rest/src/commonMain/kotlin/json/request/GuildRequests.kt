@@ -1,6 +1,7 @@
 package dev.kord.rest.json.request
 
 import dev.kord.common.Color
+import dev.kord.common.annotation.DiscordAPIPreview
 import dev.kord.common.annotation.KordExperimental
 import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.*
@@ -266,7 +267,7 @@ public data class GuildScheduledEventUsersResponse(
     val member: Optional<DiscordGuildMember> = Optional.Missing(),
 )
 
-@KordPreview
+@DiscordAPIPreview
 @Serializable
 public data class GuildMemberVerificationModifyRequest(
     val enabled: OptionalBoolean = OptionalBoolean.Missing,
@@ -277,7 +278,7 @@ public data class GuildMemberVerificationModifyRequest(
     val bulkAction: Optional<String> = Optional.Missing(),
 )
 
-@KordPreview
+@DiscordAPIPreview
 @Serializable
 public data class GuildJoinRequestsResponse(
     @SerialName("guild_join_requests")
@@ -286,13 +287,13 @@ public data class GuildJoinRequestsResponse(
     val limit: Int
 )
 
-@KordPreview
+@DiscordAPIPreview
 @Serializable
 public data class GuildJoinRequestCooldownResponse(
     val cooldown: Int
 )
 
-@KordPreview
+@DiscordAPIPreview
 @Serializable
 public data class GuildJoinRequestCreateRequest(
     @SerialName("form_fields")
@@ -300,7 +301,7 @@ public data class GuildJoinRequestCreateRequest(
     val version: Instant?
 )
 
-@KordPreview
+@DiscordAPIPreview
 @Serializable
 public data class GuildJoinRequestActionRequest(
     val action: GuildJoinRequestStatus,

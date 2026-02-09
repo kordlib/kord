@@ -171,7 +171,7 @@
 
 package dev.kord.common.entity
 
-import dev.kord.common.annotation.KordPreview
+import dev.kord.common.annotation.DiscordAPIPreview
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalInt
@@ -180,9 +180,9 @@ import dev.kord.common.serialization.DurationInSeconds
 import dev.kord.ksp.Generate
 import dev.kord.ksp.Generate.EntityType.*
 import dev.kord.ksp.Generate.Entry
-import kotlin.time.Instant
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import kotlin.time.Instant
 
 /**
  * A partial representation of a [DiscordGuild] that may be [unavailable].
@@ -396,7 +396,7 @@ public data class DiscordIntegrationAccount(
  * @param approximateMemberCount Approximate total of guild members
  * @param approximatePresenceCount Approximate total of non-offline guild members
  */
-@KordPreview
+@DiscordAPIPreview
 @Serializable
 public data class DiscordMemberVerificationGuild(
     val id: Snowflake,

@@ -1,5 +1,6 @@
 package dev.kord.core.entity
 
+import dev.kord.common.annotation.DiscordAPIPreview
 import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.DiscordMemberVerificationFormField
 import dev.kord.common.entity.GuildJoinRequestStatus
@@ -13,7 +14,7 @@ import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.supplier.EntitySupplier
 import kotlin.time.Instant
 
-@KordPreview
+@DiscordAPIPreview
 public class JoinRequest(
     public val data: JoinRequestData,
     override val kord: Kord,

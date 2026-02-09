@@ -1,11 +1,12 @@
 package dev.kord.core.cache.data
 
 import dev.kord.common.Color
+import dev.kord.common.annotation.DiscordAPIPreview
 import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.*
 import kotlinx.serialization.Serializable
 
-@KordPreview
+@DiscordAPIPreview
 @Serializable
 public data class GuildProfileData(
     val id: Snowflake,
@@ -57,5 +58,5 @@ public data class GuildProfileData(
     }
 }
 
-@KordPreview
+@DiscordAPIPreview
 public fun DiscordGuildProfile.toData(): GuildProfileData = GuildProfileData.from(this)

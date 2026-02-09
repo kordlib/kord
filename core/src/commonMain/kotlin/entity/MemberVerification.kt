@@ -1,5 +1,6 @@
 package dev.kord.core.entity
 
+import dev.kord.common.annotation.DiscordAPIPreview
 import dev.kord.common.annotation.KordPreview
 import dev.kord.core.Kord
 import dev.kord.core.KordObject
@@ -9,7 +10,7 @@ import dev.kord.core.cache.data.MemberVerificationFormFieldData
 import dev.kord.core.cache.data.MemberVerificationGuildData
 import kotlin.time.Instant
 
-@KordPreview
+@DiscordAPIPreview
 public class MemberVerification(
     public val data: MemberVerificationData,
     override val kord: Kord,

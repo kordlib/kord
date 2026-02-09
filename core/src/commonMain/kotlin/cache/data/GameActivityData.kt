@@ -1,10 +1,10 @@
 package dev.kord.core.cache.data
 
-import dev.kord.common.annotation.KordPreview
+import dev.kord.common.annotation.DiscordAPIPreview
 import dev.kord.common.entity.DiscordGameActivity
 import kotlinx.serialization.Serializable
 
-@KordPreview
+@DiscordAPIPreview
 @Serializable
 public data class GameActivityData(
     val activityLevel: Int,
@@ -20,5 +20,5 @@ public data class GameActivityData(
     }
 }
 
-@KordPreview
+@DiscordAPIPreview
 public fun DiscordGameActivity.toData(): GameActivityData = GameActivityData.from(this)

@@ -31,7 +31,7 @@
         Entry("Trophy", 28),
         Entry("MoneyBag", 29),
         Entry("DollarSign", 30),
-    ], isPreview = true
+    ], isDiscordPreview = true
 )
 
 @file:Generate(
@@ -39,12 +39,13 @@
         Entry("Public", 1),
         Entry("Restricted", 2),
         Entry("PublicWithRecruitment", 3)
-    ], isPreview = true
+    ], isDiscordPreview = true
 )
 
 package dev.kord.common.entity
 
 import dev.kord.common.Color
+import dev.kord.common.annotation.DiscordAPIPreview
 import dev.kord.common.annotation.KordPreview
 import dev.kord.ksp.Generate
 import dev.kord.ksp.Generate.EntityType.*
@@ -77,7 +78,7 @@ import kotlinx.serialization.Serializable
  * @param premiumSubscriptionCount The number of premium subscriptions (boosts) the guild currently has
  * @param premiumTier The guilds [PremiumTier] (boost level)
  */
-@KordPreview
+@DiscordAPIPreview
 @Serializable
 public data class DiscordGuildProfile(
     val id: Snowflake,

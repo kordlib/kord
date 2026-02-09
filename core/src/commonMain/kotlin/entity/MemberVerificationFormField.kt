@@ -1,5 +1,6 @@
 package dev.kord.core.entity
 
+import dev.kord.common.annotation.DiscordAPIPreview
 import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.MemberVerificationFormFieldType
 import dev.kord.core.Kord
@@ -7,7 +8,7 @@ import dev.kord.core.KordObject
 import dev.kord.core.cache.data.MemberVerificationFormFieldData
 import kotlinx.serialization.json.JsonPrimitive
 
-@KordPreview
+@DiscordAPIPreview
 public class MemberVerificationFormField(
     public val data: MemberVerificationFormFieldData,
     override val kord: Kord

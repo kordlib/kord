@@ -1,6 +1,6 @@
 package dev.kord.core.entity
 
-import dev.kord.common.annotation.KordPreview
+import dev.kord.common.annotation.DiscordAPIPreview
 import dev.kord.common.entity.NsfwLevel
 import dev.kord.common.entity.Permissions
 import dev.kord.common.entity.Snowflake
@@ -95,10 +95,10 @@ public class PartialGuild(
     /**
      * The hash of the home header, if present.
      */
-    @KordPreview
+    @DiscordAPIPreview
     public val homeHeaderHash: String? get() = data.homeHeader
 
-    @KordPreview
+    @DiscordAPIPreview
     public val homeHeader: Asset? get() = homeHeaderHash?.let { Asset.guildHomeHeader(id, it, kord) }
 
     /**

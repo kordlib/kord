@@ -1,6 +1,6 @@
 package dev.kord.core.entity
 
-import dev.kord.common.annotation.KordPreview
+import dev.kord.common.annotation.DiscordAPIPreview
 import dev.kord.common.entity.MessageStickerType
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.Kord
@@ -49,11 +49,11 @@ public class Asset private constructor(
         public fun guildBanner(guildId: Snowflake, hash: String, kord: Kord): Asset =
             Asset(hash.isAnimated, DiscordCdn.guildBanner(guildId, hash), kord)
 
-        @KordPreview
+        @DiscordAPIPreview
         public fun guildHomeHeader(guildId: Snowflake, hash: String, kord: Kord): Asset =
             Asset(isAnimated = false, DiscordCdn.guildHomeHeader(guildId, hash), kord)
 
-        @KordPreview
+        @DiscordAPIPreview
         public fun guildTagBadge(guildId: Snowflake, hash: String, kord: Kord): Asset =
             Asset(isAnimated = false, DiscordCdn.guildTagBadge(guildId, hash), kord)
 

@@ -1,5 +1,6 @@
 package dev.kord.rest.builder.guild
 
+import dev.kord.common.annotation.DiscordAPIPreview
 import dev.kord.common.annotation.KordDsl
 import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.DiscordMemberVerificationFormField
@@ -9,7 +10,7 @@ import dev.kord.common.entity.optional.delegate.delegate
 import dev.kord.rest.builder.AuditRequestBuilder
 import dev.kord.rest.json.request.GuildMemberVerificationModifyRequest
 
-@KordPreview
+@DiscordAPIPreview
 @KordDsl
 public class MemberVerificationModifyBuilder : AuditRequestBuilder<GuildMemberVerificationModifyRequest>{
     override var reason: String? = null

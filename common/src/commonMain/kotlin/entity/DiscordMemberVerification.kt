@@ -6,11 +6,12 @@
         Entry("MultipleChoice", stringValue = "MULTIPLE_CHOICE", kDoc = "User must select one of the provided choices"),
         // Crossed out in unofficial docs, here as a placeholder until real docs exist or unofficial updates
         //Entry("Verification", stringValue = "VERIFICATION", kDoc = "User must verify their email or phone number")
-    ], isPreview = true
+    ], isDiscordPreview = true
 )
 
 package dev.kord.common.entity
 
+import dev.kord.common.annotation.DiscordAPIPreview
 import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.optional.Optional
 import dev.kord.ksp.Generate
@@ -30,7 +31,7 @@ import kotlin.time.Instant
  * @param guild The guild this member verification is for
  * @param profile The profile of the guild this member verification is for
  */
-@KordPreview
+@DiscordAPIPreview
 @Serializable
 public data class DiscordMemberVerification(
     val version: Instant?,
@@ -54,7 +55,7 @@ public data class DiscordMemberVerification(
  * @param automations
  * @param placeholder Placeholder text for the fields response area
  */
-@KordPreview
+@DiscordAPIPreview
 @Serializable
 public data class DiscordMemberVerificationFormField(
     @SerialName("field_type")
