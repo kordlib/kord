@@ -18,7 +18,7 @@ private val Project.tag
 
 val Project.libraryVersion: Provider<String>
     get() {
-        if (System.getenv("QODANA_DEPENDENCIES_MODE") != null) return provider { "QODANA" }
+        if (System.getProperty("idea.active")?.toBoolean() == true) return provider { "QODANA" }
         val snapshotVersion = git("branch", "--show-current").map { branch ->
             val snapshotPrefix = when (branch) {
                 "main" -> providers.gradleProperty("nextPlannedVersion").get()
@@ -35,7 +35,7 @@ val Project.shortCommitHash get() = git("rev-parse", "--short", "HEAD")
 
 val Project.isRelease: Boolean
     get() {
-        if (System.getenv("QODANA_DEPENDENCIES_MODE") != null) return false
+        if (System.getProperty("idea.active")?.toBoolean() == true) return false
         return tag.isPresent
     }
 
