@@ -149,6 +149,9 @@ public abstract interface annotation class dev/kord/common/annotation/Deprecated
 	public abstract fun version ()Ljava/lang/String;
 }
 
+public abstract interface annotation class dev/kord/common/annotation/DiscordAPIPreview : java/lang/annotation/Annotation {
+}
+
 public abstract interface annotation class dev/kord/common/annotation/KordDsl : java/lang/annotation/Annotation {
 }
 

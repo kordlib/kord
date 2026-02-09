@@ -13,6 +13,10 @@ open annotation class dev.kord.common.annotation/DeprecatedSinceKord : kotlin/An
         final fun <get-version>(): kotlin/String // dev.kord.common.annotation/DeprecatedSinceKord.version.<get-version>|<get-version>(){}[0]
 }
 
+open annotation class dev.kord.common.annotation/DiscordAPIPreview : kotlin/Annotation { // dev.kord.common.annotation/DiscordAPIPreview|null[0]
+    constructor <init>() // dev.kord.common.annotation/DiscordAPIPreview.<init>|<init>(){}[0]
+}
+
 open annotation class dev.kord.common.annotation/KordDsl : kotlin/Annotation { // dev.kord.common.annotation/KordDsl|null[0]
     constructor <init>() // dev.kord.common.annotation/KordDsl.<init>|<init>(){}[0]
 }
