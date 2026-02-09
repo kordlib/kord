@@ -3,7 +3,10 @@ package dev.kord.core.cache
 import dev.kord.cache.api.DataCache
 import dev.kord.gateway.Close
 import dev.kord.gateway.Gateway
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach

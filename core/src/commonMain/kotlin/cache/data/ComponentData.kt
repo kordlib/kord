@@ -12,6 +12,7 @@ import kotlinx.serialization.json.JsonClassDiscriminator
 public sealed class ComponentData {
     public abstract val type: ComponentType
     public abstract val label: Optional<String>
+
     //TODO: turn this emoji into a EmojiData, it's lacking the guild id
     public abstract val emoji: Optional<DiscordPartialEmoji>
     public abstract val customId: Optional<String>
@@ -30,7 +31,7 @@ public sealed class ComponentData {
     public abstract val channelTypes: Optional<List<ChannelType>>
 
     public companion object {
-        public fun from(entity: DiscordComponent): ComponentData = with (entity) {
+        public fun from(entity: DiscordComponent): ComponentData = with(entity) {
             when (entity) {
                 is DiscordChatComponent -> {
                     ChatComponentData(
@@ -55,6 +56,7 @@ public sealed class ComponentData {
                         skuId = entity.skuId,
                     )
                 }
+
                 is DiscordTextInputComponent -> {
                     TextInputComponentData(
                         type,
@@ -68,7 +70,7 @@ public sealed class ComponentData {
                         defaultValues = defaultValues,
                         placeholder = placeholder,
                         minValues = minValues,
-                        maxValues =  maxValues,
+                        maxValues = maxValues,
                         options = options.mapList { SelectOptionData.from(it) },
                         minLength = minLength,
                         maxLength = maxLength,

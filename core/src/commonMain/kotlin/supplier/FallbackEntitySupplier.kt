@@ -195,7 +195,10 @@ private class FallbackEntitySupplier(val first: EntitySupplier, val second: Enti
         )
 
 
-    override fun getGlobalApplicationCommands(applicationId: Snowflake, withLocalizations: Boolean?): Flow<GlobalApplicationCommand> =
+    override fun getGlobalApplicationCommands(
+        applicationId: Snowflake,
+        withLocalizations: Boolean?
+    ): Flow<GlobalApplicationCommand> =
         first.getGlobalApplicationCommands(applicationId, withLocalizations)
             .switchIfEmpty(second.getGlobalApplicationCommands(applicationId, withLocalizations))
 

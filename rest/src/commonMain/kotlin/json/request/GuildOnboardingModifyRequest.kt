@@ -1,6 +1,8 @@
 package dev.kord.rest.json.request
 
-import dev.kord.common.entity.*
+import dev.kord.common.entity.OnboardingMode
+import dev.kord.common.entity.OnboardingPromptType
+import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import kotlinx.serialization.SerialName

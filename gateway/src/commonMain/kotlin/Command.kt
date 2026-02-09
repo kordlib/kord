@@ -35,26 +35,37 @@ public sealed class Command {
                     composite.encodeSerializableElement(descriptor, 0, OpCode.serializer(), OpCode.RequestGuildMembers)
                     composite.encodeSerializableElement(descriptor, 1, RequestGuildMembers.serializer(), value)
                 }
+
                 is RequestSoundboardSounds -> {
-                    composite.encodeSerializableElement(descriptor, 0, OpCode.serializer(), OpCode.RequestSoundboardSounds)
+                    composite.encodeSerializableElement(
+                        descriptor,
+                        0,
+                        OpCode.serializer(),
+                        OpCode.RequestSoundboardSounds
+                    )
                     composite.encodeSerializableElement(descriptor, 1, RequestSoundboardSounds.serializer(), value)
                 }
+
                 is UpdateVoiceStatus -> {
                     composite.encodeSerializableElement(descriptor, 0, OpCode.serializer(), OpCode.VoiceStateUpdate)
                     composite.encodeSerializableElement(descriptor, 1, UpdateVoiceStatus.serializer(), value)
                 }
+
                 is UpdateStatus -> {
                     composite.encodeSerializableElement(descriptor, 0, OpCode.serializer(), OpCode.StatusUpdate)
                     composite.encodeSerializableElement(descriptor, 1, UpdateStatus.serializer(), value)
                 }
+
                 is Identify -> {
                     composite.encodeSerializableElement(descriptor, 0, OpCode.serializer(), OpCode.Identify)
                     composite.encodeSerializableElement(descriptor, 1, Identify.serializer(), value)
                 }
+
                 is Resume -> {
                     composite.encodeSerializableElement(descriptor, 0, OpCode.serializer(), OpCode.Resume)
                     composite.encodeSerializableElement(descriptor, 1, Resume.serializer(), value)
                 }
+
                 is Heartbeat -> {
                     composite.encodeSerializableElement(descriptor, 0, OpCode.serializer(), OpCode.Heartbeat)
                     @OptIn(ExperimentalSerializationApi::class)
@@ -81,7 +92,7 @@ public data class Identify(
 ) : Command() {
     override fun toString(): String =
         "Identify(token=hunter2, properties=$properties, compress=$compress, largeThreshold=$largeThreshold, " +
-                "shard=$shard, presence=$presence, intents=$intents)"
+            "shard=$shard, presence=$presence, intents=$intents)"
 }
 
 @Serializable

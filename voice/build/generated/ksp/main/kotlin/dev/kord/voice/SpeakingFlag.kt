@@ -1,12 +1,15 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
-@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
+@file:Suppress(
+    names = arrayOf(
+        "IncorrectFormatting",
+        "ReplaceArrayOfWithLiteral",
+        "SpellCheckingInspection",
+        "GrazieInspection"
+    )
+)
 
 package dev.kord.voice
 
-import kotlin.LazyThreadSafetyMode.PUBLICATION
-import kotlin.contracts.InvocationKind.EXACTLY_ONCE
-import kotlin.contracts.contract
-import kotlin.jvm.JvmName
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.builtins.serializer
@@ -15,6 +18,9 @@ import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
 import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
+import kotlin.LazyThreadSafetyMode.PUBLICATION
+import kotlin.contracts.InvocationKind.EXACTLY_ONCE
+import kotlin.contracts.contract
 
 /**
  *
@@ -47,11 +53,13 @@ public sealed class SpeakingFlag(
      */
     public operator fun plus(flags: SpeakingFlags): SpeakingFlags = SpeakingFlags(this.code or flags.code)
 
-    final override fun equals(other: Any?): Boolean = this === other || (other is SpeakingFlag && this.shift == other.shift)
+    final override fun equals(other: Any?): Boolean =
+        this === other || (other is SpeakingFlag && this.shift == other.shift)
 
     final override fun hashCode(): Int = shift.hashCode()
 
-    final override fun toString(): String = if (this is Unknown) "SpeakingFlag.Unknown(shift=$shift)" else "SpeakingFlag.${this::class.simpleName}"
+    final override fun toString(): String =
+        if (this is Unknown) "SpeakingFlag.Unknown(shift=$shift)" else "SpeakingFlag.${this::class.simpleName}"
 
     /**
      * An unknown [SpeakingFlag].
@@ -267,7 +275,7 @@ public class SpeakingFlags internal constructor(
 
     internal object Serializer : KSerializer<SpeakingFlags> {
         override val descriptor: SerialDescriptor =
-                PrimitiveSerialDescriptor("dev.kord.voice.SpeakingFlags", PrimitiveKind.INT)
+            PrimitiveSerialDescriptor("dev.kord.voice.SpeakingFlags", PrimitiveKind.INT)
 
         private val `delegate`: KSerializer<Int> = Int.serializer()
 
@@ -275,7 +283,8 @@ public class SpeakingFlags internal constructor(
             encoder.encodeSerializableValue(delegate, value.code)
         }
 
-        override fun deserialize(decoder: Decoder): SpeakingFlags = SpeakingFlags(decoder.decodeSerializableValue(delegate))
+        override fun deserialize(decoder: Decoder): SpeakingFlags =
+            SpeakingFlags(decoder.decodeSerializableValue(delegate))
     }
 }
 

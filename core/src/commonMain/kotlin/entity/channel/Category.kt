@@ -8,9 +8,9 @@ import dev.kord.core.behavior.channel.ChannelBehavior
 import dev.kord.core.behavior.channel.GuildChannelBehavior
 import dev.kord.core.cache.data.ChannelData
 import dev.kord.core.entity.Entity
+import dev.kord.core.hash
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
-import dev.kord.core.hash
 
 /**
  * An instance of a Discord category associated to a [guild].

@@ -52,7 +52,7 @@ internal class DefaultMasterGatewayTest {
 
     @Test
     @JsName("test3")
-    fun `Gateway returns null ping when no gateway pings`(){
+    fun `Gateway returns null ping when no gateway pings`() {
 
         val dummy = DummyGateway()
 

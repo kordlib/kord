@@ -129,7 +129,6 @@ public fun ApplicationCommandSubCommandData(data: ApplicationCommandOptionData):
 }
 
 
-
 @Serializable
 public data class ApplicationCommandParameterData(
     val name: String,

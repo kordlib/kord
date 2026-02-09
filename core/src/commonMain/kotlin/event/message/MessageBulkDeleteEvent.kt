@@ -36,7 +36,16 @@ public class MessageBulkDeleteEvent(
     public suspend fun getGuildOrNull(): Guild? = guildId?.let { supplier.getGuildOrNull(it) }
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): MessageBulkDeleteEvent =
-        MessageBulkDeleteEvent(messageIds, messages, channelId, guildId, kord, shard, customContext, strategy.supply(kord))
+        MessageBulkDeleteEvent(
+            messageIds,
+            messages,
+            channelId,
+            guildId,
+            kord,
+            shard,
+            customContext,
+            strategy.supply(kord)
+        )
 
     override fun toString(): String {
         return "MessageBulkDeleteEvent(messageIds=$messageIds, messages=$messages, channelId=$channelId, guildId=$guildId, kord=$kord, shard=$shard, supplier=$supplier)"

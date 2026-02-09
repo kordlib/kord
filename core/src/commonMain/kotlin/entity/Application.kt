@@ -11,9 +11,9 @@ import dev.kord.core.cache.data.ApplicationData
 import dev.kord.core.cache.data.BaseApplicationData
 import dev.kord.core.cache.data.PartialApplicationData
 import dev.kord.core.event.guild.InviteCreateEvent
+import dev.kord.core.hash
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
-import dev.kord.core.hash
 
 public sealed class BaseApplication(
     final override val kord: Kord,

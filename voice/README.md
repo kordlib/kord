@@ -91,8 +91,12 @@ suspend fun DefaultAudioPlayerManager.playTrack(query: String, player: AudioPlay
 ```
 
 ## Audio Transmission
+
 ### Sending
-Kord handles all sending of audio with the help of the `AudioProvider`. The `AudioProvider` is how you will tell Kord what audio to sent to Discord. This can be configured in the `VoiceConnectionBuilder`.
+
+Kord handles all sending of audio with the help of the `AudioProvider`. The `AudioProvider` is how you will tell Kord
+what audio to sent to Discord. This can be configured in the `VoiceConnectionBuilder`.
+
 ```kotlin
 voiceChannel.connect {
     // audio provider wants a AudioFrame each time its called by Kord
@@ -105,14 +109,19 @@ voiceChannel.connect {
 ```
 
 ### Receiving*
-Kord provides support to receive audio from Discord (*however it is not guaranteed to be stable, as it is not documented by Discord). First you must tell Kord to process incoming packets, in the `VoiceConnectionBuilder`
+
+Kord provides support to receive audio from Discord (*however it is not guaranteed to be stable, as it is not documented
+by Discord). First you must tell Kord to process incoming packets, in the `VoiceConnectionBuilder`
+
 ```kotlin
 voiceChannel.connect {
     receiveVoice = true
 }
 ```
 
-This flag will switch out the NOP implementation with a proper `Streams` implementation exposed in the voice connection. This `Streams` class provides access to several points of incoming packet processing.
+This flag will switch out the NOP implementation with a proper `Streams` implementation exposed in the voice connection.
+This `Streams` class provides access to several points of incoming packet processing.
+
 ```kotlin
 val connection = voiceChannel.connect {
     receiveVoice = true

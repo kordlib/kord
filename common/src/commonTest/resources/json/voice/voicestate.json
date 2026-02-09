@@ -1,12 +1,12 @@
 {
-  "channel_id": "157733188964188161",
-  "user_id": "80351110224678912",
-  "session_id": "90326bd25d71d39b9ef95b299e3872ff",
-  "deaf": false,
-  "mute": false,
-  "self_deaf": false,
-  "self_video": true,
-  "self_mute": true,
-  "suppress": false,
-  "request_to_speak_timestamp": "2021-03-31T18:45:31.297561+00:00"
+    "channel_id": "157733188964188161",
+    "user_id": "80351110224678912",
+    "session_id": "90326bd25d71d39b9ef95b299e3872ff",
+    "deaf": false,
+    "mute": false,
+    "self_deaf": false,
+    "self_video": true,
+    "self_mute": true,
+    "suppress": false,
+    "request_to_speak_timestamp": "2021-03-31T18:45:31.297561+00:00"
 }

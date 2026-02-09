@@ -49,7 +49,7 @@ mavenPublishing {
 
     if (plugins.hasPlugin("org.jetbrains.kotlin.multiplatform")) {
         configure(KotlinMultiplatform(JavadocJar.Dokka("dokkaGeneratePublicationHtml"), sourcesJar = true))
-    } else if(plugins.hasPlugin("org.jetbrains.kotlin.jvm")) {
+    } else if (plugins.hasPlugin("org.jetbrains.kotlin.jvm")) {
         configure(KotlinJvm(JavadocJar.Dokka("dokkaGeneratePublicationHtml"), sourcesJar = true))
     }
 }

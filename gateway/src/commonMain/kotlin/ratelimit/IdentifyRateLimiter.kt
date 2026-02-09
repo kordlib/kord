@@ -1,6 +1,11 @@
 package dev.kord.gateway.ratelimit
 
 import dev.kord.gateway.*
+import dev.kord.gateway.ratelimit.IdentifyRateLimiterImpl.Companion.MAX_CONSUMERS
+import dev.kord.gateway.ratelimit.IdentifyRateLimiterImpl.Companion.NOT_RUNNING
+import dev.kord.gateway.ratelimit.IdentifyRateLimiterImpl.Companion.ONE_CONSUMER
+import dev.kord.gateway.ratelimit.IdentifyRateLimiterImpl.Companion.RECEIVE_TIMEOUT
+import dev.kord.gateway.ratelimit.IdentifyRateLimiterImpl.Companion.RUNNING_WITH_NO_CONSUMERS
 import io.github.oshai.kotlinlogging.KotlinLogging
 import kotlinx.atomicfu.atomic
 import kotlinx.atomicfu.getAndUpdate
@@ -9,7 +14,9 @@ import kotlinx.atomicfu.update
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.onSuccess
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.onSubscription
 import kotlinx.coroutines.selects.onTimeout
 import kotlinx.coroutines.selects.select
 import kotlin.jvm.JvmField
@@ -92,8 +99,9 @@ private class IdentifyRateLimiterImpl(
             NOT_RUNNING, RUNNING_WITH_NO_CONSUMERS -> ONE_CONSUMER // we are the first consumer
             MAX_CONSUMERS -> error(
                 "Too many concurrent identify attempts, overflow happened. There are already ${current.toUInt()} " +
-                        "other consume() invocations waiting. This is most likely a bug."
+                    "other consume() invocations waiting. This is most likely a bug."
             )
+
             else -> current + 1 // increment number of consumers
         }
     }
@@ -112,6 +120,7 @@ private class IdentifyRateLimiterImpl(
             NOT_RUNNING -> error("Should be running but was NOT_RUNNING")
             RUNNING_WITH_NO_CONSUMERS -> // no new requests in sight -> try to stop
                 if (state.compareAndSet(expect = current, update = NOT_RUNNING)) return true
+
             else -> return false // don't change number of consumers
         }
     }
@@ -191,7 +200,7 @@ private class IdentifyRateLimiterImpl(
         if (previousWaiter != null) {
             logger.debug {
                 "Waiting for other shard(s) with rate_limit_key ${request.rateLimitKey} to identify " +
-                        "before identifying on shard ${request.shardId}"
+                    "before identifying on shard ${request.shardId}"
             }
             previousWaiter.join()
         }

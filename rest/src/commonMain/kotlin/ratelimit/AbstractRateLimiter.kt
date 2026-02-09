@@ -11,8 +11,8 @@ import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.sync.Mutex
 import kotlin.time.Clock
-import kotlin.time.Instant
 import kotlin.time.Duration.Companion.minutes
+import kotlin.time.Instant
 
 public abstract class AbstractRateLimiter internal constructor(public val clock: Clock) : RequestRateLimiter {
     internal abstract val logger: KLogger
@@ -71,10 +71,12 @@ public abstract class AbstractRateLimiter internal constructor(public val clock:
                         logger.trace { "[RATE LIMIT]:[GLOBAL]:exhausted until ${response.reset.value}" }
                         globalSuspensionPoint.value = response.reset.value
                     }
+
                     is RequestResponse.BucketRateLimit -> {
                         logger.trace { "[RATE LIMIT]:[BUCKET]:Bucket ${response.bucketKey.value} was exhausted until ${response.reset.value}" }
                         response.bucketKey.bucket.updateReset(response.reset)
                     }
+
                     is RequestResponse.Accepted, RequestResponse.Error -> {}
                 }
 

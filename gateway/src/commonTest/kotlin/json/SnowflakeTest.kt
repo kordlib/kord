@@ -3,7 +3,6 @@ package dev.kord.gateway.json
 import dev.kord.common.entity.Snowflake
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.*
 import kotlin.js.JsName
 import kotlin.test.Test

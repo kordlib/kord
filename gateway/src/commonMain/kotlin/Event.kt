@@ -18,7 +18,6 @@ import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.common.serialization.DurationInSeconds
 import dev.kord.ksp.Generate
 import io.github.oshai.kotlinlogging.KotlinLogging
-import kotlin.time.Instant
 import kotlinx.serialization.*
 import kotlinx.serialization.builtins.nullable
 import kotlinx.serialization.builtins.serializer
@@ -31,6 +30,7 @@ import kotlinx.serialization.json.JsonDecoder
 import kotlinx.serialization.json.JsonElement
 import kotlin.jvm.JvmField
 import kotlin.jvm.JvmName
+import kotlin.time.Instant
 import kotlinx.serialization.DeserializationStrategy as KDeserializationStrategy
 
 private val jsonLogger = KotlinLogging.logger { }
@@ -67,6 +67,7 @@ public sealed class Event {
             when (op) {
                 null ->
                     throw @OptIn(ExperimentalSerializationApi::class) MissingFieldException("op", descriptor.serialName)
+
                 OpCode.Dispatch -> decodeDispatchEvent(decoder, eventName = t, sequence = s, eventData = d)
                 OpCode.Heartbeat -> decodeNonDispatchEvent(decoder, op, Heartbeat.serializer(), eventData = d)
                 OpCode.Reconnect -> {
@@ -74,6 +75,7 @@ public sealed class Event {
                     // https://discord.com/developers/docs/topics/gateway-events#reconnect
                     Reconnect
                 }
+
                 OpCode.InvalidSession -> decodeNonDispatchEvent(decoder, op, InvalidSession.serializer(), eventData = d)
                 OpCode.Hello -> decodeNonDispatchEvent(decoder, op, Hello.serializer(), eventData = d)
                 OpCode.HeartbeatACK -> {
@@ -84,7 +86,8 @@ public sealed class Event {
                 // OpCodes for Commands (aka send events), they shouldn't be received
                 OpCode.Identify, OpCode.StatusUpdate, OpCode.VoiceStateUpdate, OpCode.Resume,
                 OpCode.RequestGuildMembers, OpCode.RequestSoundboardSounds
-                -> throw IllegalArgumentException("Illegal opcode for gateway event: $op")
+                    -> throw IllegalArgumentException("Illegal opcode for gateway event: $op")
+
                 OpCode.Unknown -> throw IllegalArgumentException("Unknown opcode for gateway event")
             }
         }
@@ -125,17 +128,23 @@ public sealed class Event {
                     // https://discord.com/developers/docs/topics/gateway-events#resumed
                     Resumed(sequence)
                 }
+
                 "APPLICATION_COMMAND_PERMISSIONS_UPDATE" -> ApplicationCommandPermissionsUpdate(
                     decode(DiscordGuildApplicationCommandPermissions.serializer()), sequence,
                 )
+
                 "AUTO_MODERATION_RULE_CREATE" ->
                     AutoModerationRuleCreate(decode(DiscordAutoModerationRule.serializer()), sequence)
+
                 "AUTO_MODERATION_RULE_UPDATE" ->
                     AutoModerationRuleUpdate(decode(DiscordAutoModerationRule.serializer()), sequence)
+
                 "AUTO_MODERATION_RULE_DELETE" ->
                     AutoModerationRuleDelete(decode(DiscordAutoModerationRule.serializer()), sequence)
+
                 "AUTO_MODERATION_ACTION_EXECUTION" ->
                     AutoModerationActionExecution(decode(DiscordAutoModerationActionExecution.serializer()), sequence)
+
                 "CHANNEL_CREATE" -> ChannelCreate(decode(DiscordChannel.serializer()), sequence)
                 "CHANNEL_UPDATE" -> ChannelUpdate(decode(DiscordChannel.serializer()), sequence)
                 "CHANNEL_DELETE" -> ChannelDelete(decode(DiscordChannel.serializer()), sequence)
@@ -147,6 +156,7 @@ public sealed class Event {
                 "THREAD_MEMBER_UPDATE" -> ThreadMemberUpdate(decode(DiscordThreadMember.serializer()), sequence)
                 "THREAD_MEMBERS_UPDATE" ->
                     ThreadMembersUpdate(decode(DiscordThreadMembersUpdate.serializer()), sequence)
+
                 "ENTITLEMENT_CREATE" -> EntitlementCreate(decode(DiscordEntitlement.serializer()), sequence)
                 "ENTITLEMENT_UPDATE" -> EntitlementUpdate(decode(DiscordEntitlement.serializer()), sequence)
                 "ENTITLEMENT_DELETE" -> EntitlementDelete(decode(DiscordEntitlement.serializer()), sequence)
@@ -155,12 +165,14 @@ public sealed class Event {
                 "GUILD_DELETE" -> GuildDelete(decode(DiscordUnavailableGuild.serializer()), sequence)
                 "GUILD_AUDIT_LOG_ENTRY_CREATE" ->
                     GuildAuditLogEntryCreate(decode(DiscordAuditLogEntry.serializer()), sequence)
+
                 "GUILD_BAN_ADD" -> GuildBanAdd(decode(DiscordGuildBan.serializer()), sequence)
                 "GUILD_BAN_REMOVE" -> GuildBanRemove(decode(DiscordGuildBan.serializer()), sequence)
                 "GUILD_EMOJIS_UPDATE" -> GuildEmojisUpdate(decode(DiscordUpdatedEmojis.serializer()), sequence)
                 // Missing: GuildStickers Update
                 "GUILD_INTEGRATIONS_UPDATE" ->
                     GuildIntegrationsUpdate(decode(DiscordGuildIntegrations.serializer()), sequence)
+
                 "GUILD_MEMBER_ADD" -> GuildMemberAdd(decode(DiscordAddedGuildMember.serializer()), sequence)
                 "GUILD_MEMBER_REMOVE" -> GuildMemberRemove(decode(DiscordRemovedGuildMember.serializer()), sequence)
                 "GUILD_MEMBER_UPDATE" -> GuildMemberUpdate(decode(DiscordUpdatedGuildMember.serializer()), sequence)
@@ -170,14 +182,19 @@ public sealed class Event {
                 "GUILD_ROLE_DELETE" -> GuildRoleDelete(decode(DiscordDeletedGuildRole.serializer()), sequence)
                 "GUILD_SCHEDULED_EVENT_CREATE" ->
                     GuildScheduledEventCreate(decode(DiscordGuildScheduledEvent.serializer()), sequence)
+
                 "GUILD_SCHEDULED_EVENT_UPDATE" ->
                     GuildScheduledEventUpdate(decode(DiscordGuildScheduledEvent.serializer()), sequence)
+
                 "GUILD_SCHEDULED_EVENT_DELETE" ->
                     GuildScheduledEventDelete(decode(DiscordGuildScheduledEvent.serializer()), sequence)
+
                 "GUILD_SCHEDULED_EVENT_USER_ADD" ->
                     GuildScheduledEventUserAdd(decode(GuildScheduledEventUserMetadata.serializer()), sequence)
+
                 "GUILD_SCHEDULED_EVENT_USER_REMOVE" ->
                     GuildScheduledEventUserRemove(decode(GuildScheduledEventUserMetadata.serializer()), sequence)
+
                 "INTEGRATION_CREATE" -> IntegrationCreate(decode(DiscordIntegration.serializer()), sequence)
                 "INTEGRATION_UPDATE" -> IntegrationUpdate(decode(DiscordIntegration.serializer()), sequence)
                 "INTEGRATION_DELETE" -> IntegrationDelete(decode(DiscordIntegrationDelete.serializer()), sequence)
@@ -191,10 +208,13 @@ public sealed class Event {
                 "MESSAGE_REACTION_ADD" -> MessageReactionAdd(decode(MessageReactionAddData.serializer()), sequence)
                 "MESSAGE_REACTION_REMOVE" ->
                     MessageReactionRemove(decode(MessageReactionRemoveData.serializer()), sequence)
+
                 "MESSAGE_REACTION_REMOVE_ALL" ->
                     MessageReactionRemoveAll(decode(AllRemovedMessageReactions.serializer()), sequence)
+
                 "MESSAGE_REACTION_REMOVE_EMOJI" ->
                     MessageReactionRemoveEmoji(decode(DiscordRemovedEmoji.serializer()), sequence)
+
                 "PRESENCE_UPDATE" -> PresenceUpdate(decode(DiscordPresenceUpdate.serializer()), sequence)
                 // Missing: Stage Instance Create, Stage Instance Update, Stage Instance Delete
                 "SUBSCRIPTION_CREATE" -> SubscriptionCreate(decode(DiscordSubscription.serializer()), sequence)
@@ -212,16 +232,35 @@ public sealed class Event {
                 "APPLICATION_COMMAND_CREATE" ->
                     @Suppress("DEPRECATION_ERROR")
                     ApplicationCommandCreate(decode(DiscordApplicationCommand.serializer()), sequence)
+
                 "APPLICATION_COMMAND_UPDATE" ->
                     @Suppress("DEPRECATION_ERROR")
                     ApplicationCommandUpdate(decode(DiscordApplicationCommand.serializer()), sequence)
+
                 "APPLICATION_COMMAND_DELETE" ->
                     @Suppress("DEPRECATION_ERROR")
                     ApplicationCommandDelete(decode(DiscordApplicationCommand.serializer()), sequence)
-                "GUILD_SOUNDBOARD_SOUND_CREATE" -> GuildSoundboardSoundCreate(decode(DiscordSoundboardSound.serializer()), sequence)
-                "GUILD_SOUNDBOARD_SOUND_UPDATE" -> GuildSoundboardSoundUpdate(decode(DiscordSoundboardSound.serializer()), sequence)
-                "GUILD_SOUNDBOARD_SOUNDS_UPDATE" -> GuildSoundboardSoundsUpdate(decode(SoundboardSoundsChunk.serializer()), sequence)
-                "GUILD_SOUNDBOARD_SOUNDS_DELETE" -> GuildSoundboardSoundDelete(decode(DeletedSound.serializer()), sequence)
+
+                "GUILD_SOUNDBOARD_SOUND_CREATE" -> GuildSoundboardSoundCreate(
+                    decode(DiscordSoundboardSound.serializer()),
+                    sequence
+                )
+
+                "GUILD_SOUNDBOARD_SOUND_UPDATE" -> GuildSoundboardSoundUpdate(
+                    decode(DiscordSoundboardSound.serializer()),
+                    sequence
+                )
+
+                "GUILD_SOUNDBOARD_SOUNDS_UPDATE" -> GuildSoundboardSoundsUpdate(
+                    decode(SoundboardSoundsChunk.serializer()),
+                    sequence
+                )
+
+                "GUILD_SOUNDBOARD_SOUNDS_DELETE" -> GuildSoundboardSoundDelete(
+                    decode(DeletedSound.serializer()),
+                    sequence
+                )
+
                 "VOICE_CHANNEL_EFFECT_SEND" -> VoiceEffectSend(decode(VoiceChannelEffect.serializer()), sequence)
                 "SOUNDBOARD_SOUNDS" -> SoundboardSounds(decode(SoundboardSoundsChunk.serializer()), sequence)
                 else -> {
@@ -451,7 +490,9 @@ public data class ChannelDelete(val channel: DiscordChannel, override val sequen
 public data class ChannelPinsUpdate(val pins: DiscordPinsUpdateData, override val sequence: Int?) : DispatchEvent()
 
 public data class TypingStart(val data: DiscordTyping, override val sequence: Int?) : DispatchEvent()
-public data class GuildAuditLogEntryCreate(val entry: DiscordAuditLogEntry, override val sequence: Int?): DispatchEvent()
+public data class GuildAuditLogEntryCreate(val entry: DiscordAuditLogEntry, override val sequence: Int?) :
+    DispatchEvent()
+
 public data class GuildCreate(val guild: DiscordGuild, override val sequence: Int?) : DispatchEvent()
 public data class GuildUpdate(val guild: DiscordGuild, override val sequence: Int?) : DispatchEvent()
 public data class GuildDelete(val guild: DiscordUnavailableGuild, override val sequence: Int?) : DispatchEvent()
@@ -460,10 +501,13 @@ public data class GuildBanRemove(val ban: DiscordGuildBan, override val sequence
 public data class GuildEmojisUpdate(val emoji: DiscordUpdatedEmojis, override val sequence: Int?) : DispatchEvent()
 public data class GuildIntegrationsUpdate(val integrations: DiscordGuildIntegrations, override val sequence: Int?) :
     DispatchEvent()
+
 public data class IntegrationDelete(val integration: DiscordIntegrationDelete, override val sequence: Int?) :
     DispatchEvent()
+
 public data class IntegrationCreate(val integration: DiscordIntegration, override val sequence: Int?) :
     DispatchEvent()
+
 public data class IntegrationUpdate(val integration: DiscordIntegration, override val sequence: Int?) :
     DispatchEvent()
 

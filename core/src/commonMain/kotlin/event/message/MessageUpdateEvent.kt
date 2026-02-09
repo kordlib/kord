@@ -25,7 +25,12 @@ public class MessageUpdateEvent(
     /**
      * The behavior of the message that was updated.
      */
-    public val message: MessageBehavior get() = MessageBehavior(messageId = messageId, channelId = channelId, kord = kord)
+    public val message: MessageBehavior
+        get() = MessageBehavior(
+            messageId = messageId,
+            channelId = channelId,
+            kord = kord
+        )
 
     /**
      * The behavior of the channel in which the message was updated.
@@ -35,7 +40,8 @@ public class MessageUpdateEvent(
 
     public suspend fun getMessage(): Message = supplier.getMessage(channelId = channelId, messageId = messageId)
 
-    public suspend fun getMessageOrNull(): Message? = supplier.getMessageOrNull(channelId = channelId, messageId = messageId)
+    public suspend fun getMessageOrNull(): Message? =
+        supplier.getMessageOrNull(channelId = channelId, messageId = messageId)
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): MessageUpdateEvent =
         MessageUpdateEvent(messageId, channelId, new, old, kord, shard, customContext, strategy.supply(kord))

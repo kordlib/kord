@@ -36,7 +36,7 @@ internal suspend inline fun InteractionResponseBehavior.editOriginalResponseWith
         is EphemeralInteractionResponseBehavior -> false
         is FollowupPermittingInteractionResponseBehavior -> error(
             "This function can't be called on an InteractionResponseBehavior that implements neither " +
-                    "PublicInteractionResponseBehavior nor EphemeralInteractionResponseBehavior."
+                "PublicInteractionResponseBehavior nor EphemeralInteractionResponseBehavior."
         )
     }
 

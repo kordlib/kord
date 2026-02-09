@@ -124,5 +124,5 @@ public class AutoModerationActionExecutionEvent(
         AutoModerationActionExecutionEvent(data, kord, shard, customContext, strategy.supply(kord))
 
     override fun toString(): String = "AutoModerationActionExecutionEvent(data=$data, kord=$kord, shard=$shard, " +
-            "customContext=$customContext, supplier=$supplier)"
+        "customContext=$customContext, supplier=$supplier)"
 }

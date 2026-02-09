@@ -23,12 +23,12 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.runTest
-import kotlin.time.Clock
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.EmptyCoroutineContext
 import kotlin.js.JsName
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.time.Clock
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.seconds
 
@@ -52,7 +52,14 @@ class KordEventDropTest {
     }
 
     val kord = Kord(
-        resources = ClientResources("token", Snowflake(0u), Shards(1), maxConcurrency = 1, HttpClient(), EntitySupplyStrategy.cache),
+        resources = ClientResources(
+            "token",
+            Snowflake(0u),
+            Shards(1),
+            maxConcurrency = 1,
+            HttpClient(),
+            EntitySupplyStrategy.cache
+        ),
         cache = DataCache.none(),
         DefaultMasterGateway(mapOf(0 to SpammyGateway)),
         RestClient(KtorRequestHandler("token", clock = Clock.System)),

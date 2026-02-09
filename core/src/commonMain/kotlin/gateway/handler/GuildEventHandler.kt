@@ -223,7 +223,14 @@ internal class GuildEventHandler : BaseGatewayEventHandler() {
         context: LazyContext?,
     ): IntegrationDeleteEvent {
         val integration = event.integration
-        return IntegrationDeleteEvent(integration.id, integration.guildId, integration.applicationId.value, kord, shard, context?.get())
+        return IntegrationDeleteEvent(
+            integration.id,
+            integration.guildId,
+            integration.applicationId.value,
+            kord,
+            shard,
+            context?.get()
+        )
     }
 
     private suspend fun handle(
@@ -521,7 +528,7 @@ internal class GuildEventHandler : BaseGatewayEventHandler() {
 
         val old = kord.cache.query {
             idEq(SoundboardSoundData::id, event.sound.soundId)
-           // this is a guild event, so guild_id will be present
+            // this is a guild event, so guild_id will be present
             idEq(SoundboardSoundData::guildId, event.sound.guildId.value!!)
         }.singleOrNull()
 
@@ -549,7 +556,7 @@ internal class GuildEventHandler : BaseGatewayEventHandler() {
                 idEq(SoundboardSoundData::id, it.id)
                 idEq(SoundboardSoundData::guildId, it.guildId.value!!)
             }.singleOrNull()
-            val old = oldData?.let {GuildSoundboardSound(it, kord)}
+            val old = oldData?.let { GuildSoundboardSound(it, kord) }
 
             GuildSoundboardSoundsUpdateEvent.UpdatedGuildSoundboardSound(old, GuildSoundboardSound(it, kord))
         }

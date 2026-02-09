@@ -11,9 +11,9 @@ import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.rest.builder.channel.thread.StartForumThreadBuilder
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filterIsInstance
-import kotlin.time.Instant
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
+import kotlin.time.Instant
 
 public interface ThreadOnlyChannelBehavior : ThreadParentChannelBehavior {
 

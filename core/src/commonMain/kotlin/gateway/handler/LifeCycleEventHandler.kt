@@ -29,11 +29,13 @@ internal class LifeCycleEventHandler : BaseGatewayEventHandler() {
                     event.recoverable,
                     context?.get(),
                 )
+
                 Close.Reconnecting -> DisconnectEvent.ReconnectingEvent(kord, shard, context?.get())
                 Close.ZombieConnection -> DisconnectEvent.ZombieConnectionEvent(kord, shard, context?.get())
                 Close.RetryLimitReached -> DisconnectEvent.RetryLimitReachedEvent(kord, shard, context?.get())
                 Close.SessionReset -> DisconnectEvent.SessionReset(kord, shard, context?.get())
             }
+
             else -> null
         }
 

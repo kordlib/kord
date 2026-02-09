@@ -30,6 +30,7 @@ internal class SubscriptionEventHandler : BaseGatewayEventHandler() {
             shard = shard,
             customContext = context?.get(),
         )
+
         is SubscriptionUpdate -> SubscriptionUpdateEvent(
             old = kord.cache
                 .query {
@@ -43,12 +44,14 @@ internal class SubscriptionEventHandler : BaseGatewayEventHandler() {
             shard = shard,
             customContext = context?.get(),
         )
+
         is SubscriptionDelete -> SubscriptionDeleteEvent(
             subscription = handleDeletedSubscription(event.subscription, kord),
             kord = kord,
             shard = shard,
             customContext = context?.get(),
         )
+
         else -> null
     }
 

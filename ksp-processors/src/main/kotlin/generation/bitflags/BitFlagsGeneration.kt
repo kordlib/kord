@@ -38,7 +38,10 @@ internal fun BitFlags.generateFileSpec(originatingFile: KSFile) = fileSpecForGen
             addParameter<Int>("shift")
         }
         addProperty<Int>("shift", PUBLIC) {
-            addKdoc("The position of the bit that is set in this [%T]. This is always $shiftTest.", currentContext.entityCN)
+            addKdoc(
+                "The position of the bit that is set in this [%T]. This is always $shiftTest.",
+                currentContext.entityCN
+            )
             initializer("shift")
         }
         addInitializerBlock {
@@ -72,7 +75,10 @@ internal fun BitFlags.generateFileSpec(originatingFile: KSFile) = fileSpecForGen
                 returns(currentContext.entityCN)
                 withControlFlow("return when·(shift)") {
                     for (entry in currentContext.entriesDistinctByValue) {
-                        addStatement("${currentContext.valueFormat}·->·${entry.nameWithSuppressedDeprecation}", entry.value)
+                        addStatement(
+                            "${currentContext.valueFormat}·->·${entry.nameWithSuppressedDeprecation}",
+                            entry.value
+                        )
                     }
                     addStatement("else·->·Unknown(shift)")
                 }
@@ -101,11 +107,15 @@ internal fun BitFlags.generateFileSpec(originatingFile: KSFile) = fileSpecForGen
                             addStatement("var·remaining·=·$valueName")
                             addStatement("var·shift·=·0")
                             withControlFlow("while·(remaining·!=·0)") {
-                                addStatement("if·((remaining·and·1)·!=·0)·add(%T.fromShift(shift))", currentContext.entityCN)
+                                addStatement(
+                                    "if·((remaining·and·1)·!=·0)·add(%T.fromShift(shift))",
+                                    currentContext.entityCN
+                                )
                                 addStatement("remaining·=·remaining·ushr·1")
                                 addStatement("shift++")
                             }
                         }
+
                         BIT_SET -> withControlFlow("for·(shift·in·0..<$valueName.size)") {
                             addStatement("if·($valueName[shift])·add(%T.fromShift(shift))", currentContext.entityCN)
                         }

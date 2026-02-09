@@ -89,7 +89,7 @@ public class ChatInputSubCommand(
 public class GlobalChatInputCommand(
     override val data: ApplicationCommandData,
     override val service: InteractionService,
-) : ChatInputCommandCommand, GlobalApplicationCommand,  GlobalChatInputCommandBehavior
+) : ChatInputCommandCommand, GlobalApplicationCommand, GlobalChatInputCommandBehavior
 
 public class GuildChatInputCommand(
     override val data: ApplicationCommandData,

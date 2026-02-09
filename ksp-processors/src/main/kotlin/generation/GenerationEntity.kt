@@ -68,6 +68,7 @@ internal fun Generate.toGenerationEntityOrNull(logger: KSPLogger, annotation: KS
         INT_KORD_ENUM, STRING_KORD_ENUM -> areNotSpecified(
             Generate::collectionHadCopy0, Generate::collectionHadNewCompanion, Generate::hadBuilderFactoryFunction0,
         )
+
         INT_FLAGS, BIT_SET_FLAGS -> true
     }
 
@@ -92,6 +93,7 @@ internal fun Generate.toGenerationEntityOrNull(logger: KSPLogger, annotation: KS
                 name, kDoc, docUrl, valueName, mappedEntries, BitFlags.ValueType.INT, collectionHadCopy0,
                 collectionHadNewCompanion, hadBuilderFactoryFunction0,
             )
+
             BIT_SET_FLAGS -> BitFlags(
                 name, kDoc, docUrl, valueName, mappedEntries, BitFlags.ValueType.BIT_SET, collectionHadCopy0,
                 collectionHadNewCompanion, hadBuilderFactoryFunction0,

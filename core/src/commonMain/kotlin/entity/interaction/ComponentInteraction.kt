@@ -71,12 +71,14 @@ public fun ComponentInteraction(
             inGuild -> GuildButtonInteraction(data, kord, supplier)
             else -> GlobalButtonInteraction(data, kord, supplier)
         }
+
         ComponentType.StringSelect, ComponentType.UserSelect,
         ComponentType.MentionableSelect, ComponentType.ChannelSelect,
         ComponentType.RoleSelect -> when {
             inGuild -> GuildSelectMenuInteraction(data, kord, supplier)
             else -> GlobalSelectMenuInteraction(data, kord, supplier)
         }
+
         ComponentType.TextInput -> error("Text inputs can't have interactions")
         ComponentType.ActionRow -> error("Action rows can't have interactions")
         is ComponentType.Unknown -> error("Unknown component type: ${type.value}")

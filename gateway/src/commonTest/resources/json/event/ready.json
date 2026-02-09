@@ -1,35 +1,35 @@
 {
-  "op": 0,
-  "t": "READY",
-  "s": 1000,
-  "d": {
-    "v": 6,
-    "user": {
-      "id": "80351110224678912",
-      "username": "Nelly",
-      "discriminator": "1337",
-      "global_name": null,
-      "avatar": "8342729096ea3675442027381ff50dfe",
-      "verified": true,
-      "email": "nelly@discordapp.com",
-      "flags": 64,
-      "premium_type": 1
-    },
-    "private_channels": [],
-    "guilds": [
-      {
-        "id": "41771983423143937",
-        "unavailable": true
-      }
-    ],
-    "session_id": "12345",
-    "resume_gateway_url": "wss://us-east1-b.gateway.discord.gg",
-    "_trace": [
-      "test"
-    ],
-    "shard": [
-      0,
-      5
-    ]
-  }
+    "op": 0,
+    "t": "READY",
+    "s": 1000,
+    "d": {
+        "v": 6,
+        "user": {
+            "id": "80351110224678912",
+            "username": "Nelly",
+            "discriminator": "1337",
+            "global_name": null,
+            "avatar": "8342729096ea3675442027381ff50dfe",
+            "verified": true,
+            "email": "nelly@discordapp.com",
+            "flags": 64,
+            "premium_type": 1
+        },
+        "private_channels": [],
+        "guilds": [
+            {
+                "id": "41771983423143937",
+                "unavailable": true
+            }
+        ],
+        "session_id": "12345",
+        "resume_gateway_url": "wss://us-east1-b.gateway.discord.gg",
+        "_trace": [
+            "test"
+        ],
+        "shard": [
+            0,
+            5
+        ]
+    }
 }

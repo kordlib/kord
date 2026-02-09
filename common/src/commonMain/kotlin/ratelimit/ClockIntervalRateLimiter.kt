@@ -2,8 +2,8 @@ package dev.kord.common.ratelimit
 
 import kotlinx.coroutines.delay
 import kotlin.time.Clock
-import kotlin.time.Instant
 import kotlin.time.Duration
+import kotlin.time.Instant
 
 internal class ClockIntervalRateLimiter(
     limit: Int,
@@ -32,6 +32,7 @@ internal class ClockIntervalRateLimiter(
                 delayUntilNextInterval(now)
                 enterNextInterval(now = clock.now())
             }
+
             else -> remainingConsumes -= 1
         }
     }

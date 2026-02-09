@@ -12,8 +12,8 @@ private val Project.tag
     get() = git("tag", "--no-column", "--points-at", "HEAD")
         .map {
             it.takeIf { it.isNotBlank() }
-            ?.lines()
-            ?.single()
+                ?.lines()
+                ?.single()
         }
 
 val Project.libraryVersion: Provider<String>

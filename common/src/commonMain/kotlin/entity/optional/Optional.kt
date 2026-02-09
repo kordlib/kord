@@ -174,6 +174,7 @@ public sealed class Optional<out T> {
                     decoder.decodeNull()
                     Null<Nothing>()
                 }
+
                 else -> Optional(decoder.decodeSerializableValue(contentSerializer))
             }
 
@@ -230,10 +231,11 @@ public fun <K, V> Optional<MutableMap<K, V>>.mapCopy(): Optional<Map<K, V>> = ma
 
 
 @Suppress("UNCHECKED_CAST")
-public inline fun <K, V, R> Optional<Map<K, V>>.mapValues(mapper: (Map.Entry<K, V>) -> R): Optional<Map<K, R>> = when (this) {
-    is Missing, is Null<*> -> this as Optional<Map<K, R>>
-    is Value -> Value(value.mapValues(mapper))
-}
+public inline fun <K, V, R> Optional<Map<K, V>>.mapValues(mapper: (Map.Entry<K, V>) -> R): Optional<Map<K, R>> =
+    when (this) {
+        is Missing, is Null<*> -> this as Optional<Map<K, R>>
+        is Value -> Value(value.mapValues(mapper))
+    }
 
 
 public inline fun <E> Optional<List<E>>.filterList(mapper: (E) -> Boolean): Optional<List<E>> = when (this) {

@@ -1,9 +1,15 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
-@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
+@file:Suppress(
+    names = arrayOf(
+        "IncorrectFormatting",
+        "ReplaceArrayOfWithLiteral",
+        "SpellCheckingInspection",
+        "GrazieInspection"
+    )
+)
 
 package dev.kord.voice
 
-import kotlin.LazyThreadSafetyMode.PUBLICATION
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.descriptors.PrimitiveKind
@@ -11,6 +17,7 @@ import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
 import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
+import kotlin.LazyThreadSafetyMode.PUBLICATION
 
 /**
  *
@@ -24,11 +31,13 @@ public sealed class EncryptionMode(
      */
     public val `value`: String,
 ) {
-    final override fun equals(other: Any?): Boolean = this === other || (other is EncryptionMode && this.value == other.value)
+    final override fun equals(other: Any?): Boolean =
+        this === other || (other is EncryptionMode && this.value == other.value)
 
     final override fun hashCode(): Int = value.hashCode()
 
-    final override fun toString(): String = if (this is Unknown) "EncryptionMode.Unknown(value=$value)" else "EncryptionMode.${this::class.simpleName}"
+    final override fun toString(): String =
+        if (this is Unknown) "EncryptionMode.Unknown(value=$value)" else "EncryptionMode.${this::class.simpleName}"
 
     /**
      * An unknown [EncryptionMode].
@@ -47,7 +56,7 @@ public sealed class EncryptionMode(
 
     internal object Serializer : KSerializer<EncryptionMode> {
         override val descriptor: SerialDescriptor =
-                PrimitiveSerialDescriptor("dev.kord.voice.EncryptionMode", PrimitiveKind.STRING)
+            PrimitiveSerialDescriptor("dev.kord.voice.EncryptionMode", PrimitiveKind.STRING)
 
         override fun serialize(encoder: Encoder, `value`: EncryptionMode) {
             encoder.encodeString(value.value)

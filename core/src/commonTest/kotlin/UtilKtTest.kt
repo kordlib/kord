@@ -38,9 +38,10 @@ internal class UtilKtTest {
             value -= 1u //don't include the position id
 
             buildList(100) {
-                ((value - 99u /*reverse until, don't count the lowest value*/)..value).reversed().forEach { snowflake -> //biggest/youngest -> smallest/oldest
-                    add(Snowflake(snowflake))
-                }
+                ((value - 99u /*reverse until, don't count the lowest value*/)..value).reversed()
+                    .forEach { snowflake -> //biggest/youngest -> smallest/oldest
+                        add(Snowflake(snowflake))
+                    }
             }
         }
 

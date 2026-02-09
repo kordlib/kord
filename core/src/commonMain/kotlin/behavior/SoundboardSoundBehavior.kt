@@ -1,4 +1,3 @@
-
 package dev.kord.core.behavior
 
 import dev.kord.common.entity.Permission

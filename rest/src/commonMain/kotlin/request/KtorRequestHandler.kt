@@ -11,8 +11,8 @@ import io.ktor.client.request.forms.*
 import io.ktor.client.statement.*
 import io.ktor.http.*
 import io.ktor.http.content.*
-import kotlin.time.Clock
 import kotlinx.serialization.json.Json
+import kotlin.time.Clock
 
 internal val jsonDefault = Json {
     encodeDefaults = false
@@ -54,6 +54,7 @@ public class KtorRequestHandler(
                 logger.debug { response.logString(body) }
                 handle(request)
             }
+
             response.isError -> {
                 logger.debug { response.logString(body) }
                 if (response.contentType() == ContentType.Application.Json)
@@ -62,6 +63,7 @@ public class KtorRequestHandler(
                     )
                 else throw KtorRequestException(response, request, null)
             }
+
             else -> {
                 logger.debug { response.logString(body) }
                 request.route.mapper.deserialize(parser, body)
@@ -86,6 +88,7 @@ public class KtorRequestHandler(
                 logger.debug { request.logString(json) }
                 setBody(TextContent(json, ContentType.Application.Json))
             }
+
             is MultipartRequest -> {
                 val content = request.data
                 setBody(MultiPartFormDataContent(content))
@@ -129,6 +132,7 @@ public fun RequestResponse.Companion.from(response: HttpResponse, clock: Clock):
             bucket
                 ?: BucketKey("missing"), rateLimit, reset
         )
+
         response.isError -> RequestResponse.Error
         else -> RequestResponse.Accepted(bucket, rateLimit, reset)
     }

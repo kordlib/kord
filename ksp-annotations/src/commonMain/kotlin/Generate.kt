@@ -1,7 +1,6 @@
 package dev.kord.ksp
 
 import dev.kord.ksp.Generate.EntityType.*
-import dev.kord.ksp.Generate.Entry
 import kotlin.annotation.AnnotationRetention.SOURCE
 import kotlin.annotation.AnnotationTarget.FILE
 

@@ -151,11 +151,12 @@ public interface MemberBehavior : KordEntity, UserBehavior {
      * @throws [RequestException] if anything went wrong during the request.
      * @throws [EntityNotFoundException] if the [VoiceState] wasn't present.
      */
-    public suspend fun getVoiceState(): VoiceState = getVoiceStateOrNull() ?: EntityNotFoundException.guildEntityNotFound(
-        "VoiceState for Member",
-        guildId = guildId,
-        id = id
-    )
+    public suspend fun getVoiceState(): VoiceState =
+        getVoiceStateOrNull() ?: EntityNotFoundException.guildEntityNotFound(
+            "VoiceState for Member",
+            guildId = guildId,
+            id = id
+        )
 
     /**
      * Requests to get the [VoiceState] of this member in the [guild],

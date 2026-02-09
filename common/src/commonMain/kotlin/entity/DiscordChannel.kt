@@ -9,12 +9,12 @@
         Entry(
             "GuildCategory", intValue = 4,
             kDoc = "An [organizational·category](https://support.discord.com/hc/en-us/articles/115001580171-Channel-" +
-                    "Categories-101) that contains up to 50 channels.",
+                "Categories-101) that contains up to 50 channels.",
         ),
         Entry(
             "GuildNews", intValue = 5,
             kDoc = "A channel that [users·can·follow·and·crosspost·into·their·own·server]" +
-                    "(https://support.discord.com/hc/en-us/articles/360032008192).",
+                "(https://support.discord.com/hc/en-us/articles/360032008192).",
         ),
         Entry("PublicNewsThread", intValue = 10, kDoc = "A temporary sub-channel within a [GuildNews] channel."),
         Entry(
@@ -24,17 +24,17 @@
         Entry(
             "PrivateThread", intValue = 12,
             kDoc = "A temporary sub-channel within a [GuildText] channel that is only viewable by those invited and " +
-                    "those with the [ManageThreads][dev.kord.common.entity.Permission.ManageThreads] permission.",
+                "those with the [ManageThreads][dev.kord.common.entity.Permission.ManageThreads] permission.",
         ),
         Entry(
             "GuildStageVoice", intValue = 13,
             kDoc = "A voice channel for [hosting·events·with·an·audience]" +
-                    "(https://support.discord.com/hc/en-us/articles/1500005513722).",
+                "(https://support.discord.com/hc/en-us/articles/1500005513722).",
         ),
         Entry(
             "GuildDirectory", intValue = 14,
             kDoc = "The channel in a [hub](https://support.discord.com/hc/en-us/articles/4406046651927-Discord-" +
-                    "Student-Hubs-FAQ) containing the listed servers.",
+                "Student-Hubs-FAQ) containing the listed servers.",
         ),
         Entry("GuildForum", intValue = 15, kDoc = "A channel that can only contain threads."),
         Entry(
@@ -112,7 +112,6 @@ import dev.kord.ksp.Generate
 import dev.kord.ksp.Generate.EntityType.INT_FLAGS
 import dev.kord.ksp.Generate.EntityType.INT_KORD_ENUM
 import dev.kord.ksp.Generate.Entry
-import kotlin.time.Instant
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -123,6 +122,7 @@ import kotlinx.serialization.encoding.Encoder
 import kotlin.LazyThreadSafetyMode.PUBLICATION
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.minutes
+import kotlin.time.Instant
 
 @Serializable
 public data class DiscordChannel(

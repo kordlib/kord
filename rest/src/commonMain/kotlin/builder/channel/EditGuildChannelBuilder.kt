@@ -139,6 +139,7 @@ public class ForumChannelModifyBuilder : PermissionOverwritesModifyBuilder,
                     emojiId = defaultReactionEmojiId,
                     emojiName = defaultReactionEmojiName,
                 ).optional()
+
             else -> _defaultReactionEmoji
         },
         defaultThreadRateLimitPerUser = _defaultThreadRateLimitPerUser,
@@ -222,6 +223,7 @@ public class MediaChannelModifyBuilder : PermissionOverwritesModifyBuilder,
                     emojiId = defaultReactionEmojiId,
                     emojiName = defaultReactionEmojiName,
                 ).optional()
+
             else -> _defaultReactionEmoji
         },
         defaultThreadRateLimitPerUser = _defaultThreadRateLimitPerUser,

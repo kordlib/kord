@@ -52,10 +52,10 @@
         Entry(
             "Timeout", intValue = 3,
             kDoc = "Timeout user for a specified duration.\n\nA [Timeout] action can only be set up for " +
-                    "[Keyword][dev.kord.common.entity.AutoModerationRuleTriggerType.Keyword] and " +
-                    "[MentionSpam][dev.kord.common.entity.AutoModerationRuleTriggerType.MentionSpam] rules. The " +
-                    "[ModerateMembers][dev.kord.common.entity.Permission.ModerateMembers] permission is required to " +
-                    "use the [Timeout] action type."
+                "[Keyword][dev.kord.common.entity.AutoModerationRuleTriggerType.Keyword] and " +
+                "[MentionSpam][dev.kord.common.entity.AutoModerationRuleTriggerType.MentionSpam] rules. The " +
+                "[ModerateMembers][dev.kord.common.entity.Permission.ModerateMembers] permission is required to " +
+                "use the [Timeout] action type."
         ),
         Entry(
             "BlockMemberInteraction", intValue = 4,

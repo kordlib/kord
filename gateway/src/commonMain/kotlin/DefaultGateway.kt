@@ -211,6 +211,7 @@ public class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
                 state.update { State.Stopped }
                 throw IllegalStateException("Gateway closed: ${reason.code} ${reason.message}")
             }
+
             discordReason.resetSession -> {
                 setStopped()
             }

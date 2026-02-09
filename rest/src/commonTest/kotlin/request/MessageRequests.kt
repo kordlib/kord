@@ -13,13 +13,13 @@ import io.ktor.client.engine.mock.*
 import io.ktor.client.request.forms.*
 import io.ktor.utils.io.*
 import kotlinx.coroutines.test.runTest
-import kotlin.time.Clock
 import kotlinx.serialization.json.Json
 import kotlin.js.JsName
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
+import kotlin.time.Clock
 
 private val mockId = Snowflake(42)
 private const val fileName = "linus.png"

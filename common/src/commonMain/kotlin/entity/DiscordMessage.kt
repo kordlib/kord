@@ -142,9 +142,9 @@ import dev.kord.common.serialization.LongOrStringSerializer
 import dev.kord.ksp.Generate
 import dev.kord.ksp.Generate.EntityType.*
 import dev.kord.ksp.Generate.Entry
-import kotlin.time.Instant
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import kotlin.time.Instant
 
 /**
  * Represents [a message sent in a channel within Discord](https://discord.com/developers/docs/resources/channel#message-object).

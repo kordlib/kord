@@ -24,6 +24,7 @@ internal class ValueJsonMapper<T>(val strategy: DeserializationStrategy<T>) : Re
     override fun deserialize(json: Json, body: String): T {
         return json.decodeFromString(strategy, body)
     }
+
     override fun toString(): String = "ValueJsonMapper(strategy=$strategy)"
 }
 

@@ -14,13 +14,15 @@ import dev.kord.rest.request.RequestBuilder
 import dev.kord.rest.request.RequestHandler
 import dev.kord.rest.route.Route
 import kotlinx.serialization.builtins.ListSerializer
-import kotlin.collections.set
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
 public class InteractionService(requestHandler: RequestHandler) : RestService(requestHandler) {
 
-    public suspend fun getGlobalApplicationCommands(applicationId: Snowflake, withLocalizations: Boolean? = null): List<DiscordApplicationCommand> =
+    public suspend fun getGlobalApplicationCommands(
+        applicationId: Snowflake,
+        withLocalizations: Boolean? = null
+    ): List<DiscordApplicationCommand> =
         call(Route.GlobalApplicationCommandsGet) {
             keys[Route.ApplicationId] = applicationId
             withLocalizations?.let { parameter("with_localizations", it) }

@@ -6,8 +6,8 @@ import dev.kord.common.entity.DiscordSubscription
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.SubscriptionStatus
 import dev.kord.common.entity.optional.Optional
-import kotlin.time.Instant
 import kotlinx.serialization.Serializable
+import kotlin.time.Instant
 
 @Serializable
 public data class SubscriptionData(

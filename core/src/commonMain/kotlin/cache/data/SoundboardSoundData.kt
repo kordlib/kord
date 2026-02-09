@@ -5,7 +5,6 @@ import dev.kord.cache.api.data.description
 import dev.kord.common.entity.DiscordSoundboardSound
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.Optional
-import dev.kord.common.entity.optional.Optional.Missing.Companion.invoke
 import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.common.entity.optional.map
 import kotlinx.serialization.Serializable

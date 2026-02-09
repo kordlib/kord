@@ -41,7 +41,7 @@ public open class User(
      * Returns true if the user is the same as the bot.
      */
     public val isSelf: Boolean get() = id == kord.selfId
-   
+
     public val avatarHash: String? get() = data.avatar
 
     /** The avatar of this user as an [Asset]. */
@@ -54,7 +54,14 @@ public open class User(
 
     public val avatarDecorationHash: String? get() = data.avatarDecoration.value
 
-    public val avatarDecoration: Asset? get() = avatarDecorationHash?.let { Asset.userAvatarDecoration(data.id, it, kord) }
+    public val avatarDecoration: Asset?
+        get() = avatarDecorationHash?.let {
+            Asset.userAvatarDecoration(
+                data.id,
+                it,
+                kord
+            )
+        }
 
     /**
      * The username of this user.

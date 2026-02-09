@@ -34,6 +34,7 @@ public sealed class VoiceEvent {
             when (op) {
                 null ->
                     throw @OptIn(ExperimentalSerializationApi::class) MissingFieldException("op", descriptor.serialName)
+
                 OpCode.Ready -> decodeEvent(decoder, op, Ready.serializer(), d)
                 OpCode.SessionDescription -> decodeEvent(decoder, op, SessionDescription.serializer(), d)
                 OpCode.Speaking -> decodeEvent(decoder, op, Speaking.serializer(), d)
@@ -44,9 +45,10 @@ public sealed class VoiceEvent {
                     // https://discord.com/developers/docs/topics/voice-connections#resuming-voice-connection-example-resumed-payload
                     Resumed
                 }
+
                 OpCode.Identify, OpCode.SelectProtocol, OpCode.Heartbeat, OpCode.Resume, OpCode.ClientDisconnect,
                 OpCode.Unknown,
-                -> {
+                    -> {
                     jsonLogger.debug { "Unknown voice gateway event with opcode $op : $d" }
                     null
                 }

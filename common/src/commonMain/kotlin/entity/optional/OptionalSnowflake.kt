@@ -106,7 +106,7 @@ public sealed class OptionalSnowflake {
 }
 
 public val Snowflake?.missingIfNull: OptionalSnowflake
-    get() = when(this) {
+    get() = when (this) {
         null -> OptionalSnowflake.Missing
         else -> OptionalSnowflake.Value(this)
     }

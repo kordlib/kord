@@ -20,8 +20,8 @@ public class ApplicationService(handler: RequestHandler) : RestService(handler) 
 
     public suspend fun getApplicationEmojis(appId: Snowflake): ApplicationEmojisResponse =
         call(Route.GetApplicationEmojis) {
-        keys[Route.ApplicationId] = appId
-    }
+            keys[Route.ApplicationId] = appId
+        }
 
     public suspend fun getApplicationEmoji(appId: Snowflake, emojiId: Snowflake): DiscordEmoji =
         call(Route.GetApplicationEmoji) {
@@ -67,7 +67,7 @@ public class ApplicationService(handler: RequestHandler) : RestService(handler) 
         appId: Snowflake,
         emojiId: Snowflake,
     ): Unit = call(Route.DeleteApplicationEmoji) {
-            keys[Route.ApplicationId] = appId
-            keys[Route.EmojiId] = emojiId
-        }
+        keys[Route.ApplicationId] = appId
+        keys[Route.EmojiId] = emojiId
+    }
 }

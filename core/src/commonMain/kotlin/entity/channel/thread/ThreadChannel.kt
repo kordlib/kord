@@ -16,8 +16,8 @@ import dev.kord.core.entity.channel.GuildMessageChannel
 import dev.kord.core.entity.channel.MediaChannel
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
-import kotlin.time.Instant
 import kotlin.time.Duration
+import kotlin.time.Instant
 
 public interface ThreadChannel : GuildMessageChannel, ThreadChannelBehavior {
 
@@ -122,7 +122,11 @@ public interface ThreadChannel : GuildMessageChannel, ThreadChannelBehavior {
 
 }
 
-internal fun ThreadChannel(data: ChannelData, kord: Kord, supplier: EntitySupplier = kord.defaultSupplier): ThreadChannel {
+internal fun ThreadChannel(
+    data: ChannelData,
+    kord: Kord,
+    supplier: EntitySupplier = kord.defaultSupplier
+): ThreadChannel {
     return object : ThreadChannel {
 
         override val data: ChannelData

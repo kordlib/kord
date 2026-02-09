@@ -70,6 +70,7 @@ public interface GlobalApplicationCommand : ApplicationCommand, GlobalApplicatio
      */
     public val dmPermission: Boolean get() = data.dmPermission.orElse(true)
 }
+
 public class UnknownGlobalApplicationCommand(
     override val data: ApplicationCommandData,
     override val service: InteractionService,
@@ -80,12 +81,15 @@ public class UnknownGlobalApplicationCommand(
  * A representation of [Discord Application Command](https://discord.com/developers/docs/interactions/application-commands)
  * in a global context.
  */
-public fun GlobalApplicationCommand(data: ApplicationCommandData, service: InteractionService): GlobalApplicationCommand {
-    return when(data.type.value) {
+public fun GlobalApplicationCommand(
+    data: ApplicationCommandData,
+    service: InteractionService
+): GlobalApplicationCommand {
+    return when (data.type.value) {
         ApplicationCommandType.ChatInput -> GlobalChatInputCommand(data, service)
         ApplicationCommandType.Message -> GlobalMessageCommand(data, service)
         ApplicationCommandType.User -> GlobalUserCommand(data, service)
-        is ApplicationCommandType.Unknown ->  UnknownGlobalApplicationCommand(data, service)
+        is ApplicationCommandType.Unknown -> UnknownGlobalApplicationCommand(data, service)
         null -> error("The type value is missing, can't determine the type")
     }
 }
@@ -106,18 +110,15 @@ public class UnknownGuildApplicationCommand(
 }
 
 
-
-
 public fun GuildApplicationCommand(data: ApplicationCommandData, service: InteractionService): GuildApplicationCommand {
-    return when(data.type.value) {
+    return when (data.type.value) {
         ApplicationCommandType.ChatInput -> GuildChatInputCommand(data, service)
         ApplicationCommandType.Message -> GuildMessageCommand(data, service)
         ApplicationCommandType.User -> GuildUserCommand(data, service)
-        is ApplicationCommandType.Unknown ->  UnknownGuildApplicationCommand(data, service)
+        is ApplicationCommandType.Unknown -> UnknownGuildApplicationCommand(data, service)
         null -> error("The type value is missing, can't determine the type")
     }
 }
-
 
 
 public class ApplicationCommandParameter(

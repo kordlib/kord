@@ -88,6 +88,7 @@ public class ForumChannelCreateBuilder(public var name: String) :
                     emojiId = defaultReactionEmojiId,
                     emojiName = defaultReactionEmojiName,
                 ).optional()
+
             else -> _defaultReactionEmoji
         },
         defaultThreadRateLimitPerUser = _defaultThreadRateLimitPerUser,

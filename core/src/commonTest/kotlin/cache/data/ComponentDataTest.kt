@@ -1,7 +1,6 @@
 package dev.kord.core.cache.data
 
 import dev.kord.common.entity.ComponentType
-import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import kotlin.js.JsName
 import kotlin.test.Test
