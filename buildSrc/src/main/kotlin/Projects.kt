@@ -12,12 +12,13 @@ private val Project.tag
     get() = git("tag", "--no-column", "--points-at", "HEAD")
         .map {
             it.takeIf { it.isNotBlank() }
-            ?.lines()
-            ?.single()
+                ?.lines()
+                ?.single()
         }
 
 val Project.libraryVersion: Provider<String>
     get() {
+        if (System.getProperty("idea.active")?.toBoolean() == true) return provider { "QODANA" }
         val snapshotVersion = git("branch", "--show-current").map { branch ->
             val snapshotPrefix = when (branch) {
                 "main" -> providers.gradleProperty("nextPlannedVersion").get()
@@ -31,10 +32,3 @@ val Project.libraryVersion: Provider<String>
 
 val Project.commitHash get() = git("rev-parse", "--verify", "HEAD")
 val Project.shortCommitHash get() = git("rev-parse", "--short", "HEAD")
-
-val Project.isRelease get() = tag.isPresent
-
-object Repo {
-    const val releasesUrl = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
-    const val snapshotsUrl = "https://oss.sonatype.org/content/repositories/snapshots/"
-}
