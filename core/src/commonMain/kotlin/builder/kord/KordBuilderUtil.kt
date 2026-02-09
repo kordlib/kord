@@ -44,7 +44,7 @@ public fun HttpClient?.configure(): HttpClient {
 /** @suppress */
 @KordInternal
 public fun getBotIdFromToken(token: String): Snowflake = try {
-    Snowflake(Base64.decode(token.substringBefore('.')).decodeToString())
+    Snowflake(Base64.UrlSafe.decode(token.substringBefore('.')).decodeToString())
 } catch (_: IllegalArgumentException) {
     throw IllegalArgumentException("Malformed bot token: '$token'. Make sure that your token is correct.")
 }
