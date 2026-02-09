@@ -11,6 +11,7 @@
 - [ ] Breaking change
 - [ ] Documentation
 - [ ] Dependencies/Buildscript updates
+- [ ] Other: <!-- Please specify-->
 
 ---
 
@@ -27,4 +28,4 @@
 
 ## Related issues
 
-<!-- Please add the number of any issues related to this PR. If non exist, please remove this section
+<!-- Please add the number of any issues related to this PR. If non exist, please remove this section. -->
