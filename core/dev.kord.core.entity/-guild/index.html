@@ -1,22 +1,22 @@
 <!doctype html>
-<html class="no-js">
+<html class="no-js" lang="en">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
     <title>Guild</title>
-<link href="../../../images/logo-icon.svg" rel="icon" type="image/svg">    <script>var pathToRoot = "../../../";</script>
-    <script>document.documentElement.classList.replace("no-js","js");</script>
+<link href="../../../images/logo-icon.svg" rel="icon" type="image/svg"><script>var pathToRoot = "../../../";</script>
+    <script>document.documentElement.classList.replace("no-js", "js");</script>
     <script>const storage = localStorage.getItem("dokka-dark-mode")
-    if (storage == null) {
+      if (storage == null) {
         const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
         if (osDarkSchemePreferred === true) {
-            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+          document.getElementsByTagName("html")[0].classList.add("theme-dark")
         }
-    } else {
+      } else {
         const savedDarkMode = JSON.parse(storage)
-        if(savedDarkMode === true) {
-            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        if (savedDarkMode === true) {
+          document.getElementsByTagName("html")[0].classList.add("theme-dark")
         }
-    }
+      }
     </script>
 <script type="text/javascript" src="https://unpkg.com/kotlin-playground@1/dist/playground.min.js" async></script>
 <script type="text/javascript" src="../../../scripts/sourceset_dependencies.js" async></script>
@@ -24,19 +24,17 @@
 <link href="../../../styles/main.css" rel="Stylesheet">
 <link href="../../../styles/prism.css" rel="Stylesheet">
 <link href="../../../styles/logo-styles.css" rel="Stylesheet">
-<link href="../../../styles/font-jb-sans-auto.css" rel="Stylesheet">
 <link href="../../../ui-kit/ui-kit.min.css" rel="Stylesheet">
-<script type="text/javascript" src="../../../scripts/clipboard.js" async></script>
+<script type="text/javascript" src="../../../scripts/safe-local-storage_blocking.js"></script>
 <script type="text/javascript" src="../../../scripts/navigation-loader.js" async></script>
 <script type="text/javascript" src="../../../scripts/platform-content-handler.js" async></script>
 <script type="text/javascript" src="../../../scripts/main.js" defer></script>
 <script type="text/javascript" src="../../../scripts/prism.js" async></script>
-<script type="text/javascript" src="../../../ui-kit/ui-kit.min.js" defer></script>
-<script type="text/javascript" src="../../../scripts/symbol-parameters-wrapper_deferred.js" defer></script></head>
+<script type="text/javascript" src="../../../ui-kit/ui-kit.min.js" defer></script></head>
 <body>
-    <div class="root">
-    <nav class="navigation theme-dark" id="navigation-wrapper">
-<a class="library-name--link" href="../../../index.html">
+<div class="root">
+    <header class="navigation theme-dark" id="navigation-wrapper" role="banner">
+<a class="library-name--link" href="../../../index.html" tabindex="1">
                     kord
             </a>        <button class="navigation-controls--btn navigation-controls--btn_toc ui-kit_mobile-only" id="toc-toggle" type="button">Toggle table of contents
         </button>
@@ -44,13 +42,13 @@
         <div class="library-version" id="library-version">or(map(map(map(map(valueof(ProcessOutputValueSource))))), map(map(map(map(valueof(ProcessOutputValueSource))))))
         </div>
         <div class="navigation-controls">
-        <div class="filter-section filter-section_loading" id="filter-section">
-                <button class="platform-tag platform-selector common-like" data-active="" data-filter=":core/commonMain">common</button>
+        <ul class="filter-section filter-section_loading" id="filter-section" aria-label="Target filter">
+                <button class="platform-tag platform-selector common-like" data-active="" aria-pressed="true" data-filter=":core/commonMain">common</button>
             <div class="dropdown filter-section--dropdown" data-role="dropdown" id="filter-section-dropdown">
                 <button class="button button_dropdown filter-section--dropdown-toggle" role="combobox" data-role="dropdown-toggle" aria-controls="platform-tags-listbox" aria-haspopup="listbox" aria-expanded="false" aria-label="Toggle source sets"></button>
-                <ul role="listbox" id="platform-tags-listbox" class="dropdown--list" data-role="dropdown-listbox">
-                    <div class="dropdown--header"><span>Platform filter</span>
-                        <button class="button" data-role="dropdown-toggle" aria-label="Close platform filter">
+                <ul role="listbox" id="platform-tags-listbox" class="dropdown--list" data-role="dropdown-listbox" aria-label="Target filter">
+                    <div class="dropdown--header"><span>Target filter</span>
+                        <button class="button" data-role="dropdown-toggle" aria-label="Close target filter">
                             <i class="ui-kit-icon ui-kit-icon_cross"></i>
                         </button>
                     </div>
@@ -64,45 +62,47 @@
                 </ul>
                 <div class="dropdown--overlay"></div>
             </div>
-        </div>
+        </ul>
             <button class="navigation-controls--btn navigation-controls--btn_theme" id="theme-toggle-button" type="button">Switch theme
             </button>
             <div class="navigation-controls--btn navigation-controls--btn_search" id="searchBar" role="button">Search in
                 API
             </div>
         </div>
-    </nav>
-        <div id="container">
-            <div class="sidebar" id="leftColumn">
-                <div class="dropdown theme-dark_mobile" data-role="dropdown" id="toc-dropdown">
-                    <ul role="listbox" id="toc-listbox" class="dropdown--list dropdown--list_toc-list" data-role="dropdown-listbox">
-                        <div class="dropdown--header">
+    </header>
+    <div id="container">
+        <nav id="leftColumn" class="sidebar" data-item-type="SECTION" data-item-config="{&quot;defaultSize&quot;: 280, &quot;minSize&quot;: 200, &quot;maxSize&quot;: 400}">
+            <a class="toc--skip-link" href="#main">Skip to content</a>
+            <div class="dropdown theme-dark_mobile" data-role="dropdown" id="toc-dropdown">
+                <ul role="listbox" id="toc-listbox" class="dropdown--list dropdown--list_toc-list" data-role="dropdown-listbox" aria-label="Table of contents">
+                    <div class="dropdown--header">
                             <span>
                                     kord
                             </span>
-                            <button class="button" data-role="dropdown-toggle" aria-label="Close table of contents">
-                                <i class="ui-kit-icon ui-kit-icon_cross"></i>
-                            </button>
-                        </div>
-                        <div class="sidebar--inner" id="sideMenu"></div>
-                    </ul>
-                    <div class="dropdown--overlay"></div>
-                </div>
+                        <button class="button" data-role="dropdown-toggle" aria-label="Close table of contents">
+                            <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                        </button>
+                    </div>
+                    <div class="sidebar--inner" id="sideMenu"></div>
+                </ul>
+                <div class="dropdown--overlay"></div>
             </div>
-            <div id="main">
+        </nav>
+        <div id="resizer" class="resizer" data-item-type="BAR"></div>
+        <div id="main" data-item-type="SECTION" role="main">
 <div class="main-content" data-page-type="classlike" id="content" pageids="kord-core::dev.kord.core.entity/Guild///PointingToDeclaration//1239919082">
   <div class="breadcrumbs"><a href="../../index.html">kord-core</a><span class="delimiter">/</span><a href="../index.html">dev.kord.core.entity</a><span class="delimiter">/</span><span class="current">Guild</span></div>
   <div class="cover ">
     <h1 class="cover"><span><span>Guild</span></span></h1>
-    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">class </span><a href="index.html">Guild</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">val </span>data<span class="token operator">: </span><a href="../../dev.kord.core.cache.data/-guild-data/index.html">GuildData</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>kord<span class="token operator">: </span><a href="../../dev.kord.core/-kord/index.html">Kord</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>supplier<span class="token operator">: </span><a href="../../dev.kord.core.supplier/-entity-supplier/index.html">EntitySupplier</a><span class="token operator"> = </span>kord.defaultSupplier</span></span><span class="token punctuation">)</span> : <a href="../../dev.kord.core.behavior/-guild-behavior/index.html">GuildBehavior</a><span class="clearfix"><span class="floating-right">(<a href="https://github.com/kordlib/kord/blob/map(map(map(valueof(ProcessOutputValueSource))))/core/src/commonMain/kotlin/entity/Guild.kt#L37">source</a>)</span></span></div><p class="paragraph">An instance of a <a href="https://discord.com/developers/docs/resources/guild">Discord Guild</a>.</p></div></div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">class </span><a href="index.html">Guild</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">val </span>data<span class="token operator">: </span><a href="../../dev.kord.core.cache.data/-guild-data/index.html">GuildData</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>kord<span class="token operator">: </span><a href="../../dev.kord.core/-kord/index.html">Kord</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>supplier<span class="token operator">: </span><a href="../../dev.kord.core.supplier/-entity-supplier/index.html">EntitySupplier</a><span class="token operator"> = </span>kord.defaultSupplier</span></span><span class="token punctuation">)</span> : <a href="../../dev.kord.core.behavior/-guild-behavior/index.html">GuildBehavior</a><span class="source-link-wrapper"><span class="source-link" data-element-type="source-link">(<a href="https://github.com/kordlib/kord/blob/map(map(map(valueof(ProcessOutputValueSource))))/core/src/commonMain/kotlin/entity/Guild.kt#L37">source</a>)</span></span></div><p class="paragraph">An instance of a <a href="https://discord.com/developers/docs/resources/guild">Discord Guild</a>.</p></div></div>
   </div>
   <div class="tabbedcontent">
     <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="CONSTRUCTOR,TYPE,PROPERTY,FUNCTION">Members</button><button class="section-tab" data-togglable="CONSTRUCTOR,TYPE,PROPERTY,FUNCTION,EXTENSION_PROPERTY,EXTENSION_FUNCTION">Members &amp; Extensions</button></div>
     <div class="tabs-section-body">
       <div data-togglable="CONSTRUCTOR">
-        <h2 class="">Constructors</h2>
+        <h2 class="tableheader">Constructors</h2>
         <div class="table"><a data-name="1305372526%2FConstructors%2F1239919082" anchor-label="Guild" id="1305372526%2FConstructors%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-togglable="CONSTRUCTOR" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-togglable="CONSTRUCTOR" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-guild.html"><span><span>Guild</span></span></a></div>
@@ -119,9 +119,9 @@
         </div>
       </div>
       <div data-togglable="PROPERTY">
-        <h2 class="">Properties</h2>
+        <h2 class="tableheader">Properties</h2>
         <div class="table"><a data-name="-668498831%2FProperties%2F1239919082" anchor-label="activeThreads" id="-668498831%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../dev.kord.core.behavior/-guild-behavior/active-threads.html"><span>active</span><wbr><span><span>Threads</span></span></a></div>
@@ -136,7 +136,7 @@
             </div>
           </div>
 <a data-name="381074504%2FProperties%2F1239919082" anchor-label="afkChannel" id="381074504%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="afk-channel.html"><span>afk</span><wbr><span><span>Channel</span></span></a></div>
@@ -151,7 +151,7 @@
             </div>
           </div>
 <a data-name="1817511085%2FProperties%2F1239919082" anchor-label="afkChannelId" id="1817511085%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="afk-channel-id.html"><span>afk</span><wbr><span>Channel</span><wbr><span><span>Id</span></span></a></div>
@@ -166,7 +166,7 @@
             </div>
           </div>
 <a data-name="1607037354%2FProperties%2F1239919082" anchor-label="afkTimeout" id="1607037354%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="afk-timeout.html"><span>afk</span><wbr><span><span>Timeout</span></span></a></div>
@@ -181,7 +181,7 @@
             </div>
           </div>
 <a data-name="-276282518%2FProperties%2F1239919082" anchor-label="applicationId" id="-276282518%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="application-id.html"><span>application</span><wbr><span><span>Id</span></span></a></div>
@@ -196,7 +196,7 @@
             </div>
           </div>
 <a data-name="2107318052%2FProperties%2F1239919082" anchor-label="approximateMemberCount" id="2107318052%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="approximate-member-count.html"><span>approximate</span><wbr><span>Member</span><wbr><span><span>Count</span></span></a></div>
@@ -211,7 +211,7 @@
             </div>
           </div>
 <a data-name="-1646662971%2FProperties%2F1239919082" anchor-label="approximatePresenceCount" id="-1646662971%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="approximate-presence-count.html"><span>approximate</span><wbr><span>Presence</span><wbr><span><span>Count</span></span></a></div>
@@ -226,7 +226,7 @@
             </div>
           </div>
 <a data-name="-763487214%2FProperties%2F1239919082" anchor-label="autoModerationRules" id="-763487214%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../dev.kord.core.behavior/-guild-behavior/auto-moderation-rules.html"><span>auto</span><wbr><span>Moderation</span><wbr><span><span>Rules</span></span></a></div>
@@ -241,7 +241,7 @@
             </div>
           </div>
 <a data-name="809417017%2FProperties%2F1239919082" anchor-label="banner" id="809417017%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="banner.html"><span><span>banner</span></span></a></div>
@@ -256,7 +256,7 @@
             </div>
           </div>
 <a data-name="819983819%2FProperties%2F1239919082" anchor-label="bannerHash" id="819983819%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="banner-hash.html"><span>banner</span><wbr><span><span>Hash</span></span></a></div>
@@ -271,7 +271,7 @@
             </div>
           </div>
 <a data-name="-605871358%2FProperties%2F1239919082" anchor-label="bans" id="-605871358%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../dev.kord.core.behavior/-guild-behavior/bans.html"><span><span>bans</span></span></a></div>
@@ -286,7 +286,7 @@
             </div>
           </div>
 <a data-name="-948054387%2FProperties%2F1239919082" anchor-label="cachedThreads" id="-948054387%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../dev.kord.core.behavior/-guild-behavior/cached-threads.html"><span>cached</span><wbr><span><span>Threads</span></span></a></div>
@@ -301,7 +301,7 @@
             </div>
           </div>
 <a data-name="306781191%2FProperties%2F1239919082" anchor-label="channelBehaviors" id="306781191%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="channel-behaviors.html"><span>channel</span><wbr><span><span>Behaviors</span></span></a></div>
@@ -316,7 +316,7 @@
             </div>
           </div>
 <a data-name="-2025397808%2FProperties%2F1239919082" anchor-label="channelIds" id="-2025397808%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="channel-ids.html"><span>channel</span><wbr><span><span>Ids</span></span></a></div>
@@ -331,7 +331,7 @@
             </div>
           </div>
 <a data-name="-915444106%2FProperties%2F1239919082" anchor-label="channels" id="-915444106%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../dev.kord.core.behavior/-guild-behavior/channels.html"><span><span>channels</span></span></a></div>
@@ -346,7 +346,7 @@
             </div>
           </div>
 <a data-name="1108007780%2FProperties%2F1239919082" anchor-label="contentFilter" id="1108007780%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="content-filter.html"><span>content</span><wbr><span><span>Filter</span></span></a></div>
@@ -361,7 +361,7 @@
             </div>
           </div>
 <a data-name="-2089100165%2FProperties%2F1239919082" anchor-label="data" id="-2089100165%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="data.html"><span><span>data</span></span></a></div>
@@ -376,7 +376,7 @@
             </div>
           </div>
 <a data-name="1332173186%2FProperties%2F1239919082" anchor-label="defaultMessageNotificationLevel" id="1332173186%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="default-message-notification-level.html"><span>default</span><wbr><span>Message</span><wbr><span>Notification</span><wbr><span><span>Level</span></span></a></div>
@@ -391,7 +391,7 @@
             </div>
           </div>
 <a data-name="263233817%2FProperties%2F1239919082" anchor-label="description" id="263233817%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="description.html"><span><span>description</span></span></a></div>
@@ -406,7 +406,7 @@
             </div>
           </div>
 <a data-name="565807422%2FProperties%2F1239919082" anchor-label="discoverySplash" id="565807422%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="discovery-splash.html"><span>discovery</span><wbr><span><span>Splash</span></span></a></div>
@@ -421,7 +421,7 @@
             </div>
           </div>
 <a data-name="1220098896%2FProperties%2F1239919082" anchor-label="discoverySplashHash" id="1220098896%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="discovery-splash-hash.html"><span>discovery</span><wbr><span>Splash</span><wbr><span><span>Hash</span></span></a></div>
@@ -436,7 +436,7 @@
             </div>
           </div>
 <a data-name="1826610323%2FProperties%2F1239919082" anchor-label="emojiIds" id="1826610323%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="emoji-ids.html"><span>emoji</span><wbr><span><span>Ids</span></span></a></div>
@@ -451,7 +451,7 @@
             </div>
           </div>
 <a data-name="-693525959%2FProperties%2F1239919082" anchor-label="emojis" id="-693525959%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../dev.kord.core.behavior/-guild-behavior/emojis.html"><span><span>emojis</span></span></a></div>
@@ -466,7 +466,7 @@
             </div>
           </div>
 <a data-name="805374852%2FProperties%2F1239919082" anchor-label="everyoneRole" id="805374852%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="everyone-role.html"><span>everyone</span><wbr><span><span>Role</span></span></a></div>
@@ -481,7 +481,7 @@
             </div>
           </div>
 <a data-name="1170427720%2FProperties%2F1239919082" anchor-label="features" id="1170427720%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="features.html"><span><span>features</span></span></a></div>
@@ -496,7 +496,7 @@
             </div>
           </div>
 <a data-name="-721422256%2FProperties%2F1239919082" anchor-label="gateway" id="-721422256%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../dev.kord.core.behavior/-guild-behavior/gateway.html"><span><span>gateway</span></span></a></div>
@@ -505,13 +505,13 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">val </span><a href="../../dev.kord.core.behavior/-guild-behavior/gateway.html">gateway</a><span class="token operator">: </span><a href="../../../gateway/dev.kord.gateway/-gateway/index.html">Gateway</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph">Returns the gateway this guild is part of as per the <a href="https://discord.com/developers/docs/topics/gateway#sharding">Discord sharding rules</a>. Returns <code class="lang-kotlin">null</code> if no gateway for the shard is present in <a href="../../../core/dev.kord.core.behavior/-guild-behavior/kord.html">kord</a>.</p></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">val </span><a href="../../dev.kord.core.behavior/-guild-behavior/gateway.html">gateway</a><span class="token operator">: </span><a href="../../../gateway/dev.kord.gateway/-gateway/index.html">Gateway</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph">Returns the gateway this guild is part of as per the <a href="https://discord.com/developers/docs/topics/gateway#sharding">Discord sharding rules</a>. Returns <code class="lang-kotlin">null</code> if no gateway for the shard is present in <a href="../../dev.kord.core/-kord-object/kord.html">kord</a>.</p></div></div></div>
                 </div>
               </div>
             </div>
           </div>
 <a data-name="757089932%2FProperties%2F1239919082" anchor-label="icon" id="757089932%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="icon.html"><span><span>icon</span></span></a></div>
@@ -526,7 +526,7 @@
             </div>
           </div>
 <a data-name="-1664835170%2FProperties%2F1239919082" anchor-label="iconHash" id="-1664835170%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="icon-hash.html"><span>icon</span><wbr><span><span>Hash</span></span></a></div>
@@ -541,7 +541,7 @@
             </div>
           </div>
 <a data-name="-378193366%2FProperties%2F1239919082" anchor-label="id" id="-378193366%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="id.html"><span><span>id</span></span></a></div>
@@ -556,7 +556,7 @@
             </div>
           </div>
 <a data-name="1612818311%2FProperties%2F1239919082" anchor-label="integrations" id="1612818311%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../dev.kord.core.behavior/-guild-behavior/integrations.html"><span><span>integrations</span></span></a></div>
@@ -571,7 +571,7 @@
             </div>
           </div>
 <a data-name="-1551579446%2FProperties%2F1239919082" anchor-label="invites" id="-1551579446%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../dev.kord.core.behavior/-guild-behavior/invites.html"><span><span>invites</span></span></a></div>
@@ -586,7 +586,7 @@
             </div>
           </div>
 <a data-name="-521855356%2FProperties%2F1239919082" anchor-label="isLarge" id="-521855356%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="is-large.html"><span>is</span><wbr><span><span>Large</span></span></a></div>
@@ -601,7 +601,7 @@
             </div>
           </div>
 <a data-name="1374404108%2FProperties%2F1239919082" anchor-label="isOwner" id="1374404108%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="is-owner.html"><span>is</span><wbr><span><span>Owner</span></span></a></div>
@@ -616,7 +616,7 @@
             </div>
           </div>
 <a data-name="-1993486942%2FProperties%2F1239919082" anchor-label="isWidgetEnabled" id="-1993486942%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="is-widget-enabled.html"><span>is</span><wbr><span>Widget</span><wbr><span><span>Enabled</span></span></a></div>
@@ -631,7 +631,7 @@
             </div>
           </div>
 <a data-name="1502556655%2FProperties%2F1239919082" anchor-label="joinedTime" id="1502556655%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="joined-time.html"><span>joined</span><wbr><span><span>Time</span></span></a></div>
@@ -646,7 +646,7 @@
             </div>
           </div>
 <a data-name="1661098767%2FProperties%2F1239919082" anchor-label="kord" id="1661098767%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="kord.html"><span><span>kord</span></span></a></div>
@@ -661,7 +661,7 @@
             </div>
           </div>
 <a data-name="-982726288%2FProperties%2F1239919082" anchor-label="maxMembers" id="-982726288%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="max-members.html"><span>max</span><wbr><span><span>Members</span></span></a></div>
@@ -676,7 +676,7 @@
             </div>
           </div>
 <a data-name="827144593%2FProperties%2F1239919082" anchor-label="maxPresences" id="827144593%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="max-presences.html"><span>max</span><wbr><span><span>Presences</span></span></a></div>
@@ -691,7 +691,7 @@
             </div>
           </div>
 <a data-name="1475620943%2FProperties%2F1239919082" anchor-label="maxStageVideoChannelUsers" id="1475620943%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="max-stage-video-channel-users.html"><span>max</span><wbr><span>Stage</span><wbr><span>Video</span><wbr><span>Channel</span><wbr><span><span>Users</span></span></a></div>
@@ -706,7 +706,7 @@
             </div>
           </div>
 <a data-name="751113865%2FProperties%2F1239919082" anchor-label="maxVideoChannelUsers" id="751113865%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="max-video-channel-users.html"><span>max</span><wbr><span>Video</span><wbr><span>Channel</span><wbr><span><span>Users</span></span></a></div>
@@ -721,7 +721,7 @@
             </div>
           </div>
 <a data-name="968404128%2FProperties%2F1239919082" anchor-label="memberCount" id="968404128%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="member-count.html"><span>member</span><wbr><span><span>Count</span></span></a></div>
@@ -736,7 +736,7 @@
             </div>
           </div>
 <a data-name="-1380720869%2FProperties%2F1239919082" anchor-label="members" id="-1380720869%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../dev.kord.core.behavior/-guild-behavior/members.html"><span><span>members</span></span></a></div>
@@ -751,7 +751,7 @@
             </div>
           </div>
 <a data-name="1160999401%2FProperties%2F1239919082" anchor-label="mfaLevel" id="1160999401%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="mfa-level.html"><span>mfa</span><wbr><span><span>Level</span></span></a></div>
@@ -766,7 +766,7 @@
             </div>
           </div>
 <a data-name="-1765302086%2FProperties%2F1239919082" anchor-label="name" id="-1765302086%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="name.html"><span><span>name</span></span></a></div>
@@ -781,7 +781,7 @@
             </div>
           </div>
 <a data-name="361400399%2FProperties%2F1239919082" anchor-label="nsfw" id="361400399%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="nsfw.html"><span><span>nsfw</span></span></a></div>
@@ -796,7 +796,7 @@
             </div>
           </div>
 <a data-name="470392898%2FProperties%2F1239919082" anchor-label="owner" id="470392898%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="owner.html"><span><span>owner</span></span></a></div>
@@ -811,7 +811,7 @@
             </div>
           </div>
 <a data-name="1753141799%2FProperties%2F1239919082" anchor-label="ownerId" id="1753141799%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="owner-id.html"><span>owner</span><wbr><span><span>Id</span></span></a></div>
@@ -826,7 +826,7 @@
             </div>
           </div>
 <a data-name="-406496879%2FProperties%2F1239919082" anchor-label="permissions" id="-406496879%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="permissions.html"><span><span>permissions</span></span></a></div>
@@ -841,7 +841,7 @@
             </div>
           </div>
 <a data-name="-136852550%2FProperties%2F1239919082" anchor-label="preferredLocale" id="-136852550%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="preferred-locale.html"><span>preferred</span><wbr><span><span>Locale</span></span></a></div>
@@ -856,7 +856,7 @@
             </div>
           </div>
 <a data-name="1177326435%2FProperties%2F1239919082" anchor-label="premiumProgressBarEnabled" id="1177326435%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="premium-progress-bar-enabled.html"><span>premium</span><wbr><span>Progress</span><wbr><span>Bar</span><wbr><span><span>Enabled</span></span></a></div>
@@ -871,7 +871,7 @@
             </div>
           </div>
 <a data-name="960521450%2FProperties%2F1239919082" anchor-label="premiumSubscriptionCount" id="960521450%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="premium-subscription-count.html"><span>premium</span><wbr><span>Subscription</span><wbr><span><span>Count</span></span></a></div>
@@ -886,7 +886,7 @@
             </div>
           </div>
 <a data-name="499701468%2FProperties%2F1239919082" anchor-label="premiumTier" id="499701468%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="premium-tier.html"><span>premium</span><wbr><span><span>Tier</span></span></a></div>
@@ -901,7 +901,7 @@
             </div>
           </div>
 <a data-name="606441596%2FProperties%2F1239919082" anchor-label="presences" id="606441596%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../dev.kord.core.behavior/-guild-behavior/presences.html"><span><span>presences</span></span></a></div>
@@ -916,7 +916,7 @@
             </div>
           </div>
 <a data-name="1026929539%2FProperties%2F1239919082" anchor-label="publicUpdatesChannel" id="1026929539%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="public-updates-channel.html"><span>public</span><wbr><span>Updates</span><wbr><span><span>Channel</span></span></a></div>
@@ -931,7 +931,7 @@
             </div>
           </div>
 <a data-name="-286058200%2FProperties%2F1239919082" anchor-label="publicUpdatesChannelId" id="-286058200%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="public-updates-channel-id.html"><span>public</span><wbr><span>Updates</span><wbr><span>Channel</span><wbr><span><span>Id</span></span></a></div>
@@ -946,7 +946,7 @@
             </div>
           </div>
 <a data-name="-2043919210%2FProperties%2F1239919082" anchor-label="regionId" id="-2043919210%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="region-id.html"><span>region</span><wbr><span><span>Id</span></span></a></div>
@@ -961,7 +961,7 @@
             </div>
           </div>
 <a data-name="-156344587%2FProperties%2F1239919082" anchor-label="regions" id="-156344587%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../dev.kord.core.behavior/-guild-behavior/regions.html"><span><span>regions</span></span></a></div>
@@ -976,7 +976,7 @@
             </div>
           </div>
 <a data-name="-725343894%2FProperties%2F1239919082" anchor-label="roleBehaviors" id="-725343894%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="role-behaviors.html"><span>role</span><wbr><span><span>Behaviors</span></span></a></div>
@@ -991,7 +991,7 @@
             </div>
           </div>
 <a data-name="-297898637%2FProperties%2F1239919082" anchor-label="roleIds" id="-297898637%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="role-ids.html"><span>role</span><wbr><span><span>Ids</span></span></a></div>
@@ -1006,7 +1006,7 @@
             </div>
           </div>
 <a data-name="1190437815%2FProperties%2F1239919082" anchor-label="roles" id="1190437815%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../dev.kord.core.behavior/-guild-behavior/roles.html"><span><span>roles</span></span></a></div>
@@ -1021,7 +1021,7 @@
             </div>
           </div>
 <a data-name="-1531126183%2FProperties%2F1239919082" anchor-label="rulesChannel" id="-1531126183%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="rules-channel.html"><span>rules</span><wbr><span><span>Channel</span></span></a></div>
@@ -1036,7 +1036,7 @@
             </div>
           </div>
 <a data-name="-1856313730%2FProperties%2F1239919082" anchor-label="rulesChannelId" id="-1856313730%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="rules-channel-id.html"><span>rules</span><wbr><span>Channel</span><wbr><span><span>Id</span></span></a></div>
@@ -1051,7 +1051,7 @@
             </div>
           </div>
 <a data-name="1383276059%2FProperties%2F1239919082" anchor-label="safetyAlertsChannel" id="1383276059%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="safety-alerts-channel.html"><span>safety</span><wbr><span>Alerts</span><wbr><span><span>Channel</span></span></a></div>
@@ -1066,7 +1066,7 @@
             </div>
           </div>
 <a data-name="-1434436160%2FProperties%2F1239919082" anchor-label="safetyAlertsChannelId" id="-1434436160%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="safety-alerts-channel-id.html"><span>safety</span><wbr><span>Alerts</span><wbr><span>Channel</span><wbr><span><span>Id</span></span></a></div>
@@ -1081,7 +1081,7 @@
             </div>
           </div>
 <a data-name="-1998593618%2FProperties%2F1239919082" anchor-label="scheduledEvents" id="-1998593618%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../dev.kord.core.behavior/-guild-behavior/scheduled-events.html"><span>scheduled</span><wbr><span><span>Events</span></span></a></div>
@@ -1096,7 +1096,7 @@
             </div>
           </div>
 <a data-name="-247118773%2FProperties%2F1239919082" anchor-label="soundboardSounds" id="-247118773%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../dev.kord.core.behavior/-guild-behavior/soundboard-sounds.html"><span>soundboard</span><wbr><span><span>Sounds</span></span></a></div>
@@ -1111,7 +1111,7 @@
             </div>
           </div>
 <a data-name="545691230%2FProperties%2F1239919082" anchor-label="splash" id="545691230%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="splash.html"><span><span>splash</span></span></a></div>
@@ -1126,7 +1126,7 @@
             </div>
           </div>
 <a data-name="-772097936%2FProperties%2F1239919082" anchor-label="splashHash" id="-772097936%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="splash-hash.html"><span>splash</span><wbr><span><span>Hash</span></span></a></div>
@@ -1141,7 +1141,7 @@
             </div>
           </div>
 <a data-name="812126661%2FProperties%2F1239919082" anchor-label="stageInstances" id="812126661%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="stage-instances.html"><span>stage</span><wbr><span><span>Instances</span></span></a></div>
@@ -1156,7 +1156,7 @@
             </div>
           </div>
 <a data-name="1371275983%2FProperties%2F1239919082" anchor-label="stickers" id="1371275983%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="stickers.html"><span><span>stickers</span></span></a></div>
@@ -1171,7 +1171,7 @@
             </div>
           </div>
 <a data-name="1990936729%2FProperties%2F1239919082" anchor-label="supplier" id="1990936729%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="supplier.html"><span><span>supplier</span></span></a></div>
@@ -1186,7 +1186,7 @@
             </div>
           </div>
 <a data-name="907145793%2FProperties%2F1239919082" anchor-label="systemChannel" id="907145793%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="system-channel.html"><span>system</span><wbr><span><span>Channel</span></span></a></div>
@@ -1201,7 +1201,7 @@
             </div>
           </div>
 <a data-name="-579142862%2FProperties%2F1239919082" anchor-label="systemChannelFlags" id="-579142862%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="system-channel-flags.html"><span>system</span><wbr><span>Channel</span><wbr><span><span>Flags</span></span></a></div>
@@ -1216,7 +1216,7 @@
             </div>
           </div>
 <a data-name="565878886%2FProperties%2F1239919082" anchor-label="systemChannelId" id="565878886%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="system-channel-id.html"><span>system</span><wbr><span>Channel</span><wbr><span><span>Id</span></span></a></div>
@@ -1231,7 +1231,7 @@
             </div>
           </div>
 <a data-name="-1593618629%2FProperties%2F1239919082" anchor-label="templates" id="-1593618629%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../dev.kord.core.behavior/-guild-behavior/templates.html"><span><span>templates</span></span></a></div>
@@ -1246,7 +1246,7 @@
             </div>
           </div>
 <a data-name="-892527955%2FProperties%2F1239919082" anchor-label="vanityCode" id="-892527955%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="vanity-code.html"><span>vanity</span><wbr><span><span>Code</span></span></a></div>
@@ -1261,7 +1261,7 @@
             </div>
           </div>
 <a data-name="2084666705%2FProperties%2F1239919082" anchor-label="vanityUrl" id="2084666705%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="vanity-url.html"><span>vanity</span><wbr><span><span>Url</span></span></a></div>
@@ -1276,7 +1276,7 @@
             </div>
           </div>
 <a data-name="-1171795572%2FProperties%2F1239919082" anchor-label="verificationLevel" id="-1171795572%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="verification-level.html"><span>verification</span><wbr><span><span>Level</span></span></a></div>
@@ -1291,7 +1291,7 @@
             </div>
           </div>
 <a data-name="-127307968%2FProperties%2F1239919082" anchor-label="voiceStates" id="-127307968%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../dev.kord.core.behavior/-guild-behavior/voice-states.html"><span>voice</span><wbr><span><span>States</span></span></a></div>
@@ -1306,7 +1306,7 @@
             </div>
           </div>
 <a data-name="1858027242%2FProperties%2F1239919082" anchor-label="webhooks" id="1858027242%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../dev.kord.core.behavior/-guild-behavior/webhooks.html"><span><span>webhooks</span></span></a></div>
@@ -1321,7 +1321,7 @@
             </div>
           </div>
 <a data-name="631282919%2FProperties%2F1239919082" anchor-label="welcomeScreen" id="631282919%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="welcome-screen.html"><span>welcome</span><wbr><span><span>Screen</span></span></a></div>
@@ -1336,7 +1336,7 @@
             </div>
           </div>
 <a data-name="-384874922%2FProperties%2F1239919082" anchor-label="widgetChannel" id="-384874922%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="widget-channel.html"><span>widget</span><wbr><span><span>Channel</span></span></a></div>
@@ -1351,7 +1351,7 @@
             </div>
           </div>
 <a data-name="179520315%2FProperties%2F1239919082" anchor-label="widgetChannelId" id="179520315%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="widget-channel-id.html"><span>widget</span><wbr><span>Channel</span><wbr><span><span>Id</span></span></a></div>
@@ -1368,9 +1368,9 @@
         </div>
       </div>
       <div data-togglable="FUNCTION">
-        <h2 class="">Functions</h2>
+        <h2 class="tableheader">Functions</h2>
         <div class="table"><a data-name="2074369492%2FFunctions%2F1239919082" anchor-label="asGuild" id="2074369492%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="as-guild.html"><span>as</span><wbr><span><span>Guild</span></span></a></div>
@@ -1385,7 +1385,7 @@
             </div>
           </div>
 <a data-name="1457293738%2FFunctions%2F1239919082" anchor-label="asGuildOrNull" id="1457293738%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="as-guild-or-null.html"><span>as</span><wbr><span>Guild</span><wbr><span>Or</span><wbr><span><span>Null</span></span></a></div>
@@ -1400,7 +1400,7 @@
             </div>
           </div>
 <a data-name="1425612181%2FFunctions%2F1239919082" anchor-label="ban" id="1425612181%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../dev.kord.core.behavior/ban.html"><span><span>ban</span></span></a></div>
@@ -1415,7 +1415,7 @@
             </div>
           </div>
 <a data-name="1855121047%2FFunctions%2F1239919082" anchor-label="compareTo" id="1855121047%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../-entity/compare-to.html"><span>compare</span><wbr><span><span>To</span></span></a></div>
@@ -1430,7 +1430,7 @@
             </div>
           </div>
 <a data-name="-1121120657%2FFunctions%2F1239919082" anchor-label="createApplicationCommands" id="-1121120657%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../dev.kord.core.behavior/create-application-commands.html"><span>create</span><wbr><span>Application</span><wbr><span><span>Commands</span></span></a></div>
@@ -1445,7 +1445,7 @@
             </div>
           </div>
 <a data-name="-615892402%2FFunctions%2F1239919082" anchor-label="createCategory" id="-615892402%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../dev.kord.core.behavior/create-category.html"><span>create</span><wbr><span><span>Category</span></span></a></div>
@@ -1460,7 +1460,7 @@
             </div>
           </div>
 <a data-name="-73924509%2FFunctions%2F1239919082" anchor-label="createChatInputCommand" id="-73924509%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../dev.kord.core.behavior/create-chat-input-command.html"><span>create</span><wbr><span>Chat</span><wbr><span>Input</span><wbr><span><span>Command</span></span></a></div>
@@ -1475,7 +1475,7 @@
             </div>
           </div>
 <a data-name="1866943871%2FFunctions%2F1239919082" anchor-label="createEmoji" id="1866943871%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../dev.kord.core.behavior/create-emoji.html"><span>create</span><wbr><span><span>Emoji</span></span></a></div>
@@ -1490,7 +1490,7 @@
             </div>
           </div>
 <a data-name="400117198%2FFunctions%2F1239919082" anchor-label="createForumChannel" id="400117198%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../dev.kord.core.behavior/create-forum-channel.html"><span>create</span><wbr><span>Forum</span><wbr><span><span>Channel</span></span></a></div>
@@ -1505,7 +1505,7 @@
             </div>
           </div>
 <a data-name="2033657509%2FFunctions%2F1239919082" anchor-label="createKeywordAutoModerationRule" id="2033657509%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../dev.kord.core.behavior/create-keyword-auto-moderation-rule.html"><span>create</span><wbr><span>Keyword</span><wbr><span>Auto</span><wbr><span>Moderation</span><wbr><span><span>Rule</span></span></a></div>
@@ -1520,7 +1520,7 @@
             </div>
           </div>
 <a data-name="-626067929%2FFunctions%2F1239919082" anchor-label="createKeywordPresetAutoModerationRule" id="-626067929%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../dev.kord.core.behavior/create-keyword-preset-auto-moderation-rule.html"><span>create</span><wbr><span>Keyword</span><wbr><span>Preset</span><wbr><span>Auto</span><wbr><span>Moderation</span><wbr><span><span>Rule</span></span></a></div>
@@ -1535,7 +1535,7 @@
             </div>
           </div>
 <a data-name="398955374%2FFunctions%2F1239919082" anchor-label="createMediaChannel" id="398955374%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../dev.kord.core.behavior/create-media-channel.html"><span>create</span><wbr><span>Media</span><wbr><span><span>Channel</span></span></a></div>
@@ -1550,7 +1550,7 @@
             </div>
           </div>
 <a data-name="643336409%2FFunctions%2F1239919082" anchor-label="createMemberProfileAutoModerationRule" id="643336409%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../dev.kord.core.behavior/create-member-profile-auto-moderation-rule.html"><span>create</span><wbr><span>Member</span><wbr><span>Profile</span><wbr><span>Auto</span><wbr><span>Moderation</span><wbr><span><span>Rule</span></span></a></div>
@@ -1565,7 +1565,7 @@
             </div>
           </div>
 <a data-name="754591569%2FFunctions%2F1239919082" anchor-label="createMentionSpamAutoModerationRule" id="754591569%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../dev.kord.core.behavior/create-mention-spam-auto-moderation-rule.html"><span>create</span><wbr><span>Mention</span><wbr><span>Spam</span><wbr><span>Auto</span><wbr><span>Moderation</span><wbr><span><span>Rule</span></span></a></div>
@@ -1580,7 +1580,7 @@
             </div>
           </div>
 <a data-name="1334814365%2FFunctions%2F1239919082" anchor-label="createMessageCommand" id="1334814365%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../dev.kord.core.behavior/create-message-command.html"><span>create</span><wbr><span>Message</span><wbr><span><span>Command</span></span></a></div>
@@ -1595,7 +1595,7 @@
             </div>
           </div>
 <a data-name="-1807402050%2FFunctions%2F1239919082" anchor-label="createNewsChannel" id="-1807402050%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../dev.kord.core.behavior/create-news-channel.html"><span>create</span><wbr><span>News</span><wbr><span><span>Channel</span></span></a></div>
@@ -1610,7 +1610,7 @@
             </div>
           </div>
 <a data-name="1400752888%2FFunctions%2F1239919082" anchor-label="createRole" id="1400752888%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../dev.kord.core.behavior/create-role.html"><span>create</span><wbr><span><span>Role</span></span></a></div>
@@ -1625,7 +1625,7 @@
             </div>
           </div>
 <a data-name="-1015577350%2FFunctions%2F1239919082" anchor-label="createScheduledEvent" id="-1015577350%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../dev.kord.core.behavior/create-scheduled-event.html"><span>create</span><wbr><span>Scheduled</span><wbr><span><span>Event</span></span></a></div>
@@ -1640,7 +1640,7 @@
             </div>
           </div>
 <a data-name="1152624207%2FFunctions%2F1239919082" anchor-label="createSoundboardSound" id="1152624207%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../dev.kord.core.behavior/create-soundboard-sound.html"><span>create</span><wbr><span>Soundboard</span><wbr><span><span>Sound</span></span></a></div>
@@ -1655,7 +1655,7 @@
             </div>
           </div>
 <a data-name="-1547401741%2FFunctions%2F1239919082" anchor-label="createSpamAutoModerationRule" id="-1547401741%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../dev.kord.core.behavior/create-spam-auto-moderation-rule.html"><span>create</span><wbr><span>Spam</span><wbr><span>Auto</span><wbr><span>Moderation</span><wbr><span><span>Rule</span></span></a></div>
@@ -1670,7 +1670,7 @@
             </div>
           </div>
 <a data-name="-149015506%2FFunctions%2F1239919082" anchor-label="createStageChannel" id="-149015506%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../dev.kord.core.behavior/create-stage-channel.html"><span>create</span><wbr><span>Stage</span><wbr><span><span>Channel</span></span></a></div>
@@ -1685,7 +1685,7 @@
             </div>
           </div>
 <a data-name="777006116%2FFunctions%2F1239919082" anchor-label="createSticker" id="777006116%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../dev.kord.core.behavior/-guild-behavior/create-sticker.html"><span>create</span><wbr><span><span>Sticker</span></span></a></div>
@@ -1700,7 +1700,7 @@
             </div>
           </div>
 <a data-name="529770226%2FFunctions%2F1239919082" anchor-label="createTextChannel" id="529770226%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../dev.kord.core.behavior/create-text-channel.html"><span>create</span><wbr><span>Text</span><wbr><span><span>Channel</span></span></a></div>
@@ -1715,7 +1715,7 @@
             </div>
           </div>
 <a data-name="687549167%2FFunctions%2F1239919082" anchor-label="createUserCommand" id="687549167%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../dev.kord.core.behavior/create-user-command.html"><span>create</span><wbr><span>User</span><wbr><span><span>Command</span></span></a></div>
@@ -1730,7 +1730,7 @@
             </div>
           </div>
 <a data-name="-1907591762%2FFunctions%2F1239919082" anchor-label="createVoiceChannel" id="-1907591762%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../dev.kord.core.behavior/create-voice-channel.html"><span>create</span><wbr><span>Voice</span><wbr><span><span>Channel</span></span></a></div>
@@ -1745,7 +1745,7 @@
             </div>
           </div>
 <a data-name="-386934981%2FFunctions%2F1239919082" anchor-label="delete" id="-386934981%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../dev.kord.core.behavior/-guild-behavior/delete.html"><span><span>delete</span></span></a></div>
@@ -1760,7 +1760,7 @@
             </div>
           </div>
 <a data-name="-318622152%2FFunctions%2F1239919082" anchor-label="edit" id="-318622152%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../dev.kord.core.behavior/edit.html"><span><span>edit</span></span></a></div>
@@ -1775,7 +1775,7 @@
             </div>
           </div>
 <a data-name="2086532095%2FFunctions%2F1239919082" anchor-label="editMFALevel" id="2086532095%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../dev.kord.core.behavior/-guild-behavior/edit-m-f-a-level.html"><span>edit</span><wbr><span><span>MFALevel</span></span></a></div>
@@ -1790,7 +1790,7 @@
             </div>
           </div>
 <a data-name="-1086128958%2FFunctions%2F1239919082" anchor-label="editOnboarding" id="-1086128958%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../dev.kord.core.behavior/edit-onboarding.html"><span>edit</span><wbr><span><span>Onboarding</span></span></a></div>
@@ -1805,7 +1805,7 @@
             </div>
           </div>
 <a data-name="104491229%2FFunctions%2F1239919082" anchor-label="editSelfNickname" id="104491229%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../dev.kord.core.behavior/-guild-behavior/edit-self-nickname.html"><span>edit</span><wbr><span>Self</span><wbr><span><span>Nickname</span></span></a></div>
@@ -1820,7 +1820,7 @@
             </div>
           </div>
 <a data-name="218326467%2FFunctions%2F1239919082" anchor-label="editWelcomeScreen" id="218326467%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../dev.kord.core.behavior/-guild-behavior/edit-welcome-screen.html"><span>edit</span><wbr><span>Welcome</span><wbr><span><span>Screen</span></span></a></div>
@@ -1835,7 +1835,7 @@
             </div>
           </div>
 <a data-name="631630832%2FFunctions%2F1239919082" anchor-label="editWidget" id="631630832%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../dev.kord.core.behavior/edit-widget.html"><span>edit</span><wbr><span><span>Widget</span></span></a></div>
@@ -1850,7 +1850,7 @@
             </div>
           </div>
 <a data-name="-344049604%2FFunctions%2F1239919082" anchor-label="equals" id="-344049604%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="equals.html"><span><span>equals</span></span></a></div>
@@ -1865,7 +1865,7 @@
             </div>
           </div>
 <a data-name="-1647425843%2FFunctions%2F1239919082" anchor-label="fetchGuild" id="-1647425843%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../dev.kord.core.behavior/-guild-behavior/fetch-guild.html"><span>fetch</span><wbr><span><span>Guild</span></span></a></div>
@@ -1880,7 +1880,7 @@
             </div>
           </div>
 <a data-name="-1880615965%2FFunctions%2F1239919082" anchor-label="fetchGuildOrNull" id="-1880615965%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../dev.kord.core.behavior/-guild-behavior/fetch-guild-or-null.html"><span>fetch</span><wbr><span>Guild</span><wbr><span>Or</span><wbr><span><span>Null</span></span></a></div>
@@ -1895,7 +1895,7 @@
             </div>
           </div>
 <a data-name="1435985346%2FFunctions%2F1239919082" anchor-label="getAfkChannel" id="1435985346%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="get-afk-channel.html"><span>get</span><wbr><span>Afk</span><wbr><span><span>Channel</span></span></a></div>
@@ -1910,7 +1910,7 @@
             </div>
           </div>
 <a data-name="728793176%2FFunctions%2F1239919082" anchor-label="getApplicationCommand" id="728793176%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../dev.kord.core.behavior/-guild-behavior/get-application-command.html"><span>get</span><wbr><span>Application</span><wbr><span><span>Command</span></span></a></div>
@@ -1925,7 +1925,7 @@
             </div>
           </div>
 <a data-name="-1840643483%2FFunctions%2F1239919082" anchor-label="getApplicationCommandOf" id="-1840643483%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../dev.kord.core.behavior/get-application-command-of.html"><span>get</span><wbr><span>Application</span><wbr><span>Command</span><wbr><span><span>Of</span></span></a></div>
@@ -1940,7 +1940,7 @@
             </div>
           </div>
 <a data-name="-1036796677%2FFunctions%2F1239919082" anchor-label="getApplicationCommandOfOrNull" id="-1036796677%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../dev.kord.core.behavior/get-application-command-of-or-null.html"><span>get</span><wbr><span>Application</span><wbr><span>Command</span><wbr><span>Of</span><wbr><span>Or</span><wbr><span><span>Null</span></span></a></div>
@@ -1955,7 +1955,7 @@
             </div>
           </div>
 <a data-name="-330244882%2FFunctions%2F1239919082" anchor-label="getApplicationCommandOrNull" id="-330244882%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../dev.kord.core.behavior/-guild-behavior/get-application-command-or-null.html"><span>get</span><wbr><span>Application</span><wbr><span>Command</span><wbr><span>Or</span><wbr><span><span>Null</span></span></a></div>
@@ -1970,7 +1970,7 @@
             </div>
           </div>
 <a data-name="-92877382%2FFunctions%2F1239919082" anchor-label="getApplicationCommands" id="-92877382%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../dev.kord.core.behavior/-guild-behavior/get-application-commands.html"><span>get</span><wbr><span>Application</span><wbr><span><span>Commands</span></span></a></div>
@@ -1985,7 +1985,7 @@
             </div>
           </div>
 <a data-name="-1660316484%2FFunctions%2F1239919082" anchor-label="getAuditLogEntries" id="-1660316484%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../dev.kord.core.behavior/get-audit-log-entries.html"><span>get</span><wbr><span>Audit</span><wbr><span>Log</span><wbr><span><span>Entries</span></span></a></div>
@@ -2000,7 +2000,7 @@
             </div>
           </div>
 <a data-name="464525346%2FFunctions%2F1239919082" anchor-label="getAutoModerationRule" id="464525346%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../dev.kord.core.behavior/-guild-behavior/get-auto-moderation-rule.html"><span>get</span><wbr><span>Auto</span><wbr><span>Moderation</span><wbr><span><span>Rule</span></span></a></div>
@@ -2015,7 +2015,7 @@
             </div>
           </div>
 <a data-name="-68291272%2FFunctions%2F1239919082" anchor-label="getAutoModerationRuleOrNull" id="-68291272%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../dev.kord.core.behavior/-guild-behavior/get-auto-moderation-rule-or-null.html"><span>get</span><wbr><span>Auto</span><wbr><span>Moderation</span><wbr><span>Rule</span><wbr><span>Or</span><wbr><span><span>Null</span></span></a></div>
@@ -2030,7 +2030,7 @@
             </div>
           </div>
 <a data-name="1095929602%2FFunctions%2F1239919082" anchor-label="getBan" id="1095929602%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../dev.kord.core.behavior/-guild-behavior/get-ban.html"><span>get</span><wbr><span><span>Ban</span></span></a></div>
@@ -2045,7 +2045,7 @@
             </div>
           </div>
 <a data-name="1221837848%2FFunctions%2F1239919082" anchor-label="getBanOrNull" id="1221837848%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../dev.kord.core.behavior/-guild-behavior/get-ban-or-null.html"><span>get</span><wbr><span>Ban</span><wbr><span>Or</span><wbr><span><span>Null</span></span></a></div>
@@ -2060,7 +2060,7 @@
             </div>
           </div>
 <a data-name="-799809266%2FFunctions%2F1239919082" anchor-label="getChannel" id="-799809266%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../dev.kord.core.behavior/-guild-behavior/get-channel.html"><span>get</span><wbr><span><span>Channel</span></span></a></div>
@@ -2075,7 +2075,7 @@
             </div>
           </div>
 <a data-name="-745761115%2FFunctions%2F1239919082" anchor-label="getChannelOf" id="-745761115%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../dev.kord.core.behavior/get-channel-of.html"><span>get</span><wbr><span>Channel</span><wbr><span><span>Of</span></span></a></div>
@@ -2090,7 +2090,7 @@
             </div>
           </div>
 <a data-name="-574217925%2FFunctions%2F1239919082" anchor-label="getChannelOfOrNull" id="-574217925%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../dev.kord.core.behavior/get-channel-of-or-null.html"><span>get</span><wbr><span>Channel</span><wbr><span>Of</span><wbr><span>Or</span><wbr><span><span>Null</span></span></a></div>
@@ -2105,7 +2105,7 @@
             </div>
           </div>
 <a data-name="215637284%2FFunctions%2F1239919082" anchor-label="getChannelOrNull" id="215637284%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../dev.kord.core.behavior/-guild-behavior/get-channel-or-null.html"><span>get</span><wbr><span>Channel</span><wbr><span>Or</span><wbr><span><span>Null</span></span></a></div>
@@ -2120,7 +2120,7 @@
             </div>
           </div>
 <a data-name="-1468133579%2FFunctions%2F1239919082" anchor-label="getEmbedChannel" id="-1468133579%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="get-embed-channel.html"><span>get</span><wbr><span>Embed</span><wbr><span><span>Channel</span></span></a></div>
@@ -2135,7 +2135,7 @@
             </div>
           </div>
 <a data-name="-1710379126%2FFunctions%2F1239919082" anchor-label="getEmoji" id="-1710379126%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="get-emoji.html"><span>get</span><wbr><span><span>Emoji</span></span></a></div>
@@ -2150,7 +2150,7 @@
             </div>
           </div>
 <a data-name="-888775008%2FFunctions%2F1239919082" anchor-label="getEmojiOrNull" id="-888775008%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="get-emoji-or-null.html"><span>get</span><wbr><span>Emoji</span><wbr><span>Or</span><wbr><span><span>Null</span></span></a></div>
@@ -2165,7 +2165,7 @@
             </div>
           </div>
 <a data-name="962412158%2FFunctions%2F1239919082" anchor-label="getEveryoneRole" id="962412158%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="get-everyone-role.html"><span>get</span><wbr><span>Everyone</span><wbr><span><span>Role</span></span></a></div>
@@ -2180,7 +2180,7 @@
             </div>
           </div>
 <a data-name="2135999188%2FFunctions%2F1239919082" anchor-label="getEveryoneRoleOrNull" id="2135999188%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="get-everyone-role-or-null.html"><span>get</span><wbr><span>Everyone</span><wbr><span>Role</span><wbr><span>Or</span><wbr><span><span>Null</span></span></a></div>
@@ -2195,7 +2195,7 @@
             </div>
           </div>
 <a data-name="2134925681%2FFunctions%2F1239919082" anchor-label="getGuildScheduledEvent" id="2134925681%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../dev.kord.core.behavior/-guild-behavior/get-guild-scheduled-event.html"><span>get</span><wbr><span>Guild</span><wbr><span>Scheduled</span><wbr><span><span>Event</span></span></a></div>
@@ -2204,13 +2204,13 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">suspend </span><span class="token keyword">fun </span><a href="../../dev.kord.core.behavior/-guild-behavior/get-guild-scheduled-event.html"><span class="token function">getGuildScheduledEvent</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">eventId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../-guild-scheduled-event/index.html">GuildScheduledEvent</a></div><div class="brief "><p class="paragraph">Requests a <a href="../-guild-scheduled-event/index.html">GuildScheduledEvent</a> by its <a href="../../../core/dev.kord.core.behavior/-guild-behavior/id.html">id</a>.</p></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">suspend </span><span class="token keyword">fun </span><a href="../../dev.kord.core.behavior/-guild-behavior/get-guild-scheduled-event.html"><span class="token function">getGuildScheduledEvent</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">eventId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../-guild-scheduled-event/index.html">GuildScheduledEvent</a></div><div class="brief "><p class="paragraph">Requests a <a href="../-guild-scheduled-event/index.html">GuildScheduledEvent</a> by its <a href="../-entity/id.html">id</a>.</p></div></div></div>
                 </div>
               </div>
             </div>
           </div>
 <a data-name="1836042055%2FFunctions%2F1239919082" anchor-label="getGuildScheduledEventOrNull" id="1836042055%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../dev.kord.core.behavior/-guild-behavior/get-guild-scheduled-event-or-null.html"><span>get</span><wbr><span>Guild</span><wbr><span>Scheduled</span><wbr><span>Event</span><wbr><span>Or</span><wbr><span><span>Null</span></span></a></div>
@@ -2219,13 +2219,13 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">suspend </span><span class="token keyword">fun </span><a href="../../dev.kord.core.behavior/-guild-behavior/get-guild-scheduled-event-or-null.html"><span class="token function">getGuildScheduledEventOrNull</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">eventId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../-guild-scheduled-event/index.html">GuildScheduledEvent</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph">Requests a <a href="../-guild-scheduled-event/index.html">GuildScheduledEvent</a> by its <a href="../../../core/dev.kord.core.behavior/-guild-behavior/id.html">id</a> returns <code class="lang-kotlin">null</code> if none could be found.</p></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">suspend </span><span class="token keyword">fun </span><a href="../../dev.kord.core.behavior/-guild-behavior/get-guild-scheduled-event-or-null.html"><span class="token function">getGuildScheduledEventOrNull</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">eventId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../-guild-scheduled-event/index.html">GuildScheduledEvent</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph">Requests a <a href="../-guild-scheduled-event/index.html">GuildScheduledEvent</a> by its <a href="../-entity/id.html">id</a> returns <code class="lang-kotlin">null</code> if none could be found.</p></div></div></div>
                 </div>
               </div>
             </div>
           </div>
 <a data-name="140518174%2FFunctions%2F1239919082" anchor-label="getInvite" id="140518174%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../dev.kord.core.behavior/-guild-behavior/get-invite.html"><span>get</span><wbr><span><span>Invite</span></span></a></div>
@@ -2240,7 +2240,7 @@
             </div>
           </div>
 <a data-name="-1775720504%2FFunctions%2F1239919082" anchor-label="getInviteOrNull" id="-1775720504%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../dev.kord.core.behavior/-guild-behavior/get-invite-or-null.html"><span>get</span><wbr><span>Invite</span><wbr><span>Or</span><wbr><span><span>Null</span></span></a></div>
@@ -2255,7 +2255,7 @@
             </div>
           </div>
 <a data-name="-183314439%2FFunctions%2F1239919082" anchor-label="getMember" id="-183314439%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../dev.kord.core.behavior/-guild-behavior/get-member.html"><span>get</span><wbr><span><span>Member</span></span></a></div>
@@ -2270,7 +2270,7 @@
             </div>
           </div>
 <a data-name="-144623665%2FFunctions%2F1239919082" anchor-label="getMemberOrNull" id="-144623665%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../dev.kord.core.behavior/-guild-behavior/get-member-or-null.html"><span>get</span><wbr><span>Member</span><wbr><span>Or</span><wbr><span><span>Null</span></span></a></div>
@@ -2285,7 +2285,7 @@
             </div>
           </div>
 <a data-name="-144391332%2FFunctions%2F1239919082" anchor-label="getMembers" id="-144391332%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../dev.kord.core.behavior/-guild-behavior/get-members.html"><span>get</span><wbr><span><span>Members</span></span></a></div>
@@ -2294,13 +2294,13 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="../../../common/dev.kord.common.annotation/-kord-experimental/index.html"><span class="token annotation builtin">KordExperimental</span></a></div></div><span class="token keyword">open </span><span class="token keyword">fun </span><a href="../../dev.kord.core.behavior/-guild-behavior/get-members.html"><span class="token function">getMembers</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">query<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">limit<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token operator"> = </span><span class="token constant">1000</span></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines.flow/-flow/index.html">Flow</a><span class="token operator">&lt;</span><a href="../-member/index.html">Member</a><span class="token operator">&gt;</span></div><div class="brief "><p class="paragraph">Requests to get up to <a href="../../dev.kord.core.behavior/-guild-behavior/get-members.html">limit</a> members whose <a href="../../../core/dev.kord.core.entity/-member/username.html">Member.username</a> or <a href="../-member/nickname.html">Member.nickname</a> match the <a href="../../dev.kord.core.behavior/-guild-behavior/get-members.html">query</a>. The <a href="../../dev.kord.core.behavior/-guild-behavior/get-members.html">limit</a> accepts a maximum value of <code class="lang-kotlin">1000</code> and a minimum of <code class="lang-kotlin">1</code>.</p></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="../../../common/dev.kord.common.annotation/-kord-experimental/index.html"><span class="token annotation builtin">KordExperimental</span></a></div></div><span class="token keyword">open </span><span class="token keyword">fun </span><a href="../../dev.kord.core.behavior/-guild-behavior/get-members.html"><span class="token function">getMembers</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">query<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">limit<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token operator"> = </span><span class="token constant">1000</span></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines.flow/-flow/index.html">Flow</a><span class="token operator">&lt;</span><a href="../-member/index.html">Member</a><span class="token operator">&gt;</span></div><div class="brief "><p class="paragraph">Requests to get up to <a href="../../dev.kord.core.behavior/-guild-behavior/get-members.html">limit</a> members whose <a href="../-user/username.html">Member.username</a> or <a href="../-member/nickname.html">Member.nickname</a> match the <a href="../../dev.kord.core.behavior/-guild-behavior/get-members.html">query</a>. The <a href="../../dev.kord.core.behavior/-guild-behavior/get-members.html">limit</a> accepts a maximum value of <code class="lang-kotlin">1000</code> and a minimum of <code class="lang-kotlin">1</code>.</p></div></div></div>
                 </div>
               </div>
             </div>
           </div>
 <a data-name="-1043700765%2FFunctions%2F1239919082" anchor-label="getOnboarding" id="-1043700765%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../dev.kord.core.behavior/-guild-behavior/get-onboarding.html"><span>get</span><wbr><span><span>Onboarding</span></span></a></div>
@@ -2315,7 +2315,7 @@
             </div>
           </div>
 <a data-name="1734576249%2FFunctions%2F1239919082" anchor-label="getOnboardingOrNull" id="1734576249%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../dev.kord.core.behavior/-guild-behavior/get-onboarding-or-null.html"><span>get</span><wbr><span>Onboarding</span><wbr><span>Or</span><wbr><span><span>Null</span></span></a></div>
@@ -2330,7 +2330,7 @@
             </div>
           </div>
 <a data-name="-982551928%2FFunctions%2F1239919082" anchor-label="getOwner" id="-982551928%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="get-owner.html"><span>get</span><wbr><span><span>Owner</span></span></a></div>
@@ -2345,7 +2345,7 @@
             </div>
           </div>
 <a data-name="183125854%2FFunctions%2F1239919082" anchor-label="getOwnerOrNull" id="183125854%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="get-owner-or-null.html"><span>get</span><wbr><span>Owner</span><wbr><span>Or</span><wbr><span><span>Null</span></span></a></div>
@@ -2360,7 +2360,7 @@
             </div>
           </div>
 <a data-name="-1986014540%2FFunctions%2F1239919082" anchor-label="getPreview" id="-1986014540%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../dev.kord.core.behavior/-guild-behavior/get-preview.html"><span>get</span><wbr><span><span>Preview</span></span></a></div>
@@ -2375,7 +2375,7 @@
             </div>
           </div>
 <a data-name="1491392138%2FFunctions%2F1239919082" anchor-label="getPreviewOrNull" id="1491392138%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../dev.kord.core.behavior/-guild-behavior/get-preview-or-null.html"><span>get</span><wbr><span>Preview</span><wbr><span>Or</span><wbr><span><span>Null</span></span></a></div>
@@ -2390,7 +2390,7 @@
             </div>
           </div>
 <a data-name="-1253781481%2FFunctions%2F1239919082" anchor-label="getPruneCount" id="-1253781481%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../dev.kord.core.behavior/-guild-behavior/get-prune-count.html"><span>get</span><wbr><span>Prune</span><wbr><span><span>Count</span></span></a></div>
@@ -2405,7 +2405,7 @@
             </div>
           </div>
 <a data-name="1393839229%2FFunctions%2F1239919082" anchor-label="getPublicUpdatesChannel" id="1393839229%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="get-public-updates-channel.html"><span>get</span><wbr><span>Public</span><wbr><span>Updates</span><wbr><span><span>Channel</span></span></a></div>
@@ -2420,7 +2420,7 @@
             </div>
           </div>
 <a data-name="-112097827%2FFunctions%2F1239919082" anchor-label="getRole" id="-112097827%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../dev.kord.core.behavior/-guild-behavior/get-role.html"><span>get</span><wbr><span><span>Role</span></span></a></div>
@@ -2435,7 +2435,7 @@
             </div>
           </div>
 <a data-name="137816755%2FFunctions%2F1239919082" anchor-label="getRoleOrNull" id="137816755%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../dev.kord.core.behavior/-guild-behavior/get-role-or-null.html"><span>get</span><wbr><span>Role</span><wbr><span>Or</span><wbr><span><span>Null</span></span></a></div>
@@ -2450,7 +2450,7 @@
             </div>
           </div>
 <a data-name="-1374088877%2FFunctions%2F1239919082" anchor-label="getRulesChannel" id="-1374088877%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="get-rules-channel.html"><span>get</span><wbr><span>Rules</span><wbr><span><span>Channel</span></span></a></div>
@@ -2465,7 +2465,7 @@
             </div>
           </div>
 <a data-name="-2056607591%2FFunctions%2F1239919082" anchor-label="getSoundboardSound" id="-2056607591%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../dev.kord.core.behavior/-guild-behavior/get-soundboard-sound.html"><span>get</span><wbr><span>Soundboard</span><wbr><span><span>Sound</span></span></a></div>
@@ -2480,7 +2480,7 @@
             </div>
           </div>
 <a data-name="-897445777%2FFunctions%2F1239919082" anchor-label="getSoundboardSoundOrNull" id="-897445777%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../dev.kord.core.behavior/-guild-behavior/get-soundboard-sound-or-null.html"><span>get</span><wbr><span>Soundboard</span><wbr><span>Sound</span><wbr><span>Or</span><wbr><span><span>Null</span></span></a></div>
@@ -2495,7 +2495,7 @@
             </div>
           </div>
 <a data-name="-75034092%2FFunctions%2F1239919082" anchor-label="getSticker" id="-75034092%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../dev.kord.core.behavior/-guild-behavior/get-sticker.html"><span>get</span><wbr><span><span>Sticker</span></span></a></div>
@@ -2510,7 +2510,7 @@
             </div>
           </div>
 <a data-name="344601002%2FFunctions%2F1239919082" anchor-label="getStickerOrNull" id="344601002%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../dev.kord.core.behavior/-guild-behavior/get-sticker-or-null.html"><span>get</span><wbr><span>Sticker</span><wbr><span>Or</span><wbr><span><span>Null</span></span></a></div>
@@ -2525,7 +2525,7 @@
             </div>
           </div>
 <a data-name="1480334983%2FFunctions%2F1239919082" anchor-label="getSystemChannel" id="1480334983%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="get-system-channel.html"><span>get</span><wbr><span>System</span><wbr><span><span>Channel</span></span></a></div>
@@ -2540,7 +2540,7 @@
             </div>
           </div>
 <a data-name="463212768%2FFunctions%2F1239919082" anchor-label="getTemplate" id="463212768%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../dev.kord.core.behavior/-guild-behavior/get-template.html"><span>get</span><wbr><span><span>Template</span></span></a></div>
@@ -2555,7 +2555,7 @@
             </div>
           </div>
 <a data-name="290172106%2FFunctions%2F1239919082" anchor-label="getTemplateOrNull" id="290172106%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../dev.kord.core.behavior/-guild-behavior/get-template-or-null.html"><span>get</span><wbr><span>Template</span><wbr><span>Or</span><wbr><span><span>Null</span></span></a></div>
@@ -2570,7 +2570,7 @@
             </div>
           </div>
 <a data-name="424273784%2FFunctions%2F1239919082" anchor-label="getVanityUrl" id="424273784%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../dev.kord.core.behavior/-guild-behavior/get-vanity-url.html"><span>get</span><wbr><span>Vanity</span><wbr><span><span>Url</span></span></a></div>
@@ -2585,7 +2585,7 @@
             </div>
           </div>
 <a data-name="-695624818%2FFunctions%2F1239919082" anchor-label="getWelcomeScreen" id="-695624818%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../dev.kord.core.behavior/-guild-behavior/get-welcome-screen.html"><span>get</span><wbr><span>Welcome</span><wbr><span><span>Screen</span></span></a></div>
@@ -2600,7 +2600,7 @@
             </div>
           </div>
 <a data-name="2103907300%2FFunctions%2F1239919082" anchor-label="getWelcomeScreenOrNull" id="2103907300%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../dev.kord.core.behavior/-guild-behavior/get-welcome-screen-or-null.html"><span>get</span><wbr><span>Welcome</span><wbr><span>Screen</span><wbr><span>Or</span><wbr><span><span>Null</span></span></a></div>
@@ -2615,7 +2615,7 @@
             </div>
           </div>
 <a data-name="1981950042%2FFunctions%2F1239919082" anchor-label="getWidget" id="1981950042%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../dev.kord.core.behavior/-guild-behavior/get-widget.html"><span>get</span><wbr><span><span>Widget</span></span></a></div>
@@ -2630,7 +2630,7 @@
             </div>
           </div>
 <a data-name="188314268%2FFunctions%2F1239919082" anchor-label="getWidgetChannel" id="188314268%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="get-widget-channel.html"><span>get</span><wbr><span>Widget</span><wbr><span><span>Channel</span></span></a></div>
@@ -2645,7 +2645,7 @@
             </div>
           </div>
 <a data-name="450746288%2FFunctions%2F1239919082" anchor-label="getWidgetOrNull" id="450746288%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../dev.kord.core.behavior/-guild-behavior/get-widget-or-null.html"><span>get</span><wbr><span>Widget</span><wbr><span>Or</span><wbr><span><span>Null</span></span></a></div>
@@ -2660,7 +2660,7 @@
             </div>
           </div>
 <a data-name="1505131818%2FFunctions%2F1239919082" anchor-label="hashCode" id="1505131818%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="hash-code.html"><span>hash</span><wbr><span><span>Code</span></span></a></div>
@@ -2675,7 +2675,7 @@
             </div>
           </div>
 <a data-name="-1248845431%2FFunctions%2F1239919082" anchor-label="kick" id="-1248845431%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../dev.kord.core.behavior/-guild-behavior/kick.html"><span><span>kick</span></span></a></div>
@@ -2690,7 +2690,7 @@
             </div>
           </div>
 <a data-name="21885181%2FFunctions%2F1239919082" anchor-label="leave" id="21885181%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../dev.kord.core.behavior/-guild-behavior/leave.html"><span><span>leave</span></span></a></div>
@@ -2705,7 +2705,7 @@
             </div>
           </div>
 <a data-name="1712223167%2FFunctions%2F1239919082" anchor-label="live" id="1712223167%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../dev.kord.core.live/live.html"><span><span>live</span></span></a></div>
@@ -2720,7 +2720,7 @@
             </div>
           </div>
 <a data-name="-1778471658%2FFunctions%2F1239919082" anchor-label="prune" id="-1778471658%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../dev.kord.core.behavior/-guild-behavior/prune.html"><span><span>prune</span></span></a></div>
@@ -2735,7 +2735,7 @@
             </div>
           </div>
 <a data-name="934766544%2FFunctions%2F1239919082" anchor-label="requestMembers" id="934766544%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../dev.kord.core.behavior/-guild-behavior/request-members.html"><span>request</span><wbr><span><span>Members</span></span></a></div>
@@ -2750,7 +2750,7 @@
             </div>
           </div>
 <a data-name="-1344067085%2FFunctions%2F1239919082" anchor-label="requestMembers" id="-1344067085%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../dev.kord.core.behavior/request-members.html"><span>request</span><wbr><span><span>Members</span></span></a></div>
@@ -2765,7 +2765,7 @@
             </div>
           </div>
 <a data-name="-2044220598%2FFunctions%2F1239919082" anchor-label="requestSoundboardSounds" id="-2044220598%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../dev.kord.core.behavior/-guild-behavior/request-soundboard-sounds.html"><span>request</span><wbr><span>Soundboard</span><wbr><span><span>Sounds</span></span></a></div>
@@ -2780,7 +2780,7 @@
             </div>
           </div>
 <a data-name="-2034795856%2FFunctions%2F1239919082" anchor-label="swapChannelPositions" id="-2034795856%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../dev.kord.core.behavior/swap-channel-positions.html"><span>swap</span><wbr><span>Channel</span><wbr><span><span>Positions</span></span></a></div>
@@ -2795,7 +2795,7 @@
             </div>
           </div>
 <a data-name="1143585371%2FFunctions%2F1239919082" anchor-label="swapRolePositions" id="1143585371%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../dev.kord.core.behavior/swap-role-positions.html"><span>swap</span><wbr><span>Role</span><wbr><span><span>Positions</span></span></a></div>
@@ -2810,7 +2810,7 @@
             </div>
           </div>
 <a data-name="1326965753%2FFunctions%2F1239919082" anchor-label="toString" id="1326965753%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="to-string.html"><span>to</span><wbr><span><span>String</span></span></a></div>
@@ -2825,7 +2825,7 @@
             </div>
           </div>
 <a data-name="-1324200629%2FFunctions%2F1239919082" anchor-label="unban" id="-1324200629%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../dev.kord.core.behavior/-guild-behavior/unban.html"><span><span>unban</span></span></a></div>
@@ -2840,7 +2840,7 @@
             </div>
           </div>
 <a data-name="1730799253%2FFunctions%2F1239919082" anchor-label="withStrategy" id="1730799253%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="with-strategy.html"><span>with</span><wbr><span><span>Strategy</span></span></a></div>
@@ -2860,17 +2860,21 @@
   </div>
 </div>
     <div class="footer">
-        <a href="#content" id="go-to-top-link" class="footer--button footer--button_go-to-top"></a>
-        <span>© 2026 Copyright</span>
-        <span class="pull-right">
-            <span>Generated by </span>
-            <a class="footer--link footer--link_external" href="https://github.com/Kotlin/dokka">
-                <span>dokka</span>
-            </a>
-        </span>
-    </div>
+        <div class="footer--container">
+            <a href="#content" id="go-to-top-link" class="footer--button footer--button_go-to-top"></a>
+            <div class="footer--content">
+                <div>
+                    <span>Generated by </span>
+                    <a class="footer--link footer--link_external" href="https://github.com/Kotlin/dokka">
+                        Dokka
+                    </a>
+                    <div>© 2026 Copyright</div>
+                </div>
             </div>
         </div>
     </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>

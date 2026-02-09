@@ -1,22 +1,22 @@
 <!doctype html>
-<html class="no-js">
+<html class="no-js" lang="en">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
     <title>dev.kord.rest.builder.channel</title>
-<link href="../../images/logo-icon.svg" rel="icon" type="image/svg">    <script>var pathToRoot = "../../";</script>
-    <script>document.documentElement.classList.replace("no-js","js");</script>
+<link href="../../images/logo-icon.svg" rel="icon" type="image/svg"><script>var pathToRoot = "../../";</script>
+    <script>document.documentElement.classList.replace("no-js", "js");</script>
     <script>const storage = localStorage.getItem("dokka-dark-mode")
-    if (storage == null) {
+      if (storage == null) {
         const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
         if (osDarkSchemePreferred === true) {
-            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+          document.getElementsByTagName("html")[0].classList.add("theme-dark")
         }
-    } else {
+      } else {
         const savedDarkMode = JSON.parse(storage)
-        if(savedDarkMode === true) {
-            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        if (savedDarkMode === true) {
+          document.getElementsByTagName("html")[0].classList.add("theme-dark")
         }
-    }
+      }
     </script>
 <script type="text/javascript" src="https://unpkg.com/kotlin-playground@1/dist/playground.min.js" async></script>
 <script type="text/javascript" src="../../scripts/sourceset_dependencies.js" async></script>
@@ -24,19 +24,17 @@
 <link href="../../styles/main.css" rel="Stylesheet">
 <link href="../../styles/prism.css" rel="Stylesheet">
 <link href="../../styles/logo-styles.css" rel="Stylesheet">
-<link href="../../styles/font-jb-sans-auto.css" rel="Stylesheet">
 <link href="../../ui-kit/ui-kit.min.css" rel="Stylesheet">
-<script type="text/javascript" src="../../scripts/clipboard.js" async></script>
+<script type="text/javascript" src="../../scripts/safe-local-storage_blocking.js"></script>
 <script type="text/javascript" src="../../scripts/navigation-loader.js" async></script>
 <script type="text/javascript" src="../../scripts/platform-content-handler.js" async></script>
 <script type="text/javascript" src="../../scripts/main.js" defer></script>
 <script type="text/javascript" src="../../scripts/prism.js" async></script>
-<script type="text/javascript" src="../../ui-kit/ui-kit.min.js" defer></script>
-<script type="text/javascript" src="../../scripts/symbol-parameters-wrapper_deferred.js" defer></script></head>
+<script type="text/javascript" src="../../ui-kit/ui-kit.min.js" defer></script></head>
 <body>
-    <div class="root">
-    <nav class="navigation theme-dark" id="navigation-wrapper">
-<a class="library-name--link" href="../../index.html">
+<div class="root">
+    <header class="navigation theme-dark" id="navigation-wrapper" role="banner">
+<a class="library-name--link" href="../../index.html" tabindex="1">
                     kord
             </a>        <button class="navigation-controls--btn navigation-controls--btn_toc ui-kit_mobile-only" id="toc-toggle" type="button">Toggle table of contents
         </button>
@@ -44,13 +42,13 @@
         <div class="library-version" id="library-version">or(map(map(map(map(valueof(ProcessOutputValueSource))))), map(map(map(map(valueof(ProcessOutputValueSource))))))
         </div>
         <div class="navigation-controls">
-        <div class="filter-section filter-section_loading" id="filter-section">
-                <button class="platform-tag platform-selector common-like" data-active="" data-filter=":rest/commonMain">common</button>
+        <ul class="filter-section filter-section_loading" id="filter-section" aria-label="Target filter">
+                <button class="platform-tag platform-selector common-like" data-active="" aria-pressed="true" data-filter=":rest/commonMain">common</button>
             <div class="dropdown filter-section--dropdown" data-role="dropdown" id="filter-section-dropdown">
                 <button class="button button_dropdown filter-section--dropdown-toggle" role="combobox" data-role="dropdown-toggle" aria-controls="platform-tags-listbox" aria-haspopup="listbox" aria-expanded="false" aria-label="Toggle source sets"></button>
-                <ul role="listbox" id="platform-tags-listbox" class="dropdown--list" data-role="dropdown-listbox">
-                    <div class="dropdown--header"><span>Platform filter</span>
-                        <button class="button" data-role="dropdown-toggle" aria-label="Close platform filter">
+                <ul role="listbox" id="platform-tags-listbox" class="dropdown--list" data-role="dropdown-listbox" aria-label="Target filter">
+                    <div class="dropdown--header"><span>Target filter</span>
+                        <button class="button" data-role="dropdown-toggle" aria-label="Close target filter">
                             <i class="ui-kit-icon ui-kit-icon_cross"></i>
                         </button>
                     </div>
@@ -64,32 +62,34 @@
                 </ul>
                 <div class="dropdown--overlay"></div>
             </div>
-        </div>
+        </ul>
             <button class="navigation-controls--btn navigation-controls--btn_theme" id="theme-toggle-button" type="button">Switch theme
             </button>
             <div class="navigation-controls--btn navigation-controls--btn_search" id="searchBar" role="button">Search in
                 API
             </div>
         </div>
-    </nav>
-        <div id="container">
-            <div class="sidebar" id="leftColumn">
-                <div class="dropdown theme-dark_mobile" data-role="dropdown" id="toc-dropdown">
-                    <ul role="listbox" id="toc-listbox" class="dropdown--list dropdown--list_toc-list" data-role="dropdown-listbox">
-                        <div class="dropdown--header">
+    </header>
+    <div id="container">
+        <nav id="leftColumn" class="sidebar" data-item-type="SECTION" data-item-config="{&quot;defaultSize&quot;: 280, &quot;minSize&quot;: 200, &quot;maxSize&quot;: 400}">
+            <a class="toc--skip-link" href="#main">Skip to content</a>
+            <div class="dropdown theme-dark_mobile" data-role="dropdown" id="toc-dropdown">
+                <ul role="listbox" id="toc-listbox" class="dropdown--list dropdown--list_toc-list" data-role="dropdown-listbox" aria-label="Table of contents">
+                    <div class="dropdown--header">
                             <span>
                                     kord
                             </span>
-                            <button class="button" data-role="dropdown-toggle" aria-label="Close table of contents">
-                                <i class="ui-kit-icon ui-kit-icon_cross"></i>
-                            </button>
-                        </div>
-                        <div class="sidebar--inner" id="sideMenu"></div>
-                    </ul>
-                    <div class="dropdown--overlay"></div>
-                </div>
+                        <button class="button" data-role="dropdown-toggle" aria-label="Close table of contents">
+                            <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                        </button>
+                    </div>
+                    <div class="sidebar--inner" id="sideMenu"></div>
+                </ul>
+                <div class="dropdown--overlay"></div>
             </div>
-            <div id="main">
+        </nav>
+        <div id="resizer" class="resizer" data-item-type="BAR"></div>
+        <div id="main" data-item-type="SECTION" role="main">
 <div class="main-content" data-page-type="package" id="content" pageids="kord-rest::dev.kord.rest.builder.channel////PointingToDeclaration//-555443553">
   <div class="breadcrumbs"><a href="../index.html">kord-rest</a><span class="delimiter">/</span><span class="current">dev.kord.rest.builder.channel</span></div>
   <div class="cover ">
@@ -99,9 +99,9 @@
     <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="TYPE">Types</button><button class="section-tab" data-togglable="FUNCTION,EXTENSION_FUNCTION">Functions</button></div>
     <div class="tabs-section-body">
       <div data-togglable="TYPE">
-        <h2 class="">Types</h2>
+        <h2 class="tableheader">Types</h2>
         <div class="table"><a data-name="1942454474%2FClasslikes%2F-555443553" anchor-label="CategoryCreateBuilder" id="1942454474%2FClasslikes%2F-555443553" data-filterable-set=":rest/commonMain"></a>
-          <div class="table-row" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-category-create-builder/index.html"><span>Category</span><wbr><span>Create</span><wbr><span><span>Builder</span></span></a></div>
@@ -116,7 +116,7 @@
             </div>
           </div>
 <a data-name="1169088648%2FClasslikes%2F-555443553" anchor-label="CategoryModifyBuilder" id="1169088648%2FClasslikes%2F-555443553" data-filterable-set=":rest/commonMain"></a>
-          <div class="table-row" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-category-modify-builder/index.html"><span>Category</span><wbr><span>Modify</span><wbr><span><span>Builder</span></span></a></div>
@@ -131,7 +131,7 @@
             </div>
           </div>
 <a data-name="-771709752%2FClasslikes%2F-555443553" anchor-label="ChannelPermissionModifyBuilder" id="-771709752%2FClasslikes%2F-555443553" data-filterable-set=":rest/commonMain"></a>
-          <div class="table-row" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-channel-permission-modify-builder/index.html"><span>Channel</span><wbr><span>Permission</span><wbr><span>Modify</span><wbr><span><span>Builder</span></span></a></div>
@@ -146,7 +146,7 @@
             </div>
           </div>
 <a data-name="730397806%2FClasslikes%2F-555443553" anchor-label="ForumChannelCreateBuilder" id="730397806%2FClasslikes%2F-555443553" data-filterable-set=":rest/commonMain"></a>
-          <div class="table-row" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-forum-channel-create-builder/index.html"><span>Forum</span><wbr><span>Channel</span><wbr><span>Create</span><wbr><span><span>Builder</span></span></a></div>
@@ -161,7 +161,7 @@
             </div>
           </div>
 <a data-name="-42968020%2FClasslikes%2F-555443553" anchor-label="ForumChannelModifyBuilder" id="-42968020%2FClasslikes%2F-555443553" data-filterable-set=":rest/commonMain"></a>
-          <div class="table-row" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-forum-channel-modify-builder/index.html"><span>Forum</span><wbr><span>Channel</span><wbr><span>Modify</span><wbr><span><span>Builder</span></span></a></div>
@@ -176,7 +176,7 @@
             </div>
           </div>
 <a data-name="-1041963159%2FClasslikes%2F-555443553" anchor-label="ForumTagBuilder" id="-1041963159%2FClasslikes%2F-555443553" data-filterable-set=":rest/commonMain"></a>
-          <div class="table-row" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-forum-tag-builder/index.html"><span>Forum</span><wbr><span>Tag</span><wbr><span><span>Builder</span></span></a></div>
@@ -191,7 +191,7 @@
             </div>
           </div>
 <a data-name="-2016014557%2FClasslikes%2F-555443553" anchor-label="GuildChannelPositionModifyBuilder" id="-2016014557%2FClasslikes%2F-555443553" data-filterable-set=":rest/commonMain"></a>
-          <div class="table-row" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-guild-channel-position-modify-builder/index.html"><span>Guild</span><wbr><span>Channel</span><wbr><span>Position</span><wbr><span>Modify</span><wbr><span><span>Builder</span></span></a></div>
@@ -206,7 +206,7 @@
             </div>
           </div>
 <a data-name="-1949451789%2FClasslikes%2F-555443553" anchor-label="GuildChannelSwapBuilder" id="-1949451789%2FClasslikes%2F-555443553" data-filterable-set=":rest/commonMain"></a>
-          <div class="table-row" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-guild-channel-swap-builder/index.html"><span>Guild</span><wbr><span>Channel</span><wbr><span>Swap</span><wbr><span><span>Builder</span></span></a></div>
@@ -221,7 +221,7 @@
             </div>
           </div>
 <a data-name="1957089557%2FClasslikes%2F-555443553" anchor-label="InviteCreateBuilder" id="1957089557%2FClasslikes%2F-555443553" data-filterable-set=":rest/commonMain"></a>
-          <div class="table-row" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-invite-create-builder/index.html"><span>Invite</span><wbr><span>Create</span><wbr><span><span>Builder</span></span></a></div>
@@ -236,7 +236,7 @@
             </div>
           </div>
 <a data-name="1868774027%2FClasslikes%2F-555443553" anchor-label="MediaChannelCreateBuilder" id="1868774027%2FClasslikes%2F-555443553" data-filterable-set=":rest/commonMain"></a>
-          <div class="table-row" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-media-channel-create-builder/index.html"><span>Media</span><wbr><span>Channel</span><wbr><span>Create</span><wbr><span><span>Builder</span></span></a></div>
@@ -251,7 +251,7 @@
             </div>
           </div>
 <a data-name="1095408201%2FClasslikes%2F-555443553" anchor-label="MediaChannelModifyBuilder" id="1095408201%2FClasslikes%2F-555443553" data-filterable-set=":rest/commonMain"></a>
-          <div class="table-row" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-media-channel-modify-builder/index.html"><span>Media</span><wbr><span>Channel</span><wbr><span>Modify</span><wbr><span><span>Builder</span></span></a></div>
@@ -266,7 +266,7 @@
             </div>
           </div>
 <a data-name="-1652172152%2FClasslikes%2F-555443553" anchor-label="NewsChannelCreateBuilder" id="-1652172152%2FClasslikes%2F-555443553" data-filterable-set=":rest/commonMain"></a>
-          <div class="table-row" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-news-channel-create-builder/index.html"><span>News</span><wbr><span>Channel</span><wbr><span>Create</span><wbr><span><span>Builder</span></span></a></div>
@@ -281,7 +281,7 @@
             </div>
           </div>
 <a data-name="1869429318%2FClasslikes%2F-555443553" anchor-label="NewsChannelModifyBuilder" id="1869429318%2FClasslikes%2F-555443553" data-filterable-set=":rest/commonMain"></a>
-          <div class="table-row" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-news-channel-modify-builder/index.html"><span>News</span><wbr><span>Channel</span><wbr><span>Modify</span><wbr><span><span>Builder</span></span></a></div>
@@ -296,7 +296,7 @@
             </div>
           </div>
 <a data-name="-119919688%2FClasslikes%2F-555443553" anchor-label="PermissionOverwriteBuilder" id="-119919688%2FClasslikes%2F-555443553" data-filterable-set=":rest/commonMain"></a>
-          <div class="table-row" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-permission-overwrite-builder/index.html"><span>Permission</span><wbr><span>Overwrite</span><wbr><span><span>Builder</span></span></a></div>
@@ -311,7 +311,7 @@
             </div>
           </div>
 <a data-name="2044599079%2FClasslikes%2F-555443553" anchor-label="PermissionOverwritesBuilder" id="2044599079%2FClasslikes%2F-555443553" data-filterable-set=":rest/commonMain"></a>
-          <div class="table-row" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-permission-overwrites-builder/index.html"><span>Permission</span><wbr><span>Overwrites</span><wbr><span><span>Builder</span></span></a></div>
@@ -326,7 +326,7 @@
             </div>
           </div>
 <a data-name="-1987434621%2FClasslikes%2F-555443553" anchor-label="PermissionOverwritesCreateBuilder" id="-1987434621%2FClasslikes%2F-555443553" data-filterable-set=":rest/commonMain"></a>
-          <div class="table-row" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-permission-overwrites-create-builder/index.html"><span>Permission</span><wbr><span>Overwrites</span><wbr><span>Create</span><wbr><span><span>Builder</span></span></a></div>
@@ -341,7 +341,7 @@
             </div>
           </div>
 <a data-name="1534166849%2FClasslikes%2F-555443553" anchor-label="PermissionOverwritesModifyBuilder" id="1534166849%2FClasslikes%2F-555443553" data-filterable-set=":rest/commonMain"></a>
-          <div class="table-row" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-permission-overwrites-modify-builder/index.html"><span>Permission</span><wbr><span>Overwrites</span><wbr><span>Modify</span><wbr><span><span>Builder</span></span></a></div>
@@ -356,7 +356,7 @@
             </div>
           </div>
 <a data-name="1610033585%2FClasslikes%2F-555443553" anchor-label="StageChannelCreateBuilder" id="1610033585%2FClasslikes%2F-555443553" data-filterable-set=":rest/commonMain"></a>
-          <div class="table-row" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-stage-channel-create-builder/index.html"><span>Stage</span><wbr><span>Channel</span><wbr><span>Create</span><wbr><span><span>Builder</span></span></a></div>
@@ -371,7 +371,7 @@
             </div>
           </div>
 <a data-name="-2059247259%2FClasslikes%2F-555443553" anchor-label="StageVoiceChannelModifyBuilder" id="-2059247259%2FClasslikes%2F-555443553" data-filterable-set=":rest/commonMain"></a>
-          <div class="table-row" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-stage-voice-channel-modify-builder/index.html"><span>Stage</span><wbr><span>Voice</span><wbr><span>Channel</span><wbr><span>Modify</span><wbr><span><span>Builder</span></span></a></div>
@@ -386,7 +386,7 @@
             </div>
           </div>
 <a data-name="-911136146%2FClasslikes%2F-555443553" anchor-label="TextChannelCreateBuilder" id="-911136146%2FClasslikes%2F-555443553" data-filterable-set=":rest/commonMain"></a>
-          <div class="table-row" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-text-channel-create-builder/index.html"><span>Text</span><wbr><span>Channel</span><wbr><span>Create</span><wbr><span><span>Builder</span></span></a></div>
@@ -401,7 +401,7 @@
             </div>
           </div>
 <a data-name="-1684501972%2FClasslikes%2F-555443553" anchor-label="TextChannelModifyBuilder" id="-1684501972%2FClasslikes%2F-555443553" data-filterable-set=":rest/commonMain"></a>
-          <div class="table-row" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-text-channel-modify-builder/index.html"><span>Text</span><wbr><span>Channel</span><wbr><span>Modify</span><wbr><span><span>Builder</span></span></a></div>
@@ -416,7 +416,7 @@
             </div>
           </div>
 <a data-name="800100349%2FClasslikes%2F-555443553" anchor-label="VoiceChannelCreateBuilder" id="800100349%2FClasslikes%2F-555443553" data-filterable-set=":rest/commonMain"></a>
-          <div class="table-row" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-voice-channel-create-builder/index.html"><span>Voice</span><wbr><span>Channel</span><wbr><span>Create</span><wbr><span><span>Builder</span></span></a></div>
@@ -431,7 +431,7 @@
             </div>
           </div>
 <a data-name="26734523%2FClasslikes%2F-555443553" anchor-label="VoiceChannelModifyBuilder" id="26734523%2FClasslikes%2F-555443553" data-filterable-set=":rest/commonMain"></a>
-          <div class="table-row" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-voice-channel-modify-builder/index.html"><span>Voice</span><wbr><span>Channel</span><wbr><span>Modify</span><wbr><span><span>Builder</span></span></a></div>
@@ -448,9 +448,9 @@
         </div>
       </div>
       <div data-togglable="EXTENSION_FUNCTION">
-        <h2 class="">Functions</h2>
+        <h2 class="tableheader">Functions</h2>
         <div class="table"><a data-name="-1841571094%2FFunctions%2F-555443553" anchor-label="addMemberOverwrite" id="-1841571094%2FFunctions%2F-555443553" data-filterable-set=":rest/commonMain"></a>
-          <div class="table-row" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="add-member-overwrite.html"><span>add</span><wbr><span>Member</span><wbr><span><span>Overwrite</span></span></a></div>
@@ -465,7 +465,7 @@
             </div>
           </div>
 <a data-name="1765747910%2FFunctions%2F-555443553" anchor-label="addRoleOverwrite" id="1765747910%2FFunctions%2F-555443553" data-filterable-set=":rest/commonMain"></a>
-          <div class="table-row" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="add-role-overwrite.html"><span>add</span><wbr><span>Role</span><wbr><span><span>Overwrite</span></span></a></div>
@@ -485,17 +485,21 @@
   </div>
 </div>
     <div class="footer">
-        <a href="#content" id="go-to-top-link" class="footer--button footer--button_go-to-top"></a>
-        <span>© 2026 Copyright</span>
-        <span class="pull-right">
-            <span>Generated by </span>
-            <a class="footer--link footer--link_external" href="https://github.com/Kotlin/dokka">
-                <span>dokka</span>
-            </a>
-        </span>
-    </div>
+        <div class="footer--container">
+            <a href="#content" id="go-to-top-link" class="footer--button footer--button_go-to-top"></a>
+            <div class="footer--content">
+                <div>
+                    <span>Generated by </span>
+                    <a class="footer--link footer--link_external" href="https://github.com/Kotlin/dokka">
+                        Dokka
+                    </a>
+                    <div>© 2026 Copyright</div>
+                </div>
             </div>
         </div>
     </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>

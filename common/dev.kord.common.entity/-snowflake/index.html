@@ -1,22 +1,22 @@
 <!doctype html>
-<html class="no-js">
+<html class="no-js" lang="en">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
     <title>Snowflake</title>
-<link href="../../../images/logo-icon.svg" rel="icon" type="image/svg">    <script>var pathToRoot = "../../../";</script>
-    <script>document.documentElement.classList.replace("no-js","js");</script>
+<link href="../../../images/logo-icon.svg" rel="icon" type="image/svg"><script>var pathToRoot = "../../../";</script>
+    <script>document.documentElement.classList.replace("no-js", "js");</script>
     <script>const storage = localStorage.getItem("dokka-dark-mode")
-    if (storage == null) {
+      if (storage == null) {
         const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
         if (osDarkSchemePreferred === true) {
-            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+          document.getElementsByTagName("html")[0].classList.add("theme-dark")
         }
-    } else {
+      } else {
         const savedDarkMode = JSON.parse(storage)
-        if(savedDarkMode === true) {
-            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        if (savedDarkMode === true) {
+          document.getElementsByTagName("html")[0].classList.add("theme-dark")
         }
-    }
+      }
     </script>
 <script type="text/javascript" src="https://unpkg.com/kotlin-playground@1/dist/playground.min.js" async></script>
 <script type="text/javascript" src="../../../scripts/sourceset_dependencies.js" async></script>
@@ -24,19 +24,17 @@
 <link href="../../../styles/main.css" rel="Stylesheet">
 <link href="../../../styles/prism.css" rel="Stylesheet">
 <link href="../../../styles/logo-styles.css" rel="Stylesheet">
-<link href="../../../styles/font-jb-sans-auto.css" rel="Stylesheet">
 <link href="../../../ui-kit/ui-kit.min.css" rel="Stylesheet">
-<script type="text/javascript" src="../../../scripts/clipboard.js" async></script>
+<script type="text/javascript" src="../../../scripts/safe-local-storage_blocking.js"></script>
 <script type="text/javascript" src="../../../scripts/navigation-loader.js" async></script>
 <script type="text/javascript" src="../../../scripts/platform-content-handler.js" async></script>
 <script type="text/javascript" src="../../../scripts/main.js" defer></script>
 <script type="text/javascript" src="../../../scripts/prism.js" async></script>
-<script type="text/javascript" src="../../../ui-kit/ui-kit.min.js" defer></script>
-<script type="text/javascript" src="../../../scripts/symbol-parameters-wrapper_deferred.js" defer></script></head>
+<script type="text/javascript" src="../../../ui-kit/ui-kit.min.js" defer></script></head>
 <body>
-    <div class="root">
-    <nav class="navigation theme-dark" id="navigation-wrapper">
-<a class="library-name--link" href="../../../index.html">
+<div class="root">
+    <header class="navigation theme-dark" id="navigation-wrapper" role="banner">
+<a class="library-name--link" href="../../../index.html" tabindex="1">
                     kord
             </a>        <button class="navigation-controls--btn navigation-controls--btn_toc ui-kit_mobile-only" id="toc-toggle" type="button">Toggle table of contents
         </button>
@@ -44,13 +42,13 @@
         <div class="library-version" id="library-version">or(map(map(map(map(valueof(ProcessOutputValueSource))))), map(map(map(map(valueof(ProcessOutputValueSource))))))
         </div>
         <div class="navigation-controls">
-        <div class="filter-section filter-section_loading" id="filter-section">
-                <button class="platform-tag platform-selector common-like" data-active="" data-filter=":common/commonMain">common</button>
+        <ul class="filter-section filter-section_loading" id="filter-section" aria-label="Target filter">
+                <button class="platform-tag platform-selector common-like" data-active="" aria-pressed="true" data-filter=":common/commonMain">common</button>
             <div class="dropdown filter-section--dropdown" data-role="dropdown" id="filter-section-dropdown">
                 <button class="button button_dropdown filter-section--dropdown-toggle" role="combobox" data-role="dropdown-toggle" aria-controls="platform-tags-listbox" aria-haspopup="listbox" aria-expanded="false" aria-label="Toggle source sets"></button>
-                <ul role="listbox" id="platform-tags-listbox" class="dropdown--list" data-role="dropdown-listbox">
-                    <div class="dropdown--header"><span>Platform filter</span>
-                        <button class="button" data-role="dropdown-toggle" aria-label="Close platform filter">
+                <ul role="listbox" id="platform-tags-listbox" class="dropdown--list" data-role="dropdown-listbox" aria-label="Target filter">
+                    <div class="dropdown--header"><span>Target filter</span>
+                        <button class="button" data-role="dropdown-toggle" aria-label="Close target filter">
                             <i class="ui-kit-icon ui-kit-icon_cross"></i>
                         </button>
                     </div>
@@ -64,45 +62,47 @@
                 </ul>
                 <div class="dropdown--overlay"></div>
             </div>
-        </div>
+        </ul>
             <button class="navigation-controls--btn navigation-controls--btn_theme" id="theme-toggle-button" type="button">Switch theme
             </button>
             <div class="navigation-controls--btn navigation-controls--btn_search" id="searchBar" role="button">Search in
                 API
             </div>
         </div>
-    </nav>
-        <div id="container">
-            <div class="sidebar" id="leftColumn">
-                <div class="dropdown theme-dark_mobile" data-role="dropdown" id="toc-dropdown">
-                    <ul role="listbox" id="toc-listbox" class="dropdown--list dropdown--list_toc-list" data-role="dropdown-listbox">
-                        <div class="dropdown--header">
+    </header>
+    <div id="container">
+        <nav id="leftColumn" class="sidebar" data-item-type="SECTION" data-item-config="{&quot;defaultSize&quot;: 280, &quot;minSize&quot;: 200, &quot;maxSize&quot;: 400}">
+            <a class="toc--skip-link" href="#main">Skip to content</a>
+            <div class="dropdown theme-dark_mobile" data-role="dropdown" id="toc-dropdown">
+                <ul role="listbox" id="toc-listbox" class="dropdown--list dropdown--list_toc-list" data-role="dropdown-listbox" aria-label="Table of contents">
+                    <div class="dropdown--header">
                             <span>
                                     kord
                             </span>
-                            <button class="button" data-role="dropdown-toggle" aria-label="Close table of contents">
-                                <i class="ui-kit-icon ui-kit-icon_cross"></i>
-                            </button>
-                        </div>
-                        <div class="sidebar--inner" id="sideMenu"></div>
-                    </ul>
-                    <div class="dropdown--overlay"></div>
-                </div>
+                        <button class="button" data-role="dropdown-toggle" aria-label="Close table of contents">
+                            <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                        </button>
+                    </div>
+                    <div class="sidebar--inner" id="sideMenu"></div>
+                </ul>
+                <div class="dropdown--overlay"></div>
             </div>
-            <div id="main">
+        </nav>
+        <div id="resizer" class="resizer" data-item-type="BAR"></div>
+        <div id="main" data-item-type="SECTION" role="main">
 <div class="main-content" data-page-type="classlike" id="content" pageids="kord-common::dev.kord.common.entity/Snowflake///PointingToDeclaration//-1299464202">
   <div class="breadcrumbs"><a href="../../index.html">kord-common</a><span class="delimiter">/</span><a href="../index.html">dev.kord.common.entity</a><span class="delimiter">/</span><span class="current">Snowflake</span></div>
   <div class="cover ">
     <h1 class="cover"><span><span>Snowflake</span></span></h1>
-    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":common/commonMain"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://kotlinlang.org/api/kotlinx.serialization/kotlinx-serialization-core/kotlinx.serialization/-serializable/index.html"><span class="token annotation builtin">Serializable</span></a><span class="token punctuation">(</span><span>with<span class="token operator"> = </span><a href="../../../common/dev.kord.common.entity/-snowflake/-serializer/index.html">Snowflake.Serializer::class</a></span><wbr><span class="token punctuation">)</span></div></div><span class="token keyword">class </span><a href="index.html">Snowflake</a> : <a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-comparable/index.html">Comparable</a><span class="token operator">&lt;</span><a href="index.html">Snowflake</a><span class="token operator">&gt; </span><span class="clearfix"><span class="floating-right">(<a href="https://github.com/kordlib/kord/blob/map(map(map(valueof(ProcessOutputValueSource))))/common/src/commonMain/kotlin/entity/Snowflake.kt#L21">source</a>)</span></span></div><p class="paragraph">A unique identifier for entities <a href="https://discord.com/developers/docs/reference#snowflakes">used by Discord</a>.</p><p class="paragraph">Snowflakes are IDs with a <a href="timestamp.html">timestamp</a>, which makes them <a href="compare-to.html">comparable</a> based on their timestamp.</p></div></div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":common/commonMain"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://kotlinlang.org/api/kotlinx.serialization/kotlinx-serialization-core/kotlinx.serialization/-serializable/index.html"><span class="token annotation builtin">Serializable</span></a><span class="token punctuation">(</span><span>with<span class="token operator"> = </span><a href="../../../common/dev.kord.common.entity/-snowflake/-serializer/index.html">Snowflake.Serializer::class</a></span><wbr><span class="token punctuation">)</span></div></div><span class="token keyword">class </span><a href="index.html">Snowflake</a> : <a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-comparable/index.html">Comparable</a><span class="token operator">&lt;</span><a href="index.html">Snowflake</a><span class="token operator">&gt; </span><span class="source-link-wrapper"><span class="source-link" data-element-type="source-link">(<a href="https://github.com/kordlib/kord/blob/map(map(map(valueof(ProcessOutputValueSource))))/common/src/commonMain/kotlin/entity/Snowflake.kt#L21">source</a>)</span></span></div><p class="paragraph">A unique identifier for entities <a href="https://discord.com/developers/docs/reference#snowflakes">used by Discord</a>.</p><p class="paragraph">Snowflakes are IDs with a <a href="timestamp.html">timestamp</a>, which makes them <a href="compare-to.html">comparable</a> based on their timestamp.</p></div></div>
   </div>
   <div class="tabbedcontent">
     <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="CONSTRUCTOR,TYPE,PROPERTY,FUNCTION">Members</button><button class="section-tab" data-togglable="CONSTRUCTOR,TYPE,PROPERTY,FUNCTION,EXTENSION_PROPERTY,EXTENSION_FUNCTION">Members &amp; Extensions</button></div>
     <div class="tabs-section-body">
       <div data-togglable="CONSTRUCTOR">
-        <h2 class="">Constructors</h2>
+        <h2 class="tableheader">Constructors</h2>
         <div class="table"><a data-name="-1813896995%2FConstructors%2F-1299464202" anchor-label="Snowflake" id="-1813896995%2FConstructors%2F-1299464202" data-filterable-set=":common/commonMain"></a>
-          <div class="table-row" data-togglable="CONSTRUCTOR" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+          <div class="table-row table-row_content" data-togglable="CONSTRUCTOR" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-snowflake.html"><span><span>Snowflake</span></span></a></div>
@@ -111,7 +111,7 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":common/commonMain"><div class="symbol monospace"><span class="token keyword">constructor</span><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">value<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-u-long/index.html">ULong</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Creates a Snowflake from a given ULong <a href="../../../common/dev.kord.common.entity/-snowflake/[60]init[62].html">value</a>.</p></div><div class="symbol monospace"><span class="token keyword">constructor</span><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">value<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Creates a Snowflake from a given String <a href="../../../common/dev.kord.common.entity/-snowflake/[60]init[62].html">value</a>, parsing it as a <a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-u-long/index.html">ULong</a> value.</p></div><div class="symbol monospace"><span class="token keyword">constructor</span><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">timestamp<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.time/-instant/index.html">Instant</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Creates a Snowflake from a given <a href="../../../common/dev.kord.common.entity/-snowflake/[60]init[62].html">timestamp</a>.</p></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":common/commonMain"><div class="symbol monospace"><span class="token keyword">constructor</span><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">value<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-u-long/index.html">ULong</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Creates a Snowflake from a given ULong <a href="../../../common/dev.kord.common.entity/-snowflake/--root--.html">value</a>.</p></div><div class="symbol monospace"><span class="token keyword">constructor</span><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">value<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Creates a Snowflake from a given String <a href="../../../common/dev.kord.common.entity/-snowflake/--root--.html">value</a>, parsing it as a <a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-u-long/index.html">ULong</a> value.</p></div><div class="symbol monospace"><span class="token keyword">constructor</span><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">timestamp<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.time/-instant/index.html">Instant</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Creates a Snowflake from a given <a href="../../../common/dev.kord.common.entity/-snowflake/--root--.html">timestamp</a>.</p></div></div></div>
                 </div>
               </div>
             </div>
@@ -119,9 +119,9 @@
         </div>
       </div>
       <div data-togglable="TYPE">
-        <h2 class="">Types</h2>
+        <h2 class="tableheader">Types</h2>
         <div class="table"><a data-name="-1289370711%2FClasslikes%2F-1299464202" anchor-label="Companion" id="-1289370711%2FClasslikes%2F-1299464202" data-filterable-set=":common/commonMain"></a>
-          <div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-companion/index.html"><span><span>Companion</span></span></a></div>
@@ -138,9 +138,9 @@
         </div>
       </div>
       <div data-togglable="PROPERTY">
-        <h2 class="">Properties</h2>
+        <h2 class="tableheader">Properties</h2>
         <div class="table"><a data-name="-1633693229%2FProperties%2F-1299464202" anchor-label="increment" id="-1633693229%2FProperties%2F-1299464202" data-filterable-set=":common/commonMain"></a>
-          <div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="increment.html"><span><span>increment</span></span></a></div>
@@ -155,7 +155,7 @@
             </div>
           </div>
 <a data-name="198447158%2FProperties%2F-1299464202" anchor-label="missingIfNull" id="198447158%2FProperties%2F-1299464202" data-filterable-set=":common/commonMain"></a>
-          <div class="table-row" data-togglable="EXTENSION_PROPERTY" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+          <div class="table-row table-row_content" data-togglable="EXTENSION_PROPERTY" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../dev.kord.common.entity.optional/missing-if-null.html"><span>missing</span><wbr><span>If</span><wbr><span><span>Null</span></span></a></div>
@@ -170,7 +170,7 @@
             </div>
           </div>
 <a data-name="662537656%2FProperties%2F-1299464202" anchor-label="processId" id="662537656%2FProperties%2F-1299464202" data-filterable-set=":common/commonMain"></a>
-          <div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="process-id.html"><span>process</span><wbr><span><span>Id</span></span></a></div>
@@ -185,7 +185,7 @@
             </div>
           </div>
 <a data-name="586318462%2FProperties%2F-1299464202" anchor-label="timeMark" id="586318462%2FProperties%2F-1299464202" data-filterable-set=":common/commonMain"></a>
-          <div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="time-mark.html"><span>time</span><wbr><span><span>Mark</span></span></a></div>
@@ -200,7 +200,7 @@
             </div>
           </div>
 <a data-name="847056396%2FProperties%2F-1299464202" anchor-label="timestamp" id="847056396%2FProperties%2F-1299464202" data-filterable-set=":common/commonMain"></a>
-          <div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="timestamp.html"><span><span>timestamp</span></span></a></div>
@@ -215,7 +215,7 @@
             </div>
           </div>
 <a data-name="248663185%2FProperties%2F-1299464202" anchor-label="value" id="248663185%2FProperties%2F-1299464202" data-filterable-set=":common/commonMain"></a>
-          <div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="value.html"><span><span>value</span></span></a></div>
@@ -230,7 +230,7 @@
             </div>
           </div>
 <a data-name="-593159841%2FProperties%2F-1299464202" anchor-label="workerId" id="-593159841%2FProperties%2F-1299464202" data-filterable-set=":common/commonMain"></a>
-          <div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="worker-id.html"><span>worker</span><wbr><span><span>Id</span></span></a></div>
@@ -247,9 +247,9 @@
         </div>
       </div>
       <div data-togglable="FUNCTION">
-        <h2 class="">Functions</h2>
+        <h2 class="tableheader">Functions</h2>
         <div class="table"><a data-name="126571351%2FFunctions%2F-1299464202" anchor-label="compareTo" id="126571351%2FFunctions%2F-1299464202" data-filterable-set=":common/commonMain"></a>
-          <div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="compare-to.html"><span>compare</span><wbr><span><span>To</span></span></a></div>
@@ -264,7 +264,7 @@
             </div>
           </div>
 <a data-name="-1735738012%2FFunctions%2F-1299464202" anchor-label="component1" id="-1735738012%2FFunctions%2F-1299464202" data-filterable-set=":common/commonMain"></a>
-          <div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="component1.html"><span><span>component1</span></span></a></div>
@@ -279,7 +279,7 @@
             </div>
           </div>
 <a data-name="-1704718205%2FFunctions%2F-1299464202" anchor-label="component2" id="-1704718205%2FFunctions%2F-1299464202" data-filterable-set=":common/commonMain"></a>
-          <div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="component2.html"><span><span>component2</span></span></a></div>
@@ -294,7 +294,7 @@
             </div>
           </div>
 <a data-name="-1673698398%2FFunctions%2F-1299464202" anchor-label="component3" id="-1673698398%2FFunctions%2F-1299464202" data-filterable-set=":common/commonMain"></a>
-          <div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="component3.html"><span><span>component3</span></span></a></div>
@@ -309,7 +309,7 @@
             </div>
           </div>
 <a data-name="-1642678591%2FFunctions%2F-1299464202" anchor-label="component4" id="-1642678591%2FFunctions%2F-1299464202" data-filterable-set=":common/commonMain"></a>
-          <div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="component4.html"><span><span>component4</span></span></a></div>
@@ -324,7 +324,7 @@
             </div>
           </div>
 <a data-name="-2039380471%2FFunctions%2F-1299464202" anchor-label="equals" id="-2039380471%2FFunctions%2F-1299464202" data-filterable-set=":common/commonMain"></a>
-          <div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="equals.html"><span><span>equals</span></span></a></div>
@@ -339,7 +339,7 @@
             </div>
           </div>
 <a data-name="-610859843%2FFunctions%2F-1299464202" anchor-label="hashCode" id="-610859843%2FFunctions%2F-1299464202" data-filterable-set=":common/commonMain"></a>
-          <div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="hash-code.html"><span>hash</span><wbr><span><span>Code</span></span></a></div>
@@ -354,7 +354,7 @@
             </div>
           </div>
 <a data-name="1068551919%2FFunctions%2F-1299464202" anchor-label="optionalSnowflake" id="1068551919%2FFunctions%2F-1299464202" data-filterable-set=":common/commonMain"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../dev.kord.common.entity.optional/optional-snowflake.html"><span>optional</span><wbr><span><span>Snowflake</span></span></a></div>
@@ -369,7 +369,7 @@
             </div>
           </div>
 <a data-name="-789025908%2FFunctions%2F-1299464202" anchor-label="toString" id="-789025908%2FFunctions%2F-1299464202" data-filterable-set=":common/commonMain"></a>
-          <div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="to-string.html"><span>to</span><wbr><span><span>String</span></span></a></div>
@@ -389,17 +389,21 @@
   </div>
 </div>
     <div class="footer">
-        <a href="#content" id="go-to-top-link" class="footer--button footer--button_go-to-top"></a>
-        <span>© 2026 Copyright</span>
-        <span class="pull-right">
-            <span>Generated by </span>
-            <a class="footer--link footer--link_external" href="https://github.com/Kotlin/dokka">
-                <span>dokka</span>
-            </a>
-        </span>
-    </div>
+        <div class="footer--container">
+            <a href="#content" id="go-to-top-link" class="footer--button footer--button_go-to-top"></a>
+            <div class="footer--content">
+                <div>
+                    <span>Generated by </span>
+                    <a class="footer--link footer--link_external" href="https://github.com/Kotlin/dokka">
+                        Dokka
+                    </a>
+                    <div>© 2026 Copyright</div>
+                </div>
             </div>
         </div>
     </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>

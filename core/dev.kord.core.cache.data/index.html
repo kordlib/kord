@@ -1,22 +1,22 @@
 <!doctype html>
-<html class="no-js">
+<html class="no-js" lang="en">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
     <title>dev.kord.core.cache.data</title>
-<link href="../../images/logo-icon.svg" rel="icon" type="image/svg">    <script>var pathToRoot = "../../";</script>
-    <script>document.documentElement.classList.replace("no-js","js");</script>
+<link href="../../images/logo-icon.svg" rel="icon" type="image/svg"><script>var pathToRoot = "../../";</script>
+    <script>document.documentElement.classList.replace("no-js", "js");</script>
     <script>const storage = localStorage.getItem("dokka-dark-mode")
-    if (storage == null) {
+      if (storage == null) {
         const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
         if (osDarkSchemePreferred === true) {
-            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+          document.getElementsByTagName("html")[0].classList.add("theme-dark")
         }
-    } else {
+      } else {
         const savedDarkMode = JSON.parse(storage)
-        if(savedDarkMode === true) {
-            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        if (savedDarkMode === true) {
+          document.getElementsByTagName("html")[0].classList.add("theme-dark")
         }
-    }
+      }
     </script>
 <script type="text/javascript" src="https://unpkg.com/kotlin-playground@1/dist/playground.min.js" async></script>
 <script type="text/javascript" src="../../scripts/sourceset_dependencies.js" async></script>
@@ -24,19 +24,17 @@
 <link href="../../styles/main.css" rel="Stylesheet">
 <link href="../../styles/prism.css" rel="Stylesheet">
 <link href="../../styles/logo-styles.css" rel="Stylesheet">
-<link href="../../styles/font-jb-sans-auto.css" rel="Stylesheet">
 <link href="../../ui-kit/ui-kit.min.css" rel="Stylesheet">
-<script type="text/javascript" src="../../scripts/clipboard.js" async></script>
+<script type="text/javascript" src="../../scripts/safe-local-storage_blocking.js"></script>
 <script type="text/javascript" src="../../scripts/navigation-loader.js" async></script>
 <script type="text/javascript" src="../../scripts/platform-content-handler.js" async></script>
 <script type="text/javascript" src="../../scripts/main.js" defer></script>
 <script type="text/javascript" src="../../scripts/prism.js" async></script>
-<script type="text/javascript" src="../../ui-kit/ui-kit.min.js" defer></script>
-<script type="text/javascript" src="../../scripts/symbol-parameters-wrapper_deferred.js" defer></script></head>
+<script type="text/javascript" src="../../ui-kit/ui-kit.min.js" defer></script></head>
 <body>
-    <div class="root">
-    <nav class="navigation theme-dark" id="navigation-wrapper">
-<a class="library-name--link" href="../../index.html">
+<div class="root">
+    <header class="navigation theme-dark" id="navigation-wrapper" role="banner">
+<a class="library-name--link" href="../../index.html" tabindex="1">
                     kord
             </a>        <button class="navigation-controls--btn navigation-controls--btn_toc ui-kit_mobile-only" id="toc-toggle" type="button">Toggle table of contents
         </button>
@@ -44,13 +42,13 @@
         <div class="library-version" id="library-version">or(map(map(map(map(valueof(ProcessOutputValueSource))))), map(map(map(map(valueof(ProcessOutputValueSource))))))
         </div>
         <div class="navigation-controls">
-        <div class="filter-section filter-section_loading" id="filter-section">
-                <button class="platform-tag platform-selector common-like" data-active="" data-filter=":core/commonMain">common</button>
+        <ul class="filter-section filter-section_loading" id="filter-section" aria-label="Target filter">
+                <button class="platform-tag platform-selector common-like" data-active="" aria-pressed="true" data-filter=":core/commonMain">common</button>
             <div class="dropdown filter-section--dropdown" data-role="dropdown" id="filter-section-dropdown">
                 <button class="button button_dropdown filter-section--dropdown-toggle" role="combobox" data-role="dropdown-toggle" aria-controls="platform-tags-listbox" aria-haspopup="listbox" aria-expanded="false" aria-label="Toggle source sets"></button>
-                <ul role="listbox" id="platform-tags-listbox" class="dropdown--list" data-role="dropdown-listbox">
-                    <div class="dropdown--header"><span>Platform filter</span>
-                        <button class="button" data-role="dropdown-toggle" aria-label="Close platform filter">
+                <ul role="listbox" id="platform-tags-listbox" class="dropdown--list" data-role="dropdown-listbox" aria-label="Target filter">
+                    <div class="dropdown--header"><span>Target filter</span>
+                        <button class="button" data-role="dropdown-toggle" aria-label="Close target filter">
                             <i class="ui-kit-icon ui-kit-icon_cross"></i>
                         </button>
                     </div>
@@ -64,32 +62,34 @@
                 </ul>
                 <div class="dropdown--overlay"></div>
             </div>
-        </div>
+        </ul>
             <button class="navigation-controls--btn navigation-controls--btn_theme" id="theme-toggle-button" type="button">Switch theme
             </button>
             <div class="navigation-controls--btn navigation-controls--btn_search" id="searchBar" role="button">Search in
                 API
             </div>
         </div>
-    </nav>
-        <div id="container">
-            <div class="sidebar" id="leftColumn">
-                <div class="dropdown theme-dark_mobile" data-role="dropdown" id="toc-dropdown">
-                    <ul role="listbox" id="toc-listbox" class="dropdown--list dropdown--list_toc-list" data-role="dropdown-listbox">
-                        <div class="dropdown--header">
+    </header>
+    <div id="container">
+        <nav id="leftColumn" class="sidebar" data-item-type="SECTION" data-item-config="{&quot;defaultSize&quot;: 280, &quot;minSize&quot;: 200, &quot;maxSize&quot;: 400}">
+            <a class="toc--skip-link" href="#main">Skip to content</a>
+            <div class="dropdown theme-dark_mobile" data-role="dropdown" id="toc-dropdown">
+                <ul role="listbox" id="toc-listbox" class="dropdown--list dropdown--list_toc-list" data-role="dropdown-listbox" aria-label="Table of contents">
+                    <div class="dropdown--header">
                             <span>
                                     kord
                             </span>
-                            <button class="button" data-role="dropdown-toggle" aria-label="Close table of contents">
-                                <i class="ui-kit-icon ui-kit-icon_cross"></i>
-                            </button>
-                        </div>
-                        <div class="sidebar--inner" id="sideMenu"></div>
-                    </ul>
-                    <div class="dropdown--overlay"></div>
-                </div>
+                        <button class="button" data-role="dropdown-toggle" aria-label="Close table of contents">
+                            <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                        </button>
+                    </div>
+                    <div class="sidebar--inner" id="sideMenu"></div>
+                </ul>
+                <div class="dropdown--overlay"></div>
             </div>
-            <div id="main">
+        </nav>
+        <div id="resizer" class="resizer" data-item-type="BAR"></div>
+        <div id="main" data-item-type="SECTION" role="main">
 <div class="main-content" data-page-type="package" id="content" pageids="kord-core::dev.kord.core.cache.data////PointingToDeclaration//1239919082">
   <div class="breadcrumbs"><a href="../index.html">kord-core</a><span class="delimiter">/</span><span class="current">dev.kord.core.cache.data</span></div>
   <div class="cover ">
@@ -99,9 +99,9 @@
     <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="TYPE">Types</button><button class="section-tab" data-togglable="FUNCTION,EXTENSION_FUNCTION">Functions</button><button class="section-tab" data-togglable="PROPERTY,EXTENSION_PROPERTY">Properties</button></div>
     <div class="tabs-section-body">
       <div data-togglable="TYPE">
-        <h2 class="">Types</h2>
+        <h2 class="tableheader">Types</h2>
         <div class="table"><a data-name="828405423%2FClasslikes%2F1239919082" anchor-label="ActivityData" id="828405423%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-activity-data/index.html"><span>Activity</span><wbr><span><span>Data</span></span></a></div>
@@ -116,7 +116,7 @@
             </div>
           </div>
 <a data-name="1172397219%2FClasslikes%2F1239919082" anchor-label="ApplicationCommandData" id="1172397219%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-application-command-data/index.html"><span>Application</span><wbr><span>Command</span><wbr><span><span>Data</span></span></a></div>
@@ -131,7 +131,7 @@
             </div>
           </div>
 <a data-name="1005346348%2FClasslikes%2F1239919082" anchor-label="ApplicationCommandGroupData" id="1005346348%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-application-command-group-data/index.html"><span>Application</span><wbr><span>Command</span><wbr><span>Group</span><wbr><span><span>Data</span></span></a></div>
@@ -146,7 +146,7 @@
             </div>
           </div>
 <a data-name="1738823629%2FClasslikes%2F1239919082" anchor-label="ApplicationCommandOptionChoiceData" id="1738823629%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-application-command-option-choice-data/index.html"><span>Application</span><wbr><span>Command</span><wbr><span>Option</span><wbr><span>Choice</span><wbr><span><span>Data</span></span></a></div>
@@ -161,7 +161,7 @@
             </div>
           </div>
 <a data-name="-1512366290%2FClasslikes%2F1239919082" anchor-label="ApplicationCommandOptionData" id="-1512366290%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-application-command-option-data/index.html"><span>Application</span><wbr><span>Command</span><wbr><span>Option</span><wbr><span><span>Data</span></span></a></div>
@@ -176,7 +176,7 @@
             </div>
           </div>
 <a data-name="-1605634238%2FClasslikes%2F1239919082" anchor-label="ApplicationCommandParameterData" id="-1605634238%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-application-command-parameter-data/index.html"><span>Application</span><wbr><span>Command</span><wbr><span>Parameter</span><wbr><span><span>Data</span></span></a></div>
@@ -191,7 +191,7 @@
             </div>
           </div>
 <a data-name="-2130948008%2FClasslikes%2F1239919082" anchor-label="ApplicationCommandSubcommandData" id="-2130948008%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-application-command-subcommand-data/index.html"><span>Application</span><wbr><span>Command</span><wbr><span>Subcommand</span><wbr><span><span>Data</span></span></a></div>
@@ -206,7 +206,7 @@
             </div>
           </div>
 <a data-name="775529792%2FClasslikes%2F1239919082" anchor-label="ApplicationData" id="775529792%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-application-data/index.html"><span>Application</span><wbr><span><span>Data</span></span></a></div>
@@ -221,7 +221,7 @@
             </div>
           </div>
 <a data-name="-1146418244%2FClasslikes%2F1239919082" anchor-label="ApplicationInteractionData" id="-1146418244%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-application-interaction-data/index.html"><span>Application</span><wbr><span>Interaction</span><wbr><span><span>Data</span></span></a></div>
@@ -236,7 +236,7 @@
             </div>
           </div>
 <a data-name="1964418907%2FClasslikes%2F1239919082" anchor-label="AttachmentData" id="1964418907%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-attachment-data/index.html"><span>Attachment</span><wbr><span><span>Data</span></span></a></div>
@@ -251,7 +251,7 @@
             </div>
           </div>
 <a data-name="1850751475%2FClasslikes%2F1239919082" anchor-label="AutoModerationActionData" id="1850751475%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-auto-moderation-action-data/index.html"><span>Auto</span><wbr><span>Moderation</span><wbr><span>Action</span><wbr><span><span>Data</span></span></a></div>
@@ -266,7 +266,7 @@
             </div>
           </div>
 <a data-name="661824772%2FClasslikes%2F1239919082" anchor-label="AutoModerationActionMetadataData" id="661824772%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-auto-moderation-action-metadata-data/index.html"><span>Auto</span><wbr><span>Moderation</span><wbr><span>Action</span><wbr><span>Metadata</span><wbr><span><span>Data</span></span></a></div>
@@ -281,7 +281,7 @@
             </div>
           </div>
 <a data-name="1359587181%2FClasslikes%2F1239919082" anchor-label="AutoModerationRuleData" id="1359587181%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-auto-moderation-rule-data/index.html"><span>Auto</span><wbr><span>Moderation</span><wbr><span>Rule</span><wbr><span><span>Data</span></span></a></div>
@@ -296,7 +296,7 @@
             </div>
           </div>
 <a data-name="363777946%2FClasslikes%2F1239919082" anchor-label="AutoModerationRuleTriggerMetadataData" id="363777946%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-auto-moderation-rule-trigger-metadata-data/index.html"><span>Auto</span><wbr><span>Moderation</span><wbr><span>Rule</span><wbr><span>Trigger</span><wbr><span>Metadata</span><wbr><span><span>Data</span></span></a></div>
@@ -311,7 +311,7 @@
             </div>
           </div>
 <a data-name="579466209%2FClasslikes%2F1239919082" anchor-label="BanData" id="579466209%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-ban-data/index.html"><span>Ban</span><wbr><span><span>Data</span></span></a></div>
@@ -326,7 +326,7 @@
             </div>
           </div>
 <a data-name="2073235121%2FClasslikes%2F1239919082" anchor-label="BaseApplicationData" id="2073235121%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-base-application-data/index.html"><span>Base</span><wbr><span>Application</span><wbr><span><span>Data</span></span></a></div>
@@ -341,7 +341,7 @@
             </div>
           </div>
 <a data-name="-1078760796%2FClasslikes%2F1239919082" anchor-label="BaseInviteData" id="-1078760796%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-base-invite-data/index.html"><span>Base</span><wbr><span>Invite</span><wbr><span><span>Data</span></span></a></div>
@@ -356,7 +356,7 @@
             </div>
           </div>
 <a data-name="-724342035%2FClasslikes%2F1239919082" anchor-label="ChannelData" id="-724342035%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-channel-data/index.html"><span>Channel</span><wbr><span><span>Data</span></span></a></div>
@@ -371,7 +371,7 @@
             </div>
           </div>
 <a data-name="254775275%2FClasslikes%2F1239919082" anchor-label="ChatComponentData" id="254775275%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-chat-component-data/index.html"><span>Chat</span><wbr><span>Component</span><wbr><span><span>Data</span></span></a></div>
@@ -386,7 +386,7 @@
             </div>
           </div>
 <a data-name="-1582006943%2FClasslikes%2F1239919082" anchor-label="ClientStatusData" id="-1582006943%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-client-status-data/index.html"><span>Client</span><wbr><span>Status</span><wbr><span><span>Data</span></span></a></div>
@@ -401,7 +401,7 @@
             </div>
           </div>
 <a data-name="-509702413%2FClasslikes%2F1239919082" anchor-label="ComponentData" id="-509702413%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-component-data/index.html"><span>Component</span><wbr><span><span>Data</span></span></a></div>
@@ -416,7 +416,7 @@
             </div>
           </div>
 <a data-name="-1500817076%2FClasslikes%2F1239919082" anchor-label="EmbedAuthorData" id="-1500817076%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-embed-author-data/index.html"><span>Embed</span><wbr><span>Author</span><wbr><span><span>Data</span></span></a></div>
@@ -431,7 +431,7 @@
             </div>
           </div>
 <a data-name="1433630487%2FClasslikes%2F1239919082" anchor-label="EmbedData" id="1433630487%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-embed-data/index.html"><span>Embed</span><wbr><span><span>Data</span></span></a></div>
@@ -446,7 +446,7 @@
             </div>
           </div>
 <a data-name="2074982301%2FClasslikes%2F1239919082" anchor-label="EmbedFieldData" id="2074982301%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-embed-field-data/index.html"><span>Embed</span><wbr><span>Field</span><wbr><span><span>Data</span></span></a></div>
@@ -461,7 +461,7 @@
             </div>
           </div>
 <a data-name="1442643772%2FClasslikes%2F1239919082" anchor-label="EmbedFooterData" id="1442643772%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-embed-footer-data/index.html"><span>Embed</span><wbr><span>Footer</span><wbr><span><span>Data</span></span></a></div>
@@ -476,7 +476,7 @@
             </div>
           </div>
 <a data-name="-1580484900%2FClasslikes%2F1239919082" anchor-label="EmbedImageData" id="-1580484900%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-embed-image-data/index.html"><span>Embed</span><wbr><span>Image</span><wbr><span><span>Data</span></span></a></div>
@@ -491,7 +491,7 @@
             </div>
           </div>
 <a data-name="1724924582%2FClasslikes%2F1239919082" anchor-label="EmbedProviderData" id="1724924582%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-embed-provider-data/index.html"><span>Embed</span><wbr><span>Provider</span><wbr><span><span>Data</span></span></a></div>
@@ -506,7 +506,7 @@
             </div>
           </div>
 <a data-name="1505807595%2FClasslikes%2F1239919082" anchor-label="EmbedThumbnailData" id="1505807595%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-embed-thumbnail-data/index.html"><span>Embed</span><wbr><span>Thumbnail</span><wbr><span><span>Data</span></span></a></div>
@@ -521,7 +521,7 @@
             </div>
           </div>
 <a data-name="981966780%2FClasslikes%2F1239919082" anchor-label="EmbedVideoData" id="981966780%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-embed-video-data/index.html"><span>Embed</span><wbr><span>Video</span><wbr><span><span>Data</span></span></a></div>
@@ -536,7 +536,7 @@
             </div>
           </div>
 <a data-name="-1412302646%2FClasslikes%2F1239919082" anchor-label="EmojiData" id="-1412302646%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-emoji-data/index.html"><span>Emoji</span><wbr><span><span>Data</span></span></a></div>
@@ -551,7 +551,7 @@
             </div>
           </div>
 <a data-name="827573891%2FClasslikes%2F1239919082" anchor-label="EntitlementData" id="827573891%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-entitlement-data/index.html"><span>Entitlement</span><wbr><span><span>Data</span></span></a></div>
@@ -566,7 +566,7 @@
             </div>
           </div>
 <a data-name="947546963%2FClasslikes%2F1239919082" anchor-label="GuildApplicationCommandPermissionData" id="947546963%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-guild-application-command-permission-data/index.html"><span>Guild</span><wbr><span>Application</span><wbr><span>Command</span><wbr><span>Permission</span><wbr><span><span>Data</span></span></a></div>
@@ -581,7 +581,7 @@
             </div>
           </div>
 <a data-name="-2082687512%2FClasslikes%2F1239919082" anchor-label="GuildApplicationCommandPermissionsData" id="-2082687512%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-guild-application-command-permissions-data/index.html"><span>Guild</span><wbr><span>Application</span><wbr><span>Command</span><wbr><span>Permissions</span><wbr><span><span>Data</span></span></a></div>
@@ -596,7 +596,7 @@
             </div>
           </div>
 <a data-name="169875517%2FClasslikes%2F1239919082" anchor-label="GuildData" id="169875517%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-guild-data/index.html"><span>Guild</span><wbr><span><span>Data</span></span></a></div>
@@ -611,7 +611,7 @@
             </div>
           </div>
 <a data-name="2084260777%2FClasslikes%2F1239919082" anchor-label="GuildPreviewData" id="2084260777%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-guild-preview-data/index.html"><span>Guild</span><wbr><span>Preview</span><wbr><span><span>Data</span></span></a></div>
@@ -626,7 +626,7 @@
             </div>
           </div>
 <a data-name="-2128814384%2FClasslikes%2F1239919082" anchor-label="GuildScheduledEventData" id="-2128814384%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-guild-scheduled-event-data/index.html"><span>Guild</span><wbr><span>Scheduled</span><wbr><span>Event</span><wbr><span><span>Data</span></span></a></div>
@@ -641,7 +641,7 @@
             </div>
           </div>
 <a data-name="-1822370855%2FClasslikes%2F1239919082" anchor-label="GuildWidgetData" id="-1822370855%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-guild-widget-data/index.html"><span>Guild</span><wbr><span>Widget</span><wbr><span><span>Data</span></span></a></div>
@@ -656,7 +656,7 @@
             </div>
           </div>
 <a data-name="1863299900%2FClasslikes%2F1239919082" anchor-label="IntegrationData" id="1863299900%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-integration-data/index.html"><span>Integration</span><wbr><span><span>Data</span></span></a></div>
@@ -671,7 +671,7 @@
             </div>
           </div>
 <a data-name="1819485762%2FClasslikes%2F1239919082" anchor-label="IntegrationsAccountData" id="1819485762%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-integrations-account-data/index.html"><span>Integrations</span><wbr><span>Account</span><wbr><span><span>Data</span></span></a></div>
@@ -686,7 +686,7 @@
             </div>
           </div>
 <a data-name="329378750%2FClasslikes%2F1239919082" anchor-label="InteractionData" id="329378750%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-interaction-data/index.html"><span>Interaction</span><wbr><span><span>Data</span></span></a></div>
@@ -701,7 +701,7 @@
             </div>
           </div>
 <a data-name="-773354343%2FClasslikes%2F1239919082" anchor-label="InviteCreateData" id="-773354343%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-invite-create-data/index.html"><span>Invite</span><wbr><span>Create</span><wbr><span><span>Data</span></span></a></div>
@@ -716,7 +716,7 @@
             </div>
           </div>
 <a data-name="423540405%2FClasslikes%2F1239919082" anchor-label="InviteData" id="423540405%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-invite-data/index.html"><span>Invite</span><wbr><span><span>Data</span></span></a></div>
@@ -731,7 +731,7 @@
             </div>
           </div>
 <a data-name="-1345684918%2FClasslikes%2F1239919082" anchor-label="InviteDeleteData" id="-1345684918%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-invite-delete-data/index.html"><span>Invite</span><wbr><span>Delete</span><wbr><span><span>Data</span></span></a></div>
@@ -746,7 +746,7 @@
             </div>
           </div>
 <a data-name="-1762321504%2FClasslikes%2F1239919082" anchor-label="InviteWithMetadataData" id="-1762321504%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-invite-with-metadata-data/index.html"><span>Invite</span><wbr><span>With</span><wbr><span>Metadata</span><wbr><span><span>Data</span></span></a></div>
@@ -761,7 +761,7 @@
             </div>
           </div>
 <a data-name="935162052%2FClasslikes%2F1239919082" anchor-label="MemberData" id="935162052%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-member-data/index.html"><span>Member</span><wbr><span><span>Data</span></span></a></div>
@@ -776,7 +776,7 @@
             </div>
           </div>
 <a data-name="-1373456502%2FClasslikes%2F1239919082" anchor-label="MembersChunkData" id="-1373456502%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-members-chunk-data/index.html"><span>Members</span><wbr><span>Chunk</span><wbr><span><span>Data</span></span></a></div>
@@ -791,7 +791,7 @@
             </div>
           </div>
 <a data-name="651785833%2FClasslikes%2F1239919082" anchor-label="MessageData" id="651785833%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-message-data/index.html"><span>Message</span><wbr><span><span>Data</span></span></a></div>
@@ -806,7 +806,7 @@
             </div>
           </div>
 <a data-name="-1121839373%2FClasslikes%2F1239919082" anchor-label="MessageInteractionData" id="-1121839373%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-message-interaction-data/index.html"><span>Message</span><wbr><span>Interaction</span><wbr><span><span>Data</span></span></a></div>
@@ -821,7 +821,7 @@
             </div>
           </div>
 <a data-name="2059758554%2FClasslikes%2F1239919082" anchor-label="MessageReferenceData" id="2059758554%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-message-reference-data/index.html"><span>Message</span><wbr><span>Reference</span><wbr><span><span>Data</span></span></a></div>
@@ -836,7 +836,7 @@
             </div>
           </div>
 <a data-name="-457976571%2FClasslikes%2F1239919082" anchor-label="MessageSnapshotData" id="-457976571%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-message-snapshot-data/index.html"><span>Message</span><wbr><span>Snapshot</span><wbr><span><span>Data</span></span></a></div>
@@ -851,7 +851,7 @@
             </div>
           </div>
 <a data-name="843384296%2FClasslikes%2F1239919082" anchor-label="NotSerializable" id="843384296%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-not-serializable/index.html"><span>Not</span><wbr><span><span>Serializable</span></span></a></div>
@@ -866,7 +866,7 @@
             </div>
           </div>
 <a data-name="-1637260087%2FClasslikes%2F1239919082" anchor-label="OptionData" id="-1637260087%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-option-data/index.html"><span>Option</span><wbr><span><span>Data</span></span></a></div>
@@ -881,7 +881,7 @@
             </div>
           </div>
 <a data-name="1352865775%2FClasslikes%2F1239919082" anchor-label="PartialApplicationData" id="1352865775%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-partial-application-data/index.html"><span>Partial</span><wbr><span>Application</span><wbr><span><span>Data</span></span></a></div>
@@ -896,7 +896,7 @@
             </div>
           </div>
 <a data-name="1250228780%2FClasslikes%2F1239919082" anchor-label="PartialGuildData" id="1250228780%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-partial-guild-data/index.html"><span>Partial</span><wbr><span>Guild</span><wbr><span><span>Data</span></span></a></div>
@@ -911,7 +911,7 @@
             </div>
           </div>
 <a data-name="-1955209580%2FClasslikes%2F1239919082" anchor-label="PermissionOverwriteData" id="-1955209580%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-permission-overwrite-data/index.html"><span>Permission</span><wbr><span>Overwrite</span><wbr><span><span>Data</span></span></a></div>
@@ -926,7 +926,7 @@
             </div>
           </div>
 <a data-name="1629463619%2FClasslikes%2F1239919082" anchor-label="PresenceData" id="1629463619%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-presence-data/index.html"><span>Presence</span><wbr><span><span>Data</span></span></a></div>
@@ -941,7 +941,7 @@
             </div>
           </div>
 <a data-name="-343384619%2FClasslikes%2F1239919082" anchor-label="ReactionData" id="-343384619%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-reaction-data/index.html"><span>Reaction</span><wbr><span><span>Data</span></span></a></div>
@@ -956,7 +956,7 @@
             </div>
           </div>
 <a data-name="472273399%2FClasslikes%2F1239919082" anchor-label="ReactionRemoveEmojiData" id="472273399%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-reaction-remove-emoji-data/index.html"><span>Reaction</span><wbr><span>Remove</span><wbr><span>Emoji</span><wbr><span><span>Data</span></span></a></div>
@@ -971,7 +971,7 @@
             </div>
           </div>
 <a data-name="-828265814%2FClasslikes%2F1239919082" anchor-label="RegionData" id="-828265814%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-region-data/index.html"><span>Region</span><wbr><span><span>Data</span></span></a></div>
@@ -986,7 +986,7 @@
             </div>
           </div>
 <a data-name="1141924359%2FClasslikes%2F1239919082" anchor-label="RemovedReactionData" id="1141924359%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-removed-reaction-data/index.html"><span>Removed</span><wbr><span>Reaction</span><wbr><span><span>Data</span></span></a></div>
@@ -1001,7 +1001,7 @@
             </div>
           </div>
 <a data-name="367141780%2FClasslikes%2F1239919082" anchor-label="ResolvedObjectsData" id="367141780%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-resolved-objects-data/index.html"><span>Resolved</span><wbr><span>Objects</span><wbr><span><span>Data</span></span></a></div>
@@ -1016,7 +1016,7 @@
             </div>
           </div>
 <a data-name="-124089816%2FClasslikes%2F1239919082" anchor-label="RoleData" id="-124089816%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-role-data/index.html"><span>Role</span><wbr><span><span>Data</span></span></a></div>
@@ -1031,7 +1031,7 @@
             </div>
           </div>
 <a data-name="-1154486257%2FClasslikes%2F1239919082" anchor-label="RoleTagsData" id="-1154486257%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-role-tags-data/index.html"><span>Role</span><wbr><span>Tags</span><wbr><span><span>Data</span></span></a></div>
@@ -1046,7 +1046,7 @@
             </div>
           </div>
 <a data-name="-118718227%2FClasslikes%2F1239919082" anchor-label="SelectOptionData" id="-118718227%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-select-option-data/index.html"><span>Select</span><wbr><span>Option</span><wbr><span><span>Data</span></span></a></div>
@@ -1061,7 +1061,7 @@
             </div>
           </div>
 <a data-name="-1618897160%2FClasslikes%2F1239919082" anchor-label="SoundboardSoundData" id="-1618897160%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-soundboard-sound-data/index.html"><span>Soundboard</span><wbr><span>Sound</span><wbr><span><span>Data</span></span></a></div>
@@ -1076,7 +1076,7 @@
             </div>
           </div>
 <a data-name="974067069%2FClasslikes%2F1239919082" anchor-label="StageInstanceData" id="974067069%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-stage-instance-data/index.html"><span>Stage</span><wbr><span>Instance</span><wbr><span><span>Data</span></span></a></div>
@@ -1091,7 +1091,7 @@
             </div>
           </div>
 <a data-name="-685489933%2FClasslikes%2F1239919082" anchor-label="StickerData" id="-685489933%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-sticker-data/index.html"><span>Sticker</span><wbr><span><span>Data</span></span></a></div>
@@ -1106,7 +1106,7 @@
             </div>
           </div>
 <a data-name="-1030923104%2FClasslikes%2F1239919082" anchor-label="StickerItemData" id="-1030923104%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-sticker-item-data/index.html"><span>Sticker</span><wbr><span>Item</span><wbr><span><span>Data</span></span></a></div>
@@ -1121,7 +1121,7 @@
             </div>
           </div>
 <a data-name="-323757222%2FClasslikes%2F1239919082" anchor-label="StickerPackData" id="-323757222%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-sticker-pack-data/index.html"><span>Sticker</span><wbr><span>Pack</span><wbr><span><span>Data</span></span></a></div>
@@ -1136,7 +1136,7 @@
             </div>
           </div>
 <a data-name="1825275873%2FClasslikes%2F1239919082" anchor-label="SubscriptionData" id="1825275873%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-subscription-data/index.html"><span>Subscription</span><wbr><span><span>Data</span></span></a></div>
@@ -1151,7 +1151,7 @@
             </div>
           </div>
 <a data-name="-1043577439%2FClasslikes%2F1239919082" anchor-label="TeamData" id="-1043577439%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-team-data/index.html"><span>Team</span><wbr><span><span>Data</span></span></a></div>
@@ -1166,7 +1166,7 @@
             </div>
           </div>
 <a data-name="-977609305%2FClasslikes%2F1239919082" anchor-label="TeamMemberData" id="-977609305%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-team-member-data/index.html"><span>Team</span><wbr><span>Member</span><wbr><span><span>Data</span></span></a></div>
@@ -1181,7 +1181,7 @@
             </div>
           </div>
 <a data-name="836237604%2FClasslikes%2F1239919082" anchor-label="TemplateData" id="836237604%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-template-data/index.html"><span>Template</span><wbr><span><span>Data</span></span></a></div>
@@ -1196,7 +1196,7 @@
             </div>
           </div>
 <a data-name="-918624322%2FClasslikes%2F1239919082" anchor-label="TextInputComponentData" id="-918624322%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-text-input-component-data/index.html"><span>Text</span><wbr><span>Input</span><wbr><span>Component</span><wbr><span><span>Data</span></span></a></div>
@@ -1211,7 +1211,7 @@
             </div>
           </div>
 <a data-name="620978299%2FClasslikes%2F1239919082" anchor-label="ThreadListSyncData" id="620978299%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-thread-list-sync-data/index.html"><span>Thread</span><wbr><span>List</span><wbr><span>Sync</span><wbr><span><span>Data</span></span></a></div>
@@ -1226,7 +1226,7 @@
             </div>
           </div>
 <a data-name="1862084890%2FClasslikes%2F1239919082" anchor-label="ThreadMemberData" id="1862084890%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-thread-member-data/index.html"><span>Thread</span><wbr><span>Member</span><wbr><span><span>Data</span></span></a></div>
@@ -1241,7 +1241,7 @@
             </div>
           </div>
 <a data-name="-938076036%2FClasslikes%2F1239919082" anchor-label="ThreadMembersUpdateEventData" id="-938076036%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-thread-members-update-event-data/index.html"><span>Thread</span><wbr><span>Members</span><wbr><span>Update</span><wbr><span>Event</span><wbr><span><span>Data</span></span></a></div>
@@ -1256,7 +1256,7 @@
             </div>
           </div>
 <a data-name="1477729637%2FClasslikes%2F1239919082" anchor-label="ThreadMetadataData" id="1477729637%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-thread-metadata-data/index.html"><span>Thread</span><wbr><span>Metadata</span><wbr><span><span>Data</span></span></a></div>
@@ -1271,7 +1271,7 @@
             </div>
           </div>
 <a data-name="155843315%2FClasslikes%2F1239919082" anchor-label="UserData" id="155843315%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-user-data/index.html"><span>User</span><wbr><span><span>Data</span></span></a></div>
@@ -1286,7 +1286,7 @@
             </div>
           </div>
 <a data-name="-1452774529%2FClasslikes%2F1239919082" anchor-label="VoiceStateData" id="-1452774529%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-voice-state-data/index.html"><span>Voice</span><wbr><span>State</span><wbr><span><span>Data</span></span></a></div>
@@ -1301,7 +1301,7 @@
             </div>
           </div>
 <a data-name="1474713081%2FClasslikes%2F1239919082" anchor-label="WebhookData" id="1474713081%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-webhook-data/index.html"><span>Webhook</span><wbr><span><span>Data</span></span></a></div>
@@ -1316,7 +1316,7 @@
             </div>
           </div>
 <a data-name="-2031824311%2FClasslikes%2F1239919082" anchor-label="WelcomeScreenChannelData" id="-2031824311%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-welcome-screen-channel-data/index.html"><span>Welcome</span><wbr><span>Screen</span><wbr><span>Channel</span><wbr><span><span>Data</span></span></a></div>
@@ -1331,7 +1331,7 @@
             </div>
           </div>
 <a data-name="108173986%2FClasslikes%2F1239919082" anchor-label="WelcomeScreenData" id="108173986%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-welcome-screen-data/index.html"><span>Welcome</span><wbr><span>Screen</span><wbr><span><span>Data</span></span></a></div>
@@ -1348,9 +1348,9 @@
         </div>
       </div>
       <div data-togglable="EXTENSION_PROPERTY">
-        <h2 class="">Properties</h2>
+        <h2 class="tableheader">Properties</h2>
         <div class="table"><a data-name="-248877998%2FProperties%2F1239919082" anchor-label="id" id="-248877998%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="id.html"><span><span>id</span></span></a></div>
@@ -1367,9 +1367,9 @@
         </div>
       </div>
       <div data-togglable="FUNCTION">
-        <h2 class="">Functions</h2>
+        <h2 class="tableheader">Functions</h2>
         <div class="table"><a data-name="2002091915%2FFunctions%2F1239919082" anchor-label="ApplicationCommandGroupData" id="2002091915%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-application-command-group-data.html"><span>Application</span><wbr><span>Command</span><wbr><span>Group</span><wbr><span><span>Data</span></span></a></div>
@@ -1384,7 +1384,7 @@
             </div>
           </div>
 <a data-name="1496596149%2FFunctions%2F1239919082" anchor-label="ApplicationCommandParameterData" id="1496596149%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-application-command-parameter-data.html"><span>Application</span><wbr><span>Command</span><wbr><span>Parameter</span><wbr><span><span>Data</span></span></a></div>
@@ -1399,7 +1399,7 @@
             </div>
           </div>
 <a data-name="542169305%2FFunctions%2F1239919082" anchor-label="ApplicationCommandSubCommandData" id="542169305%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-application-command-sub-command-data.html"><span>Application</span><wbr><span>Command</span><wbr><span>Sub</span><wbr><span>Command</span><wbr><span><span>Data</span></span></a></div>
@@ -1414,7 +1414,7 @@
             </div>
           </div>
 <a data-name="-980310770%2FFunctions%2F1239919082" anchor-label="toData" id="-980310770%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="to-data.html"><span>to</span><wbr><span><span>Data</span></span></a></div>
@@ -1434,17 +1434,21 @@
   </div>
 </div>
     <div class="footer">
-        <a href="#content" id="go-to-top-link" class="footer--button footer--button_go-to-top"></a>
-        <span>© 2026 Copyright</span>
-        <span class="pull-right">
-            <span>Generated by </span>
-            <a class="footer--link footer--link_external" href="https://github.com/Kotlin/dokka">
-                <span>dokka</span>
-            </a>
-        </span>
-    </div>
+        <div class="footer--container">
+            <a href="#content" id="go-to-top-link" class="footer--button footer--button_go-to-top"></a>
+            <div class="footer--content">
+                <div>
+                    <span>Generated by </span>
+                    <a class="footer--link footer--link_external" href="https://github.com/Kotlin/dokka">
+                        Dokka
+                    </a>
+                    <div>© 2026 Copyright</div>
+                </div>
             </div>
         </div>
     </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>

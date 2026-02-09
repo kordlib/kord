@@ -1,22 +1,22 @@
 <!doctype html>
-<html class="no-js">
+<html class="no-js" lang="en">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
     <title>RestEntitySupplier</title>
-<link href="../../../images/logo-icon.svg" rel="icon" type="image/svg">    <script>var pathToRoot = "../../../";</script>
-    <script>document.documentElement.classList.replace("no-js","js");</script>
+<link href="../../../images/logo-icon.svg" rel="icon" type="image/svg"><script>var pathToRoot = "../../../";</script>
+    <script>document.documentElement.classList.replace("no-js", "js");</script>
     <script>const storage = localStorage.getItem("dokka-dark-mode")
-    if (storage == null) {
+      if (storage == null) {
         const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
         if (osDarkSchemePreferred === true) {
-            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+          document.getElementsByTagName("html")[0].classList.add("theme-dark")
         }
-    } else {
+      } else {
         const savedDarkMode = JSON.parse(storage)
-        if(savedDarkMode === true) {
-            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        if (savedDarkMode === true) {
+          document.getElementsByTagName("html")[0].classList.add("theme-dark")
         }
-    }
+      }
     </script>
 <script type="text/javascript" src="https://unpkg.com/kotlin-playground@1/dist/playground.min.js" async></script>
 <script type="text/javascript" src="../../../scripts/sourceset_dependencies.js" async></script>
@@ -24,19 +24,17 @@
 <link href="../../../styles/main.css" rel="Stylesheet">
 <link href="../../../styles/prism.css" rel="Stylesheet">
 <link href="../../../styles/logo-styles.css" rel="Stylesheet">
-<link href="../../../styles/font-jb-sans-auto.css" rel="Stylesheet">
 <link href="../../../ui-kit/ui-kit.min.css" rel="Stylesheet">
-<script type="text/javascript" src="../../../scripts/clipboard.js" async></script>
+<script type="text/javascript" src="../../../scripts/safe-local-storage_blocking.js"></script>
 <script type="text/javascript" src="../../../scripts/navigation-loader.js" async></script>
 <script type="text/javascript" src="../../../scripts/platform-content-handler.js" async></script>
 <script type="text/javascript" src="../../../scripts/main.js" defer></script>
 <script type="text/javascript" src="../../../scripts/prism.js" async></script>
-<script type="text/javascript" src="../../../ui-kit/ui-kit.min.js" defer></script>
-<script type="text/javascript" src="../../../scripts/symbol-parameters-wrapper_deferred.js" defer></script></head>
+<script type="text/javascript" src="../../../ui-kit/ui-kit.min.js" defer></script></head>
 <body>
-    <div class="root">
-    <nav class="navigation theme-dark" id="navigation-wrapper">
-<a class="library-name--link" href="../../../index.html">
+<div class="root">
+    <header class="navigation theme-dark" id="navigation-wrapper" role="banner">
+<a class="library-name--link" href="../../../index.html" tabindex="1">
                     kord
             </a>        <button class="navigation-controls--btn navigation-controls--btn_toc ui-kit_mobile-only" id="toc-toggle" type="button">Toggle table of contents
         </button>
@@ -44,13 +42,13 @@
         <div class="library-version" id="library-version">or(map(map(map(map(valueof(ProcessOutputValueSource))))), map(map(map(map(valueof(ProcessOutputValueSource))))))
         </div>
         <div class="navigation-controls">
-        <div class="filter-section filter-section_loading" id="filter-section">
-                <button class="platform-tag platform-selector common-like" data-active="" data-filter=":core/commonMain">common</button>
+        <ul class="filter-section filter-section_loading" id="filter-section" aria-label="Target filter">
+                <button class="platform-tag platform-selector common-like" data-active="" aria-pressed="true" data-filter=":core/commonMain">common</button>
             <div class="dropdown filter-section--dropdown" data-role="dropdown" id="filter-section-dropdown">
                 <button class="button button_dropdown filter-section--dropdown-toggle" role="combobox" data-role="dropdown-toggle" aria-controls="platform-tags-listbox" aria-haspopup="listbox" aria-expanded="false" aria-label="Toggle source sets"></button>
-                <ul role="listbox" id="platform-tags-listbox" class="dropdown--list" data-role="dropdown-listbox">
-                    <div class="dropdown--header"><span>Platform filter</span>
-                        <button class="button" data-role="dropdown-toggle" aria-label="Close platform filter">
+                <ul role="listbox" id="platform-tags-listbox" class="dropdown--list" data-role="dropdown-listbox" aria-label="Target filter">
+                    <div class="dropdown--header"><span>Target filter</span>
+                        <button class="button" data-role="dropdown-toggle" aria-label="Close target filter">
                             <i class="ui-kit-icon ui-kit-icon_cross"></i>
                         </button>
                     </div>
@@ -64,45 +62,47 @@
                 </ul>
                 <div class="dropdown--overlay"></div>
             </div>
-        </div>
+        </ul>
             <button class="navigation-controls--btn navigation-controls--btn_theme" id="theme-toggle-button" type="button">Switch theme
             </button>
             <div class="navigation-controls--btn navigation-controls--btn_search" id="searchBar" role="button">Search in
                 API
             </div>
         </div>
-    </nav>
-        <div id="container">
-            <div class="sidebar" id="leftColumn">
-                <div class="dropdown theme-dark_mobile" data-role="dropdown" id="toc-dropdown">
-                    <ul role="listbox" id="toc-listbox" class="dropdown--list dropdown--list_toc-list" data-role="dropdown-listbox">
-                        <div class="dropdown--header">
+    </header>
+    <div id="container">
+        <nav id="leftColumn" class="sidebar" data-item-type="SECTION" data-item-config="{&quot;defaultSize&quot;: 280, &quot;minSize&quot;: 200, &quot;maxSize&quot;: 400}">
+            <a class="toc--skip-link" href="#main">Skip to content</a>
+            <div class="dropdown theme-dark_mobile" data-role="dropdown" id="toc-dropdown">
+                <ul role="listbox" id="toc-listbox" class="dropdown--list dropdown--list_toc-list" data-role="dropdown-listbox" aria-label="Table of contents">
+                    <div class="dropdown--header">
                             <span>
                                     kord
                             </span>
-                            <button class="button" data-role="dropdown-toggle" aria-label="Close table of contents">
-                                <i class="ui-kit-icon ui-kit-icon_cross"></i>
-                            </button>
-                        </div>
-                        <div class="sidebar--inner" id="sideMenu"></div>
-                    </ul>
-                    <div class="dropdown--overlay"></div>
-                </div>
+                        <button class="button" data-role="dropdown-toggle" aria-label="Close table of contents">
+                            <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                        </button>
+                    </div>
+                    <div class="sidebar--inner" id="sideMenu"></div>
+                </ul>
+                <div class="dropdown--overlay"></div>
             </div>
-            <div id="main">
+        </nav>
+        <div id="resizer" class="resizer" data-item-type="BAR"></div>
+        <div id="main" data-item-type="SECTION" role="main">
 <div class="main-content" data-page-type="classlike" id="content" pageids="kord-core::dev.kord.core.supplier/RestEntitySupplier///PointingToDeclaration//1239919082">
   <div class="breadcrumbs"><a href="../../index.html">kord-core</a><span class="delimiter">/</span><a href="../index.html">dev.kord.core.supplier</a><span class="delimiter">/</span><span class="current">RestEntitySupplier</span></div>
   <div class="cover ">
     <h1 class="cover"><span>Rest</span><wbr><span>Entity</span><wbr><span><span>Supplier</span></span></h1>
-    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">class </span><a href="index.html">RestEntitySupplier</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">val </span>kord<span class="token operator">: </span><a href="../../dev.kord.core/-kord/index.html">Kord</a></span></span><span class="token punctuation">)</span> : <a href="../-entity-supplier/index.html">EntitySupplier</a><span class="clearfix"><span class="floating-right">(<a href="https://github.com/kordlib/kord/blob/map(map(map(valueof(ProcessOutputValueSource))))/core/src/commonMain/kotlin/supplier/RestEntitySupplier.kt#L44">source</a>)</span></span></div><p class="paragraph"><a href="../-entity-supplier/index.html">EntitySupplier</a> that uses a <a href="../../../rest/dev.kord.rest.service/-rest-client/index.html">RestClient</a> to resolve entities.</p><p class="paragraph">Error codes besides 429(Too Many Requests) will throw a <a href="../../../rest/dev.kord.rest.request/-rest-request-exception/index.html">RestRequestException</a>, 404(Not Found) will be caught by the <code class="lang-kotlin">xOrNull</code> variant and return null instead.</p><p class="paragraph">This supplier will always be able to resolve entities if they exist according to Discord, entities will always be up-to-date at the moment of the call.</p></div></div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">class </span><a href="index.html">RestEntitySupplier</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">val </span>kord<span class="token operator">: </span><a href="../../dev.kord.core/-kord/index.html">Kord</a></span></span><span class="token punctuation">)</span> : <a href="../-entity-supplier/index.html">EntitySupplier</a><span class="source-link-wrapper"><span class="source-link" data-element-type="source-link">(<a href="https://github.com/kordlib/kord/blob/map(map(map(valueof(ProcessOutputValueSource))))/core/src/commonMain/kotlin/supplier/RestEntitySupplier.kt#L44">source</a>)</span></span></div><p class="paragraph"><a href="../-entity-supplier/index.html">EntitySupplier</a> that uses a <a href="../../../rest/dev.kord.rest.service/-rest-client/index.html">RestClient</a> to resolve entities.</p><p class="paragraph">Error codes besides 429(Too Many Requests) will throw a <a href="../../../rest/dev.kord.rest.request/-rest-request-exception/index.html">RestRequestException</a>, 404(Not Found) will be caught by the <code class="lang-kotlin">xOrNull</code> variant and return null instead.</p><p class="paragraph">This supplier will always be able to resolve entities if they exist according to Discord, entities will always be up-to-date at the moment of the call.</p></div></div>
   </div>
   <div class="tabbedcontent">
     <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="CONSTRUCTOR,TYPE,PROPERTY,FUNCTION">Members</button><button class="section-tab" data-togglable="CONSTRUCTOR,TYPE,PROPERTY,FUNCTION,EXTENSION_PROPERTY,EXTENSION_FUNCTION">Members &amp; Extensions</button></div>
     <div class="tabs-section-body">
       <div data-togglable="CONSTRUCTOR">
-        <h2 class="">Constructors</h2>
+        <h2 class="tableheader">Constructors</h2>
         <div class="table"><a data-name="889605403%2FConstructors%2F1239919082" anchor-label="RestEntitySupplier" id="889605403%2FConstructors%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-togglable="CONSTRUCTOR" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-togglable="CONSTRUCTOR" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-rest-entity-supplier.html"><span>Rest</span><wbr><span>Entity</span><wbr><span><span>Supplier</span></span></a></div>
@@ -119,9 +119,9 @@
         </div>
       </div>
       <div data-togglable="PROPERTY">
-        <h2 class="">Properties</h2>
+        <h2 class="tableheader">Properties</h2>
         <div class="table"><a data-name="1492138820%2FProperties%2F1239919082" anchor-label="guilds" id="1492138820%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="guilds.html"><span><span>guilds</span></span></a></div>
@@ -136,7 +136,7 @@
             </div>
           </div>
 <a data-name="-2126147058%2FProperties%2F1239919082" anchor-label="kord" id="-2126147058%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="kord.html"><span><span>kord</span></span></a></div>
@@ -151,7 +151,7 @@
             </div>
           </div>
 <a data-name="1796572951%2FProperties%2F1239919082" anchor-label="regions" id="1796572951%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="regions.html"><span><span>regions</span></span></a></div>
@@ -168,9 +168,9 @@
         </div>
       </div>
       <div data-togglable="FUNCTION">
-        <h2 class="">Functions</h2>
+        <h2 class="tableheader">Functions</h2>
         <div class="table"><a data-name="1268094764%2FFunctions%2F1239919082" anchor-label="getActiveThreads" id="1268094764%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="get-active-threads.html"><span>get</span><wbr><span>Active</span><wbr><span><span>Threads</span></span></a></div>
@@ -185,7 +185,7 @@
             </div>
           </div>
 <a data-name="-288288878%2FFunctions%2F1239919082" anchor-label="getApplicationCommandPermissions" id="-288288878%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../-entity-supplier/get-application-command-permissions.html"><span>get</span><wbr><span>Application</span><wbr><span>Command</span><wbr><span><span>Permissions</span></span></a></div>
@@ -200,7 +200,7 @@
             </div>
           </div>
 <a data-name="1363603868%2FFunctions%2F1239919082" anchor-label="getApplicationCommandPermissionsOrNull" id="1363603868%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="get-application-command-permissions-or-null.html"><span>get</span><wbr><span>Application</span><wbr><span>Command</span><wbr><span>Permissions</span><wbr><span>Or</span><wbr><span><span>Null</span></span></a></div>
@@ -215,7 +215,7 @@
             </div>
           </div>
 <a data-name="-925053764%2FFunctions%2F1239919082" anchor-label="getApplicationInfo" id="-925053764%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="get-application-info.html"><span>get</span><wbr><span>Application</span><wbr><span><span>Info</span></span></a></div>
@@ -230,7 +230,7 @@
             </div>
           </div>
 <a data-name="2045329795%2FFunctions%2F1239919082" anchor-label="getAuditLogEntries" id="2045329795%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="get-audit-log-entries.html"><span>get</span><wbr><span>Audit</span><wbr><span>Log</span><wbr><span><span>Entries</span></span></a></div>
@@ -245,7 +245,7 @@
             </div>
           </div>
 <a data-name="-1786948100%2FFunctions%2F1239919082" anchor-label="getAutoModerationRule" id="-1786948100%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../-entity-supplier/get-auto-moderation-rule.html"><span>get</span><wbr><span>Auto</span><wbr><span>Moderation</span><wbr><span><span>Rule</span></span></a></div>
@@ -260,7 +260,7 @@
             </div>
           </div>
 <a data-name="-246939494%2FFunctions%2F1239919082" anchor-label="getAutoModerationRuleOrNull" id="-246939494%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="get-auto-moderation-rule-or-null.html"><span>get</span><wbr><span>Auto</span><wbr><span>Moderation</span><wbr><span>Rule</span><wbr><span>Or</span><wbr><span><span>Null</span></span></a></div>
@@ -269,13 +269,13 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">suspend override </span><span class="token keyword">fun </span><a href="get-auto-moderation-rule-or-null.html"><span class="token function">getAutoModerationRuleOrNull</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">guildId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter ">ruleId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../dev.kord.core.entity.automoderation/-auto-moderation-rule/index.html">AutoModerationRule</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph">Requests an <a href="../../dev.kord.core.entity.automoderation/-auto-moderation-rule/index.html">AutoModerationRule</a> by its <a href="get-auto-moderation-rule-or-null.html">id</a>. Returns <code class="lang-kotlin">null</code> if it wasn't found.</p></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">suspend override </span><span class="token keyword">fun </span><a href="get-auto-moderation-rule-or-null.html"><span class="token function">getAutoModerationRuleOrNull</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">guildId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter ">ruleId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../dev.kord.core.entity.automoderation/-auto-moderation-rule/index.html">AutoModerationRule</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph">Requests an <a href="../../dev.kord.core.entity.automoderation/-auto-moderation-rule/index.html">AutoModerationRule</a> by its <a href="../-entity-supplier/get-auto-moderation-rule-or-null.html">id</a>. Returns <code class="lang-kotlin">null</code> if it wasn't found.</p></div></div></div>
                 </div>
               </div>
             </div>
           </div>
 <a data-name="-932827571%2FFunctions%2F1239919082" anchor-label="getAutoModerationRules" id="-932827571%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="get-auto-moderation-rules.html"><span>get</span><wbr><span>Auto</span><wbr><span>Moderation</span><wbr><span><span>Rules</span></span></a></div>
@@ -284,13 +284,13 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="get-auto-moderation-rules.html"><span class="token function">getAutoModerationRules</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">guildId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines.flow/-flow/index.html">Flow</a><span class="token operator">&lt;</span><a href="../../dev.kord.core.entity.automoderation/-auto-moderation-rule/index.html">AutoModerationRule</a><span class="token operator">&gt;</span></div><div class="brief "><p class="paragraph">Requests to get all <a href="../../dev.kord.core.entity.automoderation/-auto-moderation-rule/index.html">AutoModerationRule</a>s currently configured for the <a href="../../dev.kord.core.entity/-guild/index.html">Guild</a> with the given <a href="get-auto-moderation-rules.html">guildId</a>.</p></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="get-auto-moderation-rules.html"><span class="token function">getAutoModerationRules</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">guildId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines.flow/-flow/index.html">Flow</a><span class="token operator">&lt;</span><a href="../../dev.kord.core.entity.automoderation/-auto-moderation-rule/index.html">AutoModerationRule</a><span class="token operator">&gt;</span></div><div class="brief "><p class="paragraph">Requests to get all <a href="../../dev.kord.core.entity.automoderation/-auto-moderation-rule/index.html">AutoModerationRule</a>s currently configured for the <a href="../../dev.kord.core.entity/-guild/index.html">Guild</a> with the given <a href="../-entity-supplier/get-auto-moderation-rules.html">guildId</a>.</p></div></div></div>
                 </div>
               </div>
             </div>
           </div>
 <a data-name="1242504248%2FFunctions%2F1239919082" anchor-label="getChannel" id="1242504248%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../-entity-supplier/get-channel.html"><span>get</span><wbr><span><span>Channel</span></span></a></div>
@@ -305,7 +305,7 @@
             </div>
           </div>
 <a data-name="-1756121483%2FFunctions%2F1239919082" anchor-label="getChannelOf" id="-1756121483%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../get-channel-of.html"><span>get</span><wbr><span>Channel</span><wbr><span><span>Of</span></span></a></div>
@@ -320,7 +320,7 @@
             </div>
           </div>
 <a data-name="-1251624161%2FFunctions%2F1239919082" anchor-label="getChannelOfOrNull" id="-1251624161%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../get-channel-of-or-null.html"><span>get</span><wbr><span>Channel</span><wbr><span>Of</span><wbr><span>Or</span><wbr><span><span>Null</span></span></a></div>
@@ -335,7 +335,7 @@
             </div>
           </div>
 <a data-name="1141982018%2FFunctions%2F1239919082" anchor-label="getChannelOrNull" id="1141982018%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="get-channel-or-null.html"><span>get</span><wbr><span>Channel</span><wbr><span>Or</span><wbr><span><span>Null</span></span></a></div>
@@ -344,13 +344,13 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">suspend override </span><span class="token keyword">fun </span><a href="get-channel-or-null.html"><span class="token function">getChannelOrNull</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">id<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../dev.kord.core.entity.channel/-channel/index.html">Channel</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph">Requests the <a href="../../dev.kord.core.entity.channel/-channel/index.html">Channel</a> with the given <a href="get-channel-or-null.html">id</a>, returns <code class="lang-kotlin">null</code> when the channel isn't present.</p></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">suspend override </span><span class="token keyword">fun </span><a href="get-channel-or-null.html"><span class="token function">getChannelOrNull</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">id<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../dev.kord.core.entity.channel/-channel/index.html">Channel</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph">Requests the <a href="../../dev.kord.core.entity.channel/-channel/index.html">Channel</a> with the given <a href="../-entity-supplier/get-channel-or-null.html">id</a>, returns <code class="lang-kotlin">null</code> when the channel isn't present.</p></div></div></div>
                 </div>
               </div>
             </div>
           </div>
 <a data-name="-1992476466%2FFunctions%2F1239919082" anchor-label="getChannelPins" id="-1992476466%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="get-channel-pins.html"><span>get</span><wbr><span>Channel</span><wbr><span><span>Pins</span></span></a></div>
@@ -359,13 +359,13 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="get-channel-pins.html"><span class="token function">getChannelPins</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">channelId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines.flow/-flow/index.html">Flow</a><span class="token operator">&lt;</span><a href="../../dev.kord.core.entity/-message/index.html">Message</a><span class="token operator">&gt;</span></div><div class="brief "><p class="paragraph">Requests the pinned <a href="../../dev.kord.core.entity/-message/index.html">messages</a> of the <a href="../../dev.kord.core.entity.channel/-channel/index.html">Channel</a> with the given <a href="get-channel-pins.html">channelId</a>.</p></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="get-channel-pins.html"><span class="token function">getChannelPins</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">channelId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines.flow/-flow/index.html">Flow</a><span class="token operator">&lt;</span><a href="../../dev.kord.core.entity/-message/index.html">Message</a><span class="token operator">&gt;</span></div><div class="brief "><p class="paragraph">Requests the pinned <a href="../../dev.kord.core.entity/-message/index.html">messages</a> of the <a href="../../dev.kord.core.entity.channel/-channel/index.html">Channel</a> with the given <a href="../-entity-supplier/get-channel-pins.html">channelId</a>.</p></div></div></div>
                 </div>
               </div>
             </div>
           </div>
 <a data-name="677503536%2FFunctions%2F1239919082" anchor-label="getChannelWebhooks" id="677503536%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="get-channel-webhooks.html"><span>get</span><wbr><span>Channel</span><wbr><span><span>Webhooks</span></span></a></div>
@@ -374,13 +374,13 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="get-channel-webhooks.html"><span class="token function">getChannelWebhooks</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">channelId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines.flow/-flow/index.html">Flow</a><span class="token operator">&lt;</span><a href="../../dev.kord.core.entity/-webhook/index.html">Webhook</a><span class="token operator">&gt;</span></div><div class="brief "><p class="paragraph">Requests the <a href="../../dev.kord.core.entity/-webhook/index.html">webhooks</a> of the MessageChannel with the given <a href="get-channel-webhooks.html">channelId</a>.</p></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="get-channel-webhooks.html"><span class="token function">getChannelWebhooks</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">channelId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines.flow/-flow/index.html">Flow</a><span class="token operator">&lt;</span><a href="../../dev.kord.core.entity/-webhook/index.html">Webhook</a><span class="token operator">&gt;</span></div><div class="brief "><p class="paragraph">Requests the <a href="../../dev.kord.core.entity/-webhook/index.html">webhooks</a> of the <a href="../../dev.kord.core.entity.channel/-message-channel/index.html">MessageChannel</a> with the given <a href="../-entity-supplier/get-channel-webhooks.html">channelId</a>.</p></div></div></div>
                 </div>
               </div>
             </div>
           </div>
 <a data-name="-613192241%2FFunctions%2F1239919082" anchor-label="getCurrentUserGuilds" id="-613192241%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="get-current-user-guilds.html"><span>get</span><wbr><span>Current</span><wbr><span>User</span><wbr><span><span>Guilds</span></span></a></div>
@@ -395,7 +395,7 @@
             </div>
           </div>
 <a data-name="-213993537%2FFunctions%2F1239919082" anchor-label="getEmoji" id="-213993537%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../-entity-supplier/get-emoji.html"><span>get</span><wbr><span><span>Emoji</span></span></a></div>
@@ -410,7 +410,7 @@
             </div>
           </div>
 <a data-name="-1337921867%2FFunctions%2F1239919082" anchor-label="getEmojiOrNull" id="-1337921867%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="get-emoji-or-null.html"><span>get</span><wbr><span>Emoji</span><wbr><span>Or</span><wbr><span><span>Null</span></span></a></div>
@@ -419,13 +419,13 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">suspend override </span><span class="token keyword">fun </span><a href="get-emoji-or-null.html"><span class="token function">getEmojiOrNull</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">guildId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter ">emojiId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../dev.kord.core.entity/-guild-emoji/index.html">GuildEmoji</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph">Requests the <a href="../../dev.kord.core.entity/-guild-emoji/index.html">GuildEmoji</a> with the <a href="get-emoji-or-null.html">emojiId</a> in the <a href="../../dev.kord.core.entity/-guild/index.html">Guild</a> wit the given <a href="get-emoji-or-null.html">guildId</a>, returns null when the emoji isn't present.</p></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">suspend override </span><span class="token keyword">fun </span><a href="get-emoji-or-null.html"><span class="token function">getEmojiOrNull</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">guildId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter ">emojiId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../dev.kord.core.entity/-guild-emoji/index.html">GuildEmoji</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph">Requests the <a href="../../dev.kord.core.entity/-guild-emoji/index.html">GuildEmoji</a> with the <a href="../-entity-supplier/get-emoji-or-null.html">emojiId</a> in the <a href="../../dev.kord.core.entity/-guild/index.html">Guild</a> wit the given <a href="../-entity-supplier/get-emoji-or-null.html">guildId</a>, returns null when the emoji isn't present.</p></div></div></div>
                 </div>
               </div>
             </div>
           </div>
 <a data-name="-1866549080%2FFunctions%2F1239919082" anchor-label="getEmojis" id="-1866549080%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="get-emojis.html"><span>get</span><wbr><span><span>Emojis</span></span></a></div>
@@ -434,13 +434,13 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="get-emojis.html"><span class="token function">getEmojis</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">guildId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines.flow/-flow/index.html">Flow</a><span class="token operator">&lt;</span><a href="../../dev.kord.core.entity/-guild-emoji/index.html">GuildEmoji</a><span class="token operator">&gt;</span></div><div class="brief "><p class="paragraph">Requests the <a href="../../dev.kord.core.entity/-guild-emoji/index.html">guild emojis</a> of the <a href="../../dev.kord.core.entity/-guild/index.html">Guild</a> with the given <a href="get-emojis.html">guildId</a>.</p></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="get-emojis.html"><span class="token function">getEmojis</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">guildId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines.flow/-flow/index.html">Flow</a><span class="token operator">&lt;</span><a href="../../dev.kord.core.entity/-guild-emoji/index.html">GuildEmoji</a><span class="token operator">&gt;</span></div><div class="brief "><p class="paragraph">Requests the <a href="../../dev.kord.core.entity/-guild-emoji/index.html">guild emojis</a> of the <a href="../../dev.kord.core.entity/-guild/index.html">Guild</a> with the given <a href="../-entity-supplier/get-emojis.html">guildId</a>.</p></div></div></div>
                 </div>
               </div>
             </div>
           </div>
 <a data-name="163207599%2FFunctions%2F1239919082" anchor-label="getEntitlements" id="163207599%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="get-entitlements.html"><span>get</span><wbr><span><span>Entitlements</span></span></a></div>
@@ -449,13 +449,13 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="get-entitlements.html"><span class="token function">getEntitlements</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">applicationId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter ">request<span class="token operator">: </span><a href="../../../rest/dev.kord.rest.json.request/-entitlements-list-request/index.html">EntitlementsListRequest</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines.flow/-flow/index.html">Flow</a><span class="token operator">&lt;</span><a href="../../dev.kord.core.entity.monetization/-entitlement/index.html">Entitlement</a><span class="token operator">&gt;</span></div><div class="brief "><p class="paragraph">Requests to get all <a href="../../dev.kord.core.entity.monetization/-entitlement/index.html">Entitlement</a>s for the <a href="../../dev.kord.core.entity/-application/index.html">Application</a> with the given <a href="get-entitlements.html">applicationId</a>.</p></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="get-entitlements.html"><span class="token function">getEntitlements</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">applicationId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter ">request<span class="token operator">: </span><a href="../../../rest/dev.kord.rest.json.request/-entitlements-list-request/index.html">EntitlementsListRequest</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines.flow/-flow/index.html">Flow</a><span class="token operator">&lt;</span><a href="../../dev.kord.core.entity.monetization/-entitlement/index.html">Entitlement</a><span class="token operator">&gt;</span></div><div class="brief "><p class="paragraph">Requests to get all <a href="../../dev.kord.core.entity.monetization/-entitlement/index.html">Entitlement</a>s for the <a href="../../dev.kord.core.entity/-application/index.html">Application</a> with the given <a href="../-entity-supplier/get-entitlements.html">applicationId</a>.</p></div></div></div>
                 </div>
               </div>
             </div>
           </div>
 <a data-name="1966706319%2FFunctions%2F1239919082" anchor-label="getFollowupMessage" id="1966706319%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../-entity-supplier/get-followup-message.html"><span>get</span><wbr><span>Followup</span><wbr><span><span>Message</span></span></a></div>
@@ -470,7 +470,7 @@
             </div>
           </div>
 <a data-name="-1169789883%2FFunctions%2F1239919082" anchor-label="getFollowupMessageOrNull" id="-1169789883%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="get-followup-message-or-null.html"><span>get</span><wbr><span>Followup</span><wbr><span>Message</span><wbr><span>Or</span><wbr><span><span>Null</span></span></a></div>
@@ -485,7 +485,7 @@
             </div>
           </div>
 <a data-name="-1331826423%2FFunctions%2F1239919082" anchor-label="getGlobalApplicationCommand" id="-1331826423%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../-entity-supplier/get-global-application-command.html"><span>get</span><wbr><span>Global</span><wbr><span>Application</span><wbr><span><span>Command</span></span></a></div>
@@ -500,7 +500,7 @@
             </div>
           </div>
 <a data-name="421668656%2FFunctions%2F1239919082" anchor-label="getGlobalApplicationCommandOf" id="421668656%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../get-global-application-command-of.html"><span>get</span><wbr><span>Global</span><wbr><span>Application</span><wbr><span>Command</span><wbr><span><span>Of</span></span></a></div>
@@ -515,7 +515,7 @@
             </div>
           </div>
 <a data-name="-1685070074%2FFunctions%2F1239919082" anchor-label="getGlobalApplicationCommandOfOrNull" id="-1685070074%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../get-global-application-command-of-or-null.html"><span>get</span><wbr><span>Global</span><wbr><span>Application</span><wbr><span>Command</span><wbr><span>Of</span><wbr><span>Or</span><wbr><span><span>Null</span></span></a></div>
@@ -530,7 +530,7 @@
             </div>
           </div>
 <a data-name="1736259303%2FFunctions%2F1239919082" anchor-label="getGlobalApplicationCommandOrNull" id="1736259303%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="get-global-application-command-or-null.html"><span>get</span><wbr><span>Global</span><wbr><span>Application</span><wbr><span>Command</span><wbr><span>Or</span><wbr><span><span>Null</span></span></a></div>
@@ -545,7 +545,7 @@
             </div>
           </div>
 <a data-name="-287844807%2FFunctions%2F1239919082" anchor-label="getGlobalApplicationCommands" id="-287844807%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="get-global-application-commands.html"><span>get</span><wbr><span>Global</span><wbr><span>Application</span><wbr><span><span>Commands</span></span></a></div>
@@ -560,7 +560,7 @@
             </div>
           </div>
 <a data-name="-543726091%2FFunctions%2F1239919082" anchor-label="getGlobalApplicationOf" id="-543726091%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../get-global-application-of.html"><span>get</span><wbr><span>Global</span><wbr><span>Application</span><wbr><span><span>Of</span></span></a></div>
@@ -575,7 +575,7 @@
             </div>
           </div>
 <a data-name="1841968651%2FFunctions%2F1239919082" anchor-label="getGlobalApplicationOfOrNull" id="1841968651%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../get-global-application-of-or-null.html"><span>get</span><wbr><span>Global</span><wbr><span>Application</span><wbr><span>Of</span><wbr><span>Or</span><wbr><span><span>Null</span></span></a></div>
@@ -590,7 +590,7 @@
             </div>
           </div>
 <a data-name="1474621832%2FFunctions%2F1239919082" anchor-label="getGuild" id="1474621832%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../-entity-supplier/get-guild.html"><span>get</span><wbr><span><span>Guild</span></span></a></div>
@@ -605,7 +605,7 @@
             </div>
           </div>
 <a data-name="-437360723%2FFunctions%2F1239919082" anchor-label="getGuildApplicationCommand" id="-437360723%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../-entity-supplier/get-guild-application-command.html"><span>get</span><wbr><span>Guild</span><wbr><span>Application</span><wbr><span><span>Command</span></span></a></div>
@@ -620,7 +620,7 @@
             </div>
           </div>
 <a data-name="275800352%2FFunctions%2F1239919082" anchor-label="getGuildApplicationCommandOf" id="275800352%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../get-guild-application-command-of.html"><span>get</span><wbr><span>Guild</span><wbr><span>Application</span><wbr><span>Command</span><wbr><span><span>Of</span></span></a></div>
@@ -635,7 +635,7 @@
             </div>
           </div>
 <a data-name="-750479606%2FFunctions%2F1239919082" anchor-label="getGuildApplicationCommandOfOrNull" id="-750479606%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../get-guild-application-command-of-or-null.html"><span>get</span><wbr><span>Guild</span><wbr><span>Application</span><wbr><span>Command</span><wbr><span>Of</span><wbr><span>Or</span><wbr><span><span>Null</span></span></a></div>
@@ -650,7 +650,7 @@
             </div>
           </div>
 <a data-name="-1032753033%2FFunctions%2F1239919082" anchor-label="getGuildApplicationCommandOrNull" id="-1032753033%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="get-guild-application-command-or-null.html"><span>get</span><wbr><span>Guild</span><wbr><span>Application</span><wbr><span>Command</span><wbr><span>Or</span><wbr><span><span>Null</span></span></a></div>
@@ -665,7 +665,7 @@
             </div>
           </div>
 <a data-name="-682230571%2FFunctions%2F1239919082" anchor-label="getGuildApplicationCommandPermissions" id="-682230571%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="get-guild-application-command-permissions.html"><span>get</span><wbr><span>Guild</span><wbr><span>Application</span><wbr><span>Command</span><wbr><span><span>Permissions</span></span></a></div>
@@ -680,7 +680,7 @@
             </div>
           </div>
 <a data-name="557711043%2FFunctions%2F1239919082" anchor-label="getGuildApplicationCommands" id="557711043%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="get-guild-application-commands.html"><span>get</span><wbr><span>Guild</span><wbr><span>Application</span><wbr><span><span>Commands</span></span></a></div>
@@ -695,7 +695,7 @@
             </div>
           </div>
 <a data-name="2108902343%2FFunctions%2F1239919082" anchor-label="getGuildBan" id="2108902343%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../-entity-supplier/get-guild-ban.html"><span>get</span><wbr><span>Guild</span><wbr><span><span>Ban</span></span></a></div>
@@ -710,7 +710,7 @@
             </div>
           </div>
 <a data-name="156791589%2FFunctions%2F1239919082" anchor-label="getGuildBanOrNull" id="156791589%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="get-guild-ban-or-null.html"><span>get</span><wbr><span>Guild</span><wbr><span>Ban</span><wbr><span>Or</span><wbr><span><span>Null</span></span></a></div>
@@ -719,13 +719,13 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">suspend override </span><span class="token keyword">fun </span><a href="get-guild-ban-or-null.html"><span class="token function">getGuildBanOrNull</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">guildId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter ">userId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../dev.kord.core.entity/-ban/index.html">Ban</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph">Requests the <a href="../../dev.kord.core.entity/-ban/index.html">Ban</a> for the user the given <a href="get-guild-ban-or-null.html">userId</a> in the <a href="../../dev.kord.core.entity/-guild/index.html">Guild</a> wit the given <a href="get-guild-ban-or-null.html">guildId</a>, returns null when the ban isn't present.</p></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">suspend override </span><span class="token keyword">fun </span><a href="get-guild-ban-or-null.html"><span class="token function">getGuildBanOrNull</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">guildId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter ">userId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../dev.kord.core.entity/-ban/index.html">Ban</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph">Requests the <a href="../../dev.kord.core.entity/-ban/index.html">Ban</a> for the user the given <a href="../-entity-supplier/get-guild-ban-or-null.html">userId</a> in the <a href="../../dev.kord.core.entity/-guild/index.html">Guild</a> wit the given <a href="../-entity-supplier/get-guild-ban-or-null.html">guildId</a>, returns null when the ban isn't present.</p></div></div></div>
                 </div>
               </div>
             </div>
           </div>
 <a data-name="-1461497282%2FFunctions%2F1239919082" anchor-label="getGuildBans" id="-1461497282%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="get-guild-bans.html"><span>get</span><wbr><span>Guild</span><wbr><span><span>Bans</span></span></a></div>
@@ -734,13 +734,13 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="get-guild-bans.html"><span class="token function">getGuildBans</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">guildId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter ">limit<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token operator">?</span></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines.flow/-flow/index.html">Flow</a><span class="token operator">&lt;</span><a href="../../dev.kord.core.entity/-ban/index.html">Ban</a><span class="token operator">&gt;</span></div><div class="brief "><p class="paragraph">Requests the <a href="../../dev.kord.core.entity/-ban/index.html">bans</a> of the <a href="../../dev.kord.core.entity/-guild/index.html">Guild</a> with the given <a href="get-guild-bans.html">guildId</a>.</p></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="get-guild-bans.html"><span class="token function">getGuildBans</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">guildId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter ">limit<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token operator">?</span></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines.flow/-flow/index.html">Flow</a><span class="token operator">&lt;</span><a href="../../dev.kord.core.entity/-ban/index.html">Ban</a><span class="token operator">&gt;</span></div><div class="brief "><p class="paragraph">Requests the <a href="../../dev.kord.core.entity/-ban/index.html">bans</a> of the <a href="../../dev.kord.core.entity/-guild/index.html">Guild</a> with the given <a href="../-entity-supplier/get-guild-bans.html">guildId</a>.</p></div></div></div>
                 </div>
               </div>
             </div>
           </div>
 <a data-name="-1176030196%2FFunctions%2F1239919082" anchor-label="getGuildChannels" id="-1176030196%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="get-guild-channels.html"><span>get</span><wbr><span>Guild</span><wbr><span><span>Channels</span></span></a></div>
@@ -749,13 +749,13 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="get-guild-channels.html"><span class="token function">getGuildChannels</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">guildId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines.flow/-flow/index.html">Flow</a><span class="token operator">&lt;</span><a href="../../dev.kord.core.entity.channel/-top-guild-channel/index.html">TopGuildChannel</a><span class="token operator">&gt;</span></div><div class="brief "><p class="paragraph">Requests the <a href="../../dev.kord.core.entity.channel/-top-guild-channel/index.html">channels</a> of the <a href="../../dev.kord.core.entity/-guild/index.html">Guild</a> with the given <a href="get-guild-channels.html">guildId</a>, channels with an Unknown type will be filtered out of the list.</p></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="get-guild-channels.html"><span class="token function">getGuildChannels</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">guildId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines.flow/-flow/index.html">Flow</a><span class="token operator">&lt;</span><a href="../../dev.kord.core.entity.channel/-top-guild-channel/index.html">TopGuildChannel</a><span class="token operator">&gt;</span></div><div class="brief "><p class="paragraph">Requests the <a href="../../dev.kord.core.entity.channel/-top-guild-channel/index.html">channels</a> of the <a href="../../dev.kord.core.entity/-guild/index.html">Guild</a> with the given <a href="../-entity-supplier/get-guild-channels.html">guildId</a>, channels with an <a href="../../../common/dev.kord.common.entity/-channel-type/-unknown/index.html">Unknown</a> type will be filtered out of the list.</p></div></div></div>
                 </div>
               </div>
             </div>
           </div>
 <a data-name="997601909%2FFunctions%2F1239919082" anchor-label="getGuildMembers" id="997601909%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="get-guild-members.html"><span>get</span><wbr><span>Guild</span><wbr><span><span>Members</span></span></a></div>
@@ -764,13 +764,13 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="get-guild-members.html"><span class="token function">getGuildMembers</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">guildId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter ">limit<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token operator">?</span></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines.flow/-flow/index.html">Flow</a><span class="token operator">&lt;</span><a href="../../dev.kord.core.entity/-member/index.html">Member</a><span class="token operator">&gt;</span></div><div class="brief "><p class="paragraph">Requests the <a href="../../dev.kord.core.entity/-member/index.html">members</a> of the <a href="../../dev.kord.core.entity/-guild/index.html">Guild</a> with the given <a href="get-guild-members.html">guildId</a>.</p></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="get-guild-members.html"><span class="token function">getGuildMembers</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">guildId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter ">limit<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token operator">?</span></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines.flow/-flow/index.html">Flow</a><span class="token operator">&lt;</span><a href="../../dev.kord.core.entity/-member/index.html">Member</a><span class="token operator">&gt;</span></div><div class="brief "><p class="paragraph">Requests the <a href="../../dev.kord.core.entity/-member/index.html">members</a> of the <a href="../../dev.kord.core.entity/-guild/index.html">Guild</a> with the given <a href="../-entity-supplier/get-guild-members.html">guildId</a>.</p></div></div></div>
                 </div>
               </div>
             </div>
           </div>
 <a data-name="39589281%2FFunctions%2F1239919082" anchor-label="getGuildOnboarding" id="39589281%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="get-guild-onboarding.html"><span>get</span><wbr><span>Guild</span><wbr><span><span>Onboarding</span></span></a></div>
@@ -785,7 +785,7 @@
             </div>
           </div>
 <a data-name="-1122003081%2FFunctions%2F1239919082" anchor-label="getGuildOnboardingOrNull" id="-1122003081%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="get-guild-onboarding-or-null.html"><span>get</span><wbr><span>Guild</span><wbr><span>Onboarding</span><wbr><span>Or</span><wbr><span><span>Null</span></span></a></div>
@@ -800,7 +800,7 @@
             </div>
           </div>
 <a data-name="1282926994%2FFunctions%2F1239919082" anchor-label="getGuildOrNull" id="1282926994%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="get-guild-or-null.html"><span>get</span><wbr><span>Guild</span><wbr><span>Or</span><wbr><span><span>Null</span></span></a></div>
@@ -809,13 +809,13 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">suspend override </span><span class="token keyword">fun </span><a href="get-guild-or-null.html"><span class="token function">getGuildOrNull</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">id<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../dev.kord.core.entity/-guild/index.html">Guild</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph">Requests the <a href="../../dev.kord.core.entity/-guild/index.html">Guild</a> with the given <a href="get-guild-or-null.html">id</a>, returns <code class="lang-kotlin">null</code> when the guild isn't present.</p></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">suspend override </span><span class="token keyword">fun </span><a href="get-guild-or-null.html"><span class="token function">getGuildOrNull</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">id<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../dev.kord.core.entity/-guild/index.html">Guild</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph">Requests the <a href="../../dev.kord.core.entity/-guild/index.html">Guild</a> with the given <a href="../-entity-supplier/get-guild-or-null.html">id</a>, returns <code class="lang-kotlin">null</code> when the guild isn't present.</p></div></div></div>
                 </div>
               </div>
             </div>
           </div>
 <a data-name="1210487028%2FFunctions%2F1239919082" anchor-label="getGuildPreview" id="1210487028%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../-entity-supplier/get-guild-preview.html"><span>get</span><wbr><span>Guild</span><wbr><span><span>Preview</span></span></a></div>
@@ -830,7 +830,7 @@
             </div>
           </div>
 <a data-name="1765424790%2FFunctions%2F1239919082" anchor-label="getGuildPreviewOrNull" id="1765424790%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="get-guild-preview-or-null.html"><span>get</span><wbr><span>Guild</span><wbr><span>Preview</span><wbr><span>Or</span><wbr><span><span>Null</span></span></a></div>
@@ -839,13 +839,13 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">suspend override </span><span class="token keyword">fun </span><a href="get-guild-preview-or-null.html"><span class="token function">getGuildPreviewOrNull</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">guildId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../dev.kord.core.entity/-guild-preview/index.html">GuildPreview</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph">Requests the preview of the guild matching the <a href="get-guild-preview-or-null.html">guildId</a>. If the bot is not in the guild, then the guild must be lurkable. Returns <code class="lang-kotlin">null</code> if the preview was not found.</p></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">suspend override </span><span class="token keyword">fun </span><a href="get-guild-preview-or-null.html"><span class="token function">getGuildPreviewOrNull</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">guildId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../dev.kord.core.entity/-guild-preview/index.html">GuildPreview</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph">Requests the preview of the guild matching the <a href="../-entity-supplier/get-guild-preview-or-null.html">guildId</a>. If the bot is not in the guild, then the guild must be lurkable. Returns <code class="lang-kotlin">null</code> if the preview was not found.</p></div></div></div>
                 </div>
               </div>
             </div>
           </div>
 <a data-name="316208171%2FFunctions%2F1239919082" anchor-label="getGuildRoles" id="316208171%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="get-guild-roles.html"><span>get</span><wbr><span>Guild</span><wbr><span><span>Roles</span></span></a></div>
@@ -854,13 +854,13 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="get-guild-roles.html"><span class="token function">getGuildRoles</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">guildId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines.flow/-flow/index.html">Flow</a><span class="token operator">&lt;</span><a href="../../dev.kord.core.entity/-role/index.html">Role</a><span class="token operator">&gt;</span></div><div class="brief "><p class="paragraph">Requests the <a href="../../dev.kord.core.entity/-role/index.html">roles</a> of the <a href="../../dev.kord.core.entity/-guild/index.html">Guild</a> with the given <a href="get-guild-roles.html">guildId</a>.</p></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="get-guild-roles.html"><span class="token function">getGuildRoles</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">guildId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines.flow/-flow/index.html">Flow</a><span class="token operator">&lt;</span><a href="../../dev.kord.core.entity/-role/index.html">Role</a><span class="token operator">&gt;</span></div><div class="brief "><p class="paragraph">Requests the <a href="../../dev.kord.core.entity/-role/index.html">roles</a> of the <a href="../../dev.kord.core.entity/-guild/index.html">Guild</a> with the given <a href="../-entity-supplier/get-guild-roles.html">guildId</a>.</p></div></div></div>
                 </div>
               </div>
             </div>
           </div>
 <a data-name="-325128327%2FFunctions%2F1239919082" anchor-label="getGuildScheduledEvent" id="-325128327%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../-entity-supplier/get-guild-scheduled-event.html"><span>get</span><wbr><span>Guild</span><wbr><span>Scheduled</span><wbr><span><span>Event</span></span></a></div>
@@ -875,7 +875,7 @@
             </div>
           </div>
 <a data-name="-343596662%2FFunctions%2F1239919082" anchor-label="getGuildScheduledEventMembers" id="-343596662%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../-entity-supplier/get-guild-scheduled-event-members.html"><span>get</span><wbr><span>Guild</span><wbr><span>Scheduled</span><wbr><span>Event</span><wbr><span><span>Members</span></span></a></div>
@@ -890,7 +890,7 @@
             </div>
           </div>
 <a data-name="-565893838%2FFunctions%2F1239919082" anchor-label="getGuildScheduledEventMembersAfter" id="-565893838%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="get-guild-scheduled-event-members-after.html"><span>get</span><wbr><span>Guild</span><wbr><span>Scheduled</span><wbr><span>Event</span><wbr><span>Members</span><wbr><span><span>After</span></span></a></div>
@@ -905,7 +905,7 @@
             </div>
           </div>
 <a data-name="-1203599869%2FFunctions%2F1239919082" anchor-label="getGuildScheduledEventMembersBefore" id="-1203599869%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="get-guild-scheduled-event-members-before.html"><span>get</span><wbr><span>Guild</span><wbr><span>Scheduled</span><wbr><span>Event</span><wbr><span>Members</span><wbr><span><span>Before</span></span></a></div>
@@ -920,7 +920,7 @@
             </div>
           </div>
 <a data-name="-106844689%2FFunctions%2F1239919082" anchor-label="getGuildScheduledEventOrNull" id="-106844689%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="get-guild-scheduled-event-or-null.html"><span>get</span><wbr><span>Guild</span><wbr><span>Scheduled</span><wbr><span>Event</span><wbr><span>Or</span><wbr><span><span>Null</span></span></a></div>
@@ -935,7 +935,7 @@
             </div>
           </div>
 <a data-name="783242082%2FFunctions%2F1239919082" anchor-label="getGuildScheduledEvents" id="783242082%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="get-guild-scheduled-events.html"><span>get</span><wbr><span>Guild</span><wbr><span>Scheduled</span><wbr><span><span>Events</span></span></a></div>
@@ -950,7 +950,7 @@
             </div>
           </div>
 <a data-name="471085433%2FFunctions%2F1239919082" anchor-label="getGuildScheduledEventUsers" id="471085433%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../-entity-supplier/get-guild-scheduled-event-users.html"><span>get</span><wbr><span>Guild</span><wbr><span>Scheduled</span><wbr><span>Event</span><wbr><span><span>Users</span></span></a></div>
@@ -965,7 +965,7 @@
             </div>
           </div>
 <a data-name="783144673%2FFunctions%2F1239919082" anchor-label="getGuildScheduledEventUsersAfter" id="783144673%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="get-guild-scheduled-event-users-after.html"><span>get</span><wbr><span>Guild</span><wbr><span>Scheduled</span><wbr><span>Event</span><wbr><span>Users</span><wbr><span><span>After</span></span></a></div>
@@ -980,7 +980,7 @@
             </div>
           </div>
 <a data-name="1961888308%2FFunctions%2F1239919082" anchor-label="getGuildScheduledEventUsersBefore" id="1961888308%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="get-guild-scheduled-event-users-before.html"><span>get</span><wbr><span>Guild</span><wbr><span>Scheduled</span><wbr><span>Event</span><wbr><span>Users</span><wbr><span><span>Before</span></span></a></div>
@@ -995,7 +995,7 @@
             </div>
           </div>
 <a data-name="-1173001840%2FFunctions%2F1239919082" anchor-label="getGuildSoundboardSound" id="-1173001840%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../-entity-supplier/get-guild-soundboard-sound.html"><span>get</span><wbr><span>Guild</span><wbr><span>Soundboard</span><wbr><span><span>Sound</span></span></a></div>
@@ -1010,7 +1010,7 @@
             </div>
           </div>
 <a data-name="-203634642%2FFunctions%2F1239919082" anchor-label="getGuildSoundboardSoundOrNull" id="-203634642%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="get-guild-soundboard-sound-or-null.html"><span>get</span><wbr><span>Guild</span><wbr><span>Soundboard</span><wbr><span>Sound</span><wbr><span>Or</span><wbr><span><span>Null</span></span></a></div>
@@ -1019,13 +1019,13 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">suspend override </span><span class="token keyword">fun </span><a href="get-guild-soundboard-sound-or-null.html"><span class="token function">getGuildSoundboardSoundOrNull</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">guildId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter ">soundId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../dev.kord.core.entity/-guild-soundboard-sound/index.html">GuildSoundboardSound</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph">Requests the <a href="../../dev.kord.core.entity/-guild-soundboard-sound/index.html">GuildSoundboardSound</a> with the <a href="get-guild-soundboard-sound-or-null.html">soundId</a> in the <a href="../../dev.kord.core.entity/-guild/index.html">Guild</a> with the given <a href="get-guild-soundboard-sound-or-null.html">guildId</a>.</p></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">suspend override </span><span class="token keyword">fun </span><a href="get-guild-soundboard-sound-or-null.html"><span class="token function">getGuildSoundboardSoundOrNull</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">guildId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter ">soundId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../dev.kord.core.entity/-guild-soundboard-sound/index.html">GuildSoundboardSound</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph">Requests the <a href="../../dev.kord.core.entity/-guild-soundboard-sound/index.html">GuildSoundboardSound</a> with the <a href="../-entity-supplier/get-guild-soundboard-sound-or-null.html">soundId</a> in the <a href="../../dev.kord.core.entity/-guild/index.html">Guild</a> with the given <a href="../-entity-supplier/get-guild-soundboard-sound-or-null.html">guildId</a>.</p></div></div></div>
                 </div>
               </div>
             </div>
           </div>
 <a data-name="-1948482335%2FFunctions%2F1239919082" anchor-label="getGuildSoundboardSounds" id="-1948482335%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="get-guild-soundboard-sounds.html"><span>get</span><wbr><span>Guild</span><wbr><span>Soundboard</span><wbr><span><span>Sounds</span></span></a></div>
@@ -1034,13 +1034,13 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="get-guild-soundboard-sounds.html"><span class="token function">getGuildSoundboardSounds</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">guildId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines.flow/-flow/index.html">Flow</a><span class="token operator">&lt;</span><a href="../../dev.kord.core.entity/-guild-soundboard-sound/index.html">GuildSoundboardSound</a><span class="token operator">&gt;</span></div><div class="brief "><p class="paragraph">Requests the <a href="../../dev.kord.core.entity/-guild-soundboard-sound/index.html">guild soundboard sound</a> of the <a href="../../dev.kord.core.entity/-guild/index.html">Guild</a> with the given <a href="get-guild-soundboard-sounds.html">guildId</a>.</p></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="get-guild-soundboard-sounds.html"><span class="token function">getGuildSoundboardSounds</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">guildId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines.flow/-flow/index.html">Flow</a><span class="token operator">&lt;</span><a href="../../dev.kord.core.entity/-guild-soundboard-sound/index.html">GuildSoundboardSound</a><span class="token operator">&gt;</span></div><div class="brief "><p class="paragraph">Requests the <a href="../../dev.kord.core.entity/-guild-soundboard-sound/index.html">guild soundboard sound</a> of the <a href="../../dev.kord.core.entity/-guild/index.html">Guild</a> with the given <a href="../-entity-supplier/get-guild-soundboard-sounds.html">guildId</a>.</p></div></div></div>
                 </div>
               </div>
             </div>
           </div>
 <a data-name="1373012085%2FFunctions%2F1239919082" anchor-label="getGuildSticker" id="1373012085%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../-entity-supplier/get-guild-sticker.html"><span>get</span><wbr><span>Guild</span><wbr><span><span>Sticker</span></span></a></div>
@@ -1055,7 +1055,7 @@
             </div>
           </div>
 <a data-name="-305065133%2FFunctions%2F1239919082" anchor-label="getGuildStickerOrNull" id="-305065133%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="get-guild-sticker-or-null.html"><span>get</span><wbr><span>Guild</span><wbr><span>Sticker</span><wbr><span>Or</span><wbr><span><span>Null</span></span></a></div>
@@ -1070,7 +1070,7 @@
             </div>
           </div>
 <a data-name="-182836282%2FFunctions%2F1239919082" anchor-label="getGuildStickers" id="-182836282%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="get-guild-stickers.html"><span>get</span><wbr><span>Guild</span><wbr><span><span>Stickers</span></span></a></div>
@@ -1085,7 +1085,7 @@
             </div>
           </div>
 <a data-name="-329732337%2FFunctions%2F1239919082" anchor-label="getGuildVoiceRegions" id="-329732337%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="get-guild-voice-regions.html"><span>get</span><wbr><span>Guild</span><wbr><span>Voice</span><wbr><span><span>Regions</span></span></a></div>
@@ -1094,13 +1094,13 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="get-guild-voice-regions.html"><span class="token function">getGuildVoiceRegions</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">guildId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines.flow/-flow/index.html">Flow</a><span class="token operator">&lt;</span><a href="../../dev.kord.core.entity/-region/index.html">Region</a><span class="token operator">&gt;</span></div><div class="brief "><p class="paragraph">Requests the <a href="../../dev.kord.core.entity/-region/index.html">regions</a> of the <a href="../../dev.kord.core.entity/-guild/index.html">Guild</a> with the given <a href="get-guild-voice-regions.html">guildId</a>.</p></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="get-guild-voice-regions.html"><span class="token function">getGuildVoiceRegions</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">guildId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines.flow/-flow/index.html">Flow</a><span class="token operator">&lt;</span><a href="../../dev.kord.core.entity/-region/index.html">Region</a><span class="token operator">&gt;</span></div><div class="brief "><p class="paragraph">Requests the <a href="../../dev.kord.core.entity/-region/index.html">regions</a> of the <a href="../../dev.kord.core.entity/-guild/index.html">Guild</a> with the given <a href="../-entity-supplier/get-guild-voice-regions.html">guildId</a>.</p></div></div></div>
                 </div>
               </div>
             </div>
           </div>
 <a data-name="-1313328000%2FFunctions%2F1239919082" anchor-label="getGuildWebhooks" id="-1313328000%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="get-guild-webhooks.html"><span>get</span><wbr><span>Guild</span><wbr><span><span>Webhooks</span></span></a></div>
@@ -1109,13 +1109,13 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="get-guild-webhooks.html"><span class="token function">getGuildWebhooks</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">guildId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines.flow/-flow/index.html">Flow</a><span class="token operator">&lt;</span><a href="../../dev.kord.core.entity/-webhook/index.html">Webhook</a><span class="token operator">&gt;</span></div><div class="brief "><p class="paragraph">Requests the <a href="../../dev.kord.core.entity/-webhook/index.html">webhooks</a> of the <a href="../../dev.kord.core.entity/-guild/index.html">Guild</a> with the given <a href="get-guild-webhooks.html">guildId</a>.</p></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="get-guild-webhooks.html"><span class="token function">getGuildWebhooks</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">guildId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines.flow/-flow/index.html">Flow</a><span class="token operator">&lt;</span><a href="../../dev.kord.core.entity/-webhook/index.html">Webhook</a><span class="token operator">&gt;</span></div><div class="brief "><p class="paragraph">Requests the <a href="../../dev.kord.core.entity/-webhook/index.html">webhooks</a> of the <a href="../../dev.kord.core.entity/-guild/index.html">Guild</a> with the given <a href="../-entity-supplier/get-guild-webhooks.html">guildId</a>.</p></div></div></div>
                 </div>
               </div>
             </div>
           </div>
 <a data-name="1374286746%2FFunctions%2F1239919082" anchor-label="getGuildWelcomeScreen" id="1374286746%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="get-guild-welcome-screen.html"><span>get</span><wbr><span>Guild</span><wbr><span>Welcome</span><wbr><span><span>Screen</span></span></a></div>
@@ -1130,7 +1130,7 @@
             </div>
           </div>
 <a data-name="-1543285072%2FFunctions%2F1239919082" anchor-label="getGuildWelcomeScreenOrNull" id="-1543285072%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="get-guild-welcome-screen-or-null.html"><span>get</span><wbr><span>Guild</span><wbr><span>Welcome</span><wbr><span>Screen</span><wbr><span>Or</span><wbr><span><span>Null</span></span></a></div>
@@ -1145,7 +1145,7 @@
             </div>
           </div>
 <a data-name="-2017940700%2FFunctions%2F1239919082" anchor-label="getGuildWidget" id="-2017940700%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../-entity-supplier/get-guild-widget.html"><span>get</span><wbr><span>Guild</span><wbr><span><span>Widget</span></span></a></div>
@@ -1160,7 +1160,7 @@
             </div>
           </div>
 <a data-name="1209046830%2FFunctions%2F1239919082" anchor-label="getGuildWidgetOrNull" id="1209046830%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="get-guild-widget-or-null.html"><span>get</span><wbr><span>Guild</span><wbr><span>Widget</span><wbr><span>Or</span><wbr><span><span>Null</span></span></a></div>
@@ -1169,13 +1169,13 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">suspend override </span><span class="token keyword">fun </span><a href="get-guild-widget-or-null.html"><span class="token function">getGuildWidgetOrNull</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">guildId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../dev.kord.core.entity/-guild-widget/index.html">GuildWidget</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph">Requests to get the widget of a <a href="../../dev.kord.core.entity/-guild/index.html">Guild</a> with the given <a href="get-guild-widget-or-null.html">id</a>, returns null if the <a href="../../dev.kord.core.entity/-guild-widget/index.html">GuildWidget</a> isn't present.</p></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">suspend override </span><span class="token keyword">fun </span><a href="get-guild-widget-or-null.html"><span class="token function">getGuildWidgetOrNull</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">guildId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../dev.kord.core.entity/-guild-widget/index.html">GuildWidget</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph">Requests to get the widget of a <a href="../../dev.kord.core.entity/-guild/index.html">Guild</a> with the given <a href="../-entity-supplier/get-guild-widget-or-null.html">id</a>, returns null if the <a href="../../dev.kord.core.entity/-guild-widget/index.html">GuildWidget</a> isn't present.</p></div></div></div>
                 </div>
               </div>
             </div>
           </div>
 <a data-name="-1822981444%2FFunctions%2F1239919082" anchor-label="getInvite" id="-1822981444%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="get-invite.html"><span>get</span><wbr><span><span>Invite</span></span></a></div>
@@ -1190,7 +1190,7 @@
             </div>
           </div>
 <a data-name="-504014618%2FFunctions%2F1239919082" anchor-label="getInviteOrNull" id="-504014618%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="get-invite-or-null.html"><span>get</span><wbr><span>Invite</span><wbr><span>Or</span><wbr><span><span>Null</span></span></a></div>
@@ -1205,7 +1205,7 @@
             </div>
           </div>
 <a data-name="-1220721251%2FFunctions%2F1239919082" anchor-label="getJoinedPrivateArchivedThreads" id="-1220721251%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="get-joined-private-archived-threads.html"><span>get</span><wbr><span>Joined</span><wbr><span>Private</span><wbr><span>Archived</span><wbr><span><span>Threads</span></span></a></div>
@@ -1220,7 +1220,7 @@
             </div>
           </div>
 <a data-name="-1402889211%2FFunctions%2F1239919082" anchor-label="getMember" id="-1402889211%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../-entity-supplier/get-member.html"><span>get</span><wbr><span><span>Member</span></span></a></div>
@@ -1235,7 +1235,7 @@
             </div>
           </div>
 <a data-name="-736368157%2FFunctions%2F1239919082" anchor-label="getMemberOrNull" id="-736368157%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="get-member-or-null.html"><span>get</span><wbr><span>Member</span><wbr><span>Or</span><wbr><span><span>Null</span></span></a></div>
@@ -1244,13 +1244,13 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">suspend override </span><span class="token keyword">fun </span><a href="get-member-or-null.html"><span class="token function">getMemberOrNull</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">guildId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter ">userId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../dev.kord.core.entity/-member/index.html">Member</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph">Requests the <a href="../../dev.kord.core.entity/-member/index.html">Member</a> with the given <a href="get-member-or-null.html">userId</a> in the <a href="../../dev.kord.core.entity/-guild/index.html">Guild</a> wit the given <a href="get-member-or-null.html">guildId</a>, returns <code class="lang-kotlin">null</code> when the member isn't present.</p></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">suspend override </span><span class="token keyword">fun </span><a href="get-member-or-null.html"><span class="token function">getMemberOrNull</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">guildId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter ">userId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../dev.kord.core.entity/-member/index.html">Member</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph">Requests the <a href="../../dev.kord.core.entity/-member/index.html">Member</a> with the given <a href="../-entity-supplier/get-member-or-null.html">userId</a> in the <a href="../../dev.kord.core.entity/-guild/index.html">Guild</a> wit the given <a href="../-entity-supplier/get-member-or-null.html">guildId</a>, returns <code class="lang-kotlin">null</code> when the member isn't present.</p></div></div></div>
                 </div>
               </div>
             </div>
           </div>
 <a data-name="1058991744%2FFunctions%2F1239919082" anchor-label="getMessage" id="1058991744%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../-entity-supplier/get-message.html"><span>get</span><wbr><span><span>Message</span></span></a></div>
@@ -1265,7 +1265,7 @@
             </div>
           </div>
 <a data-name="370130358%2FFunctions%2F1239919082" anchor-label="getMessageOrNull" id="370130358%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="get-message-or-null.html"><span>get</span><wbr><span>Message</span><wbr><span>Or</span><wbr><span><span>Null</span></span></a></div>
@@ -1274,13 +1274,13 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">suspend override </span><span class="token keyword">fun </span><a href="get-message-or-null.html"><span class="token function">getMessageOrNull</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">channelId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter ">messageId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../dev.kord.core.entity/-message/index.html">Message</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph">Requests the <a href="../../dev.kord.core.entity/-message/index.html">Message</a> with the given <a href="get-message-or-null.html">messageId</a> in the MessageChannel with the given <a href="get-message-or-null.html">channelId</a>, returns <code class="lang-kotlin">null</code> when the message isn't present.</p></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">suspend override </span><span class="token keyword">fun </span><a href="get-message-or-null.html"><span class="token function">getMessageOrNull</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">channelId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter ">messageId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../dev.kord.core.entity/-message/index.html">Message</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph">Requests the <a href="../../dev.kord.core.entity/-message/index.html">Message</a> with the given <a href="../-entity-supplier/get-message-or-null.html">messageId</a> in the <a href="../../dev.kord.core.entity.channel/-message-channel/index.html">MessageChannel</a> with the given <a href="../-entity-supplier/get-message-or-null.html">channelId</a>, returns <code class="lang-kotlin">null</code> when the message isn't present.</p></div></div></div>
                 </div>
               </div>
             </div>
           </div>
 <a data-name="1167011227%2FFunctions%2F1239919082" anchor-label="getMessagesAfter" id="1167011227%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="get-messages-after.html"><span>get</span><wbr><span>Messages</span><wbr><span><span>After</span></span></a></div>
@@ -1289,13 +1289,13 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="get-messages-after.html"><span class="token function">getMessagesAfter</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">messageId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter ">channelId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter ">limit<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token operator">?</span></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines.flow/-flow/index.html">Flow</a><span class="token operator">&lt;</span><a href="../../dev.kord.core.entity/-message/index.html">Message</a><span class="token operator">&gt;</span></div><div class="brief "><p class="paragraph">Requests a flow of messages created after the <a href="../../dev.kord.core.entity/-message/index.html">Message</a> with the <a href="get-messages-after.html">messageId</a> in the MessageChannel with the <a href="get-messages-after.html">channelId</a>.</p></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="get-messages-after.html"><span class="token function">getMessagesAfter</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">messageId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter ">channelId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter ">limit<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token operator">?</span></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines.flow/-flow/index.html">Flow</a><span class="token operator">&lt;</span><a href="../../dev.kord.core.entity/-message/index.html">Message</a><span class="token operator">&gt;</span></div><div class="brief "><p class="paragraph">Requests a flow of messages created after the <a href="../../dev.kord.core.entity/-message/index.html">Message</a> with the <a href="../-entity-supplier/get-messages-after.html">messageId</a> in the <a href="../../dev.kord.core.entity.channel/-message-channel/index.html">channel</a> with the <a href="../-entity-supplier/get-messages-after.html">channelId</a>.</p></div></div></div>
                 </div>
               </div>
             </div>
           </div>
 <a data-name="-94327035%2FFunctions%2F1239919082" anchor-label="getMessagesAround" id="-94327035%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="get-messages-around.html"><span>get</span><wbr><span>Messages</span><wbr><span><span>Around</span></span></a></div>
@@ -1304,13 +1304,13 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="get-messages-around.html"><span class="token function">getMessagesAround</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">messageId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter ">channelId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter ">limit<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines.flow/-flow/index.html">Flow</a><span class="token operator">&lt;</span><a href="../../dev.kord.core.entity/-message/index.html">Message</a><span class="token operator">&gt;</span></div><div class="brief "><p class="paragraph">Requests a flow of messages created around the <a href="../../dev.kord.core.entity/-message/index.html">Message</a> with the <a href="get-messages-around.html">messageId</a> in the MessageChannel with the <a href="get-messages-around.html">channelId</a>.</p></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="get-messages-around.html"><span class="token function">getMessagesAround</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">messageId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter ">channelId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter ">limit<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines.flow/-flow/index.html">Flow</a><span class="token operator">&lt;</span><a href="../../dev.kord.core.entity/-message/index.html">Message</a><span class="token operator">&gt;</span></div><div class="brief "><p class="paragraph">Requests a flow of messages created around the <a href="../../dev.kord.core.entity/-message/index.html">Message</a> with the <a href="../-entity-supplier/get-messages-around.html">messageId</a> in the <a href="../../dev.kord.core.entity.channel/-message-channel/index.html">channel</a> with the <a href="../-entity-supplier/get-messages-around.html">channelId</a>.</p></div></div></div>
                 </div>
               </div>
             </div>
           </div>
 <a data-name="222715056%2FFunctions%2F1239919082" anchor-label="getMessagesBefore" id="222715056%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="get-messages-before.html"><span>get</span><wbr><span>Messages</span><wbr><span><span>Before</span></span></a></div>
@@ -1319,13 +1319,13 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="get-messages-before.html"><span class="token function">getMessagesBefore</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">messageId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter ">channelId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter ">limit<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token operator">?</span></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines.flow/-flow/index.html">Flow</a><span class="token operator">&lt;</span><a href="../../dev.kord.core.entity/-message/index.html">Message</a><span class="token operator">&gt;</span></div><div class="brief "><p class="paragraph">Requests a flow of messages created before the <a href="../../dev.kord.core.entity/-message/index.html">Message</a> with the <a href="get-messages-before.html">messageId</a> in the MessageChannel with the <a href="get-messages-before.html">channelId</a>.</p></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="get-messages-before.html"><span class="token function">getMessagesBefore</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">messageId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter ">channelId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter ">limit<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token operator">?</span></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines.flow/-flow/index.html">Flow</a><span class="token operator">&lt;</span><a href="../../dev.kord.core.entity/-message/index.html">Message</a><span class="token operator">&gt;</span></div><div class="brief "><p class="paragraph">Requests a flow of messages created before the <a href="../../dev.kord.core.entity/-message/index.html">Message</a> with the <a href="../-entity-supplier/get-messages-before.html">messageId</a> in the <a href="../../dev.kord.core.entity.channel/-message-channel/index.html">channel</a> with the <a href="../-entity-supplier/get-messages-before.html">channelId</a>.</p></div></div></div>
                 </div>
               </div>
             </div>
           </div>
 <a data-name="-1079199289%2FFunctions%2F1239919082" anchor-label="getNitroStickerPacks" id="-1079199289%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="get-nitro-sticker-packs.html"><span>get</span><wbr><span>Nitro</span><wbr><span>Sticker</span><wbr><span><span>Packs</span></span></a></div>
@@ -1340,7 +1340,7 @@
             </div>
           </div>
 <a data-name="-1777489453%2FFunctions%2F1239919082" anchor-label="getOriginalInteraction" id="-1777489453%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="get-original-interaction.html"><span>get</span><wbr><span>Original</span><wbr><span><span>Interaction</span></span></a></div>
@@ -1355,7 +1355,7 @@
             </div>
           </div>
 <a data-name="295337833%2FFunctions%2F1239919082" anchor-label="getOriginalInteractionOrNull" id="295337833%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="get-original-interaction-or-null.html"><span>get</span><wbr><span>Original</span><wbr><span>Interaction</span><wbr><span>Or</span><wbr><span><span>Null</span></span></a></div>
@@ -1370,7 +1370,7 @@
             </div>
           </div>
 <a data-name="-1020807550%2FFunctions%2F1239919082" anchor-label="getPrivateArchivedThreads" id="-1020807550%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="get-private-archived-threads.html"><span>get</span><wbr><span>Private</span><wbr><span>Archived</span><wbr><span><span>Threads</span></span></a></div>
@@ -1385,7 +1385,7 @@
             </div>
           </div>
 <a data-name="-1431536638%2FFunctions%2F1239919082" anchor-label="getPublicArchivedThreads" id="-1431536638%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="get-public-archived-threads.html"><span>get</span><wbr><span>Public</span><wbr><span>Archived</span><wbr><span><span>Threads</span></span></a></div>
@@ -1400,7 +1400,7 @@
             </div>
           </div>
 <a data-name="1193371021%2FFunctions%2F1239919082" anchor-label="getReactors" id="1193371021%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="get-reactors.html"><span>get</span><wbr><span><span>Reactors</span></span></a></div>
@@ -1415,7 +1415,7 @@
             </div>
           </div>
 <a data-name="2031484193%2FFunctions%2F1239919082" anchor-label="getRole" id="2031484193%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../-entity-supplier/get-role.html"><span>get</span><wbr><span><span>Role</span></span></a></div>
@@ -1430,7 +1430,7 @@
             </div>
           </div>
 <a data-name="-753921281%2FFunctions%2F1239919082" anchor-label="getRoleOrNull" id="-753921281%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="get-role-or-null.html"><span>get</span><wbr><span>Role</span><wbr><span>Or</span><wbr><span><span>Null</span></span></a></div>
@@ -1439,13 +1439,13 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">suspend override </span><span class="token keyword">fun </span><a href="get-role-or-null.html"><span class="token function">getRoleOrNull</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">guildId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter ">roleId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../dev.kord.core.entity/-role/index.html">Role</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph">Requests the <a href="../../dev.kord.core.entity/-role/index.html">Role</a> with the given <a href="get-role-or-null.html">roleId</a> in the <a href="../../dev.kord.core.entity/-guild/index.html">Guild</a> wit the given <a href="get-role-or-null.html">guildId</a>, returns null when the role isn't present.</p></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">suspend override </span><span class="token keyword">fun </span><a href="get-role-or-null.html"><span class="token function">getRoleOrNull</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">guildId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter ">roleId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../dev.kord.core.entity/-role/index.html">Role</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph">Requests the <a href="../../dev.kord.core.entity/-role/index.html">Role</a> with the given <a href="../-entity-supplier/get-role-or-null.html">roleId</a> in the <a href="../../dev.kord.core.entity/-guild/index.html">Guild</a> wit the given <a href="../-entity-supplier/get-role-or-null.html">guildId</a>, returns null when the role isn't present.</p></div></div></div>
                 </div>
               </div>
             </div>
           </div>
 <a data-name="-1247310424%2FFunctions%2F1239919082" anchor-label="getSelf" id="-1247310424%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../-entity-supplier/get-self.html"><span>get</span><wbr><span><span>Self</span></span></a></div>
@@ -1460,7 +1460,7 @@
             </div>
           </div>
 <a data-name="2113191050%2FFunctions%2F1239919082" anchor-label="getSelfOrNull" id="2113191050%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="get-self-or-null.html"><span>get</span><wbr><span>Self</span><wbr><span>Or</span><wbr><span><span>Null</span></span></a></div>
@@ -1475,7 +1475,7 @@
             </div>
           </div>
 <a data-name="199397064%2FFunctions%2F1239919082" anchor-label="getStageInstance" id="199397064%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../-entity-supplier/get-stage-instance.html"><span>get</span><wbr><span>Stage</span><wbr><span><span>Instance</span></span></a></div>
@@ -1490,7 +1490,7 @@
             </div>
           </div>
 <a data-name="1626202834%2FFunctions%2F1239919082" anchor-label="getStageInstanceOrNull" id="1626202834%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="get-stage-instance-or-null.html"><span>get</span><wbr><span>Stage</span><wbr><span>Instance</span><wbr><span>Or</span><wbr><span><span>Null</span></span></a></div>
@@ -1505,7 +1505,7 @@
             </div>
           </div>
 <a data-name="1967279422%2FFunctions%2F1239919082" anchor-label="getSticker" id="1967279422%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../-entity-supplier/get-sticker.html"><span>get</span><wbr><span><span>Sticker</span></span></a></div>
@@ -1520,7 +1520,7 @@
             </div>
           </div>
 <a data-name="1270945736%2FFunctions%2F1239919082" anchor-label="getStickerOrNull" id="1270945736%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="get-sticker-or-null.html"><span>get</span><wbr><span>Sticker</span><wbr><span>Or</span><wbr><span><span>Null</span></span></a></div>
@@ -1535,7 +1535,7 @@
             </div>
           </div>
 <a data-name="-719662584%2FFunctions%2F1239919082" anchor-label="getSubscription" id="-719662584%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../-entity-supplier/get-subscription.html"><span>get</span><wbr><span><span>Subscription</span></span></a></div>
@@ -1550,7 +1550,7 @@
             </div>
           </div>
 <a data-name="654879398%2FFunctions%2F1239919082" anchor-label="getSubscriptionOrNull" id="654879398%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="get-subscription-or-null.html"><span>get</span><wbr><span>Subscription</span><wbr><span>Or</span><wbr><span><span>Null</span></span></a></div>
@@ -1559,13 +1559,13 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">suspend override </span><span class="token keyword">fun </span><a href="get-subscription-or-null.html"><span class="token function">getSubscriptionOrNull</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">skuId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter ">subscriptionId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../dev.kord.core.entity.monetization/-subscription/index.html">Subscription</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph">Requests a <a href="../../dev.kord.core.entity.monetization/-subscription/index.html">Subscription</a> by its <a href="get-subscription-or-null.html">id</a>. Returns <code class="lang-kotlin">null</code> if it wasn't found.</p></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">suspend override </span><span class="token keyword">fun </span><a href="get-subscription-or-null.html"><span class="token function">getSubscriptionOrNull</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">skuId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter ">subscriptionId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../dev.kord.core.entity.monetization/-subscription/index.html">Subscription</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph">Requests a <a href="../../dev.kord.core.entity.monetization/-subscription/index.html">Subscription</a> by its <a href="../-entity-supplier/get-subscription-or-null.html">id</a>. Returns <code class="lang-kotlin">null</code> if it wasn't found.</p></div></div></div>
                 </div>
               </div>
             </div>
           </div>
 <a data-name="-274184104%2FFunctions%2F1239919082" anchor-label="getSubscriptions" id="-274184104%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="get-subscriptions.html"><span>get</span><wbr><span><span>Subscriptions</span></span></a></div>
@@ -1574,13 +1574,13 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="get-subscriptions.html"><span class="token function">getSubscriptions</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">skuId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter ">request<span class="token operator">: </span><a href="../../../rest/dev.kord.rest.json.request/-sku-subscriptions-list-request/index.html">SkuSubscriptionsListRequest</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines.flow/-flow/index.html">Flow</a><span class="token operator">&lt;</span><a href="../../dev.kord.core.entity.monetization/-subscription/index.html">Subscription</a><span class="token operator">&gt;</span></div><div class="brief "><p class="paragraph">Requests to get all <a href="../../dev.kord.core.entity.monetization/-subscription/index.html">Subscription</a>s containing the Sku with the given <a href="get-subscriptions.html">skuId</a>.</p></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="get-subscriptions.html"><span class="token function">getSubscriptions</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">skuId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter ">request<span class="token operator">: </span><a href="../../../rest/dev.kord.rest.json.request/-sku-subscriptions-list-request/index.html">SkuSubscriptionsListRequest</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines.flow/-flow/index.html">Flow</a><span class="token operator">&lt;</span><a href="../../dev.kord.core.entity.monetization/-subscription/index.html">Subscription</a><span class="token operator">&gt;</span></div><div class="brief "><p class="paragraph">Requests to get all <a href="../../dev.kord.core.entity.monetization/-subscription/index.html">Subscription</a>s containing the <a href="../../dev.kord.core.entity.monetization/-sku/index.html">Sku</a> with the given <a href="../-entity-supplier/get-subscriptions.html">skuId</a>.</p></div></div></div>
                 </div>
               </div>
             </div>
           </div>
 <a data-name="-556490102%2FFunctions%2F1239919082" anchor-label="getTemplate" id="-556490102%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../-entity-supplier/get-template.html"><span>get</span><wbr><span><span>Template</span></span></a></div>
@@ -1595,7 +1595,7 @@
             </div>
           </div>
 <a data-name="1334607464%2FFunctions%2F1239919082" anchor-label="getTemplateOrNull" id="1334607464%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="get-template-or-null.html"><span>get</span><wbr><span>Template</span><wbr><span>Or</span><wbr><span><span>Null</span></span></a></div>
@@ -1604,13 +1604,13 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">suspend override </span><span class="token keyword">fun </span><a href="get-template-or-null.html"><span class="token function">getTemplateOrNull</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">code<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../dev.kord.core.entity/-template/index.html">Template</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph">Requests the <a href="../../dev.kord.core.entity/-template/index.html">Template</a> with the given <a href="get-template-or-null.html">code</a>. returns null when the template isn't present.</p></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">suspend override </span><span class="token keyword">fun </span><a href="get-template-or-null.html"><span class="token function">getTemplateOrNull</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">code<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../dev.kord.core.entity/-template/index.html">Template</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph">Requests the <a href="../../dev.kord.core.entity/-template/index.html">Template</a> with the given <a href="../-entity-supplier/get-template-or-null.html">code</a>. returns null when the template isn't present.</p></div></div></div>
                 </div>
               </div>
             </div>
           </div>
 <a data-name="-2139722506%2FFunctions%2F1239919082" anchor-label="getTemplates" id="-2139722506%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="get-templates.html"><span>get</span><wbr><span><span>Templates</span></span></a></div>
@@ -1625,7 +1625,7 @@
             </div>
           </div>
 <a data-name="761179840%2FFunctions%2F1239919082" anchor-label="getThreadMembers" id="761179840%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="get-thread-members.html"><span>get</span><wbr><span>Thread</span><wbr><span><span>Members</span></span></a></div>
@@ -1640,7 +1640,7 @@
             </div>
           </div>
 <a data-name="-1021063874%2FFunctions%2F1239919082" anchor-label="getUser" id="-1021063874%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../-entity-supplier/get-user.html"><span>get</span><wbr><span><span>User</span></span></a></div>
@@ -1655,7 +1655,7 @@
             </div>
           </div>
 <a data-name="1456760672%2FFunctions%2F1239919082" anchor-label="getUserOrNull" id="1456760672%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="get-user-or-null.html"><span>get</span><wbr><span>User</span><wbr><span>Or</span><wbr><span><span>Null</span></span></a></div>
@@ -1664,13 +1664,13 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">suspend override </span><span class="token keyword">fun </span><a href="get-user-or-null.html"><span class="token function">getUserOrNull</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">id<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../dev.kord.core.entity/-user/index.html">User</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph">Requests the <a href="../../dev.kord.core.entity/-user/index.html">User</a> with the given <a href="get-user-or-null.html">id</a>, returns null when the user isn't present.</p></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">suspend override </span><span class="token keyword">fun </span><a href="get-user-or-null.html"><span class="token function">getUserOrNull</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">id<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../dev.kord.core.entity/-user/index.html">User</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph">Requests the <a href="../../dev.kord.core.entity/-user/index.html">User</a> with the given <a href="../-entity-supplier/get-user-or-null.html">id</a>, returns null when the user isn't present.</p></div></div></div>
                 </div>
               </div>
             </div>
           </div>
 <a data-name="-1532871356%2FFunctions%2F1239919082" anchor-label="getWebhook" id="-1532871356%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../-entity-supplier/get-webhook.html"><span>get</span><wbr><span><span>Webhook</span></span></a></div>
@@ -1685,7 +1685,7 @@
             </div>
           </div>
 <a data-name="1161263141%2FFunctions%2F1239919082" anchor-label="getWebhookMessage" id="1161263141%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../-entity-supplier/get-webhook-message.html"><span>get</span><wbr><span>Webhook</span><wbr><span><span>Message</span></span></a></div>
@@ -1700,7 +1700,7 @@
             </div>
           </div>
 <a data-name="-1822397053%2FFunctions%2F1239919082" anchor-label="getWebhookMessageOrNull" id="-1822397053%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="get-webhook-message-or-null.html"><span>get</span><wbr><span>Webhook</span><wbr><span>Message</span><wbr><span>Or</span><wbr><span><span>Null</span></span></a></div>
@@ -1709,13 +1709,13 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">suspend override </span><span class="token keyword">fun </span><a href="get-webhook-message-or-null.html"><span class="token function">getWebhookMessageOrNull</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">webhookId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter ">token<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">messageId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter ">threadId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token operator">?</span></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../dev.kord.core.entity/-message/index.html">Message</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph">Requests the <a href="../../dev.kord.core.entity/-message/index.html">Message</a> with the given <a href="get-webhook-message-or-null.html">messageId</a> previously sent from a <a href="../../dev.kord.core.entity/-webhook/index.html">Webhook</a> with the given <a href="get-webhook-message-or-null.html">webhookId</a> using the <a href="get-webhook-message-or-null.html">token</a> for authentication, returns <code class="lang-kotlin">null</code> when the message isn't present.</p></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">suspend override </span><span class="token keyword">fun </span><a href="get-webhook-message-or-null.html"><span class="token function">getWebhookMessageOrNull</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">webhookId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter ">token<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">messageId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter ">threadId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token operator">?</span></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../dev.kord.core.entity/-message/index.html">Message</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph">Requests the <a href="../../dev.kord.core.entity/-message/index.html">Message</a> with the given <a href="../-entity-supplier/get-webhook-message-or-null.html">messageId</a> previously sent from a <a href="../../dev.kord.core.entity/-webhook/index.html">Webhook</a> with the given <a href="../-entity-supplier/get-webhook-message-or-null.html">webhookId</a> using the <a href="../-entity-supplier/get-webhook-message-or-null.html">token</a> for authentication, returns <code class="lang-kotlin">null</code> when the message isn't present.</p></div></div></div>
                 </div>
               </div>
             </div>
           </div>
 <a data-name="1288858446%2FFunctions%2F1239919082" anchor-label="getWebhookOrNull" id="1288858446%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="get-webhook-or-null.html"><span>get</span><wbr><span>Webhook</span><wbr><span>Or</span><wbr><span><span>Null</span></span></a></div>
@@ -1724,13 +1724,13 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">suspend override </span><span class="token keyword">fun </span><a href="get-webhook-or-null.html"><span class="token function">getWebhookOrNull</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">id<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../dev.kord.core.entity/-webhook/index.html">Webhook</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph">Requests the <a href="../../dev.kord.core.entity/-webhook/index.html">Webhook</a> with the given <a href="get-webhook-or-null.html">id</a>, returns <code class="lang-kotlin">null</code> when the webhook isn't present.</p></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">suspend override </span><span class="token keyword">fun </span><a href="get-webhook-or-null.html"><span class="token function">getWebhookOrNull</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">id<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../dev.kord.core.entity/-webhook/index.html">Webhook</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph">Requests the <a href="../../dev.kord.core.entity/-webhook/index.html">Webhook</a> with the given <a href="../-entity-supplier/get-webhook-or-null.html">id</a>, returns <code class="lang-kotlin">null</code> when the webhook isn't present.</p></div></div></div>
                 </div>
               </div>
             </div>
           </div>
 <a data-name="-195448398%2FFunctions%2F1239919082" anchor-label="getWebhookWithToken" id="-195448398%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../-entity-supplier/get-webhook-with-token.html"><span>get</span><wbr><span>Webhook</span><wbr><span>With</span><wbr><span><span>Token</span></span></a></div>
@@ -1745,7 +1745,7 @@
             </div>
           </div>
 <a data-name="1973497620%2FFunctions%2F1239919082" anchor-label="getWebhookWithTokenOrNull" id="1973497620%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="get-webhook-with-token-or-null.html"><span>get</span><wbr><span>Webhook</span><wbr><span>With</span><wbr><span>Token</span><wbr><span>Or</span><wbr><span><span>Null</span></span></a></div>
@@ -1754,13 +1754,13 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">suspend override </span><span class="token keyword">fun </span><a href="get-webhook-with-token-or-null.html"><span class="token function">getWebhookWithTokenOrNull</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">id<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter ">token<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../dev.kord.core.entity/-webhook/index.html">Webhook</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph">Requests the <a href="../../dev.kord.core.entity/-webhook/index.html">Webhook</a> with the given <a href="get-webhook-with-token-or-null.html">id</a> using the <a href="get-webhook-with-token-or-null.html">token</a> for authentication, returns null when the webhook isn't present.</p></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">suspend override </span><span class="token keyword">fun </span><a href="get-webhook-with-token-or-null.html"><span class="token function">getWebhookWithTokenOrNull</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">id<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter ">token<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../dev.kord.core.entity/-webhook/index.html">Webhook</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph">Requests the <a href="../../dev.kord.core.entity/-webhook/index.html">Webhook</a> with the given <a href="../-entity-supplier/get-webhook-with-token-or-null.html">id</a> using the <a href="../-entity-supplier/get-webhook-with-token-or-null.html">token</a> for authentication, returns null when the webhook isn't present.</p></div></div></div>
                 </div>
               </div>
             </div>
           </div>
 <a data-name="-1697021064%2FFunctions%2F1239919082" anchor-label="toString" id="-1697021064%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="to-string.html"><span>to</span><wbr><span><span>String</span></span></a></div>
@@ -1775,7 +1775,7 @@
             </div>
           </div>
 <a data-name="-594059875%2FFunctions%2F1239919082" anchor-label="withFallback" id="-594059875%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../with-fallback.html"><span>with</span><wbr><span><span>Fallback</span></span></a></div>
@@ -1795,17 +1795,21 @@
   </div>
 </div>
     <div class="footer">
-        <a href="#content" id="go-to-top-link" class="footer--button footer--button_go-to-top"></a>
-        <span>© 2026 Copyright</span>
-        <span class="pull-right">
-            <span>Generated by </span>
-            <a class="footer--link footer--link_external" href="https://github.com/Kotlin/dokka">
-                <span>dokka</span>
-            </a>
-        </span>
-    </div>
+        <div class="footer--container">
+            <a href="#content" id="go-to-top-link" class="footer--button footer--button_go-to-top"></a>
+            <div class="footer--content">
+                <div>
+                    <span>Generated by </span>
+                    <a class="footer--link footer--link_external" href="https://github.com/Kotlin/dokka">
+                        Dokka
+                    </a>
+                    <div>© 2026 Copyright</div>
+                </div>
             </div>
         </div>
     </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>

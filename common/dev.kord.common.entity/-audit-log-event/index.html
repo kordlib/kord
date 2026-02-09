@@ -1,22 +1,22 @@
 <!doctype html>
-<html class="no-js">
+<html class="no-js" lang="en">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
     <title>AuditLogEvent</title>
-<link href="../../../images/logo-icon.svg" rel="icon" type="image/svg">    <script>var pathToRoot = "../../../";</script>
-    <script>document.documentElement.classList.replace("no-js","js");</script>
+<link href="../../../images/logo-icon.svg" rel="icon" type="image/svg"><script>var pathToRoot = "../../../";</script>
+    <script>document.documentElement.classList.replace("no-js", "js");</script>
     <script>const storage = localStorage.getItem("dokka-dark-mode")
-    if (storage == null) {
+      if (storage == null) {
         const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
         if (osDarkSchemePreferred === true) {
-            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+          document.getElementsByTagName("html")[0].classList.add("theme-dark")
         }
-    } else {
+      } else {
         const savedDarkMode = JSON.parse(storage)
-        if(savedDarkMode === true) {
-            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        if (savedDarkMode === true) {
+          document.getElementsByTagName("html")[0].classList.add("theme-dark")
         }
-    }
+      }
     </script>
 <script type="text/javascript" src="https://unpkg.com/kotlin-playground@1/dist/playground.min.js" async></script>
 <script type="text/javascript" src="../../../scripts/sourceset_dependencies.js" async></script>
@@ -24,19 +24,17 @@
 <link href="../../../styles/main.css" rel="Stylesheet">
 <link href="../../../styles/prism.css" rel="Stylesheet">
 <link href="../../../styles/logo-styles.css" rel="Stylesheet">
-<link href="../../../styles/font-jb-sans-auto.css" rel="Stylesheet">
 <link href="../../../ui-kit/ui-kit.min.css" rel="Stylesheet">
-<script type="text/javascript" src="../../../scripts/clipboard.js" async></script>
+<script type="text/javascript" src="../../../scripts/safe-local-storage_blocking.js"></script>
 <script type="text/javascript" src="../../../scripts/navigation-loader.js" async></script>
 <script type="text/javascript" src="../../../scripts/platform-content-handler.js" async></script>
 <script type="text/javascript" src="../../../scripts/main.js" defer></script>
 <script type="text/javascript" src="../../../scripts/prism.js" async></script>
-<script type="text/javascript" src="../../../ui-kit/ui-kit.min.js" defer></script>
-<script type="text/javascript" src="../../../scripts/symbol-parameters-wrapper_deferred.js" defer></script></head>
+<script type="text/javascript" src="../../../ui-kit/ui-kit.min.js" defer></script></head>
 <body>
-    <div class="root">
-    <nav class="navigation theme-dark" id="navigation-wrapper">
-<a class="library-name--link" href="../../../index.html">
+<div class="root">
+    <header class="navigation theme-dark" id="navigation-wrapper" role="banner">
+<a class="library-name--link" href="../../../index.html" tabindex="1">
                     kord
             </a>        <button class="navigation-controls--btn navigation-controls--btn_toc ui-kit_mobile-only" id="toc-toggle" type="button">Toggle table of contents
         </button>
@@ -44,13 +42,13 @@
         <div class="library-version" id="library-version">or(map(map(map(map(valueof(ProcessOutputValueSource))))), map(map(map(map(valueof(ProcessOutputValueSource))))))
         </div>
         <div class="navigation-controls">
-        <div class="filter-section filter-section_loading" id="filter-section">
-                <button class="platform-tag platform-selector common-like" data-active="" data-filter=":common/commonMain">common</button>
+        <ul class="filter-section filter-section_loading" id="filter-section" aria-label="Target filter">
+                <button class="platform-tag platform-selector common-like" data-active="" aria-pressed="true" data-filter=":common/commonMain">common</button>
             <div class="dropdown filter-section--dropdown" data-role="dropdown" id="filter-section-dropdown">
                 <button class="button button_dropdown filter-section--dropdown-toggle" role="combobox" data-role="dropdown-toggle" aria-controls="platform-tags-listbox" aria-haspopup="listbox" aria-expanded="false" aria-label="Toggle source sets"></button>
-                <ul role="listbox" id="platform-tags-listbox" class="dropdown--list" data-role="dropdown-listbox">
-                    <div class="dropdown--header"><span>Platform filter</span>
-                        <button class="button" data-role="dropdown-toggle" aria-label="Close platform filter">
+                <ul role="listbox" id="platform-tags-listbox" class="dropdown--list" data-role="dropdown-listbox" aria-label="Target filter">
+                    <div class="dropdown--header"><span>Target filter</span>
+                        <button class="button" data-role="dropdown-toggle" aria-label="Close target filter">
                             <i class="ui-kit-icon ui-kit-icon_cross"></i>
                         </button>
                     </div>
@@ -64,45 +62,47 @@
                 </ul>
                 <div class="dropdown--overlay"></div>
             </div>
-        </div>
+        </ul>
             <button class="navigation-controls--btn navigation-controls--btn_theme" id="theme-toggle-button" type="button">Switch theme
             </button>
             <div class="navigation-controls--btn navigation-controls--btn_search" id="searchBar" role="button">Search in
                 API
             </div>
         </div>
-    </nav>
-        <div id="container">
-            <div class="sidebar" id="leftColumn">
-                <div class="dropdown theme-dark_mobile" data-role="dropdown" id="toc-dropdown">
-                    <ul role="listbox" id="toc-listbox" class="dropdown--list dropdown--list_toc-list" data-role="dropdown-listbox">
-                        <div class="dropdown--header">
+    </header>
+    <div id="container">
+        <nav id="leftColumn" class="sidebar" data-item-type="SECTION" data-item-config="{&quot;defaultSize&quot;: 280, &quot;minSize&quot;: 200, &quot;maxSize&quot;: 400}">
+            <a class="toc--skip-link" href="#main">Skip to content</a>
+            <div class="dropdown theme-dark_mobile" data-role="dropdown" id="toc-dropdown">
+                <ul role="listbox" id="toc-listbox" class="dropdown--list dropdown--list_toc-list" data-role="dropdown-listbox" aria-label="Table of contents">
+                    <div class="dropdown--header">
                             <span>
                                     kord
                             </span>
-                            <button class="button" data-role="dropdown-toggle" aria-label="Close table of contents">
-                                <i class="ui-kit-icon ui-kit-icon_cross"></i>
-                            </button>
-                        </div>
-                        <div class="sidebar--inner" id="sideMenu"></div>
-                    </ul>
-                    <div class="dropdown--overlay"></div>
-                </div>
+                        <button class="button" data-role="dropdown-toggle" aria-label="Close table of contents">
+                            <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                        </button>
+                    </div>
+                    <div class="sidebar--inner" id="sideMenu"></div>
+                </ul>
+                <div class="dropdown--overlay"></div>
             </div>
-            <div id="main">
+        </nav>
+        <div id="resizer" class="resizer" data-item-type="BAR"></div>
+        <div id="main" data-item-type="SECTION" role="main">
 <div class="main-content" data-page-type="classlike" id="content" pageids="kord-common::dev.kord.common.entity/AuditLogEvent///PointingToDeclaration//-1299464202">
   <div class="breadcrumbs"><a href="../../index.html">kord-common</a><span class="delimiter">/</span><a href="../index.html">dev.kord.common.entity</a><span class="delimiter">/</span><span class="current">AuditLogEvent</span></div>
   <div class="cover ">
     <h1 class="cover"><span>Audit</span><wbr><span>Log</span><wbr><span><span>Event</span></span></h1>
-    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":common/commonMain"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://kotlinlang.org/api/kotlinx.serialization/kotlinx-serialization-core/kotlinx.serialization/-serializable/index.html"><span class="token annotation builtin">Serializable</span></a><span class="token punctuation">(</span><span>with<span class="token operator"> = </span><a href="../../../common/dev.kord.common.entity/-audit-log-event/-serializer/index.html">AuditLogEvent.Serializer::class</a></span><wbr><span class="token punctuation">)</span></div></div><span class="token keyword">sealed </span><span class="token keyword">class </span><a href="index.html">AuditLogEvent</a><span class="clearfix"><span class="floating-right">(<a href="https://github.com/kordlib/kord/blob/map(map(map(valueof(ProcessOutputValueSource))))/common/build/generated/ksp/metadata/commonMain/kotlin/dev/kord/common/entity/AuditLogEvent.kt#L21">source</a>)</span></span></div><p class="paragraph">See <a href="index.html">AuditLogEvent</a>s in the <a href="https://discord.com/developers/docs/resources/audit-log#audit-log-entry-object-audit-log-events">Discord Developer Documentation</a>.</p><h4 class="">Inheritors</h4><div class="table"><div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-unknown/index.html">Unknown</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-guild-update/index.html">GuildUpdate</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-channel-create/index.html">ChannelCreate</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-channel-update/index.html">ChannelUpdate</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-channel-delete/index.html">ChannelDelete</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-channel-overwrite-create/index.html">ChannelOverwriteCreate</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-channel-overwrite-update/index.html">ChannelOverwriteUpdate</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-channel-overwrite-delete/index.html">ChannelOverwriteDelete</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-member-kick/index.html">MemberKick</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-member-prune/index.html">MemberPrune</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-member-ban-add/index.html">MemberBanAdd</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-member-ban-remove/index.html">MemberBanRemove</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-member-update/index.html">MemberUpdate</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-member-role-update/index.html">MemberRoleUpdate</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-member-move/index.html">MemberMove</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-member-disconnect/index.html">MemberDisconnect</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-bot-add/index.html">BotAdd</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-role-create/index.html">RoleCreate</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-role-update/index.html">RoleUpdate</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-role-delete/index.html">RoleDelete</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-invite-create/index.html">InviteCreate</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-invite-update/index.html">InviteUpdate</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-invite-delete/index.html">InviteDelete</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-webhook-create/index.html">WebhookCreate</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-webhook-update/index.html">WebhookUpdate</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-webhook-delete/index.html">WebhookDelete</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-emoji-create/index.html">EmojiCreate</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-emoji-update/index.html">EmojiUpdate</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-emoji-delete/index.html">EmojiDelete</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-message-delete/index.html">MessageDelete</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-message-bulk-delete/index.html">MessageBulkDelete</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-message-pin/index.html">MessagePin</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-message-unpin/index.html">MessageUnpin</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-integration-create/index.html">IntegrationCreate</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-integration-update/index.html">IntegrationUpdate</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-integration-delete/index.html">IntegrationDelete</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-stage-instance-create/index.html">StageInstanceCreate</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-stage-instance-update/index.html">StageInstanceUpdate</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-stage-instance-delete/index.html">StageInstanceDelete</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-sticker-create/index.html">StickerCreate</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-sticker-update/index.html">StickerUpdate</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-sticker-delete/index.html">StickerDelete</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-guild-scheduled-event-create/index.html">GuildScheduledEventCreate</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-guild-scheduled-event-update/index.html">GuildScheduledEventUpdate</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-guild-scheduled-event-delete/index.html">GuildScheduledEventDelete</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-thread-create/index.html">ThreadCreate</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-thread-update/index.html">ThreadUpdate</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-thread-delete/index.html">ThreadDelete</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-application-command-permission-update/index.html">ApplicationCommandPermissionUpdate</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-auto-moderation-rule-create/index.html">AutoModerationRuleCreate</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-auto-moderation-rule-update/index.html">AutoModerationRuleUpdate</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-auto-moderation-rule-delete/index.html">AutoModerationRuleDelete</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-auto-moderation-block-message/index.html">AutoModerationBlockMessage</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-auto-moderation-flag-to-channel/index.html">AutoModerationFlagToChannel</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-auto-moderation-user-communication-disabled/index.html">AutoModerationUserCommunicationDisabled</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-creator-monetization-request-created/index.html">CreatorMonetizationRequestCreated</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-creator-monetization-terms-accepted/index.html">CreatorMonetizationTermsAccepted</a></div></span></div><div></div></div></div></div></div></div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":common/commonMain"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://kotlinlang.org/api/kotlinx.serialization/kotlinx-serialization-core/kotlinx.serialization/-serializable/index.html"><span class="token annotation builtin">Serializable</span></a><span class="token punctuation">(</span><span>with<span class="token operator"> = </span><a href="../../../common/dev.kord.common.entity/-audit-log-event/-serializer/index.html">AuditLogEvent.Serializer::class</a></span><wbr><span class="token punctuation">)</span></div></div><span class="token keyword">sealed </span><span class="token keyword">class </span><a href="index.html">AuditLogEvent</a><span class="source-link-wrapper"><span class="source-link" data-element-type="source-link">(<a href="https://github.com/kordlib/kord/blob/map(map(map(valueof(ProcessOutputValueSource))))/common/build/generated/ksp/metadata/commonMain/kotlin/dev/kord/common/entity/AuditLogEvent.kt#L21">source</a>)</span></span></div><p class="paragraph">See <a href="index.html">AuditLogEvent</a>s in the <a href="https://discord.com/developers/docs/resources/audit-log#audit-log-entry-object-audit-log-events">Discord Developer Documentation</a>.</p><h4 class="tableheader">Inheritors</h4><div class="table"><div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-unknown/index.html">Unknown</a></div></span></div><div></div></div></div><div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-guild-update/index.html">GuildUpdate</a></div></span></div><div></div></div></div><div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-channel-create/index.html">ChannelCreate</a></div></span></div><div></div></div></div><div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-channel-update/index.html">ChannelUpdate</a></div></span></div><div></div></div></div><div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-channel-delete/index.html">ChannelDelete</a></div></span></div><div></div></div></div><div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-channel-overwrite-create/index.html">ChannelOverwriteCreate</a></div></span></div><div></div></div></div><div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-channel-overwrite-update/index.html">ChannelOverwriteUpdate</a></div></span></div><div></div></div></div><div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-channel-overwrite-delete/index.html">ChannelOverwriteDelete</a></div></span></div><div></div></div></div><div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-member-kick/index.html">MemberKick</a></div></span></div><div></div></div></div><div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-member-prune/index.html">MemberPrune</a></div></span></div><div></div></div></div><div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-member-ban-add/index.html">MemberBanAdd</a></div></span></div><div></div></div></div><div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-member-ban-remove/index.html">MemberBanRemove</a></div></span></div><div></div></div></div><div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-member-update/index.html">MemberUpdate</a></div></span></div><div></div></div></div><div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-member-role-update/index.html">MemberRoleUpdate</a></div></span></div><div></div></div></div><div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-member-move/index.html">MemberMove</a></div></span></div><div></div></div></div><div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-member-disconnect/index.html">MemberDisconnect</a></div></span></div><div></div></div></div><div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-bot-add/index.html">BotAdd</a></div></span></div><div></div></div></div><div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-role-create/index.html">RoleCreate</a></div></span></div><div></div></div></div><div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-role-update/index.html">RoleUpdate</a></div></span></div><div></div></div></div><div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-role-delete/index.html">RoleDelete</a></div></span></div><div></div></div></div><div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-invite-create/index.html">InviteCreate</a></div></span></div><div></div></div></div><div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-invite-update/index.html">InviteUpdate</a></div></span></div><div></div></div></div><div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-invite-delete/index.html">InviteDelete</a></div></span></div><div></div></div></div><div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-webhook-create/index.html">WebhookCreate</a></div></span></div><div></div></div></div><div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-webhook-update/index.html">WebhookUpdate</a></div></span></div><div></div></div></div><div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-webhook-delete/index.html">WebhookDelete</a></div></span></div><div></div></div></div><div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-emoji-create/index.html">EmojiCreate</a></div></span></div><div></div></div></div><div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-emoji-update/index.html">EmojiUpdate</a></div></span></div><div></div></div></div><div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-emoji-delete/index.html">EmojiDelete</a></div></span></div><div></div></div></div><div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-message-delete/index.html">MessageDelete</a></div></span></div><div></div></div></div><div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-message-bulk-delete/index.html">MessageBulkDelete</a></div></span></div><div></div></div></div><div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-message-pin/index.html">MessagePin</a></div></span></div><div></div></div></div><div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-message-unpin/index.html">MessageUnpin</a></div></span></div><div></div></div></div><div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-integration-create/index.html">IntegrationCreate</a></div></span></div><div></div></div></div><div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-integration-update/index.html">IntegrationUpdate</a></div></span></div><div></div></div></div><div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-integration-delete/index.html">IntegrationDelete</a></div></span></div><div></div></div></div><div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-stage-instance-create/index.html">StageInstanceCreate</a></div></span></div><div></div></div></div><div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-stage-instance-update/index.html">StageInstanceUpdate</a></div></span></div><div></div></div></div><div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-stage-instance-delete/index.html">StageInstanceDelete</a></div></span></div><div></div></div></div><div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-sticker-create/index.html">StickerCreate</a></div></span></div><div></div></div></div><div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-sticker-update/index.html">StickerUpdate</a></div></span></div><div></div></div></div><div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-sticker-delete/index.html">StickerDelete</a></div></span></div><div></div></div></div><div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-guild-scheduled-event-create/index.html">GuildScheduledEventCreate</a></div></span></div><div></div></div></div><div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-guild-scheduled-event-update/index.html">GuildScheduledEventUpdate</a></div></span></div><div></div></div></div><div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-guild-scheduled-event-delete/index.html">GuildScheduledEventDelete</a></div></span></div><div></div></div></div><div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-thread-create/index.html">ThreadCreate</a></div></span></div><div></div></div></div><div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-thread-update/index.html">ThreadUpdate</a></div></span></div><div></div></div></div><div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-thread-delete/index.html">ThreadDelete</a></div></span></div><div></div></div></div><div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-application-command-permission-update/index.html">ApplicationCommandPermissionUpdate</a></div></span></div><div></div></div></div><div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-auto-moderation-rule-create/index.html">AutoModerationRuleCreate</a></div></span></div><div></div></div></div><div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-auto-moderation-rule-update/index.html">AutoModerationRuleUpdate</a></div></span></div><div></div></div></div><div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-auto-moderation-rule-delete/index.html">AutoModerationRuleDelete</a></div></span></div><div></div></div></div><div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-auto-moderation-block-message/index.html">AutoModerationBlockMessage</a></div></span></div><div></div></div></div><div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-auto-moderation-flag-to-channel/index.html">AutoModerationFlagToChannel</a></div></span></div><div></div></div></div><div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-auto-moderation-user-communication-disabled/index.html">AutoModerationUserCommunicationDisabled</a></div></span></div><div></div></div></div><div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-creator-monetization-request-created/index.html">CreatorMonetizationRequestCreated</a></div></span></div><div></div></div></div><div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-creator-monetization-terms-accepted/index.html">CreatorMonetizationTermsAccepted</a></div></span></div><div></div></div></div></div></div></div>
   </div>
   <div class="tabbedcontent">
     <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="CONSTRUCTOR,TYPE,PROPERTY,FUNCTION">Members</button></div>
     <div class="tabs-section-body">
       <div data-togglable="TYPE">
-        <h2 class="">Types</h2>
+        <h2 class="tableheader">Types</h2>
         <div class="table"><a data-name="-941010823%2FClasslikes%2F-1299464202" anchor-label="ApplicationCommandPermissionUpdate" id="-941010823%2FClasslikes%2F-1299464202" data-filterable-set=":common/commonMain"></a>
-          <div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-application-command-permission-update/index.html"><span>Application</span><wbr><span>Command</span><wbr><span>Permission</span><wbr><span><span>Update</span></span></a></div>
@@ -117,7 +117,7 @@
             </div>
           </div>
 <a data-name="259425501%2FClasslikes%2F-1299464202" anchor-label="AutoModerationBlockMessage" id="259425501%2FClasslikes%2F-1299464202" data-filterable-set=":common/commonMain"></a>
-          <div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-auto-moderation-block-message/index.html"><span>Auto</span><wbr><span>Moderation</span><wbr><span>Block</span><wbr><span><span>Message</span></span></a></div>
@@ -132,7 +132,7 @@
             </div>
           </div>
 <a data-name="1909484111%2FClasslikes%2F-1299464202" anchor-label="AutoModerationFlagToChannel" id="1909484111%2FClasslikes%2F-1299464202" data-filterable-set=":common/commonMain"></a>
-          <div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-auto-moderation-flag-to-channel/index.html"><span>Auto</span><wbr><span>Moderation</span><wbr><span>Flag</span><wbr><span>To</span><wbr><span><span>Channel</span></span></a></div>
@@ -147,7 +147,7 @@
             </div>
           </div>
 <a data-name="-1126535233%2FClasslikes%2F-1299464202" anchor-label="AutoModerationRuleCreate" id="-1126535233%2FClasslikes%2F-1299464202" data-filterable-set=":common/commonMain"></a>
-          <div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-auto-moderation-rule-create/index.html"><span>Auto</span><wbr><span>Moderation</span><wbr><span>Rule</span><wbr><span><span>Create</span></span></a></div>
@@ -162,7 +162,7 @@
             </div>
           </div>
 <a data-name="-1385046544%2FClasslikes%2F-1299464202" anchor-label="AutoModerationRuleDelete" id="-1385046544%2FClasslikes%2F-1299464202" data-filterable-set=":common/commonMain"></a>
-          <div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-auto-moderation-rule-delete/index.html"><span>Auto</span><wbr><span>Moderation</span><wbr><span>Rule</span><wbr><span><span>Delete</span></span></a></div>
@@ -177,7 +177,7 @@
             </div>
           </div>
 <a data-name="177162386%2FClasslikes%2F-1299464202" anchor-label="AutoModerationRuleUpdate" id="177162386%2FClasslikes%2F-1299464202" data-filterable-set=":common/commonMain"></a>
-          <div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-auto-moderation-rule-update/index.html"><span>Auto</span><wbr><span>Moderation</span><wbr><span>Rule</span><wbr><span><span>Update</span></span></a></div>
@@ -192,7 +192,7 @@
             </div>
           </div>
 <a data-name="1963345988%2FClasslikes%2F-1299464202" anchor-label="AutoModerationUserCommunicationDisabled" id="1963345988%2FClasslikes%2F-1299464202" data-filterable-set=":common/commonMain"></a>
-          <div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-auto-moderation-user-communication-disabled/index.html"><span>Auto</span><wbr><span>Moderation</span><wbr><span>User</span><wbr><span>Communication</span><wbr><span><span>Disabled</span></span></a></div>
@@ -207,7 +207,7 @@
             </div>
           </div>
 <a data-name="-1011418894%2FClasslikes%2F-1299464202" anchor-label="BotAdd" id="-1011418894%2FClasslikes%2F-1299464202" data-filterable-set=":common/commonMain"></a>
-          <div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-bot-add/index.html"><span>Bot</span><wbr><span><span>Add</span></span></a></div>
@@ -222,7 +222,7 @@
             </div>
           </div>
 <a data-name="-1218567177%2FClasslikes%2F-1299464202" anchor-label="ChannelCreate" id="-1218567177%2FClasslikes%2F-1299464202" data-filterable-set=":common/commonMain"></a>
-          <div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-channel-create/index.html"><span>Channel</span><wbr><span><span>Create</span></span></a></div>
@@ -237,7 +237,7 @@
             </div>
           </div>
 <a data-name="-1477078488%2FClasslikes%2F-1299464202" anchor-label="ChannelDelete" id="-1477078488%2FClasslikes%2F-1299464202" data-filterable-set=":common/commonMain"></a>
-          <div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-channel-delete/index.html"><span>Channel</span><wbr><span><span>Delete</span></span></a></div>
@@ -252,7 +252,7 @@
             </div>
           </div>
 <a data-name="-748732760%2FClasslikes%2F-1299464202" anchor-label="ChannelOverwriteCreate" id="-748732760%2FClasslikes%2F-1299464202" data-filterable-set=":common/commonMain"></a>
-          <div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-channel-overwrite-create/index.html"><span>Channel</span><wbr><span>Overwrite</span><wbr><span><span>Create</span></span></a></div>
@@ -267,7 +267,7 @@
             </div>
           </div>
 <a data-name="-1007244071%2FClasslikes%2F-1299464202" anchor-label="ChannelOverwriteDelete" id="-1007244071%2FClasslikes%2F-1299464202" data-filterable-set=":common/commonMain"></a>
-          <div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-channel-overwrite-delete/index.html"><span>Channel</span><wbr><span>Overwrite</span><wbr><span><span>Delete</span></span></a></div>
@@ -282,7 +282,7 @@
             </div>
           </div>
 <a data-name="554964859%2FClasslikes%2F-1299464202" anchor-label="ChannelOverwriteUpdate" id="554964859%2FClasslikes%2F-1299464202" data-filterable-set=":common/commonMain"></a>
-          <div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-channel-overwrite-update/index.html"><span>Channel</span><wbr><span>Overwrite</span><wbr><span><span>Update</span></span></a></div>
@@ -297,7 +297,7 @@
             </div>
           </div>
 <a data-name="85130442%2FClasslikes%2F-1299464202" anchor-label="ChannelUpdate" id="85130442%2FClasslikes%2F-1299464202" data-filterable-set=":common/commonMain"></a>
-          <div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-channel-update/index.html"><span>Channel</span><wbr><span><span>Update</span></span></a></div>
@@ -312,7 +312,7 @@
             </div>
           </div>
 <a data-name="1736565738%2FClasslikes%2F-1299464202" anchor-label="Companion" id="1736565738%2FClasslikes%2F-1299464202" data-filterable-set=":common/commonMain"></a>
-          <div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-companion/index.html"><span><span>Companion</span></span></a></div>
@@ -327,7 +327,7 @@
             </div>
           </div>
 <a data-name="-1060364312%2FClasslikes%2F-1299464202" anchor-label="CreatorMonetizationRequestCreated" id="-1060364312%2FClasslikes%2F-1299464202" data-filterable-set=":common/commonMain"></a>
-          <div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-creator-monetization-request-created/index.html"><span>Creator</span><wbr><span>Monetization</span><wbr><span>Request</span><wbr><span><span>Created</span></span></a></div>
@@ -342,7 +342,7 @@
             </div>
           </div>
 <a data-name="-2085585741%2FClasslikes%2F-1299464202" anchor-label="CreatorMonetizationTermsAccepted" id="-2085585741%2FClasslikes%2F-1299464202" data-filterable-set=":common/commonMain"></a>
-          <div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-creator-monetization-terms-accepted/index.html"><span>Creator</span><wbr><span>Monetization</span><wbr><span>Terms</span><wbr><span><span>Accepted</span></span></a></div>
@@ -357,7 +357,7 @@
             </div>
           </div>
 <a data-name="-1576344172%2FClasslikes%2F-1299464202" anchor-label="EmojiCreate" id="-1576344172%2FClasslikes%2F-1299464202" data-filterable-set=":common/commonMain"></a>
-          <div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-emoji-create/index.html"><span>Emoji</span><wbr><span><span>Create</span></span></a></div>
@@ -372,7 +372,7 @@
             </div>
           </div>
 <a data-name="-1834855483%2FClasslikes%2F-1299464202" anchor-label="EmojiDelete" id="-1834855483%2FClasslikes%2F-1299464202" data-filterable-set=":common/commonMain"></a>
-          <div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-emoji-delete/index.html"><span>Emoji</span><wbr><span><span>Delete</span></span></a></div>
@@ -387,7 +387,7 @@
             </div>
           </div>
 <a data-name="-272646553%2FClasslikes%2F-1299464202" anchor-label="EmojiUpdate" id="-272646553%2FClasslikes%2F-1299464202" data-filterable-set=":common/commonMain"></a>
-          <div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-emoji-update/index.html"><span>Emoji</span><wbr><span><span>Update</span></span></a></div>
@@ -402,7 +402,7 @@
             </div>
           </div>
 <a data-name="1170317594%2FClasslikes%2F-1299464202" anchor-label="GuildScheduledEventCreate" id="1170317594%2FClasslikes%2F-1299464202" data-filterable-set=":common/commonMain"></a>
-          <div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-guild-scheduled-event-create/index.html"><span>Guild</span><wbr><span>Scheduled</span><wbr><span>Event</span><wbr><span><span>Create</span></span></a></div>
@@ -417,7 +417,7 @@
             </div>
           </div>
 <a data-name="911806283%2FClasslikes%2F-1299464202" anchor-label="GuildScheduledEventDelete" id="911806283%2FClasslikes%2F-1299464202" data-filterable-set=":common/commonMain"></a>
-          <div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-guild-scheduled-event-delete/index.html"><span>Guild</span><wbr><span>Scheduled</span><wbr><span>Event</span><wbr><span><span>Delete</span></span></a></div>
@@ -432,7 +432,7 @@
             </div>
           </div>
 <a data-name="-1820952083%2FClasslikes%2F-1299464202" anchor-label="GuildScheduledEventUpdate" id="-1820952083%2FClasslikes%2F-1299464202" data-filterable-set=":common/commonMain"></a>
-          <div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-guild-scheduled-event-update/index.html"><span>Guild</span><wbr><span>Scheduled</span><wbr><span>Event</span><wbr><span><span>Update</span></span></a></div>
@@ -447,7 +447,7 @@
             </div>
           </div>
 <a data-name="-217854694%2FClasslikes%2F-1299464202" anchor-label="GuildUpdate" id="-217854694%2FClasslikes%2F-1299464202" data-filterable-set=":common/commonMain"></a>
-          <div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-guild-update/index.html"><span>Guild</span><wbr><span><span>Update</span></span></a></div>
@@ -462,7 +462,7 @@
             </div>
           </div>
 <a data-name="-182819194%2FClasslikes%2F-1299464202" anchor-label="IntegrationCreate" id="-182819194%2FClasslikes%2F-1299464202" data-filterable-set=":common/commonMain"></a>
-          <div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-integration-create/index.html"><span>Integration</span><wbr><span><span>Create</span></span></a></div>
@@ -477,7 +477,7 @@
             </div>
           </div>
 <a data-name="-441330505%2FClasslikes%2F-1299464202" anchor-label="IntegrationDelete" id="-441330505%2FClasslikes%2F-1299464202" data-filterable-set=":common/commonMain"></a>
-          <div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-integration-delete/index.html"><span>Integration</span><wbr><span><span>Delete</span></span></a></div>
@@ -492,7 +492,7 @@
             </div>
           </div>
 <a data-name="1120878425%2FClasslikes%2F-1299464202" anchor-label="IntegrationUpdate" id="1120878425%2FClasslikes%2F-1299464202" data-filterable-set=":common/commonMain"></a>
-          <div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-integration-update/index.html"><span>Integration</span><wbr><span><span>Update</span></span></a></div>
@@ -507,7 +507,7 @@
             </div>
           </div>
 <a data-name="-1468595449%2FClasslikes%2F-1299464202" anchor-label="InviteCreate" id="-1468595449%2FClasslikes%2F-1299464202" data-filterable-set=":common/commonMain"></a>
-          <div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-invite-create/index.html"><span>Invite</span><wbr><span><span>Create</span></span></a></div>
@@ -522,7 +522,7 @@
             </div>
           </div>
 <a data-name="-1727106760%2FClasslikes%2F-1299464202" anchor-label="InviteDelete" id="-1727106760%2FClasslikes%2F-1299464202" data-filterable-set=":common/commonMain"></a>
-          <div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-invite-delete/index.html"><span>Invite</span><wbr><span><span>Delete</span></span></a></div>
@@ -537,7 +537,7 @@
             </div>
           </div>
 <a data-name="-164897830%2FClasslikes%2F-1299464202" anchor-label="InviteUpdate" id="-164897830%2FClasslikes%2F-1299464202" data-filterable-set=":common/commonMain"></a>
-          <div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-invite-update/index.html"><span>Invite</span><wbr><span><span>Update</span></span></a></div>
@@ -552,7 +552,7 @@
             </div>
           </div>
 <a data-name="-996997888%2FClasslikes%2F-1299464202" anchor-label="MemberBanAdd" id="-996997888%2FClasslikes%2F-1299464202" data-filterable-set=":common/commonMain"></a>
-          <div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-member-ban-add/index.html"><span>Member</span><wbr><span>Ban</span><wbr><span><span>Add</span></span></a></div>
@@ -567,7 +567,7 @@
             </div>
           </div>
 <a data-name="1986508765%2FClasslikes%2F-1299464202" anchor-label="MemberBanRemove" id="1986508765%2FClasslikes%2F-1299464202" data-filterable-set=":common/commonMain"></a>
-          <div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-member-ban-remove/index.html"><span>Member</span><wbr><span>Ban</span><wbr><span><span>Remove</span></span></a></div>
@@ -582,7 +582,7 @@
             </div>
           </div>
 <a data-name="-1029809866%2FClasslikes%2F-1299464202" anchor-label="MemberDisconnect" id="-1029809866%2FClasslikes%2F-1299464202" data-filterable-set=":common/commonMain"></a>
-          <div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-member-disconnect/index.html"><span>Member</span><wbr><span><span>Disconnect</span></span></a></div>
@@ -597,7 +597,7 @@
             </div>
           </div>
 <a data-name="122140556%2FClasslikes%2F-1299464202" anchor-label="MemberKick" id="122140556%2FClasslikes%2F-1299464202" data-filterable-set=":common/commonMain"></a>
-          <div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-member-kick/index.html"><span>Member</span><wbr><span><span>Kick</span></span></a></div>
@@ -612,7 +612,7 @@
             </div>
           </div>
 <a data-name="884602977%2FClasslikes%2F-1299464202" anchor-label="MemberMove" id="884602977%2FClasslikes%2F-1299464202" data-filterable-set=":common/commonMain"></a>
-          <div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-member-move/index.html"><span>Member</span><wbr><span><span>Move</span></span></a></div>
@@ -627,7 +627,7 @@
             </div>
           </div>
 <a data-name="-724892410%2FClasslikes%2F-1299464202" anchor-label="MemberPrune" id="-724892410%2FClasslikes%2F-1299464202" data-filterable-set=":common/commonMain"></a>
-          <div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-member-prune/index.html"><span>Member</span><wbr><span><span>Prune</span></span></a></div>
@@ -642,7 +642,7 @@
             </div>
           </div>
 <a data-name="-1532363181%2FClasslikes%2F-1299464202" anchor-label="MemberRoleUpdate" id="-1532363181%2FClasslikes%2F-1299464202" data-filterable-set=":common/commonMain"></a>
-          <div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-member-role-update/index.html"><span>Member</span><wbr><span>Role</span><wbr><span><span>Update</span></span></a></div>
@@ -657,7 +657,7 @@
             </div>
           </div>
 <a data-name="1877233193%2FClasslikes%2F-1299464202" anchor-label="MemberUpdate" id="1877233193%2FClasslikes%2F-1299464202" data-filterable-set=":common/commonMain"></a>
-          <div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-member-update/index.html"><span>Member</span><wbr><span><span>Update</span></span></a></div>
@@ -672,7 +672,7 @@
             </div>
           </div>
 <a data-name="511419442%2FClasslikes%2F-1299464202" anchor-label="MessageBulkDelete" id="511419442%2FClasslikes%2F-1299464202" data-filterable-set=":common/commonMain"></a>
-          <div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-message-bulk-delete/index.html"><span>Message</span><wbr><span>Bulk</span><wbr><span><span>Delete</span></span></a></div>
@@ -687,7 +687,7 @@
             </div>
           </div>
 <a data-name="-1868124508%2FClasslikes%2F-1299464202" anchor-label="MessageDelete" id="-1868124508%2FClasslikes%2F-1299464202" data-filterable-set=":common/commonMain"></a>
-          <div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-message-delete/index.html"><span>Message</span><wbr><span><span>Delete</span></span></a></div>
@@ -702,7 +702,7 @@
             </div>
           </div>
 <a data-name="-1247692994%2FClasslikes%2F-1299464202" anchor-label="MessagePin" id="-1247692994%2FClasslikes%2F-1299464202" data-filterable-set=":common/commonMain"></a>
-          <div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-message-pin/index.html"><span>Message</span><wbr><span><span>Pin</span></span></a></div>
@@ -717,7 +717,7 @@
             </div>
           </div>
 <a data-name="-1501553193%2FClasslikes%2F-1299464202" anchor-label="MessageUnpin" id="-1501553193%2FClasslikes%2F-1299464202" data-filterable-set=":common/commonMain"></a>
-          <div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-message-unpin/index.html"><span>Message</span><wbr><span><span>Unpin</span></span></a></div>
@@ -732,7 +732,7 @@
             </div>
           </div>
 <a data-name="795782842%2FClasslikes%2F-1299464202" anchor-label="RoleCreate" id="795782842%2FClasslikes%2F-1299464202" data-filterable-set=":common/commonMain"></a>
-          <div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-role-create/index.html"><span>Role</span><wbr><span><span>Create</span></span></a></div>
@@ -747,7 +747,7 @@
             </div>
           </div>
 <a data-name="537271531%2FClasslikes%2F-1299464202" anchor-label="RoleDelete" id="537271531%2FClasslikes%2F-1299464202" data-filterable-set=":common/commonMain"></a>
-          <div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-role-delete/index.html"><span>Role</span><wbr><span><span>Delete</span></span></a></div>
@@ -762,7 +762,7 @@
             </div>
           </div>
 <a data-name="2099480461%2FClasslikes%2F-1299464202" anchor-label="RoleUpdate" id="2099480461%2FClasslikes%2F-1299464202" data-filterable-set=":common/commonMain"></a>
-          <div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-role-update/index.html"><span>Role</span><wbr><span><span>Update</span></span></a></div>
@@ -777,7 +777,7 @@
             </div>
           </div>
 <a data-name="1769293191%2FClasslikes%2F-1299464202" anchor-label="StageInstanceCreate" id="1769293191%2FClasslikes%2F-1299464202" data-filterable-set=":common/commonMain"></a>
-          <div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-stage-instance-create/index.html"><span>Stage</span><wbr><span>Instance</span><wbr><span><span>Create</span></span></a></div>
@@ -792,7 +792,7 @@
             </div>
           </div>
 <a data-name="1510781880%2FClasslikes%2F-1299464202" anchor-label="StageInstanceDelete" id="1510781880%2FClasslikes%2F-1299464202" data-filterable-set=":common/commonMain"></a>
-          <div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-stage-instance-delete/index.html"><span>Stage</span><wbr><span>Instance</span><wbr><span><span>Delete</span></span></a></div>
@@ -807,7 +807,7 @@
             </div>
           </div>
 <a data-name="-1221976486%2FClasslikes%2F-1299464202" anchor-label="StageInstanceUpdate" id="-1221976486%2FClasslikes%2F-1299464202" data-filterable-set=":common/commonMain"></a>
-          <div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-stage-instance-update/index.html"><span>Stage</span><wbr><span>Instance</span><wbr><span><span>Update</span></span></a></div>
@@ -822,7 +822,7 @@
             </div>
           </div>
 <a data-name="1758564477%2FClasslikes%2F-1299464202" anchor-label="StickerCreate" id="1758564477%2FClasslikes%2F-1299464202" data-filterable-set=":common/commonMain"></a>
-          <div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-sticker-create/index.html"><span>Sticker</span><wbr><span><span>Create</span></span></a></div>
@@ -837,7 +837,7 @@
             </div>
           </div>
 <a data-name="1500053166%2FClasslikes%2F-1299464202" anchor-label="StickerDelete" id="1500053166%2FClasslikes%2F-1299464202" data-filterable-set=":common/commonMain"></a>
-          <div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-sticker-delete/index.html"><span>Sticker</span><wbr><span><span>Delete</span></span></a></div>
@@ -852,7 +852,7 @@
             </div>
           </div>
 <a data-name="-1232705200%2FClasslikes%2F-1299464202" anchor-label="StickerUpdate" id="-1232705200%2FClasslikes%2F-1299464202" data-filterable-set=":common/commonMain"></a>
-          <div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-sticker-update/index.html"><span>Sticker</span><wbr><span><span>Update</span></span></a></div>
@@ -867,7 +867,7 @@
             </div>
           </div>
 <a data-name="1478263782%2FClasslikes%2F-1299464202" anchor-label="ThreadCreate" id="1478263782%2FClasslikes%2F-1299464202" data-filterable-set=":common/commonMain"></a>
-          <div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-thread-create/index.html"><span>Thread</span><wbr><span><span>Create</span></span></a></div>
@@ -882,7 +882,7 @@
             </div>
           </div>
 <a data-name="1219752471%2FClasslikes%2F-1299464202" anchor-label="ThreadDelete" id="1219752471%2FClasslikes%2F-1299464202" data-filterable-set=":common/commonMain"></a>
-          <div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-thread-delete/index.html"><span>Thread</span><wbr><span><span>Delete</span></span></a></div>
@@ -897,7 +897,7 @@
             </div>
           </div>
 <a data-name="-1513005895%2FClasslikes%2F-1299464202" anchor-label="ThreadUpdate" id="-1513005895%2FClasslikes%2F-1299464202" data-filterable-set=":common/commonMain"></a>
-          <div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-thread-update/index.html"><span>Thread</span><wbr><span><span>Update</span></span></a></div>
@@ -912,7 +912,7 @@
             </div>
           </div>
 <a data-name="-2101843540%2FClasslikes%2F-1299464202" anchor-label="Unknown" id="-2101843540%2FClasslikes%2F-1299464202" data-filterable-set=":common/commonMain"></a>
-          <div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-unknown/index.html"><span><span>Unknown</span></span></a></div>
@@ -927,7 +927,7 @@
             </div>
           </div>
 <a data-name="-1050510333%2FClasslikes%2F-1299464202" anchor-label="WebhookCreate" id="-1050510333%2FClasslikes%2F-1299464202" data-filterable-set=":common/commonMain"></a>
-          <div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-webhook-create/index.html"><span>Webhook</span><wbr><span><span>Create</span></span></a></div>
@@ -942,7 +942,7 @@
             </div>
           </div>
 <a data-name="-1309021644%2FClasslikes%2F-1299464202" anchor-label="WebhookDelete" id="-1309021644%2FClasslikes%2F-1299464202" data-filterable-set=":common/commonMain"></a>
-          <div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-webhook-delete/index.html"><span>Webhook</span><wbr><span><span>Delete</span></span></a></div>
@@ -957,7 +957,7 @@
             </div>
           </div>
 <a data-name="253187286%2FClasslikes%2F-1299464202" anchor-label="WebhookUpdate" id="253187286%2FClasslikes%2F-1299464202" data-filterable-set=":common/commonMain"></a>
-          <div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-webhook-update/index.html"><span>Webhook</span><wbr><span><span>Update</span></span></a></div>
@@ -974,9 +974,9 @@
         </div>
       </div>
       <div data-togglable="PROPERTY">
-        <h2 class="">Properties</h2>
+        <h2 class="tableheader">Properties</h2>
         <div class="table"><a data-name="-1761430190%2FProperties%2F-1299464202" anchor-label="value" id="-1761430190%2FProperties%2F-1299464202" data-filterable-set=":common/commonMain"></a>
-          <div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="value.html"><span><span>value</span></span></a></div>
@@ -993,9 +993,9 @@
         </div>
       </div>
       <div data-togglable="FUNCTION">
-        <h2 class="">Functions</h2>
+        <h2 class="tableheader">Functions</h2>
         <div class="table"><a data-name="1376638282%2FFunctions%2F-1299464202" anchor-label="equals" id="1376638282%2FFunctions%2F-1299464202" data-filterable-set=":common/commonMain"></a>
-          <div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="equals.html"><span><span>equals</span></span></a></div>
@@ -1010,7 +1010,7 @@
             </div>
           </div>
 <a data-name="1426413660%2FFunctions%2F-1299464202" anchor-label="hashCode" id="1426413660%2FFunctions%2F-1299464202" data-filterable-set=":common/commonMain"></a>
-          <div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="hash-code.html"><span>hash</span><wbr><span><span>Code</span></span></a></div>
@@ -1025,7 +1025,7 @@
             </div>
           </div>
 <a data-name="1248247595%2FFunctions%2F-1299464202" anchor-label="toString" id="1248247595%2FFunctions%2F-1299464202" data-filterable-set=":common/commonMain"></a>
-          <div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="to-string.html"><span>to</span><wbr><span><span>String</span></span></a></div>
@@ -1045,17 +1045,21 @@
   </div>
 </div>
     <div class="footer">
-        <a href="#content" id="go-to-top-link" class="footer--button footer--button_go-to-top"></a>
-        <span>© 2026 Copyright</span>
-        <span class="pull-right">
-            <span>Generated by </span>
-            <a class="footer--link footer--link_external" href="https://github.com/Kotlin/dokka">
-                <span>dokka</span>
-            </a>
-        </span>
-    </div>
+        <div class="footer--container">
+            <a href="#content" id="go-to-top-link" class="footer--button footer--button_go-to-top"></a>
+            <div class="footer--content">
+                <div>
+                    <span>Generated by </span>
+                    <a class="footer--link footer--link_external" href="https://github.com/Kotlin/dokka">
+                        Dokka
+                    </a>
+                    <div>© 2026 Copyright</div>
+                </div>
             </div>
         </div>
     </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>

@@ -1,22 +1,22 @@
 <!doctype html>
-<html class="no-js">
+<html class="no-js" lang="en">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
     <title>GuildButtonInteraction</title>
-<link href="../../../images/logo-icon.svg" rel="icon" type="image/svg">    <script>var pathToRoot = "../../../";</script>
-    <script>document.documentElement.classList.replace("no-js","js");</script>
+<link href="../../../images/logo-icon.svg" rel="icon" type="image/svg"><script>var pathToRoot = "../../../";</script>
+    <script>document.documentElement.classList.replace("no-js", "js");</script>
     <script>const storage = localStorage.getItem("dokka-dark-mode")
-    if (storage == null) {
+      if (storage == null) {
         const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
         if (osDarkSchemePreferred === true) {
-            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+          document.getElementsByTagName("html")[0].classList.add("theme-dark")
         }
-    } else {
+      } else {
         const savedDarkMode = JSON.parse(storage)
-        if(savedDarkMode === true) {
-            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        if (savedDarkMode === true) {
+          document.getElementsByTagName("html")[0].classList.add("theme-dark")
         }
-    }
+      }
     </script>
 <script type="text/javascript" src="https://unpkg.com/kotlin-playground@1/dist/playground.min.js" async></script>
 <script type="text/javascript" src="../../../scripts/sourceset_dependencies.js" async></script>
@@ -24,19 +24,17 @@
 <link href="../../../styles/main.css" rel="Stylesheet">
 <link href="../../../styles/prism.css" rel="Stylesheet">
 <link href="../../../styles/logo-styles.css" rel="Stylesheet">
-<link href="../../../styles/font-jb-sans-auto.css" rel="Stylesheet">
 <link href="../../../ui-kit/ui-kit.min.css" rel="Stylesheet">
-<script type="text/javascript" src="../../../scripts/clipboard.js" async></script>
+<script type="text/javascript" src="../../../scripts/safe-local-storage_blocking.js"></script>
 <script type="text/javascript" src="../../../scripts/navigation-loader.js" async></script>
 <script type="text/javascript" src="../../../scripts/platform-content-handler.js" async></script>
 <script type="text/javascript" src="../../../scripts/main.js" defer></script>
 <script type="text/javascript" src="../../../scripts/prism.js" async></script>
-<script type="text/javascript" src="../../../ui-kit/ui-kit.min.js" defer></script>
-<script type="text/javascript" src="../../../scripts/symbol-parameters-wrapper_deferred.js" defer></script></head>
+<script type="text/javascript" src="../../../ui-kit/ui-kit.min.js" defer></script></head>
 <body>
-    <div class="root">
-    <nav class="navigation theme-dark" id="navigation-wrapper">
-<a class="library-name--link" href="../../../index.html">
+<div class="root">
+    <header class="navigation theme-dark" id="navigation-wrapper" role="banner">
+<a class="library-name--link" href="../../../index.html" tabindex="1">
                     kord
             </a>        <button class="navigation-controls--btn navigation-controls--btn_toc ui-kit_mobile-only" id="toc-toggle" type="button">Toggle table of contents
         </button>
@@ -44,13 +42,13 @@
         <div class="library-version" id="library-version">or(map(map(map(map(valueof(ProcessOutputValueSource))))), map(map(map(map(valueof(ProcessOutputValueSource))))))
         </div>
         <div class="navigation-controls">
-        <div class="filter-section filter-section_loading" id="filter-section">
-                <button class="platform-tag platform-selector common-like" data-active="" data-filter=":core/commonMain">common</button>
+        <ul class="filter-section filter-section_loading" id="filter-section" aria-label="Target filter">
+                <button class="platform-tag platform-selector common-like" data-active="" aria-pressed="true" data-filter=":core/commonMain">common</button>
             <div class="dropdown filter-section--dropdown" data-role="dropdown" id="filter-section-dropdown">
                 <button class="button button_dropdown filter-section--dropdown-toggle" role="combobox" data-role="dropdown-toggle" aria-controls="platform-tags-listbox" aria-haspopup="listbox" aria-expanded="false" aria-label="Toggle source sets"></button>
-                <ul role="listbox" id="platform-tags-listbox" class="dropdown--list" data-role="dropdown-listbox">
-                    <div class="dropdown--header"><span>Platform filter</span>
-                        <button class="button" data-role="dropdown-toggle" aria-label="Close platform filter">
+                <ul role="listbox" id="platform-tags-listbox" class="dropdown--list" data-role="dropdown-listbox" aria-label="Target filter">
+                    <div class="dropdown--header"><span>Target filter</span>
+                        <button class="button" data-role="dropdown-toggle" aria-label="Close target filter">
                             <i class="ui-kit-icon ui-kit-icon_cross"></i>
                         </button>
                     </div>
@@ -64,45 +62,47 @@
                 </ul>
                 <div class="dropdown--overlay"></div>
             </div>
-        </div>
+        </ul>
             <button class="navigation-controls--btn navigation-controls--btn_theme" id="theme-toggle-button" type="button">Switch theme
             </button>
             <div class="navigation-controls--btn navigation-controls--btn_search" id="searchBar" role="button">Search in
                 API
             </div>
         </div>
-    </nav>
-        <div id="container">
-            <div class="sidebar" id="leftColumn">
-                <div class="dropdown theme-dark_mobile" data-role="dropdown" id="toc-dropdown">
-                    <ul role="listbox" id="toc-listbox" class="dropdown--list dropdown--list_toc-list" data-role="dropdown-listbox">
-                        <div class="dropdown--header">
+    </header>
+    <div id="container">
+        <nav id="leftColumn" class="sidebar" data-item-type="SECTION" data-item-config="{&quot;defaultSize&quot;: 280, &quot;minSize&quot;: 200, &quot;maxSize&quot;: 400}">
+            <a class="toc--skip-link" href="#main">Skip to content</a>
+            <div class="dropdown theme-dark_mobile" data-role="dropdown" id="toc-dropdown">
+                <ul role="listbox" id="toc-listbox" class="dropdown--list dropdown--list_toc-list" data-role="dropdown-listbox" aria-label="Table of contents">
+                    <div class="dropdown--header">
                             <span>
                                     kord
                             </span>
-                            <button class="button" data-role="dropdown-toggle" aria-label="Close table of contents">
-                                <i class="ui-kit-icon ui-kit-icon_cross"></i>
-                            </button>
-                        </div>
-                        <div class="sidebar--inner" id="sideMenu"></div>
-                    </ul>
-                    <div class="dropdown--overlay"></div>
-                </div>
+                        <button class="button" data-role="dropdown-toggle" aria-label="Close table of contents">
+                            <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                        </button>
+                    </div>
+                    <div class="sidebar--inner" id="sideMenu"></div>
+                </ul>
+                <div class="dropdown--overlay"></div>
             </div>
-            <div id="main">
+        </nav>
+        <div id="resizer" class="resizer" data-item-type="BAR"></div>
+        <div id="main" data-item-type="SECTION" role="main">
 <div class="main-content" data-page-type="classlike" id="content" pageids="kord-core::dev.kord.core.entity.interaction/GuildButtonInteraction///PointingToDeclaration//1239919082">
   <div class="breadcrumbs"><a href="../../index.html">kord-core</a><span class="delimiter">/</span><a href="../index.html">dev.kord.core.entity.interaction</a><span class="delimiter">/</span><span class="current">GuildButtonInteraction</span></div>
   <div class="cover ">
     <h1 class="cover"><span>Guild</span><wbr><span>Button</span><wbr><span><span>Interaction</span></span></h1>
-    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">class </span><a href="index.html">GuildButtonInteraction</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">val </span>data<span class="token operator">: </span><a href="../../dev.kord.core.cache.data/-interaction-data/index.html">InteractionData</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>kord<span class="token operator">: </span><a href="../../dev.kord.core/-kord/index.html">Kord</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>supplier<span class="token operator">: </span><a href="../../dev.kord.core.supplier/-entity-supplier/index.html">EntitySupplier</a></span></span><span class="token punctuation">)</span> : <a href="../-button-interaction/index.html">ButtonInteraction</a>, <a href="../-guild-component-interaction/index.html">GuildComponentInteraction</a><span class="clearfix"><span class="floating-right">(<a href="https://github.com/kordlib/kord/blob/map(map(map(valueof(ProcessOutputValueSource))))/core/src/commonMain/kotlin/entity/interaction/ButtonInteraction.kt#L36">source</a>)</span></span></div><p class="paragraph">A <a href="../-button-interaction/index.html">ButtonInteraction</a> that took place in the context of a <a href="../../dev.kord.core.entity/-guild/index.html">Guild</a>.</p></div></div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">class </span><a href="index.html">GuildButtonInteraction</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">val </span>data<span class="token operator">: </span><a href="../../dev.kord.core.cache.data/-interaction-data/index.html">InteractionData</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>kord<span class="token operator">: </span><a href="../../dev.kord.core/-kord/index.html">Kord</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>supplier<span class="token operator">: </span><a href="../../dev.kord.core.supplier/-entity-supplier/index.html">EntitySupplier</a></span></span><span class="token punctuation">)</span> : <a href="../-button-interaction/index.html">ButtonInteraction</a>, <a href="../-guild-component-interaction/index.html">GuildComponentInteraction</a><span class="source-link-wrapper"><span class="source-link" data-element-type="source-link">(<a href="https://github.com/kordlib/kord/blob/map(map(map(valueof(ProcessOutputValueSource))))/core/src/commonMain/kotlin/entity/interaction/ButtonInteraction.kt#L36">source</a>)</span></span></div><p class="paragraph">A <a href="../-button-interaction/index.html">ButtonInteraction</a> that took place in the context of a <a href="../../dev.kord.core.entity/-guild/index.html">Guild</a>.</p></div></div>
   </div>
   <div class="tabbedcontent">
     <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="CONSTRUCTOR,TYPE,PROPERTY,FUNCTION">Members</button><button class="section-tab" data-togglable="CONSTRUCTOR,TYPE,PROPERTY,FUNCTION,EXTENSION_PROPERTY,EXTENSION_FUNCTION">Members &amp; Extensions</button></div>
     <div class="tabs-section-body">
       <div data-togglable="CONSTRUCTOR">
-        <h2 class="">Constructors</h2>
+        <h2 class="tableheader">Constructors</h2>
         <div class="table"><a data-name="-2103839191%2FConstructors%2F1239919082" anchor-label="GuildButtonInteraction" id="-2103839191%2FConstructors%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-togglable="CONSTRUCTOR" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-togglable="CONSTRUCTOR" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-guild-button-interaction.html"><span>Guild</span><wbr><span>Button</span><wbr><span><span>Interaction</span></span></a></div>
@@ -119,9 +119,9 @@
         </div>
       </div>
       <div data-togglable="PROPERTY">
-        <h2 class="">Properties</h2>
+        <h2 class="tableheader">Properties</h2>
         <div class="table"><a data-name="1416459335%2FProperties%2F1239919082" anchor-label="applicationId" id="1416459335%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../-interaction/application-id.html"><span>application</span><wbr><span><span>Id</span></span></a></div>
@@ -136,7 +136,7 @@
             </div>
           </div>
 <a data-name="-1817694302%2FProperties%2F1239919082" anchor-label="appPermissions" id="-1817694302%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../-guild-interaction/app-permissions.html"><span>app</span><wbr><span><span>Permissions</span></span></a></div>
@@ -151,7 +151,7 @@
             </div>
           </div>
 <a data-name="300894670%2FProperties%2F1239919082" anchor-label="channel" id="300894670%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../dev.kord.core.behavior.interaction/-interaction-behavior/channel.html"><span><span>channel</span></span></a></div>
@@ -160,13 +160,13 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">val </span><a href="../../dev.kord.core.behavior.interaction/-interaction-behavior/channel.html">channel</a><span class="token operator">: </span><a href="../../dev.kord.core.behavior.channel/-message-channel-behavior/index.html">MessageChannelBehavior</a></div><div class="brief "><p class="paragraph">The behavior of the channel the interaction was sent from.</p></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">val </span><a href="../../dev.kord.core.behavior.interaction/-interaction-behavior/channel.html">channel</a><span class="token operator">: </span><a href="../../dev.kord.core.behavior.channel/-guild-message-channel-behavior/index.html">GuildMessageChannelBehavior</a></div><div class="brief "><p class="paragraph">The behavior of the channel the interaction was sent from.</p></div></div></div>
                 </div>
               </div>
             </div>
           </div>
 <a data-name="751724340%2FProperties%2F1239919082" anchor-label="channelId" id="751724340%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../-interaction/channel-id.html"><span>channel</span><wbr><span><span>Id</span></span></a></div>
@@ -181,7 +181,7 @@
             </div>
           </div>
 <a data-name="-859508121%2FProperties%2F1239919082" anchor-label="component" id="-859508121%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../-button-interaction/component.html"><span><span>component</span></span></a></div>
@@ -190,13 +190,13 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">val </span><a href="../-button-interaction/component.html">component</a><span class="token operator">: </span><a href="../../dev.kord.core.entity.component/-button-component/index.html">ButtonComponent</a></div><div class="brief "><p class="paragraph">The Component that triggered the interaction.</p></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">val </span><a href="../-button-interaction/component.html">component</a><span class="token operator">: </span><a href="../../dev.kord.core.entity.component/-button-component/index.html">ButtonComponent</a></div><div class="brief "><p class="paragraph">The <a href="../../dev.kord.core.entity.component/-component/index.html">Component</a> that triggered the interaction.</p></div></div></div>
                 </div>
               </div>
             </div>
           </div>
 <a data-name="-1832009817%2FProperties%2F1239919082" anchor-label="componentId" id="-1832009817%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../-component-interaction/component-id.html"><span>component</span><wbr><span><span>Id</span></span></a></div>
@@ -211,7 +211,7 @@
             </div>
           </div>
 <a data-name="-2088765144%2FProperties%2F1239919082" anchor-label="componentType" id="-2088765144%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../-component-interaction/component-type.html"><span>component</span><wbr><span><span>Type</span></span></a></div>
@@ -226,7 +226,7 @@
             </div>
           </div>
 <a data-name="-342416215%2FProperties%2F1239919082" anchor-label="data" id="-342416215%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="data.html"><span><span>data</span></span></a></div>
@@ -241,7 +241,7 @@
             </div>
           </div>
 <a data-name="2013677122%2FProperties%2F1239919082" anchor-label="entitlements" id="2013677122%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../-interaction/entitlements.html"><span><span>entitlements</span></span></a></div>
@@ -256,7 +256,7 @@
             </div>
           </div>
 <a data-name="327087423%2FProperties%2F1239919082" anchor-label="guild" id="327087423%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../dev.kord.core.behavior.interaction/-guild-interaction-behavior/guild.html"><span><span>guild</span></span></a></div>
@@ -271,7 +271,7 @@
             </div>
           </div>
 <a data-name="1516040679%2FProperties%2F1239919082" anchor-label="guildId" id="1516040679%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../-guild-interaction/guild-id.html"><span>guild</span><wbr><span><span>Id</span></span></a></div>
@@ -286,7 +286,7 @@
             </div>
           </div>
 <a data-name="796630565%2FProperties%2F1239919082" anchor-label="guildLocale" id="796630565%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../-interaction/guild-locale.html"><span>guild</span><wbr><span><span>Locale</span></span></a></div>
@@ -301,7 +301,7 @@
             </div>
           </div>
 <a data-name="1128657261%2FProperties%2F1239919082" anchor-label="id" id="1128657261%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../-interaction/id.html"><span><span>id</span></span></a></div>
@@ -316,7 +316,7 @@
             </div>
           </div>
 <a data-name="-887184579%2FProperties%2F1239919082" anchor-label="kord" id="-887184579%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="kord.html"><span><span>kord</span></span></a></div>
@@ -331,7 +331,7 @@
             </div>
           </div>
 <a data-name="-1959307378%2FProperties%2F1239919082" anchor-label="locale" id="-1959307378%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../-interaction/locale.html"><span><span>locale</span></span></a></div>
@@ -346,7 +346,7 @@
             </div>
           </div>
 <a data-name="-1685759368%2FProperties%2F1239919082" anchor-label="message" id="-1685759368%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../-component-interaction/message.html"><span><span>message</span></span></a></div>
@@ -361,7 +361,7 @@
             </div>
           </div>
 <a data-name="487918225%2FProperties%2F1239919082" anchor-label="permissions" id="487918225%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../-guild-interaction/permissions.html"><span><span>permissions</span></span></a></div>
@@ -376,7 +376,7 @@
             </div>
           </div>
 <a data-name="1777060295%2FProperties%2F1239919082" anchor-label="supplier" id="1777060295%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="supplier.html"><span><span>supplier</span></span></a></div>
@@ -391,7 +391,7 @@
             </div>
           </div>
 <a data-name="-493891175%2FProperties%2F1239919082" anchor-label="token" id="-493891175%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../-interaction/token.html"><span><span>token</span></span></a></div>
@@ -406,7 +406,7 @@
             </div>
           </div>
 <a data-name="-156053138%2FProperties%2F1239919082" anchor-label="type" id="-156053138%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../-interaction/type.html"><span><span>type</span></span></a></div>
@@ -421,7 +421,7 @@
             </div>
           </div>
 <a data-name="480905725%2FProperties%2F1239919082" anchor-label="user" id="480905725%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../-interaction/user.html"><span><span>user</span></span></a></div>
@@ -430,13 +430,13 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">val </span><a href="../-interaction/user.html">user</a><span class="token operator">: </span><a href="../../dev.kord.core.entity/-user/index.html">User</a></div><div class="brief "><p class="paragraph">The invoker of the interaction.</p></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">val </span><a href="../-interaction/user.html">user</a><span class="token operator">: </span><a href="../../dev.kord.core.entity/-member/index.html">Member</a></div><div class="brief "><p class="paragraph">The invoker of the interaction as a <a href="../../dev.kord.core.entity/-member/index.html">Member</a>.</p></div></div></div>
                 </div>
               </div>
             </div>
           </div>
 <a data-name="219053658%2FProperties%2F1239919082" anchor-label="version" id="219053658%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../-interaction/version.html"><span><span>version</span></span></a></div>
@@ -453,9 +453,9 @@
         </div>
       </div>
       <div data-togglable="FUNCTION">
-        <h2 class="">Functions</h2>
+        <h2 class="tableheader">Functions</h2>
         <div class="table"><a data-name="1855121047%2FFunctions%2F1239919082" anchor-label="compareTo" id="1855121047%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../dev.kord.core.entity/-entity/compare-to.html"><span>compare</span><wbr><span><span>To</span></span></a></div>
@@ -470,7 +470,7 @@
             </div>
           </div>
 <a data-name="-420105193%2FFunctions%2F1239919082" anchor-label="deferEphemeralMessageUpdate" id="-420105193%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../dev.kord.core.behavior.interaction/-component-interaction-behavior/defer-ephemeral-message-update.html"><span>defer</span><wbr><span>Ephemeral</span><wbr><span>Message</span><wbr><span><span>Update</span></span></a></div>
@@ -485,7 +485,7 @@
             </div>
           </div>
 <a data-name="1126386183%2FFunctions%2F1239919082" anchor-label="deferEphemeralResponse" id="1126386183%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../dev.kord.core.behavior.interaction/-action-interaction-behavior/defer-ephemeral-response.html"><span>defer</span><wbr><span>Ephemeral</span><wbr><span><span>Response</span></span></a></div>
@@ -500,7 +500,7 @@
             </div>
           </div>
 <a data-name="242880385%2FFunctions%2F1239919082" anchor-label="deferEphemeralResponseUnsafe" id="242880385%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../dev.kord.core.behavior.interaction/-action-interaction-behavior/defer-ephemeral-response-unsafe.html"><span>defer</span><wbr><span>Ephemeral</span><wbr><span>Response</span><wbr><span><span>Unsafe</span></span></a></div>
@@ -515,7 +515,7 @@
             </div>
           </div>
 <a data-name="910592745%2FFunctions%2F1239919082" anchor-label="deferPublicMessageUpdate" id="910592745%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../dev.kord.core.behavior.interaction/-component-interaction-behavior/defer-public-message-update.html"><span>defer</span><wbr><span>Public</span><wbr><span>Message</span><wbr><span><span>Update</span></span></a></div>
@@ -530,7 +530,7 @@
             </div>
           </div>
 <a data-name="393381035%2FFunctions%2F1239919082" anchor-label="deferPublicResponse" id="393381035%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../dev.kord.core.behavior.interaction/-action-interaction-behavior/defer-public-response.html"><span>defer</span><wbr><span>Public</span><wbr><span><span>Response</span></span></a></div>
@@ -545,7 +545,7 @@
             </div>
           </div>
 <a data-name="947109669%2FFunctions%2F1239919082" anchor-label="deferPublicResponseUnsafe" id="947109669%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../dev.kord.core.behavior.interaction/-action-interaction-behavior/defer-public-response-unsafe.html"><span>defer</span><wbr><span>Public</span><wbr><span>Response</span><wbr><span><span>Unsafe</span></span></a></div>
@@ -560,7 +560,7 @@
             </div>
           </div>
 <a data-name="-2022626610%2FFunctions%2F1239919082" anchor-label="equals" id="-2022626610%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="equals.html"><span><span>equals</span></span></a></div>
@@ -575,7 +575,7 @@
             </div>
           </div>
 <a data-name="2109613404%2FFunctions%2F1239919082" anchor-label="getChannel" id="2109613404%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../dev.kord.core.behavior.interaction/-interaction-behavior/get-channel.html"><span>get</span><wbr><span><span>Channel</span></span></a></div>
@@ -584,13 +584,13 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">suspend </span><span class="token keyword">fun </span><a href="../../dev.kord.core.behavior.interaction/-interaction-behavior/get-channel.html"><span class="token function">getChannel</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../dev.kord.core.entity.channel/-message-channel/index.html">MessageChannel</a></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">suspend </span><span class="token keyword">fun </span><a href="../../dev.kord.core.behavior.interaction/-interaction-behavior/get-channel.html"><span class="token function">getChannel</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../dev.kord.core.entity.channel/-guild-message-channel/index.html">GuildMessageChannel</a></div></div></div>
                 </div>
               </div>
             </div>
           </div>
 <a data-name="-1265333454%2FFunctions%2F1239919082" anchor-label="getChannelOrNull" id="-1265333454%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../dev.kord.core.behavior.interaction/-interaction-behavior/get-channel-or-null.html"><span>get</span><wbr><span>Channel</span><wbr><span>Or</span><wbr><span><span>Null</span></span></a></div>
@@ -599,13 +599,13 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">suspend </span><span class="token keyword">fun </span><a href="../../dev.kord.core.behavior.interaction/-interaction-behavior/get-channel-or-null.html"><span class="token function">getChannelOrNull</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../dev.kord.core.entity.channel/-message-channel/index.html">MessageChannel</a><span class="token operator">?</span></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">suspend </span><span class="token keyword">fun </span><a href="../../dev.kord.core.behavior.interaction/-interaction-behavior/get-channel-or-null.html"><span class="token function">getChannelOrNull</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../dev.kord.core.entity.channel/-guild-message-channel/index.html">GuildMessageChannel</a><span class="token operator">?</span></div></div></div>
                 </div>
               </div>
             </div>
           </div>
 <a data-name="-720939541%2FFunctions%2F1239919082" anchor-label="getGuild" id="-720939541%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../dev.kord.core.behavior.interaction/-guild-interaction-behavior/get-guild.html"><span>get</span><wbr><span><span>Guild</span></span></a></div>
@@ -620,7 +620,7 @@
             </div>
           </div>
 <a data-name="1758778497%2FFunctions%2F1239919082" anchor-label="getGuildOrNull" id="1758778497%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../dev.kord.core.behavior.interaction/-guild-interaction-behavior/get-guild-or-null.html"><span>get</span><wbr><span>Guild</span><wbr><span>Or</span><wbr><span><span>Null</span></span></a></div>
@@ -635,7 +635,7 @@
             </div>
           </div>
 <a data-name="-590815737%2FFunctions%2F1239919082" anchor-label="getOriginalInteractionResponse" id="-590815737%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../dev.kord.core.behavior.interaction/-action-interaction-behavior/get-original-interaction-response.html"><span>get</span><wbr><span>Original</span><wbr><span>Interaction</span><wbr><span><span>Response</span></span></a></div>
@@ -650,7 +650,7 @@
             </div>
           </div>
 <a data-name="-193013859%2FFunctions%2F1239919082" anchor-label="getOriginalInteractionResponseOrNull" id="-193013859%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../dev.kord.core.behavior.interaction/-action-interaction-behavior/get-original-interaction-response-or-null.html"><span>get</span><wbr><span>Original</span><wbr><span>Interaction</span><wbr><span>Response</span><wbr><span>Or</span><wbr><span><span>Null</span></span></a></div>
@@ -665,7 +665,7 @@
             </div>
           </div>
 <a data-name="1291255384%2FFunctions%2F1239919082" anchor-label="hashCode" id="1291255384%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="hash-code.html"><span>hash</span><wbr><span><span>Code</span></span></a></div>
@@ -680,7 +680,7 @@
             </div>
           </div>
 <a data-name="-442436352%2FFunctions%2F1239919082" anchor-label="modal" id="-442436352%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../dev.kord.core.behavior.interaction/modal.html"><span><span>modal</span></span></a></div>
@@ -695,7 +695,7 @@
             </div>
           </div>
 <a data-name="2055906703%2FFunctions%2F1239919082" anchor-label="respondEphemeral" id="2055906703%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../dev.kord.core.behavior.interaction/respond-ephemeral.html"><span>respond</span><wbr><span><span>Ephemeral</span></span></a></div>
@@ -710,7 +710,7 @@
             </div>
           </div>
 <a data-name="490642777%2FFunctions%2F1239919082" anchor-label="respondPublic" id="490642777%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../dev.kord.core.behavior.interaction/respond-public.html"><span>respond</span><wbr><span><span>Public</span></span></a></div>
@@ -725,7 +725,7 @@
             </div>
           </div>
 <a data-name="1113089319%2FFunctions%2F1239919082" anchor-label="toString" id="1113089319%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="to-string.html"><span>to</span><wbr><span><span>String</span></span></a></div>
@@ -740,7 +740,7 @@
             </div>
           </div>
 <a data-name="2074801899%2FFunctions%2F1239919082" anchor-label="updateEphemeralMessage" id="2074801899%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../dev.kord.core.behavior.interaction/update-ephemeral-message.html"><span>update</span><wbr><span>Ephemeral</span><wbr><span><span>Message</span></span></a></div>
@@ -755,7 +755,7 @@
             </div>
           </div>
 <a data-name="-647421599%2FFunctions%2F1239919082" anchor-label="updatePublicMessage" id="-647421599%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../dev.kord.core.behavior.interaction/update-public-message.html"><span>update</span><wbr><span>Public</span><wbr><span><span>Message</span></span></a></div>
@@ -770,7 +770,7 @@
             </div>
           </div>
 <a data-name="1197965379%2FFunctions%2F1239919082" anchor-label="withStrategy" id="1197965379%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="with-strategy.html"><span>with</span><wbr><span><span>Strategy</span></span></a></div>
@@ -779,7 +779,7 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="with-strategy.html"><span class="token function">withStrategy</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">strategy<span class="token operator">: </span><a href="../../dev.kord.core.supplier/-entity-supply-strategy/index.html">EntitySupplyStrategy</a><span class="token operator">&lt;</span><span class="token operator">*</span><span class="token operator">&gt;</span></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="index.html">GuildButtonInteraction</a></div><div class="brief "><p class="paragraph">Returns a copy of this class with a new <a href="supplier.html">supplier</a> provided by the <a href="with-strategy.html">strategy</a>.</p></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="with-strategy.html"><span class="token function">withStrategy</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">strategy<span class="token operator">: </span><a href="../../dev.kord.core.supplier/-entity-supply-strategy/index.html">EntitySupplyStrategy</a><span class="token operator">&lt;</span><span class="token operator">*</span><span class="token operator">&gt;</span></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="index.html">GuildButtonInteraction</a></div><div class="brief "><p class="paragraph">Returns a copy of this class with a new <a href="../../dev.kord.core.entity/-strategizable/supplier.html">supplier</a> provided by the <a href="../../dev.kord.core.entity/-strategizable/with-strategy.html">strategy</a>.</p></div></div></div>
                 </div>
               </div>
             </div>
@@ -790,17 +790,21 @@
   </div>
 </div>
     <div class="footer">
-        <a href="#content" id="go-to-top-link" class="footer--button footer--button_go-to-top"></a>
-        <span>© 2026 Copyright</span>
-        <span class="pull-right">
-            <span>Generated by </span>
-            <a class="footer--link footer--link_external" href="https://github.com/Kotlin/dokka">
-                <span>dokka</span>
-            </a>
-        </span>
-    </div>
+        <div class="footer--container">
+            <a href="#content" id="go-to-top-link" class="footer--button footer--button_go-to-top"></a>
+            <div class="footer--content">
+                <div>
+                    <span>Generated by </span>
+                    <a class="footer--link footer--link_external" href="https://github.com/Kotlin/dokka">
+                        Dokka
+                    </a>
+                    <div>© 2026 Copyright</div>
+                </div>
             </div>
         </div>
     </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>

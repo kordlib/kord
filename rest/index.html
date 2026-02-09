@@ -1,22 +1,22 @@
 <!doctype html>
-<html class="no-js">
+<html class="no-js" lang="en">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
     <title>kord-rest</title>
-<link href="../images/logo-icon.svg" rel="icon" type="image/svg">    <script>var pathToRoot = "../";</script>
-    <script>document.documentElement.classList.replace("no-js","js");</script>
+<link href="../images/logo-icon.svg" rel="icon" type="image/svg"><script>var pathToRoot = "../";</script>
+    <script>document.documentElement.classList.replace("no-js", "js");</script>
     <script>const storage = localStorage.getItem("dokka-dark-mode")
-    if (storage == null) {
+      if (storage == null) {
         const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
         if (osDarkSchemePreferred === true) {
-            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+          document.getElementsByTagName("html")[0].classList.add("theme-dark")
         }
-    } else {
+      } else {
         const savedDarkMode = JSON.parse(storage)
-        if(savedDarkMode === true) {
-            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        if (savedDarkMode === true) {
+          document.getElementsByTagName("html")[0].classList.add("theme-dark")
         }
-    }
+      }
     </script>
 <script type="text/javascript" src="https://unpkg.com/kotlin-playground@1/dist/playground.min.js" async></script>
 <script type="text/javascript" src="../scripts/sourceset_dependencies.js" async></script>
@@ -24,19 +24,17 @@
 <link href="../styles/main.css" rel="Stylesheet">
 <link href="../styles/prism.css" rel="Stylesheet">
 <link href="../styles/logo-styles.css" rel="Stylesheet">
-<link href="../styles/font-jb-sans-auto.css" rel="Stylesheet">
 <link href="../ui-kit/ui-kit.min.css" rel="Stylesheet">
-<script type="text/javascript" src="../scripts/clipboard.js" async></script>
+<script type="text/javascript" src="../scripts/safe-local-storage_blocking.js"></script>
 <script type="text/javascript" src="../scripts/navigation-loader.js" async></script>
 <script type="text/javascript" src="../scripts/platform-content-handler.js" async></script>
 <script type="text/javascript" src="../scripts/main.js" defer></script>
 <script type="text/javascript" src="../scripts/prism.js" async></script>
-<script type="text/javascript" src="../ui-kit/ui-kit.min.js" defer></script>
-<script type="text/javascript" src="../scripts/symbol-parameters-wrapper_deferred.js" defer></script></head>
+<script type="text/javascript" src="../ui-kit/ui-kit.min.js" defer></script></head>
 <body>
-    <div class="root">
-    <nav class="navigation theme-dark" id="navigation-wrapper">
-<a class="library-name--link" href="../index.html">
+<div class="root">
+    <header class="navigation theme-dark" id="navigation-wrapper" role="banner">
+<a class="library-name--link" href="../index.html" tabindex="1">
                     kord
             </a>        <button class="navigation-controls--btn navigation-controls--btn_toc ui-kit_mobile-only" id="toc-toggle" type="button">Toggle table of contents
         </button>
@@ -44,14 +42,14 @@
         <div class="library-version" id="library-version">or(map(map(map(map(valueof(ProcessOutputValueSource))))), map(map(map(map(valueof(ProcessOutputValueSource))))))
         </div>
         <div class="navigation-controls">
-        <div class="filter-section filter-section_loading" id="filter-section">
-                <button class="platform-tag platform-selector common-like" data-active="" data-filter=":rest/commonMain">common</button>
-                <button class="platform-tag platform-selector jvm-like" data-active="" data-filter=":rest/jvmMain">jvm</button>
+        <ul class="filter-section filter-section_loading" id="filter-section" aria-label="Target filter">
+                <button class="platform-tag platform-selector common-like" data-active="" aria-pressed="true" data-filter=":rest/commonMain">common</button>
+                <button class="platform-tag platform-selector jvm-like" data-active="" aria-pressed="true" data-filter=":rest/jvmMain">jvm</button>
             <div class="dropdown filter-section--dropdown" data-role="dropdown" id="filter-section-dropdown">
                 <button class="button button_dropdown filter-section--dropdown-toggle" role="combobox" data-role="dropdown-toggle" aria-controls="platform-tags-listbox" aria-haspopup="listbox" aria-expanded="false" aria-label="Toggle source sets"></button>
-                <ul role="listbox" id="platform-tags-listbox" class="dropdown--list" data-role="dropdown-listbox">
-                    <div class="dropdown--header"><span>Platform filter</span>
-                        <button class="button" data-role="dropdown-toggle" aria-label="Close platform filter">
+                <ul role="listbox" id="platform-tags-listbox" class="dropdown--list" data-role="dropdown-listbox" aria-label="Target filter">
+                    <div class="dropdown--header"><span>Target filter</span>
+                        <button class="button" data-role="dropdown-toggle" aria-label="Close target filter">
                             <i class="ui-kit-icon ui-kit-icon_cross"></i>
                         </button>
                     </div>
@@ -72,32 +70,34 @@
                 </ul>
                 <div class="dropdown--overlay"></div>
             </div>
-        </div>
+        </ul>
             <button class="navigation-controls--btn navigation-controls--btn_theme" id="theme-toggle-button" type="button">Switch theme
             </button>
             <div class="navigation-controls--btn navigation-controls--btn_search" id="searchBar" role="button">Search in
                 API
             </div>
         </div>
-    </nav>
-        <div id="container">
-            <div class="sidebar" id="leftColumn">
-                <div class="dropdown theme-dark_mobile" data-role="dropdown" id="toc-dropdown">
-                    <ul role="listbox" id="toc-listbox" class="dropdown--list dropdown--list_toc-list" data-role="dropdown-listbox">
-                        <div class="dropdown--header">
+    </header>
+    <div id="container">
+        <nav id="leftColumn" class="sidebar" data-item-type="SECTION" data-item-config="{&quot;defaultSize&quot;: 280, &quot;minSize&quot;: 200, &quot;maxSize&quot;: 400}">
+            <a class="toc--skip-link" href="#main">Skip to content</a>
+            <div class="dropdown theme-dark_mobile" data-role="dropdown" id="toc-dropdown">
+                <ul role="listbox" id="toc-listbox" class="dropdown--list dropdown--list_toc-list" data-role="dropdown-listbox" aria-label="Table of contents">
+                    <div class="dropdown--header">
                             <span>
                                     kord
                             </span>
-                            <button class="button" data-role="dropdown-toggle" aria-label="Close table of contents">
-                                <i class="ui-kit-icon ui-kit-icon_cross"></i>
-                            </button>
-                        </div>
-                        <div class="sidebar--inner" id="sideMenu"></div>
-                    </ul>
-                    <div class="dropdown--overlay"></div>
-                </div>
+                        <button class="button" data-role="dropdown-toggle" aria-label="Close table of contents">
+                            <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                        </button>
+                    </div>
+                    <div class="sidebar--inner" id="sideMenu"></div>
+                </ul>
+                <div class="dropdown--overlay"></div>
             </div>
-            <div id="main">
+        </nav>
+        <div id="resizer" class="resizer" data-item-type="BAR"></div>
+        <div id="main" data-item-type="SECTION" role="main">
 <div class="main-content" id="content" pageids="kord-rest::////PointingToDeclaration//-139825916">
   <div class="breadcrumbs"></div>
   <div class="cover ">
@@ -105,7 +105,7 @@
   </div>
   <h2 class="">Packages</h2>
   <div class="table"><a data-name="-1582765899%2FPackages%2F-555443553" anchor-label="dev.kord.rest" id="-1582765899%2FPackages%2F-555443553" data-filterable-set=":rest/commonMain"></a>
-    <div class="table-row" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
+    <div class="table-row table-row_platform-tagged" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
       <div>
         <div class="main-subrow ">
           <div class=""><span class="inline-flex">
@@ -113,7 +113,7 @@
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1582765899%2FPackages%2F-555443553"></span>
                 <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
               </span></span></div>
-          <div class="pull-right">
+          <div class="pull-right platform-tags--wrapper">
             <div class="platform-tags no-gutters">
               <div class="platform-tag common-like">common</div>
             </div>
@@ -123,7 +123,7 @@
       </div>
     </div>
 <a data-name="-1966934238%2FPackages%2F-555443553" anchor-label="dev.kord.rest.builder" id="-1966934238%2FPackages%2F-555443553" data-filterable-set=":rest/commonMain"></a>
-    <div class="table-row" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
+    <div class="table-row table-row_platform-tagged" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
       <div>
         <div class="main-subrow ">
           <div class=""><span class="inline-flex">
@@ -131,7 +131,7 @@
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1966934238%2FPackages%2F-555443553"></span>
                 <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
               </span></span></div>
-          <div class="pull-right">
+          <div class="pull-right platform-tags--wrapper">
             <div class="platform-tags no-gutters">
               <div class="platform-tag common-like">common</div>
             </div>
@@ -141,7 +141,7 @@
       </div>
     </div>
 <a data-name="834820%2FPackages%2F-555443553" anchor-label="dev.kord.rest.builder.application" id="834820%2FPackages%2F-555443553" data-filterable-set=":rest/commonMain"></a>
-    <div class="table-row" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
+    <div class="table-row table-row_platform-tagged" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
       <div>
         <div class="main-subrow ">
           <div class=""><span class="inline-flex">
@@ -149,7 +149,7 @@
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="834820%2FPackages%2F-555443553"></span>
                 <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
               </span></span></div>
-          <div class="pull-right">
+          <div class="pull-right platform-tags--wrapper">
             <div class="platform-tags no-gutters">
               <div class="platform-tag common-like">common</div>
             </div>
@@ -159,7 +159,7 @@
       </div>
     </div>
 <a data-name="-987880551%2FPackages%2F-555443553" anchor-label="dev.kord.rest.builder.auditlog" id="-987880551%2FPackages%2F-555443553" data-filterable-set=":rest/commonMain"></a>
-    <div class="table-row" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
+    <div class="table-row table-row_platform-tagged" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
       <div>
         <div class="main-subrow ">
           <div class=""><span class="inline-flex">
@@ -167,7 +167,7 @@
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-987880551%2FPackages%2F-555443553"></span>
                 <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
               </span></span></div>
-          <div class="pull-right">
+          <div class="pull-right platform-tags--wrapper">
             <div class="platform-tags no-gutters">
               <div class="platform-tag common-like">common</div>
             </div>
@@ -177,7 +177,7 @@
       </div>
     </div>
 <a data-name="1458094245%2FPackages%2F-555443553" anchor-label="dev.kord.rest.builder.automoderation" id="1458094245%2FPackages%2F-555443553" data-filterable-set=":rest/commonMain"></a>
-    <div class="table-row" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
+    <div class="table-row table-row_platform-tagged" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
       <div>
         <div class="main-subrow ">
           <div class=""><span class="inline-flex">
@@ -185,7 +185,7 @@
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1458094245%2FPackages%2F-555443553"></span>
                 <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
               </span></span></div>
-          <div class="pull-right">
+          <div class="pull-right platform-tags--wrapper">
             <div class="platform-tags no-gutters">
               <div class="platform-tag common-like">common</div>
             </div>
@@ -195,7 +195,7 @@
       </div>
     </div>
 <a data-name="1099900163%2FPackages%2F-555443553" anchor-label="dev.kord.rest.builder.ban" id="1099900163%2FPackages%2F-555443553" data-filterable-set=":rest/commonMain"></a>
-    <div class="table-row" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
+    <div class="table-row table-row_platform-tagged" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
       <div>
         <div class="main-subrow ">
           <div class=""><span class="inline-flex">
@@ -203,7 +203,7 @@
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1099900163%2FPackages%2F-555443553"></span>
                 <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
               </span></span></div>
-          <div class="pull-right">
+          <div class="pull-right platform-tags--wrapper">
             <div class="platform-tags no-gutters">
               <div class="platform-tag common-like">common</div>
             </div>
@@ -213,7 +213,7 @@
       </div>
     </div>
 <a data-name="-876452873%2FPackages%2F-555443553" anchor-label="dev.kord.rest.builder.channel" id="-876452873%2FPackages%2F-555443553" data-filterable-set=":rest/commonMain"></a>
-    <div class="table-row" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
+    <div class="table-row table-row_platform-tagged" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
       <div>
         <div class="main-subrow ">
           <div class=""><span class="inline-flex">
@@ -221,7 +221,7 @@
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-876452873%2FPackages%2F-555443553"></span>
                 <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
               </span></span></div>
-          <div class="pull-right">
+          <div class="pull-right platform-tags--wrapper">
             <div class="platform-tags no-gutters">
               <div class="platform-tag common-like">common</div>
             </div>
@@ -231,7 +231,7 @@
       </div>
     </div>
 <a data-name="1715935717%2FPackages%2F-555443553" anchor-label="dev.kord.rest.builder.channel.thread" id="1715935717%2FPackages%2F-555443553" data-filterable-set=":rest/commonMain"></a>
-    <div class="table-row" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
+    <div class="table-row table-row_platform-tagged" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
       <div>
         <div class="main-subrow ">
           <div class=""><span class="inline-flex">
@@ -239,7 +239,7 @@
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1715935717%2FPackages%2F-555443553"></span>
                 <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
               </span></span></div>
-          <div class="pull-right">
+          <div class="pull-right platform-tags--wrapper">
             <div class="platform-tags no-gutters">
               <div class="platform-tag common-like">common</div>
             </div>
@@ -249,7 +249,7 @@
       </div>
     </div>
 <a data-name="-449842447%2FPackages%2F-555443553" anchor-label="dev.kord.rest.builder.component" id="-449842447%2FPackages%2F-555443553" data-filterable-set=":rest/commonMain"></a>
-    <div class="table-row" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
+    <div class="table-row table-row_platform-tagged" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
       <div>
         <div class="main-subrow ">
           <div class=""><span class="inline-flex">
@@ -257,7 +257,7 @@
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-449842447%2FPackages%2F-555443553"></span>
                 <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
               </span></span></div>
-          <div class="pull-right">
+          <div class="pull-right platform-tags--wrapper">
             <div class="platform-tags no-gutters">
               <div class="platform-tag common-like">common</div>
             </div>
@@ -267,7 +267,7 @@
       </div>
     </div>
 <a data-name="-1351605401%2FPackages%2F-555443553" anchor-label="dev.kord.rest.builder.guild" id="-1351605401%2FPackages%2F-555443553" data-filterable-set=":rest/commonMain"></a>
-    <div class="table-row" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
+    <div class="table-row table-row_platform-tagged" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
       <div>
         <div class="main-subrow ">
           <div class=""><span class="inline-flex">
@@ -275,7 +275,7 @@
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1351605401%2FPackages%2F-555443553"></span>
                 <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
               </span></span></div>
-          <div class="pull-right">
+          <div class="pull-right platform-tags--wrapper">
             <div class="platform-tags no-gutters">
               <div class="platform-tag common-like">common</div>
             </div>
@@ -285,7 +285,7 @@
       </div>
     </div>
 <a data-name="-1552559992%2FPackages%2F-555443553" anchor-label="dev.kord.rest.builder.integration" id="-1552559992%2FPackages%2F-555443553" data-filterable-set=":rest/commonMain"></a>
-    <div class="table-row" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
+    <div class="table-row table-row_platform-tagged" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
       <div>
         <div class="main-subrow ">
           <div class=""><span class="inline-flex">
@@ -293,7 +293,7 @@
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1552559992%2FPackages%2F-555443553"></span>
                 <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
               </span></span></div>
-          <div class="pull-right">
+          <div class="pull-right platform-tags--wrapper">
             <div class="platform-tags no-gutters">
               <div class="platform-tag common-like">common</div>
             </div>
@@ -303,7 +303,7 @@
       </div>
     </div>
 <a data-name="710424390%2FPackages%2F-555443553" anchor-label="dev.kord.rest.builder.interaction" id="710424390%2FPackages%2F-555443553" data-filterable-set=":rest/commonMain"></a>
-    <div class="table-row" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
+    <div class="table-row table-row_platform-tagged" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
       <div>
         <div class="main-subrow ">
           <div class=""><span class="inline-flex">
@@ -311,7 +311,7 @@
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="710424390%2FPackages%2F-555443553"></span>
                 <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
               </span></span></div>
-          <div class="pull-right">
+          <div class="pull-right platform-tags--wrapper">
             <div class="platform-tags no-gutters">
               <div class="platform-tag common-like">common</div>
             </div>
@@ -321,7 +321,7 @@
       </div>
     </div>
 <a data-name="-181036822%2FPackages%2F-555443553" anchor-label="dev.kord.rest.builder.member" id="-181036822%2FPackages%2F-555443553" data-filterable-set=":rest/commonMain"></a>
-    <div class="table-row" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
+    <div class="table-row table-row_platform-tagged" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
       <div>
         <div class="main-subrow ">
           <div class=""><span class="inline-flex">
@@ -329,7 +329,7 @@
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-181036822%2FPackages%2F-555443553"></span>
                 <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
               </span></span></div>
-          <div class="pull-right">
+          <div class="pull-right platform-tags--wrapper">
             <div class="platform-tags no-gutters">
               <div class="platform-tag common-like">common</div>
             </div>
@@ -339,7 +339,7 @@
       </div>
     </div>
 <a data-name="-793220613%2FPackages%2F-139825916" anchor-label="dev.kord.rest.builder.message" id="-793220613%2FPackages%2F-139825916" data-filterable-set=":rest/commonMain,:rest/jvmMain"></a>
-    <div class="table-row" data-filterable-current=":rest/commonMain,:rest/jvmMain" data-filterable-set=":rest/commonMain,:rest/jvmMain">
+    <div class="table-row table-row_platform-tagged" data-filterable-current=":rest/commonMain,:rest/jvmMain" data-filterable-set=":rest/commonMain,:rest/jvmMain">
       <div>
         <div class="main-subrow ">
           <div class=""><span class="inline-flex">
@@ -347,7 +347,7 @@
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-793220613%2FPackages%2F-139825916"></span>
                 <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
               </span></span></div>
-          <div class="pull-right">
+          <div class="pull-right platform-tags--wrapper">
             <div class="platform-tags no-gutters">
               <div class="platform-tag common-like">common</div>
               <div class="platform-tag jvm-like">jvm</div>
@@ -358,7 +358,7 @@
       </div>
     </div>
 <a data-name="399962067%2FPackages%2F-555443553" anchor-label="dev.kord.rest.builder.message.create" id="399962067%2FPackages%2F-555443553" data-filterable-set=":rest/commonMain"></a>
-    <div class="table-row" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
+    <div class="table-row table-row_platform-tagged" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
       <div>
         <div class="main-subrow ">
           <div class=""><span class="inline-flex">
@@ -366,7 +366,7 @@
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="399962067%2FPackages%2F-555443553"></span>
                 <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
               </span></span></div>
-          <div class="pull-right">
+          <div class="pull-right platform-tags--wrapper">
             <div class="platform-tags no-gutters">
               <div class="platform-tag common-like">common</div>
             </div>
@@ -376,7 +376,7 @@
       </div>
     </div>
 <a data-name="-1011321327%2FPackages%2F-555443553" anchor-label="dev.kord.rest.builder.message.modify" id="-1011321327%2FPackages%2F-555443553" data-filterable-set=":rest/commonMain"></a>
-    <div class="table-row" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
+    <div class="table-row table-row_platform-tagged" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
       <div>
         <div class="main-subrow ">
           <div class=""><span class="inline-flex">
@@ -384,7 +384,7 @@
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1011321327%2FPackages%2F-555443553"></span>
                 <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
               </span></span></div>
-          <div class="pull-right">
+          <div class="pull-right platform-tags--wrapper">
             <div class="platform-tags no-gutters">
               <div class="platform-tag common-like">common</div>
             </div>
@@ -394,7 +394,7 @@
       </div>
     </div>
 <a data-name="-1326300583%2FPackages%2F-555443553" anchor-label="dev.kord.rest.builder.monetization" id="-1326300583%2FPackages%2F-555443553" data-filterable-set=":rest/commonMain"></a>
-    <div class="table-row" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
+    <div class="table-row table-row_platform-tagged" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
       <div>
         <div class="main-subrow ">
           <div class=""><span class="inline-flex">
@@ -402,7 +402,7 @@
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1326300583%2FPackages%2F-555443553"></span>
                 <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
               </span></span></div>
-          <div class="pull-right">
+          <div class="pull-right platform-tags--wrapper">
             <div class="platform-tags no-gutters">
               <div class="platform-tag common-like">common</div>
             </div>
@@ -412,7 +412,7 @@
       </div>
     </div>
 <a data-name="-261728442%2FPackages%2F-555443553" anchor-label="dev.kord.rest.builder.role" id="-261728442%2FPackages%2F-555443553" data-filterable-set=":rest/commonMain"></a>
-    <div class="table-row" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
+    <div class="table-row table-row_platform-tagged" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
       <div>
         <div class="main-subrow ">
           <div class=""><span class="inline-flex">
@@ -420,7 +420,7 @@
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-261728442%2FPackages%2F-555443553"></span>
                 <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
               </span></span></div>
-          <div class="pull-right">
+          <div class="pull-right platform-tags--wrapper">
             <div class="platform-tags no-gutters">
               <div class="platform-tag common-like">common</div>
             </div>
@@ -430,7 +430,7 @@
       </div>
     </div>
 <a data-name="685652603%2FPackages%2F-555443553" anchor-label="dev.kord.rest.builder.scheduled_events" id="685652603%2FPackages%2F-555443553" data-filterable-set=":rest/commonMain"></a>
-    <div class="table-row" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
+    <div class="table-row table-row_platform-tagged" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
       <div>
         <div class="main-subrow ">
           <div class=""><span class="inline-flex">
@@ -438,7 +438,7 @@
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="685652603%2FPackages%2F-555443553"></span>
                 <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
               </span></span></div>
-          <div class="pull-right">
+          <div class="pull-right platform-tags--wrapper">
             <div class="platform-tags no-gutters">
               <div class="platform-tag common-like">common</div>
             </div>
@@ -448,7 +448,7 @@
       </div>
     </div>
 <a data-name="-462839118%2FPackages%2F-555443553" anchor-label="dev.kord.rest.builder.stage" id="-462839118%2FPackages%2F-555443553" data-filterable-set=":rest/commonMain"></a>
-    <div class="table-row" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
+    <div class="table-row table-row_platform-tagged" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
       <div>
         <div class="main-subrow ">
           <div class=""><span class="inline-flex">
@@ -456,7 +456,7 @@
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-462839118%2FPackages%2F-555443553"></span>
                 <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
               </span></span></div>
-          <div class="pull-right">
+          <div class="pull-right platform-tags--wrapper">
             <div class="platform-tags no-gutters">
               <div class="platform-tag common-like">common</div>
             </div>
@@ -466,7 +466,7 @@
       </div>
     </div>
 <a data-name="1118601034%2FPackages%2F-555443553" anchor-label="dev.kord.rest.builder.template" id="1118601034%2FPackages%2F-555443553" data-filterable-set=":rest/commonMain"></a>
-    <div class="table-row" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
+    <div class="table-row table-row_platform-tagged" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
       <div>
         <div class="main-subrow ">
           <div class=""><span class="inline-flex">
@@ -474,7 +474,7 @@
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1118601034%2FPackages%2F-555443553"></span>
                 <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
               </span></span></div>
-          <div class="pull-right">
+          <div class="pull-right platform-tags--wrapper">
             <div class="platform-tags no-gutters">
               <div class="platform-tag common-like">common</div>
             </div>
@@ -484,7 +484,7 @@
       </div>
     </div>
 <a data-name="-351104421%2FPackages%2F-555443553" anchor-label="dev.kord.rest.builder.user" id="-351104421%2FPackages%2F-555443553" data-filterable-set=":rest/commonMain"></a>
-    <div class="table-row" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
+    <div class="table-row table-row_platform-tagged" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
       <div>
         <div class="main-subrow ">
           <div class=""><span class="inline-flex">
@@ -492,7 +492,7 @@
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-351104421%2FPackages%2F-555443553"></span>
                 <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
               </span></span></div>
-          <div class="pull-right">
+          <div class="pull-right platform-tags--wrapper">
             <div class="platform-tags no-gutters">
               <div class="platform-tag common-like">common</div>
             </div>
@@ -502,7 +502,7 @@
       </div>
     </div>
 <a data-name="1897018475%2FPackages%2F-555443553" anchor-label="dev.kord.rest.builder.webhook" id="1897018475%2FPackages%2F-555443553" data-filterable-set=":rest/commonMain"></a>
-    <div class="table-row" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
+    <div class="table-row table-row_platform-tagged" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
       <div>
         <div class="main-subrow ">
           <div class=""><span class="inline-flex">
@@ -510,7 +510,7 @@
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1897018475%2FPackages%2F-555443553"></span>
                 <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
               </span></span></div>
-          <div class="pull-right">
+          <div class="pull-right platform-tags--wrapper">
             <div class="platform-tags no-gutters">
               <div class="platform-tag common-like">common</div>
             </div>
@@ -520,7 +520,7 @@
       </div>
     </div>
 <a data-name="294538117%2FPackages%2F-555443553" anchor-label="dev.kord.rest.json" id="294538117%2FPackages%2F-555443553" data-filterable-set=":rest/commonMain"></a>
-    <div class="table-row" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
+    <div class="table-row table-row_platform-tagged" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
       <div>
         <div class="main-subrow ">
           <div class=""><span class="inline-flex">
@@ -528,7 +528,7 @@
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="294538117%2FPackages%2F-555443553"></span>
                 <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
               </span></span></div>
-          <div class="pull-right">
+          <div class="pull-right platform-tags--wrapper">
             <div class="platform-tags no-gutters">
               <div class="platform-tag common-like">common</div>
             </div>
@@ -538,7 +538,7 @@
       </div>
     </div>
 <a data-name="-1091501082%2FPackages%2F-555443553" anchor-label="dev.kord.rest.json.request" id="-1091501082%2FPackages%2F-555443553" data-filterable-set=":rest/commonMain"></a>
-    <div class="table-row" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
+    <div class="table-row table-row_platform-tagged" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
       <div>
         <div class="main-subrow ">
           <div class=""><span class="inline-flex">
@@ -546,7 +546,7 @@
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1091501082%2FPackages%2F-555443553"></span>
                 <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
               </span></span></div>
-          <div class="pull-right">
+          <div class="pull-right platform-tags--wrapper">
             <div class="platform-tags no-gutters">
               <div class="platform-tag common-like">common</div>
             </div>
@@ -556,7 +556,7 @@
       </div>
     </div>
 <a data-name="-1561594034%2FPackages%2F-555443553" anchor-label="dev.kord.rest.json.response" id="-1561594034%2FPackages%2F-555443553" data-filterable-set=":rest/commonMain"></a>
-    <div class="table-row" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
+    <div class="table-row table-row_platform-tagged" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
       <div>
         <div class="main-subrow ">
           <div class=""><span class="inline-flex">
@@ -564,7 +564,7 @@
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1561594034%2FPackages%2F-555443553"></span>
                 <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
               </span></span></div>
-          <div class="pull-right">
+          <div class="pull-right platform-tags--wrapper">
             <div class="platform-tags no-gutters">
               <div class="platform-tag common-like">common</div>
             </div>
@@ -574,7 +574,7 @@
       </div>
     </div>
 <a data-name="-947290846%2FPackages%2F-555443553" anchor-label="dev.kord.rest.ratelimit" id="-947290846%2FPackages%2F-555443553" data-filterable-set=":rest/commonMain"></a>
-    <div class="table-row" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
+    <div class="table-row table-row_platform-tagged" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
       <div>
         <div class="main-subrow ">
           <div class=""><span class="inline-flex">
@@ -582,7 +582,7 @@
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-947290846%2FPackages%2F-555443553"></span>
                 <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
               </span></span></div>
-          <div class="pull-right">
+          <div class="pull-right platform-tags--wrapper">
             <div class="platform-tags no-gutters">
               <div class="platform-tag common-like">common</div>
             </div>
@@ -592,7 +592,7 @@
       </div>
     </div>
 <a data-name="1509126422%2FPackages%2F-139825916" anchor-label="dev.kord.rest.request" id="1509126422%2FPackages%2F-139825916" data-filterable-set=":rest/commonMain,:rest/jvmMain"></a>
-    <div class="table-row" data-filterable-current=":rest/commonMain,:rest/jvmMain" data-filterable-set=":rest/commonMain,:rest/jvmMain">
+    <div class="table-row table-row_platform-tagged" data-filterable-current=":rest/commonMain,:rest/jvmMain" data-filterable-set=":rest/commonMain,:rest/jvmMain">
       <div>
         <div class="main-subrow ">
           <div class=""><span class="inline-flex">
@@ -600,7 +600,7 @@
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1509126422%2FPackages%2F-139825916"></span>
                 <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
               </span></span></div>
-          <div class="pull-right">
+          <div class="pull-right platform-tags--wrapper">
             <div class="platform-tags no-gutters">
               <div class="platform-tag common-like">common</div>
               <div class="platform-tag jvm-like">jvm</div>
@@ -611,7 +611,7 @@
       </div>
     </div>
 <a data-name="-165809776%2FPackages%2F-555443553" anchor-label="dev.kord.rest.route" id="-165809776%2FPackages%2F-555443553" data-filterable-set=":rest/commonMain"></a>
-    <div class="table-row" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
+    <div class="table-row table-row_platform-tagged" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
       <div>
         <div class="main-subrow ">
           <div class=""><span class="inline-flex">
@@ -619,7 +619,7 @@
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-165809776%2FPackages%2F-555443553"></span>
                 <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
               </span></span></div>
-          <div class="pull-right">
+          <div class="pull-right platform-tags--wrapper">
             <div class="platform-tags no-gutters">
               <div class="platform-tag common-like">common</div>
             </div>
@@ -629,7 +629,7 @@
       </div>
     </div>
 <a data-name="701481404%2FPackages%2F-555443553" anchor-label="dev.kord.rest.service" id="701481404%2FPackages%2F-555443553" data-filterable-set=":rest/commonMain"></a>
-    <div class="table-row" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
+    <div class="table-row table-row_platform-tagged" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
       <div>
         <div class="main-subrow ">
           <div class=""><span class="inline-flex">
@@ -637,7 +637,7 @@
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="701481404%2FPackages%2F-555443553"></span>
                 <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
               </span></span></div>
-          <div class="pull-right">
+          <div class="pull-right platform-tags--wrapper">
             <div class="platform-tags no-gutters">
               <div class="platform-tag common-like">common</div>
             </div>
@@ -649,17 +649,21 @@
   </div>
 </div>
     <div class="footer">
-        <a href="#content" id="go-to-top-link" class="footer--button footer--button_go-to-top"></a>
-        <span>© 2026 Copyright</span>
-        <span class="pull-right">
-            <span>Generated by </span>
-            <a class="footer--link footer--link_external" href="https://github.com/Kotlin/dokka">
-                <span>dokka</span>
-            </a>
-        </span>
-    </div>
+        <div class="footer--container">
+            <a href="#content" id="go-to-top-link" class="footer--button footer--button_go-to-top"></a>
+            <div class="footer--content">
+                <div>
+                    <span>Generated by </span>
+                    <a class="footer--link footer--link_external" href="https://github.com/Kotlin/dokka">
+                        Dokka
+                    </a>
+                    <div>© 2026 Copyright</div>
+                </div>
             </div>
         </div>
     </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>

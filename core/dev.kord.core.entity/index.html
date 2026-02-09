@@ -1,22 +1,22 @@
 <!doctype html>
-<html class="no-js">
+<html class="no-js" lang="en">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
     <title>dev.kord.core.entity</title>
-<link href="../../images/logo-icon.svg" rel="icon" type="image/svg">    <script>var pathToRoot = "../../";</script>
-    <script>document.documentElement.classList.replace("no-js","js");</script>
+<link href="../../images/logo-icon.svg" rel="icon" type="image/svg"><script>var pathToRoot = "../../";</script>
+    <script>document.documentElement.classList.replace("no-js", "js");</script>
     <script>const storage = localStorage.getItem("dokka-dark-mode")
-    if (storage == null) {
+      if (storage == null) {
         const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
         if (osDarkSchemePreferred === true) {
-            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+          document.getElementsByTagName("html")[0].classList.add("theme-dark")
         }
-    } else {
+      } else {
         const savedDarkMode = JSON.parse(storage)
-        if(savedDarkMode === true) {
-            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        if (savedDarkMode === true) {
+          document.getElementsByTagName("html")[0].classList.add("theme-dark")
         }
-    }
+      }
     </script>
 <script type="text/javascript" src="https://unpkg.com/kotlin-playground@1/dist/playground.min.js" async></script>
 <script type="text/javascript" src="../../scripts/sourceset_dependencies.js" async></script>
@@ -24,19 +24,17 @@
 <link href="../../styles/main.css" rel="Stylesheet">
 <link href="../../styles/prism.css" rel="Stylesheet">
 <link href="../../styles/logo-styles.css" rel="Stylesheet">
-<link href="../../styles/font-jb-sans-auto.css" rel="Stylesheet">
 <link href="../../ui-kit/ui-kit.min.css" rel="Stylesheet">
-<script type="text/javascript" src="../../scripts/clipboard.js" async></script>
+<script type="text/javascript" src="../../scripts/safe-local-storage_blocking.js"></script>
 <script type="text/javascript" src="../../scripts/navigation-loader.js" async></script>
 <script type="text/javascript" src="../../scripts/platform-content-handler.js" async></script>
 <script type="text/javascript" src="../../scripts/main.js" defer></script>
 <script type="text/javascript" src="../../scripts/prism.js" async></script>
-<script type="text/javascript" src="../../ui-kit/ui-kit.min.js" defer></script>
-<script type="text/javascript" src="../../scripts/symbol-parameters-wrapper_deferred.js" defer></script></head>
+<script type="text/javascript" src="../../ui-kit/ui-kit.min.js" defer></script></head>
 <body>
-    <div class="root">
-    <nav class="navigation theme-dark" id="navigation-wrapper">
-<a class="library-name--link" href="../../index.html">
+<div class="root">
+    <header class="navigation theme-dark" id="navigation-wrapper" role="banner">
+<a class="library-name--link" href="../../index.html" tabindex="1">
                     kord
             </a>        <button class="navigation-controls--btn navigation-controls--btn_toc ui-kit_mobile-only" id="toc-toggle" type="button">Toggle table of contents
         </button>
@@ -44,13 +42,13 @@
         <div class="library-version" id="library-version">or(map(map(map(map(valueof(ProcessOutputValueSource))))), map(map(map(map(valueof(ProcessOutputValueSource))))))
         </div>
         <div class="navigation-controls">
-        <div class="filter-section filter-section_loading" id="filter-section">
-                <button class="platform-tag platform-selector common-like" data-active="" data-filter=":core/commonMain">common</button>
+        <ul class="filter-section filter-section_loading" id="filter-section" aria-label="Target filter">
+                <button class="platform-tag platform-selector common-like" data-active="" aria-pressed="true" data-filter=":core/commonMain">common</button>
             <div class="dropdown filter-section--dropdown" data-role="dropdown" id="filter-section-dropdown">
                 <button class="button button_dropdown filter-section--dropdown-toggle" role="combobox" data-role="dropdown-toggle" aria-controls="platform-tags-listbox" aria-haspopup="listbox" aria-expanded="false" aria-label="Toggle source sets"></button>
-                <ul role="listbox" id="platform-tags-listbox" class="dropdown--list" data-role="dropdown-listbox">
-                    <div class="dropdown--header"><span>Platform filter</span>
-                        <button class="button" data-role="dropdown-toggle" aria-label="Close platform filter">
+                <ul role="listbox" id="platform-tags-listbox" class="dropdown--list" data-role="dropdown-listbox" aria-label="Target filter">
+                    <div class="dropdown--header"><span>Target filter</span>
+                        <button class="button" data-role="dropdown-toggle" aria-label="Close target filter">
                             <i class="ui-kit-icon ui-kit-icon_cross"></i>
                         </button>
                     </div>
@@ -64,32 +62,34 @@
                 </ul>
                 <div class="dropdown--overlay"></div>
             </div>
-        </div>
+        </ul>
             <button class="navigation-controls--btn navigation-controls--btn_theme" id="theme-toggle-button" type="button">Switch theme
             </button>
             <div class="navigation-controls--btn navigation-controls--btn_search" id="searchBar" role="button">Search in
                 API
             </div>
         </div>
-    </nav>
-        <div id="container">
-            <div class="sidebar" id="leftColumn">
-                <div class="dropdown theme-dark_mobile" data-role="dropdown" id="toc-dropdown">
-                    <ul role="listbox" id="toc-listbox" class="dropdown--list dropdown--list_toc-list" data-role="dropdown-listbox">
-                        <div class="dropdown--header">
+    </header>
+    <div id="container">
+        <nav id="leftColumn" class="sidebar" data-item-type="SECTION" data-item-config="{&quot;defaultSize&quot;: 280, &quot;minSize&quot;: 200, &quot;maxSize&quot;: 400}">
+            <a class="toc--skip-link" href="#main">Skip to content</a>
+            <div class="dropdown theme-dark_mobile" data-role="dropdown" id="toc-dropdown">
+                <ul role="listbox" id="toc-listbox" class="dropdown--list dropdown--list_toc-list" data-role="dropdown-listbox" aria-label="Table of contents">
+                    <div class="dropdown--header">
                             <span>
                                     kord
                             </span>
-                            <button class="button" data-role="dropdown-toggle" aria-label="Close table of contents">
-                                <i class="ui-kit-icon ui-kit-icon_cross"></i>
-                            </button>
-                        </div>
-                        <div class="sidebar--inner" id="sideMenu"></div>
-                    </ul>
-                    <div class="dropdown--overlay"></div>
-                </div>
+                        <button class="button" data-role="dropdown-toggle" aria-label="Close table of contents">
+                            <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                        </button>
+                    </div>
+                    <div class="sidebar--inner" id="sideMenu"></div>
+                </ul>
+                <div class="dropdown--overlay"></div>
             </div>
-            <div id="main">
+        </nav>
+        <div id="resizer" class="resizer" data-item-type="BAR"></div>
+        <div id="main" data-item-type="SECTION" role="main">
 <div class="main-content" data-page-type="package" id="content" pageids="kord-core::dev.kord.core.entity////PointingToDeclaration//1239919082">
   <div class="breadcrumbs"><a href="../index.html">kord-core</a><span class="delimiter">/</span><span class="current">dev.kord.core.entity</span></div>
   <div class="cover ">
@@ -99,9 +99,9 @@
     <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="TYPE">Types</button><button class="section-tab" data-togglable="FUNCTION,EXTENSION_FUNCTION">Functions</button><button class="section-tab" data-togglable="PROPERTY,EXTENSION_PROPERTY">Properties</button></div>
     <div class="tabs-section-body">
       <div data-togglable="TYPE">
-        <h2 class="">Types</h2>
+        <h2 class="tableheader">Types</h2>
         <div class="table"><a data-name="727246150%2FClasslikes%2F1239919082" anchor-label="Activity" id="727246150%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-activity/index.html"><span><span>Activity</span></span></a></div>
@@ -116,7 +116,7 @@
             </div>
           </div>
 <a data-name="-1060327139%2FClasslikes%2F1239919082" anchor-label="Application" id="-1060327139%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-application/index.html"><span><span>Application</span></span></a></div>
@@ -125,13 +125,13 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">class </span><a href="-application/index.html">Application</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">val </span>data<span class="token operator">: </span><a href="../dev.kord.core.cache.data/-application-data/index.html">ApplicationData</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>kord<span class="token operator">: </span><a href="../dev.kord.core/-kord/index.html">Kord</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>supplier<span class="token operator">: </span><a href="../dev.kord.core.supplier/-entity-supplier/index.html">EntitySupplier</a><span class="token operator"> = </span>kord.defaultSupplier</span></span><span class="token punctuation">)</span> : <a href="-base-application/index.html">BaseApplication</a></div><div class="brief "><p class="paragraph">The details of an <a href="https://discord.com/developers/docs/resources/application#application-object-application-structure">Application</a>.</p></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">class </span><a href="-application/index.html">Application</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">val </span>data<span class="token operator">: </span><a href="../dev.kord.core.cache.data/-application-data/index.html">ApplicationData</a><span class="token punctuation">, </span></span><span class="parameter ">kord<span class="token operator">: </span><a href="../dev.kord.core/-kord/index.html">Kord</a><span class="token punctuation">, </span></span><span class="parameter ">supplier<span class="token operator">: </span><a href="../dev.kord.core.supplier/-entity-supplier/index.html">EntitySupplier</a><span class="token operator"> = </span>kord.defaultSupplier</span></span><span class="token punctuation">)</span> : <a href="-base-application/index.html">BaseApplication</a></div><div class="brief "><p class="paragraph">The details of an <a href="https://discord.com/developers/docs/resources/application#application-object-application-structure">Application</a>.</p></div></div></div>
                 </div>
               </div>
             </div>
           </div>
 <a data-name="1963767135%2FClasslikes%2F1239919082" anchor-label="ApplicationEmoji" id="1963767135%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-application-emoji/index.html"><span>Application</span><wbr><span><span>Emoji</span></span></a></div>
@@ -146,7 +146,7 @@
             </div>
           </div>
 <a data-name="834911357%2FClasslikes%2F1239919082" anchor-label="Asset" id="834911357%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-asset/index.html"><span><span>Asset</span></span></a></div>
@@ -161,7 +161,7 @@
             </div>
           </div>
 <a data-name="1331887282%2FClasslikes%2F1239919082" anchor-label="Attachment" id="1331887282%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-attachment/index.html"><span><span>Attachment</span></span></a></div>
@@ -176,7 +176,7 @@
             </div>
           </div>
 <a data-name="-1777986516%2FClasslikes%2F1239919082" anchor-label="AuditLog" id="-1777986516%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-audit-log/index.html"><span>Audit</span><wbr><span><span>Log</span></span></a></div>
@@ -191,7 +191,7 @@
             </div>
           </div>
 <a data-name="-900422396%2FClasslikes%2F1239919082" anchor-label="AuditLogEntry" id="-900422396%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-audit-log-entry/index.html"><span>Audit</span><wbr><span>Log</span><wbr><span><span>Entry</span></span></a></div>
@@ -206,7 +206,7 @@
             </div>
           </div>
 <a data-name="895286078%2FClasslikes%2F1239919082" anchor-label="Ban" id="895286078%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-ban/index.html"><span><span>Ban</span></span></a></div>
@@ -221,7 +221,7 @@
             </div>
           </div>
 <a data-name="-2138646130%2FClasslikes%2F1239919082" anchor-label="BaseApplication" id="-2138646130%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-base-application/index.html"><span>Base</span><wbr><span><span>Application</span></span></a></div>
@@ -236,7 +236,7 @@
             </div>
           </div>
 <a data-name="-2064103816%2FClasslikes%2F1239919082" anchor-label="ClientStatus" id="-2064103816%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-client-status/index.html"><span>Client</span><wbr><span><span>Status</span></span></a></div>
@@ -251,7 +251,7 @@
             </div>
           </div>
 <a data-name="-1663200584%2FClasslikes%2F1239919082" anchor-label="CustomEmoji" id="-1663200584%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-custom-emoji/index.html"><span>Custom</span><wbr><span><span>Emoji</span></span></a></div>
@@ -266,7 +266,7 @@
             </div>
           </div>
 <a data-name="-224119106%2FClasslikes%2F1239919082" anchor-label="DefaultSoundboardSound" id="-224119106%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-default-soundboard-sound/index.html"><span>Default</span><wbr><span>Soundboard</span><wbr><span><span>Sound</span></span></a></div>
@@ -281,7 +281,7 @@
             </div>
           </div>
 <a data-name="555770036%2FClasslikes%2F1239919082" anchor-label="Embed" id="555770036%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-embed/index.html"><span><span>Embed</span></span></a></div>
@@ -296,7 +296,7 @@
             </div>
           </div>
 <a data-name="-2087603225%2FClasslikes%2F1239919082" anchor-label="Emoji" id="-2087603225%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-emoji/index.html"><span><span>Emoji</span></span></a></div>
@@ -311,7 +311,7 @@
             </div>
           </div>
 <a data-name="1238223858%2FClasslikes%2F1239919082" anchor-label="Entity" id="1238223858%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-entity/index.html"><span><span>Entity</span></span></a></div>
@@ -326,7 +326,7 @@
             </div>
           </div>
 <a data-name="-1813543718%2FClasslikes%2F1239919082" anchor-label="Guild" id="-1813543718%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-guild/index.html"><span><span>Guild</span></span></a></div>
@@ -341,7 +341,7 @@
             </div>
           </div>
 <a data-name="-750669886%2FClasslikes%2F1239919082" anchor-label="GuildEmoji" id="-750669886%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-guild-emoji/index.html"><span>Guild</span><wbr><span><span>Emoji</span></span></a></div>
@@ -356,7 +356,7 @@
             </div>
           </div>
 <a data-name="437935039%2FClasslikes%2F1239919082" anchor-label="GuildOnboarding" id="437935039%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-guild-onboarding/index.html"><span>Guild</span><wbr><span><span>Onboarding</span></span></a></div>
@@ -371,7 +371,7 @@
             </div>
           </div>
 <a data-name="2138142912%2FClasslikes%2F1239919082" anchor-label="GuildPreview" id="2138142912%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-guild-preview/index.html"><span>Guild</span><wbr><span><span>Preview</span></span></a></div>
@@ -386,7 +386,7 @@
             </div>
           </div>
 <a data-name="130592685%2FClasslikes%2F1239919082" anchor-label="GuildScheduledEvent" id="130592685%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-guild-scheduled-event/index.html"><span>Guild</span><wbr><span>Scheduled</span><wbr><span><span>Event</span></span></a></div>
@@ -401,7 +401,7 @@
             </div>
           </div>
 <a data-name="-1158560912%2FClasslikes%2F1239919082" anchor-label="GuildSoundboardSound" id="-1158560912%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-guild-soundboard-sound/index.html"><span>Guild</span><wbr><span>Soundboard</span><wbr><span><span>Sound</span></span></a></div>
@@ -416,7 +416,7 @@
             </div>
           </div>
 <a data-name="201060587%2FClasslikes%2F1239919082" anchor-label="GuildSticker" id="201060587%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-guild-sticker/index.html"><span>Guild</span><wbr><span><span>Sticker</span></span></a></div>
@@ -425,13 +425,13 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">class </span><a href="-guild-sticker/index.html">GuildSticker</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">val </span>data<span class="token operator">: </span><a href="../dev.kord.core.cache.data/-sticker-data/index.html">StickerData</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>kord<span class="token operator">: </span><a href="../dev.kord.core/-kord/index.html">Kord</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>supplier<span class="token operator">: </span><a href="../dev.kord.core.supplier/-entity-supplier/index.html">EntitySupplier</a><span class="token operator"> = </span>kord.defaultSupplier</span></span><span class="token punctuation">)</span> : <a href="-sticker/index.html">Sticker</a>, <a href="../dev.kord.core.behavior/-sticker-behavior/index.html">StickerBehavior</a></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">class </span><a href="-guild-sticker/index.html">GuildSticker</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">data<span class="token operator">: </span><a href="../dev.kord.core.cache.data/-sticker-data/index.html">StickerData</a><span class="token punctuation">, </span></span><span class="parameter ">kord<span class="token operator">: </span><a href="../dev.kord.core/-kord/index.html">Kord</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>supplier<span class="token operator">: </span><a href="../dev.kord.core.supplier/-entity-supplier/index.html">EntitySupplier</a><span class="token operator"> = </span>kord.defaultSupplier</span></span><span class="token punctuation">)</span> : <a href="-sticker/index.html">Sticker</a>, <a href="../dev.kord.core.behavior/-sticker-behavior/index.html">StickerBehavior</a></div></div></div>
                 </div>
               </div>
             </div>
           </div>
 <a data-name="-1988291530%2FClasslikes%2F1239919082" anchor-label="GuildWidget" id="-1988291530%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-guild-widget/index.html"><span>Guild</span><wbr><span><span>Widget</span></span></a></div>
@@ -446,7 +446,7 @@
             </div>
           </div>
 <a data-name="1106320665%2FClasslikes%2F1239919082" anchor-label="Integration" id="1106320665%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-integration/index.html"><span><span>Integration</span></span></a></div>
@@ -461,7 +461,7 @@
             </div>
           </div>
 <a data-name="-887736436%2FClasslikes%2F1239919082" anchor-label="Invite" id="-887736436%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-invite/index.html"><span><span>Invite</span></span></a></div>
@@ -476,7 +476,7 @@
             </div>
           </div>
 <a data-name="2101821047%2FClasslikes%2F1239919082" anchor-label="InviteWithMetadata" id="2101821047%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-invite-with-metadata/index.html"><span>Invite</span><wbr><span>With</span><wbr><span><span>Metadata</span></span></a></div>
@@ -485,13 +485,13 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">class </span><a href="-invite-with-metadata/index.html">InviteWithMetadata</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">val </span>data<span class="token operator">: </span><a href="../dev.kord.core.cache.data/-invite-with-metadata-data/index.html">InviteWithMetadataData</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>kord<span class="token operator">: </span><a href="../dev.kord.core/-kord/index.html">Kord</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>supplier<span class="token operator">: </span><a href="../dev.kord.core.supplier/-entity-supplier/index.html">EntitySupplier</a><span class="token operator"> = </span>kord.defaultSupplier</span></span><span class="token punctuation">)</span> : <a href="-invite/index.html">Invite</a></div><div class="brief "><p class="paragraph">An instance of a <a href="https://discord.com/developers/docs/resources/invite">Discord Invite</a> with <a href="https://discord.com/developers/docs/resources/invite#invite-metadata-object">extra information</a>.</p></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">class </span><a href="-invite-with-metadata/index.html">InviteWithMetadata</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">val </span>data<span class="token operator">: </span><a href="../dev.kord.core.cache.data/-invite-with-metadata-data/index.html">InviteWithMetadataData</a><span class="token punctuation">, </span></span><span class="parameter ">kord<span class="token operator">: </span><a href="../dev.kord.core/-kord/index.html">Kord</a><span class="token punctuation">, </span></span><span class="parameter ">supplier<span class="token operator">: </span><a href="../dev.kord.core.supplier/-entity-supplier/index.html">EntitySupplier</a><span class="token operator"> = </span>kord.defaultSupplier</span></span><span class="token punctuation">)</span> : <a href="-invite/index.html">Invite</a></div><div class="brief "><p class="paragraph">An instance of a <a href="https://discord.com/developers/docs/resources/invite">Discord Invite</a> with <a href="https://discord.com/developers/docs/resources/invite#invite-metadata-object">extra information</a>.</p></div></div></div>
                 </div>
               </div>
             </div>
           </div>
 <a data-name="-1787175812%2FClasslikes%2F1239919082" anchor-label="KordEntity" id="-1787175812%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-kord-entity/index.html"><span>Kord</span><wbr><span><span>Entity</span></span></a></div>
@@ -500,13 +500,13 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">interface </span><a href="-kord-entity/index.html">KordEntity</a> : <a href="../dev.kord.core/-kord-object/index.html">KordObject</a>, <a href="-entity/index.html">Entity</a></div><div class="brief "><p class="paragraph">An object that is identified by its <a href="../../core/dev.kord.core.entity/-kord-entity/id.html">id</a>. This object holds a <a href="../dev.kord.core/-kord-object/index.html">KordObject</a></p></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">interface </span><a href="-kord-entity/index.html">KordEntity</a> : <a href="../dev.kord.core/-kord-object/index.html">KordObject</a>, <a href="-entity/index.html">Entity</a></div><div class="brief "><p class="paragraph">An object that is identified by its <a href="-entity/id.html">id</a>. This object holds a <a href="../dev.kord.core/-kord-object/index.html">KordObject</a></p></div></div></div>
                 </div>
               </div>
             </div>
           </div>
 <a data-name="-882224869%2FClasslikes%2F1239919082" anchor-label="Member" id="-882224869%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-member/index.html"><span><span>Member</span></span></a></div>
@@ -515,13 +515,13 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">class </span><a href="-member/index.html">Member</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">val </span>memberData<span class="token operator">: </span><a href="../dev.kord.core.cache.data/-member-data/index.html">MemberData</a><span class="token punctuation">, </span></span><span class="parameter ">userData<span class="token operator">: </span><a href="../dev.kord.core.cache.data/-user-data/index.html">UserData</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>kord<span class="token operator">: </span><a href="../dev.kord.core/-kord/index.html">Kord</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>supplier<span class="token operator">: </span><a href="../dev.kord.core.supplier/-entity-supplier/index.html">EntitySupplier</a><span class="token operator"> = </span>kord.defaultSupplier</span></span><span class="token punctuation">)</span> : <a href="-user/index.html">User</a>, <a href="../dev.kord.core.behavior/-member-behavior/index.html">MemberBehavior</a></div><div class="brief "><p class="paragraph">An instance of a <a href="https://discord.com/developers/docs/resources/guild#guild-member-object">Discord Member</a>.</p></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">class </span><a href="-member/index.html">Member</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">val </span>memberData<span class="token operator">: </span><a href="../dev.kord.core.cache.data/-member-data/index.html">MemberData</a><span class="token punctuation">, </span></span><span class="parameter ">userData<span class="token operator">: </span><a href="../dev.kord.core.cache.data/-user-data/index.html">UserData</a><span class="token punctuation">, </span></span><span class="parameter ">kord<span class="token operator">: </span><a href="../dev.kord.core/-kord/index.html">Kord</a><span class="token punctuation">, </span></span><span class="parameter ">supplier<span class="token operator">: </span><a href="../dev.kord.core.supplier/-entity-supplier/index.html">EntitySupplier</a><span class="token operator"> = </span>kord.defaultSupplier</span></span><span class="token punctuation">)</span> : <a href="-user/index.html">User</a>, <a href="../dev.kord.core.behavior/-member-behavior/index.html">MemberBehavior</a></div><div class="brief "><p class="paragraph">An instance of a <a href="https://discord.com/developers/docs/resources/guild#guild-member-object">Discord Member</a>.</p></div></div></div>
                 </div>
               </div>
             </div>
           </div>
 <a data-name="197255238%2FClasslikes%2F1239919082" anchor-label="Message" id="197255238%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-message/index.html"><span><span>Message</span></span></a></div>
@@ -536,7 +536,7 @@
             </div>
           </div>
 <a data-name="-794768655%2FClasslikes%2F1239919082" anchor-label="MessageReference" id="-794768655%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-message-reference/index.html"><span>Message</span><wbr><span><span>Reference</span></span></a></div>
@@ -551,7 +551,7 @@
             </div>
           </div>
 <a data-name="-267392542%2FClasslikes%2F1239919082" anchor-label="MessageSnapshot" id="-267392542%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-message-snapshot/index.html"><span>Message</span><wbr><span><span>Snapshot</span></span></a></div>
@@ -566,7 +566,7 @@
             </div>
           </div>
 <a data-name="-1790592442%2FClasslikes%2F1239919082" anchor-label="PartialApplication" id="-1790592442%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-partial-application/index.html"><span>Partial</span><wbr><span><span>Application</span></span></a></div>
@@ -575,13 +575,13 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">class </span><a href="-partial-application/index.html">PartialApplication</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">val </span>data<span class="token operator">: </span><a href="../dev.kord.core.cache.data/-partial-application-data/index.html">PartialApplicationData</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>kord<span class="token operator">: </span><a href="../dev.kord.core/-kord/index.html">Kord</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>supplier<span class="token operator">: </span><a href="../dev.kord.core.supplier/-entity-supplier/index.html">EntitySupplier</a><span class="token operator"> = </span>kord.defaultSupplier</span></span><span class="token punctuation">)</span> : <a href="-base-application/index.html">BaseApplication</a></div><div class="brief "><p class="paragraph">The partial details of an <a href="https://discord.com/developers/docs/resources/application#application-object-application-structure">Application</a> sent in <a href="../dev.kord.core.event.guild/-invite-create-event/index.html">InviteCreateEvent</a>s.</p></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">class </span><a href="-partial-application/index.html">PartialApplication</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">val </span>data<span class="token operator">: </span><a href="../dev.kord.core.cache.data/-partial-application-data/index.html">PartialApplicationData</a><span class="token punctuation">, </span></span><span class="parameter ">kord<span class="token operator">: </span><a href="../dev.kord.core/-kord/index.html">Kord</a><span class="token punctuation">, </span></span><span class="parameter ">supplier<span class="token operator">: </span><a href="../dev.kord.core.supplier/-entity-supplier/index.html">EntitySupplier</a><span class="token operator"> = </span>kord.defaultSupplier</span></span><span class="token punctuation">)</span> : <a href="-base-application/index.html">BaseApplication</a></div><div class="brief "><p class="paragraph">The partial details of an <a href="https://discord.com/developers/docs/resources/application#application-object-application-structure">Application</a> sent in <a href="../dev.kord.core.event.guild/-invite-create-event/index.html">InviteCreateEvent</a>s.</p></div></div></div>
                 </div>
               </div>
             </div>
           </div>
 <a data-name="-712711997%2FClasslikes%2F1239919082" anchor-label="PartialGuild" id="-712711997%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-partial-guild/index.html"><span>Partial</span><wbr><span><span>Guild</span></span></a></div>
@@ -596,7 +596,7 @@
             </div>
           </div>
 <a data-name="1627402609%2FClasslikes%2F1239919082" anchor-label="PermissionOverwrite" id="1627402609%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-permission-overwrite/index.html"><span>Permission</span><wbr><span><span>Overwrite</span></span></a></div>
@@ -611,7 +611,7 @@
             </div>
           </div>
 <a data-name="1859250894%2FClasslikes%2F1239919082" anchor-label="PermissionOverwriteEntity" id="1859250894%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-permission-overwrite-entity/index.html"><span>Permission</span><wbr><span>Overwrite</span><wbr><span><span>Entity</span></span></a></div>
@@ -620,13 +620,13 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">class </span><a href="-permission-overwrite-entity/index.html">PermissionOverwriteEntity</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">val </span>guildId<span class="token operator">: </span><a href="../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>channelId<span class="token operator">: </span><a href="../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>data<span class="token operator">: </span><a href="../dev.kord.core.cache.data/-permission-overwrite-data/index.html">PermissionOverwriteData</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>kord<span class="token operator">: </span><a href="../dev.kord.core/-kord/index.html">Kord</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>supplier<span class="token operator">: </span><a href="../dev.kord.core.supplier/-entity-supplier/index.html">EntitySupplier</a><span class="token operator"> = </span>kord.defaultSupplier</span></span><span class="token punctuation">)</span> : <a href="-permission-overwrite/index.html">PermissionOverwrite</a>, <a href="../dev.kord.core/-kord-object/index.html">KordObject</a>, <a href="-strategizable/index.html">Strategizable</a></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">class </span><a href="-permission-overwrite-entity/index.html">PermissionOverwriteEntity</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">val </span>guildId<span class="token operator">: </span><a href="../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>channelId<span class="token operator">: </span><a href="../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter ">data<span class="token operator">: </span><a href="../dev.kord.core.cache.data/-permission-overwrite-data/index.html">PermissionOverwriteData</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>kord<span class="token operator">: </span><a href="../dev.kord.core/-kord/index.html">Kord</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>supplier<span class="token operator">: </span><a href="../dev.kord.core.supplier/-entity-supplier/index.html">EntitySupplier</a><span class="token operator"> = </span>kord.defaultSupplier</span></span><span class="token punctuation">)</span> : <a href="-permission-overwrite/index.html">PermissionOverwrite</a>, <a href="../dev.kord.core/-kord-object/index.html">KordObject</a>, <a href="-strategizable/index.html">Strategizable</a></div></div></div>
                 </div>
               </div>
             </div>
           </div>
 <a data-name="1431698650%2FClasslikes%2F1239919082" anchor-label="Presence" id="1431698650%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-presence/index.html"><span><span>Presence</span></span></a></div>
@@ -641,7 +641,7 @@
             </div>
           </div>
 <a data-name="-2144448660%2FClasslikes%2F1239919082" anchor-label="Reaction" id="-2144448660%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-reaction/index.html"><span><span>Reaction</span></span></a></div>
@@ -656,7 +656,7 @@
             </div>
           </div>
 <a data-name="1322037360%2FClasslikes%2F1239919082" anchor-label="ReactionEmoji" id="1322037360%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-reaction-emoji/index.html"><span>Reaction</span><wbr><span><span>Emoji</span></span></a></div>
@@ -671,7 +671,7 @@
             </div>
           </div>
 <a data-name="127102465%2FClasslikes%2F1239919082" anchor-label="Region" id="127102465%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-region/index.html"><span><span>Region</span></span></a></div>
@@ -686,7 +686,7 @@
             </div>
           </div>
 <a data-name="-1521177665%2FClasslikes%2F1239919082" anchor-label="Role" id="-1521177665%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-role/index.html"><span><span>Role</span></span></a></div>
@@ -701,7 +701,7 @@
             </div>
           </div>
 <a data-name="1201409702%2FClasslikes%2F1239919082" anchor-label="RoleTags" id="1201409702%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-role-tags/index.html"><span>Role</span><wbr><span><span>Tags</span></span></a></div>
@@ -716,7 +716,7 @@
             </div>
           </div>
 <a data-name="1595579733%2FClasslikes%2F1239919082" anchor-label="SoundboardSound" id="1595579733%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-soundboard-sound/index.html"><span>Soundboard</span><wbr><span><span>Sound</span></span></a></div>
@@ -731,7 +731,7 @@
             </div>
           </div>
 <a data-name="-1452908774%2FClasslikes%2F1239919082" anchor-label="StageInstance" id="-1452908774%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-stage-instance/index.html"><span>Stage</span><wbr><span><span>Instance</span></span></a></div>
@@ -746,7 +746,7 @@
             </div>
           </div>
 <a data-name="1224980996%2FClasslikes%2F1239919082" anchor-label="StandardEmoji" id="1224980996%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-standard-emoji/index.html"><span>Standard</span><wbr><span><span>Emoji</span></span></a></div>
@@ -761,7 +761,7 @@
             </div>
           </div>
 <a data-name="-396656688%2FClasslikes%2F1239919082" anchor-label="Sticker" id="-396656688%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-sticker/index.html"><span><span>Sticker</span></span></a></div>
@@ -776,7 +776,7 @@
             </div>
           </div>
 <a data-name="-547153795%2FClasslikes%2F1239919082" anchor-label="StickerItem" id="-547153795%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-sticker-item/index.html"><span>Sticker</span><wbr><span><span>Item</span></span></a></div>
@@ -791,7 +791,7 @@
             </div>
           </div>
 <a data-name="-1430649801%2FClasslikes%2F1239919082" anchor-label="StickerPack" id="-1430649801%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-sticker-pack/index.html"><span>Sticker</span><wbr><span><span>Pack</span></span></a></div>
@@ -806,7 +806,7 @@
             </div>
           </div>
 <a data-name="-2069274820%2FClasslikes%2F1239919082" anchor-label="Strategizable" id="-2069274820%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-strategizable/index.html"><span><span>Strategizable</span></span></a></div>
@@ -821,7 +821,7 @@
             </div>
           </div>
 <a data-name="672730040%2FClasslikes%2F1239919082" anchor-label="Team" id="672730040%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-team/index.html"><span><span>Team</span></span></a></div>
@@ -836,7 +836,7 @@
             </div>
           </div>
 <a data-name="-1076479746%2FClasslikes%2F1239919082" anchor-label="TeamMember" id="-1076479746%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-team-member/index.html"><span>Team</span><wbr><span><span>Member</span></span></a></div>
@@ -851,7 +851,7 @@
             </div>
           </div>
 <a data-name="-1133123013%2FClasslikes%2F1239919082" anchor-label="Template" id="-1133123013%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-template/index.html"><span><span>Template</span></span></a></div>
@@ -866,7 +866,7 @@
             </div>
           </div>
 <a data-name="1801075210%2FClasslikes%2F1239919082" anchor-label="User" id="1801075210%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-user/index.html"><span><span>User</span></span></a></div>
@@ -881,7 +881,7 @@
             </div>
           </div>
 <a data-name="-345738538%2FClasslikes%2F1239919082" anchor-label="VoiceState" id="-345738538%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-voice-state/index.html"><span>Voice</span><wbr><span><span>State</span></span></a></div>
@@ -896,7 +896,7 @@
             </div>
           </div>
 <a data-name="-1932720170%2FClasslikes%2F1239919082" anchor-label="Webhook" id="-1932720170%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-webhook/index.html"><span><span>Webhook</span></span></a></div>
@@ -911,7 +911,7 @@
             </div>
           </div>
 <a data-name="-658751809%2FClasslikes%2F1239919082" anchor-label="WelcomeScreen" id="-658751809%2FClasslikes%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-welcome-screen/index.html"><span>Welcome</span><wbr><span><span>Screen</span></span></a></div>
@@ -928,9 +928,9 @@
         </div>
       </div>
       <div data-togglable="EXTENSION_PROPERTY">
-        <h2 class="">Properties</h2>
+        <h2 class="tableheader">Properties</h2>
         <div class="table"><a data-name="-1751928028%2FProperties%2F1239919082" anchor-label="effectiveName" id="-1751928028%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="effective-name.html"><span>effective</span><wbr><span><span>Name</span></span></a></div>
@@ -947,9 +947,9 @@
         </div>
       </div>
       <div data-togglable="EXTENSION_FUNCTION">
-        <h2 class="">Functions</h2>
+        <h2 class="tableheader">Functions</h2>
         <div class="table"><a data-name="1743685445%2FFunctions%2F1239919082" anchor-label="edit" id="1743685445%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="edit.html"><span><span>edit</span></span></a></div>
@@ -964,7 +964,7 @@
             </div>
           </div>
 <a data-name="-1918258319%2FFunctions%2F1239919082" anchor-label="toRawType" id="-1918258319%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
-          <div class="table-row" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="to-raw-type.html"><span>to</span><wbr><span>Raw</span><wbr><span><span>Type</span></span></a></div>
@@ -984,17 +984,21 @@
   </div>
 </div>
     <div class="footer">
-        <a href="#content" id="go-to-top-link" class="footer--button footer--button_go-to-top"></a>
-        <span>© 2026 Copyright</span>
-        <span class="pull-right">
-            <span>Generated by </span>
-            <a class="footer--link footer--link_external" href="https://github.com/Kotlin/dokka">
-                <span>dokka</span>
-            </a>
-        </span>
-    </div>
+        <div class="footer--container">
+            <a href="#content" id="go-to-top-link" class="footer--button footer--button_go-to-top"></a>
+            <div class="footer--content">
+                <div>
+                    <span>Generated by </span>
+                    <a class="footer--link footer--link_external" href="https://github.com/Kotlin/dokka">
+                        Dokka
+                    </a>
+                    <div>© 2026 Copyright</div>
+                </div>
             </div>
         </div>
     </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>

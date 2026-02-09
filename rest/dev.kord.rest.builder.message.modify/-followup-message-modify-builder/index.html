@@ -1,22 +1,22 @@
 <!doctype html>
-<html class="no-js">
+<html class="no-js" lang="en">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
     <title>FollowupMessageModifyBuilder</title>
-<link href="../../../images/logo-icon.svg" rel="icon" type="image/svg">    <script>var pathToRoot = "../../../";</script>
-    <script>document.documentElement.classList.replace("no-js","js");</script>
+<link href="../../../images/logo-icon.svg" rel="icon" type="image/svg"><script>var pathToRoot = "../../../";</script>
+    <script>document.documentElement.classList.replace("no-js", "js");</script>
     <script>const storage = localStorage.getItem("dokka-dark-mode")
-    if (storage == null) {
+      if (storage == null) {
         const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
         if (osDarkSchemePreferred === true) {
-            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+          document.getElementsByTagName("html")[0].classList.add("theme-dark")
         }
-    } else {
+      } else {
         const savedDarkMode = JSON.parse(storage)
-        if(savedDarkMode === true) {
-            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        if (savedDarkMode === true) {
+          document.getElementsByTagName("html")[0].classList.add("theme-dark")
         }
-    }
+      }
     </script>
 <script type="text/javascript" src="https://unpkg.com/kotlin-playground@1/dist/playground.min.js" async></script>
 <script type="text/javascript" src="../../../scripts/sourceset_dependencies.js" async></script>
@@ -24,19 +24,17 @@
 <link href="../../../styles/main.css" rel="Stylesheet">
 <link href="../../../styles/prism.css" rel="Stylesheet">
 <link href="../../../styles/logo-styles.css" rel="Stylesheet">
-<link href="../../../styles/font-jb-sans-auto.css" rel="Stylesheet">
 <link href="../../../ui-kit/ui-kit.min.css" rel="Stylesheet">
-<script type="text/javascript" src="../../../scripts/clipboard.js" async></script>
+<script type="text/javascript" src="../../../scripts/safe-local-storage_blocking.js"></script>
 <script type="text/javascript" src="../../../scripts/navigation-loader.js" async></script>
 <script type="text/javascript" src="../../../scripts/platform-content-handler.js" async></script>
 <script type="text/javascript" src="../../../scripts/main.js" defer></script>
 <script type="text/javascript" src="../../../scripts/prism.js" async></script>
-<script type="text/javascript" src="../../../ui-kit/ui-kit.min.js" defer></script>
-<script type="text/javascript" src="../../../scripts/symbol-parameters-wrapper_deferred.js" defer></script></head>
+<script type="text/javascript" src="../../../ui-kit/ui-kit.min.js" defer></script></head>
 <body>
-    <div class="root">
-    <nav class="navigation theme-dark" id="navigation-wrapper">
-<a class="library-name--link" href="../../../index.html">
+<div class="root">
+    <header class="navigation theme-dark" id="navigation-wrapper" role="banner">
+<a class="library-name--link" href="../../../index.html" tabindex="1">
                     kord
             </a>        <button class="navigation-controls--btn navigation-controls--btn_toc ui-kit_mobile-only" id="toc-toggle" type="button">Toggle table of contents
         </button>
@@ -44,14 +42,14 @@
         <div class="library-version" id="library-version">or(map(map(map(map(valueof(ProcessOutputValueSource))))), map(map(map(map(valueof(ProcessOutputValueSource))))))
         </div>
         <div class="navigation-controls">
-        <div class="filter-section filter-section_loading" id="filter-section">
-                <button class="platform-tag platform-selector common-like" data-active="" data-filter=":rest/commonMain">common</button>
-                <button class="platform-tag platform-selector jvm-like" data-active="" data-filter=":rest/jvmMain">jvm</button>
+        <ul class="filter-section filter-section_loading" id="filter-section" aria-label="Target filter">
+                <button class="platform-tag platform-selector common-like" data-active="" aria-pressed="true" data-filter=":rest/commonMain">common</button>
+                <button class="platform-tag platform-selector jvm-like" data-active="" aria-pressed="true" data-filter=":rest/jvmMain">jvm</button>
             <div class="dropdown filter-section--dropdown" data-role="dropdown" id="filter-section-dropdown">
                 <button class="button button_dropdown filter-section--dropdown-toggle" role="combobox" data-role="dropdown-toggle" aria-controls="platform-tags-listbox" aria-haspopup="listbox" aria-expanded="false" aria-label="Toggle source sets"></button>
-                <ul role="listbox" id="platform-tags-listbox" class="dropdown--list" data-role="dropdown-listbox">
-                    <div class="dropdown--header"><span>Platform filter</span>
-                        <button class="button" data-role="dropdown-toggle" aria-label="Close platform filter">
+                <ul role="listbox" id="platform-tags-listbox" class="dropdown--list" data-role="dropdown-listbox" aria-label="Target filter">
+                    <div class="dropdown--header"><span>Target filter</span>
+                        <button class="button" data-role="dropdown-toggle" aria-label="Close target filter">
                             <i class="ui-kit-icon ui-kit-icon_cross"></i>
                         </button>
                     </div>
@@ -72,45 +70,47 @@
                 </ul>
                 <div class="dropdown--overlay"></div>
             </div>
-        </div>
+        </ul>
             <button class="navigation-controls--btn navigation-controls--btn_theme" id="theme-toggle-button" type="button">Switch theme
             </button>
             <div class="navigation-controls--btn navigation-controls--btn_search" id="searchBar" role="button">Search in
                 API
             </div>
         </div>
-    </nav>
-        <div id="container">
-            <div class="sidebar" id="leftColumn">
-                <div class="dropdown theme-dark_mobile" data-role="dropdown" id="toc-dropdown">
-                    <ul role="listbox" id="toc-listbox" class="dropdown--list dropdown--list_toc-list" data-role="dropdown-listbox">
-                        <div class="dropdown--header">
+    </header>
+    <div id="container">
+        <nav id="leftColumn" class="sidebar" data-item-type="SECTION" data-item-config="{&quot;defaultSize&quot;: 280, &quot;minSize&quot;: 200, &quot;maxSize&quot;: 400}">
+            <a class="toc--skip-link" href="#main">Skip to content</a>
+            <div class="dropdown theme-dark_mobile" data-role="dropdown" id="toc-dropdown">
+                <ul role="listbox" id="toc-listbox" class="dropdown--list dropdown--list_toc-list" data-role="dropdown-listbox" aria-label="Table of contents">
+                    <div class="dropdown--header">
                             <span>
                                     kord
                             </span>
-                            <button class="button" data-role="dropdown-toggle" aria-label="Close table of contents">
-                                <i class="ui-kit-icon ui-kit-icon_cross"></i>
-                            </button>
-                        </div>
-                        <div class="sidebar--inner" id="sideMenu"></div>
-                    </ul>
-                    <div class="dropdown--overlay"></div>
-                </div>
+                        <button class="button" data-role="dropdown-toggle" aria-label="Close table of contents">
+                            <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                        </button>
+                    </div>
+                    <div class="sidebar--inner" id="sideMenu"></div>
+                </ul>
+                <div class="dropdown--overlay"></div>
             </div>
-            <div id="main">
+        </nav>
+        <div id="resizer" class="resizer" data-item-type="BAR"></div>
+        <div id="main" data-item-type="SECTION" role="main">
 <div class="main-content" data-page-type="classlike" id="content" pageids="kord-rest::dev.kord.rest.builder.message.modify/FollowupMessageModifyBuilder///PointingToDeclaration//-555443553">
   <div class="breadcrumbs"><a href="../../index.html">kord-rest</a><span class="delimiter">/</span><a href="../index.html">dev.kord.rest.builder.message.modify</a><span class="delimiter">/</span><span class="current">FollowupMessageModifyBuilder</span></div>
   <div class="cover ">
     <h1 class="cover"><span>Followup</span><wbr><span>Message</span><wbr><span>Modify</span><wbr><span><span>Builder</span></span></h1>
-    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":rest/commonMain"><div class="symbol monospace"><span class="token keyword">class </span><a href="index.html">FollowupMessageModifyBuilder</a> : <a href="../-abstract-message-modify-builder/index.html">AbstractMessageModifyBuilder</a>, <a href="../../dev.kord.rest.builder/-request-builder/index.html">RequestBuilder</a><span class="token operator">&lt;</span><a href="../../dev.kord.rest.json.request/-multipart-followup-message-modify-request/index.html">MultipartFollowupMessageModifyRequest</a><span class="token operator">&gt; </span><span class="clearfix"><span class="floating-right">(<a href="https://github.com/kordlib/kord/blob/map(map(map(valueof(ProcessOutputValueSource))))/rest/src/commonMain/kotlin/builder/message/modify/FollowupMessageModifyBuilder.kt#L11">source</a>)</span></span></div></div></div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":rest/commonMain"><div class="symbol monospace"><span class="token keyword">class </span><a href="index.html">FollowupMessageModifyBuilder</a> : <a href="../-abstract-message-modify-builder/index.html">AbstractMessageModifyBuilder</a>, <a href="../../dev.kord.rest.builder/-request-builder/index.html">RequestBuilder</a><span class="token operator">&lt;</span><a href="../../dev.kord.rest.json.request/-multipart-followup-message-modify-request/index.html">MultipartFollowupMessageModifyRequest</a><span class="token operator">&gt; </span><span class="source-link-wrapper"><span class="source-link" data-element-type="source-link">(<a href="https://github.com/kordlib/kord/blob/map(map(map(valueof(ProcessOutputValueSource))))/rest/src/commonMain/kotlin/builder/message/modify/FollowupMessageModifyBuilder.kt#L11">source</a>)</span></span></div></div></div>
   </div>
   <div class="tabbedcontent">
     <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="CONSTRUCTOR,TYPE,PROPERTY,FUNCTION">Members</button><button class="section-tab" data-togglable="CONSTRUCTOR,TYPE,PROPERTY,FUNCTION,EXTENSION_PROPERTY,EXTENSION_FUNCTION">Members &amp; Extensions</button></div>
     <div class="tabs-section-body">
       <div data-togglable="CONSTRUCTOR">
-        <h2 class="">Constructors</h2>
+        <h2 class="tableheader">Constructors</h2>
         <div class="table"><a data-name="-1668533938%2FConstructors%2F-555443553" anchor-label="FollowupMessageModifyBuilder" id="-1668533938%2FConstructors%2F-555443553" data-filterable-set=":rest/commonMain"></a>
-          <div class="table-row" data-togglable="CONSTRUCTOR" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
+          <div class="table-row table-row_content" data-togglable="CONSTRUCTOR" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-followup-message-modify-builder.html"><span>Followup</span><wbr><span>Message</span><wbr><span>Modify</span><wbr><span><span>Builder</span></span></a></div>
@@ -127,9 +127,9 @@
         </div>
       </div>
       <div data-togglable="PROPERTY">
-        <h2 class="">Properties</h2>
+        <h2 class="tableheader">Properties</h2>
         <div class="table"><a data-name="-746008641%2FProperties%2F-555443553" anchor-label="allowedMentions" id="-746008641%2FProperties%2F-555443553" data-filterable-set=":rest/commonMain"></a>
-          <div class="table-row" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../-abstract-message-modify-builder/allowed-mentions.html"><span>allowed</span><wbr><span><span>Mentions</span></span></a></div>
@@ -144,7 +144,7 @@
             </div>
           </div>
 <a data-name="-143203328%2FProperties%2F-555443553" anchor-label="attachments" id="-143203328%2FProperties%2F-555443553" data-filterable-set=":rest/commonMain"></a>
-          <div class="table-row" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../-abstract-message-modify-builder/attachments.html"><span><span>attachments</span></span></a></div>
@@ -159,7 +159,7 @@
             </div>
           </div>
 <a data-name="-148368108%2FProperties%2F-555443553" anchor-label="components" id="-148368108%2FProperties%2F-555443553" data-filterable-set=":rest/commonMain"></a>
-          <div class="table-row" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../-abstract-message-modify-builder/components.html"><span><span>components</span></span></a></div>
@@ -174,7 +174,7 @@
             </div>
           </div>
 <a data-name="-1925599017%2FProperties%2F-555443553" anchor-label="content" id="-1925599017%2FProperties%2F-555443553" data-filterable-set=":rest/commonMain"></a>
-          <div class="table-row" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../-abstract-message-modify-builder/content.html"><span><span>content</span></span></a></div>
@@ -189,7 +189,7 @@
             </div>
           </div>
 <a data-name="-1135130000%2FProperties%2F-555443553" anchor-label="embeds" id="-1135130000%2FProperties%2F-555443553" data-filterable-set=":rest/commonMain"></a>
-          <div class="table-row" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../-abstract-message-modify-builder/embeds.html"><span><span>embeds</span></span></a></div>
@@ -204,7 +204,7 @@
             </div>
           </div>
 <a data-name="-773880487%2FProperties%2F-555443553" anchor-label="files" id="-773880487%2FProperties%2F-555443553" data-filterable-set=":rest/commonMain"></a>
-          <div class="table-row" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../-abstract-message-modify-builder/files.html"><span><span>files</span></span></a></div>
@@ -219,7 +219,7 @@
             </div>
           </div>
 <a data-name="1735787337%2FProperties%2F-555443553" anchor-label="flags" id="1735787337%2FProperties%2F-555443553" data-filterable-set=":rest/commonMain"></a>
-          <div class="table-row" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../-abstract-message-modify-builder/flags.html"><span><span>flags</span></span></a></div>
@@ -234,7 +234,7 @@
             </div>
           </div>
 <a data-name="-385775621%2FProperties%2F-555443553" anchor-label="suppressEmbeds" id="-385775621%2FProperties%2F-555443553" data-filterable-set=":rest/commonMain"></a>
-          <div class="table-row" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../-abstract-message-modify-builder/suppress-embeds.html"><span>suppress</span><wbr><span><span>Embeds</span></span></a></div>
@@ -251,9 +251,9 @@
         </div>
       </div>
       <div data-togglable="FUNCTION">
-        <h2 class="">Functions</h2>
+        <h2 class="tableheader">Functions</h2>
         <div class="table"><a data-name="340090312%2FFunctions%2F-555443553" anchor-label="actionRow" id="340090312%2FFunctions%2F-555443553" data-filterable-set=":rest/commonMain"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../dev.kord.rest.builder.message/action-row.html"><span>action</span><wbr><span><span>Row</span></span></a></div>
@@ -268,7 +268,7 @@
             </div>
           </div>
 <a data-name="175033843%2FFunctions%2F-555443553" anchor-label="addFile" id="175033843%2FFunctions%2F-555443553" data-filterable-set=":rest/commonMain"></a>
-          <div class="table-row" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../dev.kord.rest.builder.message/-message-builder/add-file.html"><span>add</span><wbr><span><span>File</span></span></a></div>
@@ -282,8 +282,8 @@
               </div>
             </div>
           </div>
-<a data-name="-671766226%2FFunctions%2F-139825916" anchor-label="addFile" id="-671766226%2FFunctions%2F-139825916" data-filterable-set=":rest/jvmMain,:rest/commonMain"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":rest/jvmMain,:rest/commonMain" data-filterable-set=":rest/jvmMain,:rest/commonMain">
+<a data-name="-671766226%2FFunctions%2F-139825916" anchor-label="addFile" id="-671766226%2FFunctions%2F-139825916" data-filterable-set=":rest/commonMain,:rest/jvmMain"></a>
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":rest/commonMain,:rest/jvmMain" data-filterable-set=":rest/commonMain,:rest/jvmMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../dev.kord.rest.builder.message/add-file.html"><span>add</span><wbr><span><span>File</span></span></a></div>
@@ -300,7 +300,7 @@
             </div>
           </div>
 <a data-name="1845041444%2FFunctions%2F-555443553" anchor-label="allowedMentions" id="1845041444%2FFunctions%2F-555443553" data-filterable-set=":rest/commonMain"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../dev.kord.rest.builder.message/allowed-mentions.html"><span>allowed</span><wbr><span><span>Mentions</span></span></a></div>
@@ -315,7 +315,7 @@
             </div>
           </div>
 <a data-name="1854414612%2FFunctions%2F-555443553" anchor-label="embed" id="1854414612%2FFunctions%2F-555443553" data-filterable-set=":rest/commonMain"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../dev.kord.rest.builder.message/embed.html"><span><span>embed</span></span></a></div>
@@ -330,7 +330,7 @@
             </div>
           </div>
 <a data-name="-713548797%2FFunctions%2F-555443553" anchor-label="keepAttachment" id="-713548797%2FFunctions%2F-555443553" data-filterable-set=":rest/commonMain"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../keep-attachment.html"><span>keep</span><wbr><span><span>Attachment</span></span></a></div>
@@ -345,7 +345,7 @@
             </div>
           </div>
 <a data-name="312728642%2FFunctions%2F-555443553" anchor-label="messageFlags" id="312728642%2FFunctions%2F-555443553" data-filterable-set=":rest/commonMain"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="../../dev.kord.rest.builder.message/message-flags.html"><span>message</span><wbr><span><span>Flags</span></span></a></div>
@@ -360,7 +360,7 @@
             </div>
           </div>
 <a data-name="1501142066%2FFunctions%2F-555443553" anchor-label="toRequest" id="1501142066%2FFunctions%2F-555443553" data-filterable-set=":rest/commonMain"></a>
-          <div class="table-row" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="to-request.html"><span>to</span><wbr><span><span>Request</span></span></a></div>
@@ -380,17 +380,21 @@
   </div>
 </div>
     <div class="footer">
-        <a href="#content" id="go-to-top-link" class="footer--button footer--button_go-to-top"></a>
-        <span>© 2026 Copyright</span>
-        <span class="pull-right">
-            <span>Generated by </span>
-            <a class="footer--link footer--link_external" href="https://github.com/Kotlin/dokka">
-                <span>dokka</span>
-            </a>
-        </span>
-    </div>
+        <div class="footer--container">
+            <a href="#content" id="go-to-top-link" class="footer--button footer--button_go-to-top"></a>
+            <div class="footer--content">
+                <div>
+                    <span>Generated by </span>
+                    <a class="footer--link footer--link_external" href="https://github.com/Kotlin/dokka">
+                        Dokka
+                    </a>
+                    <div>© 2026 Copyright</div>
+                </div>
             </div>
         </div>
     </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>

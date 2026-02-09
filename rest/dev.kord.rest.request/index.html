@@ -1,22 +1,22 @@
 <!doctype html>
-<html class="no-js">
+<html class="no-js" lang="en">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
     <title>dev.kord.rest.request</title>
-<link href="../../images/logo-icon.svg" rel="icon" type="image/svg">    <script>var pathToRoot = "../../";</script>
-    <script>document.documentElement.classList.replace("no-js","js");</script>
+<link href="../../images/logo-icon.svg" rel="icon" type="image/svg"><script>var pathToRoot = "../../";</script>
+    <script>document.documentElement.classList.replace("no-js", "js");</script>
     <script>const storage = localStorage.getItem("dokka-dark-mode")
-    if (storage == null) {
+      if (storage == null) {
         const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
         if (osDarkSchemePreferred === true) {
-            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+          document.getElementsByTagName("html")[0].classList.add("theme-dark")
         }
-    } else {
+      } else {
         const savedDarkMode = JSON.parse(storage)
-        if(savedDarkMode === true) {
-            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        if (savedDarkMode === true) {
+          document.getElementsByTagName("html")[0].classList.add("theme-dark")
         }
-    }
+      }
     </script>
 <script type="text/javascript" src="https://unpkg.com/kotlin-playground@1/dist/playground.min.js" async></script>
 <script type="text/javascript" src="../../scripts/sourceset_dependencies.js" async></script>
@@ -24,19 +24,17 @@
 <link href="../../styles/main.css" rel="Stylesheet">
 <link href="../../styles/prism.css" rel="Stylesheet">
 <link href="../../styles/logo-styles.css" rel="Stylesheet">
-<link href="../../styles/font-jb-sans-auto.css" rel="Stylesheet">
 <link href="../../ui-kit/ui-kit.min.css" rel="Stylesheet">
-<script type="text/javascript" src="../../scripts/clipboard.js" async></script>
+<script type="text/javascript" src="../../scripts/safe-local-storage_blocking.js"></script>
 <script type="text/javascript" src="../../scripts/navigation-loader.js" async></script>
 <script type="text/javascript" src="../../scripts/platform-content-handler.js" async></script>
 <script type="text/javascript" src="../../scripts/main.js" defer></script>
 <script type="text/javascript" src="../../scripts/prism.js" async></script>
-<script type="text/javascript" src="../../ui-kit/ui-kit.min.js" defer></script>
-<script type="text/javascript" src="../../scripts/symbol-parameters-wrapper_deferred.js" defer></script></head>
+<script type="text/javascript" src="../../ui-kit/ui-kit.min.js" defer></script></head>
 <body>
-    <div class="root">
-    <nav class="navigation theme-dark" id="navigation-wrapper">
-<a class="library-name--link" href="../../index.html">
+<div class="root">
+    <header class="navigation theme-dark" id="navigation-wrapper" role="banner">
+<a class="library-name--link" href="../../index.html" tabindex="1">
                     kord
             </a>        <button class="navigation-controls--btn navigation-controls--btn_toc ui-kit_mobile-only" id="toc-toggle" type="button">Toggle table of contents
         </button>
@@ -44,14 +42,14 @@
         <div class="library-version" id="library-version">or(map(map(map(map(valueof(ProcessOutputValueSource))))), map(map(map(map(valueof(ProcessOutputValueSource))))))
         </div>
         <div class="navigation-controls">
-        <div class="filter-section filter-section_loading" id="filter-section">
-                <button class="platform-tag platform-selector common-like" data-active="" data-filter=":rest/commonMain">common</button>
-                <button class="platform-tag platform-selector jvm-like" data-active="" data-filter=":rest/jvmMain">jvm</button>
+        <ul class="filter-section filter-section_loading" id="filter-section" aria-label="Target filter">
+                <button class="platform-tag platform-selector common-like" data-active="" aria-pressed="true" data-filter=":rest/commonMain">common</button>
+                <button class="platform-tag platform-selector jvm-like" data-active="" aria-pressed="true" data-filter=":rest/jvmMain">jvm</button>
             <div class="dropdown filter-section--dropdown" data-role="dropdown" id="filter-section-dropdown">
                 <button class="button button_dropdown filter-section--dropdown-toggle" role="combobox" data-role="dropdown-toggle" aria-controls="platform-tags-listbox" aria-haspopup="listbox" aria-expanded="false" aria-label="Toggle source sets"></button>
-                <ul role="listbox" id="platform-tags-listbox" class="dropdown--list" data-role="dropdown-listbox">
-                    <div class="dropdown--header"><span>Platform filter</span>
-                        <button class="button" data-role="dropdown-toggle" aria-label="Close platform filter">
+                <ul role="listbox" id="platform-tags-listbox" class="dropdown--list" data-role="dropdown-listbox" aria-label="Target filter">
+                    <div class="dropdown--header"><span>Target filter</span>
+                        <button class="button" data-role="dropdown-toggle" aria-label="Close target filter">
                             <i class="ui-kit-icon ui-kit-icon_cross"></i>
                         </button>
                     </div>
@@ -72,32 +70,34 @@
                 </ul>
                 <div class="dropdown--overlay"></div>
             </div>
-        </div>
+        </ul>
             <button class="navigation-controls--btn navigation-controls--btn_theme" id="theme-toggle-button" type="button">Switch theme
             </button>
             <div class="navigation-controls--btn navigation-controls--btn_search" id="searchBar" role="button">Search in
                 API
             </div>
         </div>
-    </nav>
-        <div id="container">
-            <div class="sidebar" id="leftColumn">
-                <div class="dropdown theme-dark_mobile" data-role="dropdown" id="toc-dropdown">
-                    <ul role="listbox" id="toc-listbox" class="dropdown--list dropdown--list_toc-list" data-role="dropdown-listbox">
-                        <div class="dropdown--header">
+    </header>
+    <div id="container">
+        <nav id="leftColumn" class="sidebar" data-item-type="SECTION" data-item-config="{&quot;defaultSize&quot;: 280, &quot;minSize&quot;: 200, &quot;maxSize&quot;: 400}">
+            <a class="toc--skip-link" href="#main">Skip to content</a>
+            <div class="dropdown theme-dark_mobile" data-role="dropdown" id="toc-dropdown">
+                <ul role="listbox" id="toc-listbox" class="dropdown--list dropdown--list_toc-list" data-role="dropdown-listbox" aria-label="Table of contents">
+                    <div class="dropdown--header">
                             <span>
                                     kord
                             </span>
-                            <button class="button" data-role="dropdown-toggle" aria-label="Close table of contents">
-                                <i class="ui-kit-icon ui-kit-icon_cross"></i>
-                            </button>
-                        </div>
-                        <div class="sidebar--inner" id="sideMenu"></div>
-                    </ul>
-                    <div class="dropdown--overlay"></div>
-                </div>
+                        <button class="button" data-role="dropdown-toggle" aria-label="Close table of contents">
+                            <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                        </button>
+                    </div>
+                    <div class="sidebar--inner" id="sideMenu"></div>
+                </ul>
+                <div class="dropdown--overlay"></div>
             </div>
-            <div id="main">
+        </nav>
+        <div id="resizer" class="resizer" data-item-type="BAR"></div>
+        <div id="main" data-item-type="SECTION" role="main">
 <div class="main-content" data-page-type="package" id="content" pageids="kord-rest::dev.kord.rest.request////PointingToDeclaration//-139825916">
   <div class="breadcrumbs"><a href="../index.html">kord-rest</a><span class="delimiter">/</span><span class="current">dev.kord.rest.request</span></div>
   <div class="cover ">
@@ -107,9 +107,9 @@
     <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="TYPE">Types</button><button class="section-tab" data-togglable="FUNCTION,EXTENSION_FUNCTION">Functions</button><button class="section-tab" data-togglable="PROPERTY,EXTENSION_PROPERTY">Properties</button></div>
     <div class="tabs-section-body">
       <div data-togglable="TYPE">
-        <h2 class="">Types</h2>
+        <h2 class="tableheader">Types</h2>
         <div class="table"><a data-name="705126748%2FClasslikes%2F-555443553" anchor-label="HttpStatus" id="705126748%2FClasslikes%2F-555443553" data-filterable-set=":rest/commonMain"></a>
-          <div class="table-row" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-http-status/index.html"><span>Http</span><wbr><span><span>Status</span></span></a></div>
@@ -124,7 +124,7 @@
             </div>
           </div>
 <a data-name="-847909979%2FClasslikes%2F-555443553" anchor-label="JsonRequest" id="-847909979%2FClasslikes%2F-555443553" data-filterable-set=":rest/commonMain"></a>
-          <div class="table-row" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-json-request/index.html"><span>Json</span><wbr><span><span>Request</span></span></a></div>
@@ -139,7 +139,7 @@
             </div>
           </div>
 <a data-name="506590794%2FClasslikes%2F-555443553" anchor-label="KtorRequestException" id="506590794%2FClasslikes%2F-555443553" data-filterable-set=":rest/commonMain"></a>
-          <div class="table-row" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-ktor-request-exception/index.html"><span>Ktor</span><wbr><span>Request</span><wbr><span><span>Exception</span></span></a></div>
@@ -148,13 +148,13 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":rest/commonMain"><div class="symbol monospace"><span class="token keyword">class </span><a href="-ktor-request-exception/index.html">KtorRequestException</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">val </span>httpResponse<span class="token operator">: </span><a href="https://api.ktor.io/ktor-client-core/io.ktor.client.statement/-http-response/index.html">HttpResponse</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>request<span class="token operator">: </span><a href="-request/index.html">Request</a><span class="token operator">&lt;</span><span class="token operator">*</span><span class="token punctuation">, </span><span class="token operator">*</span><span class="token operator">&gt;</span><span class="token punctuation">, </span></span><span class="parameter ">discordError<span class="token operator">: </span><a href="../dev.kord.rest.json.response/-discord-error-response/index.html">DiscordErrorResponse</a><span class="token operator">?</span></span></span><span class="token punctuation">)</span> : <a href="-rest-request-exception/index.html">RestRequestException</a></div><div class="brief "><p class="paragraph">Implementation of the <a href="-rest-request-exception/index.html">RestRequestException</a> for <a href="../dev.kord.rest.service/-rest-service/index.html">RestServices</a> using Ktor.</p></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":rest/commonMain"><div class="symbol monospace"><span class="token keyword">class </span><a href="-ktor-request-exception/index.html">KtorRequestException</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">val </span>httpResponse<span class="token operator">: </span><a href="https://api.ktor.io/ktor-client-core/io.ktor.client.statement/-http-response/index.html">HttpResponse</a><span class="token punctuation">, </span></span><span class="parameter ">request<span class="token operator">: </span><a href="-request/index.html">Request</a><span class="token operator">&lt;</span><span class="token operator">*</span><span class="token punctuation">, </span><span class="token operator">*</span><span class="token operator">&gt;</span><span class="token punctuation">, </span></span><span class="parameter ">discordError<span class="token operator">: </span><a href="../dev.kord.rest.json.response/-discord-error-response/index.html">DiscordErrorResponse</a><span class="token operator">?</span></span></span><span class="token punctuation">)</span> : <a href="-rest-request-exception/index.html">RestRequestException</a></div><div class="brief "><p class="paragraph">Implementation of the <a href="-rest-request-exception/index.html">RestRequestException</a> for <a href="../dev.kord.rest.service/-rest-service/index.html">RestServices</a> using Ktor.</p></div></div></div>
                 </div>
               </div>
             </div>
           </div>
 <a data-name="-1386057297%2FClasslikes%2F-555443553" anchor-label="KtorRequestHandler" id="-1386057297%2FClasslikes%2F-555443553" data-filterable-set=":rest/commonMain"></a>
-          <div class="table-row" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-ktor-request-handler/index.html"><span>Ktor</span><wbr><span>Request</span><wbr><span><span>Handler</span></span></a></div>
@@ -163,13 +163,13 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":rest/commonMain"><div class="symbol monospace"><span class="token keyword">class </span><a href="-ktor-request-handler/index.html">KtorRequestHandler</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">client<span class="token operator">: </span><a href="https://api.ktor.io/ktor-client-core/io.ktor.client/-http-client/index.html">HttpClient</a><span class="token punctuation">, </span></span><span class="parameter ">requestRateLimiter<span class="token operator">: </span><a href="../dev.kord.rest.ratelimit/-request-rate-limiter/index.html">RequestRateLimiter</a><span class="token operator"> = </span>ExclusionRequestRateLimiter()<span class="token punctuation">, </span></span><span class="parameter ">clock<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.time/-clock/index.html">Clock</a><span class="token operator"> = </span>Clock.System<span class="token punctuation">, </span></span><span class="parameter ">parser<span class="token operator">: </span><a href="https://kotlinlang.org/api/kotlinx.serialization/kotlinx-serialization-json/kotlinx.serialization.json/-json/index.html">Json</a><span class="token operator"> = </span>jsonDefault<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>token<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span> : <a href="-request-handler/index.html">RequestHandler</a></div><div class="brief "><p class="paragraph">A <a href="-request-handler/index.html">RequestHandler</a> that uses ktor's <a href="../../rest/dev.kord.rest.request/-ktor-request-handler/client.html">HttpClient</a> to execute requests and accepts a <a href="../../rest/dev.kord.rest.request/-ktor-request-handler/request-rate-limiter.html">requestRateLimiter</a> to schedule requests.</p></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":rest/commonMain"><div class="symbol monospace"><span class="token keyword">class </span><a href="-ktor-request-handler/index.html">KtorRequestHandler</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">client<span class="token operator">: </span><a href="https://api.ktor.io/ktor-client-core/io.ktor.client/-http-client/index.html">HttpClient</a><span class="token punctuation">, </span></span><span class="parameter ">requestRateLimiter<span class="token operator">: </span><a href="../dev.kord.rest.ratelimit/-request-rate-limiter/index.html">RequestRateLimiter</a><span class="token operator"> = </span>ExclusionRequestRateLimiter()<span class="token punctuation">, </span></span><span class="parameter ">clock<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.time/-clock/index.html">Clock</a><span class="token operator"> = </span>Clock.System<span class="token punctuation">, </span></span><span class="parameter ">parser<span class="token operator">: </span><a href="https://kotlinlang.org/api/kotlinx.serialization/kotlinx-serialization-json/kotlinx.serialization.json/-json/index.html">Json</a><span class="token operator"> = </span>jsonDefault<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>token<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span> : <a href="-request-handler/index.html">RequestHandler</a></div><div class="brief "><p class="paragraph">A <a href="-request-handler/index.html">RequestHandler</a> that uses ktor's <a href="../../rest/dev.kord.rest.request/-ktor-request-handler/--root--.html">HttpClient</a> to execute requests and accepts a <a href="../../rest/dev.kord.rest.request/-ktor-request-handler/--root--.html">requestRateLimiter</a> to schedule requests.</p></div></div></div>
                 </div>
               </div>
             </div>
           </div>
 <a data-name="1510910995%2FClasslikes%2F-555443553" anchor-label="MultipartRequest" id="1510910995%2FClasslikes%2F-555443553" data-filterable-set=":rest/commonMain"></a>
-          <div class="table-row" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-multipart-request/index.html"><span>Multipart</span><wbr><span><span>Request</span></span></a></div>
@@ -184,7 +184,7 @@
             </div>
           </div>
 <a data-name="236970013%2FClasslikes%2F-555443553" anchor-label="Request" id="236970013%2FClasslikes%2F-555443553" data-filterable-set=":rest/commonMain"></a>
-          <div class="table-row" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-request/index.html"><span><span>Request</span></span></a></div>
@@ -199,7 +199,7 @@
             </div>
           </div>
 <a data-name="-674301285%2FClasslikes%2F-555443553" anchor-label="RequestBody" id="-674301285%2FClasslikes%2F-555443553" data-filterable-set=":rest/commonMain"></a>
-          <div class="table-row" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-request-body/index.html"><span>Request</span><wbr><span><span>Body</span></span></a></div>
@@ -214,7 +214,7 @@
             </div>
           </div>
 <a data-name="1165120426%2FClasslikes%2F-555443553" anchor-label="RequestBuilder" id="1165120426%2FClasslikes%2F-555443553" data-filterable-set=":rest/commonMain"></a>
-          <div class="table-row" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-request-builder/index.html"><span>Request</span><wbr><span><span>Builder</span></span></a></div>
@@ -229,7 +229,7 @@
             </div>
           </div>
 <a data-name="332177115%2FClasslikes%2F-555443553" anchor-label="RequestHandler" id="332177115%2FClasslikes%2F-555443553" data-filterable-set=":rest/commonMain"></a>
-          <div class="table-row" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-request-handler/index.html"><span>Request</span><wbr><span><span>Handler</span></span></a></div>
@@ -244,7 +244,7 @@
             </div>
           </div>
 <a data-name="-2129779596%2FClasslikes%2F-555443553" anchor-label="RequestIdentifier" id="-2129779596%2FClasslikes%2F-555443553" data-filterable-set=":rest/commonMain"></a>
-          <div class="table-row" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-request-identifier/index.html"><span>Request</span><wbr><span><span>Identifier</span></span></a></div>
@@ -259,7 +259,7 @@
             </div>
           </div>
 <a data-name="-1869791102%2FClasslikes%2F-555443553" anchor-label="RestRequestException" id="-1869791102%2FClasslikes%2F-555443553" data-filterable-set=":rest/commonMain"></a>
-          <div class="table-row" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-rest-request-exception/index.html"><span>Rest</span><wbr><span>Request</span><wbr><span><span>Exception</span></span></a></div>
@@ -274,7 +274,7 @@
             </div>
           </div>
 <a data-name="1908201140%2FClasslikes%2F-555443553" anchor-label="StackTraceRecoveringKtorRequestHandler" id="1908201140%2FClasslikes%2F-555443553" data-filterable-set=":rest/commonMain"></a>
-          <div class="table-row" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-stack-trace-recovering-ktor-request-handler/index.html"><span>Stack</span><wbr><span>Trace</span><wbr><span>Recovering</span><wbr><span>Ktor</span><wbr><span>Request</span><wbr><span><span>Handler</span></span></a></div>
@@ -291,9 +291,9 @@
         </div>
       </div>
       <div data-togglable="EXTENSION_PROPERTY">
-        <h2 class="">Properties</h2>
+        <h2 class="tableheader">Properties</h2>
         <div class="table"><a data-name="-1158424242%2FProperties%2F-555443553" anchor-label="bucket" id="-1158424242%2FProperties%2F-555443553" data-filterable-set=":rest/commonMain"></a>
-          <div class="table-row" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="bucket.html"><span><span>bucket</span></span></a></div>
@@ -308,7 +308,7 @@
             </div>
           </div>
 <a data-name="1299461152%2FProperties%2F-555443553" anchor-label="channelResetPoint" id="1299461152%2FProperties%2F-555443553" data-filterable-set=":rest/commonMain"></a>
-          <div class="table-row" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="channel-reset-point.html"><span>channel</span><wbr><span>Reset</span><wbr><span><span>Point</span></span></a></div>
@@ -323,7 +323,7 @@
             </div>
           </div>
 <a data-name="-1417245285%2FProperties%2F-555443553" anchor-label="identifier" id="-1417245285%2FProperties%2F-555443553" data-filterable-set=":rest/commonMain"></a>
-          <div class="table-row" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="identifier.html"><span><span>identifier</span></span></a></div>
@@ -338,7 +338,7 @@
             </div>
           </div>
 <a data-name="-1195575898%2FProperties%2F-555443553" anchor-label="isChannelRateLimit" id="-1195575898%2FProperties%2F-555443553" data-filterable-set=":rest/commonMain"></a>
-          <div class="table-row" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="is-channel-rate-limit.html"><span>is</span><wbr><span>Channel</span><wbr><span>Rate</span><wbr><span><span>Limit</span></span></a></div>
@@ -353,7 +353,7 @@
             </div>
           </div>
 <a data-name="-1540766278%2FProperties%2F-555443553" anchor-label="isError" id="-1540766278%2FProperties%2F-555443553" data-filterable-set=":rest/commonMain"></a>
-          <div class="table-row" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="is-error.html"><span>is</span><wbr><span><span>Error</span></span></a></div>
@@ -368,7 +368,7 @@
             </div>
           </div>
 <a data-name="520497627%2FProperties%2F-555443553" anchor-label="isErrorWithRateLimit" id="520497627%2FProperties%2F-555443553" data-filterable-set=":rest/commonMain"></a>
-          <div class="table-row" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="is-error-with-rate-limit.html"><span>is</span><wbr><span>Error</span><wbr><span>With</span><wbr><span>Rate</span><wbr><span><span>Limit</span></span></a></div>
@@ -383,7 +383,7 @@
             </div>
           </div>
 <a data-name="1963307914%2FProperties%2F-555443553" anchor-label="isGlobalRateLimit" id="1963307914%2FProperties%2F-555443553" data-filterable-set=":rest/commonMain"></a>
-          <div class="table-row" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="is-global-rate-limit.html"><span>is</span><wbr><span>Global</span><wbr><span>Rate</span><wbr><span><span>Limit</span></span></a></div>
@@ -398,7 +398,7 @@
             </div>
           </div>
 <a data-name="1160726061%2FProperties%2F-555443553" anchor-label="isRateLimit" id="1160726061%2FProperties%2F-555443553" data-filterable-set=":rest/commonMain"></a>
-          <div class="table-row" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="is-rate-limit.html"><span>is</span><wbr><span>Rate</span><wbr><span><span>Limit</span></span></a></div>
@@ -413,7 +413,7 @@
             </div>
           </div>
 <a data-name="621563679%2FProperties%2F-555443553" anchor-label="rateLimitRemaining" id="621563679%2FProperties%2F-555443553" data-filterable-set=":rest/commonMain"></a>
-          <div class="table-row" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="rate-limit-remaining.html"><span>rate</span><wbr><span>Limit</span><wbr><span><span>Remaining</span></span></a></div>
@@ -428,7 +428,7 @@
             </div>
           </div>
 <a data-name="-18391955%2FProperties%2F-555443553" anchor-label="rateLimitTotal" id="-18391955%2FProperties%2F-555443553" data-filterable-set=":rest/commonMain"></a>
-          <div class="table-row" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="rate-limit-total.html"><span>rate</span><wbr><span>Limit</span><wbr><span><span>Total</span></span></a></div>
@@ -445,9 +445,9 @@
         </div>
       </div>
       <div data-togglable="FUNCTION">
-        <h2 class="">Functions</h2>
+        <h2 class="tableheader">Functions</h2>
         <div class="table"><a data-name="-976564467%2FFunctions%2F-555443553" anchor-label="auditLogReason" id="-976564467%2FFunctions%2F-555443553" data-filterable-set=":rest/commonMain"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="audit-log-reason.html"><span>audit</span><wbr><span>Log</span><wbr><span><span>Reason</span></span></a></div>
@@ -462,7 +462,7 @@
             </div>
           </div>
 <a data-name="1346979336%2FFunctions%2F-555443553" anchor-label="channelResetPoint" id="1346979336%2FFunctions%2F-555443553" data-filterable-set=":rest/commonMain"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="channel-reset-point.html"><span>channel</span><wbr><span>Reset</span><wbr><span><span>Point</span></span></a></div>
@@ -477,7 +477,7 @@
             </div>
           </div>
 <a data-name="982934453%2FFunctions%2F-555443553" anchor-label="errorString" id="982934453%2FFunctions%2F-555443553" data-filterable-set=":rest/commonMain"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="error-string.html"><span>error</span><wbr><span><span>String</span></span></a></div>
@@ -492,7 +492,7 @@
             </div>
           </div>
 <a data-name="-1819091732%2FFunctions%2F1471447415" anchor-label="file" id="-1819091732%2FFunctions%2F1471447415" data-filterable-set=":rest/jvmMain"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":rest/jvmMain" data-filterable-set=":rest/jvmMain">
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":rest/jvmMain" data-filterable-set=":rest/jvmMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="file.html"><span><span>file</span></span></a></div>
@@ -509,7 +509,7 @@
             </div>
           </div>
 <a data-name="-945304995%2FFunctions%2F-555443553" anchor-label="from" id="-945304995%2FFunctions%2F-555443553" data-filterable-set=":rest/commonMain"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="from.html"><span><span>from</span></span></a></div>
@@ -524,7 +524,7 @@
             </div>
           </div>
 <a data-name="974385116%2FFunctions%2F-555443553" anchor-label="globalSuspensionPoint" id="974385116%2FFunctions%2F-555443553" data-filterable-set=":rest/commonMain"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="global-suspension-point.html"><span>global</span><wbr><span>Suspension</span><wbr><span><span>Point</span></span></a></div>
@@ -539,7 +539,7 @@
             </div>
           </div>
 <a data-name="1581434057%2FFunctions%2F-555443553" anchor-label="KtorRequestHandler" id="1581434057%2FFunctions%2F-555443553" data-filterable-set=":rest/commonMain"></a>
-          <div class="table-row" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-ktor-request-handler.html"><span>Ktor</span><wbr><span>Request</span><wbr><span><span>Handler</span></span></a></div>
@@ -554,7 +554,7 @@
             </div>
           </div>
 <a data-name="2104037234%2FFunctions%2F-555443553" anchor-label="logString" id="2104037234%2FFunctions%2F-555443553" data-filterable-set=":rest/commonMain"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="log-string.html"><span>log</span><wbr><span><span>String</span></span></a></div>
@@ -569,7 +569,7 @@
             </div>
           </div>
 <a data-name="-238269582%2FFunctions%2F-555443553" anchor-label="withStackTraceRecovery" id="-238269582%2FFunctions%2F-555443553" data-filterable-set=":rest/commonMain"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="with-stack-trace-recovery.html"><span>with</span><wbr><span>Stack</span><wbr><span>Trace</span><wbr><span><span>Recovery</span></span></a></div>
@@ -589,17 +589,21 @@
   </div>
 </div>
     <div class="footer">
-        <a href="#content" id="go-to-top-link" class="footer--button footer--button_go-to-top"></a>
-        <span>© 2026 Copyright</span>
-        <span class="pull-right">
-            <span>Generated by </span>
-            <a class="footer--link footer--link_external" href="https://github.com/Kotlin/dokka">
-                <span>dokka</span>
-            </a>
-        </span>
-    </div>
+        <div class="footer--container">
+            <a href="#content" id="go-to-top-link" class="footer--button footer--button_go-to-top"></a>
+            <div class="footer--content">
+                <div>
+                    <span>Generated by </span>
+                    <a class="footer--link footer--link_external" href="https://github.com/Kotlin/dokka">
+                        Dokka
+                    </a>
+                    <div>© 2026 Copyright</div>
+                </div>
             </div>
         </div>
     </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>

@@ -1,22 +1,22 @@
 <!doctype html>
-<html class="no-js">
+<html class="no-js" lang="en">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
     <title>Companion</title>
-<link href="../../../../images/logo-icon.svg" rel="icon" type="image/svg">    <script>var pathToRoot = "../../../../";</script>
-    <script>document.documentElement.classList.replace("no-js","js");</script>
+<link href="../../../../images/logo-icon.svg" rel="icon" type="image/svg"><script>var pathToRoot = "../../../../";</script>
+    <script>document.documentElement.classList.replace("no-js", "js");</script>
     <script>const storage = localStorage.getItem("dokka-dark-mode")
-    if (storage == null) {
+      if (storage == null) {
         const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
         if (osDarkSchemePreferred === true) {
-            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+          document.getElementsByTagName("html")[0].classList.add("theme-dark")
         }
-    } else {
+      } else {
         const savedDarkMode = JSON.parse(storage)
-        if(savedDarkMode === true) {
-            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        if (savedDarkMode === true) {
+          document.getElementsByTagName("html")[0].classList.add("theme-dark")
         }
-    }
+      }
     </script>
 <script type="text/javascript" src="https://unpkg.com/kotlin-playground@1/dist/playground.min.js" async></script>
 <script type="text/javascript" src="../../../../scripts/sourceset_dependencies.js" async></script>
@@ -24,19 +24,17 @@
 <link href="../../../../styles/main.css" rel="Stylesheet">
 <link href="../../../../styles/prism.css" rel="Stylesheet">
 <link href="../../../../styles/logo-styles.css" rel="Stylesheet">
-<link href="../../../../styles/font-jb-sans-auto.css" rel="Stylesheet">
 <link href="../../../../ui-kit/ui-kit.min.css" rel="Stylesheet">
-<script type="text/javascript" src="../../../../scripts/clipboard.js" async></script>
+<script type="text/javascript" src="../../../../scripts/safe-local-storage_blocking.js"></script>
 <script type="text/javascript" src="../../../../scripts/navigation-loader.js" async></script>
 <script type="text/javascript" src="../../../../scripts/platform-content-handler.js" async></script>
 <script type="text/javascript" src="../../../../scripts/main.js" defer></script>
 <script type="text/javascript" src="../../../../scripts/prism.js" async></script>
-<script type="text/javascript" src="../../../../ui-kit/ui-kit.min.js" defer></script>
-<script type="text/javascript" src="../../../../scripts/symbol-parameters-wrapper_deferred.js" defer></script></head>
+<script type="text/javascript" src="../../../../ui-kit/ui-kit.min.js" defer></script></head>
 <body>
-    <div class="root">
-    <nav class="navigation theme-dark" id="navigation-wrapper">
-<a class="library-name--link" href="../../../../index.html">
+<div class="root">
+    <header class="navigation theme-dark" id="navigation-wrapper" role="banner">
+<a class="library-name--link" href="../../../../index.html" tabindex="1">
                     kord
             </a>        <button class="navigation-controls--btn navigation-controls--btn_toc ui-kit_mobile-only" id="toc-toggle" type="button">Toggle table of contents
         </button>
@@ -44,13 +42,13 @@
         <div class="library-version" id="library-version">or(map(map(map(map(valueof(ProcessOutputValueSource))))), map(map(map(map(valueof(ProcessOutputValueSource))))))
         </div>
         <div class="navigation-controls">
-        <div class="filter-section filter-section_loading" id="filter-section">
-                <button class="platform-tag platform-selector common-like" data-active="" data-filter=":common/commonMain">common</button>
+        <ul class="filter-section filter-section_loading" id="filter-section" aria-label="Target filter">
+                <button class="platform-tag platform-selector common-like" data-active="" aria-pressed="true" data-filter=":common/commonMain">common</button>
             <div class="dropdown filter-section--dropdown" data-role="dropdown" id="filter-section-dropdown">
                 <button class="button button_dropdown filter-section--dropdown-toggle" role="combobox" data-role="dropdown-toggle" aria-controls="platform-tags-listbox" aria-haspopup="listbox" aria-expanded="false" aria-label="Toggle source sets"></button>
-                <ul role="listbox" id="platform-tags-listbox" class="dropdown--list" data-role="dropdown-listbox">
-                    <div class="dropdown--header"><span>Platform filter</span>
-                        <button class="button" data-role="dropdown-toggle" aria-label="Close platform filter">
+                <ul role="listbox" id="platform-tags-listbox" class="dropdown--list" data-role="dropdown-listbox" aria-label="Target filter">
+                    <div class="dropdown--header"><span>Target filter</span>
+                        <button class="button" data-role="dropdown-toggle" aria-label="Close target filter">
                             <i class="ui-kit-icon ui-kit-icon_cross"></i>
                         </button>
                     </div>
@@ -64,45 +62,47 @@
                 </ul>
                 <div class="dropdown--overlay"></div>
             </div>
-        </div>
+        </ul>
             <button class="navigation-controls--btn navigation-controls--btn_theme" id="theme-toggle-button" type="button">Switch theme
             </button>
             <div class="navigation-controls--btn navigation-controls--btn_search" id="searchBar" role="button">Search in
                 API
             </div>
         </div>
-    </nav>
-        <div id="container">
-            <div class="sidebar" id="leftColumn">
-                <div class="dropdown theme-dark_mobile" data-role="dropdown" id="toc-dropdown">
-                    <ul role="listbox" id="toc-listbox" class="dropdown--list dropdown--list_toc-list" data-role="dropdown-listbox">
-                        <div class="dropdown--header">
+    </header>
+    <div id="container">
+        <nav id="leftColumn" class="sidebar" data-item-type="SECTION" data-item-config="{&quot;defaultSize&quot;: 280, &quot;minSize&quot;: 200, &quot;maxSize&quot;: 400}">
+            <a class="toc--skip-link" href="#main">Skip to content</a>
+            <div class="dropdown theme-dark_mobile" data-role="dropdown" id="toc-dropdown">
+                <ul role="listbox" id="toc-listbox" class="dropdown--list dropdown--list_toc-list" data-role="dropdown-listbox" aria-label="Table of contents">
+                    <div class="dropdown--header">
                             <span>
                                     kord
                             </span>
-                            <button class="button" data-role="dropdown-toggle" aria-label="Close table of contents">
-                                <i class="ui-kit-icon ui-kit-icon_cross"></i>
-                            </button>
-                        </div>
-                        <div class="sidebar--inner" id="sideMenu"></div>
-                    </ul>
-                    <div class="dropdown--overlay"></div>
-                </div>
+                        <button class="button" data-role="dropdown-toggle" aria-label="Close table of contents">
+                            <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                        </button>
+                    </div>
+                    <div class="sidebar--inner" id="sideMenu"></div>
+                </ul>
+                <div class="dropdown--overlay"></div>
             </div>
-            <div id="main">
+        </nav>
+        <div id="resizer" class="resizer" data-item-type="BAR"></div>
+        <div id="main" data-item-type="SECTION" role="main">
 <div class="main-content" data-page-type="classlike" id="content" pageids="kord-common::dev.kord.common/Locale.Companion///PointingToDeclaration//-1299464202">
   <div class="breadcrumbs"><a href="../../../index.html">kord-common</a><span class="delimiter">/</span><a href="../../index.html">dev.kord.common</a><span class="delimiter">/</span><a href="../index.html">Locale</a><span class="delimiter">/</span><span class="current">Companion</span></div>
   <div class="cover ">
     <h1 class="cover"><span><span>Companion</span></span></h1>
-    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":common/commonMain"><div class="symbol monospace"><span class="token keyword">object </span><a href="index.html">Companion</a><span class="clearfix"><span class="floating-right">(<a href="https://github.com/kordlib/kord/blob/map(map(map(valueof(ProcessOutputValueSource))))/common/src/commonMain/kotlin/Locale.kt#L18">source</a>)</span></span></div></div></div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":common/commonMain"><div class="symbol monospace"><span class="token keyword">object </span><a href="index.html">Companion</a><span class="source-link-wrapper"><span class="source-link" data-element-type="source-link">(<a href="https://github.com/kordlib/kord/blob/map(map(map(valueof(ProcessOutputValueSource))))/common/src/commonMain/kotlin/Locale.kt#L18">source</a>)</span></span></div></div></div>
   </div>
   <div class="tabbedcontent">
     <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="CONSTRUCTOR,TYPE,PROPERTY,FUNCTION">Members</button></div>
     <div class="tabs-section-body">
       <div data-togglable="PROPERTY">
-        <h2 class="">Properties</h2>
+        <h2 class="tableheader">Properties</h2>
         <div class="table"><a data-name="230068782%2FProperties%2F-1299464202" anchor-label="ALL" id="230068782%2FProperties%2F-1299464202" data-filterable-set=":common/commonMain"></a>
-          <div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-a-l-l.html"><span><span>ALL</span></span></a></div>
@@ -117,7 +117,7 @@
             </div>
           </div>
 <a data-name="990353112%2FProperties%2F-1299464202" anchor-label="BULGARIAN" id="990353112%2FProperties%2F-1299464202" data-filterable-set=":common/commonMain"></a>
-          <div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-b-u-l-g-a-r-i-a-n.html"><span><span>BULGARIAN</span></span></a></div>
@@ -132,7 +132,7 @@
             </div>
           </div>
 <a data-name="951418474%2FProperties%2F-1299464202" anchor-label="CHINESE_CHINA" id="951418474%2FProperties%2F-1299464202" data-filterable-set=":common/commonMain"></a>
-          <div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-c-h-i-n-e-s-e_-c-h-i-n-a.html"><span>CHINESE_</span><wbr><span>CHINA</span></a></div>
@@ -147,7 +147,7 @@
             </div>
           </div>
 <a data-name="-855486607%2FProperties%2F-1299464202" anchor-label="CHINESE_TAIWAN" id="-855486607%2FProperties%2F-1299464202" data-filterable-set=":common/commonMain"></a>
-          <div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-c-h-i-n-e-s-e_-t-a-i-w-a-n.html"><span>CHINESE_</span><wbr><span>TAIWAN</span></a></div>
@@ -162,7 +162,7 @@
             </div>
           </div>
 <a data-name="1106419752%2FProperties%2F-1299464202" anchor-label="CROATIAN" id="1106419752%2FProperties%2F-1299464202" data-filterable-set=":common/commonMain"></a>
-          <div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-c-r-o-a-t-i-a-n.html"><span><span>CROATIAN</span></span></a></div>
@@ -177,7 +177,7 @@
             </div>
           </div>
 <a data-name="-989061156%2FProperties%2F-1299464202" anchor-label="CZECH" id="-989061156%2FProperties%2F-1299464202" data-filterable-set=":common/commonMain"></a>
-          <div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-c-z-e-c-h.html"><span><span>CZECH</span></span></a></div>
@@ -192,7 +192,7 @@
             </div>
           </div>
 <a data-name="2106523390%2FProperties%2F-1299464202" anchor-label="DANISH" id="2106523390%2FProperties%2F-1299464202" data-filterable-set=":common/commonMain"></a>
-          <div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-d-a-n-i-s-h.html"><span><span>DANISH</span></span></a></div>
@@ -207,7 +207,7 @@
             </div>
           </div>
 <a data-name="325632903%2FProperties%2F-1299464202" anchor-label="DUTCH" id="325632903%2FProperties%2F-1299464202" data-filterable-set=":common/commonMain"></a>
-          <div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-d-u-t-c-h.html"><span><span>DUTCH</span></span></a></div>
@@ -222,7 +222,7 @@
             </div>
           </div>
 <a data-name="-2115891963%2FProperties%2F-1299464202" anchor-label="ENGLISH_GREAT_BRITAIN" id="-2115891963%2FProperties%2F-1299464202" data-filterable-set=":common/commonMain"></a>
-          <div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-e-n-g-l-i-s-h_-g-r-e-a-t_-b-r-i-t-a-i-n.html"><span>ENGLISH_</span><wbr><span>GREAT_</span><wbr><span>BRITAIN</span></a></div>
@@ -237,7 +237,7 @@
             </div>
           </div>
 <a data-name="-1701285376%2FProperties%2F-1299464202" anchor-label="ENGLISH_UNITED_STATES" id="-1701285376%2FProperties%2F-1299464202" data-filterable-set=":common/commonMain"></a>
-          <div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-e-n-g-l-i-s-h_-u-n-i-t-e-d_-s-t-a-t-e-s.html"><span>ENGLISH_</span><wbr><span>UNITED_</span><wbr><span>STATES</span></a></div>
@@ -252,7 +252,7 @@
             </div>
           </div>
 <a data-name="-692930508%2FProperties%2F-1299464202" anchor-label="FINNISH" id="-692930508%2FProperties%2F-1299464202" data-filterable-set=":common/commonMain"></a>
-          <div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-f-i-n-n-i-s-h.html"><span><span>FINNISH</span></span></a></div>
@@ -267,7 +267,7 @@
             </div>
           </div>
 <a data-name="1577911633%2FProperties%2F-1299464202" anchor-label="FRENCH" id="1577911633%2FProperties%2F-1299464202" data-filterable-set=":common/commonMain"></a>
-          <div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-f-r-e-n-c-h.html"><span><span>FRENCH</span></span></a></div>
@@ -282,7 +282,7 @@
             </div>
           </div>
 <a data-name="719616741%2FProperties%2F-1299464202" anchor-label="GERMAN" id="719616741%2FProperties%2F-1299464202" data-filterable-set=":common/commonMain"></a>
-          <div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-g-e-r-m-a-n.html"><span><span>GERMAN</span></span></a></div>
@@ -297,7 +297,7 @@
             </div>
           </div>
 <a data-name="-177355473%2FProperties%2F-1299464202" anchor-label="GREEK" id="-177355473%2FProperties%2F-1299464202" data-filterable-set=":common/commonMain"></a>
-          <div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-g-r-e-e-k.html"><span><span>GREEK</span></span></a></div>
@@ -312,7 +312,7 @@
             </div>
           </div>
 <a data-name="-1130302563%2FProperties%2F-1299464202" anchor-label="HINDI" id="-1130302563%2FProperties%2F-1299464202" data-filterable-set=":common/commonMain"></a>
-          <div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-h-i-n-d-i.html"><span><span>HINDI</span></span></a></div>
@@ -327,7 +327,7 @@
             </div>
           </div>
 <a data-name="-1171869872%2FProperties%2F-1299464202" anchor-label="HUNGARIAN" id="-1171869872%2FProperties%2F-1299464202" data-filterable-set=":common/commonMain"></a>
-          <div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-h-u-n-g-a-r-i-a-n.html"><span><span>HUNGARIAN</span></span></a></div>
@@ -342,7 +342,7 @@
             </div>
           </div>
 <a data-name="-146331071%2FProperties%2F-1299464202" anchor-label="INDONESIAN" id="-146331071%2FProperties%2F-1299464202" data-filterable-set=":common/commonMain"></a>
-          <div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-i-n-d-o-n-e-s-i-a-n.html"><span><span>INDONESIAN</span></span></a></div>
@@ -357,7 +357,7 @@
             </div>
           </div>
 <a data-name="-45852753%2FProperties%2F-1299464202" anchor-label="ITALIAN" id="-45852753%2FProperties%2F-1299464202" data-filterable-set=":common/commonMain"></a>
-          <div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-i-t-a-l-i-a-n.html"><span><span>ITALIAN</span></span></a></div>
@@ -372,7 +372,7 @@
             </div>
           </div>
 <a data-name="-126281830%2FProperties%2F-1299464202" anchor-label="JAPANESE" id="-126281830%2FProperties%2F-1299464202" data-filterable-set=":common/commonMain"></a>
-          <div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-j-a-p-a-n-e-s-e.html"><span><span>JAPANESE</span></span></a></div>
@@ -387,7 +387,7 @@
             </div>
           </div>
 <a data-name="-21097177%2FProperties%2F-1299464202" anchor-label="KOREAN" id="-21097177%2FProperties%2F-1299464202" data-filterable-set=":common/commonMain"></a>
-          <div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-k-o-r-e-a-n.html"><span><span>KOREAN</span></span></a></div>
@@ -402,7 +402,7 @@
             </div>
           </div>
 <a data-name="-545789274%2FProperties%2F-1299464202" anchor-label="LITHUANIAN" id="-545789274%2FProperties%2F-1299464202" data-filterable-set=":common/commonMain"></a>
-          <div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-l-i-t-h-u-a-n-i-a-n.html"><span><span>LITHUANIAN</span></span></a></div>
@@ -417,7 +417,7 @@
             </div>
           </div>
 <a data-name="-513261439%2FProperties%2F-1299464202" anchor-label="NORWEGIAN" id="-513261439%2FProperties%2F-1299464202" data-filterable-set=":common/commonMain"></a>
-          <div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-n-o-r-w-e-g-i-a-n.html"><span><span>NORWEGIAN</span></span></a></div>
@@ -432,7 +432,7 @@
             </div>
           </div>
 <a data-name="793377722%2FProperties%2F-1299464202" anchor-label="POLISH" id="793377722%2FProperties%2F-1299464202" data-filterable-set=":common/commonMain"></a>
-          <div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-p-o-l-i-s-h.html"><span><span>POLISH</span></span></a></div>
@@ -447,7 +447,7 @@
             </div>
           </div>
 <a data-name="-1373434599%2FProperties%2F-1299464202" anchor-label="PORTUGUESE_BRAZIL" id="-1373434599%2FProperties%2F-1299464202" data-filterable-set=":common/commonMain"></a>
-          <div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-p-o-r-t-u-g-u-e-s-e_-b-r-a-z-i-l.html"><span>PORTUGUESE_</span><wbr><span>BRAZIL</span></a></div>
@@ -462,7 +462,7 @@
             </div>
           </div>
 <a data-name="-413861614%2FProperties%2F-1299464202" anchor-label="ROMANIAN" id="-413861614%2FProperties%2F-1299464202" data-filterable-set=":common/commonMain"></a>
-          <div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-r-o-m-a-n-i-a-n.html"><span><span>ROMANIAN</span></span></a></div>
@@ -477,7 +477,7 @@
             </div>
           </div>
 <a data-name="154316668%2FProperties%2F-1299464202" anchor-label="RUSSIAN" id="154316668%2FProperties%2F-1299464202" data-filterable-set=":common/commonMain"></a>
-          <div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-r-u-s-s-i-a-n.html"><span><span>RUSSIAN</span></span></a></div>
@@ -492,7 +492,7 @@
             </div>
           </div>
 <a data-name="358836647%2FProperties%2F-1299464202" anchor-label="SPANISH_LATIN_AMERICA" id="358836647%2FProperties%2F-1299464202" data-filterable-set=":common/commonMain"></a>
-          <div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-s-p-a-n-i-s-h_-l-a-t-i-n_-a-m-e-r-i-c-a.html"><span>SPANISH_</span><wbr><span>LATIN_</span><wbr><span>AMERICA</span></a></div>
@@ -507,7 +507,7 @@
             </div>
           </div>
 <a data-name="-1637254831%2FProperties%2F-1299464202" anchor-label="SPANISH_SPAIN" id="-1637254831%2FProperties%2F-1299464202" data-filterable-set=":common/commonMain"></a>
-          <div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-s-p-a-n-i-s-h_-s-p-a-i-n.html"><span>SPANISH_</span><wbr><span>SPAIN</span></a></div>
@@ -522,7 +522,7 @@
             </div>
           </div>
 <a data-name="1118827636%2FProperties%2F-1299464202" anchor-label="SWEDISH" id="1118827636%2FProperties%2F-1299464202" data-filterable-set=":common/commonMain"></a>
-          <div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-s-w-e-d-i-s-h.html"><span><span>SWEDISH</span></span></a></div>
@@ -537,7 +537,7 @@
             </div>
           </div>
 <a data-name="-1879222513%2FProperties%2F-1299464202" anchor-label="THAI" id="-1879222513%2FProperties%2F-1299464202" data-filterable-set=":common/commonMain"></a>
-          <div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-t-h-a-i.html"><span><span>THAI</span></span></a></div>
@@ -552,7 +552,7 @@
             </div>
           </div>
 <a data-name="-889021845%2FProperties%2F-1299464202" anchor-label="TURKISH" id="-889021845%2FProperties%2F-1299464202" data-filterable-set=":common/commonMain"></a>
-          <div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-t-u-r-k-i-s-h.html"><span><span>TURKISH</span></span></a></div>
@@ -567,7 +567,7 @@
             </div>
           </div>
 <a data-name="-305633853%2FProperties%2F-1299464202" anchor-label="UKRAINIAN" id="-305633853%2FProperties%2F-1299464202" data-filterable-set=":common/commonMain"></a>
-          <div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-u-k-r-a-i-n-i-a-n.html"><span><span>UKRAINIAN</span></span></a></div>
@@ -582,7 +582,7 @@
             </div>
           </div>
 <a data-name="1588340812%2FProperties%2F-1299464202" anchor-label="VIETNAMESE" id="1588340812%2FProperties%2F-1299464202" data-filterable-set=":common/commonMain"></a>
-          <div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="-v-i-e-t-n-a-m-e-s-e.html"><span><span>VIETNAMESE</span></span></a></div>
@@ -599,9 +599,9 @@
         </div>
       </div>
       <div data-togglable="FUNCTION">
-        <h2 class="">Functions</h2>
+        <h2 class="tableheader">Functions</h2>
         <div class="table"><a data-name="1323979860%2FFunctions%2F-1299464202" anchor-label="fromString" id="1323979860%2FFunctions%2F-1299464202" data-filterable-set=":common/commonMain"></a>
-          <div class="table-row" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="from-string.html"><span>from</span><wbr><span><span>String</span></span></a></div>
@@ -621,17 +621,21 @@
   </div>
 </div>
     <div class="footer">
-        <a href="#content" id="go-to-top-link" class="footer--button footer--button_go-to-top"></a>
-        <span>© 2026 Copyright</span>
-        <span class="pull-right">
-            <span>Generated by </span>
-            <a class="footer--link footer--link_external" href="https://github.com/Kotlin/dokka">
-                <span>dokka</span>
-            </a>
-        </span>
-    </div>
+        <div class="footer--container">
+            <a href="#content" id="go-to-top-link" class="footer--button footer--button_go-to-top"></a>
+            <div class="footer--content">
+                <div>
+                    <span>Generated by </span>
+                    <a class="footer--link footer--link_external" href="https://github.com/Kotlin/dokka">
+                        Dokka
+                    </a>
+                    <div>© 2026 Copyright</div>
+                </div>
             </div>
         </div>
     </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>
