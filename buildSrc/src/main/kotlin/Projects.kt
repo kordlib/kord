@@ -12,12 +12,13 @@ private val Project.tag
     get() = git("tag", "--no-column", "--points-at", "HEAD")
         .map {
             it.takeIf { it.isNotBlank() }
-            ?.lines()
-            ?.single()
+                ?.lines()
+                ?.single()
         }
 
 val Project.libraryVersion: Provider<String>
     get() {
+        if (System.getenv("QODANA_DEPENDENCIES_MODE") != null) return provider { "QODANA" }
         val snapshotVersion = git("branch", "--show-current").map { branch ->
             val snapshotPrefix = when (branch) {
                 "main" -> providers.gradleProperty("nextPlannedVersion").get()
