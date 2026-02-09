@@ -32,14 +32,3 @@ val Project.libraryVersion: Provider<String>
 
 val Project.commitHash get() = git("rev-parse", "--verify", "HEAD")
 val Project.shortCommitHash get() = git("rev-parse", "--short", "HEAD")
-
-val Project.isRelease: Boolean
-    get() {
-        if (System.getProperty("idea.active")?.toBoolean() == true) return false
-        return tag.isPresent
-    }
-
-object Repo {
-    const val releasesUrl = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
-    const val snapshotsUrl = "https://oss.sonatype.org/content/repositories/snapshots/"
-}
