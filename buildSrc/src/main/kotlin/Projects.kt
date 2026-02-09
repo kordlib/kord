@@ -33,7 +33,11 @@ val Project.libraryVersion: Provider<String>
 val Project.commitHash get() = git("rev-parse", "--verify", "HEAD")
 val Project.shortCommitHash get() = git("rev-parse", "--short", "HEAD")
 
-val Project.isRelease get() = tag.isPresent
+val Project.isRelease: Boolean
+    get() {
+        if (System.getenv("QODANA_DEPENDENCIES_MODE") != null) return false
+        return tag.isPresent
+    }
 
 object Repo {
     const val releasesUrl = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
