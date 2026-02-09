@@ -44,7 +44,10 @@ public fun HttpClient?.configure(): HttpClient {
 /** @suppress */
 @KordInternal
 public fun getBotIdFromToken(token: String): Snowflake = try {
-    Snowflake(Base64.decode(token.substringBefore('.')).decodeToString())
+    Snowflake(Base64.TokenSafe.decode(token.substringBefore('.')).decodeToString())
 } catch (e: IllegalArgumentException) {
     throw IllegalArgumentException("Malformed bot token: '$token'. Make sure that your token is correct.", e)
 }
+
+@Suppress("UnusedReceiverParameter")
+private val Base64.TokenSafe get()= Base64.withPadding(Base64.PaddingOption.ABSENT_OPTIONAL)
