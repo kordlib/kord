@@ -1815,6 +1815,85 @@ final class dev.kord.common.entity/DiscordChatComponent : dev.kord.common.entity
     }
 }
 
+final class dev.kord.common.entity/DiscordCheckboxComponent : dev.kord.common.entity/DiscordComponent { // dev.kord.common.entity/DiscordCheckboxComponent|null[0]
+    constructor <init>(dev.kord.common.entity/ComponentType, dev.kord.common.entity.optional/Optional<kotlin/String> = ..., dev.kord.common.entity.optional/OptionalBoolean = ..., dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.common.entity/DiscordComponent>> = ..., dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.common.entity/DiscordSelectOption>> = ..., dev.kord.common.entity.optional/Optional<kotlin/String> = ..., dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.common.entity/DiscordSelectDefaultValue>> = ..., dev.kord.common.entity.optional/OptionalInt = ..., dev.kord.common.entity.optional/OptionalInt = ..., dev.kord.common.entity.optional/OptionalInt = ..., dev.kord.common.entity.optional/OptionalInt = ..., dev.kord.common.entity.optional/OptionalBoolean = ..., dev.kord.common.entity.optional/Optional<kotlin/String> = ..., dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.common.entity/ChannelType>> = ..., dev.kord.common.entity.optional/Optional<kotlin/String> = ..., dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordPartialEmoji> = ..., dev.kord.common.entity.optional/Optional<kotlin/String> = ..., dev.kord.common.entity.optional/OptionalBoolean = ...) // dev.kord.common.entity/DiscordCheckboxComponent.<init>|<init>(dev.kord.common.entity.ComponentType;dev.kord.common.entity.optional.Optional<kotlin.String>;dev.kord.common.entity.optional.OptionalBoolean;dev.kord.common.entity.optional.Optional<kotlin.collections.List<dev.kord.common.entity.DiscordComponent>>;dev.kord.common.entity.optional.Optional<kotlin.collections.List<dev.kord.common.entity.DiscordSelectOption>>;dev.kord.common.entity.optional.Optional<kotlin.String>;dev.kord.common.entity.optional.Optional<kotlin.collections.List<dev.kord.common.entity.DiscordSelectDefaultValue>>;dev.kord.common.entity.optional.OptionalInt;dev.kord.common.entity.optional.OptionalInt;dev.kord.common.entity.optional.OptionalInt;dev.kord.common.entity.optional.OptionalInt;dev.kord.common.entity.optional.OptionalBoolean;dev.kord.common.entity.optional.Optional<kotlin.String>;dev.kord.common.entity.optional.Optional<kotlin.collections.List<dev.kord.common.entity.ChannelType>>;dev.kord.common.entity.optional.Optional<kotlin.String>;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.DiscordPartialEmoji>;dev.kord.common.entity.optional.Optional<kotlin.String>;dev.kord.common.entity.optional.OptionalBoolean){}[0]
+
+    final val channelTypes // dev.kord.common.entity/DiscordCheckboxComponent.channelTypes|{}channelTypes[0]
+        final fun <get-channelTypes>(): dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.common.entity/ChannelType>> // dev.kord.common.entity/DiscordCheckboxComponent.channelTypes.<get-channelTypes>|<get-channelTypes>(){}[0]
+    final val components // dev.kord.common.entity/DiscordCheckboxComponent.components|{}components[0]
+        final fun <get-components>(): dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.common.entity/DiscordComponent>> // dev.kord.common.entity/DiscordCheckboxComponent.components.<get-components>|<get-components>(){}[0]
+    final val customId // dev.kord.common.entity/DiscordCheckboxComponent.customId|{}customId[0]
+        final fun <get-customId>(): dev.kord.common.entity.optional/Optional<kotlin/String> // dev.kord.common.entity/DiscordCheckboxComponent.customId.<get-customId>|<get-customId>(){}[0]
+    final val default // dev.kord.common.entity/DiscordCheckboxComponent.default|{}default[0]
+        final fun <get-default>(): dev.kord.common.entity.optional/OptionalBoolean // dev.kord.common.entity/DiscordCheckboxComponent.default.<get-default>|<get-default>(){}[0]
+    final val defaultValues // dev.kord.common.entity/DiscordCheckboxComponent.defaultValues|{}defaultValues[0]
+        final fun <get-defaultValues>(): dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.common.entity/DiscordSelectDefaultValue>> // dev.kord.common.entity/DiscordCheckboxComponent.defaultValues.<get-defaultValues>|<get-defaultValues>(){}[0]
+    final val disabled // dev.kord.common.entity/DiscordCheckboxComponent.disabled|{}disabled[0]
+        final fun <get-disabled>(): dev.kord.common.entity.optional/OptionalBoolean // dev.kord.common.entity/DiscordCheckboxComponent.disabled.<get-disabled>|<get-disabled>(){}[0]
+    final val emoji // dev.kord.common.entity/DiscordCheckboxComponent.emoji|{}emoji[0]
+        final fun <get-emoji>(): dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordPartialEmoji> // dev.kord.common.entity/DiscordCheckboxComponent.emoji.<get-emoji>|<get-emoji>(){}[0]
+    final val label // dev.kord.common.entity/DiscordCheckboxComponent.label|{}label[0]
+        final fun <get-label>(): dev.kord.common.entity.optional/Optional<kotlin/String> // dev.kord.common.entity/DiscordCheckboxComponent.label.<get-label>|<get-label>(){}[0]
+    final val maxLength // dev.kord.common.entity/DiscordCheckboxComponent.maxLength|{}maxLength[0]
+        final fun <get-maxLength>(): dev.kord.common.entity.optional/OptionalInt // dev.kord.common.entity/DiscordCheckboxComponent.maxLength.<get-maxLength>|<get-maxLength>(){}[0]
+    final val maxValues // dev.kord.common.entity/DiscordCheckboxComponent.maxValues|{}maxValues[0]
+        final fun <get-maxValues>(): dev.kord.common.entity.optional/OptionalInt // dev.kord.common.entity/DiscordCheckboxComponent.maxValues.<get-maxValues>|<get-maxValues>(){}[0]
+    final val minLength // dev.kord.common.entity/DiscordCheckboxComponent.minLength|{}minLength[0]
+        final fun <get-minLength>(): dev.kord.common.entity.optional/OptionalInt // dev.kord.common.entity/DiscordCheckboxComponent.minLength.<get-minLength>|<get-minLength>(){}[0]
+    final val minValues // dev.kord.common.entity/DiscordCheckboxComponent.minValues|{}minValues[0]
+        final fun <get-minValues>(): dev.kord.common.entity.optional/OptionalInt // dev.kord.common.entity/DiscordCheckboxComponent.minValues.<get-minValues>|<get-minValues>(){}[0]
+    final val options // dev.kord.common.entity/DiscordCheckboxComponent.options|{}options[0]
+        final fun <get-options>(): dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.common.entity/DiscordSelectOption>> // dev.kord.common.entity/DiscordCheckboxComponent.options.<get-options>|<get-options>(){}[0]
+    final val placeholder // dev.kord.common.entity/DiscordCheckboxComponent.placeholder|{}placeholder[0]
+        final fun <get-placeholder>(): dev.kord.common.entity.optional/Optional<kotlin/String> // dev.kord.common.entity/DiscordCheckboxComponent.placeholder.<get-placeholder>|<get-placeholder>(){}[0]
+    final val required // dev.kord.common.entity/DiscordCheckboxComponent.required|{}required[0]
+        final fun <get-required>(): dev.kord.common.entity.optional/OptionalBoolean // dev.kord.common.entity/DiscordCheckboxComponent.required.<get-required>|<get-required>(){}[0]
+    final val type // dev.kord.common.entity/DiscordCheckboxComponent.type|{}type[0]
+        final fun <get-type>(): dev.kord.common.entity/ComponentType // dev.kord.common.entity/DiscordCheckboxComponent.type.<get-type>|<get-type>(){}[0]
+    final val url // dev.kord.common.entity/DiscordCheckboxComponent.url|{}url[0]
+        final fun <get-url>(): dev.kord.common.entity.optional/Optional<kotlin/String> // dev.kord.common.entity/DiscordCheckboxComponent.url.<get-url>|<get-url>(){}[0]
+    final val value // dev.kord.common.entity/DiscordCheckboxComponent.value|{}value[0]
+        final fun <get-value>(): dev.kord.common.entity.optional/Optional<kotlin/String> // dev.kord.common.entity/DiscordCheckboxComponent.value.<get-value>|<get-value>(){}[0]
+
+    final fun component1(): dev.kord.common.entity/ComponentType // dev.kord.common.entity/DiscordCheckboxComponent.component1|component1(){}[0]
+    final fun component10(): dev.kord.common.entity.optional/OptionalInt // dev.kord.common.entity/DiscordCheckboxComponent.component10|component10(){}[0]
+    final fun component11(): dev.kord.common.entity.optional/OptionalInt // dev.kord.common.entity/DiscordCheckboxComponent.component11|component11(){}[0]
+    final fun component12(): dev.kord.common.entity.optional/OptionalBoolean // dev.kord.common.entity/DiscordCheckboxComponent.component12|component12(){}[0]
+    final fun component13(): dev.kord.common.entity.optional/Optional<kotlin/String> // dev.kord.common.entity/DiscordCheckboxComponent.component13|component13(){}[0]
+    final fun component14(): dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.common.entity/ChannelType>> // dev.kord.common.entity/DiscordCheckboxComponent.component14|component14(){}[0]
+    final fun component15(): dev.kord.common.entity.optional/Optional<kotlin/String> // dev.kord.common.entity/DiscordCheckboxComponent.component15|component15(){}[0]
+    final fun component16(): dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordPartialEmoji> // dev.kord.common.entity/DiscordCheckboxComponent.component16|component16(){}[0]
+    final fun component17(): dev.kord.common.entity.optional/Optional<kotlin/String> // dev.kord.common.entity/DiscordCheckboxComponent.component17|component17(){}[0]
+    final fun component18(): dev.kord.common.entity.optional/OptionalBoolean // dev.kord.common.entity/DiscordCheckboxComponent.component18|component18(){}[0]
+    final fun component2(): dev.kord.common.entity.optional/Optional<kotlin/String> // dev.kord.common.entity/DiscordCheckboxComponent.component2|component2(){}[0]
+    final fun component3(): dev.kord.common.entity.optional/OptionalBoolean // dev.kord.common.entity/DiscordCheckboxComponent.component3|component3(){}[0]
+    final fun component4(): dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.common.entity/DiscordComponent>> // dev.kord.common.entity/DiscordCheckboxComponent.component4|component4(){}[0]
+    final fun component5(): dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.common.entity/DiscordSelectOption>> // dev.kord.common.entity/DiscordCheckboxComponent.component5|component5(){}[0]
+    final fun component6(): dev.kord.common.entity.optional/Optional<kotlin/String> // dev.kord.common.entity/DiscordCheckboxComponent.component6|component6(){}[0]
+    final fun component7(): dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.common.entity/DiscordSelectDefaultValue>> // dev.kord.common.entity/DiscordCheckboxComponent.component7|component7(){}[0]
+    final fun component8(): dev.kord.common.entity.optional/OptionalInt // dev.kord.common.entity/DiscordCheckboxComponent.component8|component8(){}[0]
+    final fun component9(): dev.kord.common.entity.optional/OptionalInt // dev.kord.common.entity/DiscordCheckboxComponent.component9|component9(){}[0]
+    final fun copy(dev.kord.common.entity/ComponentType = ..., dev.kord.common.entity.optional/Optional<kotlin/String> = ..., dev.kord.common.entity.optional/OptionalBoolean = ..., dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.common.entity/DiscordComponent>> = ..., dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.common.entity/DiscordSelectOption>> = ..., dev.kord.common.entity.optional/Optional<kotlin/String> = ..., dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.common.entity/DiscordSelectDefaultValue>> = ..., dev.kord.common.entity.optional/OptionalInt = ..., dev.kord.common.entity.optional/OptionalInt = ..., dev.kord.common.entity.optional/OptionalInt = ..., dev.kord.common.entity.optional/OptionalInt = ..., dev.kord.common.entity.optional/OptionalBoolean = ..., dev.kord.common.entity.optional/Optional<kotlin/String> = ..., dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.common.entity/ChannelType>> = ..., dev.kord.common.entity.optional/Optional<kotlin/String> = ..., dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordPartialEmoji> = ..., dev.kord.common.entity.optional/Optional<kotlin/String> = ..., dev.kord.common.entity.optional/OptionalBoolean = ...): dev.kord.common.entity/DiscordCheckboxComponent // dev.kord.common.entity/DiscordCheckboxComponent.copy|copy(dev.kord.common.entity.ComponentType;dev.kord.common.entity.optional.Optional<kotlin.String>;dev.kord.common.entity.optional.OptionalBoolean;dev.kord.common.entity.optional.Optional<kotlin.collections.List<dev.kord.common.entity.DiscordComponent>>;dev.kord.common.entity.optional.Optional<kotlin.collections.List<dev.kord.common.entity.DiscordSelectOption>>;dev.kord.common.entity.optional.Optional<kotlin.String>;dev.kord.common.entity.optional.Optional<kotlin.collections.List<dev.kord.common.entity.DiscordSelectDefaultValue>>;dev.kord.common.entity.optional.OptionalInt;dev.kord.common.entity.optional.OptionalInt;dev.kord.common.entity.optional.OptionalInt;dev.kord.common.entity.optional.OptionalInt;dev.kord.common.entity.optional.OptionalBoolean;dev.kord.common.entity.optional.Optional<kotlin.String>;dev.kord.common.entity.optional.Optional<kotlin.collections.List<dev.kord.common.entity.ChannelType>>;dev.kord.common.entity.optional.Optional<kotlin.String>;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.DiscordPartialEmoji>;dev.kord.common.entity.optional.Optional<kotlin.String>;dev.kord.common.entity.optional.OptionalBoolean){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.common.entity/DiscordCheckboxComponent.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.common.entity/DiscordCheckboxComponent.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // dev.kord.common.entity/DiscordCheckboxComponent.toString|toString(){}[0]
+
+    final object $serializer : kotlinx.serialization.internal/GeneratedSerializer<dev.kord.common.entity/DiscordCheckboxComponent> { // dev.kord.common.entity/DiscordCheckboxComponent.$serializer|null[0]
+        final val descriptor // dev.kord.common.entity/DiscordCheckboxComponent.$serializer.descriptor|{}descriptor[0]
+            final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // dev.kord.common.entity/DiscordCheckboxComponent.$serializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
+
+        final fun childSerializers(): kotlin/Array<kotlinx.serialization/KSerializer<*>> // dev.kord.common.entity/DiscordCheckboxComponent.$serializer.childSerializers|childSerializers(){}[0]
+        final fun deserialize(kotlinx.serialization.encoding/Decoder): dev.kord.common.entity/DiscordCheckboxComponent // dev.kord.common.entity/DiscordCheckboxComponent.$serializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
+        final fun serialize(kotlinx.serialization.encoding/Encoder, dev.kord.common.entity/DiscordCheckboxComponent) // dev.kord.common.entity/DiscordCheckboxComponent.$serializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;dev.kord.common.entity.DiscordCheckboxComponent){}[0]
+    }
+
+    final object Companion { // dev.kord.common.entity/DiscordCheckboxComponent.Companion|null[0]
+        final val $childSerializers // dev.kord.common.entity/DiscordCheckboxComponent.Companion.$childSerializers|{}$childSerializers[0]
+
+        final fun serializer(): kotlinx.serialization/KSerializer<dev.kord.common.entity/DiscordCheckboxComponent> // dev.kord.common.entity/DiscordCheckboxComponent.Companion.serializer|serializer(){}[0]
+    }
+}
+
 final class dev.kord.common.entity/DiscordClientStatus { // dev.kord.common.entity/DiscordClientStatus|null[0]
     constructor <init>(dev.kord.common.entity.optional/Optional<dev.kord.common.entity/PresenceStatus> = ..., dev.kord.common.entity.optional/Optional<dev.kord.common.entity/PresenceStatus> = ..., dev.kord.common.entity.optional/Optional<dev.kord.common.entity/PresenceStatus> = ...) // dev.kord.common.entity/DiscordClientStatus.<init>|<init>(dev.kord.common.entity.optional.Optional<dev.kord.common.entity.PresenceStatus>;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.PresenceStatus>;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.PresenceStatus>){}[0]
 
@@ -8098,6 +8177,10 @@ sealed class dev.kord.common.entity/ComponentType { // dev.kord.common.entity/Co
 
     final object ChannelSelect : dev.kord.common.entity/ComponentType // dev.kord.common.entity/ComponentType.ChannelSelect|null[0]
 
+    final object Checkbox : dev.kord.common.entity/ComponentType // dev.kord.common.entity/ComponentType.Checkbox|null[0]
+
+    final object CheckboxGroup : dev.kord.common.entity/ComponentType // dev.kord.common.entity/ComponentType.CheckboxGroup|null[0]
+
     final object Companion { // dev.kord.common.entity/ComponentType.Companion|null[0]
         final val entries // dev.kord.common.entity/ComponentType.Companion.entries|{}entries[0]
             final fun <get-entries>(): kotlin.collections/List<dev.kord.common.entity/ComponentType> // dev.kord.common.entity/ComponentType.Companion.entries.<get-entries>|<get-entries>(){}[0]
@@ -8117,6 +8200,8 @@ sealed class dev.kord.common.entity/ComponentType { // dev.kord.common.entity/Co
     final object MediaGallery : dev.kord.common.entity/ComponentType // dev.kord.common.entity/ComponentType.MediaGallery|null[0]
 
     final object MentionableSelect : dev.kord.common.entity/ComponentType // dev.kord.common.entity/ComponentType.MentionableSelect|null[0]
+
+    final object RadioGroup : dev.kord.common.entity/ComponentType // dev.kord.common.entity/ComponentType.RadioGroup|null[0]
 
     final object RoleSelect : dev.kord.common.entity/ComponentType // dev.kord.common.entity/ComponentType.RoleSelect|null[0]
 

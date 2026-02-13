@@ -2206,6 +2206,41 @@ final class dev.kord.rest.builder.component/ChannelSelectBuilder : dev.kord.rest
         final fun <set-channelTypes>(kotlin.collections/MutableList<dev.kord.common.entity/ChannelType>?) // dev.kord.rest.builder.component/ChannelSelectBuilder.channelTypes.<set-channelTypes>|<set-channelTypes>(kotlin.collections.MutableList<dev.kord.common.entity.ChannelType>?){}[0]
 }
 
+final class dev.kord.rest.builder.component/CheckboxBuilder : dev.kord.rest.builder.component/ContainerComponentBuilder { // dev.kord.rest.builder.component/CheckboxBuilder|null[0]
+    constructor <init>(kotlin/String) // dev.kord.rest.builder.component/CheckboxBuilder.<init>|<init>(kotlin.String){}[0]
+
+    final val customId // dev.kord.rest.builder.component/CheckboxBuilder.customId|{}customId[0]
+        final fun <get-customId>(): kotlin/String // dev.kord.rest.builder.component/CheckboxBuilder.customId.<get-customId>|<get-customId>(){}[0]
+
+    final var default // dev.kord.rest.builder.component/CheckboxBuilder.default|{}default[0]
+        final fun <get-default>(): kotlin/Boolean? // dev.kord.rest.builder.component/CheckboxBuilder.default.<get-default>|<get-default>(){}[0]
+        final fun <set-default>(kotlin/Boolean?) // dev.kord.rest.builder.component/CheckboxBuilder.default.<set-default>|<set-default>(kotlin.Boolean?){}[0]
+
+    final fun build(): dev.kord.common.entity/DiscordComponent // dev.kord.rest.builder.component/CheckboxBuilder.build|build(){}[0]
+}
+
+final class dev.kord.rest.builder.component/CheckboxGroupBuilder : dev.kord.rest.builder.component/ContainerComponentBuilder { // dev.kord.rest.builder.component/CheckboxGroupBuilder|null[0]
+    constructor <init>(kotlin/String) // dev.kord.rest.builder.component/CheckboxGroupBuilder.<init>|<init>(kotlin.String){}[0]
+
+    final val customId // dev.kord.rest.builder.component/CheckboxGroupBuilder.customId|{}customId[0]
+        final fun <get-customId>(): kotlin/String // dev.kord.rest.builder.component/CheckboxGroupBuilder.customId.<get-customId>|<get-customId>(){}[0]
+
+    final var maxValues // dev.kord.rest.builder.component/CheckboxGroupBuilder.maxValues|{}maxValues[0]
+        final fun <get-maxValues>(): kotlin/Int? // dev.kord.rest.builder.component/CheckboxGroupBuilder.maxValues.<get-maxValues>|<get-maxValues>(){}[0]
+        final fun <set-maxValues>(kotlin/Int?) // dev.kord.rest.builder.component/CheckboxGroupBuilder.maxValues.<set-maxValues>|<set-maxValues>(kotlin.Int?){}[0]
+    final var minValues // dev.kord.rest.builder.component/CheckboxGroupBuilder.minValues|{}minValues[0]
+        final fun <get-minValues>(): kotlin/Int? // dev.kord.rest.builder.component/CheckboxGroupBuilder.minValues.<get-minValues>|<get-minValues>(){}[0]
+        final fun <set-minValues>(kotlin/Int?) // dev.kord.rest.builder.component/CheckboxGroupBuilder.minValues.<set-minValues>|<set-minValues>(kotlin.Int?){}[0]
+    final var options // dev.kord.rest.builder.component/CheckboxGroupBuilder.options|{}options[0]
+        final fun <get-options>(): kotlin.collections/List<dev.kord.common.entity/DiscordSelectOption>? // dev.kord.rest.builder.component/CheckboxGroupBuilder.options.<get-options>|<get-options>(){}[0]
+        final fun <set-options>(kotlin.collections/List<dev.kord.common.entity/DiscordSelectOption>?) // dev.kord.rest.builder.component/CheckboxGroupBuilder.options.<set-options>|<set-options>(kotlin.collections.List<dev.kord.common.entity.DiscordSelectOption>?){}[0]
+    final var required // dev.kord.rest.builder.component/CheckboxGroupBuilder.required|{}required[0]
+        final fun <get-required>(): kotlin/Boolean? // dev.kord.rest.builder.component/CheckboxGroupBuilder.required.<get-required>|<get-required>(){}[0]
+        final fun <set-required>(kotlin/Boolean?) // dev.kord.rest.builder.component/CheckboxGroupBuilder.required.<set-required>|<set-required>(kotlin.Boolean?){}[0]
+
+    final fun build(): dev.kord.common.entity/DiscordComponent // dev.kord.rest.builder.component/CheckboxGroupBuilder.build|build(){}[0]
+}
+
 final class dev.kord.rest.builder.component/ContainerBuilder : dev.kord.rest.builder.component/ComponentContainerBuilder, dev.kord.rest.builder.component/MessageComponentBuilder { // dev.kord.rest.builder.component/ContainerBuilder|null[0]
     constructor <init>() // dev.kord.rest.builder.component/ContainerBuilder.<init>|<init>(){}[0]
 
@@ -2270,8 +2305,11 @@ final class dev.kord.rest.builder.component/LabelComponentBuilder : dev.kord.res
 
     final fun build(): dev.kord.common.entity/DiscordComponent // dev.kord.rest.builder.component/LabelComponentBuilder.build|build(){}[0]
     final inline fun channelSelect(kotlin/String, kotlin/Function1<dev.kord.rest.builder.component/ChannelSelectBuilder, kotlin/Unit>) // dev.kord.rest.builder.component/LabelComponentBuilder.channelSelect|channelSelect(kotlin.String;kotlin.Function1<dev.kord.rest.builder.component.ChannelSelectBuilder,kotlin.Unit>){}[0]
+    final inline fun checkbox(kotlin/String, kotlin/Function1<dev.kord.rest.builder.component/CheckboxBuilder, kotlin/Unit>) // dev.kord.rest.builder.component/LabelComponentBuilder.checkbox|checkbox(kotlin.String;kotlin.Function1<dev.kord.rest.builder.component.CheckboxBuilder,kotlin.Unit>){}[0]
+    final inline fun checkboxGroup(kotlin/String, kotlin/Function1<dev.kord.rest.builder.component/CheckboxGroupBuilder, kotlin/Unit>) // dev.kord.rest.builder.component/LabelComponentBuilder.checkboxGroup|checkboxGroup(kotlin.String;kotlin.Function1<dev.kord.rest.builder.component.CheckboxGroupBuilder,kotlin.Unit>){}[0]
     final inline fun fileUpload(kotlin/String, kotlin/Function1<dev.kord.rest.builder.component/FileUploadBuilder, kotlin/Unit>) // dev.kord.rest.builder.component/LabelComponentBuilder.fileUpload|fileUpload(kotlin.String;kotlin.Function1<dev.kord.rest.builder.component.FileUploadBuilder,kotlin.Unit>){}[0]
     final inline fun mentionableSelect(kotlin/String, kotlin/Function1<dev.kord.rest.builder.component/MentionableSelectBuilder, kotlin/Unit>) // dev.kord.rest.builder.component/LabelComponentBuilder.mentionableSelect|mentionableSelect(kotlin.String;kotlin.Function1<dev.kord.rest.builder.component.MentionableSelectBuilder,kotlin.Unit>){}[0]
+    final inline fun radioGroup(kotlin/String, kotlin/Function1<dev.kord.rest.builder.component/RadioGroupBuilder, kotlin/Unit>) // dev.kord.rest.builder.component/LabelComponentBuilder.radioGroup|radioGroup(kotlin.String;kotlin.Function1<dev.kord.rest.builder.component.RadioGroupBuilder,kotlin.Unit>){}[0]
     final inline fun roleSelect(kotlin/String, kotlin/Function1<dev.kord.rest.builder.component/RoleSelectBuilder, kotlin/Unit>) // dev.kord.rest.builder.component/LabelComponentBuilder.roleSelect|roleSelect(kotlin.String;kotlin.Function1<dev.kord.rest.builder.component.RoleSelectBuilder,kotlin.Unit>){}[0]
     final inline fun stringSelect(kotlin/String, kotlin/Function1<dev.kord.rest.builder.component/StringSelectBuilder, kotlin/Unit>) // dev.kord.rest.builder.component/LabelComponentBuilder.stringSelect|stringSelect(kotlin.String;kotlin.Function1<dev.kord.rest.builder.component.StringSelectBuilder,kotlin.Unit>){}[0]
     final inline fun textInput(dev.kord.common.entity/TextInputStyle, kotlin/String, kotlin/Function1<dev.kord.rest.builder.component/TextInputBuilder, kotlin/Unit>) // dev.kord.rest.builder.component/LabelComponentBuilder.textInput|textInput(dev.kord.common.entity.TextInputStyle;kotlin.String;kotlin.Function1<dev.kord.rest.builder.component.TextInputBuilder,kotlin.Unit>){}[0]
@@ -2321,6 +2359,22 @@ final class dev.kord.rest.builder.component/PremiumButtonBuilder : dev.kord.rest
         final fun <set-skuId>(dev.kord.common.entity/Snowflake) // dev.kord.rest.builder.component/PremiumButtonBuilder.skuId.<set-skuId>|<set-skuId>(dev.kord.common.entity.Snowflake){}[0]
 
     final fun build(): dev.kord.common.entity/DiscordChatComponent // dev.kord.rest.builder.component/PremiumButtonBuilder.build|build(){}[0]
+}
+
+final class dev.kord.rest.builder.component/RadioGroupBuilder : dev.kord.rest.builder.component/ContainerComponentBuilder { // dev.kord.rest.builder.component/RadioGroupBuilder|null[0]
+    constructor <init>(kotlin/String) // dev.kord.rest.builder.component/RadioGroupBuilder.<init>|<init>(kotlin.String){}[0]
+
+    final val customId // dev.kord.rest.builder.component/RadioGroupBuilder.customId|{}customId[0]
+        final fun <get-customId>(): kotlin/String // dev.kord.rest.builder.component/RadioGroupBuilder.customId.<get-customId>|<get-customId>(){}[0]
+
+    final var options // dev.kord.rest.builder.component/RadioGroupBuilder.options|{}options[0]
+        final fun <get-options>(): kotlin.collections/List<dev.kord.common.entity/DiscordSelectOption>? // dev.kord.rest.builder.component/RadioGroupBuilder.options.<get-options>|<get-options>(){}[0]
+        final fun <set-options>(kotlin.collections/List<dev.kord.common.entity/DiscordSelectOption>?) // dev.kord.rest.builder.component/RadioGroupBuilder.options.<set-options>|<set-options>(kotlin.collections.List<dev.kord.common.entity.DiscordSelectOption>?){}[0]
+    final var required // dev.kord.rest.builder.component/RadioGroupBuilder.required|{}required[0]
+        final fun <get-required>(): kotlin/Boolean? // dev.kord.rest.builder.component/RadioGroupBuilder.required.<get-required>|<get-required>(){}[0]
+        final fun <set-required>(kotlin/Boolean?) // dev.kord.rest.builder.component/RadioGroupBuilder.required.<set-required>|<set-required>(kotlin.Boolean?){}[0]
+
+    final fun build(): dev.kord.common.entity/DiscordComponent // dev.kord.rest.builder.component/RadioGroupBuilder.build|build(){}[0]
 }
 
 final class dev.kord.rest.builder.component/RoleSelectBuilder : dev.kord.rest.builder.component/SelectMenuBuilder { // dev.kord.rest.builder.component/RoleSelectBuilder|null[0]

@@ -2,7 +2,10 @@ package dev.kord.rest.builder.component
 
 import dev.kord.common.entity.ComponentType
 import dev.kord.common.entity.DiscordChatComponent
+import dev.kord.common.entity.DiscordCheckboxComponent
 import dev.kord.common.entity.DiscordComponent
+import dev.kord.common.entity.DiscordSelectComponent
+import dev.kord.common.entity.DiscordSelectOption
 import dev.kord.common.entity.MediaGalleryItem
 import dev.kord.common.entity.SeparatorSpacingSize
 import dev.kord.common.entity.UnfurledMediaItem
@@ -112,6 +115,58 @@ public class FileUploadBuilder(public val customId: String) : ContainerComponent
         minValues = _minValues,
         maxValues = _maxValues,
         required = _required
+    )
+}
+
+public class RadioGroupBuilder(public val customId: String) : ContainerComponentBuilder {
+    private var _options: Optional<List<DiscordSelectOption>> = Optional.Missing()
+    private var _required: OptionalBoolean = OptionalBoolean.Missing
+
+    public var options: List<DiscordSelectOption>? by ::_options.delegate()
+
+    public var required: Boolean? by ::_required.delegate()
+
+    override fun build() : DiscordComponent = DiscordChatComponent(
+        type = ComponentType.RadioGroup,
+        customId = Optional(customId),
+        options = _options,
+        required = _required
+    )
+}
+
+public class CheckboxGroupBuilder(public val customId: String) : ContainerComponentBuilder {
+    private var _options: Optional<List<DiscordSelectOption>> = Optional.Missing()
+    private var _minValues: OptionalInt = OptionalInt.Missing
+    private var _maxValues: OptionalInt = OptionalInt.Missing
+    private var _required: OptionalBoolean = OptionalBoolean.Missing
+
+    public var options: List<DiscordSelectOption>? by ::_options.delegate()
+
+    public var minValues: Int? by ::_minValues.delegate()
+
+    public var maxValues: Int? by ::_maxValues.delegate()
+
+    public var required: Boolean? by ::_required.delegate()
+
+    override fun build(): DiscordComponent = DiscordSelectComponent(
+        type = ComponentType.FileUpload,
+        customId = Optional(customId),
+        options = _options,
+        minValues = _minValues,
+        maxValues = _maxValues,
+        required = _required
+    )
+}
+
+public class CheckboxBuilder(public val customId: String) : ContainerComponentBuilder {
+    private var _default: OptionalBoolean = OptionalBoolean.Missing
+
+    public var default: Boolean? by ::_default.delegate()
+
+    override fun build(): DiscordComponent = DiscordCheckboxComponent(
+        type = ComponentType.Checkbox,
+        customId = Optional(customId),
+        default = _default
     )
 }
 

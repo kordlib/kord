@@ -97,6 +97,38 @@ public class LabelComponentBuilder(public val label: String) : ContainerComponen
         component = FileUploadBuilder(customId).apply(builder)
     }
 
+    /**
+     * Adds a radio group to the label, configured by the [builder]
+     */
+    public inline fun radioGroup(customId: String, builder: RadioGroupBuilder.() -> Unit) {
+        contract {
+            callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+        }
+
+        component = RadioGroupBuilder(customId).apply(builder)
+    }
+
+    /**
+     * Adds a checkbox group to the label, configured by the [builder]
+     */
+    public inline fun checkboxGroup(customId: String, builder: CheckboxGroupBuilder.() -> Unit) {
+        contract {
+            callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+        }
+
+        component = CheckboxGroupBuilder(customId).apply(builder)
+    }
+
+    /**
+     * Adds a checkbox to the label, configured by the [builder]
+     */
+    public inline fun checkbox(customId: String, builder: CheckboxBuilder.() -> Unit) {
+        contract {
+            callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+        }
+
+        component = CheckboxBuilder(customId).apply(builder)
+    }
 
     override fun build(): DiscordComponent = DiscordModalComponent(
         type = ComponentType.Label,

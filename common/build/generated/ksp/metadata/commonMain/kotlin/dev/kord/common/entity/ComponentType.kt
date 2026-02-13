@@ -124,6 +124,21 @@ public sealed class ComponentType(
      */
     public object FileUpload : ComponentType(19)
 
+    /**
+     * Single-Choice set of options
+     */
+    public object RadioGroup : ComponentType(21)
+
+    /**
+     * Multi-selectable group of checkboxes
+     */
+    public object CheckboxGroup : ComponentType(22)
+
+    /**
+     * Single checkbox for yes/no choice
+     */
+    public object Checkbox : ComponentType(23)
+
     internal object Serializer : KSerializer<ComponentType> {
         override val descriptor: SerialDescriptor =
                 PrimitiveSerialDescriptor("dev.kord.common.entity.ComponentType", PrimitiveKind.INT)
@@ -158,6 +173,9 @@ public sealed class ComponentType(
                 Container,
                 Label,
                 FileUpload,
+                RadioGroup,
+                CheckboxGroup,
+                Checkbox,
             )
         }
 
@@ -182,6 +200,9 @@ public sealed class ComponentType(
             17 -> Container
             18 -> Label
             19 -> FileUpload
+            21 -> RadioGroup
+            22 -> CheckboxGroup
+            23 -> Checkbox
             else -> Unknown(value)
         }
     }

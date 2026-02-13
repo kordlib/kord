@@ -2,6 +2,7 @@ package dev.kord.core.entity.component
 
 import dev.kord.common.entity.ComponentType
 import dev.kord.core.cache.data.ChatComponentData
+import dev.kord.core.cache.data.CheckboxComponentData
 import dev.kord.core.cache.data.ComponentData
 import dev.kord.core.cache.data.LabelComponentData
 import dev.kord.core.cache.data.SelectComponentData
@@ -31,6 +32,9 @@ public sealed interface Component {
  * @see ActionRowComponent
  * @see ButtonComponent
  * @see SelectMenuComponent
+ * @see TextInputComponent
+ * @see LabelComponent
+ * @see CheckboxComponent
  * @see UnknownComponent
  */
 public fun Component(data: ComponentData): Component = when (data.type) {
@@ -51,5 +55,8 @@ public fun Component(data: ComponentData): Component = when (data.type) {
     ComponentType.Thumbnail -> ThumbnailComponent(data as ChatComponentData)
     ComponentType.Label -> LabelComponent(data as LabelComponentData)
     ComponentType.FileUpload -> FileUploadComponent(data as SelectComponentData)
+    ComponentType.RadioGroup -> RadioGroupComponent(data as ChatComponentData)
+    ComponentType.CheckboxGroup -> CheckboxGroupComponent(data as SelectComponentData)
+    ComponentType.Checkbox -> CheckboxComponent(data as CheckboxComponentData)
     is ComponentType.Unknown -> UnknownComponent(data)
 }

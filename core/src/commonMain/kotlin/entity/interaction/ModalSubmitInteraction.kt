@@ -130,6 +130,32 @@ public sealed interface ModalSubmitInteraction : ActionInteraction, ComponentInt
             .associateBy { it.customId }
 
     /**
+     * The [RadioGroupComponent]s of the modal, indexed by their [customId][RadioGroupComponent.customId]. They
+     * contain the [options][RadioGroupComponent.options] submitted by the user.
+     */
+    public val radioGroups: Map<String, RadioGroupComponent>
+        get() = responseComponents.values
+            .filterIsInstance<RadioGroupComponent>()
+            .associateBy { it.customId }
+
+    /**
+     * The [CheckboxGroupComponent]s of the modal, indexed by their [customId][CheckboxGroupComponent.customId]. They
+     * contain the [options][CheckboxGroupComponent.options] submitted by the user.
+     */
+    public val checkboxGroups: Map<String, CheckboxGroupComponent>
+        get() = responseComponents.values
+            .filterIsInstance<CheckboxGroupComponent>()
+            .associateBy { it.customId }
+
+    /**
+     * The [CheckboxComponent]s of the modal, indexed by their [customId][CheckboxComponent.customId].
+     */
+    public val checkboxes: Map<String, CheckboxComponent>
+        get() = responseComponents.values
+            .filterIsInstance<CheckboxComponent>()
+            .associateBy { it.customId }
+
+    /**
      * The message the [Component], to which the modal was the response for, is attached to.
      *
      * This is only present if the interaction was created by submitting a modal that was the response for a
