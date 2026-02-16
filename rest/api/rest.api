@@ -1126,6 +1126,28 @@ public final class dev/kord/rest/builder/component/ChannelSelectBuilder : dev/ko
 	public final fun setChannelTypes (Ljava/util/List;)V
 }
 
+public final class dev/kord/rest/builder/component/CheckboxBuilder : dev/kord/rest/builder/component/ContainerComponentBuilder {
+	public fun <init> (Ljava/lang/String;)V
+	public fun build ()Ldev/kord/common/entity/DiscordComponent;
+	public final fun getCustomId ()Ljava/lang/String;
+	public final fun getDefault ()Ljava/lang/Boolean;
+	public final fun setDefault (Ljava/lang/Boolean;)V
+}
+
+public final class dev/kord/rest/builder/component/CheckboxGroupBuilder : dev/kord/rest/builder/component/ContainerComponentBuilder {
+	public fun <init> (Ljava/lang/String;)V
+	public fun build ()Ldev/kord/common/entity/DiscordComponent;
+	public final fun getCustomId ()Ljava/lang/String;
+	public final fun getMaxValues ()Ljava/lang/Integer;
+	public final fun getMinValues ()Ljava/lang/Integer;
+	public final fun getOptions ()Ljava/util/List;
+	public final fun getRequired ()Ljava/lang/Boolean;
+	public final fun setMaxValues (Ljava/lang/Integer;)V
+	public final fun setMinValues (Ljava/lang/Integer;)V
+	public final fun setOptions (Ljava/util/List;)V
+	public final fun setRequired (Ljava/lang/Boolean;)V
+}
+
 public abstract interface class dev/kord/rest/builder/component/ComponentBuilder {
 	public abstract fun build ()Ldev/kord/common/entity/DiscordComponent;
 }
@@ -1192,10 +1214,21 @@ public final class dev/kord/rest/builder/component/FileUploadBuilder : dev/kord/
 public final class dev/kord/rest/builder/component/LabelComponentBuilder : dev/kord/rest/builder/component/ContainerComponentBuilder {
 	public fun <init> (Ljava/lang/String;)V
 	public fun build ()Ldev/kord/common/entity/DiscordComponent;
-	public final fun getComponent ()Ljava/util/List;
+	public final fun channelSelect (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+	public final fun checkbox (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+	public final fun checkboxGroup (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+	public final fun fileUpload (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+	public final fun getComponent ()Ldev/kord/rest/builder/component/ContainerComponentBuilder;
 	public final fun getDescription ()Ljava/lang/String;
 	public final fun getLabel ()Ljava/lang/String;
+	public final fun mentionableSelect (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+	public final fun radioGroup (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+	public final fun roleSelect (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+	public final fun setComponent (Ldev/kord/rest/builder/component/ContainerComponentBuilder;)V
 	public final fun setDescription (Ljava/lang/String;)V
+	public final fun stringSelect (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+	public final fun textInput (Ldev/kord/common/entity/TextInputStyle;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+	public final fun userSelect (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
 }
 
 public final class dev/kord/rest/builder/component/MediaGalleryBuilder : dev/kord/rest/builder/component/ContainerComponentBuilder {
@@ -1232,6 +1265,16 @@ public final class dev/kord/rest/builder/component/PremiumButtonBuilder : dev/ko
 	public synthetic fun build ()Ldev/kord/common/entity/DiscordComponent;
 	public final fun getSkuId ()Ldev/kord/common/entity/Snowflake;
 	public final fun setSkuId (Ldev/kord/common/entity/Snowflake;)V
+}
+
+public final class dev/kord/rest/builder/component/RadioGroupBuilder : dev/kord/rest/builder/component/ContainerComponentBuilder {
+	public fun <init> (Ljava/lang/String;)V
+	public fun build ()Ldev/kord/common/entity/DiscordComponent;
+	public final fun getCustomId ()Ljava/lang/String;
+	public final fun getOptions ()Ljava/util/List;
+	public final fun getRequired ()Ljava/lang/Boolean;
+	public final fun setOptions (Ljava/util/List;)V
+	public final fun setRequired (Ljava/lang/Boolean;)V
 }
 
 public final class dev/kord/rest/builder/component/RoleSelectBuilder : dev/kord/rest/builder/component/SelectMenuBuilder {
@@ -1311,6 +1354,7 @@ public final class dev/kord/rest/builder/component/TextDisplayBuilder : dev/kord
 
 public final class dev/kord/rest/builder/component/TextInputBuilder : dev/kord/rest/builder/component/ActionRowComponentBuilder {
 	public fun <init> (Ldev/kord/common/entity/TextInputStyle;Ljava/lang/String;Ljava/lang/String;)V
+	public synthetic fun <init> (Ldev/kord/common/entity/TextInputStyle;Ljava/lang/String;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public synthetic fun build ()Ldev/kord/common/entity/DiscordComponent;
 	public fun build ()Ldev/kord/common/entity/DiscordTextInputComponent;
 	public final fun getAllowedLength ()Lkotlin/ranges/ClosedRange;
@@ -2020,8 +2064,10 @@ public final class dev/kord/rest/builder/interaction/ModalBuilder : dev/kord/res
 	public final fun getComponents ()Ljava/util/List;
 	public final fun getCustomId ()Ljava/lang/String;
 	public final fun getTitle ()Ljava/lang/String;
+	public final fun label (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
 	public final fun setCustomId (Ljava/lang/String;)V
 	public final fun setTitle (Ljava/lang/String;)V
+	public final fun textDisplay (Lkotlin/jvm/functions/Function1;)V
 	public fun toRequest ()Ldev/kord/common/entity/DiscordModal;
 	public synthetic fun toRequest ()Ljava/lang/Object;
 }

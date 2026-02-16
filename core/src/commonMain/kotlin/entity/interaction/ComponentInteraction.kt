@@ -91,6 +91,9 @@ public fun ComponentInteraction(
         ComponentType.ActionRow -> throwNoInteractions()
         ComponentType.FileUpload -> throwNoInteractions()
         ComponentType.Label -> throwNoInteractions()
+        ComponentType.Checkbox -> throwNoInteractions()
+        ComponentType.CheckboxGroup -> throwNoInteractions()
+        ComponentType.RadioGroup -> throwNoInteractions()
         is ComponentType.Unknown -> error("Unknown component type: ${type.value}")
         null -> error("Component type was null")
     }

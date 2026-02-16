@@ -5,8 +5,11 @@ import dev.kord.common.entity.ButtonStyle
 import dev.kord.common.entity.ChannelType
 import dev.kord.common.entity.ComponentType
 import dev.kord.common.entity.DiscordChatComponent
+import dev.kord.common.entity.DiscordCheckboxComponent
 import dev.kord.common.entity.DiscordComponent
+import dev.kord.common.entity.DiscordModalComponent
 import dev.kord.common.entity.DiscordPartialEmoji
+import dev.kord.common.entity.DiscordSelectComponent
 import dev.kord.common.entity.DiscordSelectDefaultValue
 import dev.kord.common.entity.DiscordTextInputComponent
 import dev.kord.common.entity.MediaGalleryItem
@@ -28,7 +31,7 @@ import kotlinx.serialization.json.JsonClassDiscriminator
 @JsonClassDiscriminator("_type") // would otherwise conflict with `type` property
 public sealed class ComponentData {
     public abstract val type: ComponentType
-    public abstract val label: Optional<String>
+    public abstract val label: Optional<String?>
 
     //TODO: turn this emoji into a EmojiData, it's lacking the guild id
     public abstract val emoji: Optional<DiscordPartialEmoji>
@@ -105,6 +108,73 @@ public sealed class ComponentData {
                     channelTypes = channelTypes
                 )
             }
+
+            is DiscordModalComponent -> with(entity) {
+                LabelComponentData(
+                    type,
+                    label,
+                    emoji,
+                    customId,
+                    url,
+                    disabled,
+                    component = component.map { from(it) },
+                    description = description,
+                    options = options.mapList { SelectOptionData.from(it) },
+                    placeholder = placeholder,
+                    defaultValues = defaultValues,
+                    minValues = minValues,
+                    maxValues = maxValues,
+                    minLength = minLength,
+                    maxLength = maxLength,
+                    required = required,
+                )
+            }
+
+            is DiscordSelectComponent -> with(entity) {
+                SelectComponentData(
+                    type,
+                    label,
+                    emoji,
+                    customId,
+                    url,
+                    disabled,
+                    components.mapList { from(it) },
+                    options.mapList { SelectOptionData.from(it) },
+                    placeholder,
+                    defaultValues,
+                    minValues = minValues,
+                    maxValues = maxValues,
+                    minLength = minLength,
+                    maxLength = maxLength,
+                    required = required,
+                    value = value,
+                    values = values,
+                    channelTypes = channelTypes
+                )
+            }
+
+            is DiscordCheckboxComponent -> with(entity) {
+                CheckboxComponentData(
+                    type,
+                    label,
+                    emoji,
+                    customId,
+                    url,
+                    disabled,
+                    components.mapList { from(it) },
+                    options.mapList { SelectOptionData.from(it) },
+                    placeholder,
+                    defaultValues,
+                    minValues,
+                    maxValues,
+                    minLength,
+                    maxLength,
+                    required,
+                    value,
+                    channelTypes,
+                    default
+                )
+            }
         }
     }
 }
@@ -147,7 +217,7 @@ public data class ChatComponentData(
 public data class TextInputComponentData(
     override val type: ComponentType,
     val style: Optional<TextInputStyle> = Optional.Missing(),
-    override val label: Optional<String> = Optional.Missing(),
+    override val label: Optional<String?> = Optional.Missing(),
     //TODO: turn this emoji into a EmojiData, it's lacking the guild id
     override val emoji: Optional<DiscordPartialEmoji> = Optional.Missing(),
     override val customId: Optional<String> = Optional.Missing(),
@@ -165,3 +235,71 @@ public data class TextInputComponentData(
     override val value: Optional<String> = Optional.Missing(),
     override val channelTypes: Optional<List<ChannelType>> = Optional.Missing(),
 ) : ComponentData()
+
+@Serializable
+public data class LabelComponentData(
+    override val type: ComponentType,
+    override val label: Optional<String> = Optional.Missing(),
+    override val emoji: Optional<DiscordPartialEmoji> = Optional.Missing(),
+    override val customId: Optional<String> = Optional.Missing(),
+    override val url: Optional<String> = Optional.Missing(),
+    override val disabled: OptionalBoolean = OptionalBoolean.Missing,
+    override val components: Optional<List<ComponentData>> = Optional.Missing(),
+    val component: Optional<ComponentData> = Optional.Missing(),
+    override val options: Optional<List<SelectOptionData>> = Optional.Missing(),
+    override val placeholder: Optional<String> = Optional.Missing(),
+    override val defaultValues: Optional<List<DiscordSelectDefaultValue>> = Optional.Missing(),
+    override val minValues: OptionalInt = OptionalInt.Missing,
+    override val maxValues: OptionalInt = OptionalInt.Missing,
+    override val minLength: OptionalInt = OptionalInt.Missing,
+    override val maxLength: OptionalInt = OptionalInt.Missing,
+    override val required: OptionalBoolean = OptionalBoolean.Missing,
+    override val value: Optional<String> = Optional.Missing(),
+    override val channelTypes: Optional<List<ChannelType>> = Optional.Missing(),
+    val description: Optional<String> = Optional.Missing(),
+) : ComponentData()
+
+@Serializable
+public data class SelectComponentData(
+    override val type: ComponentType,
+    override val label: Optional<String> = Optional.Missing(),
+    override val emoji: Optional<DiscordPartialEmoji> = Optional.Missing(),
+    override val customId: Optional<String> = Optional.Missing(),
+    override val url: Optional<String> = Optional.Missing(),
+    override val disabled: OptionalBoolean = OptionalBoolean.Missing,
+    override val components: Optional<List<ComponentData>> = Optional.Missing(),
+    override val options: Optional<List<SelectOptionData>> = Optional.Missing(),
+    override val placeholder: Optional<String> = Optional.Missing(),
+    override val defaultValues: Optional<List<DiscordSelectDefaultValue>> = Optional.Missing(),
+    override val minValues: OptionalInt = OptionalInt.Missing,
+    override val maxValues: OptionalInt = OptionalInt.Missing,
+    override val minLength: OptionalInt = OptionalInt.Missing,
+    override val maxLength: OptionalInt = OptionalInt.Missing,
+    override val required: OptionalBoolean = OptionalBoolean.Missing,
+    override val value: Optional<String> = Optional.Missing(),
+    val values: Optional<List<String>> = Optional.Missing(),
+    override val channelTypes: Optional<List<ChannelType>> = Optional.Missing(),
+) : ComponentData()
+
+@Serializable
+public data class CheckboxComponentData(
+    override val type: ComponentType,
+    override val label: Optional<String> = Optional.Missing(),
+    override val emoji: Optional<DiscordPartialEmoji> = Optional.Missing(),
+    override val customId: Optional<String> = Optional.Missing(),
+    override val url: Optional<String> = Optional.Missing(),
+    override val disabled: OptionalBoolean = OptionalBoolean.Missing,
+    override val components: Optional<List<ComponentData>> = Optional.Missing(),
+    override val options: Optional<List<SelectOptionData>> = Optional.Missing(),
+    override val placeholder: Optional<String> = Optional.Missing(),
+    override val defaultValues: Optional<List<DiscordSelectDefaultValue>> = Optional.Missing(),
+    override val minValues: OptionalInt = OptionalInt.Missing,
+    override val maxValues: OptionalInt = OptionalInt.Missing,
+    override val minLength: OptionalInt = OptionalInt.Missing,
+    override val maxLength: OptionalInt = OptionalInt.Missing,
+    override val required: OptionalBoolean = OptionalBoolean.Missing,
+    override val value: Optional<String> = Optional.Missing(),
+    override val channelTypes: Optional<List<ChannelType>> = Optional.Missing(),
+    val default: OptionalBoolean = OptionalBoolean.Missing
+) : ComponentData()
+

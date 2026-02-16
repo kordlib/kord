@@ -19,7 +19,10 @@
         Entry("Separator", intValue = 14, kDoc = "Component to add vertical padding between other components"),
         Entry("Container", intValue = 17, kDoc = "Container that visually groups a set of components"),
         Entry("Label", intValue = 18, kDoc = "Container associating a label and description with a component"),
-        Entry("FileUpload", intValue = 19, kDoc = "Component for uploading files")
+        Entry("FileUpload", intValue = 19, kDoc = "Component for uploading files"),
+        Entry("RadioGroup", intValue = 21, kDoc = "Single-Choice set of options"),
+        Entry("CheckboxGroup", intValue = 22, kDoc = "Multi-selectable group of checkboxes"),
+        Entry("Checkbox", intValue = 23, kDoc = "Single checkbox for yes/no choice"),
     ],
 )
 
@@ -93,7 +96,7 @@ import kotlinx.serialization.json.*
 @Serializable(with = DiscordComponent.Serializer::class)
 public sealed class DiscordComponent {
     public abstract val type: ComponentType
-    public abstract val label: Optional<String>
+    public abstract val label: Optional<String?>
     public abstract val emoji: Optional<DiscordPartialEmoji>
 
     @SerialName("custom_id")
@@ -129,10 +132,15 @@ public sealed class DiscordComponent {
             val componentType =
                 element.jsonObject["type"]?.jsonPrimitive?.intOrNull ?: error("Missing component type ID!")
 
-            return if (componentType == ComponentType.TextInput.value) {
-                DiscordTextInputComponent.serializer()
-            } else {
-                DiscordChatComponent.serializer()
+            return when (componentType) {
+                ComponentType.TextInput.value -> DiscordTextInputComponent.serializer()
+                ComponentType.Label.value -> DiscordModalComponent.serializer()
+                ComponentType.StringSelect.value, ComponentType.ChannelSelect.value, ComponentType.RoleSelect.value,
+                ComponentType.UserSelect.value, ComponentType.MentionableSelect.value, ComponentType.FileUpload.value,
+                ComponentType.CheckboxGroup.value -> DiscordSelectComponent.serializer()
+
+                ComponentType.Checkbox.value -> DiscordCheckboxComponent.serializer()
+                else -> DiscordChatComponent.serializer()
             }
         }
     }
@@ -152,7 +160,10 @@ public data class UnfurledMediaItem(
     val proxyUrl: Optional<String> = Optional.Missing(),
     val height: OptionalInt? = OptionalInt.Missing,
     val width: OptionalInt? = OptionalInt.Missing,
-    val contentType: Optional<String> = Optional.Missing()
+    @SerialName("content_type")
+    val contentType: Optional<String> = Optional.Missing(),
+    @SerialName("attachment_id")
+    val attachmentId: OptionalSnowflake = OptionalSnowflake.Missing
 )
 
 @Serializable
@@ -201,7 +212,7 @@ public data class DiscordChatComponent(
 public data class DiscordTextInputComponent(
     override val type: ComponentType,
     public val style: Optional<TextInputStyle> = Optional.Missing(),
-    override val label: Optional<String> = Optional.Missing(),
+    override val label: Optional<String?> = Optional.Missing(),
     override val emoji: Optional<DiscordPartialEmoji> = Optional.Missing(),
     @SerialName("custom_id")
     override val customId: Optional<String> = Optional.Missing(),
@@ -224,4 +235,93 @@ public data class DiscordTextInputComponent(
     override val value: Optional<String> = Optional.Missing(),
     @SerialName("channel_types")
     override val channelTypes: Optional<List<ChannelType>> = Optional.Missing(),
+) : DiscordComponent()
+
+@Serializable
+public data class DiscordModalComponent(
+    override val type: ComponentType,
+    val style: Optional<ButtonStyle> = Optional.Missing(),
+    @SerialName("custom_id")
+    override val customId: Optional<String> = Optional.Missing(),
+    override val disabled: OptionalBoolean = OptionalBoolean.Missing,
+    override val components: Optional<List<DiscordComponent>> = Optional.Missing(),
+    val component: Optional<DiscordComponent> = Optional.Missing(),
+    override val options: Optional<List<DiscordSelectOption>> = Optional.Missing(),
+    override val placeholder: Optional<String> = Optional.Missing(),
+    @SerialName("default_values")
+    override val defaultValues: Optional<List<DiscordSelectDefaultValue>> = Optional.Missing(),
+    @SerialName("min_values")
+    override val minValues: OptionalInt = OptionalInt.Missing,
+    @SerialName("max_values")
+    override val maxValues: OptionalInt = OptionalInt.Missing,
+    @SerialName("min_length")
+    override val minLength: OptionalInt = OptionalInt.Missing,
+    @SerialName("max_length")
+    override val maxLength: OptionalInt = OptionalInt.Missing,
+    override val required: OptionalBoolean = OptionalBoolean.Missing,
+    override val value: Optional<String> = Optional.Missing(),
+    @SerialName("channel_types")
+    override val channelTypes: Optional<List<ChannelType>> = Optional.Missing(),
+    override val label: Optional<String> = Optional.Missing(),
+    override val emoji: Optional<DiscordPartialEmoji> = Optional.Missing(),
+    override val url: Optional<String> = Optional.Missing(),
+    val description: Optional<String> = Optional.Missing(),
+) : DiscordComponent()
+
+@Serializable
+public data class DiscordSelectComponent(
+    override val type: ComponentType,
+    @SerialName("custom_id")
+    override val customId: Optional<String> = Optional.Missing(),
+    override val disabled: OptionalBoolean = OptionalBoolean.Missing,
+    override val components: Optional<List<DiscordComponent>> = Optional.Missing(),
+    override val options: Optional<List<DiscordSelectOption>> = Optional.Missing(),
+    override val placeholder: Optional<String> = Optional.Missing(),
+    @SerialName("default_values")
+    override val defaultValues: Optional<List<DiscordSelectDefaultValue>> = Optional.Missing(),
+    @SerialName("min_values")
+    override val minValues: OptionalInt = OptionalInt.Missing,
+    @SerialName("max_values")
+    override val maxValues: OptionalInt = OptionalInt.Missing,
+    @SerialName("min_length")
+    override val minLength: OptionalInt = OptionalInt.Missing,
+    @SerialName("max_length")
+    override val maxLength: OptionalInt = OptionalInt.Missing,
+    override val required: OptionalBoolean = OptionalBoolean.Missing,
+    override val value: Optional<String> = Optional.Missing(),
+    val values: Optional<List<String>> = Optional.Missing(),
+    @SerialName("channel_types")
+    override val channelTypes: Optional<List<ChannelType>> = Optional.Missing(),
+    override val label: Optional<String> = Optional.Missing(),
+    override val emoji: Optional<DiscordPartialEmoji> = Optional.Missing(),
+    override val url: Optional<String> = Optional.Missing(),
+) : DiscordComponent()
+
+@Serializable
+public data class DiscordCheckboxComponent(
+    override val type: ComponentType,
+    @SerialName("custom_id")
+    override val customId: Optional<String> = Optional.Missing(),
+    override val disabled: OptionalBoolean = OptionalBoolean.Missing,
+    override val components: Optional<List<DiscordComponent>> = Optional.Missing(),
+    override val options: Optional<List<DiscordSelectOption>> = Optional.Missing(),
+    override val placeholder: Optional<String> = Optional.Missing(),
+    @SerialName("default_values")
+    override val defaultValues: Optional<List<DiscordSelectDefaultValue>> = Optional.Missing(),
+    @SerialName("min_values")
+    override val minValues: OptionalInt = OptionalInt.Missing,
+    @SerialName("max_values")
+    override val maxValues: OptionalInt = OptionalInt.Missing,
+    @SerialName("min_length")
+    override val minLength: OptionalInt = OptionalInt.Missing,
+    @SerialName("max_length")
+    override val maxLength: OptionalInt = OptionalInt.Missing,
+    override val required: OptionalBoolean = OptionalBoolean.Missing,
+    override val value: Optional<String> = Optional.Missing(),
+    @SerialName("channel_types")
+    override val channelTypes: Optional<List<ChannelType>> = Optional.Missing(),
+    override val label: Optional<String> = Optional.Missing(),
+    override val emoji: Optional<DiscordPartialEmoji> = Optional.Missing(),
+    override val url: Optional<String> = Optional.Missing(),
+    val default: OptionalBoolean = OptionalBoolean.Missing
 ) : DiscordComponent()

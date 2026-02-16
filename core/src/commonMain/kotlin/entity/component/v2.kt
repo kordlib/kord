@@ -1,15 +1,21 @@
 package dev.kord.core.entity.component
 
 import dev.kord.common.entity.ComponentType
+import dev.kord.common.entity.DiscordSelectOption
 import dev.kord.common.entity.MediaGalleryItem
 import dev.kord.common.entity.SeparatorSpacingSize
+import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.map
 import dev.kord.common.entity.optional.mapList
 import dev.kord.common.entity.optional.orEmpty
 import dev.kord.common.entity.optional.value
 import dev.kord.core.cache.data.ChatComponentData
+import dev.kord.core.cache.data.CheckboxComponentData
 import dev.kord.core.cache.data.ComponentData
-import dev.kord.core.cache.data.TextInputComponentData
+import dev.kord.core.cache.data.LabelComponentData
+import dev.kord.core.cache.data.SelectComponentData
+import dev.kord.rest.builder.component.SelectMenuBuilder
+import kotlin.collections.map
 import dev.kord.common.entity.UnfurledMediaItem as UnfurledMediaItemData
 
 /**
@@ -32,6 +38,7 @@ public class UnfurledMediaItem(private val data: UnfurledMediaItemData) {
     public val height: Int? get() = data.height.value
     public val width: Int? get() = data.width.value
     public val contentType: String? get() = data.contentType.value
+    public val attachmentId: Snowflake? get() = data.attachmentId.value
 }
 
 /**
@@ -180,7 +187,7 @@ public class SeparatorComponent(override val data: ChatComponentData) : Componen
 
 }
 
-public class LabelComponent(override val data: ChatComponentData) : Component {
+public class LabelComponent(override val data: LabelComponentData) : Component {
 
     override val type: ComponentType
         get() = ComponentType.Label
@@ -195,17 +202,17 @@ public class LabelComponent(override val data: ChatComponentData) : Component {
 
     /** The component within the label. Cannot be null. */
     public val component: ComponentData
-        get() = data.components.value!!.first()
+        get() = data.component.value!!
 }
 
-public class FileUploadComponent(override val data: ChatComponentData) : Component {
+public class FileUploadComponent(override val data: SelectComponentData) : Component {
 
     override val type: ComponentType
         get() = ComponentType.FileUpload
 
     /** ID for the file upload; 1-100 characters. */
-    public val customId: String?
-        get() = data.customId.value
+    public val customId: String
+        get() = data.customId.value!!
 
     /** Minimum number of items that must be uploaded (defaults to 1); min 0, max 10. */
     public val minValues: Int?
@@ -218,4 +225,85 @@ public class FileUploadComponent(override val data: ChatComponentData) : Compone
     /** whether the file upload requires files to be uploaded before submitting the modal (defaults to `true`). */
     public val required: Boolean
         get() = data.required.discordBoolean
+
+    /**
+     * The selected values, the expected range should between 0 and 25.
+     *
+     * @see SelectMenuBuilder.allowedValues
+     */
+    public val valueIds: List<Snowflake> get() = data.values.orEmpty().map { Snowflake(it) }
+}
+
+public class RadioGroupComponent(override val data: ChatComponentData) : Component {
+    override val type: ComponentType
+        get() = ComponentType.RadioGroup
+
+    /** ID for the radio group; 1-100 characters. */
+    public val customId: String
+        get() = data.customId.value!!
+
+    /** The list of options to show; min 2, max 10 */
+    public val options: List<SelectOption>
+        get() = data.options.mapList { SelectOption(it) }.orEmpty()
+
+    /** whether a selection is required to submit the modal (defaults to `true`). */
+    public val required: Boolean
+        get() = data.required.discordBoolean
+
+    /** The value of the selected option, or `null` if no option is selected. */
+    public val value: String?
+        get() = data.value.value
+}
+
+public class CheckboxGroupComponent(override val data: SelectComponentData) : Component {
+    override val type: ComponentType
+        get() = ComponentType.CheckboxGroup
+
+    /** ID for the checkbox group; 1-100 characters. */
+    public val customId: String
+        get() = data.customId.value!!
+
+    /** The list of options to show; min 1, max 10 */
+    public val options: List<SelectOption>
+        get() = data.options.mapList { SelectOption(it) }.orEmpty()
+
+    /**
+     * Minimum number of items that must be chosen (defaults to 1); min 0, max 10. If set to 0 `required`
+     * must be `false`.
+     */
+    public val minValues: Int?
+        get() = data.minValues.value
+
+    /** Maximum number of items that can be chosen; min 1, max 10. (defaults to the number of options) */
+    public val maxValues: Int?
+        get() = data.maxValues.value
+
+    /** Whether selecting within the group is required (defaults to `true`). */
+    public val required: Boolean
+        get() = data.required.discordBoolean
+
+    /** The values of the selected options, or an empty array if no options are selected. */
+    public val values: List<String>
+        get() = data.values.value.orEmpty()
+}
+
+public class CheckboxComponent(override val data: CheckboxComponentData) : Component {
+    override val type: ComponentType
+        get() = ComponentType.Checkbox
+
+    /** ID for the checkbox; 1-100 characters. */
+    public val customId: String
+        get() = data.customId.value!!
+
+    /** Whether the checkbox is selected by default. */
+    public val default: Boolean
+        get() = data.default.discordBoolean
+
+    /** The state of the checkbox (`true` if checked, `false` if unchecked). */
+    public val value: Boolean
+        get() = when (data.value.value) {
+            "true" -> true
+            "false" -> false
+            else -> false
+        }
 }
