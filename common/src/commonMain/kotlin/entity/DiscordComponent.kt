@@ -22,7 +22,7 @@
         Entry("FileUpload", intValue = 19, kDoc = "Component for uploading files"),
         Entry("RadioGroup", intValue = 21, kDoc = "Single-Choice set of options"),
         Entry("CheckboxGroup", intValue = 22, kDoc = "Multi-selectable group of checkboxes"),
-        Entry("Checkbox", intValue = 23, kDoc = "Single checkbox for yes/no choice")
+        Entry("Checkbox", intValue = 23, kDoc = "Single checkbox for yes/no choice"),
     ],
 )
 
