@@ -1,0 +1,416 @@
+<!doctype html>
+<html class="no-js" lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title>DiscordSelectComponent</title>
+<link href="../../../images/logo-icon.svg" rel="icon" type="image/svg"><script>var pathToRoot = "../../../";</script>
+    <script>document.documentElement.classList.replace("no-js", "js");</script>
+    <script>const storage = localStorage.getItem("dokka-dark-mode")
+      if (storage == null) {
+        const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        if (osDarkSchemePreferred === true) {
+          document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+      } else {
+        const savedDarkMode = JSON.parse(storage)
+        if (savedDarkMode === true) {
+          document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+      }
+    </script>
+<script type="text/javascript" src="https://unpkg.com/kotlin-playground@1/dist/playground.min.js" async></script>
+<script type="text/javascript" src="../../../scripts/sourceset_dependencies.js" async></script>
+<link href="../../../styles/style.css" rel="Stylesheet">
+<link href="../../../styles/main.css" rel="Stylesheet">
+<link href="../../../styles/prism.css" rel="Stylesheet">
+<link href="../../../styles/logo-styles.css" rel="Stylesheet">
+<link href="../../../ui-kit/ui-kit.min.css" rel="Stylesheet">
+<script type="text/javascript" src="../../../scripts/safe-local-storage_blocking.js"></script>
+<script type="text/javascript" src="../../../scripts/navigation-loader.js" async></script>
+<script type="text/javascript" src="../../../scripts/platform-content-handler.js" async></script>
+<script type="text/javascript" src="../../../scripts/main.js" defer></script>
+<script type="text/javascript" src="../../../scripts/prism.js" async></script>
+<script type="text/javascript" src="../../../ui-kit/ui-kit.min.js" defer></script></head>
+<body>
+<div class="root">
+    <header class="navigation theme-dark" id="navigation-wrapper" role="banner">
+<a class="library-name--link" href="../../../index.html" tabindex="1">
+                    kord
+            </a>        <button class="navigation-controls--btn navigation-controls--btn_toc ui-kit_mobile-only" id="toc-toggle" type="button">Toggle table of contents
+        </button>
+        <div class="navigation-controls--break ui-kit_mobile-only"></div>
+        <div class="library-version" id="library-version">or(map(map(map(map(valueof(ProcessOutputValueSource))))), map(map(map(map(valueof(ProcessOutputValueSource))))))
+        </div>
+        <div class="navigation-controls">
+        <ul class="filter-section filter-section_loading" id="filter-section" aria-label="Target filter">
+                <button class="platform-tag platform-selector common-like" data-active="" aria-pressed="true" data-filter=":common/commonMain">common</button>
+            <div class="dropdown filter-section--dropdown" data-role="dropdown" id="filter-section-dropdown">
+                <button class="button button_dropdown filter-section--dropdown-toggle" role="combobox" data-role="dropdown-toggle" aria-controls="platform-tags-listbox" aria-haspopup="listbox" aria-expanded="false" aria-label="Toggle source sets"></button>
+                <ul role="listbox" id="platform-tags-listbox" class="dropdown--list" data-role="dropdown-listbox" aria-label="Target filter">
+                    <div class="dropdown--header"><span>Target filter</span>
+                        <button class="button" data-role="dropdown-toggle" aria-label="Close target filter">
+                            <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                        </button>
+                    </div>
+                        <li role="option" class="dropdown--option platform-selector-option common-like" tabindex="0">
+                            <label class="checkbox">
+                                <input type="checkbox" class="checkbox--input" id=":common/commonMain" data-filter=":common/commonMain">
+                                <span class="checkbox--icon"></span>
+                                common
+                            </label>
+                        </li>
+                </ul>
+                <div class="dropdown--overlay"></div>
+            </div>
+        </ul>
+            <button class="navigation-controls--btn navigation-controls--btn_theme" id="theme-toggle-button" type="button">Switch theme
+            </button>
+            <div class="navigation-controls--btn navigation-controls--btn_search" id="searchBar" role="button">Search in
+                API
+            </div>
+        </div>
+    </header>
+    <div id="container">
+        <nav id="leftColumn" class="sidebar" data-item-type="SECTION" data-item-config="{&quot;defaultSize&quot;: 280, &quot;minSize&quot;: 200, &quot;maxSize&quot;: 400}">
+            <a class="toc--skip-link" href="#main">Skip to content</a>
+            <div class="dropdown theme-dark_mobile" data-role="dropdown" id="toc-dropdown">
+                <ul role="listbox" id="toc-listbox" class="dropdown--list dropdown--list_toc-list" data-role="dropdown-listbox" aria-label="Table of contents">
+                    <div class="dropdown--header">
+                            <span>
+                                    kord
+                            </span>
+                        <button class="button" data-role="dropdown-toggle" aria-label="Close table of contents">
+                            <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                        </button>
+                    </div>
+                    <div class="sidebar--inner" id="sideMenu"></div>
+                </ul>
+                <div class="dropdown--overlay"></div>
+            </div>
+        </nav>
+        <div id="resizer" class="resizer" data-item-type="BAR"></div>
+        <div id="main" data-item-type="SECTION" role="main">
+<div class="main-content" data-page-type="classlike" id="content" pageids="kord-common::dev.kord.common.entity/DiscordSelectComponent///PointingToDeclaration//-1299464202">
+  <div class="breadcrumbs"><a href="../../index.html">kord-common</a><span class="delimiter">/</span><a href="../index.html">dev.kord.common.entity</a><span class="delimiter">/</span><span class="current">DiscordSelectComponent</span></div>
+  <div class="cover ">
+    <h1 class="cover"><span>Discord</span><wbr><span>Select</span><wbr><span><span>Component</span></span></h1>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":common/commonMain"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://kotlinlang.org/api/kotlinx.serialization/kotlinx-serialization-core/kotlinx.serialization/-serializable/index.html"><span class="token annotation builtin">Serializable</span></a></div></div><span class="token keyword">data </span><span class="token keyword">class </span><a href="index.html">DiscordSelectComponent</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">val </span>type<span class="token operator">: </span><a href="../-component-type/index.html">ComponentType</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>customId<span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional/index.html">Optional</a><span class="token operator">&lt;</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">&gt;</span><span class="token operator"> = </span>Optional.Missing()<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>disabled<span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional-boolean/index.html">OptionalBoolean</a><span class="token operator"> = </span>OptionalBoolean.Missing<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>components<span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional/index.html">Optional</a><span class="token operator">&lt;</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><a href="../-discord-component/index.html">DiscordComponent</a><span class="token operator">&gt;</span><span class="token operator">&gt;</span><span class="token operator"> = </span>Optional.Missing()<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>options<span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional/index.html">Optional</a><span class="token operator">&lt;</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><a href="../-discord-select-option/index.html">DiscordSelectOption</a><span class="token operator">&gt;</span><span class="token operator">&gt;</span><span class="token operator"> = </span>Optional.Missing()<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>placeholder<span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional/index.html">Optional</a><span class="token operator">&lt;</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">&gt;</span><span class="token operator"> = </span>Optional.Missing()<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>defaultValues<span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional/index.html">Optional</a><span class="token operator">&lt;</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><a href="../-discord-select-default-value/index.html">DiscordSelectDefaultValue</a><span class="token operator">&gt;</span><span class="token operator">&gt;</span><span class="token operator"> = </span>Optional.Missing()<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>minValues<span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional-int/index.html">OptionalInt</a><span class="token operator"> = </span>OptionalInt.Missing<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>maxValues<span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional-int/index.html">OptionalInt</a><span class="token operator"> = </span>OptionalInt.Missing<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>minLength<span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional-int/index.html">OptionalInt</a><span class="token operator"> = </span>OptionalInt.Missing<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>maxLength<span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional-int/index.html">OptionalInt</a><span class="token operator"> = </span>OptionalInt.Missing<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>required<span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional-boolean/index.html">OptionalBoolean</a><span class="token operator"> = </span>OptionalBoolean.Missing<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>value<span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional/index.html">Optional</a><span class="token operator">&lt;</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">&gt;</span><span class="token operator"> = </span>Optional.Missing()<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>values<span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional/index.html">Optional</a><span class="token operator">&lt;</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">&gt;</span><span class="token operator">&gt;</span><span class="token operator"> = </span>Optional.Missing()<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>channelTypes<span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional/index.html">Optional</a><span class="token operator">&lt;</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><a href="../-channel-type/index.html">ChannelType</a><span class="token operator">&gt;</span><span class="token operator">&gt;</span><span class="token operator"> = </span>Optional.Missing()<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>label<span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional/index.html">Optional</a><span class="token operator">&lt;</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">&gt;</span><span class="token operator"> = </span>Optional.Missing()<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>emoji<span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional/index.html">Optional</a><span class="token operator">&lt;</span><a href="../-discord-partial-emoji/index.html">DiscordPartialEmoji</a><span class="token operator">&gt;</span><span class="token operator"> = </span>Optional.Missing()<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>url<span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional/index.html">Optional</a><span class="token operator">&lt;</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">&gt;</span><span class="token operator"> = </span>Optional.Missing()</span></span><span class="token punctuation">)</span> : <a href="../-discord-component/index.html">DiscordComponent</a><span class="source-link-wrapper"><span class="source-link" data-element-type="source-link">(<a href="https://github.com/kordlib/kord/blob/map(map(map(valueof(ProcessOutputValueSource))))/common/src/commonMain/kotlin/entity/DiscordComponent.kt#L272">source</a>)</span></span></div></div></div>
+  </div>
+  <div class="tabbedcontent">
+    <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="CONSTRUCTOR,TYPE,PROPERTY,FUNCTION">Members</button></div>
+    <div class="tabs-section-body">
+      <div data-togglable="CONSTRUCTOR">
+        <h2 class="tableheader">Constructors</h2>
+        <div class="table"><a data-name="-725819837%2FConstructors%2F-1299464202" anchor-label="DiscordSelectComponent" id="-725819837%2FConstructors%2F-1299464202" data-filterable-set=":common/commonMain"></a>
+          <div class="table-row table-row_content" data-togglable="CONSTRUCTOR" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-discord-select-component.html"><span>Discord</span><wbr><span>Select</span><wbr><span><span>Component</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-725819837%2FConstructors%2F-1299464202"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":common/commonMain"><div class="symbol monospace"><span class="token keyword">constructor</span><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">type<span class="token operator">: </span><a href="../-component-type/index.html">ComponentType</a><span class="token punctuation">, </span></span><span class="parameter ">customId<span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional/index.html">Optional</a><span class="token operator">&lt;</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">&gt;</span><span class="token operator"> = </span>Optional.Missing()<span class="token punctuation">, </span></span><span class="parameter ">disabled<span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional-boolean/index.html">OptionalBoolean</a><span class="token operator"> = </span>OptionalBoolean.Missing<span class="token punctuation">, </span></span><span class="parameter ">components<span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional/index.html">Optional</a><span class="token operator">&lt;</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><a href="../-discord-component/index.html">DiscordComponent</a><span class="token operator">&gt;</span><span class="token operator">&gt;</span><span class="token operator"> = </span>Optional.Missing()<span class="token punctuation">, </span></span><span class="parameter ">options<span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional/index.html">Optional</a><span class="token operator">&lt;</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><a href="../-discord-select-option/index.html">DiscordSelectOption</a><span class="token operator">&gt;</span><span class="token operator">&gt;</span><span class="token operator"> = </span>Optional.Missing()<span class="token punctuation">, </span></span><span class="parameter ">placeholder<span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional/index.html">Optional</a><span class="token operator">&lt;</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">&gt;</span><span class="token operator"> = </span>Optional.Missing()<span class="token punctuation">, </span></span><span class="parameter ">defaultValues<span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional/index.html">Optional</a><span class="token operator">&lt;</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><a href="../-discord-select-default-value/index.html">DiscordSelectDefaultValue</a><span class="token operator">&gt;</span><span class="token operator">&gt;</span><span class="token operator"> = </span>Optional.Missing()<span class="token punctuation">, </span></span><span class="parameter ">minValues<span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional-int/index.html">OptionalInt</a><span class="token operator"> = </span>OptionalInt.Missing<span class="token punctuation">, </span></span><span class="parameter ">maxValues<span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional-int/index.html">OptionalInt</a><span class="token operator"> = </span>OptionalInt.Missing<span class="token punctuation">, </span></span><span class="parameter ">minLength<span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional-int/index.html">OptionalInt</a><span class="token operator"> = </span>OptionalInt.Missing<span class="token punctuation">, </span></span><span class="parameter ">maxLength<span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional-int/index.html">OptionalInt</a><span class="token operator"> = </span>OptionalInt.Missing<span class="token punctuation">, </span></span><span class="parameter ">required<span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional-boolean/index.html">OptionalBoolean</a><span class="token operator"> = </span>OptionalBoolean.Missing<span class="token punctuation">, </span></span><span class="parameter ">value<span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional/index.html">Optional</a><span class="token operator">&lt;</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">&gt;</span><span class="token operator"> = </span>Optional.Missing()<span class="token punctuation">, </span></span><span class="parameter ">values<span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional/index.html">Optional</a><span class="token operator">&lt;</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">&gt;</span><span class="token operator">&gt;</span><span class="token operator"> = </span>Optional.Missing()<span class="token punctuation">, </span></span><span class="parameter ">channelTypes<span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional/index.html">Optional</a><span class="token operator">&lt;</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><a href="../-channel-type/index.html">ChannelType</a><span class="token operator">&gt;</span><span class="token operator">&gt;</span><span class="token operator"> = </span>Optional.Missing()<span class="token punctuation">, </span></span><span class="parameter ">label<span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional/index.html">Optional</a><span class="token operator">&lt;</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">&gt;</span><span class="token operator"> = </span>Optional.Missing()<span class="token punctuation">, </span></span><span class="parameter ">emoji<span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional/index.html">Optional</a><span class="token operator">&lt;</span><a href="../-discord-partial-emoji/index.html">DiscordPartialEmoji</a><span class="token operator">&gt;</span><span class="token operator"> = </span>Optional.Missing()<span class="token punctuation">, </span></span><span class="parameter ">url<span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional/index.html">Optional</a><span class="token operator">&lt;</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">&gt;</span><span class="token operator"> = </span>Optional.Missing()</span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div data-togglable="PROPERTY">
+        <h2 class="tableheader">Properties</h2>
+        <div class="table"><a data-name="955520021%2FProperties%2F-1299464202" anchor-label="channelTypes" id="955520021%2FProperties%2F-1299464202" data-filterable-set=":common/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="channel-types.html"><span>channel</span><wbr><span><span>Types</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="955520021%2FProperties%2F-1299464202"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":common/commonMain"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://kotlinlang.org/api/kotlinx.serialization/kotlinx-serialization-core/kotlinx.serialization/-serial-name/index.html"><span class="token annotation builtin">SerialName</span></a><span class="token punctuation">(</span><span>value<span class="token operator"> = </span><span class="breakable-word"><span class="token string">"channel_types"</span></span></span><wbr><span class="token punctuation">)</span></div></div><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">val </span><a href="channel-types.html">channelTypes</a><span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional/index.html">Optional</a><span class="token operator">&lt;</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><a href="../-channel-type/index.html">ChannelType</a><span class="token operator">&gt;</span><span class="token operator">&gt;</span></div><div class="brief "><p class="paragraph">List of channel types to include in the channel select component (<a href="../-component-type/-channel-select/index.html">ComponentType.ChannelSelect</a>)</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="236674485%2FProperties%2F-1299464202" anchor-label="components" id="236674485%2FProperties%2F-1299464202" data-filterable-set=":common/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="components.html"><span><span>components</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="236674485%2FProperties%2F-1299464202"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":common/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">val </span><a href="components.html">components</a><span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional/index.html">Optional</a><span class="token operator">&lt;</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><a href="../-discord-component/index.html">DiscordComponent</a><span class="token operator">&gt;</span><span class="token operator">&gt;</span></div><div class="brief "><p class="paragraph">a list of child components (for action rows)</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-877122401%2FProperties%2F-1299464202" anchor-label="customId" id="-877122401%2FProperties%2F-1299464202" data-filterable-set=":common/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="custom-id.html"><span>custom</span><wbr><span><span>Id</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-877122401%2FProperties%2F-1299464202"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":common/commonMain"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://kotlinlang.org/api/kotlinx.serialization/kotlinx-serialization-core/kotlinx.serialization/-serial-name/index.html"><span class="token annotation builtin">SerialName</span></a><span class="token punctuation">(</span><span>value<span class="token operator"> = </span><span class="breakable-word"><span class="token string">"custom_id"</span></span></span><wbr><span class="token punctuation">)</span></div></div><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">val </span><a href="custom-id.html">customId</a><span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional/index.html">Optional</a><span class="token operator">&lt;</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">&gt;</span></div><div class="brief "><p class="paragraph">a developer-defined identifier for the button, max 100 characters</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="852035404%2FProperties%2F-1299464202" anchor-label="defaultValues" id="852035404%2FProperties%2F-1299464202" data-filterable-set=":common/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="default-values.html"><span>default</span><wbr><span><span>Values</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="852035404%2FProperties%2F-1299464202"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":common/commonMain"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://kotlinlang.org/api/kotlinx.serialization/kotlinx-serialization-core/kotlinx.serialization/-serial-name/index.html"><span class="token annotation builtin">SerialName</span></a><span class="token punctuation">(</span><span>value<span class="token operator"> = </span><span class="breakable-word"><span class="token string">"default_values"</span></span></span><wbr><span class="token punctuation">)</span></div></div><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">val </span><a href="default-values.html">defaultValues</a><span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional/index.html">Optional</a><span class="token operator">&lt;</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><a href="../-discord-select-default-value/index.html">DiscordSelectDefaultValue</a><span class="token operator">&gt;</span><span class="token operator">&gt;</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="360341647%2FProperties%2F-1299464202" anchor-label="disabled" id="360341647%2FProperties%2F-1299464202" data-filterable-set=":common/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="disabled.html"><span><span>disabled</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="360341647%2FProperties%2F-1299464202"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":common/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">val </span><a href="disabled.html">disabled</a><span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional-boolean/index.html">OptionalBoolean</a></div><div class="brief "><p class="paragraph">whether the button is disabled, default <code class="lang-kotlin">false</code></p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1382699735%2FProperties%2F-1299464202" anchor-label="emoji" id="-1382699735%2FProperties%2F-1299464202" data-filterable-set=":common/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="emoji.html"><span><span>emoji</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1382699735%2FProperties%2F-1299464202"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":common/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">val </span><a href="emoji.html">emoji</a><span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional/index.html">Optional</a><span class="token operator">&lt;</span><a href="../-discord-partial-emoji/index.html">DiscordPartialEmoji</a><span class="token operator">&gt;</span></div><div class="brief "><p class="paragraph">an <a href="../-discord-partial-emoji/index.html">DiscordPartialEmoji</a> that appears on the button (if the component is a button)</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1860759099%2FProperties%2F-1299464202" anchor-label="label" id="1860759099%2FProperties%2F-1299464202" data-filterable-set=":common/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="label.html"><span><span>label</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1860759099%2FProperties%2F-1299464202"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":common/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">val </span><a href="label.html">label</a><span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional/index.html">Optional</a><span class="token operator">&lt;</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">&gt;</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-681049211%2FProperties%2F-1299464202" anchor-label="maxLength" id="-681049211%2FProperties%2F-1299464202" data-filterable-set=":common/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="max-length.html"><span>max</span><wbr><span><span>Length</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-681049211%2FProperties%2F-1299464202"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":common/commonMain"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://kotlinlang.org/api/kotlinx.serialization/kotlinx-serialization-core/kotlinx.serialization/-serial-name/index.html"><span class="token annotation builtin">SerialName</span></a><span class="token punctuation">(</span><span>value<span class="token operator"> = </span><span class="breakable-word"><span class="token string">"max_length"</span></span></span><wbr><span class="token punctuation">)</span></div></div><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">val </span><a href="max-length.html">maxLength</a><span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional-int/index.html">OptionalInt</a></div><div class="brief "><p class="paragraph">the maximum input length for a text input, min 1, max 4000.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="926047433%2FProperties%2F-1299464202" anchor-label="maxValues" id="926047433%2FProperties%2F-1299464202" data-filterable-set=":common/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="max-values.html"><span>max</span><wbr><span><span>Values</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="926047433%2FProperties%2F-1299464202"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":common/commonMain"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://kotlinlang.org/api/kotlinx.serialization/kotlinx-serialization-core/kotlinx.serialization/-serial-name/index.html"><span class="token annotation builtin">SerialName</span></a><span class="token punctuation">(</span><span>value<span class="token operator"> = </span><span class="breakable-word"><span class="token string">"max_values"</span></span></span><wbr><span class="token punctuation">)</span></div></div><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">val </span><a href="max-values.html">maxValues</a><span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional-int/index.html">OptionalInt</a></div><div class="brief "><p class="paragraph">the maximum amount of <a href="../-discord-component/options.html">options</a> allowed</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1950573783%2FProperties%2F-1299464202" anchor-label="minLength" id="1950573783%2FProperties%2F-1299464202" data-filterable-set=":common/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="min-length.html"><span>min</span><wbr><span><span>Length</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1950573783%2FProperties%2F-1299464202"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":common/commonMain"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://kotlinlang.org/api/kotlinx.serialization/kotlinx-serialization-core/kotlinx.serialization/-serial-name/index.html"><span class="token annotation builtin">SerialName</span></a><span class="token punctuation">(</span><span>value<span class="token operator"> = </span><span class="breakable-word"><span class="token string">"min_length"</span></span></span><wbr><span class="token punctuation">)</span></div></div><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">val </span><a href="min-length.html">minLength</a><span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional-int/index.html">OptionalInt</a></div><div class="brief "><p class="paragraph">the minimum input length for a text input, min 0, max 4000.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-737296869%2FProperties%2F-1299464202" anchor-label="minValues" id="-737296869%2FProperties%2F-1299464202" data-filterable-set=":common/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="min-values.html"><span>min</span><wbr><span><span>Values</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-737296869%2FProperties%2F-1299464202"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":common/commonMain"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://kotlinlang.org/api/kotlinx.serialization/kotlinx-serialization-core/kotlinx.serialization/-serial-name/index.html"><span class="token annotation builtin">SerialName</span></a><span class="token punctuation">(</span><span>value<span class="token operator"> = </span><span class="breakable-word"><span class="token string">"min_values"</span></span></span><wbr><span class="token punctuation">)</span></div></div><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">val </span><a href="min-values.html">minValues</a><span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional-int/index.html">OptionalInt</a></div><div class="brief "><p class="paragraph">the minimum amount of <a href="../-discord-component/options.html">options</a> allowed</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="994116945%2FProperties%2F-1299464202" anchor-label="options" id="994116945%2FProperties%2F-1299464202" data-filterable-set=":common/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="options.html"><span><span>options</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="994116945%2FProperties%2F-1299464202"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":common/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">val </span><a href="options.html">options</a><span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional/index.html">Optional</a><span class="token operator">&lt;</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><a href="../-discord-select-option/index.html">DiscordSelectOption</a><span class="token operator">&gt;</span><span class="token operator">&gt;</span></div><div class="brief "><p class="paragraph">the select menu options</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="928278300%2FProperties%2F-1299464202" anchor-label="placeholder" id="928278300%2FProperties%2F-1299464202" data-filterable-set=":common/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="placeholder.html"><span><span>placeholder</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="928278300%2FProperties%2F-1299464202"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":common/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">val </span><a href="placeholder.html">placeholder</a><span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional/index.html">Optional</a><span class="token operator">&lt;</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">&gt;</span></div><div class="brief "><p class="paragraph">the placeholder text for the select menu</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-2142835508%2FProperties%2F-1299464202" anchor-label="required" id="-2142835508%2FProperties%2F-1299464202" data-filterable-set=":common/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="required.html"><span><span>required</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-2142835508%2FProperties%2F-1299464202"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":common/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">val </span><a href="required.html">required</a><span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional-boolean/index.html">OptionalBoolean</a></div><div class="brief "><p class="paragraph">whether this component is required to be filled, default false.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-528853871%2FProperties%2F-1299464202" anchor-label="type" id="-528853871%2FProperties%2F-1299464202" data-filterable-set=":common/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="type.html"><span><span>type</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-528853871%2FProperties%2F-1299464202"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":common/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">val </span><a href="type.html">type</a><span class="token operator">: </span><a href="../-component-type/index.html">ComponentType</a></div><div class="brief "><p class="paragraph">the <a href="../-component-type/index.html">ComponentType</a> of the component</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1483248480%2FProperties%2F-1299464202" anchor-label="url" id="-1483248480%2FProperties%2F-1299464202" data-filterable-set=":common/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="url.html"><span><span>url</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1483248480%2FProperties%2F-1299464202"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":common/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">val </span><a href="url.html">url</a><span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional/index.html">Optional</a><span class="token operator">&lt;</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">&gt;</span></div><div class="brief "><p class="paragraph">a url for link-style buttons</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1710338654%2FProperties%2F-1299464202" anchor-label="value" id="1710338654%2FProperties%2F-1299464202" data-filterable-set=":common/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="value.html"><span><span>value</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1710338654%2FProperties%2F-1299464202"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":common/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">val </span><a href="value.html">value</a><span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional/index.html">Optional</a><span class="token operator">&lt;</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">&gt;</span></div><div class="brief "><p class="paragraph">a pre-filled value for this component, max 4000 characters.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1247821783%2FProperties%2F-1299464202" anchor-label="values" id="-1247821783%2FProperties%2F-1299464202" data-filterable-set=":common/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":common/commonMain" data-filterable-set=":common/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="values.html"><span><span>values</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1247821783%2FProperties%2F-1299464202"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":common/commonMain"><div class="symbol monospace"><span class="token keyword">val </span><a href="values.html">values</a><span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional/index.html">Optional</a><span class="token operator">&lt;</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">&gt;</span><span class="token operator">&gt;</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    <div class="footer">
+        <div class="footer--container">
+            <a href="#content" id="go-to-top-link" class="footer--button footer--button_go-to-top"></a>
+            <div class="footer--content">
+                <div>
+                    <span>Generated by </span>
+                    <a class="footer--link footer--link_external" href="https://github.com/Kotlin/dokka">
+                        Dokka
+                    </a>
+                    <div>© 2026 Copyright</div>
+                </div>
+            </div>
+        </div>
+    </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
