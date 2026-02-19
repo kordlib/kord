@@ -20,6 +20,7 @@ import dev.kord.core.entity.channel.Channel
 import dev.kord.core.entity.channel.GuildChannel
 import dev.kord.core.entity.channel.MessageChannel
 import dev.kord.core.entity.channel.TopGuildMessageChannel
+import dev.kord.core.entity.channel.thread.ThreadChannel
 import dev.kord.core.entity.component.ActionRowComponent
 import dev.kord.core.entity.interaction.ActionInteraction
 import dev.kord.core.entity.interaction.followup.FollowupMessage
@@ -247,6 +248,11 @@ public class Message(
      * The [Message.Interaction] sent on this message object when it is a response to an [ActionInteraction].
      */
     public val interaction: Interaction? get() = data.interaction.mapNullable { Interaction(it, kord) }.value
+
+    /**
+     * The [thread][ThreadChannel] that was started from this message.
+     */
+    public val thread: ThreadChannel? get() = data.thread.mapNullable { ThreadChannel(it, kord) }.value
 
     /**
      * The [users][User] mentioned in this message.
