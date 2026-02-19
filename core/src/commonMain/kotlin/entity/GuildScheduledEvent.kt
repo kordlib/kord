@@ -12,7 +12,7 @@ import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.core.supplier.getChannelOfOrNull
-import kotlinx.datetime.Instant
+import kotlin.time.Instant
 
 /**
  * An instance of a

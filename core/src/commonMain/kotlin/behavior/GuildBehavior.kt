@@ -31,9 +31,11 @@ import dev.kord.gateway.Gateway
 import dev.kord.gateway.PrivilegedIntent
 import dev.kord.gateway.RequestGuildMembers
 import dev.kord.gateway.builder.RequestGuildMembersBuilder
+import dev.kord.gateway.requestSoundboardSounds
 import dev.kord.gateway.start
 import dev.kord.rest.Image
 import dev.kord.rest.NamedFile
+import dev.kord.rest.Sound
 import dev.kord.rest.builder.auditlog.AuditLogGetRequestBuilder
 import dev.kord.rest.builder.automoderation.*
 import dev.kord.rest.builder.ban.BanCreateBuilder
@@ -51,8 +53,9 @@ import dev.kord.rest.json.request.GuildStickerCreateRequest
 import dev.kord.rest.json.request.MultipartGuildStickerCreateRequest
 import dev.kord.rest.request.RestRequestException
 import dev.kord.rest.service.*
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.*
-import kotlinx.datetime.Instant
+import kotlin.time.Instant
 import kotlin.contracts.InvocationKind.EXACTLY_ONCE
 import kotlin.contracts.contract
 
@@ -78,6 +81,15 @@ public interface GuildBehavior : KordEntity, Strategizable {
      */
     public val activeThreads: Flow<ThreadChannel>
         get() = supplier.getActiveThreads(id)
+
+    /**
+     * Returns all [soundboard sounds][GuildSoundboardSound] in this guild.
+     *
+     * The returned flow is lazily executed, any [RequestException] will be thrown on
+     * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
+     */
+    public val soundboardSounds: Flow<GuildSoundboardSound>
+        get() = supplier.getGuildSoundboardSounds(id)
 
     /**
      * Requests to get all threads in this guild that are present in [cache][Kord.cache].
@@ -255,6 +267,28 @@ public interface GuildBehavior : KordEntity, Strategizable {
                 emit(it)
                 return@transformWhile (it.chunkIndex + 1) < it.chunkCount
             }
+    }
+
+    /**
+     * Requests guild emojis [through the gateway][requestSoundboardSounds].
+     *
+     * The returned flow is cold, and will execute the request only on subscription.
+     * Collection of this flow on a [Gateway] that is not [running][Gateway.start]
+     * will result in an [IllegalStateException] being thrown.
+     *
+     * Executing the request on a [Gateway] with a [Shard][dev.kord.common.entity.DiscordShard] that
+     * [does not match the guild id](https://discord.com/developers/docs/topics/gateway#sharding)
+     * can result in undefined behavior for the returned flow and inconsistencies in the cache.
+     */
+    @OptIn(ExperimentalCoroutinesApi::class)
+    public fun requestSoundboardSounds(): Flow<GuildSoundboardSound> {
+        val gateway = gateway ?: return emptyFlow()
+        return gateway.requestSoundboardSounds(listOf(id)).flatMapConcat {
+            it.soundboardSounds.map { sound ->
+                val data = SoundboardSoundData.from(sound)
+                GuildSoundboardSound(data, kord, supplier)
+            }.asFlow()
+        }
     }
 
     public fun getApplicationCommands(withLocalizations: Boolean? = null): Flow<GuildApplicationCommand> =
@@ -596,6 +630,24 @@ public interface GuildBehavior : KordEntity, Strategizable {
      */
     public suspend fun getGuildScheduledEventOrNull(eventId: Snowflake): GuildScheduledEvent? =
         supplier.getGuildScheduledEventOrNull(id, eventId)
+
+    /**
+     * Requests a [GuildSoundboardSound] by its [soundId].
+     *
+     * @throws [RequestException] if anything went wrong during the request.
+     * @throws EntityNotFoundException if the sound is null
+     */
+    public suspend fun getSoundboardSound(soundId: Snowflake): GuildSoundboardSound =
+        supplier.getGuildSoundboardSound(id, soundId)
+
+    /**
+     * Requests a [GuildSoundboardSound] by its [soundId] returns `null` if none could be found.
+     *
+     * @throws [RequestException] if anything went wrong during the request.
+     * @throws EntityNotFoundException if the sound is null
+     */
+    public suspend fun getSoundboardSoundOrNull(soundId: Snowflake): GuildSoundboardSound? =
+        supplier.getGuildSoundboardSoundOrNull(id, soundId)
 
     public suspend fun getWidget(): GuildWidget = supplier.getGuildWidget(id)
 
@@ -1143,4 +1195,21 @@ public suspend inline fun GuildBehavior.createMemberProfileAutoModerationRule(
     contract { callsInPlace(builder, EXACTLY_ONCE) }
     val rule = kord.rest.autoModeration.createMemberProfileAutoModerationRule(guildId = id, name, eventType, builder)
     return MemberProfileAutoModerationRule(AutoModerationRuleData.from(rule), kord, supplier)
+}
+
+/**
+ * Creates a new [sound][GuildSoundboardSound] on this guild and returns it.
+ *
+ * This requires the [Permission.ManageGuildExpressions] permission.
+ *
+ * @param name the name of the sound
+ * @param sound the [Sound]
+ *
+ * @throws RestRequestException if something went wrong during the request.
+ */
+public suspend inline fun GuildBehavior.createSoundboardSound(name: String, sound: Sound, builder: SoundboardSoundCreateBuilder.() -> Unit = {}): GuildSoundboardSound {
+    contract { callsInPlace(builder, EXACTLY_ONCE) }
+    val sound = kord.rest.guild.createGuildSoundboardSound(guildId = id, name, sound, builder)
+
+    return GuildSoundboardSound(SoundboardSoundData.from(sound), kord, supplier)
 }

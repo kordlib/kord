@@ -27,7 +27,7 @@ import dev.kord.rest.request.RestRequestException
 import dev.kord.rest.route.Position
 import dev.kord.rest.service.RestClient
 import kotlinx.coroutines.flow.*
-import kotlinx.datetime.Instant
+import kotlin.time.Instant
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 import kotlin.math.min
@@ -227,6 +227,19 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
         for (emoji in emoji.getEmojis(guildId)) {
             val data = EmojiData.from(guildId = guildId, id = emoji.id!!, entity = emoji)
             emit(GuildEmoji(data, kord))
+        }
+    }
+
+    override suspend fun getGuildSoundboardSoundOrNull(guildId: Snowflake, soundId: Snowflake): GuildSoundboardSound? = catchNotFound {
+        val data = SoundboardSoundData.from(guild.getGuildSoundboardSound(guildId, soundId))
+
+        return GuildSoundboardSound(data, kord)
+    }
+
+    override fun getGuildSoundboardSounds(guildId: Snowflake): Flow<GuildSoundboardSound> = flow {
+        for (sound in guild.listGuildSoundboardSounds(guildId).items) {
+            val data = SoundboardSoundData.from(sound)
+            emit(GuildSoundboardSound(data, kord))
         }
     }
 

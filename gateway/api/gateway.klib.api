@@ -44,6 +44,7 @@ final enum class dev.kord.gateway/OpCode : kotlin/Enum<dev.kord.gateway/OpCode> 
     enum entry InvalidSession // dev.kord.gateway/OpCode.InvalidSession|null[0]
     enum entry Reconnect // dev.kord.gateway/OpCode.Reconnect|null[0]
     enum entry RequestGuildMembers // dev.kord.gateway/OpCode.RequestGuildMembers|null[0]
+    enum entry RequestSoundboardSounds // dev.kord.gateway/OpCode.RequestSoundboardSounds|null[0]
     enum entry Resume // dev.kord.gateway/OpCode.Resume|null[0]
     enum entry StatusUpdate // dev.kord.gateway/OpCode.StatusUpdate|null[0]
     enum entry Unknown // dev.kord.gateway/OpCode.Unknown|null[0]
@@ -108,7 +109,6 @@ final class dev.kord.gateway.builder/LoginBuilder { // dev.kord.gateway.builder/
         final fun <set-presence>(dev.kord.gateway/DiscordPresence) // dev.kord.gateway.builder/LoginBuilder.presence.<set-presence>|<set-presence>(dev.kord.gateway.DiscordPresence){}[0]
 
     final inline fun intents(kotlin/Function1<dev.kord.gateway/Intents.Builder, kotlin/Unit>) // dev.kord.gateway.builder/LoginBuilder.intents|intents(kotlin.Function1<dev.kord.gateway.Intents.Builder,kotlin.Unit>){}[0]
-    final inline fun intents0(kotlin/Function1<dev.kord.gateway/Intents.Builder, kotlin/Unit>) // dev.kord.gateway.builder/LoginBuilder.intents0|intents0(kotlin.Function1<dev.kord.gateway.Intents.Builder,kotlin.Unit>){}[0]
     final inline fun presence(kotlin/Function1<dev.kord.gateway.builder/PresenceBuilder, kotlin/Unit>) // dev.kord.gateway.builder/LoginBuilder.presence|presence(kotlin.Function1<dev.kord.gateway.builder.PresenceBuilder,kotlin.Unit>){}[0]
 }
 
@@ -119,8 +119,8 @@ final class dev.kord.gateway.builder/PresenceBuilder { // dev.kord.gateway.build
         final fun <get-afk>(): kotlin/Boolean // dev.kord.gateway.builder/PresenceBuilder.afk.<get-afk>|<get-afk>(){}[0]
         final fun <set-afk>(kotlin/Boolean) // dev.kord.gateway.builder/PresenceBuilder.afk.<set-afk>|<set-afk>(kotlin.Boolean){}[0]
     final var since // dev.kord.gateway.builder/PresenceBuilder.since|{}since[0]
-        final fun <get-since>(): kotlinx.datetime/Instant? // dev.kord.gateway.builder/PresenceBuilder.since.<get-since>|<get-since>(){}[0]
-        final fun <set-since>(kotlinx.datetime/Instant?) // dev.kord.gateway.builder/PresenceBuilder.since.<set-since>|<set-since>(kotlinx.datetime.Instant?){}[0]
+        final fun <get-since>(): kotlin.time/Instant? // dev.kord.gateway.builder/PresenceBuilder.since.<get-since>|<get-since>(){}[0]
+        final fun <set-since>(kotlin.time/Instant?) // dev.kord.gateway.builder/PresenceBuilder.since.<set-since>|<set-since>(kotlin.time.Instant?){}[0]
     final var state // dev.kord.gateway.builder/PresenceBuilder.state|{}state[0]
         final fun <get-state>(): kotlin/String? // dev.kord.gateway.builder/PresenceBuilder.state.<get-state>|<get-state>(){}[0]
         final fun <set-state>(kotlin/String?) // dev.kord.gateway.builder/PresenceBuilder.state.<set-state>|<set-state>(kotlin.String?){}[0]
@@ -189,38 +189,6 @@ final class dev.kord.gateway.retry/LinearRetry : dev.kord.gateway.retry/Retry { 
     final suspend fun retry() // dev.kord.gateway.retry/LinearRetry.retry|retry(){}[0]
 }
 
-final class dev.kord.gateway/ApplicationCommandCreate : dev.kord.gateway/DispatchEvent { // dev.kord.gateway/ApplicationCommandCreate|null[0]
-    constructor <init>(dev.kord.common.entity/DiscordApplicationCommand, kotlin/Int?) // dev.kord.gateway/ApplicationCommandCreate.<init>|<init>(dev.kord.common.entity.DiscordApplicationCommand;kotlin.Int?){}[0]
-
-    final val application // dev.kord.gateway/ApplicationCommandCreate.application|{}application[0]
-        final fun <get-application>(): dev.kord.common.entity/DiscordApplicationCommand // dev.kord.gateway/ApplicationCommandCreate.application.<get-application>|<get-application>(){}[0]
-    final val sequence // dev.kord.gateway/ApplicationCommandCreate.sequence|{}sequence[0]
-        final fun <get-sequence>(): kotlin/Int? // dev.kord.gateway/ApplicationCommandCreate.sequence.<get-sequence>|<get-sequence>(){}[0]
-
-    final fun component1(): dev.kord.common.entity/DiscordApplicationCommand // dev.kord.gateway/ApplicationCommandCreate.component1|component1(){}[0]
-    final fun component2(): kotlin/Int? // dev.kord.gateway/ApplicationCommandCreate.component2|component2(){}[0]
-    final fun copy(dev.kord.common.entity/DiscordApplicationCommand = ..., kotlin/Int? = ...): dev.kord.gateway/ApplicationCommandCreate // dev.kord.gateway/ApplicationCommandCreate.copy|copy(dev.kord.common.entity.DiscordApplicationCommand;kotlin.Int?){}[0]
-    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.gateway/ApplicationCommandCreate.equals|equals(kotlin.Any?){}[0]
-    final fun hashCode(): kotlin/Int // dev.kord.gateway/ApplicationCommandCreate.hashCode|hashCode(){}[0]
-    final fun toString(): kotlin/String // dev.kord.gateway/ApplicationCommandCreate.toString|toString(){}[0]
-}
-
-final class dev.kord.gateway/ApplicationCommandDelete : dev.kord.gateway/DispatchEvent { // dev.kord.gateway/ApplicationCommandDelete|null[0]
-    constructor <init>(dev.kord.common.entity/DiscordApplicationCommand, kotlin/Int?) // dev.kord.gateway/ApplicationCommandDelete.<init>|<init>(dev.kord.common.entity.DiscordApplicationCommand;kotlin.Int?){}[0]
-
-    final val application // dev.kord.gateway/ApplicationCommandDelete.application|{}application[0]
-        final fun <get-application>(): dev.kord.common.entity/DiscordApplicationCommand // dev.kord.gateway/ApplicationCommandDelete.application.<get-application>|<get-application>(){}[0]
-    final val sequence // dev.kord.gateway/ApplicationCommandDelete.sequence|{}sequence[0]
-        final fun <get-sequence>(): kotlin/Int? // dev.kord.gateway/ApplicationCommandDelete.sequence.<get-sequence>|<get-sequence>(){}[0]
-
-    final fun component1(): dev.kord.common.entity/DiscordApplicationCommand // dev.kord.gateway/ApplicationCommandDelete.component1|component1(){}[0]
-    final fun component2(): kotlin/Int? // dev.kord.gateway/ApplicationCommandDelete.component2|component2(){}[0]
-    final fun copy(dev.kord.common.entity/DiscordApplicationCommand = ..., kotlin/Int? = ...): dev.kord.gateway/ApplicationCommandDelete // dev.kord.gateway/ApplicationCommandDelete.copy|copy(dev.kord.common.entity.DiscordApplicationCommand;kotlin.Int?){}[0]
-    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.gateway/ApplicationCommandDelete.equals|equals(kotlin.Any?){}[0]
-    final fun hashCode(): kotlin/Int // dev.kord.gateway/ApplicationCommandDelete.hashCode|hashCode(){}[0]
-    final fun toString(): kotlin/String // dev.kord.gateway/ApplicationCommandDelete.toString|toString(){}[0]
-}
-
 final class dev.kord.gateway/ApplicationCommandPermissionsUpdate : dev.kord.gateway/DispatchEvent { // dev.kord.gateway/ApplicationCommandPermissionsUpdate|null[0]
     constructor <init>(dev.kord.common.entity/DiscordGuildApplicationCommandPermissions, kotlin/Int?) // dev.kord.gateway/ApplicationCommandPermissionsUpdate.<init>|<init>(dev.kord.common.entity.DiscordGuildApplicationCommandPermissions;kotlin.Int?){}[0]
 
@@ -235,22 +203,6 @@ final class dev.kord.gateway/ApplicationCommandPermissionsUpdate : dev.kord.gate
     final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.gateway/ApplicationCommandPermissionsUpdate.equals|equals(kotlin.Any?){}[0]
     final fun hashCode(): kotlin/Int // dev.kord.gateway/ApplicationCommandPermissionsUpdate.hashCode|hashCode(){}[0]
     final fun toString(): kotlin/String // dev.kord.gateway/ApplicationCommandPermissionsUpdate.toString|toString(){}[0]
-}
-
-final class dev.kord.gateway/ApplicationCommandUpdate : dev.kord.gateway/DispatchEvent { // dev.kord.gateway/ApplicationCommandUpdate|null[0]
-    constructor <init>(dev.kord.common.entity/DiscordApplicationCommand, kotlin/Int?) // dev.kord.gateway/ApplicationCommandUpdate.<init>|<init>(dev.kord.common.entity.DiscordApplicationCommand;kotlin.Int?){}[0]
-
-    final val application // dev.kord.gateway/ApplicationCommandUpdate.application|{}application[0]
-        final fun <get-application>(): dev.kord.common.entity/DiscordApplicationCommand // dev.kord.gateway/ApplicationCommandUpdate.application.<get-application>|<get-application>(){}[0]
-    final val sequence // dev.kord.gateway/ApplicationCommandUpdate.sequence|{}sequence[0]
-        final fun <get-sequence>(): kotlin/Int? // dev.kord.gateway/ApplicationCommandUpdate.sequence.<get-sequence>|<get-sequence>(){}[0]
-
-    final fun component1(): dev.kord.common.entity/DiscordApplicationCommand // dev.kord.gateway/ApplicationCommandUpdate.component1|component1(){}[0]
-    final fun component2(): kotlin/Int? // dev.kord.gateway/ApplicationCommandUpdate.component2|component2(){}[0]
-    final fun copy(dev.kord.common.entity/DiscordApplicationCommand = ..., kotlin/Int? = ...): dev.kord.gateway/ApplicationCommandUpdate // dev.kord.gateway/ApplicationCommandUpdate.copy|copy(dev.kord.common.entity.DiscordApplicationCommand;kotlin.Int?){}[0]
-    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.gateway/ApplicationCommandUpdate.equals|equals(kotlin.Any?){}[0]
-    final fun hashCode(): kotlin/Int // dev.kord.gateway/ApplicationCommandUpdate.hashCode|hashCode(){}[0]
-    final fun toString(): kotlin/String // dev.kord.gateway/ApplicationCommandUpdate.toString|toString(){}[0]
 }
 
 final class dev.kord.gateway/AutoModerationActionExecution : dev.kord.gateway/DispatchEvent { // dev.kord.gateway/AutoModerationActionExecution|null[0]
@@ -458,6 +410,35 @@ final class dev.kord.gateway/DefaultGatewayData { // dev.kord.gateway/DefaultGat
     final fun toString(): kotlin/String // dev.kord.gateway/DefaultGatewayData.toString|toString(){}[0]
 }
 
+final class dev.kord.gateway/DeletedSound { // dev.kord.gateway/DeletedSound|null[0]
+    constructor <init>(dev.kord.common.entity/Snowflake, dev.kord.common.entity/Snowflake) // dev.kord.gateway/DeletedSound.<init>|<init>(dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake){}[0]
+
+    final val guildId // dev.kord.gateway/DeletedSound.guildId|{}guildId[0]
+        final fun <get-guildId>(): dev.kord.common.entity/Snowflake // dev.kord.gateway/DeletedSound.guildId.<get-guildId>|<get-guildId>(){}[0]
+    final val soundId // dev.kord.gateway/DeletedSound.soundId|{}soundId[0]
+        final fun <get-soundId>(): dev.kord.common.entity/Snowflake // dev.kord.gateway/DeletedSound.soundId.<get-soundId>|<get-soundId>(){}[0]
+
+    final fun component1(): dev.kord.common.entity/Snowflake // dev.kord.gateway/DeletedSound.component1|component1(){}[0]
+    final fun component2(): dev.kord.common.entity/Snowflake // dev.kord.gateway/DeletedSound.component2|component2(){}[0]
+    final fun copy(dev.kord.common.entity/Snowflake = ..., dev.kord.common.entity/Snowflake = ...): dev.kord.gateway/DeletedSound // dev.kord.gateway/DeletedSound.copy|copy(dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.gateway/DeletedSound.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.gateway/DeletedSound.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // dev.kord.gateway/DeletedSound.toString|toString(){}[0]
+
+    final object $serializer : kotlinx.serialization.internal/GeneratedSerializer<dev.kord.gateway/DeletedSound> { // dev.kord.gateway/DeletedSound.$serializer|null[0]
+        final val descriptor // dev.kord.gateway/DeletedSound.$serializer.descriptor|{}descriptor[0]
+            final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // dev.kord.gateway/DeletedSound.$serializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
+
+        final fun childSerializers(): kotlin/Array<kotlinx.serialization/KSerializer<*>> // dev.kord.gateway/DeletedSound.$serializer.childSerializers|childSerializers(){}[0]
+        final fun deserialize(kotlinx.serialization.encoding/Decoder): dev.kord.gateway/DeletedSound // dev.kord.gateway/DeletedSound.$serializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
+        final fun serialize(kotlinx.serialization.encoding/Encoder, dev.kord.gateway/DeletedSound) // dev.kord.gateway/DeletedSound.$serializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;dev.kord.gateway.DeletedSound){}[0]
+    }
+
+    final object Companion { // dev.kord.gateway/DeletedSound.Companion|null[0]
+        final fun serializer(): kotlinx.serialization/KSerializer<dev.kord.gateway/DeletedSound> // dev.kord.gateway/DeletedSound.Companion.serializer|serializer(){}[0]
+    }
+}
+
 final class dev.kord.gateway/DiscordAutoModerationActionExecution { // dev.kord.gateway/DiscordAutoModerationActionExecution|null[0]
     constructor <init>(dev.kord.common.entity/Snowflake, dev.kord.common.entity/DiscordAutoModerationAction, dev.kord.common.entity/Snowflake, dev.kord.common.entity/AutoModerationRuleTriggerType, dev.kord.common.entity/Snowflake, dev.kord.common.entity.optional/OptionalSnowflake = ..., dev.kord.common.entity.optional/OptionalSnowflake = ..., dev.kord.common.entity.optional/OptionalSnowflake = ..., kotlin/String, kotlin/String?, kotlin/String?) // dev.kord.gateway/DiscordAutoModerationActionExecution.<init>|<init>(dev.kord.common.entity.Snowflake;dev.kord.common.entity.DiscordAutoModerationAction;dev.kord.common.entity.Snowflake;dev.kord.common.entity.AutoModerationRuleTriggerType;dev.kord.common.entity.Snowflake;dev.kord.common.entity.optional.OptionalSnowflake;dev.kord.common.entity.optional.OptionalSnowflake;dev.kord.common.entity.optional.OptionalSnowflake;kotlin.String;kotlin.String?;kotlin.String?){}[0]
 
@@ -515,14 +496,14 @@ final class dev.kord.gateway/DiscordAutoModerationActionExecution { // dev.kord.
 }
 
 final class dev.kord.gateway/DiscordCreatedInvite { // dev.kord.gateway/DiscordCreatedInvite|null[0]
-    constructor <init>(dev.kord.common.entity/Snowflake, kotlin/String, kotlinx.datetime/Instant, dev.kord.common.entity.optional/OptionalSnowflake = ..., dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordUser> = ..., kotlin.time/Duration, kotlin/Int, dev.kord.common.entity.optional/Optional<dev.kord.common.entity/InviteTargetType> = ..., dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordUser> = ..., dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordPartialApplication> = ..., kotlin/Boolean, kotlin/Int) // dev.kord.gateway/DiscordCreatedInvite.<init>|<init>(dev.kord.common.entity.Snowflake;kotlin.String;kotlinx.datetime.Instant;dev.kord.common.entity.optional.OptionalSnowflake;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.DiscordUser>;kotlin.time.Duration;kotlin.Int;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.InviteTargetType>;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.DiscordUser>;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.DiscordPartialApplication>;kotlin.Boolean;kotlin.Int){}[0]
+    constructor <init>(dev.kord.common.entity/Snowflake, kotlin/String, kotlin.time/Instant, dev.kord.common.entity.optional/OptionalSnowflake = ..., dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordUser> = ..., kotlin.time/Duration, kotlin/Int, dev.kord.common.entity.optional/Optional<dev.kord.common.entity/InviteTargetType> = ..., dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordUser> = ..., dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordPartialApplication> = ..., kotlin/Boolean, kotlin/Int) // dev.kord.gateway/DiscordCreatedInvite.<init>|<init>(dev.kord.common.entity.Snowflake;kotlin.String;kotlin.time.Instant;dev.kord.common.entity.optional.OptionalSnowflake;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.DiscordUser>;kotlin.time.Duration;kotlin.Int;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.InviteTargetType>;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.DiscordUser>;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.DiscordPartialApplication>;kotlin.Boolean;kotlin.Int){}[0]
 
     final val channelId // dev.kord.gateway/DiscordCreatedInvite.channelId|{}channelId[0]
         final fun <get-channelId>(): dev.kord.common.entity/Snowflake // dev.kord.gateway/DiscordCreatedInvite.channelId.<get-channelId>|<get-channelId>(){}[0]
     final val code // dev.kord.gateway/DiscordCreatedInvite.code|{}code[0]
         final fun <get-code>(): kotlin/String // dev.kord.gateway/DiscordCreatedInvite.code.<get-code>|<get-code>(){}[0]
     final val createdAt // dev.kord.gateway/DiscordCreatedInvite.createdAt|{}createdAt[0]
-        final fun <get-createdAt>(): kotlinx.datetime/Instant // dev.kord.gateway/DiscordCreatedInvite.createdAt.<get-createdAt>|<get-createdAt>(){}[0]
+        final fun <get-createdAt>(): kotlin.time/Instant // dev.kord.gateway/DiscordCreatedInvite.createdAt.<get-createdAt>|<get-createdAt>(){}[0]
     final val guildId // dev.kord.gateway/DiscordCreatedInvite.guildId|{}guildId[0]
         final fun <get-guildId>(): dev.kord.common.entity.optional/OptionalSnowflake // dev.kord.gateway/DiscordCreatedInvite.guildId.<get-guildId>|<get-guildId>(){}[0]
     final val inviter // dev.kord.gateway/DiscordCreatedInvite.inviter|{}inviter[0]
@@ -547,14 +528,14 @@ final class dev.kord.gateway/DiscordCreatedInvite { // dev.kord.gateway/DiscordC
     final fun component11(): kotlin/Boolean // dev.kord.gateway/DiscordCreatedInvite.component11|component11(){}[0]
     final fun component12(): kotlin/Int // dev.kord.gateway/DiscordCreatedInvite.component12|component12(){}[0]
     final fun component2(): kotlin/String // dev.kord.gateway/DiscordCreatedInvite.component2|component2(){}[0]
-    final fun component3(): kotlinx.datetime/Instant // dev.kord.gateway/DiscordCreatedInvite.component3|component3(){}[0]
+    final fun component3(): kotlin.time/Instant // dev.kord.gateway/DiscordCreatedInvite.component3|component3(){}[0]
     final fun component4(): dev.kord.common.entity.optional/OptionalSnowflake // dev.kord.gateway/DiscordCreatedInvite.component4|component4(){}[0]
     final fun component5(): dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordUser> // dev.kord.gateway/DiscordCreatedInvite.component5|component5(){}[0]
     final fun component6(): kotlin.time/Duration // dev.kord.gateway/DiscordCreatedInvite.component6|component6(){}[0]
     final fun component7(): kotlin/Int // dev.kord.gateway/DiscordCreatedInvite.component7|component7(){}[0]
     final fun component8(): dev.kord.common.entity.optional/Optional<dev.kord.common.entity/InviteTargetType> // dev.kord.gateway/DiscordCreatedInvite.component8|component8(){}[0]
     final fun component9(): dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordUser> // dev.kord.gateway/DiscordCreatedInvite.component9|component9(){}[0]
-    final fun copy(dev.kord.common.entity/Snowflake = ..., kotlin/String = ..., kotlinx.datetime/Instant = ..., dev.kord.common.entity.optional/OptionalSnowflake = ..., dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordUser> = ..., kotlin.time/Duration = ..., kotlin/Int = ..., dev.kord.common.entity.optional/Optional<dev.kord.common.entity/InviteTargetType> = ..., dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordUser> = ..., dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordPartialApplication> = ..., kotlin/Boolean = ..., kotlin/Int = ...): dev.kord.gateway/DiscordCreatedInvite // dev.kord.gateway/DiscordCreatedInvite.copy|copy(dev.kord.common.entity.Snowflake;kotlin.String;kotlinx.datetime.Instant;dev.kord.common.entity.optional.OptionalSnowflake;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.DiscordUser>;kotlin.time.Duration;kotlin.Int;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.InviteTargetType>;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.DiscordUser>;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.DiscordPartialApplication>;kotlin.Boolean;kotlin.Int){}[0]
+    final fun copy(dev.kord.common.entity/Snowflake = ..., kotlin/String = ..., kotlin.time/Instant = ..., dev.kord.common.entity.optional/OptionalSnowflake = ..., dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordUser> = ..., kotlin.time/Duration = ..., kotlin/Int = ..., dev.kord.common.entity.optional/Optional<dev.kord.common.entity/InviteTargetType> = ..., dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordUser> = ..., dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordPartialApplication> = ..., kotlin/Boolean = ..., kotlin/Int = ...): dev.kord.gateway/DiscordCreatedInvite // dev.kord.gateway/DiscordCreatedInvite.copy|copy(dev.kord.common.entity.Snowflake;kotlin.String;kotlin.time.Instant;dev.kord.common.entity.optional.OptionalSnowflake;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.DiscordUser>;kotlin.time.Duration;kotlin.Int;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.InviteTargetType>;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.DiscordUser>;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.DiscordPartialApplication>;kotlin.Boolean;kotlin.Int){}[0]
     final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.gateway/DiscordCreatedInvite.equals|equals(kotlin.Any?){}[0]
     final fun hashCode(): kotlin/Int // dev.kord.gateway/DiscordCreatedInvite.hashCode|hashCode(){}[0]
     final fun toString(): kotlin/String // dev.kord.gateway/DiscordCreatedInvite.toString|toString(){}[0]
@@ -608,22 +589,22 @@ final class dev.kord.gateway/DiscordDeletedInvite { // dev.kord.gateway/DiscordD
 }
 
 final class dev.kord.gateway/DiscordPresence { // dev.kord.gateway/DiscordPresence|null[0]
-    constructor <init>(dev.kord.common.entity/PresenceStatus, kotlin/Boolean, kotlinx.datetime/Instant? = ..., dev.kord.common.entity/DiscordBotActivity? = ...) // dev.kord.gateway/DiscordPresence.<init>|<init>(dev.kord.common.entity.PresenceStatus;kotlin.Boolean;kotlinx.datetime.Instant?;dev.kord.common.entity.DiscordBotActivity?){}[0]
+    constructor <init>(dev.kord.common.entity/PresenceStatus, kotlin/Boolean, kotlin.time/Instant? = ..., dev.kord.common.entity/DiscordBotActivity? = ...) // dev.kord.gateway/DiscordPresence.<init>|<init>(dev.kord.common.entity.PresenceStatus;kotlin.Boolean;kotlin.time.Instant?;dev.kord.common.entity.DiscordBotActivity?){}[0]
 
     final val afk // dev.kord.gateway/DiscordPresence.afk|{}afk[0]
         final fun <get-afk>(): kotlin/Boolean // dev.kord.gateway/DiscordPresence.afk.<get-afk>|<get-afk>(){}[0]
     final val game // dev.kord.gateway/DiscordPresence.game|{}game[0]
         final fun <get-game>(): dev.kord.common.entity/DiscordBotActivity? // dev.kord.gateway/DiscordPresence.game.<get-game>|<get-game>(){}[0]
     final val since // dev.kord.gateway/DiscordPresence.since|{}since[0]
-        final fun <get-since>(): kotlinx.datetime/Instant? // dev.kord.gateway/DiscordPresence.since.<get-since>|<get-since>(){}[0]
+        final fun <get-since>(): kotlin.time/Instant? // dev.kord.gateway/DiscordPresence.since.<get-since>|<get-since>(){}[0]
     final val status // dev.kord.gateway/DiscordPresence.status|{}status[0]
         final fun <get-status>(): dev.kord.common.entity/PresenceStatus // dev.kord.gateway/DiscordPresence.status.<get-status>|<get-status>(){}[0]
 
     final fun component1(): dev.kord.common.entity/PresenceStatus // dev.kord.gateway/DiscordPresence.component1|component1(){}[0]
     final fun component2(): kotlin/Boolean // dev.kord.gateway/DiscordPresence.component2|component2(){}[0]
-    final fun component3(): kotlinx.datetime/Instant? // dev.kord.gateway/DiscordPresence.component3|component3(){}[0]
+    final fun component3(): kotlin.time/Instant? // dev.kord.gateway/DiscordPresence.component3|component3(){}[0]
     final fun component4(): dev.kord.common.entity/DiscordBotActivity? // dev.kord.gateway/DiscordPresence.component4|component4(){}[0]
-    final fun copy(dev.kord.common.entity/PresenceStatus = ..., kotlin/Boolean = ..., kotlinx.datetime/Instant? = ..., dev.kord.common.entity/DiscordBotActivity? = ...): dev.kord.gateway/DiscordPresence // dev.kord.gateway/DiscordPresence.copy|copy(dev.kord.common.entity.PresenceStatus;kotlin.Boolean;kotlinx.datetime.Instant?;dev.kord.common.entity.DiscordBotActivity?){}[0]
+    final fun copy(dev.kord.common.entity/PresenceStatus = ..., kotlin/Boolean = ..., kotlin.time/Instant? = ..., dev.kord.common.entity/DiscordBotActivity? = ...): dev.kord.gateway/DiscordPresence // dev.kord.gateway/DiscordPresence.copy|copy(dev.kord.common.entity.PresenceStatus;kotlin.Boolean;kotlin.time.Instant?;dev.kord.common.entity.DiscordBotActivity?){}[0]
     final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.gateway/DiscordPresence.equals|equals(kotlin.Any?){}[0]
     final fun hashCode(): kotlin/Int // dev.kord.gateway/DiscordPresence.hashCode|hashCode(){}[0]
     final fun toString(): kotlin/String // dev.kord.gateway/DiscordPresence.toString|toString(){}[0]
@@ -1267,6 +1248,70 @@ final class dev.kord.gateway/GuildScheduledEventUserRemove : dev.kord.gateway/Di
     final fun toString(): kotlin/String // dev.kord.gateway/GuildScheduledEventUserRemove.toString|toString(){}[0]
 }
 
+final class dev.kord.gateway/GuildSoundboardSoundCreate : dev.kord.gateway/DispatchEvent { // dev.kord.gateway/GuildSoundboardSoundCreate|null[0]
+    constructor <init>(dev.kord.common.entity/DiscordSoundboardSound, kotlin/Int?) // dev.kord.gateway/GuildSoundboardSoundCreate.<init>|<init>(dev.kord.common.entity.DiscordSoundboardSound;kotlin.Int?){}[0]
+
+    final val sequence // dev.kord.gateway/GuildSoundboardSoundCreate.sequence|{}sequence[0]
+        final fun <get-sequence>(): kotlin/Int? // dev.kord.gateway/GuildSoundboardSoundCreate.sequence.<get-sequence>|<get-sequence>(){}[0]
+    final val sound // dev.kord.gateway/GuildSoundboardSoundCreate.sound|{}sound[0]
+        final fun <get-sound>(): dev.kord.common.entity/DiscordSoundboardSound // dev.kord.gateway/GuildSoundboardSoundCreate.sound.<get-sound>|<get-sound>(){}[0]
+
+    final fun component1(): dev.kord.common.entity/DiscordSoundboardSound // dev.kord.gateway/GuildSoundboardSoundCreate.component1|component1(){}[0]
+    final fun component2(): kotlin/Int? // dev.kord.gateway/GuildSoundboardSoundCreate.component2|component2(){}[0]
+    final fun copy(dev.kord.common.entity/DiscordSoundboardSound = ..., kotlin/Int? = ...): dev.kord.gateway/GuildSoundboardSoundCreate // dev.kord.gateway/GuildSoundboardSoundCreate.copy|copy(dev.kord.common.entity.DiscordSoundboardSound;kotlin.Int?){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.gateway/GuildSoundboardSoundCreate.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.gateway/GuildSoundboardSoundCreate.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // dev.kord.gateway/GuildSoundboardSoundCreate.toString|toString(){}[0]
+}
+
+final class dev.kord.gateway/GuildSoundboardSoundDelete : dev.kord.gateway/DispatchEvent { // dev.kord.gateway/GuildSoundboardSoundDelete|null[0]
+    constructor <init>(dev.kord.gateway/DeletedSound, kotlin/Int?) // dev.kord.gateway/GuildSoundboardSoundDelete.<init>|<init>(dev.kord.gateway.DeletedSound;kotlin.Int?){}[0]
+
+    final val sequence // dev.kord.gateway/GuildSoundboardSoundDelete.sequence|{}sequence[0]
+        final fun <get-sequence>(): kotlin/Int? // dev.kord.gateway/GuildSoundboardSoundDelete.sequence.<get-sequence>|<get-sequence>(){}[0]
+    final val sound // dev.kord.gateway/GuildSoundboardSoundDelete.sound|{}sound[0]
+        final fun <get-sound>(): dev.kord.gateway/DeletedSound // dev.kord.gateway/GuildSoundboardSoundDelete.sound.<get-sound>|<get-sound>(){}[0]
+
+    final fun component1(): dev.kord.gateway/DeletedSound // dev.kord.gateway/GuildSoundboardSoundDelete.component1|component1(){}[0]
+    final fun component2(): kotlin/Int? // dev.kord.gateway/GuildSoundboardSoundDelete.component2|component2(){}[0]
+    final fun copy(dev.kord.gateway/DeletedSound = ..., kotlin/Int? = ...): dev.kord.gateway/GuildSoundboardSoundDelete // dev.kord.gateway/GuildSoundboardSoundDelete.copy|copy(dev.kord.gateway.DeletedSound;kotlin.Int?){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.gateway/GuildSoundboardSoundDelete.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.gateway/GuildSoundboardSoundDelete.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // dev.kord.gateway/GuildSoundboardSoundDelete.toString|toString(){}[0]
+}
+
+final class dev.kord.gateway/GuildSoundboardSoundUpdate : dev.kord.gateway/DispatchEvent { // dev.kord.gateway/GuildSoundboardSoundUpdate|null[0]
+    constructor <init>(dev.kord.common.entity/DiscordSoundboardSound, kotlin/Int?) // dev.kord.gateway/GuildSoundboardSoundUpdate.<init>|<init>(dev.kord.common.entity.DiscordSoundboardSound;kotlin.Int?){}[0]
+
+    final val sequence // dev.kord.gateway/GuildSoundboardSoundUpdate.sequence|{}sequence[0]
+        final fun <get-sequence>(): kotlin/Int? // dev.kord.gateway/GuildSoundboardSoundUpdate.sequence.<get-sequence>|<get-sequence>(){}[0]
+    final val sound // dev.kord.gateway/GuildSoundboardSoundUpdate.sound|{}sound[0]
+        final fun <get-sound>(): dev.kord.common.entity/DiscordSoundboardSound // dev.kord.gateway/GuildSoundboardSoundUpdate.sound.<get-sound>|<get-sound>(){}[0]
+
+    final fun component1(): dev.kord.common.entity/DiscordSoundboardSound // dev.kord.gateway/GuildSoundboardSoundUpdate.component1|component1(){}[0]
+    final fun component2(): kotlin/Int? // dev.kord.gateway/GuildSoundboardSoundUpdate.component2|component2(){}[0]
+    final fun copy(dev.kord.common.entity/DiscordSoundboardSound = ..., kotlin/Int? = ...): dev.kord.gateway/GuildSoundboardSoundUpdate // dev.kord.gateway/GuildSoundboardSoundUpdate.copy|copy(dev.kord.common.entity.DiscordSoundboardSound;kotlin.Int?){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.gateway/GuildSoundboardSoundUpdate.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.gateway/GuildSoundboardSoundUpdate.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // dev.kord.gateway/GuildSoundboardSoundUpdate.toString|toString(){}[0]
+}
+
+final class dev.kord.gateway/GuildSoundboardSoundsUpdate : dev.kord.gateway/DispatchEvent { // dev.kord.gateway/GuildSoundboardSoundsUpdate|null[0]
+    constructor <init>(dev.kord.gateway/SoundboardSoundsChunk, kotlin/Int?) // dev.kord.gateway/GuildSoundboardSoundsUpdate.<init>|<init>(dev.kord.gateway.SoundboardSoundsChunk;kotlin.Int?){}[0]
+
+    final val data // dev.kord.gateway/GuildSoundboardSoundsUpdate.data|{}data[0]
+        final fun <get-data>(): dev.kord.gateway/SoundboardSoundsChunk // dev.kord.gateway/GuildSoundboardSoundsUpdate.data.<get-data>|<get-data>(){}[0]
+    final val sequence // dev.kord.gateway/GuildSoundboardSoundsUpdate.sequence|{}sequence[0]
+        final fun <get-sequence>(): kotlin/Int? // dev.kord.gateway/GuildSoundboardSoundsUpdate.sequence.<get-sequence>|<get-sequence>(){}[0]
+
+    final fun component1(): dev.kord.gateway/SoundboardSoundsChunk // dev.kord.gateway/GuildSoundboardSoundsUpdate.component1|component1(){}[0]
+    final fun component2(): kotlin/Int? // dev.kord.gateway/GuildSoundboardSoundsUpdate.component2|component2(){}[0]
+    final fun copy(dev.kord.gateway/SoundboardSoundsChunk = ..., kotlin/Int? = ...): dev.kord.gateway/GuildSoundboardSoundsUpdate // dev.kord.gateway/GuildSoundboardSoundsUpdate.copy|copy(dev.kord.gateway.SoundboardSoundsChunk;kotlin.Int?){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.gateway/GuildSoundboardSoundsUpdate.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.gateway/GuildSoundboardSoundsUpdate.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // dev.kord.gateway/GuildSoundboardSoundsUpdate.toString|toString(){}[0]
+}
+
 final class dev.kord.gateway/GuildUpdate : dev.kord.gateway/DispatchEvent { // dev.kord.gateway/GuildUpdate|null[0]
     constructor <init>(dev.kord.common.entity/DiscordGuild, kotlin/Int?) // dev.kord.gateway/GuildUpdate.<init>|<init>(dev.kord.common.entity.DiscordGuild;kotlin.Int?){}[0]
 
@@ -1284,30 +1329,19 @@ final class dev.kord.gateway/GuildUpdate : dev.kord.gateway/DispatchEvent { // d
 }
 
 final class dev.kord.gateway/Heartbeat : dev.kord.gateway/Event { // dev.kord.gateway/Heartbeat|null[0]
-    constructor <init>(kotlin/Long) // dev.kord.gateway/Heartbeat.<init>|<init>(kotlin.Long){}[0]
     constructor <init>(kotlin/Long?) // dev.kord.gateway/Heartbeat.<init>|<init>(kotlin.Long?){}[0]
 
     final val data // dev.kord.gateway/Heartbeat.data|{}data[0]
         final fun <get-data>(): kotlin/Long? // dev.kord.gateway/Heartbeat.data.<get-data>|<get-data>(){}[0]
-    final val data_ // dev.kord.gateway/Heartbeat.data_|{}data_[0]
-        final fun <get-data_>(): kotlin/Long // dev.kord.gateway/Heartbeat.data_.<get-data_>|<get-data_>(){}[0]
 
     final fun component1(): kotlin/Long? // dev.kord.gateway/Heartbeat.component1|component1(){}[0]
-    final fun component1_(): kotlin/Long // dev.kord.gateway/Heartbeat.component1_|component1_(){}[0]
+    final fun copy(kotlin/Long = ...): dev.kord.gateway/Heartbeat // dev.kord.gateway/Heartbeat.copy|copy(kotlin.Long){}[0]
     final fun copy(kotlin/Long? = ...): dev.kord.gateway/Heartbeat // dev.kord.gateway/Heartbeat.copy|copy(kotlin.Long?){}[0]
-    final fun copy_(kotlin/Long = ...): dev.kord.gateway/Heartbeat // dev.kord.gateway/Heartbeat.copy_|copy_(kotlin.Long){}[0]
     final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.gateway/Heartbeat.equals|equals(kotlin.Any?){}[0]
     final fun hashCode(): kotlin/Int // dev.kord.gateway/Heartbeat.hashCode|hashCode(){}[0]
     final fun toString(): kotlin/String // dev.kord.gateway/Heartbeat.toString|toString(){}[0]
 
-    final class NewCompanion { // dev.kord.gateway/Heartbeat.NewCompanion|null[0]
-        final fun serializer(): kotlinx.serialization/KSerializer<dev.kord.gateway/Heartbeat> // dev.kord.gateway/Heartbeat.NewCompanion.serializer|serializer(){}[0]
-    }
-
     final object Companion { // dev.kord.gateway/Heartbeat.Companion|null[0]
-        final val NewCompanion // dev.kord.gateway/Heartbeat.Companion.NewCompanion|{}NewCompanion[0]
-            final fun <get-NewCompanion>(): dev.kord.gateway/Heartbeat.NewCompanion // dev.kord.gateway/Heartbeat.Companion.NewCompanion.<get-NewCompanion>|<get-NewCompanion>(){}[0]
-
         final fun serializer(): kotlinx.serialization/KSerializer<dev.kord.gateway/Heartbeat> // dev.kord.gateway/Heartbeat.Companion.serializer|serializer(){}[0]
     }
 }
@@ -1480,7 +1514,6 @@ final class dev.kord.gateway/Intents { // dev.kord.gateway/Intents|null[0]
     final fun plus(dev.kord.gateway/Intents): dev.kord.gateway/Intents // dev.kord.gateway/Intents.plus|plus(dev.kord.gateway.Intents){}[0]
     final fun toString(): kotlin/String // dev.kord.gateway/Intents.toString|toString(){}[0]
     final inline fun copy(kotlin/Function1<dev.kord.gateway/Intents.Builder, kotlin/Unit>): dev.kord.gateway/Intents // dev.kord.gateway/Intents.copy|copy(kotlin.Function1<dev.kord.gateway.Intents.Builder,kotlin.Unit>){}[0]
-    final inline fun copy0(kotlin/Function1<dev.kord.gateway/Intents.Builder, kotlin/Unit>): dev.kord.gateway/Intents // dev.kord.gateway/Intents.copy0|copy0(kotlin.Function1<dev.kord.gateway.Intents.Builder,kotlin.Unit>){}[0]
 
     final class Builder { // dev.kord.gateway/Intents.Builder|null[0]
         constructor <init>(dev.kord.common/DiscordBitSet = ...) // dev.kord.gateway/Intents.Builder.<init>|<init>(dev.kord.common.DiscordBitSet){}[0]
@@ -1827,6 +1860,34 @@ final class dev.kord.gateway/RequestGuildMembers : dev.kord.gateway/Command { //
     }
 }
 
+final class dev.kord.gateway/RequestSoundboardSounds : dev.kord.gateway/Command { // dev.kord.gateway/RequestSoundboardSounds|null[0]
+    constructor <init>(kotlin.collections/List<dev.kord.common.entity/Snowflake>) // dev.kord.gateway/RequestSoundboardSounds.<init>|<init>(kotlin.collections.List<dev.kord.common.entity.Snowflake>){}[0]
+
+    final val guildIds // dev.kord.gateway/RequestSoundboardSounds.guildIds|{}guildIds[0]
+        final fun <get-guildIds>(): kotlin.collections/List<dev.kord.common.entity/Snowflake> // dev.kord.gateway/RequestSoundboardSounds.guildIds.<get-guildIds>|<get-guildIds>(){}[0]
+
+    final fun component1(): kotlin.collections/List<dev.kord.common.entity/Snowflake> // dev.kord.gateway/RequestSoundboardSounds.component1|component1(){}[0]
+    final fun copy(kotlin.collections/List<dev.kord.common.entity/Snowflake> = ...): dev.kord.gateway/RequestSoundboardSounds // dev.kord.gateway/RequestSoundboardSounds.copy|copy(kotlin.collections.List<dev.kord.common.entity.Snowflake>){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.gateway/RequestSoundboardSounds.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.gateway/RequestSoundboardSounds.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // dev.kord.gateway/RequestSoundboardSounds.toString|toString(){}[0]
+
+    final object $serializer : kotlinx.serialization.internal/GeneratedSerializer<dev.kord.gateway/RequestSoundboardSounds> { // dev.kord.gateway/RequestSoundboardSounds.$serializer|null[0]
+        final val descriptor // dev.kord.gateway/RequestSoundboardSounds.$serializer.descriptor|{}descriptor[0]
+            final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // dev.kord.gateway/RequestSoundboardSounds.$serializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
+
+        final fun childSerializers(): kotlin/Array<kotlinx.serialization/KSerializer<*>> // dev.kord.gateway/RequestSoundboardSounds.$serializer.childSerializers|childSerializers(){}[0]
+        final fun deserialize(kotlinx.serialization.encoding/Decoder): dev.kord.gateway/RequestSoundboardSounds // dev.kord.gateway/RequestSoundboardSounds.$serializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
+        final fun serialize(kotlinx.serialization.encoding/Encoder, dev.kord.gateway/RequestSoundboardSounds) // dev.kord.gateway/RequestSoundboardSounds.$serializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;dev.kord.gateway.RequestSoundboardSounds){}[0]
+    }
+
+    final object Companion { // dev.kord.gateway/RequestSoundboardSounds.Companion|null[0]
+        final val $childSerializers // dev.kord.gateway/RequestSoundboardSounds.Companion.$childSerializers|{}$childSerializers[0]
+
+        final fun serializer(): kotlinx.serialization/KSerializer<dev.kord.gateway/RequestSoundboardSounds> // dev.kord.gateway/RequestSoundboardSounds.Companion.serializer|serializer(){}[0]
+    }
+}
+
 final class dev.kord.gateway/Resume : dev.kord.gateway/Command { // dev.kord.gateway/Resume|null[0]
     constructor <init>(kotlin/String, kotlin/String, kotlin/Int) // dev.kord.gateway/Resume.<init>|<init>(kotlin.String;kotlin.String;kotlin.Int){}[0]
 
@@ -1882,6 +1943,53 @@ final class dev.kord.gateway/Resumed : dev.kord.gateway/DispatchEvent { // dev.k
 
     final object Companion { // dev.kord.gateway/Resumed.Companion|null[0]
         final fun serializer(): kotlinx.serialization/KSerializer<dev.kord.gateway/Resumed> // dev.kord.gateway/Resumed.Companion.serializer|serializer(){}[0]
+    }
+}
+
+final class dev.kord.gateway/SoundboardSounds : dev.kord.gateway/DispatchEvent { // dev.kord.gateway/SoundboardSounds|null[0]
+    constructor <init>(dev.kord.gateway/SoundboardSoundsChunk, kotlin/Int?) // dev.kord.gateway/SoundboardSounds.<init>|<init>(dev.kord.gateway.SoundboardSoundsChunk;kotlin.Int?){}[0]
+
+    final val data // dev.kord.gateway/SoundboardSounds.data|{}data[0]
+        final fun <get-data>(): dev.kord.gateway/SoundboardSoundsChunk // dev.kord.gateway/SoundboardSounds.data.<get-data>|<get-data>(){}[0]
+    final val sequence // dev.kord.gateway/SoundboardSounds.sequence|{}sequence[0]
+        final fun <get-sequence>(): kotlin/Int? // dev.kord.gateway/SoundboardSounds.sequence.<get-sequence>|<get-sequence>(){}[0]
+
+    final fun component1(): dev.kord.gateway/SoundboardSoundsChunk // dev.kord.gateway/SoundboardSounds.component1|component1(){}[0]
+    final fun component2(): kotlin/Int? // dev.kord.gateway/SoundboardSounds.component2|component2(){}[0]
+    final fun copy(dev.kord.gateway/SoundboardSoundsChunk = ..., kotlin/Int? = ...): dev.kord.gateway/SoundboardSounds // dev.kord.gateway/SoundboardSounds.copy|copy(dev.kord.gateway.SoundboardSoundsChunk;kotlin.Int?){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.gateway/SoundboardSounds.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.gateway/SoundboardSounds.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // dev.kord.gateway/SoundboardSounds.toString|toString(){}[0]
+}
+
+final class dev.kord.gateway/SoundboardSoundsChunk { // dev.kord.gateway/SoundboardSoundsChunk|null[0]
+    constructor <init>(kotlin.collections/List<dev.kord.common.entity/DiscordSoundboardSound>, dev.kord.common.entity/Snowflake) // dev.kord.gateway/SoundboardSoundsChunk.<init>|<init>(kotlin.collections.List<dev.kord.common.entity.DiscordSoundboardSound>;dev.kord.common.entity.Snowflake){}[0]
+
+    final val guildId // dev.kord.gateway/SoundboardSoundsChunk.guildId|{}guildId[0]
+        final fun <get-guildId>(): dev.kord.common.entity/Snowflake // dev.kord.gateway/SoundboardSoundsChunk.guildId.<get-guildId>|<get-guildId>(){}[0]
+    final val soundboardSounds // dev.kord.gateway/SoundboardSoundsChunk.soundboardSounds|{}soundboardSounds[0]
+        final fun <get-soundboardSounds>(): kotlin.collections/List<dev.kord.common.entity/DiscordSoundboardSound> // dev.kord.gateway/SoundboardSoundsChunk.soundboardSounds.<get-soundboardSounds>|<get-soundboardSounds>(){}[0]
+
+    final fun component1(): kotlin.collections/List<dev.kord.common.entity/DiscordSoundboardSound> // dev.kord.gateway/SoundboardSoundsChunk.component1|component1(){}[0]
+    final fun component2(): dev.kord.common.entity/Snowflake // dev.kord.gateway/SoundboardSoundsChunk.component2|component2(){}[0]
+    final fun copy(kotlin.collections/List<dev.kord.common.entity/DiscordSoundboardSound> = ..., dev.kord.common.entity/Snowflake = ...): dev.kord.gateway/SoundboardSoundsChunk // dev.kord.gateway/SoundboardSoundsChunk.copy|copy(kotlin.collections.List<dev.kord.common.entity.DiscordSoundboardSound>;dev.kord.common.entity.Snowflake){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.gateway/SoundboardSoundsChunk.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.gateway/SoundboardSoundsChunk.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // dev.kord.gateway/SoundboardSoundsChunk.toString|toString(){}[0]
+
+    final object $serializer : kotlinx.serialization.internal/GeneratedSerializer<dev.kord.gateway/SoundboardSoundsChunk> { // dev.kord.gateway/SoundboardSoundsChunk.$serializer|null[0]
+        final val descriptor // dev.kord.gateway/SoundboardSoundsChunk.$serializer.descriptor|{}descriptor[0]
+            final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // dev.kord.gateway/SoundboardSoundsChunk.$serializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
+
+        final fun childSerializers(): kotlin/Array<kotlinx.serialization/KSerializer<*>> // dev.kord.gateway/SoundboardSoundsChunk.$serializer.childSerializers|childSerializers(){}[0]
+        final fun deserialize(kotlinx.serialization.encoding/Decoder): dev.kord.gateway/SoundboardSoundsChunk // dev.kord.gateway/SoundboardSoundsChunk.$serializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
+        final fun serialize(kotlinx.serialization.encoding/Encoder, dev.kord.gateway/SoundboardSoundsChunk) // dev.kord.gateway/SoundboardSoundsChunk.$serializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;dev.kord.gateway.SoundboardSoundsChunk){}[0]
+    }
+
+    final object Companion { // dev.kord.gateway/SoundboardSoundsChunk.Companion|null[0]
+        final val $childSerializers // dev.kord.gateway/SoundboardSoundsChunk.Companion.$childSerializers|{}$childSerializers[0]
+
+        final fun serializer(): kotlinx.serialization/KSerializer<dev.kord.gateway/SoundboardSoundsChunk> // dev.kord.gateway/SoundboardSoundsChunk.Companion.serializer|serializer(){}[0]
     }
 }
 
@@ -2075,22 +2183,22 @@ final class dev.kord.gateway/UnknownDispatchEvent : dev.kord.gateway/DispatchEve
 }
 
 final class dev.kord.gateway/UpdateStatus : dev.kord.gateway/Command { // dev.kord.gateway/UpdateStatus|null[0]
-    constructor <init>(kotlinx.datetime/Instant?, kotlin.collections/List<dev.kord.common.entity/DiscordBotActivity>, dev.kord.common.entity/PresenceStatus, kotlin/Boolean) // dev.kord.gateway/UpdateStatus.<init>|<init>(kotlinx.datetime.Instant?;kotlin.collections.List<dev.kord.common.entity.DiscordBotActivity>;dev.kord.common.entity.PresenceStatus;kotlin.Boolean){}[0]
+    constructor <init>(kotlin.time/Instant?, kotlin.collections/List<dev.kord.common.entity/DiscordBotActivity>, dev.kord.common.entity/PresenceStatus, kotlin/Boolean) // dev.kord.gateway/UpdateStatus.<init>|<init>(kotlin.time.Instant?;kotlin.collections.List<dev.kord.common.entity.DiscordBotActivity>;dev.kord.common.entity.PresenceStatus;kotlin.Boolean){}[0]
 
     final val activities // dev.kord.gateway/UpdateStatus.activities|{}activities[0]
         final fun <get-activities>(): kotlin.collections/List<dev.kord.common.entity/DiscordBotActivity> // dev.kord.gateway/UpdateStatus.activities.<get-activities>|<get-activities>(){}[0]
     final val afk // dev.kord.gateway/UpdateStatus.afk|{}afk[0]
         final fun <get-afk>(): kotlin/Boolean // dev.kord.gateway/UpdateStatus.afk.<get-afk>|<get-afk>(){}[0]
     final val since // dev.kord.gateway/UpdateStatus.since|{}since[0]
-        final fun <get-since>(): kotlinx.datetime/Instant? // dev.kord.gateway/UpdateStatus.since.<get-since>|<get-since>(){}[0]
+        final fun <get-since>(): kotlin.time/Instant? // dev.kord.gateway/UpdateStatus.since.<get-since>|<get-since>(){}[0]
     final val status // dev.kord.gateway/UpdateStatus.status|{}status[0]
         final fun <get-status>(): dev.kord.common.entity/PresenceStatus // dev.kord.gateway/UpdateStatus.status.<get-status>|<get-status>(){}[0]
 
-    final fun component1(): kotlinx.datetime/Instant? // dev.kord.gateway/UpdateStatus.component1|component1(){}[0]
+    final fun component1(): kotlin.time/Instant? // dev.kord.gateway/UpdateStatus.component1|component1(){}[0]
     final fun component2(): kotlin.collections/List<dev.kord.common.entity/DiscordBotActivity> // dev.kord.gateway/UpdateStatus.component2|component2(){}[0]
     final fun component3(): dev.kord.common.entity/PresenceStatus // dev.kord.gateway/UpdateStatus.component3|component3(){}[0]
     final fun component4(): kotlin/Boolean // dev.kord.gateway/UpdateStatus.component4|component4(){}[0]
-    final fun copy(kotlinx.datetime/Instant? = ..., kotlin.collections/List<dev.kord.common.entity/DiscordBotActivity> = ..., dev.kord.common.entity/PresenceStatus = ..., kotlin/Boolean = ...): dev.kord.gateway/UpdateStatus // dev.kord.gateway/UpdateStatus.copy|copy(kotlinx.datetime.Instant?;kotlin.collections.List<dev.kord.common.entity.DiscordBotActivity>;dev.kord.common.entity.PresenceStatus;kotlin.Boolean){}[0]
+    final fun copy(kotlin.time/Instant? = ..., kotlin.collections/List<dev.kord.common.entity/DiscordBotActivity> = ..., dev.kord.common.entity/PresenceStatus = ..., kotlin/Boolean = ...): dev.kord.gateway/UpdateStatus // dev.kord.gateway/UpdateStatus.copy|copy(kotlin.time.Instant?;kotlin.collections.List<dev.kord.common.entity.DiscordBotActivity>;dev.kord.common.entity.PresenceStatus;kotlin.Boolean){}[0]
     final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.gateway/UpdateStatus.equals|equals(kotlin.Any?){}[0]
     final fun hashCode(): kotlin/Int // dev.kord.gateway/UpdateStatus.hashCode|hashCode(){}[0]
     final fun toString(): kotlin/String // dev.kord.gateway/UpdateStatus.toString|toString(){}[0]
@@ -2162,6 +2270,71 @@ final class dev.kord.gateway/UserUpdate : dev.kord.gateway/DispatchEvent { // de
     final fun toString(): kotlin/String // dev.kord.gateway/UserUpdate.toString|toString(){}[0]
 }
 
+final class dev.kord.gateway/VoiceChannelEffect { // dev.kord.gateway/VoiceChannelEffect|null[0]
+    constructor <init>(dev.kord.common.entity/Snowflake, dev.kord.common.entity/Snowflake, dev.kord.common.entity/Snowflake, dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordEmoji?> = ..., dev.kord.common.entity.optional/Optional<dev.kord.gateway/AnimationType?> = ..., dev.kord.common.entity.optional/OptionalInt = ..., dev.kord.common.entity.optional/OptionalSnowflake = ..., dev.kord.common.entity.optional/OptionalDouble = ...) // dev.kord.gateway/VoiceChannelEffect.<init>|<init>(dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.DiscordEmoji?>;dev.kord.common.entity.optional.Optional<dev.kord.gateway.AnimationType?>;dev.kord.common.entity.optional.OptionalInt;dev.kord.common.entity.optional.OptionalSnowflake;dev.kord.common.entity.optional.OptionalDouble){}[0]
+
+    final val animationId // dev.kord.gateway/VoiceChannelEffect.animationId|{}animationId[0]
+        final fun <get-animationId>(): dev.kord.common.entity.optional/OptionalInt // dev.kord.gateway/VoiceChannelEffect.animationId.<get-animationId>|<get-animationId>(){}[0]
+    final val animationType // dev.kord.gateway/VoiceChannelEffect.animationType|{}animationType[0]
+        final fun <get-animationType>(): dev.kord.common.entity.optional/Optional<dev.kord.gateway/AnimationType?> // dev.kord.gateway/VoiceChannelEffect.animationType.<get-animationType>|<get-animationType>(){}[0]
+    final val channelId // dev.kord.gateway/VoiceChannelEffect.channelId|{}channelId[0]
+        final fun <get-channelId>(): dev.kord.common.entity/Snowflake // dev.kord.gateway/VoiceChannelEffect.channelId.<get-channelId>|<get-channelId>(){}[0]
+    final val emoji // dev.kord.gateway/VoiceChannelEffect.emoji|{}emoji[0]
+        final fun <get-emoji>(): dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordEmoji?> // dev.kord.gateway/VoiceChannelEffect.emoji.<get-emoji>|<get-emoji>(){}[0]
+    final val guildId // dev.kord.gateway/VoiceChannelEffect.guildId|{}guildId[0]
+        final fun <get-guildId>(): dev.kord.common.entity/Snowflake // dev.kord.gateway/VoiceChannelEffect.guildId.<get-guildId>|<get-guildId>(){}[0]
+    final val soundId // dev.kord.gateway/VoiceChannelEffect.soundId|{}soundId[0]
+        final fun <get-soundId>(): dev.kord.common.entity.optional/OptionalSnowflake // dev.kord.gateway/VoiceChannelEffect.soundId.<get-soundId>|<get-soundId>(){}[0]
+    final val soundVolume // dev.kord.gateway/VoiceChannelEffect.soundVolume|{}soundVolume[0]
+        final fun <get-soundVolume>(): dev.kord.common.entity.optional/OptionalDouble // dev.kord.gateway/VoiceChannelEffect.soundVolume.<get-soundVolume>|<get-soundVolume>(){}[0]
+    final val userId // dev.kord.gateway/VoiceChannelEffect.userId|{}userId[0]
+        final fun <get-userId>(): dev.kord.common.entity/Snowflake // dev.kord.gateway/VoiceChannelEffect.userId.<get-userId>|<get-userId>(){}[0]
+
+    final fun component1(): dev.kord.common.entity/Snowflake // dev.kord.gateway/VoiceChannelEffect.component1|component1(){}[0]
+    final fun component2(): dev.kord.common.entity/Snowflake // dev.kord.gateway/VoiceChannelEffect.component2|component2(){}[0]
+    final fun component3(): dev.kord.common.entity/Snowflake // dev.kord.gateway/VoiceChannelEffect.component3|component3(){}[0]
+    final fun component4(): dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordEmoji?> // dev.kord.gateway/VoiceChannelEffect.component4|component4(){}[0]
+    final fun component5(): dev.kord.common.entity.optional/Optional<dev.kord.gateway/AnimationType?> // dev.kord.gateway/VoiceChannelEffect.component5|component5(){}[0]
+    final fun component6(): dev.kord.common.entity.optional/OptionalInt // dev.kord.gateway/VoiceChannelEffect.component6|component6(){}[0]
+    final fun component7(): dev.kord.common.entity.optional/OptionalSnowflake // dev.kord.gateway/VoiceChannelEffect.component7|component7(){}[0]
+    final fun component8(): dev.kord.common.entity.optional/OptionalDouble // dev.kord.gateway/VoiceChannelEffect.component8|component8(){}[0]
+    final fun copy(dev.kord.common.entity/Snowflake = ..., dev.kord.common.entity/Snowflake = ..., dev.kord.common.entity/Snowflake = ..., dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordEmoji?> = ..., dev.kord.common.entity.optional/Optional<dev.kord.gateway/AnimationType?> = ..., dev.kord.common.entity.optional/OptionalInt = ..., dev.kord.common.entity.optional/OptionalSnowflake = ..., dev.kord.common.entity.optional/OptionalDouble = ...): dev.kord.gateway/VoiceChannelEffect // dev.kord.gateway/VoiceChannelEffect.copy|copy(dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.DiscordEmoji?>;dev.kord.common.entity.optional.Optional<dev.kord.gateway.AnimationType?>;dev.kord.common.entity.optional.OptionalInt;dev.kord.common.entity.optional.OptionalSnowflake;dev.kord.common.entity.optional.OptionalDouble){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.gateway/VoiceChannelEffect.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.gateway/VoiceChannelEffect.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // dev.kord.gateway/VoiceChannelEffect.toString|toString(){}[0]
+
+    final object $serializer : kotlinx.serialization.internal/GeneratedSerializer<dev.kord.gateway/VoiceChannelEffect> { // dev.kord.gateway/VoiceChannelEffect.$serializer|null[0]
+        final val descriptor // dev.kord.gateway/VoiceChannelEffect.$serializer.descriptor|{}descriptor[0]
+            final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // dev.kord.gateway/VoiceChannelEffect.$serializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
+
+        final fun childSerializers(): kotlin/Array<kotlinx.serialization/KSerializer<*>> // dev.kord.gateway/VoiceChannelEffect.$serializer.childSerializers|childSerializers(){}[0]
+        final fun deserialize(kotlinx.serialization.encoding/Decoder): dev.kord.gateway/VoiceChannelEffect // dev.kord.gateway/VoiceChannelEffect.$serializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
+        final fun serialize(kotlinx.serialization.encoding/Encoder, dev.kord.gateway/VoiceChannelEffect) // dev.kord.gateway/VoiceChannelEffect.$serializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;dev.kord.gateway.VoiceChannelEffect){}[0]
+    }
+
+    final object Companion { // dev.kord.gateway/VoiceChannelEffect.Companion|null[0]
+        final val $childSerializers // dev.kord.gateway/VoiceChannelEffect.Companion.$childSerializers|{}$childSerializers[0]
+
+        final fun serializer(): kotlinx.serialization/KSerializer<dev.kord.gateway/VoiceChannelEffect> // dev.kord.gateway/VoiceChannelEffect.Companion.serializer|serializer(){}[0]
+    }
+}
+
+final class dev.kord.gateway/VoiceEffectSend : dev.kord.gateway/DispatchEvent { // dev.kord.gateway/VoiceEffectSend|null[0]
+    constructor <init>(dev.kord.gateway/VoiceChannelEffect, kotlin/Int?) // dev.kord.gateway/VoiceEffectSend.<init>|<init>(dev.kord.gateway.VoiceChannelEffect;kotlin.Int?){}[0]
+
+    final val effect // dev.kord.gateway/VoiceEffectSend.effect|{}effect[0]
+        final fun <get-effect>(): dev.kord.gateway/VoiceChannelEffect // dev.kord.gateway/VoiceEffectSend.effect.<get-effect>|<get-effect>(){}[0]
+    final val sequence // dev.kord.gateway/VoiceEffectSend.sequence|{}sequence[0]
+        final fun <get-sequence>(): kotlin/Int? // dev.kord.gateway/VoiceEffectSend.sequence.<get-sequence>|<get-sequence>(){}[0]
+
+    final fun component1(): dev.kord.gateway/VoiceChannelEffect // dev.kord.gateway/VoiceEffectSend.component1|component1(){}[0]
+    final fun component2(): kotlin/Int? // dev.kord.gateway/VoiceEffectSend.component2|component2(){}[0]
+    final fun copy(dev.kord.gateway/VoiceChannelEffect = ..., kotlin/Int? = ...): dev.kord.gateway/VoiceEffectSend // dev.kord.gateway/VoiceEffectSend.copy|copy(dev.kord.gateway.VoiceChannelEffect;kotlin.Int?){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.gateway/VoiceEffectSend.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.gateway/VoiceEffectSend.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // dev.kord.gateway/VoiceEffectSend.toString|toString(){}[0]
+}
+
 final class dev.kord.gateway/VoiceServerUpdate : dev.kord.gateway/DispatchEvent { // dev.kord.gateway/VoiceServerUpdate|null[0]
     constructor <init>(dev.kord.common.entity/DiscordVoiceServerUpdateData, kotlin/Int?) // dev.kord.gateway/VoiceServerUpdate.<init>|<init>(dev.kord.common.entity.DiscordVoiceServerUpdateData;kotlin.Int?){}[0]
 
@@ -2208,6 +2381,29 @@ final class dev.kord.gateway/WebhooksUpdate : dev.kord.gateway/DispatchEvent { /
     final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.gateway/WebhooksUpdate.equals|equals(kotlin.Any?){}[0]
     final fun hashCode(): kotlin/Int // dev.kord.gateway/WebhooksUpdate.hashCode|hashCode(){}[0]
     final fun toString(): kotlin/String // dev.kord.gateway/WebhooksUpdate.toString|toString(){}[0]
+}
+
+sealed class dev.kord.gateway/AnimationType { // dev.kord.gateway/AnimationType|null[0]
+    final val value // dev.kord.gateway/AnimationType.value|{}value[0]
+        final fun <get-value>(): kotlin/Int // dev.kord.gateway/AnimationType.value.<get-value>|<get-value>(){}[0]
+
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.gateway/AnimationType.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.gateway/AnimationType.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // dev.kord.gateway/AnimationType.toString|toString(){}[0]
+
+    final class Unknown : dev.kord.gateway/AnimationType // dev.kord.gateway/AnimationType.Unknown|null[0]
+
+    final object Basic : dev.kord.gateway/AnimationType // dev.kord.gateway/AnimationType.Basic|null[0]
+
+    final object Companion { // dev.kord.gateway/AnimationType.Companion|null[0]
+        final val entries // dev.kord.gateway/AnimationType.Companion.entries|{}entries[0]
+            final fun <get-entries>(): kotlin.collections/List<dev.kord.gateway/AnimationType> // dev.kord.gateway/AnimationType.Companion.entries.<get-entries>|<get-entries>(){}[0]
+
+        final fun from(kotlin/Int): dev.kord.gateway/AnimationType // dev.kord.gateway/AnimationType.Companion.from|from(kotlin.Int){}[0]
+        final fun serializer(): kotlinx.serialization/KSerializer<dev.kord.gateway/AnimationType> // dev.kord.gateway/AnimationType.Companion.serializer|serializer(){}[0]
+    }
+
+    final object Premium : dev.kord.gateway/AnimationType // dev.kord.gateway/AnimationType.Premium|null[0]
 }
 
 sealed class dev.kord.gateway/Close : dev.kord.gateway/Event { // dev.kord.gateway/Close|null[0]
@@ -2311,6 +2507,8 @@ sealed class dev.kord.gateway/Intent { // dev.kord.gateway/Intent|null[0]
 
     final object GuildEmojis : dev.kord.gateway/Intent // dev.kord.gateway/Intent.GuildEmojis|null[0]
 
+    final object GuildExpressions : dev.kord.gateway/Intent // dev.kord.gateway/Intent.GuildExpressions|null[0]
+
     final object GuildIntegrations : dev.kord.gateway/Intent // dev.kord.gateway/Intent.GuildIntegrations|null[0]
 
     final object GuildInvites : dev.kord.gateway/Intent // dev.kord.gateway/Intent.GuildInvites|null[0]
@@ -2353,6 +2551,7 @@ final val dev.kord.gateway/PRIVILEGED // dev.kord.gateway/PRIVILEGED|@dev.kord.g
 
 final fun (dev.kord.gateway/Gateway).dev.kord.gateway/requestGuildMembers(dev.kord.common.entity/Snowflake, kotlin/Function1<dev.kord.gateway.builder/RequestGuildMembersBuilder, kotlin/Unit> = ...): kotlinx.coroutines.flow/Flow<dev.kord.gateway/GuildMembersChunk> // dev.kord.gateway/requestGuildMembers|requestGuildMembers@dev.kord.gateway.Gateway(dev.kord.common.entity.Snowflake;kotlin.Function1<dev.kord.gateway.builder.RequestGuildMembersBuilder,kotlin.Unit>){}[0]
 final fun (dev.kord.gateway/Gateway).dev.kord.gateway/requestGuildMembers(dev.kord.gateway/RequestGuildMembers): kotlinx.coroutines.flow/Flow<dev.kord.gateway/GuildMembersChunk> // dev.kord.gateway/requestGuildMembers|requestGuildMembers@dev.kord.gateway.Gateway(dev.kord.gateway.RequestGuildMembers){}[0]
+final fun (dev.kord.gateway/Gateway).dev.kord.gateway/requestSoundboardSounds(kotlin.collections/List<dev.kord.common.entity/Snowflake>): kotlinx.coroutines.flow/Flow<dev.kord.gateway/SoundboardSoundsChunk> // dev.kord.gateway/requestSoundboardSounds|requestSoundboardSounds@dev.kord.gateway.Gateway(kotlin.collections.List<dev.kord.common.entity.Snowflake>){}[0]
 final fun dev.kord.gateway.ratelimit/IdentifyRateLimiter(kotlin/Int, kotlinx.coroutines/CoroutineDispatcher = ...): dev.kord.gateway.ratelimit/IdentifyRateLimiter // dev.kord.gateway.ratelimit/IdentifyRateLimiter|IdentifyRateLimiter(kotlin.Int;kotlinx.coroutines.CoroutineDispatcher){}[0]
 final fun dev.kord.gateway/Intents(kotlin.collections/Iterable<dev.kord.gateway/Intent>): dev.kord.gateway/Intents // dev.kord.gateway/Intents|Intents(kotlin.collections.Iterable<dev.kord.gateway.Intent>){}[0]
 final fun dev.kord.gateway/Intents(kotlin.collections/Iterable<dev.kord.gateway/Intents>): dev.kord.gateway/Intents // dev.kord.gateway/Intents|Intents(kotlin.collections.Iterable<dev.kord.gateway.Intents>){}[0]
@@ -2362,6 +2561,5 @@ final fun dev.kord.gateway/logCaughtThrowable(kotlin/Throwable) // dev.kord.gate
 final inline fun <#A: reified dev.kord.gateway/Event> (dev.kord.gateway/Gateway).dev.kord.gateway/on(kotlinx.coroutines/CoroutineScope = ..., crossinline kotlin.coroutines/SuspendFunction1<#A, kotlin/Unit>): kotlinx.coroutines/Job // dev.kord.gateway/on|on@dev.kord.gateway.Gateway(kotlinx.coroutines.CoroutineScope;kotlin.coroutines.SuspendFunction1<0:0,kotlin.Unit>){0§<dev.kord.gateway.Event>}[0]
 final inline fun dev.kord.gateway/DefaultGateway(kotlin/Function1<dev.kord.gateway/DefaultGatewayBuilder, kotlin/Unit> = ...): dev.kord.gateway/DefaultGateway // dev.kord.gateway/DefaultGateway|DefaultGateway(kotlin.Function1<dev.kord.gateway.DefaultGatewayBuilder,kotlin.Unit>){}[0]
 final inline fun dev.kord.gateway/Intents(kotlin/Function1<dev.kord.gateway/Intents.Builder, kotlin/Unit> = ...): dev.kord.gateway/Intents // dev.kord.gateway/Intents|Intents(kotlin.Function1<dev.kord.gateway.Intents.Builder,kotlin.Unit>){}[0]
-final inline fun dev.kord.gateway/Intents0(kotlin/Function1<dev.kord.gateway/Intents.Builder, kotlin/Unit> = ...): dev.kord.gateway/Intents // dev.kord.gateway/Intents0|Intents0(kotlin.Function1<dev.kord.gateway.Intents.Builder,kotlin.Unit>){}[0]
 final suspend inline fun (dev.kord.gateway/Gateway).dev.kord.gateway/editPresence(kotlin/Function1<dev.kord.gateway.builder/PresenceBuilder, kotlin/Unit>) // dev.kord.gateway/editPresence|editPresence@dev.kord.gateway.Gateway(kotlin.Function1<dev.kord.gateway.builder.PresenceBuilder,kotlin.Unit>){}[0]
 final suspend inline fun (dev.kord.gateway/Gateway).dev.kord.gateway/start(kotlin/String, kotlin/Function1<dev.kord.gateway/GatewayConfigurationBuilder, kotlin/Unit> = ...) // dev.kord.gateway/start|start@dev.kord.gateway.Gateway(kotlin.String;kotlin.Function1<dev.kord.gateway.GatewayConfigurationBuilder,kotlin.Unit>){}[0]

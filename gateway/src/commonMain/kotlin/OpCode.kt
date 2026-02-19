@@ -65,7 +65,12 @@ public enum class OpCode(public val code: Int) {
     /**
      * Sent in response to receiving a heartbeat to acknowledge that it has been received.
      */
-    HeartbeatACK(11);
+    HeartbeatACK(11),
+
+    /**
+     * Request information about soundboard sounds in a set of guilds.
+     */
+    RequestSoundboardSounds(31);
 
     internal object Serializer : KSerializer<OpCode> {
         override val descriptor = PrimitiveSerialDescriptor("dev.kord.gateway.OpCode", PrimitiveKind.INT)

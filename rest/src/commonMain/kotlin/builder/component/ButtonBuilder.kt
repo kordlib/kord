@@ -9,7 +9,7 @@ import dev.kord.common.entity.optional.delegate.delegate
 import dev.kord.common.entity.optional.optionalSnowflake
 
 @KordDsl
-public sealed class ButtonBuilder : ActionRowComponentBuilder() {
+public sealed class ButtonBuilder : AccessoryComponentBuilder, ActionRowComponentBuilder() {
 
     protected var _label: Optional<String> = Optional.Missing()
         private set

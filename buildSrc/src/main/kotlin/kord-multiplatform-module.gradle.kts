@@ -1,4 +1,7 @@
+@file:OptIn(ExperimentalAbiValidation::class)
+
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
+import org.jetbrains.kotlin.gradle.dsl.abi.ExperimentalAbiValidation
 import org.jetbrains.kotlin.gradle.targets.js.testing.KotlinJsTest
 
 plugins {
@@ -6,7 +9,6 @@ plugins {
     org.jetbrains.kotlin.plugin.serialization
     org.jetbrains.dokka
     org.jetbrains.kotlinx.atomicfu
-    org.jetbrains.kotlinx.`binary-compatibility-validator`
     com.google.devtools.ksp
 }
 
@@ -16,10 +18,6 @@ repositories {
 
 dependencies {
     kspCommonMainMetadata(project(":ksp-processors"))
-}
-
-apiValidation {
-    applyKordBCVOptions()
 }
 
 @OptIn(ExperimentalKotlinGradlePluginApi::class)
@@ -44,8 +42,12 @@ kotlin {
                     timeout = "0"
                 }
             }
+
+            compilerOptions {
+                target = "es2015"
+            }
         }
-        useCommonJs()
+        useEsModules()
     }
 
     applyDefaultHierarchyTemplate()
@@ -66,6 +68,13 @@ kotlin {
         }
         jsMain {
             dependsOn(nonJvmMain)
+        }
+    }
+
+    abiValidation {
+        applyKordBCVOptions()
+        klib {
+            enabled = true
         }
     }
 }

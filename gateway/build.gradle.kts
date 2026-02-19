@@ -34,3 +34,7 @@ kotlin {
         }
     }
 }
+
+dependencies {
+    kspCommonMainMetadata(projects.kspProcessors)
+}

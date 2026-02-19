@@ -1,6 +1,5 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
-@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
-                "SpellCheckingInspection", "GrazieInspection"))
+@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
@@ -14,8 +13,9 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 /**
- * See [AllowedMentionType]s in the
- * [Discord Developer Documentation](https://discord.com/developers/docs/resources/channel#allowed-mentions-object-allowed-mention-types).
+ *
+ *
+ * See [AllowedMentionType]s in the [Discord Developer Documentation](https://discord.com/developers/docs/resources/channel#allowed-mentions-object-allowed-mention-types).
  */
 @Serializable(with = AllowedMentionType.Serializer::class)
 public sealed class AllowedMentionType(
@@ -24,14 +24,11 @@ public sealed class AllowedMentionType(
      */
     public val `value`: String,
 ) {
-    final override fun equals(other: Any?): Boolean = this === other ||
-            (other is AllowedMentionType && this.value == other.value)
+    final override fun equals(other: Any?): Boolean = this === other || (other is AllowedMentionType && this.value == other.value)
 
     final override fun hashCode(): Int = value.hashCode()
 
-    final override fun toString(): String =
-            if (this is Unknown) "AllowedMentionType.Unknown(value=$value)"
-            else "AllowedMentionType.${this::class.simpleName}"
+    final override fun toString(): String = if (this is Unknown) "AllowedMentionType.Unknown(value=$value)" else "AllowedMentionType.${this::class.simpleName}"
 
     /**
      * An unknown [AllowedMentionType].
@@ -59,15 +56,13 @@ public sealed class AllowedMentionType(
 
     internal object Serializer : KSerializer<AllowedMentionType> {
         override val descriptor: SerialDescriptor =
-                PrimitiveSerialDescriptor("dev.kord.common.entity.AllowedMentionType",
-                PrimitiveKind.STRING)
+                PrimitiveSerialDescriptor("dev.kord.common.entity.AllowedMentionType", PrimitiveKind.STRING)
 
         override fun serialize(encoder: Encoder, `value`: AllowedMentionType) {
             encoder.encodeString(value.value)
         }
 
-        override fun deserialize(decoder: Decoder): AllowedMentionType =
-                from(decoder.decodeString())
+        override fun deserialize(decoder: Decoder): AllowedMentionType = from(decoder.decodeString())
     }
 
     public companion object {
@@ -83,8 +78,7 @@ public sealed class AllowedMentionType(
         }
 
         /**
-         * Returns an instance of [AllowedMentionType] with [AllowedMentionType.value] equal to the
-         * specified [value].
+         * Returns an instance of [AllowedMentionType] with [AllowedMentionType.value] equal to the specified [value].
          */
         public fun from(`value`: String): AllowedMentionType = when (value) {
             "roles" -> RoleMentions

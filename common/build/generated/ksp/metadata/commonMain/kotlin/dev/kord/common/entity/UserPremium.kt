@@ -1,6 +1,5 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
-@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
-                "SpellCheckingInspection", "GrazieInspection"))
+@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
@@ -16,8 +15,7 @@ import kotlinx.serialization.encoding.Encoder
 /**
  * Premium types denote the level of premium a user has.
  *
- * See [UserPremium]s in the
- * [Discord Developer Documentation](https://discord.com/developers/docs/resources/user#user-object-premium-types).
+ * See [UserPremium]s in the [Discord Developer Documentation](https://discord.com/developers/docs/resources/user#user-object-premium-types).
  */
 @Serializable(with = UserPremium.Serializer::class)
 public sealed class UserPremium(
@@ -26,13 +24,11 @@ public sealed class UserPremium(
      */
     public val `value`: Int,
 ) {
-    final override fun equals(other: Any?): Boolean = this === other ||
-            (other is UserPremium && this.value == other.value)
+    final override fun equals(other: Any?): Boolean = this === other || (other is UserPremium && this.value == other.value)
 
     final override fun hashCode(): Int = value.hashCode()
 
-    final override fun toString(): String = if (this is Unknown) "UserPremium.Unknown(value=$value)"
-            else "UserPremium.${this::class.simpleName}"
+    final override fun toString(): String = if (this is Unknown) "UserPremium.Unknown(value=$value)" else "UserPremium.${this::class.simpleName}"
 
     /**
      * An unknown [UserPremium].
@@ -76,8 +72,7 @@ public sealed class UserPremium(
         }
 
         /**
-         * Returns an instance of [UserPremium] with [UserPremium.value] equal to the specified
-         * [value].
+         * Returns an instance of [UserPremium] with [UserPremium.value] equal to the specified [value].
          */
         public fun from(`value`: Int): UserPremium = when (value) {
             0 -> None

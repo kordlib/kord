@@ -152,7 +152,6 @@
 
 @file:Generate(
     INT_FLAGS, name = "SystemChannelFlag", valueName = "code",
-    collectionHadNewCompanion = true,
     docUrl = "https://discord.com/developers/docs/resources/guild#guild-object-system-channel-flags",
     entries = [
         Entry("SuppressJoinNotifications", shift = 0, kDoc = "Suppress member join notifications."),
@@ -180,7 +179,7 @@ import dev.kord.common.serialization.DurationInSeconds
 import dev.kord.ksp.Generate
 import dev.kord.ksp.Generate.EntityType.*
 import dev.kord.ksp.Generate.Entry
-import kotlinx.datetime.Instant
+import kotlin.time.Instant
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 

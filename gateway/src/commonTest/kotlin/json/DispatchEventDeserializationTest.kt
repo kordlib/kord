@@ -2,8 +2,8 @@ package dev.kord.gateway.json
 
 import dev.kord.common.entity.*
 import dev.kord.gateway.*
-import kotlinx.datetime.Clock
-import kotlinx.datetime.Instant
+import kotlin.time.Clock
+import kotlin.time.Instant
 import kotlinx.serialization.json.*
 import kotlin.random.Random
 import kotlin.test.Test
@@ -822,47 +822,5 @@ class DispatchEventDeserializationTest {
         eventConstructor = { data, sequence -> UnknownDispatchEvent(name = "SOME_UNKNOWN_EVENT", data, sequence) },
         data = buildJsonObject { put("foo", "bar") },
         json = """{"foo":"bar"}""",
-    )
-
-
-    // The following events have been removed from Discord's documentation, we should probably remove them too.
-    // See https://github.com/discord/discord-api-docs/pull/3691
-
-    private val applicationCommand = DiscordApplicationCommand(
-        id = Snowflake.min,
-        applicationId = Snowflake.min,
-        name = "name",
-        description = null,
-        defaultMemberPermissions = null,
-        version = Snowflake.min,
-    )
-    private val applicationCommandJson = """{"id":"0","application_id":"0","name":"name","description":null,""" +
-        """"default_member_permissions":null,"version":"0"}"""
-
-    @Test
-    @Suppress("DEPRECATION_ERROR")
-    fun test_ApplicationCommandCreate_deserialization() = testDispatchEventDeserialization(
-        eventName = "APPLICATION_COMMAND_CREATE",
-        eventConstructor = ::ApplicationCommandCreate,
-        data = applicationCommand,
-        json = applicationCommandJson,
-    )
-
-    @Test
-    @Suppress("DEPRECATION_ERROR")
-    fun test_ApplicationCommandUpdate_deserialization() = testDispatchEventDeserialization(
-        eventName = "APPLICATION_COMMAND_UPDATE",
-        eventConstructor = ::ApplicationCommandUpdate,
-        data = applicationCommand,
-        json = applicationCommandJson,
-    )
-
-    @Test
-    @Suppress("DEPRECATION_ERROR")
-    fun test_ApplicationCommandDelete_deserialization() = testDispatchEventDeserialization(
-        eventName = "APPLICATION_COMMAND_DELETE",
-        eventConstructor = ::ApplicationCommandDelete,
-        data = applicationCommand,
-        json = applicationCommandJson,
     )
 }

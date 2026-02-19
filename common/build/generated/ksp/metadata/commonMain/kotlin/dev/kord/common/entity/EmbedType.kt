@@ -1,6 +1,5 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
-@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
-                "SpellCheckingInspection", "GrazieInspection"))
+@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
@@ -14,8 +13,9 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 /**
- * See [EmbedType]s in the
- * [Discord Developer Documentation](https://discord.com/developers/docs/resources/channel#embed-object-embed-types).
+ *
+ *
+ * See [EmbedType]s in the [Discord Developer Documentation](https://discord.com/developers/docs/resources/channel#embed-object-embed-types).
  */
 @Serializable(with = EmbedType.Serializer::class)
 public sealed class EmbedType(
@@ -24,13 +24,11 @@ public sealed class EmbedType(
      */
     public val `value`: String,
 ) {
-    final override fun equals(other: Any?): Boolean = this === other ||
-            (other is EmbedType && this.value == other.value)
+    final override fun equals(other: Any?): Boolean = this === other || (other is EmbedType && this.value == other.value)
 
     final override fun hashCode(): Int = value.hashCode()
 
-    final override fun toString(): String = if (this is Unknown) "EmbedType.Unknown(value=$value)"
-            else "EmbedType.${this::class.simpleName}"
+    final override fun toString(): String = if (this is Unknown) "EmbedType.Unknown(value=$value)" else "EmbedType.${this::class.simpleName}"
 
     /**
      * An unknown [EmbedType].

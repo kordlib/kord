@@ -5,7 +5,7 @@ import dev.kord.cache.api.data.description
 import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.*
 import dev.kord.common.serialization.DurationInSeconds
-import kotlinx.datetime.Instant
+import kotlin.time.Instant
 import kotlinx.serialization.Serializable
 
 private val ApplicationCommandData.nullableGuildId get() = guildId.value
@@ -87,6 +87,7 @@ public data class GuildData(
             link(GuildData::id to EmojiData::guildId)
             link(GuildData::id to AutoModerationRuleData::guildId)
             link(GuildData::id to EntitlementData::nullableGuildId)
+            link(GuildData::id to SoundboardSoundData::guildId)
         }
 
         public fun from(entity: DiscordGuild): GuildData = with(entity) {

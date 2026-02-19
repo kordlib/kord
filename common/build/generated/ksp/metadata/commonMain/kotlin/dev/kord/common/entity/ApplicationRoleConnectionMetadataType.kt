@@ -1,6 +1,5 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
-@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
-                "SpellCheckingInspection", "GrazieInspection"))
+@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
@@ -14,13 +13,9 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 /**
- * Each [ApplicationRoleConnectionMetadataType] offers a comparison operation that allows guilds to
- * configure role requirements based on metadata values stored by the bot. Bots specify a 'metadata
- * value' for each user and guilds specify the required 'guild's configured value' within the guild
- * role settings.
+ * Each [ApplicationRoleConnectionMetadataType] offers a comparison operation that allows guilds to configure role requirements based on metadata values stored by the bot. Bots specify a 'metadata value' for each user and guilds specify the required 'guild's configured value' within the guild role settings.
  *
- * See [ApplicationRoleConnectionMetadataType]s in the
- * [Discord Developer Documentation](https://discord.com/developers/docs/resources/application-role-connection-metadata#application-role-connection-metadata-object-application-role-connection-metadata-type).
+ * See [ApplicationRoleConnectionMetadataType]s in the [Discord Developer Documentation](https://discord.com/developers/docs/resources/application-role-connection-metadata#application-role-connection-metadata-object-application-role-connection-metadata-type).
  */
 @Serializable(with = ApplicationRoleConnectionMetadataType.Serializer::class)
 public sealed class ApplicationRoleConnectionMetadataType(
@@ -29,34 +24,28 @@ public sealed class ApplicationRoleConnectionMetadataType(
      */
     public val `value`: Int,
 ) {
-    final override fun equals(other: Any?): Boolean = this === other ||
-            (other is ApplicationRoleConnectionMetadataType && this.value == other.value)
+    final override fun equals(other: Any?): Boolean = this === other || (other is ApplicationRoleConnectionMetadataType && this.value == other.value)
 
     final override fun hashCode(): Int = value.hashCode()
 
-    final override fun toString(): String =
-            if (this is Unknown) "ApplicationRoleConnectionMetadataType.Unknown(value=$value)"
-            else "ApplicationRoleConnectionMetadataType.${this::class.simpleName}"
+    final override fun toString(): String = if (this is Unknown) "ApplicationRoleConnectionMetadataType.Unknown(value=$value)" else "ApplicationRoleConnectionMetadataType.${this::class.simpleName}"
 
     /**
      * An unknown [ApplicationRoleConnectionMetadataType].
      *
-     * This is used as a fallback for [ApplicationRoleConnectionMetadataType]s that haven't been
-     * added to Kord yet.
+     * This is used as a fallback for [ApplicationRoleConnectionMetadataType]s that haven't been added to Kord yet.
      */
     public class Unknown internal constructor(
         `value`: Int,
     ) : ApplicationRoleConnectionMetadataType(value)
 
     /**
-     * The metadata value (`integer`) is less than or equal to the guild's configured value
-     * (`integer`).
+     * The metadata value (`integer`) is less than or equal to the guild's configured value (`integer`).
      */
     public object IntegerLessThanOrEqual : ApplicationRoleConnectionMetadataType(1)
 
     /**
-     * The metadata value (`integer`) is greater than or equal to the guild's configured value
-     * (`integer`).
+     * The metadata value (`integer`) is greater than or equal to the guild's configured value (`integer`).
      */
     public object IntegerGreaterThanOrEqual : ApplicationRoleConnectionMetadataType(2)
 
@@ -71,14 +60,12 @@ public sealed class ApplicationRoleConnectionMetadataType(
     public object IntegerNotEqual : ApplicationRoleConnectionMetadataType(4)
 
     /**
-     * The metadata value (`ISO8601 string`) is less than or equal to the guild's configured value
-     * (`integer`; `days before current date`).
+     * The metadata value (`ISO8601 string`) is less than or equal to the guild's configured value (`integer`; `days before current date`).
      */
     public object DateTimeLessThanOrEqual : ApplicationRoleConnectionMetadataType(5)
 
     /**
-     * The metadata value (`ISO8601 string`) is greater than or equal to the guild's configured
-     * value (`integer`; `days before current date`).
+     * The metadata value (`ISO8601 string`) is greater than or equal to the guild's configured value (`integer`; `days before current date`).
      */
     public object DateTimeGreaterThanOrEqual : ApplicationRoleConnectionMetadataType(6)
 
@@ -94,15 +81,13 @@ public sealed class ApplicationRoleConnectionMetadataType(
 
     internal object Serializer : KSerializer<ApplicationRoleConnectionMetadataType> {
         override val descriptor: SerialDescriptor =
-                PrimitiveSerialDescriptor("dev.kord.common.entity.ApplicationRoleConnectionMetadataType",
-                PrimitiveKind.INT)
+                PrimitiveSerialDescriptor("dev.kord.common.entity.ApplicationRoleConnectionMetadataType", PrimitiveKind.INT)
 
         override fun serialize(encoder: Encoder, `value`: ApplicationRoleConnectionMetadataType) {
             encoder.encodeInt(value.value)
         }
 
-        override fun deserialize(decoder: Decoder): ApplicationRoleConnectionMetadataType =
-                from(decoder.decodeInt())
+        override fun deserialize(decoder: Decoder): ApplicationRoleConnectionMetadataType = from(decoder.decodeInt())
     }
 
     public companion object {
@@ -124,8 +109,7 @@ public sealed class ApplicationRoleConnectionMetadataType(
         }
 
         /**
-         * Returns an instance of [ApplicationRoleConnectionMetadataType] with
-         * [ApplicationRoleConnectionMetadataType.value] equal to the specified [value].
+         * Returns an instance of [ApplicationRoleConnectionMetadataType] with [ApplicationRoleConnectionMetadataType.value] equal to the specified [value].
          */
         public fun from(`value`: Int): ApplicationRoleConnectionMetadataType = when (value) {
             1 -> IntegerLessThanOrEqual

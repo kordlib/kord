@@ -21,7 +21,9 @@ public sealed interface ResponseMapper<T> {
 }
 
 internal class ValueJsonMapper<T>(val strategy: DeserializationStrategy<T>) : ResponseMapper<T> {
-    override fun deserialize(json: Json, body: String): T = json.decodeFromString(strategy, body)
+    override fun deserialize(json: Json, body: String): T {
+        return json.decodeFromString(strategy, body)
+    }
     override fun toString(): String = "ValueJsonMapper(strategy=$strategy)"
 }
 
@@ -85,6 +87,7 @@ public sealed class Route<T>(
     public object ScheduledEventId : Key("{event.id}", true)
     public object StickerId : Key("{sticker.id}")
     public object AutoModerationRuleId : Key("{auto_moderation_rule.id}")
+    public object SoundId : Key("{sound.id}")
 
 
     protected constructor(
@@ -1125,4 +1128,82 @@ public sealed class Route<T>(
             "/guilds/$GuildId/stickers/$StickerId",
             DiscordMessageSticker.serializer()
         )
+
+    public object SendSoundboardSound : Route<Unit>(
+        HttpMethod.Post,
+        "/channels/$ChannelId/send-soundboard-sound",
+        NoStrategy,
+    )
+
+    public object GetSoundboardDefaultSounds :
+        Route<List<DiscordSoundboardSound>>(
+            HttpMethod.Get,
+            "/soundboard-default-sounds",
+            ListSerializer(DiscordSoundboardSound.serializer())
+        )
+
+    public object GetGuildSoundboardSounds :
+        Route<GuildSoundboardSoundsResponse>(
+            HttpMethod.Get,
+            "/guilds/$GuildId/soundboard-sounds",
+            GuildSoundboardSoundsResponse.serializer()
+        )
+
+    public object GetGuildsSoundboardSound :
+        Route<DiscordSoundboardSound>(
+            HttpMethod.Get,
+            "/guilds/$GuildId/soundboard-sounds/$SoundId",
+            DiscordSoundboardSound.serializer()
+        )
+
+    public object PostGuildsSoundboardSounds :
+        Route<DiscordSoundboardSound>(
+            HttpMethod.Post,
+            "/guilds/$GuildId/soundboard-sounds",
+            DiscordSoundboardSound.serializer()
+        )
+
+    public object PatchGuildsSoundboardSound :
+        Route<DiscordSoundboardSound>(
+            HttpMethod.Patch,
+            "/guilds/$GuildId/soundboard-sounds/$SoundId",
+            DiscordSoundboardSound.serializer()
+        )
+
+    public object DeleteGuildsSoundboardSound :
+        Route<Unit>(
+            HttpMethod.Delete,
+            "/guilds/$GuildId/soundboard-sounds/$SoundId",
+            NoStrategy
+        )
+
+    public object GetApplicationEmojis : Route<ApplicationEmojisResponse>(
+        HttpMethod.Get,
+        "/applications/$ApplicationId/emojis",
+        ApplicationEmojisResponse.serializer()
+    )
+
+    public object GetApplicationEmoji : Route<DiscordEmoji>(
+        HttpMethod.Get,
+        "/applications/$ApplicationId/emojis/$EmojiId",
+        DiscordEmoji.serializer()
+    )
+
+    public object PostApplicationEmoji : Route<DiscordEmoji>(
+        HttpMethod.Post,
+        "/applications/$ApplicationId/emojis",
+        DiscordEmoji.serializer()
+    )
+
+    public object PatchApplicationEmoji : Route<DiscordEmoji>(
+        HttpMethod.Patch,
+        "/applications/$ApplicationId/emojis/$EmojiId",
+        DiscordEmoji.serializer()
+    )
+
+    public object DeleteApplicationEmoji : Route<Unit>(
+        HttpMethod.Delete,
+        "/applications/$ApplicationId/emojis/$EmojiId",
+        NoStrategy
+    )
 }

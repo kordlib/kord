@@ -15,7 +15,7 @@ import dev.kord.common.serialization.DurationInSeconds
 import dev.kord.ksp.Generate
 import dev.kord.ksp.Generate.EntityType.INT_KORD_ENUM
 import dev.kord.ksp.Generate.Entry
-import kotlinx.datetime.Instant
+import kotlin.time.Instant
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -52,7 +52,8 @@ public data class DiscordInvite(
     @SerialName("expires_at")
     override val expiresAt: Optional<Instant?> = Optional.Missing(),
     @SerialName("stage_instance")
-    @Deprecated("Stages are no longer discoverable")
+    @Deprecated("Stages are no longer discoverable. The deprecation level will be raised to HIDDEN in " +
+            "0.19.0 and this declaration will be removed in 0.20.0.", level = DeprecationLevel.ERROR)
     val stageInstance: Optional<DiscordStageInstance> = Optional.Missing(),
     @SerialName("guild_scheduled_event")
     override val guildScheduledEvent: Optional<DiscordGuildScheduledEvent> = Optional.Missing(),

@@ -1,4 +1,5 @@
 import org.gradle.api.Project
+import org.gradle.api.provider.Provider
 
 object Library {
     const val name = "kord"
@@ -9,25 +10,25 @@ object Library {
 
 private val Project.tag
     get() = git("tag", "--no-column", "--points-at", "HEAD")
-        .takeIf { it.isNotBlank() }
-        ?.lines()
-        ?.single()
-
-val Project.libraryVersion
-    get() = tag ?: run {
-        val snapshotPrefix = when (val branch = git("branch", "--show-current")) {
-            "main" -> providers.gradleProperty("nextPlannedVersion").get()
-            else -> branch.replace('/', '-')
+        .map {
+            it.takeIf { it.isNotBlank() }
+                ?.lines()
+                ?.single()
         }
-        "$snapshotPrefix-SNAPSHOT"
+
+val Project.libraryVersion: Provider<String>
+    get() {
+        if (System.getProperty("idea.active")?.toBoolean() == true) return provider { "QODANA" }
+        val snapshotVersion = git("branch", "--show-current").map { branch ->
+            val snapshotPrefix = when (branch) {
+                "main" -> providers.gradleProperty("nextPlannedVersion").get()
+                else -> branch.replace('/', '-')
+            }
+            "$snapshotPrefix-SNAPSHOT"
+        }
+
+        return tag.orElse(snapshotVersion)
     }
 
 val Project.commitHash get() = git("rev-parse", "--verify", "HEAD")
 val Project.shortCommitHash get() = git("rev-parse", "--short", "HEAD")
-
-val Project.isRelease get() = tag != null
-
-object Repo {
-    const val releasesUrl = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
-    const val snapshotsUrl = "https://oss.sonatype.org/content/repositories/snapshots/"
-}

@@ -17,7 +17,7 @@ import dev.kord.core.switchIfEmpty
 import dev.kord.rest.json.request.EntitlementsListRequest
 import dev.kord.rest.json.request.SkuSubscriptionsListRequest
 import kotlinx.coroutines.flow.Flow
-import kotlinx.datetime.Instant
+import kotlin.time.Instant
 
 /**
  * Creates supplier providing a strategy which will first operate on this supplier. When an entity
@@ -98,6 +98,12 @@ private class FallbackEntitySupplier(val first: EntitySupplier, val second: Enti
 
     override fun getEmojis(guildId: Snowflake): Flow<GuildEmoji> =
         first.getEmojis(guildId).switchIfEmpty(second.getEmojis(guildId))
+
+    override suspend fun getGuildSoundboardSoundOrNull(guildId: Snowflake, soundId: Snowflake): GuildSoundboardSound? =
+        first.getGuildSoundboardSoundOrNull(guildId, soundId) ?: second.getGuildSoundboardSoundOrNull(guildId, soundId)
+
+    override fun getGuildSoundboardSounds(guildId: Snowflake): Flow<GuildSoundboardSound> =
+        first.getGuildSoundboardSounds(guildId).switchIfEmpty(second.getGuildSoundboardSounds(guildId))
 
     override fun getCurrentUserGuilds(limit: Int?): Flow<Guild> =
         first.getCurrentUserGuilds(limit).switchIfEmpty(second.getCurrentUserGuilds(limit))
