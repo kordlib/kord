@@ -31,6 +31,9 @@ public class EntityNotFoundException : Exception {
         public inline fun memberNotFound(guildId: Snowflake, userId: Snowflake): Nothing =
             guildEntityNotFound("Member", guildId = guildId, id = userId)
 
+        public inline fun memberVoiceStateNotFound(guildId: Snowflake, userId: Snowflake): Nothing =
+            guildEntityNotFound("VoiceState for Member", guildId = guildId, id = userId)
+
         public inline fun messageNotFound(channelId: Snowflake, messageId: Snowflake): Nothing =
             throw EntityNotFoundException("Message with id $messageId in channel $channelId was not found.")
 

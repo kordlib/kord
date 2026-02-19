@@ -111,6 +111,12 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
         Member(memberData, userData, kord)
     }
 
+    override suspend fun getMemberVoiceStateOrNull(guildId: Snowflake, userId: Snowflake): VoiceState? = catchNotFound {
+        val voiceState = guild.getGuildMemberVoiceState(guildId = guildId, userId = userId)
+        val voiceStateData = VoiceStateData.from(guildId = guildId, entity = voiceState)
+        VoiceState(voiceStateData, kord)
+    }
+
     override suspend fun getMessageOrNull(channelId: Snowflake, messageId: Snowflake): Message? = catchNotFound {
         Message(channel.getMessage(channelId = channelId, messageId = messageId).toData(), kord)
     }
