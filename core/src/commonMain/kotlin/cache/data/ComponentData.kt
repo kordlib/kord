@@ -1,27 +1,8 @@
 package dev.kord.core.cache.data
 
 import dev.kord.common.Color
-import dev.kord.common.entity.ButtonStyle
-import dev.kord.common.entity.ChannelType
-import dev.kord.common.entity.ComponentType
-import dev.kord.common.entity.DiscordChatComponent
-import dev.kord.common.entity.DiscordCheckboxComponent
-import dev.kord.common.entity.DiscordComponent
-import dev.kord.common.entity.DiscordModalComponent
-import dev.kord.common.entity.DiscordPartialEmoji
-import dev.kord.common.entity.DiscordSelectComponent
-import dev.kord.common.entity.DiscordSelectDefaultValue
-import dev.kord.common.entity.DiscordTextInputComponent
-import dev.kord.common.entity.MediaGalleryItem
-import dev.kord.common.entity.SeparatorSpacingSize
-import dev.kord.common.entity.TextInputStyle
-import dev.kord.common.entity.UnfurledMediaItem
-import dev.kord.common.entity.optional.Optional
-import dev.kord.common.entity.optional.OptionalBoolean
-import dev.kord.common.entity.optional.OptionalInt
-import dev.kord.common.entity.optional.OptionalSnowflake
-import dev.kord.common.entity.optional.map
-import dev.kord.common.entity.optional.mapList
+import dev.kord.common.entity.*
+import dev.kord.common.entity.optional.*
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.JsonClassDiscriminator
@@ -51,131 +32,129 @@ public sealed class ComponentData {
     public abstract val channelTypes: Optional<List<ChannelType>>
 
     public companion object {
-        public fun from(entity: DiscordComponent): ComponentData = with(entity) {
-            when (entity) {
-                is DiscordChatComponent -> {
-                    ChatComponentData(
-                        type,
-                        entity.style,
-                        label,
-                        emoji,
-                        customId,
-                        url,
-                        disabled,
-                        components.mapList { from(it) },
-                        defaultValues = defaultValues,
-                        placeholder = placeholder,
-                        minValues = minValues,
-                        maxValues = maxValues,
-                        options = options.mapList { SelectOptionData.from(it) },
-                        minLength = minLength,
-                        maxLength = maxLength,
-                        required = required,
-                        value = value,
-                        channelTypes = channelTypes,
-                        skuId = entity.skuId,
-                        accessory = accessory.map { from(it) as ChatComponentData },
-                        content = content,
-                        image = media,
-                        description = description,
-                        spoiler = spoiler,
-                        items = items,
-                        divider = divider,
-                        spacing = spacing,
-                        file = file,
-                        accentColor = accentColor
-                    )
-                }
+        public fun from(entity: DiscordComponent): ComponentData = when (entity) {
+            is DiscordChatComponent -> with(entity) {
+                ChatComponentData(
+                    type,
+                    entity.style,
+                    label,
+                    emoji,
+                    customId,
+                    url,
+                    disabled,
+                    components.mapList { from(it) },
+                    defaultValues = defaultValues,
+                    placeholder = placeholder,
+                    minValues = minValues,
+                    maxValues = maxValues,
+                    options = options.mapList { SelectOptionData.from(it) },
+                    minLength = minLength,
+                    maxLength = maxLength,
+                    required = required,
+                    value = value,
+                    channelTypes = channelTypes,
+                    skuId = entity.skuId,
+                    accessory = accessory.map { from(it) as ChatComponentData },
+                    content = content,
+                    image = media,
+                    description = description,
+                    spoiler = spoiler,
+                    items = items,
+                    divider = divider,
+                    spacing = spacing,
+                    file = file,
+                    accentColor = accentColor
+                )
+            }
 
-                is DiscordTextInputComponent -> {
-                    TextInputComponentData(
-                        type,
-                        entity.style,
-                        label,
-                        emoji,
-                        customId,
-                        url,
-                        disabled,
-                        components.mapList { from(it) },
-                        defaultValues = defaultValues,
-                        placeholder = placeholder,
-                        minValues = minValues,
-                        maxValues = maxValues,
-                        options = options.mapList { SelectOptionData.from(it) },
-                        minLength = minLength,
-                        maxLength = maxLength,
-                        required = required,
-                        value = value,
-                        channelTypes = channelTypes
-                    )
-                }
+            is DiscordTextInputComponent -> with(entity) {
+                TextInputComponentData(
+                    type,
+                    entity.style,
+                    label,
+                    emoji,
+                    customId,
+                    url,
+                    disabled,
+                    components.mapList { from(it) },
+                    defaultValues = defaultValues,
+                    placeholder = placeholder,
+                    minValues = minValues,
+                    maxValues = maxValues,
+                    options = options.mapList { SelectOptionData.from(it) },
+                    minLength = minLength,
+                    maxLength = maxLength,
+                    required = required,
+                    value = value,
+                    channelTypes = channelTypes
+                )
+            }
 
-                is DiscordModalComponent -> {
-                    LabelComponentData(
-                        type,
-                        label,
-                        emoji,
-                        customId,
-                        url,
-                        disabled,
-                        component = component.map { from(it) },
-                        description = description,
-                        options = options.mapList { SelectOptionData.from(it) },
-                        placeholder = placeholder,
-                        defaultValues = defaultValues,
-                        minValues = minValues,
-                        maxValues = maxValues,
-                        minLength = minLength,
-                        maxLength = maxLength,
-                        required = required,
-                    )
-                }
+            is DiscordModalComponent -> with(entity) {
+                LabelComponentData(
+                    type,
+                    label,
+                    emoji,
+                    customId,
+                    url,
+                    disabled,
+                    component = component.map { from(it) },
+                    description = description,
+                    options = options.mapList { SelectOptionData.from(it) },
+                    placeholder = placeholder,
+                    defaultValues = defaultValues,
+                    minValues = minValues,
+                    maxValues = maxValues,
+                    minLength = minLength,
+                    maxLength = maxLength,
+                    required = required,
+                )
+            }
 
-                is DiscordSelectComponent -> {
-                    SelectComponentData(
-                        type,
-                        label,
-                        emoji,
-                        customId,
-                        url,
-                        disabled,
-                        components.mapList { from(it) },
-                        options.mapList { SelectOptionData.from(it) },
-                        placeholder,
-                        defaultValues,
-                        minValues = minValues,
-                        maxValues = maxValues,
-                        minLength = minLength,
-                        maxLength = maxLength,
-                        required = required,
-                        value = value,
-                        values = values,
-                        channelTypes = channelTypes
-                    )
-                }
+            is DiscordSelectComponent -> with(entity) {
+                SelectComponentData(
+                    type,
+                    label,
+                    emoji,
+                    customId,
+                    url,
+                    disabled,
+                    components.mapList { from(it) },
+                    options.mapList { SelectOptionData.from(it) },
+                    placeholder,
+                    defaultValues,
+                    minValues = minValues,
+                    maxValues = maxValues,
+                    minLength = minLength,
+                    maxLength = maxLength,
+                    required = required,
+                    value = value,
+                    values = values,
+                    channelTypes = channelTypes
+                )
+            }
 
-                is DiscordCheckboxComponent -> {
-                    CheckboxComponentData(
-                        type,
-                        label,
-                        emoji,
-                        customId,
-                        url,
-                        disabled,
-                        components.mapList { from(it) },
-                        options.mapList { SelectOptionData.from(it) },
-                        placeholder,
-                        defaultValues,
-                        minValues,
-                        maxValues,
-                        minLength,
-                        maxLength,
-                        required,
-                        value,
-                        channelTypes,
-                        default
-                    )
-                }
+            is DiscordCheckboxComponent -> with(entity) {
+                CheckboxComponentData(
+                    type,
+                    label,
+                    emoji,
+                    customId,
+                    url,
+                    disabled,
+                    components.mapList { from(it) },
+                    options.mapList { SelectOptionData.from(it) },
+                    placeholder,
+                    defaultValues,
+                    minValues,
+                    maxValues,
+                    minLength,
+                    maxLength,
+                    required,
+                    value,
+                    channelTypes,
+                    default
+                )
             }
         }
     }
@@ -304,4 +283,3 @@ public data class CheckboxComponentData(
     override val channelTypes: Optional<List<ChannelType>> = Optional.Missing(),
     val default: OptionalBoolean = OptionalBoolean.Missing
 ) : ComponentData()
-

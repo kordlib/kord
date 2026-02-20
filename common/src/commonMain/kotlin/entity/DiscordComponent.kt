@@ -61,6 +61,7 @@
 
 package dev.kord.common.entity
 
+import dev.kord.common.Color
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalInt

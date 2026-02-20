@@ -20,7 +20,10 @@ import dev.kord.common.entity.optional.delegate.delegate
 public class TextInputBuilder(
     public var style: TextInputStyle,
     public var customId: String,
-    @Deprecated("Deprecated in favor of `label` and `description` on the **Label** component.", level = DeprecationLevel.WARNING)
+    @Deprecated(
+        "Deprecated in favor of `label` and `description` on the **Label** component.",
+        level = DeprecationLevel.WARNING
+    )
     public var label: String? = null,
 ) : ActionRowComponentBuilder() {
     /**

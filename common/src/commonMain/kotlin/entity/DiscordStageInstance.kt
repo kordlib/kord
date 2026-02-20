@@ -4,8 +4,11 @@
     entries = [
         Entry(
             "Public", intValue = 1, kDoc = "The Stage instance is visible publicly.",
-            deprecated = Deprecated("Stages are no longer discoverable. The deprecation level will be raised" +
-                    " to HIDDEN in 0.19.0 and this declaration will be removed in 0.20.0", level = DeprecationLevel.ERROR),
+            deprecated = Deprecated(
+                "Stages are no longer discoverable. The deprecation level will be raised" +
+                    " to HIDDEN in 0.19.0 and this declaration will be removed in 0.20.0",
+                level = DeprecationLevel.ERROR
+            ),
         ),
         Entry("GuildOnly", intValue = 2, kDoc = "The Stage instance is visible to only guild members."),
     ],
@@ -42,8 +45,10 @@ public data class DiscordStageInstance(
     val topic: String,
     @SerialName("privacy_level")
     val privacyLevel: StageInstancePrivacyLevel,
-    @Deprecated("Stages are no longer discoverable. The deprecation level will be raised to HIDDEN in 0.19.0" +
-            " and this declaration will be removed in 0.20.0", level = DeprecationLevel.ERROR)
+    @Deprecated(
+        "Stages are no longer discoverable. The deprecation level will be raised to HIDDEN in 0.19.0" +
+            " and this declaration will be removed in 0.20.0", level = DeprecationLevel.ERROR
+    )
     @SerialName("discoverable_disabled")
     val discoverableDisabled: Boolean,
     @SerialName("guild_scheduled_event_id")

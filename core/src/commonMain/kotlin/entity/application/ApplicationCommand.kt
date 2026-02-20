@@ -56,9 +56,11 @@ public sealed interface ApplicationCommand : ApplicationCommandBehavior {
      * whether the command is enabled by default when the app is added to a guild.
      */
     @Suppress("DEPRECATION_ERROR")
-    @Deprecated("'defaultPermission' is deprecated in favor of 'defaultMemberPermissions' and 'dmPermission'." +
+    @Deprecated(
+        "'defaultPermission' is deprecated in favor of 'defaultMemberPermissions' and 'dmPermission'." +
             " The deprecation level will be raised to HIDDEN in 0.19.0 and this declaration will be removed in 0.20.0",
-        level = DeprecationLevel.ERROR)
+        level = DeprecationLevel.ERROR
+    )
     public val defaultPermission: Boolean? get() = data.defaultPermission.value
 
     /** Indicates whether the command is age-restricted. */

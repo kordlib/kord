@@ -3,9 +3,6 @@
 
 package dev.kord.common
 
-import dev.kord.common.KordConstants.COMMIT_HASH
-
-
 public object KordConstants {
 
     /** Kord's version. */

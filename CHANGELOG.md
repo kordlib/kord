@@ -542,7 +542,6 @@ Updated in #732, #739, #755, #782 and #788
 
 ## Dependencies
 
-*
 * Kotlin 1.6.20 -> 1.6.21
 * BinaryValidator 0.8.0 -> 0.9.0
 
@@ -1334,8 +1333,7 @@ Updated in #732, #739, #755, #782 and #788
 
 ## Additions
 
-*
-Added [Gateway Intents](https://github.com/discordapp/discord-api-docs/blob/feature/gateway-intents/docs/topics/Gateway.md#gateway-intents),
+* Added [Gateway Intents](https://github.com/discordapp/discord-api-docs/blob/feature/gateway-intents/docs/topics/Gateway.md#gateway-intents),
 allowing users to filter events send by Discord. #60
 * Added `VIEW_GUILD_INSIGHTS` permission #88
 * Added `MessageCreateEvent#guildId` to replace the removed `Message#guildId`.

@@ -56,10 +56,12 @@ public sealed interface ModalSubmitInteraction : ActionInteraction, ComponentInt
      *
      * @see textInputs
      */
-    @Deprecated("Action Rows with text inputs in modals are now deprecated. Kept for binary compatibility." +
+    @Deprecated(
+        "Action Rows with text inputs in modals are now deprecated. Kept for binary compatibility." +
             " The deprecation level will be raised to ERROR in 0.19.0, to HIDDEN in 0.20.0 and this declaration will" +
             " be removed in 0.21.0",
-        ReplaceWith("textInputs"), DeprecationLevel.WARNING)
+        ReplaceWith("textInputs"), DeprecationLevel.WARNING
+    )
     public val textInputs0: Map<String, TextInputComponent>
         get() = actionRows
             .flatMap { it.components }

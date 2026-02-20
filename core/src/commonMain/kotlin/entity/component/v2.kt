@@ -1,7 +1,6 @@
 package dev.kord.core.entity.component
 
 import dev.kord.common.entity.ComponentType
-import dev.kord.common.entity.DiscordSelectOption
 import dev.kord.common.entity.MediaGalleryItem
 import dev.kord.common.entity.SeparatorSpacingSize
 import dev.kord.common.entity.Snowflake
@@ -9,13 +8,8 @@ import dev.kord.common.entity.optional.map
 import dev.kord.common.entity.optional.mapList
 import dev.kord.common.entity.optional.orEmpty
 import dev.kord.common.entity.optional.value
-import dev.kord.core.cache.data.ChatComponentData
-import dev.kord.core.cache.data.CheckboxComponentData
-import dev.kord.core.cache.data.ComponentData
-import dev.kord.core.cache.data.LabelComponentData
-import dev.kord.core.cache.data.SelectComponentData
+import dev.kord.core.cache.data.*
 import dev.kord.rest.builder.component.SelectMenuBuilder
-import kotlin.collections.map
 import dev.kord.common.entity.UnfurledMediaItem as UnfurledMediaItemData
 
 /**
