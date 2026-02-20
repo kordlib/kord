@@ -52,15 +52,11 @@ public open class User(
             if (migratedToNewUsernameSystem) Asset.defaultUserAvatar(userId = id, kord)
             else Asset.defaultUserAvatar(discriminator.toInt(), kord)
 
-    public val avatarDecorationHash: String? get() = data.avatarDecoration.value
+    public val avatarDecorationHash: String? get() = data.avatarDecorationData.value?.asset
 
     public val avatarDecoration: Asset?
         get() = avatarDecorationHash?.let {
-            Asset.userAvatarDecoration(
-                data.id,
-                it,
-                kord
-            )
+            Asset.avatarDecoration(it, kord)
         }
 
     /**
