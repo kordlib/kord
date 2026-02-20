@@ -1,8 +1,11 @@
 package dev.kord.rest.route
 
 import dev.kord.common.KordConfiguration
+import dev.kord.common.annotation.DiscordAPIPreview
 import dev.kord.common.annotation.KordExperimental
 import dev.kord.common.entity.*
+import dev.kord.rest.json.request.GuildJoinRequestCooldownResponse
+import dev.kord.rest.json.request.GuildJoinRequestsResponse
 import dev.kord.rest.json.request.GuildScheduledEventUsersResponse
 import dev.kord.rest.json.response.*
 import io.ktor.http.*
@@ -24,6 +27,7 @@ internal class ValueJsonMapper<T>(val strategy: DeserializationStrategy<T>) : Re
     override fun deserialize(json: Json, body: String): T {
         return json.decodeFromString(strategy, body)
     }
+
     override fun toString(): String = "ValueJsonMapper(strategy=$strategy)"
 }
 
@@ -87,6 +91,7 @@ public sealed class Route<T>(
     public object ScheduledEventId : Key("{event.id}", true)
     public object StickerId : Key("{sticker.id}")
     public object AutoModerationRuleId : Key("{auto_moderation_rule.id}")
+    @DiscordAPIPreview public object GuildJoinRequestId : Key("{guild_join_request.id}")
     public object SoundId : Key("{sound.id}")
 
 
@@ -648,6 +653,110 @@ public sealed class Route<T>(
     public object GuildVanityInviteGet :
         Route<DiscordPartialInvite>(HttpMethod.Get, "/guilds/$GuildId/vanity-url", DiscordPartialInvite.serializer())
 
+    @DiscordAPIPreview
+    public object GuildMemberVerificationGet :
+        Route<DiscordMemberVerification>(
+            HttpMethod.Get,
+            "/guilds/$GuildId/member-verification",
+            DiscordMemberVerification.serializer()
+        )
+
+    @DiscordAPIPreview
+    public object GuildMemberVerificationPatch :
+        Route<DiscordMemberVerification>(
+            HttpMethod.Patch,
+            "guilds/$GuildId/member-verification",
+            DiscordMemberVerification.serializer()
+        )
+
+    @DiscordAPIPreview
+    public object GuildJoinRequestsGet :
+        Route<GuildJoinRequestsResponse>(
+            HttpMethod.Get,
+            "guilds/$GuildId/requests",
+            GuildJoinRequestsResponse.serializer()
+        )
+
+    @DiscordAPIPreview
+    public object GuildJoinRequestGet :
+        Route<DiscordGuildJoinRequest>(
+            HttpMethod.Get,
+            "join-requests/$GuildJoinRequestId",
+            DiscordGuildJoinRequest.serializer()
+        )
+
+    @DiscordAPIPreview
+    public object GuildJoinRequestCooldownGet :
+        Route<GuildJoinRequestCooldownResponse>(
+            HttpMethod.Get,
+            "guilds/$GuildId/requests/@me/cooldown",
+            GuildJoinRequestCooldownResponse.serializer()
+        )
+
+    @DiscordAPIPreview
+    public object GuildJoinRequestCreate :
+        Route<DiscordGuildJoinRequest>(
+            HttpMethod.Put,
+            "guilds/$GuildId/requests/@me",
+            DiscordGuildJoinRequest.serializer()
+        )
+
+    @DiscordAPIPreview
+    public object GuildJoinRequestReset :
+        Route<DiscordGuildJoinRequest>(
+            HttpMethod.Post,
+            "guilds/$GuildId/requests/@me",
+            DiscordGuildJoinRequest.serializer()
+        )
+
+    @DiscordAPIPreview
+    public object GuildJoinRequestAck :
+        Route<Unit>(
+            HttpMethod.Post,
+            "guilds/$GuildId/requests/$GuildJoinRequestId/ack",
+            NoStrategy
+        )
+
+    @DiscordAPIPreview
+    public object GuildJoinRequestDelete :
+        Route<Unit>(
+            HttpMethod.Delete,
+            "guilds/$GuildId/requests/@me",
+            NoStrategy
+        )
+
+    @DiscordAPIPreview
+    public object GuildJoinRequestInterviewCreate :
+        Route<DiscordChannel>(
+            HttpMethod.Post,
+            "join-requests/$GuildJoinRequestId/interview",
+            DiscordChannel.serializer()
+        )
+
+    @DiscordAPIPreview
+    public object GuildJoinRequestAction :
+        Route<DiscordGuildJoinRequest>(
+            HttpMethod.Patch,
+            "guilds/$GuildId/requests/id/$GuildJoinRequestId",
+            DiscordGuildJoinRequest.serializer()
+        )
+
+    @DiscordAPIPreview
+    public object GuildJoinRequestActionByUser :
+        Route<DiscordGuildJoinRequest>(
+            HttpMethod.Patch,
+            "guilds/$GuildId/requests/$UserId",
+            DiscordGuildJoinRequest.serializer()
+        )
+
+    @DiscordAPIPreview
+    public object GuildJoinRequestBulkAction :
+        Route<Unit>(
+            HttpMethod.Patch,
+            "guilds/$GuildId/requests",
+            NoStrategy
+        )
+
     public object GuildWelcomeScreenGet :
         Route<DiscordWelcomeScreen>(
             HttpMethod.Get,
@@ -1205,5 +1314,19 @@ public sealed class Route<T>(
         HttpMethod.Delete,
         "/applications/$ApplicationId/emojis/$EmojiId",
         NoStrategy
+    )
+
+    @DiscordAPIPreview
+    public object GuildProfileGet : Route<DiscordGuildProfile>(
+        HttpMethod.Get,
+        "guilds/$GuildId/profile",
+        DiscordGuildProfile.serializer()
+    )
+
+    @DiscordAPIPreview
+    public object GuildProfilePatch : Route<DiscordGuildProfile>(
+        HttpMethod.Patch,
+        "guilds/$GuildId/profile",
+        DiscordGuildProfile.serializer()
     )
 }
