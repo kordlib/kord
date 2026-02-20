@@ -76,14 +76,12 @@ internal class ThreadEventHandler : BaseGatewayEventHandler() {
                 shard,
                 context?.get()
             )
-
             is TextChannelThread -> TextChannelThreadUpdateEvent(
                 channel,
                 old as? TextChannelThread,
                 shard,
                 context?.get()
             )
-
             is ThreadChannel -> UnknownChannelThreadUpdateEvent(channel, old, shard, context?.get())
             else -> return null
         }
@@ -111,7 +109,6 @@ internal class ThreadEventHandler : BaseGatewayEventHandler() {
                 shard,
                 context?.get(),
             )
-
             ChannelType.PrivateThread,
             ChannelType.PublicGuildThread -> TextChannelThreadDeleteEvent(
                 channel,
@@ -119,7 +116,6 @@ internal class ThreadEventHandler : BaseGatewayEventHandler() {
                 shard,
                 context?.get()
             )
-
             else -> UnknownChannelThreadDeleteEvent(channel, old as? ThreadChannel, shard, context?.get())
         }
 

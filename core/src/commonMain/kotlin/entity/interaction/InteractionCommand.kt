@@ -61,7 +61,6 @@ public sealed interface InteractionCommand : KordObject {
                     val resolvedObject = value.resolvedObject
                     if (resolvedObject is T) put(key, resolvedObject)
                 }
-
                 else -> {
                     val wrappedValue = value.value
                     if (wrappedValue is T) put(key, wrappedValue)

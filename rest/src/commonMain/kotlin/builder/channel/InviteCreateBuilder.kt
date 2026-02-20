@@ -73,10 +73,8 @@ public class InviteCreateBuilder : AuditRequestBuilder<InviteCreateRequest> {
             when {
                 _targetUserId.isPresent && _targetApplicationId.isMissing ->
                     InviteTargetType.Stream.optional()
-
                 _targetUserId.isMissing && _targetApplicationId.isPresent ->
                     InviteTargetType.EmbeddedApplication.optional()
-
                 else -> Optional.Missing() // both missing or both present, we should not decide in this case
             }
         )

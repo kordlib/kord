@@ -35,7 +35,6 @@ public sealed class Command {
                     composite.encodeSerializableElement(descriptor, 0, OpCode.serializer(), OpCode.RequestGuildMembers)
                     composite.encodeSerializableElement(descriptor, 1, RequestGuildMembers.serializer(), value)
                 }
-
                 is RequestSoundboardSounds -> {
                     composite.encodeSerializableElement(
                         descriptor,
@@ -45,27 +44,22 @@ public sealed class Command {
                     )
                     composite.encodeSerializableElement(descriptor, 1, RequestSoundboardSounds.serializer(), value)
                 }
-
                 is UpdateVoiceStatus -> {
                     composite.encodeSerializableElement(descriptor, 0, OpCode.serializer(), OpCode.VoiceStateUpdate)
                     composite.encodeSerializableElement(descriptor, 1, UpdateVoiceStatus.serializer(), value)
                 }
-
                 is UpdateStatus -> {
                     composite.encodeSerializableElement(descriptor, 0, OpCode.serializer(), OpCode.StatusUpdate)
                     composite.encodeSerializableElement(descriptor, 1, UpdateStatus.serializer(), value)
                 }
-
                 is Identify -> {
                     composite.encodeSerializableElement(descriptor, 0, OpCode.serializer(), OpCode.Identify)
                     composite.encodeSerializableElement(descriptor, 1, Identify.serializer(), value)
                 }
-
                 is Resume -> {
                     composite.encodeSerializableElement(descriptor, 0, OpCode.serializer(), OpCode.Resume)
                     composite.encodeSerializableElement(descriptor, 1, Resume.serializer(), value)
                 }
-
                 is Heartbeat -> {
                     composite.encodeSerializableElement(descriptor, 0, OpCode.serializer(), OpCode.Heartbeat)
                     @OptIn(ExperimentalSerializationApi::class)

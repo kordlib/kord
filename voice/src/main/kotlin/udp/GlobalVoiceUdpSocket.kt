@@ -69,8 +69,7 @@ public object GlobalVoiceUdpSocket : VoiceUdpSocket {
         socket.await().send(packet)
     }
 
-    override suspend fun stop() { /* this doesn't stop until the end of the process */
-    }
+    override suspend fun stop() { /* this doesn't stop until the end of the process */ }
 
     private fun packet(address: SocketAddress, builder: Sink.() -> Unit): Datagram {
         return Datagram(buildPacket(block = builder), address)

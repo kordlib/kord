@@ -28,7 +28,6 @@ internal class AutoModerationEventHandler : BaseGatewayEventHandler() {
             shard = shard,
             customContext = context?.get(),
         )
-
         else -> null
     }
 

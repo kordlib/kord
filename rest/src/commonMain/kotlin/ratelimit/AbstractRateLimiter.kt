@@ -71,12 +71,10 @@ public abstract class AbstractRateLimiter internal constructor(public val clock:
                         logger.trace { "[RATE LIMIT]:[GLOBAL]:exhausted until ${response.reset.value}" }
                         globalSuspensionPoint.value = response.reset.value
                     }
-
                     is RequestResponse.BucketRateLimit -> {
                         logger.trace { "[RATE LIMIT]:[BUCKET]:Bucket ${response.bucketKey.value} was exhausted until ${response.reset.value}" }
                         response.bucketKey.bucket.updateReset(response.reset)
                     }
-
                     is RequestResponse.Accepted, RequestResponse.Error -> {}
                 }
 

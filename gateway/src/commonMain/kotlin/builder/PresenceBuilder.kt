@@ -49,7 +49,6 @@ public class PresenceBuilder {
                 ActivityType.Custom,
                 state = state,
             )
-
             else -> null
         }
     }

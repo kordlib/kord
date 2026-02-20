@@ -191,12 +191,10 @@ public class DefaultVoiceGateway(
                     val copy = command.copy(token = "token")
                     "Voice Gateway >>> ${Json.encodeToString(Command.SerializationStrategy, copy)}"
                 }
-
                 is SelectProtocol -> {
                     val copy = command.copy(data = command.data.copy(address = "ip"))
                     "Voice Gateway >>> ${Json.encodeToString(Command.SerializationStrategy, copy)}"
                 }
-
                 is Heartbeat, is Resume, is SendSpeaking -> "Voice Gateway >>> $json"
             }
         }

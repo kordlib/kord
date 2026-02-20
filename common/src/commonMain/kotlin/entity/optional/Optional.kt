@@ -174,7 +174,6 @@ public sealed class Optional<out T> {
                     decoder.decodeNull()
                     Null<Nothing>()
                 }
-
                 else -> Optional(decoder.decodeSerializableValue(contentSerializer))
             }
 

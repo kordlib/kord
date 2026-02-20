@@ -101,7 +101,6 @@ private class IdentifyRateLimiterImpl(
                 "Too many concurrent identify attempts, overflow happened. There are already ${current.toUInt()} " +
                     "other consume() invocations waiting. This is most likely a bug."
             )
-
             else -> current + 1 // increment number of consumers
         }
     }
@@ -120,7 +119,6 @@ private class IdentifyRateLimiterImpl(
             NOT_RUNNING -> error("Should be running but was NOT_RUNNING")
             RUNNING_WITH_NO_CONSUMERS -> // no new requests in sight -> try to stop
                 if (state.compareAndSet(expect = current, update = NOT_RUNNING)) return true
-
             else -> return false // don't change number of consumers
         }
     }

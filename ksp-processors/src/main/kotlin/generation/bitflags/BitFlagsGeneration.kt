@@ -115,7 +115,6 @@ internal fun BitFlags.generateFileSpec(originatingFile: KSFile) = fileSpecForGen
                                 addStatement("shift++")
                             }
                         }
-
                         BIT_SET -> withControlFlow("for·(shift·in·0..<$valueName.size)") {
                             addStatement("if·($valueName[shift])·add(%T.fromShift(shift))", currentContext.entityCN)
                         }

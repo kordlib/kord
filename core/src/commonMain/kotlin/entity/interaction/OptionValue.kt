@@ -85,7 +85,6 @@ public fun OptionValue(value: CommandArgument<*>, resolvedObjects: ResolvedObjec
         is CommandArgument.IntegerArgument -> IntegerOptionValue(value.value, focused)
         is CommandArgument.StringArgument, is CommandArgument.AutoCompleteArgument ->
             StringOptionValue(value.value, focused)
-
         is CommandArgument.ChannelArgument -> {
             val channel = resolvedObjects?.channels.orEmpty()[value.value]
             ChannelOptionValue(value.value, focused, channel)

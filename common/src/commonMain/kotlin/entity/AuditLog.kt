@@ -214,7 +214,6 @@ public data class AuditLogChange<T>(
                         index,
                         AuditLogChangeKey.Serializer(Unit.serializer())
                     )
-
                     CompositeDecoder.DECODE_DONE -> break
                     else -> throw SerializationException("unknown index: $index")
                 }

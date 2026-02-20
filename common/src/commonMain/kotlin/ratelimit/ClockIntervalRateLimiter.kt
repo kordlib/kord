@@ -32,7 +32,6 @@ internal class ClockIntervalRateLimiter(
                 delayUntilNextInterval(now)
                 enterNextInterval(now = clock.now())
             }
-
             else -> remainingConsumes -= 1
         }
     }

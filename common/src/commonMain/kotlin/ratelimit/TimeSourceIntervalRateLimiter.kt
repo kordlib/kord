@@ -32,7 +32,6 @@ internal class TimeSourceIntervalRateLimiter(
                 delayUntilNextInterval(elapsed)
                 enterNextInterval()
             }
-
             else -> remainingConsumes -= 1
         }
     }

@@ -74,14 +74,12 @@ public fun ComponentInteraction(
             inGuild -> GuildButtonInteraction(data, kord, supplier)
             else -> GlobalButtonInteraction(data, kord, supplier)
         }
-
         ComponentType.StringSelect, ComponentType.UserSelect,
         ComponentType.MentionableSelect, ComponentType.ChannelSelect,
         ComponentType.RoleSelect -> when {
             inGuild -> GuildSelectMenuInteraction(data, kord, supplier)
             else -> GlobalSelectMenuInteraction(data, kord, supplier)
         }
-
         ComponentType.TextInput -> throwNoInteractions()
         ComponentType.Container -> throwNoInteractions()
         ComponentType.File -> throwNoInteractions()

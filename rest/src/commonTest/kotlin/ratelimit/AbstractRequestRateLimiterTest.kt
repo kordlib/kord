@@ -45,7 +45,6 @@ abstract class AbstractRequestRateLimiterTest {
                     Reset(clock.now().plus(timeout))
                 )
             )
-
             else -> token.complete(
                 RequestResponse.Accepted(
                     BucketKey(bucketKey.toString()),
@@ -76,7 +75,6 @@ abstract class AbstractRequestRateLimiterTest {
                     Reset(clock.now().plus(timeout))
                 )
             )
-
             else -> complete(
                 RequestResponse.Accepted(
                     BucketKey(bucketKey.toString()),
