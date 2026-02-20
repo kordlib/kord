@@ -42,8 +42,12 @@ kotlin {
                     timeout = "0"
                 }
             }
+
+            compilerOptions {
+                target = "es2015"
+            }
         }
-        useCommonJs()
+        useEsModules()
     }
 
     applyDefaultHierarchyTemplate()

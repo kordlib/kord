@@ -17,7 +17,7 @@ import dev.kord.core.event.interaction.InteractionCreateEvent
  * a [InteractionCreateEvent] with a [ComponentInteraction] will fire.
  */
 
-public class ButtonComponent(override val data: ChatComponentData) : Component {
+public class ButtonComponent(override val data: ChatComponentData) : AccessoryComponent {
 
     override val type: ComponentType.Button
         get() = ComponentType.Button

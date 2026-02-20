@@ -34,7 +34,7 @@ public interface VoiceChannelBehavior : TopGuildMessageChannelBehavior, BaseVoic
      * having a [voice state] without [VoiceState.isDeafened], [VoiceState.isSelfDeafened], [VoiceState.isMuted],
      * or [VoiceState.isSuppressed] enabled.
      *
-     * @see SoundboardSoundBehavior.play
+     * @see SoundboardSoundBehavior.send
      *
      * @throws RestRequestException if something went wrong during the request.
      */

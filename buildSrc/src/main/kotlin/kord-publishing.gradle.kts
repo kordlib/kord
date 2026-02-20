@@ -1,6 +1,7 @@
 import com.vanniktech.maven.publish.JavadocJar
 import com.vanniktech.maven.publish.KotlinJvm
 import com.vanniktech.maven.publish.KotlinMultiplatform
+import com.vanniktech.maven.publish.SourcesJar
 
 plugins {
     com.vanniktech.maven.publish
@@ -48,9 +49,14 @@ mavenPublishing {
     }
 
     if (plugins.hasPlugin("org.jetbrains.kotlin.multiplatform")) {
-        configure(KotlinMultiplatform(JavadocJar.Dokka("dokkaGeneratePublicationHtml"), sourcesJar = true))
-    } else if(plugins.hasPlugin("org.jetbrains.kotlin.jvm")) {
-        configure(KotlinJvm(JavadocJar.Dokka("dokkaGeneratePublicationHtml"), sourcesJar = true))
+        configure(
+            KotlinMultiplatform(
+                JavadocJar.Dokka("dokkaGeneratePublicationHtml"),
+                sourcesJar = SourcesJar.Sources()
+            )
+        )
+    } else if (plugins.hasPlugin("org.jetbrains.kotlin.jvm")) {
+        configure(KotlinJvm(JavadocJar.Dokka("dokkaGeneratePublicationHtml"), sourcesJar = SourcesJar.Sources()))
     }
 }
 

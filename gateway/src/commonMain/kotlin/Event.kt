@@ -625,7 +625,7 @@ public data class VoiceChannelEffect(
 )
 
 /**
- * Event sent in response to [RequestSoundboardSounds] containing the [sounds][data] for [guildId].
+ * Event sent in response to [RequestSoundboardSounds] containing the [sounds][data] for [SoundboardSoundsChunk.guildId].
  */
 public data class SoundboardSounds(
     val data: SoundboardSoundsChunk,

@@ -146,33 +146,18 @@ public interface MemberBehavior : KordEntity, UserBehavior {
     /**
      * Requests to get the [VoiceState] of this member in the [guild].
      *
-     * This property is not resolvable through REST and will always use the [Kord.cache] instead.
-     *
      * @throws [RequestException] if anything went wrong during the request.
      * @throws [EntityNotFoundException] if the [VoiceState] wasn't present.
      */
-    public suspend fun getVoiceState(): VoiceState = getVoiceStateOrNull() ?: EntityNotFoundException.guildEntityNotFound(
-        "VoiceState for Member",
-        guildId = guildId,
-        id = id
-    )
+    public suspend fun getVoiceState(): VoiceState = supplier.getMemberVoiceState(guildId, id)
 
     /**
      * Requests to get the [VoiceState] of this member in the [guild],
      * returns null if the [VoiceState] isn't present.
      *
-     * This property is not resolvable through REST and will always use the [Kord.cache] instead.
-     *
      * @throws [RequestException] if anything went wrong during the request.
      */
-    public suspend fun getVoiceStateOrNull(): VoiceState? {
-        val data = kord.cache.query {
-            idEq(VoiceStateData::userId, id)
-            idEq(VoiceStateData::guildId, guildId)
-        }.singleOrNull() ?: return null
-
-        return VoiceState(data, kord)
-    }
+    public suspend fun getVoiceStateOrNull(): VoiceState? = supplier.getMemberVoiceStateOrNull(guildId, id)
 
     /**
      * Returns a new [MemberBehavior] with the given [strategy].
