@@ -30,8 +30,11 @@ public object DiscordCdn {
     public fun memberAvatar(guildId: Snowflake, userId: Snowflake, hash: String): CdnUrl =
         CdnUrl("$BASE_URL/guilds/$guildId/users/$userId/avatars/$hash")
 
-    public fun userAvatarDecoration(userId: Snowflake, hash: String): CdnUrl =
-        CdnUrl("$BASE_URL/avatar-decorations/$userId/$hash")
+    public fun avatarDecoration(hash: String): CdnUrl = CdnUrl("$BASE_URL/avatar-decoration-preset/$hash")
+
+    public fun staticNameplate(path: String): CdnUrl = CdnUrl("$BASE_URL/assets/collectibles/$path/static.png")
+
+    public fun animatedNameplate(path: String): CdnUrl = CdnUrl("$BASE_URL/assets/collectibles/$path/asset.webm")
 
     public fun applicationIcon(applicationId: Snowflake, hash: String): CdnUrl =
         CdnUrl("$BASE_URL/app-icons/$applicationId/$hash")
@@ -53,4 +56,7 @@ public object DiscordCdn {
 
     public fun memberBanner(guildId: Snowflake, userId: Snowflake, hash: String): CdnUrl =
         CdnUrl("$BASE_URL/guilds/$guildId/users/$userId/banners/$hash")
+
+    public fun tagBadge(guildId: Snowflake, hash: String): CdnUrl =
+        CdnUrl("$BASE_URL/guild-tag-badges/$guildId/$hash")
 }
