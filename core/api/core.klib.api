@@ -4394,6 +4394,71 @@ final class dev.kord.core.cache.data/InviteWithMetadataData : dev.kord.core.cach
     }
 }
 
+final class dev.kord.core.cache.data/JoinRequestData { // dev.kord.core.cache.data/JoinRequestData|null[0]
+    constructor <init>(dev.kord.common.entity/Snowflake, dev.kord.common.entity/Snowflake, kotlin.time/Instant, dev.kord.common.entity/GuildJoinRequestStatus, dev.kord.common.entity/Snowflake, dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.common.entity/DiscordMemberVerificationFormField>?> = ..., kotlin.time/Instant? = ..., dev.kord.common.entity.optional/OptionalSnowflake = ..., dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordUser> = ..., kotlin/String? = ..., dev.kord.common.entity/Snowflake, dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordUser> = ..., dev.kord.common.entity/Snowflake? = ...) // dev.kord.core.cache.data/JoinRequestData.<init>|<init>(dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake;kotlin.time.Instant;dev.kord.common.entity.GuildJoinRequestStatus;dev.kord.common.entity.Snowflake;dev.kord.common.entity.optional.Optional<kotlin.collections.List<dev.kord.common.entity.DiscordMemberVerificationFormField>?>;kotlin.time.Instant?;dev.kord.common.entity.optional.OptionalSnowflake;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.DiscordUser>;kotlin.String?;dev.kord.common.entity.Snowflake;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.DiscordUser>;dev.kord.common.entity.Snowflake?){}[0]
+
+    final val actionedAt // dev.kord.core.cache.data/JoinRequestData.actionedAt|{}actionedAt[0]
+        final fun <get-actionedAt>(): dev.kord.common.entity.optional/OptionalSnowflake // dev.kord.core.cache.data/JoinRequestData.actionedAt.<get-actionedAt>|<get-actionedAt>(){}[0]
+    final val actionedByUser // dev.kord.core.cache.data/JoinRequestData.actionedByUser|{}actionedByUser[0]
+        final fun <get-actionedByUser>(): dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordUser> // dev.kord.core.cache.data/JoinRequestData.actionedByUser.<get-actionedByUser>|<get-actionedByUser>(){}[0]
+    final val applicationStatus // dev.kord.core.cache.data/JoinRequestData.applicationStatus|{}applicationStatus[0]
+        final fun <get-applicationStatus>(): dev.kord.common.entity/GuildJoinRequestStatus // dev.kord.core.cache.data/JoinRequestData.applicationStatus.<get-applicationStatus>|<get-applicationStatus>(){}[0]
+    final val createdAt // dev.kord.core.cache.data/JoinRequestData.createdAt|{}createdAt[0]
+        final fun <get-createdAt>(): kotlin.time/Instant // dev.kord.core.cache.data/JoinRequestData.createdAt.<get-createdAt>|<get-createdAt>(){}[0]
+    final val formResponses // dev.kord.core.cache.data/JoinRequestData.formResponses|{}formResponses[0]
+        final fun <get-formResponses>(): dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.common.entity/DiscordMemberVerificationFormField>?> // dev.kord.core.cache.data/JoinRequestData.formResponses.<get-formResponses>|<get-formResponses>(){}[0]
+    final val guildId // dev.kord.core.cache.data/JoinRequestData.guildId|{}guildId[0]
+        final fun <get-guildId>(): dev.kord.common.entity/Snowflake // dev.kord.core.cache.data/JoinRequestData.guildId.<get-guildId>|<get-guildId>(){}[0]
+    final val id // dev.kord.core.cache.data/JoinRequestData.id|{}id[0]
+        final fun <get-id>(): dev.kord.common.entity/Snowflake // dev.kord.core.cache.data/JoinRequestData.id.<get-id>|<get-id>(){}[0]
+    final val interviewChannelId // dev.kord.core.cache.data/JoinRequestData.interviewChannelId|{}interviewChannelId[0]
+        final fun <get-interviewChannelId>(): dev.kord.common.entity/Snowflake? // dev.kord.core.cache.data/JoinRequestData.interviewChannelId.<get-interviewChannelId>|<get-interviewChannelId>(){}[0]
+    final val joinRequestId // dev.kord.core.cache.data/JoinRequestData.joinRequestId|{}joinRequestId[0]
+        final fun <get-joinRequestId>(): dev.kord.common.entity/Snowflake // dev.kord.core.cache.data/JoinRequestData.joinRequestId.<get-joinRequestId>|<get-joinRequestId>(){}[0]
+    final val lastSeen // dev.kord.core.cache.data/JoinRequestData.lastSeen|{}lastSeen[0]
+        final fun <get-lastSeen>(): kotlin.time/Instant? // dev.kord.core.cache.data/JoinRequestData.lastSeen.<get-lastSeen>|<get-lastSeen>(){}[0]
+    final val rejectionReason // dev.kord.core.cache.data/JoinRequestData.rejectionReason|{}rejectionReason[0]
+        final fun <get-rejectionReason>(): kotlin/String? // dev.kord.core.cache.data/JoinRequestData.rejectionReason.<get-rejectionReason>|<get-rejectionReason>(){}[0]
+    final val user // dev.kord.core.cache.data/JoinRequestData.user|{}user[0]
+        final fun <get-user>(): dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordUser> // dev.kord.core.cache.data/JoinRequestData.user.<get-user>|<get-user>(){}[0]
+    final val userId // dev.kord.core.cache.data/JoinRequestData.userId|{}userId[0]
+        final fun <get-userId>(): dev.kord.common.entity/Snowflake // dev.kord.core.cache.data/JoinRequestData.userId.<get-userId>|<get-userId>(){}[0]
+
+    final fun component1(): dev.kord.common.entity/Snowflake // dev.kord.core.cache.data/JoinRequestData.component1|component1(){}[0]
+    final fun component10(): kotlin/String? // dev.kord.core.cache.data/JoinRequestData.component10|component10(){}[0]
+    final fun component11(): dev.kord.common.entity/Snowflake // dev.kord.core.cache.data/JoinRequestData.component11|component11(){}[0]
+    final fun component12(): dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordUser> // dev.kord.core.cache.data/JoinRequestData.component12|component12(){}[0]
+    final fun component13(): dev.kord.common.entity/Snowflake? // dev.kord.core.cache.data/JoinRequestData.component13|component13(){}[0]
+    final fun component2(): dev.kord.common.entity/Snowflake // dev.kord.core.cache.data/JoinRequestData.component2|component2(){}[0]
+    final fun component3(): kotlin.time/Instant // dev.kord.core.cache.data/JoinRequestData.component3|component3(){}[0]
+    final fun component4(): dev.kord.common.entity/GuildJoinRequestStatus // dev.kord.core.cache.data/JoinRequestData.component4|component4(){}[0]
+    final fun component5(): dev.kord.common.entity/Snowflake // dev.kord.core.cache.data/JoinRequestData.component5|component5(){}[0]
+    final fun component6(): dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.common.entity/DiscordMemberVerificationFormField>?> // dev.kord.core.cache.data/JoinRequestData.component6|component6(){}[0]
+    final fun component7(): kotlin.time/Instant? // dev.kord.core.cache.data/JoinRequestData.component7|component7(){}[0]
+    final fun component8(): dev.kord.common.entity.optional/OptionalSnowflake // dev.kord.core.cache.data/JoinRequestData.component8|component8(){}[0]
+    final fun component9(): dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordUser> // dev.kord.core.cache.data/JoinRequestData.component9|component9(){}[0]
+    final fun copy(dev.kord.common.entity/Snowflake = ..., dev.kord.common.entity/Snowflake = ..., kotlin.time/Instant = ..., dev.kord.common.entity/GuildJoinRequestStatus = ..., dev.kord.common.entity/Snowflake = ..., dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.common.entity/DiscordMemberVerificationFormField>?> = ..., kotlin.time/Instant? = ..., dev.kord.common.entity.optional/OptionalSnowflake = ..., dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordUser> = ..., kotlin/String? = ..., dev.kord.common.entity/Snowflake = ..., dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordUser> = ..., dev.kord.common.entity/Snowflake? = ...): dev.kord.core.cache.data/JoinRequestData // dev.kord.core.cache.data/JoinRequestData.copy|copy(dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake;kotlin.time.Instant;dev.kord.common.entity.GuildJoinRequestStatus;dev.kord.common.entity.Snowflake;dev.kord.common.entity.optional.Optional<kotlin.collections.List<dev.kord.common.entity.DiscordMemberVerificationFormField>?>;kotlin.time.Instant?;dev.kord.common.entity.optional.OptionalSnowflake;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.DiscordUser>;kotlin.String?;dev.kord.common.entity.Snowflake;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.DiscordUser>;dev.kord.common.entity.Snowflake?){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.core.cache.data/JoinRequestData.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.core.cache.data/JoinRequestData.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // dev.kord.core.cache.data/JoinRequestData.toString|toString(){}[0]
+
+    final object $serializer : kotlinx.serialization.internal/GeneratedSerializer<dev.kord.core.cache.data/JoinRequestData> { // dev.kord.core.cache.data/JoinRequestData.$serializer|null[0]
+        final val descriptor // dev.kord.core.cache.data/JoinRequestData.$serializer.descriptor|{}descriptor[0]
+            final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // dev.kord.core.cache.data/JoinRequestData.$serializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
+
+        final fun childSerializers(): kotlin/Array<kotlinx.serialization/KSerializer<*>> // dev.kord.core.cache.data/JoinRequestData.$serializer.childSerializers|childSerializers(){}[0]
+        final fun deserialize(kotlinx.serialization.encoding/Decoder): dev.kord.core.cache.data/JoinRequestData // dev.kord.core.cache.data/JoinRequestData.$serializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
+        final fun serialize(kotlinx.serialization.encoding/Encoder, dev.kord.core.cache.data/JoinRequestData) // dev.kord.core.cache.data/JoinRequestData.$serializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;dev.kord.core.cache.data.JoinRequestData){}[0]
+    }
+
+    final object Companion { // dev.kord.core.cache.data/JoinRequestData.Companion|null[0]
+        final val $childSerializers // dev.kord.core.cache.data/JoinRequestData.Companion.$childSerializers|{}$childSerializers[0]
+
+        final fun from(dev.kord.common.entity/DiscordGuildJoinRequest): dev.kord.core.cache.data/JoinRequestData // dev.kord.core.cache.data/JoinRequestData.Companion.from|from(dev.kord.common.entity.DiscordGuildJoinRequest){}[0]
+        final fun serializer(): kotlinx.serialization/KSerializer<dev.kord.core.cache.data/JoinRequestData> // dev.kord.core.cache.data/JoinRequestData.Companion.serializer|serializer(){}[0]
+    }
+}
+
 final class dev.kord.core.cache.data/LabelComponentData : dev.kord.core.cache.data/ComponentData { // dev.kord.core.cache.data/LabelComponentData|null[0]
     constructor <init>(dev.kord.common.entity/ComponentType, dev.kord.common.entity.optional/Optional<kotlin/String> = ..., dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordPartialEmoji> = ..., dev.kord.common.entity.optional/Optional<kotlin/String> = ..., dev.kord.common.entity.optional/Optional<kotlin/String> = ..., dev.kord.common.entity.optional/OptionalBoolean = ..., dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.core.cache.data/ComponentData>> = ..., dev.kord.common.entity.optional/Optional<dev.kord.core.cache.data/ComponentData> = ..., dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.core.cache.data/SelectOptionData>> = ..., dev.kord.common.entity.optional/Optional<kotlin/String> = ..., dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.common.entity/DiscordSelectDefaultValue>> = ..., dev.kord.common.entity.optional/OptionalInt = ..., dev.kord.common.entity.optional/OptionalInt = ..., dev.kord.common.entity.optional/OptionalInt = ..., dev.kord.common.entity.optional/OptionalInt = ..., dev.kord.common.entity.optional/OptionalBoolean = ..., dev.kord.common.entity.optional/Optional<kotlin/String> = ..., dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.common.entity/ChannelType>> = ..., dev.kord.common.entity.optional/Optional<kotlin/String> = ...) // dev.kord.core.cache.data/LabelComponentData.<init>|<init>(dev.kord.common.entity.ComponentType;dev.kord.common.entity.optional.Optional<kotlin.String>;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.DiscordPartialEmoji>;dev.kord.common.entity.optional.Optional<kotlin.String>;dev.kord.common.entity.optional.Optional<kotlin.String>;dev.kord.common.entity.optional.OptionalBoolean;dev.kord.common.entity.optional.Optional<kotlin.collections.List<dev.kord.core.cache.data.ComponentData>>;dev.kord.common.entity.optional.Optional<dev.kord.core.cache.data.ComponentData>;dev.kord.common.entity.optional.Optional<kotlin.collections.List<dev.kord.core.cache.data.SelectOptionData>>;dev.kord.common.entity.optional.Optional<kotlin.String>;dev.kord.common.entity.optional.Optional<kotlin.collections.List<dev.kord.common.entity.DiscordSelectDefaultValue>>;dev.kord.common.entity.optional.OptionalInt;dev.kord.common.entity.optional.OptionalInt;dev.kord.common.entity.optional.OptionalInt;dev.kord.common.entity.optional.OptionalInt;dev.kord.common.entity.optional.OptionalBoolean;dev.kord.common.entity.optional.Optional<kotlin.String>;dev.kord.common.entity.optional.Optional<kotlin.collections.List<dev.kord.common.entity.ChannelType>>;dev.kord.common.entity.optional.Optional<kotlin.String>){}[0]
 
@@ -4473,71 +4538,6 @@ final class dev.kord.core.cache.data/LabelComponentData : dev.kord.core.cache.da
         final val $childSerializers // dev.kord.core.cache.data/LabelComponentData.Companion.$childSerializers|{}$childSerializers[0]
 
         final fun serializer(): kotlinx.serialization/KSerializer<dev.kord.core.cache.data/LabelComponentData> // dev.kord.core.cache.data/LabelComponentData.Companion.serializer|serializer(){}[0]
-    }
-}
-
-final class dev.kord.core.cache.data/JoinRequestData { // dev.kord.core.cache.data/JoinRequestData|null[0]
-    constructor <init>(dev.kord.common.entity/Snowflake, dev.kord.common.entity/Snowflake, kotlin.time/Instant, dev.kord.common.entity/GuildJoinRequestStatus, dev.kord.common.entity/Snowflake, dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.common.entity/DiscordMemberVerificationFormField>?> = ..., kotlin.time/Instant? = ..., dev.kord.common.entity.optional/OptionalSnowflake = ..., dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordUser> = ..., kotlin/String? = ..., dev.kord.common.entity/Snowflake, dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordUser> = ..., dev.kord.common.entity/Snowflake? = ...) // dev.kord.core.cache.data/JoinRequestData.<init>|<init>(dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake;kotlin.time.Instant;dev.kord.common.entity.GuildJoinRequestStatus;dev.kord.common.entity.Snowflake;dev.kord.common.entity.optional.Optional<kotlin.collections.List<dev.kord.common.entity.DiscordMemberVerificationFormField>?>;kotlin.time.Instant?;dev.kord.common.entity.optional.OptionalSnowflake;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.DiscordUser>;kotlin.String?;dev.kord.common.entity.Snowflake;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.DiscordUser>;dev.kord.common.entity.Snowflake?){}[0]
-
-    final val actionedAt // dev.kord.core.cache.data/JoinRequestData.actionedAt|{}actionedAt[0]
-        final fun <get-actionedAt>(): dev.kord.common.entity.optional/OptionalSnowflake // dev.kord.core.cache.data/JoinRequestData.actionedAt.<get-actionedAt>|<get-actionedAt>(){}[0]
-    final val actionedByUser // dev.kord.core.cache.data/JoinRequestData.actionedByUser|{}actionedByUser[0]
-        final fun <get-actionedByUser>(): dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordUser> // dev.kord.core.cache.data/JoinRequestData.actionedByUser.<get-actionedByUser>|<get-actionedByUser>(){}[0]
-    final val applicationStatus // dev.kord.core.cache.data/JoinRequestData.applicationStatus|{}applicationStatus[0]
-        final fun <get-applicationStatus>(): dev.kord.common.entity/GuildJoinRequestStatus // dev.kord.core.cache.data/JoinRequestData.applicationStatus.<get-applicationStatus>|<get-applicationStatus>(){}[0]
-    final val createdAt // dev.kord.core.cache.data/JoinRequestData.createdAt|{}createdAt[0]
-        final fun <get-createdAt>(): kotlin.time/Instant // dev.kord.core.cache.data/JoinRequestData.createdAt.<get-createdAt>|<get-createdAt>(){}[0]
-    final val formResponses // dev.kord.core.cache.data/JoinRequestData.formResponses|{}formResponses[0]
-        final fun <get-formResponses>(): dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.common.entity/DiscordMemberVerificationFormField>?> // dev.kord.core.cache.data/JoinRequestData.formResponses.<get-formResponses>|<get-formResponses>(){}[0]
-    final val guildId // dev.kord.core.cache.data/JoinRequestData.guildId|{}guildId[0]
-        final fun <get-guildId>(): dev.kord.common.entity/Snowflake // dev.kord.core.cache.data/JoinRequestData.guildId.<get-guildId>|<get-guildId>(){}[0]
-    final val id // dev.kord.core.cache.data/JoinRequestData.id|{}id[0]
-        final fun <get-id>(): dev.kord.common.entity/Snowflake // dev.kord.core.cache.data/JoinRequestData.id.<get-id>|<get-id>(){}[0]
-    final val interviewChannelId // dev.kord.core.cache.data/JoinRequestData.interviewChannelId|{}interviewChannelId[0]
-        final fun <get-interviewChannelId>(): dev.kord.common.entity/Snowflake? // dev.kord.core.cache.data/JoinRequestData.interviewChannelId.<get-interviewChannelId>|<get-interviewChannelId>(){}[0]
-    final val joinRequestId // dev.kord.core.cache.data/JoinRequestData.joinRequestId|{}joinRequestId[0]
-        final fun <get-joinRequestId>(): dev.kord.common.entity/Snowflake // dev.kord.core.cache.data/JoinRequestData.joinRequestId.<get-joinRequestId>|<get-joinRequestId>(){}[0]
-    final val lastSeen // dev.kord.core.cache.data/JoinRequestData.lastSeen|{}lastSeen[0]
-        final fun <get-lastSeen>(): kotlin.time/Instant? // dev.kord.core.cache.data/JoinRequestData.lastSeen.<get-lastSeen>|<get-lastSeen>(){}[0]
-    final val rejectionReason // dev.kord.core.cache.data/JoinRequestData.rejectionReason|{}rejectionReason[0]
-        final fun <get-rejectionReason>(): kotlin/String? // dev.kord.core.cache.data/JoinRequestData.rejectionReason.<get-rejectionReason>|<get-rejectionReason>(){}[0]
-    final val user // dev.kord.core.cache.data/JoinRequestData.user|{}user[0]
-        final fun <get-user>(): dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordUser> // dev.kord.core.cache.data/JoinRequestData.user.<get-user>|<get-user>(){}[0]
-    final val userId // dev.kord.core.cache.data/JoinRequestData.userId|{}userId[0]
-        final fun <get-userId>(): dev.kord.common.entity/Snowflake // dev.kord.core.cache.data/JoinRequestData.userId.<get-userId>|<get-userId>(){}[0]
-
-    final fun component1(): dev.kord.common.entity/Snowflake // dev.kord.core.cache.data/JoinRequestData.component1|component1(){}[0]
-    final fun component10(): kotlin/String? // dev.kord.core.cache.data/JoinRequestData.component10|component10(){}[0]
-    final fun component11(): dev.kord.common.entity/Snowflake // dev.kord.core.cache.data/JoinRequestData.component11|component11(){}[0]
-    final fun component12(): dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordUser> // dev.kord.core.cache.data/JoinRequestData.component12|component12(){}[0]
-    final fun component13(): dev.kord.common.entity/Snowflake? // dev.kord.core.cache.data/JoinRequestData.component13|component13(){}[0]
-    final fun component2(): dev.kord.common.entity/Snowflake // dev.kord.core.cache.data/JoinRequestData.component2|component2(){}[0]
-    final fun component3(): kotlin.time/Instant // dev.kord.core.cache.data/JoinRequestData.component3|component3(){}[0]
-    final fun component4(): dev.kord.common.entity/GuildJoinRequestStatus // dev.kord.core.cache.data/JoinRequestData.component4|component4(){}[0]
-    final fun component5(): dev.kord.common.entity/Snowflake // dev.kord.core.cache.data/JoinRequestData.component5|component5(){}[0]
-    final fun component6(): dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.common.entity/DiscordMemberVerificationFormField>?> // dev.kord.core.cache.data/JoinRequestData.component6|component6(){}[0]
-    final fun component7(): kotlin.time/Instant? // dev.kord.core.cache.data/JoinRequestData.component7|component7(){}[0]
-    final fun component8(): dev.kord.common.entity.optional/OptionalSnowflake // dev.kord.core.cache.data/JoinRequestData.component8|component8(){}[0]
-    final fun component9(): dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordUser> // dev.kord.core.cache.data/JoinRequestData.component9|component9(){}[0]
-    final fun copy(dev.kord.common.entity/Snowflake = ..., dev.kord.common.entity/Snowflake = ..., kotlin.time/Instant = ..., dev.kord.common.entity/GuildJoinRequestStatus = ..., dev.kord.common.entity/Snowflake = ..., dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.common.entity/DiscordMemberVerificationFormField>?> = ..., kotlin.time/Instant? = ..., dev.kord.common.entity.optional/OptionalSnowflake = ..., dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordUser> = ..., kotlin/String? = ..., dev.kord.common.entity/Snowflake = ..., dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordUser> = ..., dev.kord.common.entity/Snowflake? = ...): dev.kord.core.cache.data/JoinRequestData // dev.kord.core.cache.data/JoinRequestData.copy|copy(dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake;kotlin.time.Instant;dev.kord.common.entity.GuildJoinRequestStatus;dev.kord.common.entity.Snowflake;dev.kord.common.entity.optional.Optional<kotlin.collections.List<dev.kord.common.entity.DiscordMemberVerificationFormField>?>;kotlin.time.Instant?;dev.kord.common.entity.optional.OptionalSnowflake;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.DiscordUser>;kotlin.String?;dev.kord.common.entity.Snowflake;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.DiscordUser>;dev.kord.common.entity.Snowflake?){}[0]
-    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.core.cache.data/JoinRequestData.equals|equals(kotlin.Any?){}[0]
-    final fun hashCode(): kotlin/Int // dev.kord.core.cache.data/JoinRequestData.hashCode|hashCode(){}[0]
-    final fun toString(): kotlin/String // dev.kord.core.cache.data/JoinRequestData.toString|toString(){}[0]
-
-    final object $serializer : kotlinx.serialization.internal/GeneratedSerializer<dev.kord.core.cache.data/JoinRequestData> { // dev.kord.core.cache.data/JoinRequestData.$serializer|null[0]
-        final val descriptor // dev.kord.core.cache.data/JoinRequestData.$serializer.descriptor|{}descriptor[0]
-            final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // dev.kord.core.cache.data/JoinRequestData.$serializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
-
-        final fun childSerializers(): kotlin/Array<kotlinx.serialization/KSerializer<*>> // dev.kord.core.cache.data/JoinRequestData.$serializer.childSerializers|childSerializers(){}[0]
-        final fun deserialize(kotlinx.serialization.encoding/Decoder): dev.kord.core.cache.data/JoinRequestData // dev.kord.core.cache.data/JoinRequestData.$serializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
-        final fun serialize(kotlinx.serialization.encoding/Encoder, dev.kord.core.cache.data/JoinRequestData) // dev.kord.core.cache.data/JoinRequestData.$serializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;dev.kord.core.cache.data.JoinRequestData){}[0]
-    }
-
-    final object Companion { // dev.kord.core.cache.data/JoinRequestData.Companion|null[0]
-        final val $childSerializers // dev.kord.core.cache.data/JoinRequestData.Companion.$childSerializers|{}$childSerializers[0]
-
-        final fun from(dev.kord.common.entity/DiscordGuildJoinRequest): dev.kord.core.cache.data/JoinRequestData // dev.kord.core.cache.data/JoinRequestData.Companion.from|from(dev.kord.common.entity.DiscordGuildJoinRequest){}[0]
-        final fun serializer(): kotlinx.serialization/KSerializer<dev.kord.core.cache.data/JoinRequestData> // dev.kord.core.cache.data/JoinRequestData.Companion.serializer|serializer(){}[0]
     }
 }
 
