@@ -41,7 +41,10 @@ internal fun KordEnum.generateFileSpec(originatingFile: KSFile) = fileSpecForGen
                 returns(currentContext.entityCN)
                 withControlFlow("return when·($valueName)") {
                     for (entry in currentContext.entriesDistinctByValue) {
-                        addStatement("${currentContext.valueFormat}·->·${entry.nameWithSuppressedDeprecation}", entry.value)
+                        addStatement(
+                            "${currentContext.valueFormat}·->·${entry.nameWithSuppressedDeprecation}",
+                            entry.value
+                        )
                     }
                     addStatement("else·->·Unknown($valueName)")
                 }

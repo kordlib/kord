@@ -13,6 +13,7 @@ public sealed class MultiApplicationCommandBuilder {
         return commands.map { it.toRequest() }
     }
 }
+
 public inline fun MultiApplicationCommandBuilder.input(
     name: String,
     description: String,

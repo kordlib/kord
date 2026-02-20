@@ -9,11 +9,11 @@ import dev.kord.common.entity.optional.coerceToMissing
 import dev.kord.common.entity.optional.optional
 import dev.kord.common.entity.optional.optionalInt
 import dev.kord.gateway.*
-import kotlin.time.Instant
 import kotlinx.serialization.json.*
 import kotlin.js.JsName
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.time.Instant
 
 private val json = Json { encodeDefaults = false }
 

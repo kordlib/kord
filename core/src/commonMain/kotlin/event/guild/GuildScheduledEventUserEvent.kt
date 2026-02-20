@@ -43,7 +43,15 @@ public data class GuildScheduledEventUserAddEvent(
     override val supplier: EntitySupplier = kord.defaultSupplier,
 ) : GuildScheduledEventUserEvent {
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): GuildScheduledEventUserAddEvent =
-        GuildScheduledEventUserAddEvent(scheduledEventId, userId, guildId, kord, shard, customContext, strategy.supply(kord))
+        GuildScheduledEventUserAddEvent(
+            scheduledEventId,
+            userId,
+            guildId,
+            kord,
+            shard,
+            customContext,
+            strategy.supply(kord)
+        )
 }
 
 /** Sent when a user has unsubscribed from a [GuildScheduledEvent]. */
@@ -57,5 +65,13 @@ public data class GuildScheduledEventUserRemoveEvent(
     override val supplier: EntitySupplier = kord.defaultSupplier,
 ) : GuildScheduledEventUserEvent {
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): GuildScheduledEventUserRemoveEvent =
-        GuildScheduledEventUserRemoveEvent(scheduledEventId, userId, guildId, kord, shard, customContext, strategy.supply(kord))
+        GuildScheduledEventUserRemoveEvent(
+            scheduledEventId,
+            userId,
+            guildId,
+            kord,
+            shard,
+            customContext,
+            strategy.supply(kord)
+        )
 }

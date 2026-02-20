@@ -84,7 +84,7 @@
         Entry(
             "Community", stringValue = "COMMUNITY",
             kDoc = "Guild can enable welcome screen, Membership Screening, stage channels and discovery, and " +
-                    "receives community updates.",
+                "receives community updates.",
         ),
         Entry(
             "CreatorMonetizableProvisional", stringValue = "CREATOR_MONETIZABLE_PROVISIONAL",
@@ -127,10 +127,12 @@
             kDoc = "Guild has disabled alerts for join raids in the configured safety alerts channel.",
         ),
         Entry("RoleIcons", stringValue = "ROLE_ICONS", kDoc = "Guild is able to set role icons."),
-        Entry("RoleSubscriptionsAvailableForPurchase", stringValue = "ROLE_SUBSCRIPTIONS_AVAILABLE_FOR_PURCHASE",
+        Entry(
+            "RoleSubscriptionsAvailableForPurchase", stringValue = "ROLE_SUBSCRIPTIONS_AVAILABLE_FOR_PURCHASE",
             kDoc = "Guild has role subscriptions that can be purchased."
         ),
-        Entry("RoleSubscriptionsEnabled", stringValue = "ROLE_SUBSCRIPTIONS_ENABLED",
+        Entry(
+            "RoleSubscriptionsEnabled", stringValue = "ROLE_SUBSCRIPTIONS_ENABLED",
             kDoc = "Guild has enabled role subscriptions."
         ),
         Entry(
@@ -179,9 +181,9 @@ import dev.kord.common.serialization.DurationInSeconds
 import dev.kord.ksp.Generate
 import dev.kord.ksp.Generate.EntityType.*
 import dev.kord.ksp.Generate.Entry
-import kotlin.time.Instant
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import kotlin.time.Instant
 
 /**
  * A partial representation of a [DiscordGuild] that may be [unavailable].

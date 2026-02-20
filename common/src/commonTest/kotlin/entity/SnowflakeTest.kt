@@ -1,11 +1,11 @@
 package dev.kord.common.entity
 
-import kotlin.time.Clock
-import kotlin.time.Instant
 import kotlin.js.JsName
 import kotlin.test.*
+import kotlin.time.Clock
 import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.nanoseconds
+import kotlin.time.Instant
 
 class SnowflakeTest {
 

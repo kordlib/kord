@@ -27,12 +27,8 @@ import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.hash
 import dev.kord.core.supplier.*
 import dev.kord.core.supplier.EntitySupplyStrategy.Companion.rest
-import dev.kord.gateway.Gateway
-import dev.kord.gateway.PrivilegedIntent
-import dev.kord.gateway.RequestGuildMembers
+import dev.kord.gateway.*
 import dev.kord.gateway.builder.RequestGuildMembersBuilder
-import dev.kord.gateway.requestSoundboardSounds
-import dev.kord.gateway.start
 import dev.kord.rest.Image
 import dev.kord.rest.NamedFile
 import dev.kord.rest.Sound
@@ -55,9 +51,9 @@ import dev.kord.rest.request.RestRequestException
 import dev.kord.rest.service.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.*
-import kotlin.time.Instant
 import kotlin.contracts.InvocationKind.EXACTLY_ONCE
 import kotlin.contracts.contract
+import kotlin.time.Instant
 
 /**
  * The behavior of a [Discord Guild](https://discord.com/developers/docs/resources/guild).
@@ -1207,7 +1203,11 @@ public suspend inline fun GuildBehavior.createMemberProfileAutoModerationRule(
  *
  * @throws RestRequestException if something went wrong during the request.
  */
-public suspend inline fun GuildBehavior.createSoundboardSound(name: String, sound: Sound, builder: SoundboardSoundCreateBuilder.() -> Unit = {}): GuildSoundboardSound {
+public suspend inline fun GuildBehavior.createSoundboardSound(
+    name: String,
+    sound: Sound,
+    builder: SoundboardSoundCreateBuilder.() -> Unit = {}
+): GuildSoundboardSound {
     contract { callsInPlace(builder, EXACTLY_ONCE) }
     val sound = kord.rest.guild.createGuildSoundboardSound(guildId = id, name, sound, builder)
 

@@ -85,7 +85,9 @@ public data class RTPPacket(
 
             val payload = readByteArray().view()
 
-            val paddingBytes = if (hasPadding) { payload[payload.viewSize - 1] } else 0
+            val paddingBytes = if (hasPadding) {
+                payload[payload.viewSize - 1]
+            } else 0
 
             payload.resize(end = payload.dataStart + payload.viewSize - paddingBytes)
 

@@ -38,7 +38,7 @@ internal fun FileSpec.Builder.addFactoryFunctions() {
 
 private enum class IterableType { VARARG, ITERABLE }
 
-context(entity: BitFlags, _:GenerationContext)
+context(entity: BitFlags, _: GenerationContext)
 private fun FileSpec.Builder.addFactoryFunctionForIterable(
     baseParameterType: TypeName,
     iterableType: IterableType,

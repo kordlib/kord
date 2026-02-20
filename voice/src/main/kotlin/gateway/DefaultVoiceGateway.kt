@@ -103,7 +103,7 @@ public class DefaultVoiceGateway(
             } catch (exception: CancellationException) {
                 defaultVoiceGatewayLogger.trace(exception) { "voice gateway stopped" }
             } catch (exception: Exception) {
-                defaultVoiceGatewayLogger.error(exception) { "voice gateway stopped"}
+                defaultVoiceGatewayLogger.error(exception) { "voice gateway stopped" }
             }
 
             defaultVoiceGatewayLogger.trace { "voice gateway connection closing" }

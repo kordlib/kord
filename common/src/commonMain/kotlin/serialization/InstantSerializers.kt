@@ -1,6 +1,5 @@
 package dev.kord.common.serialization
 
-import kotlin.time.Instant
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.SerializationException
@@ -9,6 +8,7 @@ import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
 import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
+import kotlin.time.Instant
 
 
 // epoch milliseconds
@@ -26,7 +26,7 @@ public object InstantInEpochMillisecondsSerializer : KSerializer<Instant> {
 
         if (value !in VALID_RANGE) throw SerializationException(
             "The Instant $value expressed as a number of milliseconds from the epoch Instant does not fit in the " +
-                    "range of Long type and therefore cannot be serialized with InstantInEpochMillisecondsSerializer"
+                "range of Long type and therefore cannot be serialized with InstantInEpochMillisecondsSerializer"
         )
 
         encoder.encodeLong(value.toEpochMilliseconds())

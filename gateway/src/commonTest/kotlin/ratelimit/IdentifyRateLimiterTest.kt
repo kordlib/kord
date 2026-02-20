@@ -9,10 +9,13 @@ import dev.kord.gateway.GatewayCloseCode.Unknown
 import dev.kord.gateway.InvalidSession
 import dev.kord.gateway.Ready
 import dev.kord.gateway.ReadyData
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CompletableDeferred
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.flow.SharingStarted.Companion.Eagerly
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.currentTime
 import kotlinx.coroutines.test.runTest
 import kotlin.coroutines.ContinuationInterceptor

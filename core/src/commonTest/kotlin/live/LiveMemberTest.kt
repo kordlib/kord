@@ -16,12 +16,12 @@ import dev.kord.gateway.GuildMemberRemove
 import dev.kord.gateway.GuildMemberUpdate
 import kotlinx.coroutines.job
 import kotlinx.coroutines.test.runTest
-import kotlin.time.Instant
 import kotlin.js.JsName
 import kotlin.test.BeforeTest
 import kotlin.test.Ignore
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.time.Instant
 
 @Ignore
 class LiveMemberTest : AbstractLiveEntityTest<LiveMember>() {

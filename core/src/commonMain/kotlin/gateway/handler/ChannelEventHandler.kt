@@ -30,7 +30,12 @@ internal class ChannelEventHandler : BaseGatewayEventHandler() {
         else -> null
     }
 
-    private suspend fun handle(event: ChannelCreate, shard: Int, kord: Kord, context: LazyContext?): ChannelCreateEvent? {
+    private suspend fun handle(
+        event: ChannelCreate,
+        shard: Int,
+        kord: Kord,
+        context: LazyContext?
+    ): ChannelCreateEvent? {
         val data = ChannelData.from(event.channel)
         kord.cache.put(data)
 
@@ -51,7 +56,12 @@ internal class ChannelEventHandler : BaseGatewayEventHandler() {
         return coreEvent
     }
 
-    private suspend fun handle(event: ChannelUpdate, shard: Int, kord: Kord, context: LazyContext?): ChannelUpdateEvent? {
+    private suspend fun handle(
+        event: ChannelUpdate,
+        shard: Int,
+        kord: Kord,
+        context: LazyContext?
+    ): ChannelUpdateEvent? {
         val data = ChannelData.from(event.channel)
         val oldData = kord.cache.query { idEq(ChannelData::id, data.id) }.singleOrNull()
         kord.cache.put(data)
@@ -73,7 +83,12 @@ internal class ChannelEventHandler : BaseGatewayEventHandler() {
         return coreEvent
     }
 
-    private suspend fun handle(event: ChannelDelete, shard: Int, kord: Kord, context: LazyContext?): ChannelDeleteEvent? {
+    private suspend fun handle(
+        event: ChannelDelete,
+        shard: Int,
+        kord: Kord,
+        context: LazyContext?
+    ): ChannelDeleteEvent? {
         kord.cache.remove { idEq(ChannelData::id, event.channel.id) }
         val data = ChannelData.from(event.channel)
 

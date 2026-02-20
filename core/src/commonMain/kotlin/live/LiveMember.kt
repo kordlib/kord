@@ -52,7 +52,6 @@ public class LiveMember(
         is BanAddEvent -> shutDown(LiveCancellationException(event, "The member is banned"))
         is GuildDeleteEvent -> shutDown(LiveCancellationException(event, "The guild is deleted"))
         is MemberUpdateEvent -> member = event.member
-
         else -> Unit
     }
 }

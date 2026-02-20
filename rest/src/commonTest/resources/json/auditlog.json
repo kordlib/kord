@@ -1,127 +1,124 @@
 {
-  "webhooks":[
-
-  ],
-  "users":[
-    {
-      "username":"Kordoino",
-      "discriminator":"7540",
-      "global_name": "Kordoino Bot",
-      "bot":true,
-      "id":"587166353111252992",
-      "avatar":"e51fba91466108ab0e3aa90a108bffa1"
-    }
-  ],
-  "audit_log_entries":[
-    {
-      "target_id":"595876143006089219",
-      "changes":[
+    "webhooks": [
+    ],
+    "users": [
         {
-          "old_value":"bot-test-run",
-          "key":"name"
-        },
-        {
-          "old_value":0,
-          "key":"type"
-        },
-        {
-          "old_value":0,
-          "key":"rate_limit_per_user"
-        },
-        {
-          "old_value":false,
-          "key":"nsfw"
-        },
-        {
-          "old_value":[
-
-          ],
-          "key":"permission_overwrites"
+            "username": "Kordoino",
+            "discriminator": "7540",
+            "global_name": "Kordoino Bot",
+            "bot": true,
+            "id": "587166353111252992",
+            "avatar": "e51fba91466108ab0e3aa90a108bffa1"
         }
-      ],
-      "user_id":"587166353111252992",
-      "id":"595876151642030080",
-      "action_type":12
-    },
-    {
-      "target_id":"595876143006089219",
-      "changes":[
+    ],
+    "audit_log_entries": [
         {
-          "new_value":"bot-test-run",
-          "key":"name"
+            "target_id": "595876143006089219",
+            "changes": [
+                {
+                    "old_value": "bot-test-run",
+                    "key": "name"
+                },
+                {
+                    "old_value": 0,
+                    "key": "type"
+                },
+                {
+                    "old_value": 0,
+                    "key": "rate_limit_per_user"
+                },
+                {
+                    "old_value": false,
+                    "key": "nsfw"
+                },
+                {
+                    "old_value": [
+                    ],
+                    "key": "permission_overwrites"
+                }
+            ],
+            "user_id": "587166353111252992",
+            "id": "595876151642030080",
+            "action_type": 12
         },
         {
-          "new_value":0,
-          "key":"type"
+            "target_id": "595876143006089219",
+            "changes": [
+                {
+                    "new_value": "bot-test-run",
+                    "key": "name"
+                },
+                {
+                    "new_value": 0,
+                    "key": "type"
+                },
+                {
+                    "new_value": 0,
+                    "key": "rate_limit_per_user"
+                },
+                {
+                    "new_value": false,
+                    "key": "nsfw"
+                },
+                {
+                    "new_value": [
+                    ],
+                    "key": "permission_overwrites"
+                }
+            ],
+            "user_id": "587166353111252992",
+            "id": "595876143006089221",
+            "action_type": 10
         },
         {
-          "new_value":0,
-          "key":"rate_limit_per_user"
-        },
-        {
-          "new_value":false,
-          "key":"nsfw"
-        },
-        {
-          "new_value":[
-
-          ],
-          "key":"permission_overwrites"
+            "target_id": null,
+            "changes": [
+                {
+                    "new_value": 86400,
+                    "key": "max_age"
+                },
+                {
+                    "new_value": "DeawcF",
+                    "key": "code"
+                },
+                {
+                    "new_value": false,
+                    "key": "temporary"
+                },
+                {
+                    "new_value": "587166353111252992",
+                    "key": "inviter_id"
+                },
+                {
+                    "new_value": "595876140011487234",
+                    "key": "channel_id"
+                },
+                {
+                    "new_value": 0,
+                    "key": "uses"
+                },
+                {
+                    "new_value": 0,
+                    "key": "max_uses"
+                }
+            ],
+            "user_id": "587166353111252992",
+            "id": "595876141969965078",
+            "action_type": 40
         }
-      ],
-      "user_id":"587166353111252992",
-      "id":"595876143006089221",
-      "action_type":10
-    },
-    {
-      "target_id":null,
-      "changes":[
+    ],
+    "integrations": [
         {
-          "new_value":86400,
-          "key":"max_age"
-        },
-        {
-          "new_value":"DeawcF",
-          "key":"code"
-        },
-        {
-          "new_value":false,
-          "key":"temporary"
-        },
-        {
-          "new_value":"587166353111252992",
-          "key":"inviter_id"
-        },
-        {
-          "new_value":"595876140011487234",
-          "key":"channel_id"
-        },
-        {
-          "new_value":0,
-          "key":"uses"
-        },
-        {
-          "new_value":0,
-          "key":"max_uses"
+            "id": "33590653072239123",
+            "name": "A Name",
+            "type": "twitch",
+            "account": {
+                "name": "twitchusername",
+                "id": "1234567"
+            }
         }
-      ],
-      "user_id":"587166353111252992",
-      "id":"595876141969965078",
-      "action_type":40
-    }
-  ],
-  "integrations": [
-    {
-      "id": "33590653072239123",
-      "name": "A Name",
-      "type": "twitch",
-      "account": {
-        "name": "twitchusername",
-        "id": "1234567"
-      }
-    }
-  ],
-  "application_commands": [],
-  "auto_moderation_rules": [],
-  "threads" : []
+    ],
+    "application_commands": [],
+    "auto_moderation_rules": [],
+    "threads": []
 }

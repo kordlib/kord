@@ -5,8 +5,14 @@ import dev.kord.voice.EncryptionMode
 import dev.kord.voice.SpeakingFlags
 import io.github.oshai.kotlinlogging.KotlinLogging
 import kotlinx.serialization.*
-import kotlinx.serialization.descriptors.*
-import kotlinx.serialization.encoding.*
+import kotlinx.serialization.descriptors.PrimitiveKind
+import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
+import kotlinx.serialization.descriptors.SerialDescriptor
+import kotlinx.serialization.descriptors.buildClassSerialDescriptor
+import kotlinx.serialization.encoding.CompositeDecoder
+import kotlinx.serialization.encoding.Decoder
+import kotlinx.serialization.encoding.Encoder
+import kotlinx.serialization.encoding.decodeStructure
 import kotlinx.serialization.json.JsonDecoder
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.DeserializationStrategy as KDeserializationStrategy
@@ -46,7 +52,7 @@ public sealed class VoiceEvent {
                 }
                 OpCode.Identify, OpCode.SelectProtocol, OpCode.Heartbeat, OpCode.Resume, OpCode.ClientDisconnect,
                 OpCode.Unknown,
-                -> {
+                    -> {
                     jsonLogger.debug { "Unknown voice gateway event with opcode $op : $d" }
                     null
                 }

@@ -19,9 +19,9 @@ import dev.kord.rest.request.RequestHandler
 import dev.kord.rest.request.auditLogReason
 import dev.kord.rest.route.Position
 import dev.kord.rest.route.Route
-import kotlin.time.Instant
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
+import kotlin.time.Instant
 
 public class GuildService(requestHandler: RequestHandler) : RestService(requestHandler) {
 
@@ -575,7 +575,11 @@ public class GuildService(requestHandler: RequestHandler) : RestService(requestH
      *
      * @param reason the audit log reason for this change
      */
-    public suspend fun createGuildSoundboardSound(guildId: Snowflake, request: CreateSoundboardSoundRequest, reason: String? = null): DiscordSoundboardSound =
+    public suspend fun createGuildSoundboardSound(
+        guildId: Snowflake,
+        request: CreateSoundboardSoundRequest,
+        reason: String? = null
+    ): DiscordSoundboardSound =
         call(Route.GetGuildsSoundboardSound) {
             keys[Route.GuildId] = guildId
             auditLogReason(reason)
@@ -588,7 +592,12 @@ public class GuildService(requestHandler: RequestHandler) : RestService(requestH
      * @param request the data to change
      * @param reason the audit log reason for this change
      */
-    public suspend fun modifyGuildSoundboardSound(guildId: Snowflake, soundId: Snowflake, request: UpdateSoundboardSoundRequest, reason: String? = null): DiscordSoundboardSound =
+    public suspend fun modifyGuildSoundboardSound(
+        guildId: Snowflake,
+        soundId: Snowflake,
+        request: UpdateSoundboardSoundRequest,
+        reason: String? = null
+    ): DiscordSoundboardSound =
         call(Route.GetGuildsSoundboardSound) {
             keys[Route.GuildId] = guildId
             keys[Route.SoundId] = soundId

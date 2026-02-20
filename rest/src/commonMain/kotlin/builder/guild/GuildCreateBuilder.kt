@@ -33,9 +33,9 @@ public class GuildCreateBuilder(public var name: String) : RequestBuilder<GuildC
             .map { Snowflake(it) }
             .filter {
                 it !in roles.map { role -> role.id.value }
-                        && it !in channels.map { channel -> channel.id.value }
-                        && it != systemChannelId
-                        && it != afkChannelId
+                    && it !in channels.map { channel -> channel.id.value }
+                    && it != systemChannelId
+                    && it != afkChannelId
             }
             .iterator()
     }

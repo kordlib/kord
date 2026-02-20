@@ -2,14 +2,17 @@ package dev.kord.gateway.json
 
 import dev.kord.common.entity.*
 import dev.kord.gateway.*
-import kotlin.time.Clock
-import kotlin.time.Instant
-import kotlinx.serialization.json.*
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.buildJsonObject
+import kotlinx.serialization.json.put
 import kotlin.random.Random
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.time.Clock
 import kotlin.time.Duration.Companion.hours
 import kotlin.time.Duration.Companion.minutes
+import kotlin.time.Instant
 
 class DispatchEventDeserializationTest {
     private fun <T> testDispatchEventDeserialization(
@@ -563,7 +566,7 @@ class DispatchEventDeserializationTest {
         eventName = "INTEGRATION_UPDATE",
         eventConstructor = ::IntegrationUpdate,
         data =
-        integration,
+            integration,
         json = integrationJson,
     )
 

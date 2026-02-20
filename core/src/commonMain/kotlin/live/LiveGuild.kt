@@ -238,17 +238,20 @@ public class LiveGuild(
             ), kord
         )
 
-        is MemberLeaveEvent -> guild = Guild(guild.data.copy(
-            memberCount = guild.data.memberCount.map { it - 1 }
-        ), kord)
+        is MemberLeaveEvent -> guild = Guild(
+            guild.data.copy(
+                memberCount = guild.data.memberCount.map { it - 1 }
+            ), kord)
 
-        is ChannelCreateEvent -> guild = Guild(guild.data.copy(
-            channels = guild.data.channels.map { it + event.channel.id }
-        ), kord)
+        is ChannelCreateEvent -> guild = Guild(
+            guild.data.copy(
+                channels = guild.data.channels.map { it + event.channel.id }
+            ), kord)
 
-        is ChannelDeleteEvent -> guild = Guild(guild.data.copy(
-            channels = guild.data.channels.map { it - event.channel.id }
-        ), kord)
+        is ChannelDeleteEvent -> guild = Guild(
+            guild.data.copy(
+                channels = guild.data.channels.map { it - event.channel.id }
+            ), kord)
 
         is GuildUpdateEvent -> guild = event.guild
         is GuildDeleteEvent -> shutDown(LiveCancellationException(event, "The guild is deleted"))

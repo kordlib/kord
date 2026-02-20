@@ -3,7 +3,7 @@ package dev.kord.rest.request
 import dev.kord.common.exception.RequestException
 import dev.kord.rest.json.response.DiscordErrorResponse
 import dev.kord.rest.service.RestService
-import io.ktor.client.statement.HttpResponse
+import io.ktor.client.statement.*
 
 private fun formatRestRequestExceptionMessage(status: HttpStatus, error: DiscordErrorResponse?): String {
     val statusCode = status.code

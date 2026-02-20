@@ -1,11 +1,11 @@
 {
-  "id": "80351110224678912",
-  "username": "Nelly",
-  "discriminator": "1337",
-  "global_name": "Nelly",
-  "avatar": "8342729096ea3675442027381ff50dfe",
-  "verified": true,
-  "email": "nelly@discordapp.com",
-  "flags": 64,
-  "premium_type": 1
+    "id": "80351110224678912",
+    "username": "Nelly",
+    "discriminator": "1337",
+    "global_name": "Nelly",
+    "avatar": "8342729096ea3675442027381ff50dfe",
+    "verified": true,
+    "email": "nelly@discordapp.com",
+    "flags": 64,
+    "premium_type": 1
 }

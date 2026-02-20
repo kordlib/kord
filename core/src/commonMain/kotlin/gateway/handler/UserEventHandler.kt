@@ -15,10 +15,11 @@ import dev.kord.core.event.Event as CoreEvent
 
 internal class UserEventHandler : BaseGatewayEventHandler() {
 
-    override suspend fun handle(event: Event, shard: Int, kord: Kord, context: LazyContext?): CoreEvent? = when (event) {
-        is UserUpdate -> handle(event, shard, kord, context)
-        else -> null
-    }
+    override suspend fun handle(event: Event, shard: Int, kord: Kord, context: LazyContext?): CoreEvent? =
+        when (event) {
+            is UserUpdate -> handle(event, shard, kord, context)
+            else -> null
+        }
 
     private suspend fun handle(event: UserUpdate, shard: Int, kord: Kord, context: LazyContext?): UserUpdateEvent {
         val data = UserData.from(event.user)

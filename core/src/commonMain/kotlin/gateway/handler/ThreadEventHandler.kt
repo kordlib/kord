@@ -31,7 +31,12 @@ internal class ThreadEventHandler : BaseGatewayEventHandler() {
         else -> null
     }
 
-    private suspend fun handle(event: ThreadCreate, shard: Int, kord: Kord, context: LazyContext?): ThreadChannelCreateEvent? {
+    private suspend fun handle(
+        event: ThreadCreate,
+        shard: Int,
+        kord: Kord,
+        context: LazyContext?
+    ): ThreadChannelCreateEvent? {
         val channelData = event.channel.toData()
         kord.cache.put(channelData)
 
@@ -65,8 +70,18 @@ internal class ThreadEventHandler : BaseGatewayEventHandler() {
         val old = oldData?.let { ThreadChannel(it, kord) }
 
         val coreEvent = when (val channel = Channel.from(channelData, kord)) {
-            is NewsChannelThread -> NewsChannelThreadUpdateEvent(channel, old as? NewsChannelThread, shard, context?.get())
-            is TextChannelThread -> TextChannelThreadUpdateEvent(channel, old as? TextChannelThread, shard, context?.get())
+            is NewsChannelThread -> NewsChannelThreadUpdateEvent(
+                channel,
+                old as? NewsChannelThread,
+                shard,
+                context?.get()
+            )
+            is TextChannelThread -> TextChannelThreadUpdateEvent(
+                channel,
+                old as? TextChannelThread,
+                shard,
+                context?.get()
+            )
             is ThreadChannel -> UnknownChannelThreadUpdateEvent(channel, old, shard, context?.get())
             else -> return null
         }
@@ -75,7 +90,12 @@ internal class ThreadEventHandler : BaseGatewayEventHandler() {
 
     }
 
-    private suspend fun handle(event: ThreadDelete, shard: Int, kord: Kord, context: LazyContext?): ThreadChannelDeleteEvent {
+    private suspend fun handle(
+        event: ThreadDelete,
+        shard: Int,
+        kord: Kord,
+        context: LazyContext?
+    ): ThreadChannelDeleteEvent {
 
         val channelData = event.channel.toData()
         val cachedData = kord.cache.query { idEq(ChannelData::id, channelData.id) }.singleOrNull()
@@ -90,7 +110,12 @@ internal class ThreadEventHandler : BaseGatewayEventHandler() {
                 context?.get(),
             )
             ChannelType.PrivateThread,
-            ChannelType.PublicGuildThread -> TextChannelThreadDeleteEvent(channel, old as? TextChannelThread, shard, context?.get())
+            ChannelType.PublicGuildThread -> TextChannelThreadDeleteEvent(
+                channel,
+                old as? TextChannelThread,
+                shard,
+                context?.get()
+            )
             else -> UnknownChannelThreadDeleteEvent(channel, old as? ThreadChannel, shard, context?.get())
         }
 
@@ -98,7 +123,12 @@ internal class ThreadEventHandler : BaseGatewayEventHandler() {
         return coreEvent
     }
 
-    private suspend fun handle(event: ThreadListSync, shard: Int, kord: Kord, context: LazyContext?): ThreadListSyncEvent {
+    private suspend fun handle(
+        event: ThreadListSync,
+        shard: Int,
+        kord: Kord,
+        context: LazyContext?
+    ): ThreadListSyncEvent {
         val data = ThreadListSyncData.from(event)
 
         data.threads.forEach { thread ->
@@ -111,13 +141,23 @@ internal class ThreadEventHandler : BaseGatewayEventHandler() {
         return ThreadListSyncEvent(data, kord, shard, context?.get())
     }
 
-    private suspend fun handle(event: ThreadMemberUpdate, shard: Int, kord: Kord, context: LazyContext?): ThreadMemberUpdateEvent {
+    private suspend fun handle(
+        event: ThreadMemberUpdate,
+        shard: Int,
+        kord: Kord,
+        context: LazyContext?
+    ): ThreadMemberUpdateEvent {
         val data = ThreadMemberData.from(event.member)
         val member = ThreadMember(data, kord)
         return ThreadMemberUpdateEvent(member, kord, shard, context?.get())
     }
 
-    private suspend fun handle(event: ThreadMembersUpdate, shard: Int, kord: Kord, context: LazyContext?): ThreadMembersUpdateEvent {
+    private suspend fun handle(
+        event: ThreadMembersUpdate,
+        shard: Int,
+        kord: Kord,
+        context: LazyContext?
+    ): ThreadMembersUpdateEvent {
         val data = ThreadMembersUpdateEventData.from(event)
         for (removedMemberId in data.removedMemberIds.orEmpty()) {
             kord.cache.remove {

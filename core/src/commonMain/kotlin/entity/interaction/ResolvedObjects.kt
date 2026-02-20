@@ -1,12 +1,12 @@
 package dev.kord.core.entity.interaction
 
 import dev.kord.common.entity.Snowflake
+import dev.kord.common.entity.optional.mapValues
 import dev.kord.core.Kord
 import dev.kord.core.cache.data.ResolvedObjectsData
 import dev.kord.core.entity.*
 import dev.kord.core.entity.channel.ResolvedChannel
 import dev.kord.core.supplier.EntitySupplyStrategy
-import dev.kord.common.entity.optional.mapValues
 
 public class ResolvedObjects(
     public val data: ResolvedObjectsData,

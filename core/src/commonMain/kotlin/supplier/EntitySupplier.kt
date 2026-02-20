@@ -369,7 +369,10 @@ public interface EntitySupplier {
      * @throws EntityNotFoundException if the sound was null.
      */
     public suspend fun getGuildSoundboardSound(guildId: Snowflake, soundId: Snowflake): GuildSoundboardSound =
-        getGuildSoundboardSoundOrNull(guildId, soundId) ?: EntityNotFoundException.soundboardSoundNotFound(guildId, soundId)
+        getGuildSoundboardSoundOrNull(guildId, soundId) ?: EntityNotFoundException.soundboardSoundNotFound(
+            guildId,
+            soundId
+        )
 
     /**
      * Requests the [guild soundboard sound][GuildSoundboardSound] of the [Guild] with the given [guildId].
@@ -520,7 +523,11 @@ public interface EntitySupplier {
         limit: Int? = null,
     ): Flow<ThreadChannel>
 
-    public fun getGuildApplicationCommands(applicationId: Snowflake, guildId: Snowflake, withLocalizations: Boolean? = null): Flow<GuildApplicationCommand>
+    public fun getGuildApplicationCommands(
+        applicationId: Snowflake,
+        guildId: Snowflake,
+        withLocalizations: Boolean? = null
+    ): Flow<GuildApplicationCommand>
 
     public suspend fun getGuildApplicationCommandOrNull(
         applicationId: Snowflake,
@@ -551,7 +558,10 @@ public interface EntitySupplier {
         getGlobalApplicationCommandOrNull(applicationId, commandId)
             ?: EntityNotFoundException.applicationCommandNotFound<GlobalApplicationCommand>(commandId)
 
-    public fun getGlobalApplicationCommands(applicationId: Snowflake, withLocalizations: Boolean? = null): Flow<GlobalApplicationCommand>
+    public fun getGlobalApplicationCommands(
+        applicationId: Snowflake,
+        withLocalizations: Boolean? = null
+    ): Flow<GlobalApplicationCommand>
 
 
     public suspend fun getApplicationCommandPermissionsOrNull(

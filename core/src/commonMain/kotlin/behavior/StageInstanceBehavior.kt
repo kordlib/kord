@@ -20,7 +20,8 @@ public interface StageInstanceBehavior : KordEntity, Strategizable {
     /** The id of the associated [StageChannel]. */
     public val channelId: Snowflake
 
-    public suspend fun delete(reason: String? = null): Unit = kord.rest.stageInstance.deleteStageInstance(channelId, reason)
+    public suspend fun delete(reason: String? = null): Unit =
+        kord.rest.stageInstance.deleteStageInstance(channelId, reason)
 
     /**
      * Requests to get this behavior as a [StageInstance] if it's not an instance of a [StageInstance].

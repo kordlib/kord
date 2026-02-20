@@ -42,9 +42,7 @@ public class ButtonComponent(override val data: ChatComponentData) : AccessoryCo
 
             when (id) {
                 null -> ReactionEmoji.Unicode(name!!)
-                else -> ReactionEmoji.Custom(
-                    id!!, name ?: "", animated.value!!
-                )
+                else -> ReactionEmoji.Custom(id!!, name ?: "", animated.value!!)
             }
         }
 

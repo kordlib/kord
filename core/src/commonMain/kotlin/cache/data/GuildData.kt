@@ -5,8 +5,8 @@ import dev.kord.cache.api.data.description
 import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.*
 import dev.kord.common.serialization.DurationInSeconds
-import kotlin.time.Instant
 import kotlinx.serialization.Serializable
+import kotlin.time.Instant
 
 private val ApplicationCommandData.nullableGuildId get() = guildId.value
 private val MessageData.nullableGuildId get() = guildId.value
@@ -26,7 +26,10 @@ public data class GuildData(
     //val owner: OptionalBoolean = OptionalBoolean.Missing, useless?
     val ownerId: Snowflake,
     val permissions: Optional<Permissions> = Optional.Missing(),
-    @Deprecated("The region field has been moved to Channel#rtcRegion in Discord API v9", ReplaceWith("ChannelData#rtcRegion"))
+    @Deprecated(
+        "The region field has been moved to Channel#rtcRegion in Discord API v9",
+        ReplaceWith("ChannelData#rtcRegion")
+    )
     val region: String,
     val afkChannelId: Snowflake? = null,
     val afkTimeout: DurationInSeconds,

@@ -1,6 +1,8 @@
 package dev.kord.gateway.handler
 
-import dev.kord.gateway.*
+import dev.kord.gateway.Close
+import dev.kord.gateway.Event
+import dev.kord.gateway.InvalidSession
 import kotlinx.coroutines.flow.Flow
 
 internal class InvalidSessionHandler(

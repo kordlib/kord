@@ -12,7 +12,6 @@ import dev.kord.core.randomId
 import dev.kord.gateway.*
 import kotlinx.coroutines.job
 import kotlinx.coroutines.test.runTest
-import kotlin.time.Instant
 import kotlinx.serialization.json.JsonObject
 import kotlin.js.JsName
 import kotlin.test.BeforeTest
@@ -20,6 +19,7 @@ import kotlin.test.Ignore
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.time.Duration.Companion.seconds
+import kotlin.time.Instant
 
 @Ignore
 class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
@@ -793,7 +793,7 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
 
     @Test
     @JsName("test28")
-    fun `Check if live entity is completed when event the guild delete event is received`()  {
+    fun `Check if live entity is completed when event the guild delete event is received`() {
         countdownContext(1) {
             live.coroutineContext.job.invokeOnCompletion {
                 it as LiveCancellationException

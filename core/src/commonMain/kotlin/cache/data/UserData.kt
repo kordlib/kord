@@ -39,7 +39,18 @@ public data class UserData(
         }
 
         public fun from(entity: DiscordUser): UserData = with(entity) {
-            UserData(id, username, discriminator, globalName, avatar, bot, publicFlags, banner, accentColor, avatarDecorationData)
+            UserData(
+                id,
+                username,
+                discriminator,
+                globalName,
+                avatar,
+                bot,
+                publicFlags,
+                banner,
+                accentColor,
+                avatarDecorationData
+            )
         }
 
         public fun from(entity: DiscordOptionallyMemberUser): UserData = with(entity) {

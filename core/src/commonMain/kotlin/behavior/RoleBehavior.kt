@@ -98,7 +98,8 @@ public interface RoleBehavior : KordEntity, Strategizable {
      *
      * @throws [RestRequestException] if something went wrong during the request.
      */
-    public suspend fun getPosition(): Int = supplier.getGuildRoles(guildId).sorted().indexOfFirstOrNull { it.id == id }!!
+    public suspend fun getPosition(): Int =
+        supplier.getGuildRoles(guildId).sorted().indexOfFirstOrNull { it.id == id }!!
 
     /**
      * Requests to delete this role.

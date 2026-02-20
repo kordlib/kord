@@ -34,7 +34,13 @@ internal class XSalsa20Poly1305Encryption(private val key: ByteArray) {
         return false
     }
 
-    fun open(box: ByteArray, boxOffset: Int, boxLength: Int, nonce: ByteArray, output: MutableByteArrayCursor): Boolean {
+    fun open(
+        box: ByteArray,
+        boxOffset: Int,
+        boxLength: Int,
+        nonce: ByteArray,
+        output: MutableByteArrayCursor
+    ): Boolean {
         c.fill(0)
         m.fill(0)
 

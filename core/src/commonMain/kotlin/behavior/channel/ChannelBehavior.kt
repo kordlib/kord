@@ -7,12 +7,12 @@ import dev.kord.core.entity.KordEntity
 import dev.kord.core.entity.Strategizable
 import dev.kord.core.entity.channel.Channel
 import dev.kord.core.exception.EntityNotFoundException
+import dev.kord.core.hash
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.core.supplier.getChannelOf
 import dev.kord.core.supplier.getChannelOfOrNull
 import dev.kord.rest.request.RestRequestException
-import dev.kord.core.hash
 
 /**
  * The behavior of a [Discord Channel](https://discord.com/developers/docs/resources/channel)
@@ -82,7 +82,8 @@ public interface ChannelBehavior : KordEntity, Strategizable {
  * @throws [RequestException] if anything went wrong during the request.
  * @throws [ClassCastException] if the channel is not of type [T]
  */
-public suspend inline fun <reified T: Channel> ChannelBehavior.asChannelOfOrNull(): T? = supplier.getChannelOfOrNull(id)
+public suspend inline fun <reified T : Channel> ChannelBehavior.asChannelOfOrNull(): T? =
+    supplier.getChannelOfOrNull(id)
 
 
 /**
@@ -92,9 +93,13 @@ public suspend inline fun <reified T: Channel> ChannelBehavior.asChannelOfOrNull
  * @throws [EntityNotFoundException] if the [Channel] wasn't present.
  * @throws [ClassCastException] if the channel is not of type  [T].
  */
-public suspend inline fun <reified T: Channel> ChannelBehavior.asChannelOf(): T = supplier.getChannelOf(id)
+public suspend inline fun <reified T : Channel> ChannelBehavior.asChannelOf(): T = supplier.getChannelOf(id)
 
-public fun ChannelBehavior(id: Snowflake, kord: Kord, strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy): ChannelBehavior =
+public fun ChannelBehavior(
+    id: Snowflake,
+    kord: Kord,
+    strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy
+): ChannelBehavior =
     object : ChannelBehavior {
         override val id: Snowflake = id
         override val kord: Kord = kord

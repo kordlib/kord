@@ -3,8 +3,8 @@ package dev.kord.rest.request
 import dev.kord.rest.ratelimit.BucketKey
 import io.ktor.client.statement.*
 import kotlin.time.Clock
-import kotlin.time.Instant
 import kotlin.time.Duration.Companion.seconds
+import kotlin.time.Instant
 
 private const val rateLimitGlobalHeader = "X-RateLimit-Global"
 private const val retryAfterHeader = "Retry-After"

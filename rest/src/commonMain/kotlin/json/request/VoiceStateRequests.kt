@@ -1,10 +1,12 @@
 package dev.kord.rest.json.request
 
 import dev.kord.common.entity.Snowflake
-import dev.kord.common.entity.optional.*
-import kotlin.time.Instant
+import dev.kord.common.entity.optional.Optional
+import dev.kord.common.entity.optional.OptionalBoolean
+import dev.kord.common.entity.optional.OptionalSnowflake
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import kotlin.time.Instant
 
 @Serializable
 public data class CurrentVoiceStateModifyRequest(

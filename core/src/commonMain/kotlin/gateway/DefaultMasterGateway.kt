@@ -9,7 +9,7 @@ import kotlin.time.Duration.Companion.microseconds
 
 public class DefaultMasterGateway(
     override val gateways: Map<Int, Gateway>,
-): MasterGateway {
+) : MasterGateway {
 
     /**
      * Calculates the average [Gateway.ping] of all running [gateways].

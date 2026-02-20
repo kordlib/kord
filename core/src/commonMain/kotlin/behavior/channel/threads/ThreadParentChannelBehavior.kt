@@ -12,14 +12,14 @@ import dev.kord.core.entity.channel.Channel
 import dev.kord.core.entity.channel.ThreadParentChannel
 import dev.kord.core.entity.channel.thread.ThreadChannel
 import dev.kord.core.exception.EntityNotFoundException
+import dev.kord.core.hash
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
-import dev.kord.rest.builder.channel.thread.StartThreadWithMessageBuilder
 import dev.kord.rest.builder.channel.thread.StartThreadBuilder
+import dev.kord.rest.builder.channel.thread.StartThreadWithMessageBuilder
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filter
 import kotlin.time.Instant
-import dev.kord.core.hash
 
 /**
  * Behavior of channels that can contain public threads.
@@ -33,7 +33,8 @@ public interface ThreadParentChannelBehavior : CategorizableChannelBehavior {
      * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
 
      */
-    public val activeThreads: Flow<ThreadChannel> get() = supplier.getActiveThreads(guildId).filter { it.parentId == id }
+    public val activeThreads: Flow<ThreadChannel>
+        get() = supplier.getActiveThreads(guildId).filter { it.parentId == id }
 
     /**
      * Returns archived threads in the channel that are public.
@@ -144,7 +145,8 @@ internal suspend fun ThreadParentChannelBehavior.unsafeStartPublicThreadWithMess
     builder: StartThreadWithMessageBuilder.() -> Unit,
 ): ThreadChannel {
     val startBuilder = StartThreadWithMessageBuilder(name).apply(builder)
-    val response = kord.rest.channel.startThreadWithMessage(id, messageId, startBuilder.toRequest(), startBuilder.reason)
+    val response =
+        kord.rest.channel.startThreadWithMessage(id, messageId, startBuilder.toRequest(), startBuilder.reason)
     val data = ChannelData.from(response)
 
     return Channel.from(data, kord) as ThreadChannel

@@ -1,10 +1,6 @@
 package dev.kord.core.entity
 
-import dev.kord.common.entity.ActivityFlags
-import dev.kord.common.entity.ActivityPlatform
-import dev.kord.common.entity.ActivityType
-import dev.kord.common.entity.DiscordActivityEmoji
-import dev.kord.common.entity.Snowflake
+import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.value
 import dev.kord.core.cache.data.ActivityData
 import kotlin.time.Instant
@@ -64,8 +60,22 @@ public class Activity(public val data: ActivityData) {
         return "Activity(data=$data)"
     }
 
-    public data class Party(val id: String?, val currentSize: Int?, val maxSize: Int?)
-    public data class Assets(val largeImage: String?, val largeText: String?, val smallImage: String?, val smallText: String?)
-    public data class Secrets(val join: String?, val spectate: String?, val match: String?)
+    public data class Party(
+        val id: String?,
+        val currentSize: Int?,
+        val maxSize: Int?
+    )
 
+    public data class Assets(
+        val largeImage: String?,
+        val largeText: String?,
+        val smallImage: String?,
+        val smallText: String?
+    )
+
+    public data class Secrets(
+        val join: String?,
+        val spectate: String?,
+        val match: String?
+    )
 }

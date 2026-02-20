@@ -28,8 +28,8 @@ import dev.kord.core.supplier.getChannelOfOrNull
 import dev.kord.core.switchIfEmpty
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import kotlin.time.Instant
 import kotlin.time.Duration
+import kotlin.time.Instant
 
 /**
  * An instance of a [Discord Guild](https://discord.com/developers/docs/resources/guild).

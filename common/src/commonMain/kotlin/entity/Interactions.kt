@@ -54,7 +54,7 @@
         Entry(
             "DeferredUpdateMessage", intValue = 6,
             kDoc = "For components, ACK an interaction and edit the original message later; the user does not see a " +
-                    "loading state.",
+                "loading state.",
         ),
         Entry("UpdateMessage", intValue = 7, kDoc = "For components, edit the message the component was attached to."),
         Entry(
@@ -115,9 +115,11 @@ public data class DiscordApplicationCommand(
     @SerialName("dm_permission")
     val dmPermission: OptionalBoolean = OptionalBoolean.Missing,
     @SerialName("default_permission")
-    @Deprecated("'defaultPermission' is deprecated in favor of 'defaultMemberPermissions' and 'dmPermission'." +
-            " The deprecation level will be raised to HIDDEN in 0.19.0 and this declaration will be removed in 0.20.0" ,
-        level = DeprecationLevel.ERROR)
+    @Deprecated(
+        "'defaultPermission' is deprecated in favor of 'defaultMemberPermissions' and 'dmPermission'." +
+            " The deprecation level will be raised to HIDDEN in 0.19.0 and this declaration will be removed in 0.20.0",
+        level = DeprecationLevel.ERROR
+    )
     val defaultPermission: OptionalBoolean? = OptionalBoolean.Missing,
     val nsfw: OptionalBoolean = OptionalBoolean.Missing,
     val version: Snowflake
@@ -613,7 +615,6 @@ public sealed class CommandArgument<out T> : Option() {
                 ApplicationCommandOptionType.Integer -> IntegerArgument(
                     name, json.decodeFromJsonElement(Long.serializer(), element), focused
                 )
-
                 ApplicationCommandOptionType.Number -> NumberArgument(
                     name, json.decodeFromJsonElement(Double.serializer(), element), focused
                 )

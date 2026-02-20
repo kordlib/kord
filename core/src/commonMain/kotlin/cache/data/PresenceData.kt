@@ -2,7 +2,9 @@ package dev.kord.core.cache.data
 
 import dev.kord.cache.api.data.DataDescription
 import dev.kord.cache.api.data.description
-import dev.kord.common.entity.*
+import dev.kord.common.entity.DiscordPresenceUpdate
+import dev.kord.common.entity.PresenceStatus
+import dev.kord.common.entity.Snowflake
 import kotlinx.serialization.Serializable
 
 public val PresenceData.id: String get() = "$userId$guildId"

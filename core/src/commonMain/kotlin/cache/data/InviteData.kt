@@ -6,8 +6,8 @@ import dev.kord.common.entity.InviteTargetType
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.*
 import dev.kord.common.serialization.DurationInSeconds
-import kotlin.time.Instant
 import kotlinx.serialization.Serializable
+import kotlin.time.Instant
 
 public sealed interface BaseInviteData {
     public val code: String

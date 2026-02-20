@@ -36,7 +36,12 @@ public sealed class Command {
                     composite.encodeSerializableElement(descriptor, 1, RequestGuildMembers.serializer(), value)
                 }
                 is RequestSoundboardSounds -> {
-                    composite.encodeSerializableElement(descriptor, 0, OpCode.serializer(), OpCode.RequestSoundboardSounds)
+                    composite.encodeSerializableElement(
+                        descriptor,
+                        0,
+                        OpCode.serializer(),
+                        OpCode.RequestSoundboardSounds
+                    )
                     composite.encodeSerializableElement(descriptor, 1, RequestSoundboardSounds.serializer(), value)
                 }
                 is UpdateVoiceStatus -> {
@@ -81,7 +86,7 @@ public data class Identify(
 ) : Command() {
     override fun toString(): String =
         "Identify(token=hunter2, properties=$properties, compress=$compress, largeThreshold=$largeThreshold, " +
-                "shard=$shard, presence=$presence, intents=$intents)"
+            "shard=$shard, presence=$presence, intents=$intents)"
 }
 
 @Serializable
