@@ -560,34 +560,6 @@ public class Kord(
     ): T? = defaultSupplier.getGlobalApplicationCommandOfOrNull(resources.applicationId, commandId)
 
 
-    @Suppress("TYPE_INTERSECTION_AS_REIFIED_WARNING")
-    @Deprecated(
-        "This function has bad semantics: the type argument for T is effectively ignored. It no longer compiles " +
-            "without a 'TYPE_INTERSECTION_AS_REIFIED_WARNING' since Kotlin 2.1.0 " +
-            "(https://youtrack.jetbrains.com/issue/KT-52469). The replacement function has a proper bounded reified " +
-            "type parameter that is actually used. This declaration is kept for binary compatibility, it will be " +
-            "removed in 0.18.0. The replacement function should then be migrated away from using @JvmName.",
-        level = DeprecationLevel.HIDDEN,
-    )
-    public suspend fun <T> getGlobalApplicationCommandOf(commandId: Snowflake): T {
-        return defaultSupplier.getGlobalApplicationCommandOf(resources.applicationId, commandId)
-    }
-
-
-    @Suppress("TYPE_INTERSECTION_AS_REIFIED_WARNING")
-    @Deprecated(
-        "This function has bad semantics: the type argument for T is effectively ignored. It no longer compiles " +
-            "without a 'TYPE_INTERSECTION_AS_REIFIED_WARNING' since Kotlin 2.1.0 " +
-            "(https://youtrack.jetbrains.com/issue/KT-52469). The replacement function has a proper bounded reified " +
-            "type parameter that is actually used. This declaration is kept for binary compatibility, it will be " +
-            "removed in 0.18.0. The replacement function should then be migrated away from using @JvmName.",
-        level = DeprecationLevel.HIDDEN,
-    )
-    public suspend fun <T> getGlobalApplicationCommandOfOrNull(commandId: Snowflake): T? {
-        return defaultSupplier.getGlobalApplicationCommandOfOrNull(resources.applicationId, commandId)
-    }
-
-
     public suspend inline fun createGlobalChatInputCommand(
         name: String,
         description: String,

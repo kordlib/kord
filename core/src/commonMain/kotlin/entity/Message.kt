@@ -12,6 +12,7 @@ import dev.kord.core.behavior.MessageBehavior
 import dev.kord.core.behavior.UserBehavior
 import dev.kord.core.behavior.channel.ChannelBehavior
 import dev.kord.core.behavior.interaction.response.InteractionResponseBehavior
+import dev.kord.core.cache.data.ChannelData
 import dev.kord.core.cache.data.MessageData
 import dev.kord.core.cache.data.MessageInteractionData
 import dev.kord.core.entity.application.ApplicationCommand
@@ -19,6 +20,7 @@ import dev.kord.core.entity.channel.Channel
 import dev.kord.core.entity.channel.GuildChannel
 import dev.kord.core.entity.channel.MessageChannel
 import dev.kord.core.entity.channel.TopGuildMessageChannel
+import dev.kord.core.entity.channel.thread.ThreadChannel
 import dev.kord.core.entity.component.ActionRowComponent
 import dev.kord.core.entity.interaction.ActionInteraction
 import dev.kord.core.entity.interaction.followup.FollowupMessage
@@ -30,7 +32,6 @@ import dev.kord.core.supplier.getChannelOf
 import dev.kord.core.supplier.getChannelOfOrNull
 import kotlinx.coroutines.flow.*
 import kotlin.time.Instant
-import dev.kord.core.hash
 
 /**
  * An instance of a [Discord Message][https://discord.com/developers/docs/resources/channel#message-object].
@@ -249,6 +250,11 @@ public class Message(
     public val interaction: Interaction? get() = data.interaction.mapNullable { Interaction(it, kord) }.value
 
     /**
+     * The [thread][ThreadChannel] that was started from this message.
+     */
+    public val thread: ThreadChannel? get() = data.thread.mapNullable { ThreadChannel(it, kord) }.value
+
+    /**
      * The [users][User] mentioned in this message.
      *
      * This request uses state [data] to resolve the entities belonging to the flow,
@@ -303,6 +309,9 @@ public class Message(
      * Can be used to estimate the relative position along with total_message_sent on the parent thread,
      */
     public val position: Int? get() = data.position.value
+
+    /** The thread that was started from this message, includes thread member object. */
+    public val thread: ChannelData? get() = data.thread.value
 
     /** The [ActionRowComponent]s of this message. */
     public val actionRows: List<ActionRowComponent>
