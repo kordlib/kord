@@ -65,8 +65,11 @@ public fun ComponentInteraction(
     supplier: EntitySupplier = kord.defaultSupplier,
 ): ComponentInteraction {
     val inGuild = data.guildId.value != null
+    val type = data.data.componentType.value
 
-    return when (val type = data.data.componentType.value) {
+    fun throwNoInteractions(): Nothing = error("Component '$type' can't have interactions")
+
+    return when (type) {
         ComponentType.Button -> when {
             inGuild -> GuildButtonInteraction(data, kord, supplier)
             else -> GlobalButtonInteraction(data, kord, supplier)
@@ -79,8 +82,20 @@ public fun ComponentInteraction(
             else -> GlobalSelectMenuInteraction(data, kord, supplier)
         }
 
-        ComponentType.TextInput -> error("Text inputs can't have interactions")
-        ComponentType.ActionRow -> error("Action rows can't have interactions")
+        ComponentType.TextInput -> throwNoInteractions()
+        ComponentType.Container -> throwNoInteractions()
+        ComponentType.File -> throwNoInteractions()
+        ComponentType.MediaGallery -> throwNoInteractions()
+        ComponentType.Section -> throwNoInteractions()
+        ComponentType.Separator -> throwNoInteractions()
+        ComponentType.TextDisplay -> throwNoInteractions()
+        ComponentType.Thumbnail -> throwNoInteractions()
+        ComponentType.ActionRow -> throwNoInteractions()
+        ComponentType.FileUpload -> throwNoInteractions()
+        ComponentType.Label -> throwNoInteractions()
+        ComponentType.Checkbox -> throwNoInteractions()
+        ComponentType.CheckboxGroup -> throwNoInteractions()
+        ComponentType.RadioGroup -> throwNoInteractions()
         is ComponentType.Unknown -> error("Unknown component type: ${type.value}")
         null -> error("Component type was null")
     }

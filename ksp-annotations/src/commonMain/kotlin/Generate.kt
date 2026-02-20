@@ -21,11 +21,6 @@ annotation class Generate(
     val kDoc: String = "",
     /** Name of the value of the entity. */
     val valueName: String = "value",
-
-    // for migration only, will be removed eventually
-    val collectionHadCopy0: Boolean = false,
-    val collectionHadNewCompanion: Boolean = false,
-    val hadBuilderFactoryFunction0: Boolean = false,
 ) {
     enum class EntityType { INT_KORD_ENUM, STRING_KORD_ENUM, INT_FLAGS, BIT_SET_FLAGS }
 

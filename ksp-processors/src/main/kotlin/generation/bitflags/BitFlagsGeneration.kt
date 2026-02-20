@@ -130,9 +130,6 @@ internal fun BitFlags.generateFileSpec(originatingFile: KSFile) = fileSpecForGen
         addMinus(parameterName = "flag", parameterType = currentContext.entityCN)
         addMinus(parameterName = "flags", parameterType = collectionCN)
         addCopy()
-        if (collectionHadCopy0) {
-            addCopy0()
-        }
         addEqualsAndHashCodeBasedOnClassAndSingleProperty(collectionCN, property = valueName)
         addFunction("toString") {
             addModifiers(OVERRIDE)
@@ -141,9 +138,6 @@ internal fun BitFlags.generateFileSpec(originatingFile: KSFile) = fileSpecForGen
         }
         addBuilder()
         addSerializer()
-        if (collectionHadNewCompanion) {
-            addDeprecatedNewCompanion()
-        }
     }
     addFactoryFunctions()
 }

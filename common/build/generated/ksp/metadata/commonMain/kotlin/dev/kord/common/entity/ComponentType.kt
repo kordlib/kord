@@ -79,6 +79,66 @@ public sealed class ComponentType(
      */
     public object ChannelSelect : ComponentType(8)
 
+    /**
+     * Container to display text alongside an accessory component
+     */
+    public object Section : ComponentType(9)
+
+    /**
+     * Markdown text
+     */
+    public object TextDisplay : ComponentType(10)
+
+    /**
+     * Small image that can be used as an accessory
+     */
+    public object Thumbnail : ComponentType(11)
+
+    /**
+     * Display images and other media
+     */
+    public object MediaGallery : ComponentType(12)
+
+    /**
+     * Displays an attached file
+     */
+    public object File : ComponentType(13)
+
+    /**
+     * Component to add vertical padding between other components
+     */
+    public object Separator : ComponentType(14)
+
+    /**
+     * Container that visually groups a set of components
+     */
+    public object Container : ComponentType(17)
+
+    /**
+     * Container associating a label and description with a component
+     */
+    public object Label : ComponentType(18)
+
+    /**
+     * Component for uploading files
+     */
+    public object FileUpload : ComponentType(19)
+
+    /**
+     * Single-Choice set of options
+     */
+    public object RadioGroup : ComponentType(21)
+
+    /**
+     * Multi-selectable group of checkboxes
+     */
+    public object CheckboxGroup : ComponentType(22)
+
+    /**
+     * Single checkbox for yes/no choice
+     */
+    public object Checkbox : ComponentType(23)
+
     internal object Serializer : KSerializer<ComponentType> {
         override val descriptor: SerialDescriptor =
                 PrimitiveSerialDescriptor("dev.kord.common.entity.ComponentType", PrimitiveKind.INT)
@@ -104,6 +164,18 @@ public sealed class ComponentType(
                 RoleSelect,
                 MentionableSelect,
                 ChannelSelect,
+                Section,
+                TextDisplay,
+                Thumbnail,
+                MediaGallery,
+                File,
+                Separator,
+                Container,
+                Label,
+                FileUpload,
+                RadioGroup,
+                CheckboxGroup,
+                Checkbox,
             )
         }
 
@@ -119,6 +191,18 @@ public sealed class ComponentType(
             6 -> RoleSelect
             7 -> MentionableSelect
             8 -> ChannelSelect
+            9 -> Section
+            10 -> TextDisplay
+            11 -> Thumbnail
+            12 -> MediaGallery
+            13 -> File
+            14 -> Separator
+            17 -> Container
+            18 -> Label
+            19 -> FileUpload
+            21 -> RadioGroup
+            22 -> CheckboxGroup
+            23 -> Checkbox
             else -> Unknown(value)
         }
     }

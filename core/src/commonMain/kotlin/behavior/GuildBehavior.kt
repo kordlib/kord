@@ -268,7 +268,7 @@ public interface GuildBehavior : KordEntity, Strategizable {
     /**
      * Requests guild emojis [through the gateway][requestSoundboardSounds].
      *
-     * The returned flow is cold, and will execute the [request] only on subscription.
+     * The returned flow is cold, and will execute the request only on subscription.
      * Collection of this flow on a [Gateway] that is not [running][Gateway.start]
      * will result in an [IllegalStateException] being thrown.
      *

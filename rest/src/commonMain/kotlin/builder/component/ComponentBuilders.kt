@@ -13,7 +13,7 @@ public sealed interface ComponentBuilder {
 }
 
 @KordDsl
-public sealed class ActionRowComponentBuilder : ComponentBuilder {
+public sealed class ActionRowComponentBuilder : ContainerComponentBuilder {
 
     protected var _disabled: OptionalBoolean = OptionalBoolean.Missing
         private set
@@ -24,3 +24,15 @@ public sealed class ActionRowComponentBuilder : ComponentBuilder {
 
 @KordDsl
 public sealed interface MessageComponentBuilder : ComponentBuilder
+
+/**
+ * A component that is a child of a container component.
+ */
+@KordDsl
+public sealed interface ContainerComponentBuilder : MessageComponentBuilder
+
+/**
+ * A component that is an accessory to a section component.
+ */
+@KordDsl
+public sealed interface AccessoryComponentBuilder : ComponentBuilder

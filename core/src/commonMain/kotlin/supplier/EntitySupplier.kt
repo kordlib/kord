@@ -133,7 +133,7 @@ public interface EntitySupplier {
     public fun getChannelPins(channelId: Snowflake): Flow<Message>
 
     /**
-     * Requests the [Member] with the given [userId] in the [Guild] wit the given [guildId],
+     * Requests the [Member] with the given [userId] in the [Guild] with the given [guildId],
      * returns `null` when the member isn't present.
      *
      * @throws RequestException if something went wrong while retrieving the member.
@@ -141,7 +141,7 @@ public interface EntitySupplier {
     public suspend fun getMemberOrNull(guildId: Snowflake, userId: Snowflake): Member?
 
     /**
-     * Requests the [Member] with the given [userId] in the [Guild] wit the given [guildId].
+     * Requests the [Member] with the given [userId] in the [Guild] with the given [guildId].
      *
      * @throws RequestException if something went wrong while retrieving the member.
      * @throws EntityNotFoundException if the member was null.
@@ -149,6 +149,23 @@ public interface EntitySupplier {
     public suspend fun getMember(guildId: Snowflake, userId: Snowflake): Member =
         getMemberOrNull(guildId, userId)
             ?: EntityNotFoundException.memberNotFound(guildId = guildId, userId = userId)
+
+    /**
+     * Requests the member's [VoiceState] with the given [userId] in the [Guild] with the given [guildId].
+     *
+     * @throws RequestException if something went wrong while retrieving the member's voice state.
+     */
+    public suspend fun getMemberVoiceStateOrNull(guildId: Snowflake, userId: Snowflake): VoiceState?
+
+    /**
+     * Requests the member's [VoiceState] with the given [userId] in the [Guild] with the given [guildId].
+     *
+     * @throws RequestException if something went wrong while retrieving the member's voice state.
+     * @throws EntityNotFoundException if the [VoiceState] wasn't present.
+     */
+    public suspend fun getMemberVoiceState(guildId: Snowflake, userId: Snowflake): VoiceState =
+        getMemberVoiceStateOrNull(guildId, userId)
+            ?: EntityNotFoundException.memberVoiceStateNotFound(guildId = guildId, userId = userId)
 
     /**
      * Requests the [Message] with the given [messageId] in the [MessageChannel] with the given [channelId],

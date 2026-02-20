@@ -43,7 +43,7 @@ public sealed class VoiceEvent {
                 OpCode.Resumed -> {
                     // ignore the d field, Resumed is supposed to have null here:
                     // https://discord.com/developers/docs/topics/voice-connections#resuming-voice-connection-example-resumed-payload
-                    Resumed
+                    null
                 }
 
                 OpCode.Identify, OpCode.SelectProtocol, OpCode.Heartbeat, OpCode.Resume, OpCode.ClientDisconnect,
@@ -107,26 +107,6 @@ public data class Speaking(
     val ssrc: UInt,
     val speaking: SpeakingFlags
 ) : VoiceEvent()
-
-public object Resumed : VoiceEvent() {
-    @Deprecated(
-        "'Resumed' is no longer serializable, deserialize it with 'VoiceEvent.DeserializationStrategy' instead. " +
-            "Deprecated without a replacement. This declaration will be removed in 0.17.0.",
-        level = DeprecationLevel.HIDDEN,
-    )
-    public fun serializer(): KSerializer<Resumed> = Serializer
-
-    private object Serializer : KSerializer<Resumed> {
-        @OptIn(InternalSerializationApi::class, ExperimentalSerializationApi::class)
-        override val descriptor = buildSerialDescriptor("dev.kord.voice.gateway.Resumed", StructureKind.OBJECT)
-        override fun serialize(encoder: Encoder, value: Resumed) = encoder.encodeStructure(descriptor) {}
-        override fun deserialize(decoder: Decoder) = decoder.decodeStructure(descriptor) {
-            val index = decodeElementIndex(descriptor)
-            if (index != CompositeDecoder.DECODE_DONE) throw SerializationException("Unexpected index $index")
-            Resumed
-        }
-    }
-}
 
 public sealed class Close : VoiceEvent() {
     /**
