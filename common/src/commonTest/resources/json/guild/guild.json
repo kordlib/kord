@@ -41,5 +41,6 @@
   "public_updates_channel_id": "281283303326089216",
   "nsfw_level": 0,
   "premium_progress_bar_enabled": false,
-  "safety_alerts_channel_id": "587324906702766226"
+  "safety_alerts_channel_id": "587324906702766226",
+  "home_header": null
 }

@@ -26,6 +26,8 @@ internal val BitFlags.builderCN
 
 internal fun BitFlags.generateFileSpec(originatingFile: KSFile) = fileSpecForGenerationEntity(originatingFile) {
     addClass(currentContext.entityCN) {
+        if (isKordPreview) addAnnotation(ClassName("dev.kord.common.annotation", "KordPreview"))
+        if (isDiscordPreview) addAnnotation(ClassName("dev.kord.common.annotation", "DiscordAPIPreview"))
         // for ksp incremental processing
         addOriginatingKSFile(originatingFile)
         addEntityKDoc()

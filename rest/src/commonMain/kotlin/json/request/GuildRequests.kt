@@ -1,7 +1,9 @@
 package dev.kord.rest.json.request
 
 import dev.kord.common.Color
+import dev.kord.common.annotation.DiscordAPIPreview
 import dev.kord.common.annotation.KordExperimental
+import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
@@ -263,4 +265,46 @@ public data class GuildScheduledEventUsersResponse(
     val guildScheduledEventId: Snowflake,
     val user: DiscordUser,
     val member: Optional<DiscordGuildMember> = Optional.Missing(),
+)
+
+@DiscordAPIPreview
+@Serializable
+public data class GuildMemberVerificationModifyRequest(
+    val enabled: OptionalBoolean = OptionalBoolean.Missing,
+    @SerialName("form_fields")
+    val formFields: Optional<List<DiscordMemberVerificationFormField>> = Optional.Missing(),
+    val description: Optional<String?> = Optional.Missing(),
+    @SerialName("bulk_action")
+    val bulkAction: Optional<String> = Optional.Missing(),
+)
+
+@DiscordAPIPreview
+@Serializable
+public data class GuildJoinRequestsResponse(
+    @SerialName("guild_join_requests")
+    val guildJoinRequests: Optional<List<DiscordGuildJoinRequest>> = Optional.Missing(),
+    val total: OptionalInt = OptionalInt.Missing,
+    val limit: Int
+)
+
+@DiscordAPIPreview
+@Serializable
+public data class GuildJoinRequestCooldownResponse(
+    val cooldown: Int
+)
+
+@DiscordAPIPreview
+@Serializable
+public data class GuildJoinRequestCreateRequest(
+    @SerialName("form_fields")
+    val formFields: List<DiscordMemberVerificationFormField>,
+    val version: Instant?
+)
+
+@DiscordAPIPreview
+@Serializable
+public data class GuildJoinRequestActionRequest(
+    val action: GuildJoinRequestStatus,
+    @SerialName("rejection_reason")
+    val rejectionReason: Optional<String?> = Optional.Missing()
 )

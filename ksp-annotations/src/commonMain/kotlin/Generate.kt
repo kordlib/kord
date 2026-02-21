@@ -21,6 +21,10 @@ annotation class Generate(
     val kDoc: String = "",
     /** Name of the value of the entity. */
     val valueName: String = "value",
+    /** Whether the class is a KordPreview or not. */
+    val isKordPreview: Boolean = false,
+    /** Whether the class is a Discord API Preview or not. */
+    val isDiscordPreview: Boolean = false,
 ) {
     enum class EntityType { INT_KORD_ENUM, STRING_KORD_ENUM, INT_FLAGS, BIT_SET_FLAGS }
 
