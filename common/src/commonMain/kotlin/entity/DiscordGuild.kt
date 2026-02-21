@@ -71,6 +71,14 @@
     docUrl = "https://discord.com/developers/docs/resources/guild#guild-object-guild-features",
     entries = [
         Entry(
+            "ActivityFeedDisabled", stringValue = "ACTIVITY_FEED_DISABLED_BY_USER",
+            kDoc = "Guild has disabled the activity feed."
+        ),
+        Entry(
+            "ActivityFeedEnabled", stringValue = "ACTIVITY_FEED_ENABLED_BY_USER",
+            kDoc = "Guild has enabled the activity feed."
+        ),
+        Entry(
             "AnimatedBanner", stringValue = "ANIMATED_BANNER",
             kDoc = "Guild has access to set an animated guild banner image.",
         ),

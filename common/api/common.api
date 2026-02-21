@@ -7678,6 +7678,14 @@ public abstract class dev/kord/common/entity/GuildFeature {
 	public final fun toString ()Ljava/lang/String;
 }
 
+public final class dev/kord/common/entity/GuildFeature$ActivityFeedDisabled : dev/kord/common/entity/GuildFeature {
+	public static final field INSTANCE Ldev/kord/common/entity/GuildFeature$ActivityFeedDisabled;
+}
+
+public final class dev/kord/common/entity/GuildFeature$ActivityFeedEnabled : dev/kord/common/entity/GuildFeature {
+	public static final field INSTANCE Ldev/kord/common/entity/GuildFeature$ActivityFeedEnabled;
+}
+
 public final class dev/kord/common/entity/GuildFeature$AnimatedBanner : dev/kord/common/entity/GuildFeature {
 	public static final field INSTANCE Ldev/kord/common/entity/GuildFeature$AnimatedBanner;
 }
