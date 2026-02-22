@@ -1,0 +1,480 @@
+<!doctype html>
+<html class="no-js" lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title>JoinRequest</title>
+<link href="../../../images/logo-icon.svg" rel="icon" type="image/svg"><script>var pathToRoot = "../../../";</script>
+    <script>document.documentElement.classList.replace("no-js", "js");</script>
+    <script>const storage = localStorage.getItem("dokka-dark-mode")
+      if (storage == null) {
+        const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        if (osDarkSchemePreferred === true) {
+          document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+      } else {
+        const savedDarkMode = JSON.parse(storage)
+        if (savedDarkMode === true) {
+          document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+      }
+    </script>
+<script type="text/javascript" src="https://unpkg.com/kotlin-playground@1/dist/playground.min.js" async></script>
+<script type="text/javascript" src="../../../scripts/sourceset_dependencies.js" async></script>
+<link href="../../../styles/style.css" rel="Stylesheet">
+<link href="../../../styles/main.css" rel="Stylesheet">
+<link href="../../../styles/prism.css" rel="Stylesheet">
+<link href="../../../styles/logo-styles.css" rel="Stylesheet">
+<link href="../../../ui-kit/ui-kit.min.css" rel="Stylesheet">
+<script type="text/javascript" src="../../../scripts/safe-local-storage_blocking.js"></script>
+<script type="text/javascript" src="../../../scripts/navigation-loader.js" async></script>
+<script type="text/javascript" src="../../../scripts/platform-content-handler.js" async></script>
+<script type="text/javascript" src="../../../scripts/main.js" defer></script>
+<script type="text/javascript" src="../../../scripts/prism.js" async></script>
+<script type="text/javascript" src="../../../ui-kit/ui-kit.min.js" defer></script></head>
+<body>
+<div class="root">
+    <header class="navigation theme-dark" id="navigation-wrapper" role="banner">
+<a class="library-name--link" href="../../../index.html" tabindex="1">
+                    kord
+            </a>        <button class="navigation-controls--btn navigation-controls--btn_toc ui-kit_mobile-only" id="toc-toggle" type="button">Toggle table of contents
+        </button>
+        <div class="navigation-controls--break ui-kit_mobile-only"></div>
+        <div class="library-version" id="library-version">or(map(map(map(map(valueof(ProcessOutputValueSource))))), map(map(map(map(valueof(ProcessOutputValueSource))))))
+        </div>
+        <div class="navigation-controls">
+        <ul class="filter-section filter-section_loading" id="filter-section" aria-label="Target filter">
+                <button class="platform-tag platform-selector common-like" data-active="" aria-pressed="true" data-filter=":core/commonMain">common</button>
+            <div class="dropdown filter-section--dropdown" data-role="dropdown" id="filter-section-dropdown">
+                <button class="button button_dropdown filter-section--dropdown-toggle" role="combobox" data-role="dropdown-toggle" aria-controls="platform-tags-listbox" aria-haspopup="listbox" aria-expanded="false" aria-label="Toggle source sets"></button>
+                <ul role="listbox" id="platform-tags-listbox" class="dropdown--list" data-role="dropdown-listbox" aria-label="Target filter">
+                    <div class="dropdown--header"><span>Target filter</span>
+                        <button class="button" data-role="dropdown-toggle" aria-label="Close target filter">
+                            <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                        </button>
+                    </div>
+                        <li role="option" class="dropdown--option platform-selector-option common-like" tabindex="0">
+                            <label class="checkbox">
+                                <input type="checkbox" class="checkbox--input" id=":core/commonMain" data-filter=":core/commonMain">
+                                <span class="checkbox--icon"></span>
+                                common
+                            </label>
+                        </li>
+                </ul>
+                <div class="dropdown--overlay"></div>
+            </div>
+        </ul>
+            <button class="navigation-controls--btn navigation-controls--btn_theme" id="theme-toggle-button" type="button">Switch theme
+            </button>
+            <div class="navigation-controls--btn navigation-controls--btn_search" id="searchBar" role="button">Search in
+                API
+            </div>
+        </div>
+    </header>
+    <div id="container">
+        <nav id="leftColumn" class="sidebar" data-item-type="SECTION" data-item-config="{&quot;defaultSize&quot;: 280, &quot;minSize&quot;: 200, &quot;maxSize&quot;: 400}">
+            <a class="toc--skip-link" href="#main">Skip to content</a>
+            <div class="dropdown theme-dark_mobile" data-role="dropdown" id="toc-dropdown">
+                <ul role="listbox" id="toc-listbox" class="dropdown--list dropdown--list_toc-list" data-role="dropdown-listbox" aria-label="Table of contents">
+                    <div class="dropdown--header">
+                            <span>
+                                    kord
+                            </span>
+                        <button class="button" data-role="dropdown-toggle" aria-label="Close table of contents">
+                            <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                        </button>
+                    </div>
+                    <div class="sidebar--inner" id="sideMenu"></div>
+                </ul>
+                <div class="dropdown--overlay"></div>
+            </div>
+        </nav>
+        <div id="resizer" class="resizer" data-item-type="BAR"></div>
+        <div id="main" data-item-type="SECTION" role="main">
+<div class="main-content" data-page-type="classlike" id="content" pageids="kord-core::dev.kord.core.entity/JoinRequest///PointingToDeclaration//1239919082">
+  <div class="breadcrumbs"><a href="../../index.html">kord-core</a><span class="delimiter">/</span><a href="../index.html">dev.kord.core.entity</a><span class="delimiter">/</span><span class="current">JoinRequest</span></div>
+  <div class="cover ">
+    <h1 class="cover"><span>Join</span><wbr><span><span>Request</span></span></h1>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="../../../common/dev.kord.common.annotation/-discord-a-p-i-preview/index.html"><span class="token annotation builtin">DiscordAPIPreview</span></a></div></div><span class="token keyword">class </span><a href="index.html">JoinRequest</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">val </span>data<span class="token operator">: </span><a href="../../dev.kord.core.cache.data/-join-request-data/index.html">JoinRequestData</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>kord<span class="token operator">: </span><a href="../../dev.kord.core/-kord/index.html">Kord</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>supplier<span class="token operator">: </span><a href="../../dev.kord.core.supplier/-entity-supplier/index.html">EntitySupplier</a><span class="token operator"> = </span>kord.defaultSupplier</span></span><span class="token punctuation">)</span> : <a href="../-kord-entity/index.html">KordEntity</a><span class="source-link-wrapper"><span class="source-link" data-element-type="source-link">(<a href="https://github.com/kordlib/kord/blob/map(map(map(valueof(ProcessOutputValueSource))))/core/src/commonMain/kotlin/entity/JoinRequest.kt#L18">source</a>)</span></span></div></div></div>
+  </div>
+  <div class="tabbedcontent">
+    <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="CONSTRUCTOR,TYPE,PROPERTY,FUNCTION">Members</button></div>
+    <div class="tabs-section-body">
+      <div data-togglable="CONSTRUCTOR">
+        <h2 class="tableheader">Constructors</h2>
+        <div class="table"><a data-name="1627910756%2FConstructors%2F1239919082" anchor-label="JoinRequest" id="1627910756%2FConstructors%2F1239919082" data-filterable-set=":core/commonMain"></a>
+          <div class="table-row table-row_content" data-togglable="CONSTRUCTOR" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-join-request.html"><span>Join</span><wbr><span><span>Request</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1627910756%2FConstructors%2F1239919082"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">constructor</span><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">data<span class="token operator">: </span><a href="../../dev.kord.core.cache.data/-join-request-data/index.html">JoinRequestData</a><span class="token punctuation">, </span></span><span class="parameter ">kord<span class="token operator">: </span><a href="../../dev.kord.core/-kord/index.html">Kord</a><span class="token punctuation">, </span></span><span class="parameter ">supplier<span class="token operator">: </span><a href="../../dev.kord.core.supplier/-entity-supplier/index.html">EntitySupplier</a><span class="token operator"> = </span>kord.defaultSupplier</span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div data-togglable="PROPERTY">
+        <h2 class="tableheader">Properties</h2>
+        <div class="table"><a data-name="-1324339825%2FProperties%2F1239919082" anchor-label="actionedAt" id="-1324339825%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="actioned-at.html"><span>actioned</span><wbr><span><span>At</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1324339825%2FProperties%2F1239919082"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">val </span><a href="actioned-at.html">actionedAt</a><span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph">A snowflake representing when the join request was actioned</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1634198082%2FProperties%2F1239919082" anchor-label="actionedAtTime" id="1634198082%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="actioned-at-time.html"><span>actioned</span><wbr><span>At</span><wbr><span><span>Time</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1634198082%2FProperties%2F1239919082"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">val </span><a href="actioned-at-time.html">actionedAtTime</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.time/-instant/index.html">Instant</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph">The <a href="actioned-at.html">actionedAt</a> snowflake formated as an <a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.time/-instant/index.html">Instant</a></p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1487594848%2FProperties%2F1239919082" anchor-label="actionedByUser" id="1487594848%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="actioned-by-user.html"><span>actioned</span><wbr><span>By</span><wbr><span><span>User</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1487594848%2FProperties%2F1239919082"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">val </span><a href="actioned-by-user.html">actionedByUser</a><span class="token operator">: </span><a href="../../dev.kord.core.behavior/-user-behavior/index.html">UserBehavior</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph">The moderator that actioned the request</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-649299423%2FProperties%2F1239919082" anchor-label="applicationStatus" id="-649299423%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="application-status.html"><span>application</span><wbr><span><span>Status</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-649299423%2FProperties%2F1239919082"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">val </span><a href="application-status.html">applicationStatus</a><span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-guild-join-request-status/index.html">GuildJoinRequestStatus</a></div><div class="brief "><p class="paragraph">The status of the application</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1137062296%2FProperties%2F1239919082" anchor-label="createdAt" id="-1137062296%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="created-at.html"><span>created</span><wbr><span><span>At</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1137062296%2FProperties%2F1239919082"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">val </span><a href="created-at.html">createdAt</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.time/-instant/index.html">Instant</a></div><div class="brief "><p class="paragraph">When the join request was created</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="2035604493%2FProperties%2F1239919082" anchor-label="data" id="2035604493%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="data.html"><span><span>data</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="2035604493%2FProperties%2F1239919082"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">val </span><a href="data.html">data</a><span class="token operator">: </span><a href="../../dev.kord.core.cache.data/-join-request-data/index.html">JoinRequestData</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-961723371%2FProperties%2F1239919082" anchor-label="formResponses" id="-961723371%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="form-responses.html"><span>form</span><wbr><span><span>Responses</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-961723371%2FProperties%2F1239919082"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">val </span><a href="form-responses.html">formResponses</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><a href="../../../common/dev.kord.common.entity/-discord-member-verification-form-field/index.html">DiscordMemberVerificationFormField</a><span class="token operator">&gt;</span><span class="token operator">?</span></div><div class="brief "><p class="paragraph">Responses to the verification questions</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-213860331%2FProperties%2F1239919082" anchor-label="guildId" id="-213860331%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="guild-id.html"><span>guild</span><wbr><span><span>Id</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-213860331%2FProperties%2F1239919082"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">val </span><a href="guild-id.html">guildId</a><span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a></div><div class="brief "><p class="paragraph">The ID of the guild this join request is for</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1030883780%2FProperties%2F1239919082" anchor-label="id" id="-1030883780%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="id.html"><span><span>id</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1030883780%2FProperties%2F1239919082"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">val </span><a href="id.html">id</a><span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a></div><div class="brief "><p class="paragraph">The unique identifier of this entity.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1954304154%2FProperties%2F1239919082" anchor-label="interviewChannelId" id="1954304154%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="interview-channel-id.html"><span>interview</span><wbr><span>Channel</span><wbr><span><span>Id</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1954304154%2FProperties%2F1239919082"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">val </span><a href="interview-channel-id.html">interviewChannelId</a><span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph">The ID of the channel where an interview regarding this join request may be conducted</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1288370755%2FProperties%2F1239919082" anchor-label="joinRequestId" id="1288370755%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="join-request-id.html"><span>join</span><wbr><span>Request</span><wbr><span><span>Id</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1288370755%2FProperties%2F1239919082"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">val </span><a href="join-request-id.html">joinRequestId</a><span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a></div><div class="brief "><p class="paragraph">The ID of the join request</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1490836129%2FProperties%2F1239919082" anchor-label="kord" id="1490836129%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="kord.html"><span><span>kord</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1490836129%2FProperties%2F1239919082"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">val </span><a href="kord.html">kord</a><span class="token operator">: </span><a href="../../dev.kord.core/-kord/index.html">Kord</a></div><div class="brief "><p class="paragraph">The kord instance that created this object.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1120033382%2FProperties%2F1239919082" anchor-label="lastSeen" id="1120033382%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="last-seen.html"><span>last</span><wbr><span><span>Seen</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1120033382%2FProperties%2F1239919082"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">val </span><a href="last-seen.html">lastSeen</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.time/-instant/index.html">Instant</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph">When the request was acknowledged by the user</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="2119312310%2FProperties%2F1239919082" anchor-label="rejectionReason" id="2119312310%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="rejection-reason.html"><span>rejection</span><wbr><span><span>Reason</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="2119312310%2FProperties%2F1239919082"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">val </span><a href="rejection-reason.html">rejectionReason</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph">The reason given for rejecting the join request</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-378065109%2FProperties%2F1239919082" anchor-label="supplier" id="-378065109%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="supplier.html"><span><span>supplier</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-378065109%2FProperties%2F1239919082"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">val </span><a href="supplier.html">supplier</a><span class="token operator">: </span><a href="../../dev.kord.core.supplier/-entity-supplier/index.html">EntitySupplier</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-368830708%2FProperties%2F1239919082" anchor-label="user" id="-368830708%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="user.html"><span><span>user</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-368830708%2FProperties%2F1239919082"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">val </span><a href="user.html">user</a><span class="token operator">: </span><a href="../../dev.kord.core.behavior/-user-behavior/index.html">UserBehavior</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph">The user that created this join request</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1581859215%2FProperties%2F1239919082" anchor-label="userId" id="-1581859215%2FProperties%2F1239919082" data-filterable-set=":core/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="user-id.html"><span>user</span><wbr><span><span>Id</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1581859215%2FProperties%2F1239919082"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">val </span><a href="user-id.html">userId</a><span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a></div><div class="brief "><p class="paragraph">The Id of the user who created this join request</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div data-togglable="FUNCTION">
+        <h2 class="tableheader">Functions</h2>
+        <div class="table"><a data-name="1855121047%2FFunctions%2F1239919082" anchor-label="compareTo" id="1855121047%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../-entity/compare-to.html"><span>compare</span><wbr><span><span>To</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1855121047%2FFunctions%2F1239919082"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">operator override </span><span class="token keyword">fun </span><a href="../-entity/compare-to.html"><span class="token function">compareTo</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">other<span class="token operator">: </span><a href="../-entity/index.html">Entity</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a></div><div class="brief "><p class="paragraph">Compares entities on <a href="../-entity/id.html">id</a>.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1552549926%2FFunctions%2F1239919082" anchor-label="getGuild" id="-1552549926%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="get-guild.html"><span>get</span><wbr><span><span>Guild</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1552549926%2FFunctions%2F1239919082"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">suspend </span><span class="token keyword">fun </span><a href="get-guild.html"><span class="token function">getGuild</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../-guild/index.html">Guild</a></div><div class="brief "><p class="paragraph">Requests the <a href="../-guild/index.html">Guild</a> with the given <a href="id.html">id</a>.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1526204208%2FFunctions%2F1239919082" anchor-label="getGuildOrNull" id="1526204208%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="get-guild-or-null.html"><span>get</span><wbr><span>Guild</span><wbr><span>Or</span><wbr><span><span>Null</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1526204208%2FFunctions%2F1239919082"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">suspend </span><span class="token keyword">fun </span><a href="get-guild-or-null.html"><span class="token function">getGuildOrNull</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../-guild/index.html">Guild</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph">Requests the <a href="../-guild/index.html">Guild</a> with the given <a href="id.html">id</a>, returns <code class="lang-kotlin">null</code> when the guild isn't present.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-477381877%2FFunctions%2F1239919082" anchor-label="getInterviewChannel" id="-477381877%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="get-interview-channel.html"><span>get</span><wbr><span>Interview</span><wbr><span><span>Channel</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-477381877%2FFunctions%2F1239919082"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">suspend </span><span class="token keyword">fun </span><a href="get-interview-channel.html"><span class="token function">getInterviewChannel</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../dev.kord.core.entity.channel/-channel/index.html">Channel</a></div><div class="brief "><p class="paragraph">Requests the <a href="../../dev.kord.core.entity.channel/-channel/index.html">Channel</a> with the given <a href="id.html">id</a>.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-159325791%2FFunctions%2F1239919082" anchor-label="getInterviewChannelOrNull" id="-159325791%2FFunctions%2F1239919082" data-filterable-set=":core/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":core/commonMain" data-filterable-set=":core/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="get-interview-channel-or-null.html"><span>get</span><wbr><span>Interview</span><wbr><span>Channel</span><wbr><span>Or</span><wbr><span><span>Null</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-159325791%2FFunctions%2F1239919082"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">suspend </span><span class="token keyword">fun </span><a href="get-interview-channel-or-null.html"><span class="token function">getInterviewChannelOrNull</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../dev.kord.core.entity.channel/-channel/index.html">Channel</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph">Requests the <a href="../../dev.kord.core.entity.channel/-channel/index.html">Channel</a> with the given <a href="id.html">id</a>, returns <code class="lang-kotlin">null</code> when the channel isn't present.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    <div class="footer">
+        <div class="footer--container">
+            <a href="#content" id="go-to-top-link" class="footer--button footer--button_go-to-top"></a>
+            <div class="footer--content">
+                <div>
+                    <span>Generated by </span>
+                    <a class="footer--link footer--link_external" href="https://github.com/Kotlin/dokka">
+                        Dokka
+                    </a>
+                    <div>© 2026 Copyright</div>
+                </div>
+            </div>
+        </div>
+    </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
