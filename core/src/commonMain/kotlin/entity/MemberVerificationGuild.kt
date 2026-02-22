@@ -1,13 +1,11 @@
 package dev.kord.core.entity
 
 import dev.kord.common.annotation.DiscordAPIPreview
-import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.GuildFeature
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.VerificationLevel
 import dev.kord.common.exception.RequestException
 import dev.kord.core.Kord
-import dev.kord.core.behavior.GuildBehavior
 import dev.kord.core.cache.data.MemberVerificationGuildData
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.supplier.EntitySupplier
@@ -89,7 +87,7 @@ public class MemberVerificationGuild(
     public val emojisIds: Set<Snowflake> get() = data.emojis.toSet()
 
     /**
-     * Requests the [GuildEmoji] with the [emojiId] in the [Guild] wit the given [guildId].
+     * Requests the [GuildEmoji] with the [emojiId] in the [Guild] with the given guild [id].
      *
      * @throws RequestException if something went wrong while retrieving the emoji.
      * @throws EntityNotFoundException if the emoji was null.
@@ -98,7 +96,7 @@ public class MemberVerificationGuild(
         supplier.getEmoji(guildId = id, emojiId = emojiId)
 
     /**
-     * Requests the [GuildEmoji] with the [emojiId] in the [Guild] wit the given [guildId],
+     * Requests the [GuildEmoji] with the [emojiId] in the [Guild] with the given guild [id],
      * returns null when the emoji isn't present.
      *
      * @throws RequestException if something went wrong while retrieving the emoji.
