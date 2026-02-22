@@ -110,7 +110,6 @@ class GuildTest {
                 ReadMessageHistory, MentionEveryone, Connect, Speak, UseVAD,
             )
             features shouldBe listOf(GuildFeature.Community, GuildFeature.News)
-            homeHeader shouldBe null
         }
     }
 }

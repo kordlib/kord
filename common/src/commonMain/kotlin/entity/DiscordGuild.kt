@@ -339,7 +339,6 @@ public data class DiscordPartialGuild(
     val description: Optional<String?> = Optional.Missing(),
     val banner: Optional<String?> = Optional.Missing(),
     val splash: Optional<String?> = Optional.Missing(),
-    @SerialName("home_header") val homeHeader: String?,
     @SerialName("nsfw_level") val nsfwLevel: Optional<NsfwLevel> = Optional.Missing(),
     @SerialName("verification_level")
     val verificationLevel: Optional<VerificationLevel> = Optional.Missing(),
