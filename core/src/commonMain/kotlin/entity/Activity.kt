@@ -1,12 +1,13 @@
 package dev.kord.core.entity
 
 import dev.kord.common.entity.ActivityFlags
+import dev.kord.common.entity.ActivityPlatform
 import dev.kord.common.entity.ActivityType
 import dev.kord.common.entity.DiscordActivityEmoji
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.value
 import dev.kord.core.cache.data.ActivityData
-import kotlinx.datetime.Instant
+import kotlin.time.Instant
 
 public class Activity(public val data: ActivityData) {
 
@@ -24,6 +25,8 @@ public class Activity(public val data: ActivityData) {
     public val emoji: DiscordActivityEmoji? get() = data.emoji.value
 
     public val state: String? get() = data.state.value
+
+    public val platform: ActivityPlatform? get() = data.platform.value
 
     public val party: Party?
         get() = data.party.value?.let {

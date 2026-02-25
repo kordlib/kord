@@ -1,6 +1,5 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
-@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
-                "SpellCheckingInspection", "GrazieInspection"))
+@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
@@ -14,8 +13,9 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 /**
- * See [ForumLayoutType]s in the
- * [Discord Developer Documentation](https://discord.com/developers/docs/resources/channel#channel-object-forum-layout-types).
+ *
+ *
+ * See [ForumLayoutType]s in the [Discord Developer Documentation](https://discord.com/developers/docs/resources/channel#channel-object-forum-layout-types).
  */
 @Serializable(with = ForumLayoutType.Serializer::class)
 public sealed class ForumLayoutType(
@@ -24,14 +24,11 @@ public sealed class ForumLayoutType(
      */
     public val `value`: Int,
 ) {
-    final override fun equals(other: Any?): Boolean = this === other ||
-            (other is ForumLayoutType && this.value == other.value)
+    final override fun equals(other: Any?): Boolean = this === other || (other is ForumLayoutType && this.value == other.value)
 
     final override fun hashCode(): Int = value.hashCode()
 
-    final override fun toString(): String =
-            if (this is Unknown) "ForumLayoutType.Unknown(value=$value)"
-            else "ForumLayoutType.${this::class.simpleName}"
+    final override fun toString(): String = if (this is Unknown) "ForumLayoutType.Unknown(value=$value)" else "ForumLayoutType.${this::class.simpleName}"
 
     /**
      * An unknown [ForumLayoutType].
@@ -59,8 +56,7 @@ public sealed class ForumLayoutType(
 
     internal object Serializer : KSerializer<ForumLayoutType> {
         override val descriptor: SerialDescriptor =
-                PrimitiveSerialDescriptor("dev.kord.common.entity.ForumLayoutType",
-                PrimitiveKind.INT)
+                PrimitiveSerialDescriptor("dev.kord.common.entity.ForumLayoutType", PrimitiveKind.INT)
 
         override fun serialize(encoder: Encoder, `value`: ForumLayoutType) {
             encoder.encodeInt(value.value)
@@ -82,8 +78,7 @@ public sealed class ForumLayoutType(
         }
 
         /**
-         * Returns an instance of [ForumLayoutType] with [ForumLayoutType.value] equal to the
-         * specified [value].
+         * Returns an instance of [ForumLayoutType] with [ForumLayoutType.value] equal to the specified [value].
          */
         public fun from(`value`: Int): ForumLayoutType = when (value) {
             0 -> NotSet

@@ -2,8 +2,8 @@ package dev.kord.gateway.json
 
 import dev.kord.common.entity.*
 import dev.kord.gateway.*
-import kotlinx.datetime.Clock
-import kotlinx.datetime.Instant
+import kotlin.time.Clock
+import kotlin.time.Instant
 import kotlinx.serialization.json.*
 import kotlin.random.Random
 import kotlin.test.Test
@@ -61,10 +61,19 @@ class DispatchEventDeserializationTest {
     private val channelJson = """{"id":"0","type":0}"""
     private val thread = DiscordChannel(id = Snowflake.min, type = ChannelType.PublicGuildThread)
     private val threadJson = """{"id":"0","type":11}"""
+    private val entitlement = DiscordEntitlement(
+        id = Snowflake.min,
+        skuId = Snowflake.min,
+        applicationId = Snowflake.min,
+        type = EntitlementType.ApplicationSubscription,
+        deleted = false,
+    )
+    private val entitlementJson = """{"id":"0","sku_id":"0","application_id":"0","type":8,"deleted":false}"""
     private val guild = DiscordGuild(
         id = Snowflake.min,
         name = "name",
         icon = null,
+        homeHeader = null,
         ownerId = Snowflake.min,
         region = "nice-region",
         afkChannelId = null,
@@ -90,13 +99,13 @@ class DispatchEventDeserializationTest {
         premiumProgressBarEnabled = false,
         safetyAlertsChannelId = null,
     )
-    private val guildJson = """{"id":"0","name":"name","icon":null,"owner_id":"0","region":"nice-region",""" +
-        """"afk_channel_id":null,"afk_timeout":2520,"verification_level":2,"default_message_notifications":1,""" +
-        """"explicit_content_filter":1,"roles":[],"emojis":[],"features":[],"mfa_level":0,"application_id":null,""" +
-        """"system_channel_id":null,"system_channel_flags":0,"rules_channel_id":null,"vanity_url_code":null,""" +
-        """"description":null,"banner":null,"premium_tier":1,"preferred_locale":"en-US",""" +
-        """"public_updates_channel_id":null,"nsfw_level":0,"premium_progress_bar_enabled":false,""" +
-        """"safety_alerts_channel_id":null}"""
+    private val guildJson = """{"id":"0","name":"name","icon":null,"home_header":null,"owner_id":"0",""" +
+        """"region":"nice-region","afk_channel_id":null,"afk_timeout":2520,"verification_level":2,""" +
+        """"default_message_notifications":1,"explicit_content_filter":1,"roles":[],"emojis":[],"features":[],""" +
+        """"mfa_level":0,"application_id":null,"system_channel_id":null,"system_channel_flags":0,""" +
+        """"rules_channel_id":null,"vanity_url_code":null,"description":null,"banner":null,"premium_tier":1,""" +
+        """"preferred_locale":"en-US","public_updates_channel_id":null,"nsfw_level":0,""" +
+        """"premium_progress_bar_enabled":false,"safety_alerts_channel_id":null}"""
     private val user = DiscordUser(id = Snowflake.min, username = "username", avatar = null)
     private val userJson = """{"id":"0","username":"username","avatar":null}"""
     private val guildBan = DiscordGuildBan(guildId = Snowflake.min, user = user)
@@ -150,6 +159,18 @@ class DispatchEventDeserializationTest {
     )
     private val integrationJson =
         """{"id":"0","name":"name","type":"discord","enabled":true,"account":{"id":"id","name":"name"}}"""
+    private val subscription = DiscordSubscription(
+        id = Snowflake.min,
+        userId = Snowflake.min,
+        skuIds = emptyList(),
+        entitlementIds = emptyList(),
+        currentPeriodStart = instant,
+        currentPeriodEnd = instant,
+        status = SubscriptionStatus.Active,
+        canceledAt = null,
+    )
+    private val subscriptionJson = """{"id":"0","user_id":"0","sku_ids":[],"entitlement_ids":[],""" +
+        """"current_period_start":"$instant","current_period_end":"$instant","status":0,"canceled_at":null}"""
 
 
     /*
@@ -318,12 +339,29 @@ class DispatchEventDeserializationTest {
         json = """{"id":"0","guild_id":"0","member_count":42}""",
     )
 
-    /*
-     * Missing:
-     * - EntitlementCreate
-     * - EntitlementUpdate
-     * - EntitlementDelete
-     */
+    @Test
+    fun test_EntitlementCreate_deserialization() = testDispatchEventDeserialization(
+        eventName = "ENTITLEMENT_CREATE",
+        eventConstructor = ::EntitlementCreate,
+        data = entitlement,
+        json = entitlementJson,
+    )
+
+    @Test
+    fun test_EntitlementUpdate_deserialization() = testDispatchEventDeserialization(
+        eventName = "ENTITLEMENT_UPDATE",
+        eventConstructor = ::EntitlementUpdate,
+        data = entitlement,
+        json = entitlementJson,
+    )
+
+    @Test
+    fun test_EntitlementDelete_deserialization() = testDispatchEventDeserialization(
+        eventName = "ENTITLEMENT_DELETE",
+        eventConstructor = ::EntitlementDelete,
+        data = entitlement,
+        json = entitlementJson,
+    )
 
     @Test
     fun test_GuildCreate_deserialization() = testDispatchEventDeserialization(
@@ -695,6 +733,30 @@ class DispatchEventDeserializationTest {
      */
 
     @Test
+    fun test_SubscriptionCreate_deserialization() = testDispatchEventDeserialization(
+        eventName = "SUBSCRIPTION_CREATE",
+        eventConstructor = ::SubscriptionCreate,
+        data = subscription,
+        json = subscriptionJson,
+    )
+
+    @Test
+    fun test_SubscriptionUpdate_deserialization() = testDispatchEventDeserialization(
+        eventName = "SUBSCRIPTION_UPDATE",
+        eventConstructor = ::SubscriptionUpdate,
+        data = subscription,
+        json = subscriptionJson,
+    )
+
+    @Test
+    fun test_SubscriptionDelete_deserialization() = testDispatchEventDeserialization(
+        eventName = "SUBSCRIPTION_DELETE",
+        eventConstructor = ::SubscriptionDelete,
+        data = subscription,
+        json = subscriptionJson,
+    )
+
+    @Test
     fun test_TypingStart_deserialization() = testDispatchEventDeserialization(
         eventName = "TYPING_START",
         eventConstructor = ::TypingStart,
@@ -713,6 +775,11 @@ class DispatchEventDeserializationTest {
         data = user,
         json = userJson,
     )
+
+    /*
+     * Missing:
+     * - VoiceChannelEffectSend
+     */
 
     @Test
     fun test_VoiceStateUpdate_deserialization() = testDispatchEventDeserialization(
@@ -756,47 +823,5 @@ class DispatchEventDeserializationTest {
         eventConstructor = { data, sequence -> UnknownDispatchEvent(name = "SOME_UNKNOWN_EVENT", data, sequence) },
         data = buildJsonObject { put("foo", "bar") },
         json = """{"foo":"bar"}""",
-    )
-
-
-    // The following events have been removed from Discord's documentation, we should probably remove them too.
-    // See https://github.com/discord/discord-api-docs/pull/3691
-
-    private val applicationCommand = DiscordApplicationCommand(
-        id = Snowflake.min,
-        applicationId = Snowflake.min,
-        name = "name",
-        description = null,
-        defaultMemberPermissions = null,
-        version = Snowflake.min,
-    )
-    private val applicationCommandJson = """{"id":"0","application_id":"0","name":"name","description":null,""" +
-        """"default_member_permissions":null,"version":"0"}"""
-
-    @Test
-    @Suppress("DEPRECATION_ERROR")
-    fun test_ApplicationCommandCreate_deserialization() = testDispatchEventDeserialization(
-        eventName = "APPLICATION_COMMAND_CREATE",
-        eventConstructor = ::ApplicationCommandCreate,
-        data = applicationCommand,
-        json = applicationCommandJson,
-    )
-
-    @Test
-    @Suppress("DEPRECATION_ERROR")
-    fun test_ApplicationCommandUpdate_deserialization() = testDispatchEventDeserialization(
-        eventName = "APPLICATION_COMMAND_UPDATE",
-        eventConstructor = ::ApplicationCommandUpdate,
-        data = applicationCommand,
-        json = applicationCommandJson,
-    )
-
-    @Test
-    @Suppress("DEPRECATION_ERROR")
-    fun test_ApplicationCommandDelete_deserialization() = testDispatchEventDeserialization(
-        eventName = "APPLICATION_COMMAND_DELETE",
-        eventConstructor = ::ApplicationCommandDelete,
-        data = applicationCommand,
-        json = applicationCommandJson,
     )
 }

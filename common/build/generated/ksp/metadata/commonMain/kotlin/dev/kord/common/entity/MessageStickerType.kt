@@ -1,6 +1,5 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
-@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
-                "SpellCheckingInspection", "GrazieInspection"))
+@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
@@ -14,8 +13,9 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 /**
- * See [MessageStickerType]s in the
- * [Discord Developer Documentation](https://discord.com/developers/docs/resources/sticker#sticker-object-sticker-format-types).
+ *
+ *
+ * See [MessageStickerType]s in the [Discord Developer Documentation](https://discord.com/developers/docs/resources/sticker#sticker-object-sticker-format-types).
  */
 @Serializable(with = MessageStickerType.Serializer::class)
 public sealed class MessageStickerType(
@@ -24,14 +24,11 @@ public sealed class MessageStickerType(
      */
     public val `value`: Int,
 ) {
-    final override fun equals(other: Any?): Boolean = this === other ||
-            (other is MessageStickerType && this.value == other.value)
+    final override fun equals(other: Any?): Boolean = this === other || (other is MessageStickerType && this.value == other.value)
 
     final override fun hashCode(): Int = value.hashCode()
 
-    final override fun toString(): String =
-            if (this is Unknown) "MessageStickerType.Unknown(value=$value)"
-            else "MessageStickerType.${this::class.simpleName}"
+    final override fun toString(): String = if (this is Unknown) "MessageStickerType.Unknown(value=$value)" else "MessageStickerType.${this::class.simpleName}"
 
     /**
      * An unknown [MessageStickerType].
@@ -52,8 +49,7 @@ public sealed class MessageStickerType(
 
     internal object Serializer : KSerializer<MessageStickerType> {
         override val descriptor: SerialDescriptor =
-                PrimitiveSerialDescriptor("dev.kord.common.entity.MessageStickerType",
-                PrimitiveKind.INT)
+                PrimitiveSerialDescriptor("dev.kord.common.entity.MessageStickerType", PrimitiveKind.INT)
 
         override fun serialize(encoder: Encoder, `value`: MessageStickerType) {
             encoder.encodeInt(value.value)
@@ -76,8 +72,7 @@ public sealed class MessageStickerType(
         }
 
         /**
-         * Returns an instance of [MessageStickerType] with [MessageStickerType.value] equal to the
-         * specified [value].
+         * Returns an instance of [MessageStickerType] with [MessageStickerType.value] equal to the specified [value].
          */
         public fun from(`value`: Int): MessageStickerType = when (value) {
             1 -> PNG

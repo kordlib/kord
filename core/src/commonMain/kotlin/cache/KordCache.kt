@@ -11,7 +11,7 @@ import dev.kord.common.concurrentHashMap
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.cache.data.*
 
-public typealias Generator<I, T> = (cache: DataCache, description: DataDescription<T, I>) -> DataEntryCache<out T>
+public typealias Generator<T, I> = (cache: DataCache, description: DataDescription<T, I>) -> DataEntryCache<out T>
 
 public class KordCacheBuilder {
 
@@ -101,6 +101,12 @@ public class KordCacheBuilder {
     public fun emojis(generator: Generator<EmojiData, Snowflake>): Unit = forDescription(EmojiData.description, generator)
 
     /**
+     * Configures the caching for [SoundboardSoundData].
+     */
+    public fun soundboardSounds(generator: Generator<SoundboardSoundData, Snowflake>): Unit =
+        forDescription(SoundboardSoundData.description, generator)
+
+    /**
      *  Configures the caching for [WebhookData].
      */
     public fun webhooks(generator: Generator<WebhookData, Snowflake>): Unit = forDescription(WebhookData.description, generator)
@@ -118,6 +124,14 @@ public class KordCacheBuilder {
     /** Configures the caching for [AutoModerationRuleData]. */
     public fun autoModerationRules(generator: Generator<AutoModerationRuleData, Snowflake>): Unit =
         forDescription(AutoModerationRuleData.description, generator)
+
+    /** Configures the caching for [EntitlementData]. */
+    public fun entitlements(generator: Generator<EntitlementData, Snowflake>): Unit =
+        forDescription(EntitlementData.description, generator)
+
+    /** Configures the caching for [SubscriptionData]. */
+    public fun subscriptions(generator: Generator<SubscriptionData, Snowflake>): Unit =
+        forDescription(SubscriptionData.description, generator)
 
     public fun build(): DataCache = DelegatingDataCache(EntrySupplier.invoke { cache, description ->
         val generator = descriptionGenerators[description] ?: defaultGenerator

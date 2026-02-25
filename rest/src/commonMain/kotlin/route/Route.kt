@@ -1,8 +1,11 @@
 package dev.kord.rest.route
 
 import dev.kord.common.KordConfiguration
+import dev.kord.common.annotation.DiscordAPIPreview
 import dev.kord.common.annotation.KordExperimental
 import dev.kord.common.entity.*
+import dev.kord.rest.json.request.GuildJoinRequestCooldownResponse
+import dev.kord.rest.json.request.GuildJoinRequestsResponse
 import dev.kord.rest.json.request.GuildScheduledEventUsersResponse
 import dev.kord.rest.json.response.*
 import io.ktor.http.*
@@ -21,7 +24,10 @@ public sealed interface ResponseMapper<T> {
 }
 
 internal class ValueJsonMapper<T>(val strategy: DeserializationStrategy<T>) : ResponseMapper<T> {
-    override fun deserialize(json: Json, body: String): T = json.decodeFromString(strategy, body)
+    override fun deserialize(json: Json, body: String): T {
+        return json.decodeFromString(strategy, body)
+    }
+
     override fun toString(): String = "ValueJsonMapper(strategy=$strategy)"
 }
 
@@ -50,6 +56,7 @@ public sealed class Route<T>(
     public val path: String,
     public val mapper: ResponseMapper<T>,
     public val requiresAuthorizationHeader: Boolean = true,
+    public val affectedByGlobalRateLimit: Boolean = true
 ) {
 
     public companion object {
@@ -74,6 +81,9 @@ public sealed class Route<T>(
     public object WebhookId : Key("{webhook.id}", true)
     public object WebhookToken : Key("{webhook.token}")
     public object TemplateCode : Key("{template.code}")
+    public object EntitlementId : Key("{entitlement.id}")
+    public object SkuId : Key("{sku.id}")
+    public object SubscriptionId : Key("{subscription.id}")
     public object ApplicationId : Key("{application.id}", true)
     public object CommandId : Key("{command.id}", true)
     public object InteractionId : Key("{interaction.id}", true)
@@ -81,6 +91,8 @@ public sealed class Route<T>(
     public object ScheduledEventId : Key("{event.id}", true)
     public object StickerId : Key("{sticker.id}")
     public object AutoModerationRuleId : Key("{auto_moderation_rule.id}")
+    @DiscordAPIPreview public object GuildJoinRequestId : Key("{guild_join_request.id}")
+    public object SoundId : Key("{sound.id}")
     public object PollAnswerId : Key("{poll.answer.id}")
 
 
@@ -89,7 +101,8 @@ public sealed class Route<T>(
         path: String,
         strategy: DeserializationStrategy<T>,
         requiresAuthorizationHeader: Boolean = true,
-    ) : this(method, path, ValueJsonMapper(strategy), requiresAuthorizationHeader)
+        affectedByGlobalRateLimit: Boolean = true
+    ) : this(method, path, ValueJsonMapper(strategy), requiresAuthorizationHeader, affectedByGlobalRateLimit)
 
     override fun toString(): String = "Route(method:${method.value},path:$path,mapper:$mapper)"
 
@@ -374,6 +387,32 @@ public sealed class Route<T>(
 
 
     /*
+     * Entitlement:
+     * https://discord.com/developers/docs/resources/entitlement
+     */
+
+    public object EntitlementsList :
+        Route<List<DiscordEntitlement>>(
+            HttpMethod.Get,
+            "/applications/$ApplicationId/entitlements",
+            ListSerializer(DiscordEntitlement.serializer()),
+        )
+
+    public object EntitlementConsume :
+        Route<Unit>(HttpMethod.Post, "/applications/$ApplicationId/entitlements/$EntitlementId/consume", NoStrategy)
+
+    public object TestEntitlementCreate :
+        Route<DiscordEntitlement>(
+            HttpMethod.Post,
+            "/applications/$ApplicationId/entitlements",
+            DiscordEntitlement.serializer(),
+        )
+
+    public object TestEntitlementDelete :
+        Route<Unit>(HttpMethod.Delete, "/applications/$ApplicationId/entitlements/$EntitlementId", NoStrategy)
+
+
+    /*
      * Invite:
      * https://discord.com/developers/docs/resources/invite
      */
@@ -383,6 +422,39 @@ public sealed class Route<T>(
 
     public object InviteDelete :
         Route<DiscordInvite>(HttpMethod.Delete, "/invites/$InviteCode", DiscordInvite.serializer())
+
+
+    /*
+     * SKU:
+     * https://discord.com/developers/docs/resources/sku
+     */
+
+    public object SkusList :
+        Route<List<DiscordSku>>(
+            HttpMethod.Get,
+            "/applications/$ApplicationId/skus",
+            ListSerializer(DiscordSku.serializer()),
+        )
+
+
+    /*
+     * Subscription:
+     * https://discord.com/developers/docs/resources/subscription
+     */
+
+    public object SkuSubscriptionsList :
+        Route<List<DiscordSubscription>>(
+            HttpMethod.Get,
+            "/skus/$SkuId/subscriptions",
+            ListSerializer(DiscordSubscription.serializer()),
+        )
+
+    public object SkuSubscriptionGet :
+        Route<DiscordSubscription>(
+            HttpMethod.Get,
+            "/skus/$SkuId/subscriptions/$SubscriptionId",
+            DiscordSubscription.serializer(),
+        )
 
 
     /*
@@ -540,6 +612,13 @@ public sealed class Route<T>(
             ListSerializer(DiscordVoiceRegion.serializer())
         )
 
+    public object GuildVoiceStatesGet :
+        Route<DiscordVoiceState>(
+            HttpMethod.Get,
+            "/guilds/$GuildId/voice-states/$UserId",
+            DiscordVoiceState.serializer()
+        )
+
     public object GuildInvitesGet :
         Route<List<DiscordInviteWithMetadata>>(
             HttpMethod.Get,
@@ -574,6 +653,110 @@ public sealed class Route<T>(
 
     public object GuildVanityInviteGet :
         Route<DiscordPartialInvite>(HttpMethod.Get, "/guilds/$GuildId/vanity-url", DiscordPartialInvite.serializer())
+
+    @DiscordAPIPreview
+    public object GuildMemberVerificationGet :
+        Route<DiscordMemberVerification>(
+            HttpMethod.Get,
+            "/guilds/$GuildId/member-verification",
+            DiscordMemberVerification.serializer()
+        )
+
+    @DiscordAPIPreview
+    public object GuildMemberVerificationPatch :
+        Route<DiscordMemberVerification>(
+            HttpMethod.Patch,
+            "guilds/$GuildId/member-verification",
+            DiscordMemberVerification.serializer()
+        )
+
+    @DiscordAPIPreview
+    public object GuildJoinRequestsGet :
+        Route<GuildJoinRequestsResponse>(
+            HttpMethod.Get,
+            "guilds/$GuildId/requests",
+            GuildJoinRequestsResponse.serializer()
+        )
+
+    @DiscordAPIPreview
+    public object GuildJoinRequestGet :
+        Route<DiscordGuildJoinRequest>(
+            HttpMethod.Get,
+            "join-requests/$GuildJoinRequestId",
+            DiscordGuildJoinRequest.serializer()
+        )
+
+    @DiscordAPIPreview
+    public object GuildJoinRequestCooldownGet :
+        Route<GuildJoinRequestCooldownResponse>(
+            HttpMethod.Get,
+            "guilds/$GuildId/requests/@me/cooldown",
+            GuildJoinRequestCooldownResponse.serializer()
+        )
+
+    @DiscordAPIPreview
+    public object GuildJoinRequestCreate :
+        Route<DiscordGuildJoinRequest>(
+            HttpMethod.Put,
+            "guilds/$GuildId/requests/@me",
+            DiscordGuildJoinRequest.serializer()
+        )
+
+    @DiscordAPIPreview
+    public object GuildJoinRequestReset :
+        Route<DiscordGuildJoinRequest>(
+            HttpMethod.Post,
+            "guilds/$GuildId/requests/@me",
+            DiscordGuildJoinRequest.serializer()
+        )
+
+    @DiscordAPIPreview
+    public object GuildJoinRequestAck :
+        Route<Unit>(
+            HttpMethod.Post,
+            "guilds/$GuildId/requests/$GuildJoinRequestId/ack",
+            NoStrategy
+        )
+
+    @DiscordAPIPreview
+    public object GuildJoinRequestDelete :
+        Route<Unit>(
+            HttpMethod.Delete,
+            "guilds/$GuildId/requests/@me",
+            NoStrategy
+        )
+
+    @DiscordAPIPreview
+    public object GuildJoinRequestInterviewCreate :
+        Route<DiscordChannel>(
+            HttpMethod.Post,
+            "join-requests/$GuildJoinRequestId/interview",
+            DiscordChannel.serializer()
+        )
+
+    @DiscordAPIPreview
+    public object GuildJoinRequestAction :
+        Route<DiscordGuildJoinRequest>(
+            HttpMethod.Patch,
+            "guilds/$GuildId/requests/id/$GuildJoinRequestId",
+            DiscordGuildJoinRequest.serializer()
+        )
+
+    @DiscordAPIPreview
+    public object GuildJoinRequestActionByUser :
+        Route<DiscordGuildJoinRequest>(
+            HttpMethod.Patch,
+            "guilds/$GuildId/requests/$UserId",
+            DiscordGuildJoinRequest.serializer()
+        )
+
+    @DiscordAPIPreview
+    public object GuildJoinRequestBulkAction :
+        Route<Unit>(
+            HttpMethod.Patch,
+            "guilds/$GuildId/requests",
+            NoStrategy
+        )
 
     public object GuildWelcomeScreenGet :
         Route<DiscordWelcomeScreen>(
@@ -929,6 +1112,7 @@ public sealed class Route<T>(
             "/interactions/$InteractionId/$InteractionToken/callback",
             NoStrategy,
             requiresAuthorizationHeader = false,
+            affectedByGlobalRateLimit = false
         )
 
     public object OriginalInteractionResponseGet :
@@ -937,6 +1121,7 @@ public sealed class Route<T>(
             "/webhooks/$ApplicationId/$InteractionToken/messages/@original",
             DiscordMessage.serializer(),
             requiresAuthorizationHeader = false,
+            affectedByGlobalRateLimit = false
         )
 
     public object OriginalInteractionResponseModify :
@@ -945,6 +1130,7 @@ public sealed class Route<T>(
             "/webhooks/$ApplicationId/$InteractionToken/messages/@original",
             DiscordMessage.serializer(),
             requiresAuthorizationHeader = false,
+            affectedByGlobalRateLimit = false
         )
 
     public object OriginalInteractionResponseDelete :
@@ -953,6 +1139,7 @@ public sealed class Route<T>(
             "/webhooks/$ApplicationId/$InteractionToken/messages/@original",
             NoStrategy,
             requiresAuthorizationHeader = false,
+            affectedByGlobalRateLimit = false
         )
 
     public object FollowupMessageCreate :
@@ -961,6 +1148,7 @@ public sealed class Route<T>(
             "/webhooks/$ApplicationId/$InteractionToken",
             DiscordMessage.serializer(),
             requiresAuthorizationHeader = false,
+            affectedByGlobalRateLimit = false
         )
 
     public object FollowupMessageGet :
@@ -969,6 +1157,7 @@ public sealed class Route<T>(
             "/webhooks/$ApplicationId/$InteractionToken/messages/$MessageId",
             DiscordMessage.serializer(),
             requiresAuthorizationHeader = false,
+            affectedByGlobalRateLimit = false
         )
 
     public object FollowupMessageModify :
@@ -977,6 +1166,7 @@ public sealed class Route<T>(
             "/webhooks/$ApplicationId/$InteractionToken/messages/$MessageId",
             DiscordMessage.serializer(),
             requiresAuthorizationHeader = false,
+            affectedByGlobalRateLimit = false
         )
 
     public object FollowupMessageDelete :
@@ -985,6 +1175,7 @@ public sealed class Route<T>(
             "/webhooks/$ApplicationId/$InteractionToken/messages/$MessageId",
             NoStrategy,
             requiresAuthorizationHeader = false,
+            affectedByGlobalRateLimit = false
         )
 
 
@@ -1067,4 +1258,96 @@ public sealed class Route<T>(
             "/guilds/$GuildId/stickers/$StickerId",
             DiscordMessageSticker.serializer()
         )
+
+    public object SendSoundboardSound : Route<Unit>(
+        HttpMethod.Post,
+        "/channels/$ChannelId/send-soundboard-sound",
+        NoStrategy,
+    )
+
+    public object GetSoundboardDefaultSounds :
+        Route<List<DiscordSoundboardSound>>(
+            HttpMethod.Get,
+            "/soundboard-default-sounds",
+            ListSerializer(DiscordSoundboardSound.serializer())
+        )
+
+    public object GetGuildSoundboardSounds :
+        Route<GuildSoundboardSoundsResponse>(
+            HttpMethod.Get,
+            "/guilds/$GuildId/soundboard-sounds",
+            GuildSoundboardSoundsResponse.serializer()
+        )
+
+    public object GetGuildsSoundboardSound :
+        Route<DiscordSoundboardSound>(
+            HttpMethod.Get,
+            "/guilds/$GuildId/soundboard-sounds/$SoundId",
+            DiscordSoundboardSound.serializer()
+        )
+
+    public object PostGuildsSoundboardSounds :
+        Route<DiscordSoundboardSound>(
+            HttpMethod.Post,
+            "/guilds/$GuildId/soundboard-sounds",
+            DiscordSoundboardSound.serializer()
+        )
+
+    public object PatchGuildsSoundboardSound :
+        Route<DiscordSoundboardSound>(
+            HttpMethod.Patch,
+            "/guilds/$GuildId/soundboard-sounds/$SoundId",
+            DiscordSoundboardSound.serializer()
+        )
+
+    public object DeleteGuildsSoundboardSound :
+        Route<Unit>(
+            HttpMethod.Delete,
+            "/guilds/$GuildId/soundboard-sounds/$SoundId",
+            NoStrategy
+        )
+
+    public object GetApplicationEmojis : Route<ApplicationEmojisResponse>(
+        HttpMethod.Get,
+        "/applications/$ApplicationId/emojis",
+        ApplicationEmojisResponse.serializer()
+    )
+
+    public object GetApplicationEmoji : Route<DiscordEmoji>(
+        HttpMethod.Get,
+        "/applications/$ApplicationId/emojis/$EmojiId",
+        DiscordEmoji.serializer()
+    )
+
+    public object PostApplicationEmoji : Route<DiscordEmoji>(
+        HttpMethod.Post,
+        "/applications/$ApplicationId/emojis",
+        DiscordEmoji.serializer()
+    )
+
+    public object PatchApplicationEmoji : Route<DiscordEmoji>(
+        HttpMethod.Patch,
+        "/applications/$ApplicationId/emojis/$EmojiId",
+        DiscordEmoji.serializer()
+    )
+
+    public object DeleteApplicationEmoji : Route<Unit>(
+        HttpMethod.Delete,
+        "/applications/$ApplicationId/emojis/$EmojiId",
+        NoStrategy
+    )
+
+    @DiscordAPIPreview
+    public object GuildProfileGet : Route<DiscordGuildProfile>(
+        HttpMethod.Get,
+        "guilds/$GuildId/profile",
+        DiscordGuildProfile.serializer()
+    )
+
+    @DiscordAPIPreview
+    public object GuildProfilePatch : Route<DiscordGuildProfile>(
+        HttpMethod.Patch,
+        "guilds/$GuildId/profile",
+        DiscordGuildProfile.serializer()
+    )
 }

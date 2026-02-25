@@ -22,8 +22,8 @@ import dev.kord.rest.json.JsonErrorCode
 import dev.kord.rest.request.RestRequestException
 import dev.kord.rest.route.Position
 import kotlinx.coroutines.flow.*
-import kotlinx.datetime.Clock
-import kotlinx.datetime.Instant
+import kotlin.time.Clock
+import kotlin.time.Instant
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 import kotlin.reflect.KClass
@@ -370,7 +370,7 @@ public fun Intents.Builder.enableEvent(event: KClass<out Event>): Unit = when (e
     InviteCreateEvent::class, InviteDeleteEvent::class -> +GuildInvites
 
 
-    VoiceStateUpdateEvent::class -> +GuildVoiceStates
+    VoiceStateUpdateEvent::class, VoiceChannelEffectSentEvent::class -> +GuildVoiceStates
 
 
     PresenceUpdateEvent::class -> +GuildPresences
@@ -395,6 +395,13 @@ public fun Intents.Builder.enableEvent(event: KClass<out Event>): Unit = when (e
     AutoModerationRuleUpdateEvent::class,
     AutoModerationRuleDeleteEvent::class,
     -> +AutoModerationConfiguration
+
+    EmojisUpdateEvent::class,
+        GuildSoundboardSoundCreateEvent::class,
+        GuildSoundboardSoundUpdateEvent::class,
+        GuildSoundboardSoundsUpdateEvent::class,
+        GuildSoundboardSoundDeletEvent::class,
+        -> +GuildExpressions
 
 
     /*

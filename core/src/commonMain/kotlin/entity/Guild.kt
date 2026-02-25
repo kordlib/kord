@@ -1,6 +1,7 @@
 package dev.kord.core.entity
 
 import dev.kord.common.Locale
+import dev.kord.common.annotation.DiscordAPIPreview
 import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.orElse
 import dev.kord.common.entity.optional.orEmpty
@@ -28,7 +29,7 @@ import dev.kord.core.supplier.getChannelOfOrNull
 import dev.kord.core.switchIfEmpty
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import kotlinx.datetime.Instant
+import kotlin.time.Instant
 import kotlin.time.Duration
 
 /**
@@ -275,6 +276,15 @@ public class Guild(
     public val discoverySplashHash: String? get() = data.discoverySplash.value
 
     public val discoverySplash: Asset? get() = discoverySplashHash?.let { Asset.guildDiscoverySplash(id, it, kord) }
+
+    /**
+     * The hash of the home header, if present.
+     */
+    @DiscordAPIPreview
+    public val homeHeaderHash: String? get() = data.homeHeader
+
+    @DiscordAPIPreview
+    public val homeHeader: Asset? get() = homeHeaderHash?.let { Asset.guildHomeHeader(id, it, kord) }
 
     /**
      * The id of the channel to which system messages are sent.

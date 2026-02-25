@@ -1,6 +1,5 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
-@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
-                "SpellCheckingInspection", "GrazieInspection"))
+@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
@@ -14,8 +13,9 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 /**
- * See [InteractionResponseType]s in the
- * [Discord Developer Documentation](https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-response-object-interaction-callback-type).
+ *
+ *
+ * See [InteractionResponseType]s in the [Discord Developer Documentation](https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-response-object-interaction-callback-type).
  */
 @Serializable(with = InteractionResponseType.Serializer::class)
 public sealed class InteractionResponseType(
@@ -24,20 +24,16 @@ public sealed class InteractionResponseType(
      */
     public val type: Int,
 ) {
-    final override fun equals(other: Any?): Boolean = this === other ||
-            (other is InteractionResponseType && this.type == other.type)
+    final override fun equals(other: Any?): Boolean = this === other || (other is InteractionResponseType && this.type == other.type)
 
     final override fun hashCode(): Int = type.hashCode()
 
-    final override fun toString(): String =
-            if (this is Unknown) "InteractionResponseType.Unknown(type=$type)"
-            else "InteractionResponseType.${this::class.simpleName}"
+    final override fun toString(): String = if (this is Unknown) "InteractionResponseType.Unknown(type=$type)" else "InteractionResponseType.${this::class.simpleName}"
 
     /**
      * An unknown [InteractionResponseType].
      *
-     * This is used as a fallback for [InteractionResponseType]s that haven't been added to Kord
-     * yet.
+     * This is used as a fallback for [InteractionResponseType]s that haven't been added to Kord yet.
      */
     public class Unknown internal constructor(
         type: Int,
@@ -59,8 +55,7 @@ public sealed class InteractionResponseType(
     public object DeferredChannelMessageWithSource : InteractionResponseType(5)
 
     /**
-     * For components, ACK an interaction and edit the original message later; the user does not see
-     * a loading state.
+     * For components, ACK an interaction and edit the original message later; the user does not see a loading state.
      */
     public object DeferredUpdateMessage : InteractionResponseType(6)
 
@@ -81,15 +76,13 @@ public sealed class InteractionResponseType(
 
     internal object Serializer : KSerializer<InteractionResponseType> {
         override val descriptor: SerialDescriptor =
-                PrimitiveSerialDescriptor("dev.kord.common.entity.InteractionResponseType",
-                PrimitiveKind.INT)
+                PrimitiveSerialDescriptor("dev.kord.common.entity.InteractionResponseType", PrimitiveKind.INT)
 
         override fun serialize(encoder: Encoder, `value`: InteractionResponseType) {
             encoder.encodeInt(value.type)
         }
 
-        override fun deserialize(decoder: Decoder): InteractionResponseType =
-                from(decoder.decodeInt())
+        override fun deserialize(decoder: Decoder): InteractionResponseType = from(decoder.decodeInt())
     }
 
     public companion object {
@@ -109,8 +102,7 @@ public sealed class InteractionResponseType(
         }
 
         /**
-         * Returns an instance of [InteractionResponseType] with [InteractionResponseType.type]
-         * equal to the specified [type].
+         * Returns an instance of [InteractionResponseType] with [InteractionResponseType.type] equal to the specified [type].
          */
         public fun from(type: Int): InteractionResponseType = when (type) {
             1 -> Pong

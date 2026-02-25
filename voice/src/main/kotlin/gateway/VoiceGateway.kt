@@ -86,14 +86,6 @@ public interface VoiceGateway {
 }
 
 
-@Suppress("unused")
-@Deprecated(
-    "Kept for binary compatibility, this declaration will be removed in 0.16.0.",
-    level = DeprecationLevel.HIDDEN,
-)
-@PublishedApi
-internal val voiceGatewayOnLogger: mu.KLogger = mu.KotlinLogging.logger("Gateway.on")
-
 /**
  * Logger used to report [Throwable]s caught in [VoiceGateway.on].
  */

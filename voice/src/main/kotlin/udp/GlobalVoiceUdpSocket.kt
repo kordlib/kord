@@ -5,12 +5,13 @@ import io.github.oshai.kotlinlogging.KotlinLogging
 import io.ktor.network.selector.*
 import io.ktor.network.sockets.*
 import io.ktor.utils.io.core.*
-import kotlinx.coroutines.CoroutineName
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.flow.*
-import kotlin.text.String
+import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.emitAll
+import kotlinx.io.Sink
+import kotlinx.io.readString
+import kotlinx.io.readUShort
 
 private val globalVoiceSocketLogger = KotlinLogging.logger { }
 
@@ -32,18 +33,16 @@ public object GlobalVoiceUdpSocket : VoiceUdpSocket {
     private val _incoming: MutableSharedFlow<Datagram> = MutableSharedFlow()
     override val incoming: SharedFlow<Datagram> = _incoming
 
-    private val socket = aSocket(ActorSelectorManager(socketScope.coroutineContext)).udp().bind()
+    private val socket = socketScope.async {
+        aSocket(ActorSelectorManager(socketScope.coroutineContext)).udp().bind()
+    }
 
     private val EMPTY_DATA = ByteArray(DISCOVERY_DATA_SIZE)
 
     init {
-        socket.incoming
-            .consumeAsFlow()
-            .onEach { _incoming.emit(it) }
-            .launchIn(socketScope)
+        socketScope.launch { _incoming.emitAll(socket.await().incoming) }
     }
 
-    @OptIn(ExperimentalUnsignedTypes::class)
     override suspend fun discoverIp(address: InetSocketAddress, ssrc: Int): InetSocketAddress {
         globalVoiceSocketLogger.trace { "discovering ip" }
 
@@ -51,15 +50,15 @@ public object GlobalVoiceUdpSocket : VoiceUdpSocket {
             writeShort(REQUEST)
             writeShort(MESSAGE_LENGTH)
             writeInt(ssrc)
-            writeFully(EMPTY_DATA)
+            write(EMPTY_DATA)
         })
 
         return with(receiveFrom(address).packet) {
             require(readShort() == RESPONSE) { "did not receive a response." }
-            require(readShort() == MESSAGE_LENGTH) { "expected $MESSAGE_LENGTH bytes of data."}
-            discardExact(4) // ssrc
+            require(readShort() == MESSAGE_LENGTH) { "expected $MESSAGE_LENGTH bytes of data." }
+            skip(byteCount = 4) // ssrc
 
-            val ip = String(readBytes(64)).trimEnd(0.toChar())
+            val ip = readString(byteCount = 64).trimEnd(0.toChar())
             val port = readUShort().toInt()
 
             InetSocketAddress(ip, port)
@@ -67,12 +66,12 @@ public object GlobalVoiceUdpSocket : VoiceUdpSocket {
     }
 
     override suspend fun send(packet: Datagram) {
-        socket.send(packet)
+        socket.await().send(packet)
     }
 
     override suspend fun stop() { /* this doesn't stop until the end of the process */ }
 
-    private fun packet(address: SocketAddress, builder: BytePacketBuilder.() -> Unit): Datagram {
+    private fun packet(address: SocketAddress, builder: Sink.() -> Unit): Datagram {
         return Datagram(buildPacket(block = builder), address)
     }
 }

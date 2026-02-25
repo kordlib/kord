@@ -17,6 +17,9 @@ internal class GenerationContext(
     val entriesDistinctByValue: List<GenerationEntity.Entry>,
 )
 
+context(context: GenerationContext)
+internal val currentContext: GenerationContext get() = context
+
 internal fun GenerationEntity.fileSpecForGenerationEntity(
     originatingFile: KSFile,
     block: context(GenerationContext) FileSpec.Builder.() -> Unit,

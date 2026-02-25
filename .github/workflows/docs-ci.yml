@@ -18,20 +18,20 @@ jobs:
       group: pages
       cancel-in-progress: true
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Set up JDK
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
           distribution: temurin
-          java-version: 11
+          java-version: 21
       - name: Set up Gradle
-        uses: gradle/actions/setup-gradle@v3
+        uses: gradle/actions/setup-gradle@v4
       - name: Build docs with Gradle
-        run: ./gradlew --stacktrace --info dokkaHtmlMultiModule
+        run: ./gradlew --stacktrace --info :dokkaGeneratePublicationHtml
       - name: Deploy docs to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: build/dokka/htmlMultiModule
+          folder: build/dokka/html
           branch: gh-pages
           git-config-name: GitHub Actions
           git-config-email: actions@github.com

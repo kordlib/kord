@@ -5,7 +5,7 @@ import dev.kord.cache.api.data.description
 import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.*
 import dev.kord.common.serialization.DurationInSeconds
-import kotlinx.datetime.Instant
+import kotlin.time.Instant
 import kotlinx.serialization.Serializable
 
 private val ApplicationCommandData.nullableGuildId get() = guildId.value
@@ -13,6 +13,7 @@ private val MessageData.nullableGuildId get() = guildId.value
 private val ChannelData.nullableGuildId get() = guildId.value
 private val WebhookData.nullableGuildId get() = guildId.value
 private val StickerData.nullableGuildId get() = guildId.value
+private val EntitlementData.nullableGuildId get() = guildId.value
 
 @Serializable
 public data class GuildData(
@@ -22,6 +23,7 @@ public data class GuildData(
     val iconHash: Optional<String?> = Optional.Missing(),
     val splash: Optional<String?> = Optional.Missing(),
     val discoverySplash: Optional<String?> = Optional.Missing(),
+    val homeHeader: String? = null,
     //val owner: OptionalBoolean = OptionalBoolean.Missing, useless?
     val ownerId: Snowflake,
     val permissions: Optional<Permissions> = Optional.Missing(),
@@ -85,6 +87,8 @@ public data class GuildData(
             link(GuildData::id to StickerData::nullableGuildId)
             link(GuildData::id to EmojiData::guildId)
             link(GuildData::id to AutoModerationRuleData::guildId)
+            link(GuildData::id to EntitlementData::nullableGuildId)
+            link(GuildData::id to SoundboardSoundData::guildId)
         }
 
         public fun from(entity: DiscordGuild): GuildData = with(entity) {
@@ -95,6 +99,7 @@ public data class GuildData(
                 iconHash = iconHash,
                 splash = splash,
                 discoverySplash = discoverySplash,
+                homeHeader = homeHeader,
                 //owner = owner,
                 ownerId = ownerId,
                 permissions = permissions,

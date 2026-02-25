@@ -1,5 +1,6 @@
 package dev.kord.core.entity
 
+import dev.kord.common.annotation.DiscordAPIPreview
 import dev.kord.common.entity.MessageStickerType
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.Kord
@@ -48,6 +49,14 @@ public class Asset private constructor(
         public fun guildBanner(guildId: Snowflake, hash: String, kord: Kord): Asset =
             Asset(hash.isAnimated, DiscordCdn.guildBanner(guildId, hash), kord)
 
+        @DiscordAPIPreview
+        public fun guildHomeHeader(guildId: Snowflake, hash: String, kord: Kord): Asset =
+            Asset(isAnimated = false, DiscordCdn.guildHomeHeader(guildId, hash), kord)
+
+        @DiscordAPIPreview
+        public fun guildTagBadge(guildId: Snowflake, hash: String, kord: Kord): Asset =
+            Asset(isAnimated = false, DiscordCdn.guildTagBadge(guildId, hash), kord)
+
         public fun userBanner(userId: Snowflake, hash: String, kord: Kord): Asset =
             Asset(hash.isAnimated, DiscordCdn.userBanner(userId, hash), kord)
 
@@ -63,9 +72,13 @@ public class Asset private constructor(
         public fun memberAvatar(guildId: Snowflake, userId: Snowflake, hash: String, kord: Kord): Asset =
             Asset(hash.isAnimated, DiscordCdn.memberAvatar(guildId, userId, hash), kord)
 
-        // https://github.com/discord/discord-api-docs/pull/5723#issuecomment-1342674515
-        public fun userAvatarDecoration(userId: Snowflake, hash: String, kord: Kord): Asset =
-            Asset(hash.isAnimated, DiscordCdn.userAvatarDecoration(userId, hash), kord, recommendedFormat = PNG)
+        public fun avatarDecoration(hash: String, kord: Kord): Asset =
+            Asset(isAnimated = false, DiscordCdn.avatarDecoration(hash), kord, recommendedFormat = PNG)
+
+        public fun nameplate(hash: String, kord: Kord): Asset = when (hash.isAnimated) {
+            true -> Asset(true, DiscordCdn.animatedNameplate(hash), kord, recommendedFormat = PNG)
+            false -> Asset(false, DiscordCdn.staticNameplate(hash), kord, recommendedFormat = WEBM)
+        }
 
         public fun applicationIcon(applicationId: Snowflake, hash: String, kord: Kord): Asset =
             Asset(isAnimated = false, DiscordCdn.applicationIcon(applicationId, hash), kord)
@@ -103,5 +116,8 @@ public class Asset private constructor(
 
         public fun memberBanner(guildId: Snowflake, userId: Snowflake, hash: String, kord: Kord): Asset =
             Asset(hash.isAnimated, DiscordCdn.memberBanner(guildId, userId, hash), kord)
+
+        public fun tagBadge(guildId: Snowflake, hash: String, kord: Kord): Asset =
+            Asset(isAnimated = false, DiscordCdn.tagBadge(guildId, hash), kord)
     }
 }

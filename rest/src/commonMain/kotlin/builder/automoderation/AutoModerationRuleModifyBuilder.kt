@@ -103,7 +103,7 @@ public class KeywordAutoModerationRuleModifyBuilder :
 }
 
 /** A [SpamAutoModerationRuleBuilder] for building [AutoModerationRuleModifyRequest]s. */
-@Suppress("CanSealedSubClassBeObject") // has state in super class
+@Suppress("CanSealedSubClassBeObject") // superclass is mutable
 @KordDsl
 public class SpamAutoModerationRuleModifyBuilder :
     AutoModerationRuleModifyBuilder(),
@@ -117,11 +117,6 @@ public class KeywordPresetAutoModerationRuleModifyBuilder :
 
     private var _presets: Optional<MutableList<AutoModerationRuleKeywordPresetType>> = Optional.Missing()
     override var presets: MutableList<AutoModerationRuleKeywordPresetType>? by ::_presets.delegate()
-
-    /** @suppress Use `this.presets = presets` instead. */
-    override fun assignPresets(presets: MutableList<AutoModerationRuleKeywordPresetType>) {
-        this.presets = presets
-    }
 
     private var _allowedKeywords: Optional<MutableList<String>> = Optional.Missing()
     override var allowedKeywords: MutableList<String>? by ::_allowedKeywords.delegate()
@@ -160,6 +155,35 @@ public class MentionSpamAutoModerationRuleModifyBuilder :
             ).optional()
         } else {
             Optional.Missing()
+        }
+    }
+}
+
+/** A [MemberProfileAutoModerationRuleBuilder] for building [AutoModerationRuleModifyRequest]s. */
+@KordDsl
+public class MemberProfileAutoModerationRuleModifyBuilder :
+    AutoModerationRuleModifyBuilder(),
+    MemberProfileAutoModerationRuleBuilder {
+
+    private var _keywords: Optional<MutableList<String>> = Optional.Missing()
+    override var keywords: MutableList<String>? by ::_keywords.delegate()
+
+    private var _regexPatterns: Optional<MutableList<String>> = Optional.Missing()
+    override var regexPatterns: MutableList<String>? by ::_regexPatterns.delegate()
+
+    private var _allowedKeywords: Optional<MutableList<String>> = Optional.Missing()
+    override var allowedKeywords: MutableList<String>? by ::_allowedKeywords.delegate()
+
+    override fun buildTriggerMetadata(): Optional<DiscordAutoModerationRuleTriggerMetadata> {
+        val keywords = _keywords
+        val regexPatterns = _regexPatterns
+        val allowedKeywords = _allowedKeywords
+        return ifAnyPresent(keywords, regexPatterns, allowedKeywords) {
+            DiscordAutoModerationRuleTriggerMetadata(
+                keywordFilter = keywords.mapCopy(),
+                regexPatterns = regexPatterns.mapCopy(),
+                allowList = allowedKeywords.mapCopy(),
+            )
         }
     }
 }

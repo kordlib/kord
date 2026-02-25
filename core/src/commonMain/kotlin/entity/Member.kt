@@ -15,7 +15,7 @@ import dev.kord.core.entity.interaction.GuildInteraction
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import kotlinx.coroutines.flow.*
-import kotlinx.datetime.Instant
+import kotlin.time.Instant
 import dev.kord.core.hash
 
 /**

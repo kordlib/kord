@@ -8,17 +8,24 @@ repositories {
     mavenCentral()
 }
 
+@OptIn(ExperimentalKotlinGradlePluginApi::class)
 kotlin {
-    jvm()
+    compilerOptions {
+        applyKordCommonCompilerOptions()
+    }
+
+    jvm {
+        compilerOptions {
+            applyKordJvmCompilerOptions()
+        }
+    }
     js {
         nodejs()
-        useCommonJs()
-    }
-    jvmToolchain(Jvm.target)
+        useEsModules()
 
-    @OptIn(ExperimentalKotlinGradlePluginApi::class)
-    compilerOptions {
-        applyKordCompilerOptions()
+        compilerOptions {
+            target = "es2015"
+        }
     }
 }
 

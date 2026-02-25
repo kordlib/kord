@@ -31,6 +31,9 @@ public class EntityNotFoundException : Exception {
         public inline fun memberNotFound(guildId: Snowflake, userId: Snowflake): Nothing =
             guildEntityNotFound("Member", guildId = guildId, id = userId)
 
+        public inline fun memberVoiceStateNotFound(guildId: Snowflake, userId: Snowflake): Nothing =
+            guildEntityNotFound("VoiceState for Member", guildId = guildId, id = userId)
+
         public inline fun messageNotFound(channelId: Snowflake, messageId: Snowflake): Nothing =
             throw EntityNotFoundException("Message with id $messageId in channel $channelId was not found.")
 
@@ -48,6 +51,9 @@ public class EntityNotFoundException : Exception {
 
         public inline fun emojiNotFound(guildId: Snowflake, emojiId: Snowflake): Nothing =
             guildEntityNotFound("GuildEmoji", guildId = guildId, id = emojiId)
+
+        public inline fun soundboardSoundNotFound(guildId: Snowflake, soundId: Snowflake): Nothing =
+            guildEntityNotFound("SoundboardSound", guildId = guildId, id = soundId)
 
         public inline fun webhookNotFound(webhookId: Snowflake): Nothing =
             entityNotFound("Webhook", webhookId)
@@ -104,5 +110,8 @@ public class EntityNotFoundException : Exception {
 
         public inline fun autoModerationRuleNotFound(guildId: Snowflake, ruleId: Snowflake): Nothing =
             guildEntityNotFound("Auto Moderation Rule", guildId, ruleId)
+
+        public inline fun subscriptionNotFound(skuId: Snowflake, subscriptionId: Snowflake): Nothing =
+            throw EntityNotFoundException("Subscription with id $subscriptionId for SKU with id $skuId was not found.")
     }
 }

@@ -2,7 +2,7 @@ package dev.kord.rest.json.request
 
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.*
-import kotlinx.datetime.Instant
+import kotlin.time.Instant
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 

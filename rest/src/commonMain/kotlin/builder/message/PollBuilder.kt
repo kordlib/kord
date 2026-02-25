@@ -10,9 +10,9 @@ import dev.kord.common.entity.optional.coerceToMissing
 import dev.kord.common.entity.optional.delegate.delegate
 import dev.kord.rest.builder.RequestBuilder
 import dev.kord.rest.json.request.CreatablePoll
-import kotlinx.datetime.Clock
-import kotlinx.datetime.Instant
+import kotlin.time.Clock
 import kotlin.time.Duration
+import kotlin.time.Instant
 
 /**
  * A builder for a [CreatablePoll].

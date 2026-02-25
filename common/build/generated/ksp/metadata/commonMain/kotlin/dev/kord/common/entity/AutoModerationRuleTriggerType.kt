@@ -1,6 +1,5 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
-@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
-                "SpellCheckingInspection", "GrazieInspection"))
+@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
@@ -16,8 +15,7 @@ import kotlinx.serialization.encoding.Encoder
 /**
  * Characterizes the type of content which can trigger the rule.
  *
- * See [AutoModerationRuleTriggerType]s in the
- * [Discord Developer Documentation](https://discord.com/developers/docs/resources/auto-moderation#auto-moderation-rule-object-trigger-types).
+ * See [AutoModerationRuleTriggerType]s in the [Discord Developer Documentation](https://discord.com/developers/docs/resources/auto-moderation#auto-moderation-rule-object-trigger-types).
  */
 @Serializable(with = AutoModerationRuleTriggerType.Serializer::class)
 public sealed class AutoModerationRuleTriggerType(
@@ -26,20 +24,16 @@ public sealed class AutoModerationRuleTriggerType(
      */
     public val `value`: Int,
 ) {
-    final override fun equals(other: Any?): Boolean = this === other ||
-            (other is AutoModerationRuleTriggerType && this.value == other.value)
+    final override fun equals(other: Any?): Boolean = this === other || (other is AutoModerationRuleTriggerType && this.value == other.value)
 
     final override fun hashCode(): Int = value.hashCode()
 
-    final override fun toString(): String =
-            if (this is Unknown) "AutoModerationRuleTriggerType.Unknown(value=$value)"
-            else "AutoModerationRuleTriggerType.${this::class.simpleName}"
+    final override fun toString(): String = if (this is Unknown) "AutoModerationRuleTriggerType.Unknown(value=$value)" else "AutoModerationRuleTriggerType.${this::class.simpleName}"
 
     /**
      * An unknown [AutoModerationRuleTriggerType].
      *
-     * This is used as a fallback for [AutoModerationRuleTriggerType]s that haven't been added to
-     * Kord yet.
+     * This is used as a fallback for [AutoModerationRuleTriggerType]s that haven't been added to Kord yet.
      */
     public class Unknown internal constructor(
         `value`: Int,
@@ -65,17 +59,20 @@ public sealed class AutoModerationRuleTriggerType(
      */
     public object MentionSpam : AutoModerationRuleTriggerType(5)
 
+    /**
+     * Check if member profile contains words from a user defined list of keywords.
+     */
+    public object MemberProfile : AutoModerationRuleTriggerType(6)
+
     internal object Serializer : KSerializer<AutoModerationRuleTriggerType> {
         override val descriptor: SerialDescriptor =
-                PrimitiveSerialDescriptor("dev.kord.common.entity.AutoModerationRuleTriggerType",
-                PrimitiveKind.INT)
+                PrimitiveSerialDescriptor("dev.kord.common.entity.AutoModerationRuleTriggerType", PrimitiveKind.INT)
 
         override fun serialize(encoder: Encoder, `value`: AutoModerationRuleTriggerType) {
             encoder.encodeInt(value.value)
         }
 
-        override fun deserialize(decoder: Decoder): AutoModerationRuleTriggerType =
-                from(decoder.decodeInt())
+        override fun deserialize(decoder: Decoder): AutoModerationRuleTriggerType = from(decoder.decodeInt())
     }
 
     public companion object {
@@ -88,18 +85,19 @@ public sealed class AutoModerationRuleTriggerType(
                 Spam,
                 KeywordPreset,
                 MentionSpam,
+                MemberProfile,
             )
         }
 
         /**
-         * Returns an instance of [AutoModerationRuleTriggerType] with
-         * [AutoModerationRuleTriggerType.value] equal to the specified [value].
+         * Returns an instance of [AutoModerationRuleTriggerType] with [AutoModerationRuleTriggerType.value] equal to the specified [value].
          */
         public fun from(`value`: Int): AutoModerationRuleTriggerType = when (value) {
             1 -> Keyword
             3 -> Spam
             4 -> KeywordPreset
             5 -> MentionSpam
+            6 -> MemberProfile
             else -> Unknown(value)
         }
     }

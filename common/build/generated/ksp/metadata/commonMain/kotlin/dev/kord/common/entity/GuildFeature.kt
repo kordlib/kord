@@ -1,6 +1,5 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
-@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
-                "SpellCheckingInspection", "GrazieInspection"))
+@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
@@ -14,8 +13,9 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 /**
- * See [GuildFeature]s in the
- * [Discord Developer Documentation](https://discord.com/developers/docs/resources/guild#guild-object-guild-features).
+ *
+ *
+ * See [GuildFeature]s in the [Discord Developer Documentation](https://discord.com/developers/docs/resources/guild#guild-object-guild-features).
  */
 @Serializable(with = GuildFeature.Serializer::class)
 public sealed class GuildFeature(
@@ -24,14 +24,11 @@ public sealed class GuildFeature(
      */
     public val `value`: String,
 ) {
-    final override fun equals(other: Any?): Boolean = this === other ||
-            (other is GuildFeature && this.value == other.value)
+    final override fun equals(other: Any?): Boolean = this === other || (other is GuildFeature && this.value == other.value)
 
     final override fun hashCode(): Int = value.hashCode()
 
-    final override fun toString(): String =
-            if (this is Unknown) "GuildFeature.Unknown(value=$value)"
-            else "GuildFeature.${this::class.simpleName}"
+    final override fun toString(): String = if (this is Unknown) "GuildFeature.Unknown(value=$value)" else "GuildFeature.${this::class.simpleName}"
 
     /**
      * An unknown [GuildFeature].
@@ -55,8 +52,7 @@ public sealed class GuildFeature(
     /**
      * Guild is using the old permissions configuration behavior.
      */
-    public object ApplicationCommandPermissionsV2 :
-            GuildFeature("APPLICATION_COMMAND_PERMISSIONS_V2")
+    public object ApplicationCommandPermissionsV2 : GuildFeature("APPLICATION_COMMAND_PERMISSIONS_V2")
 
     /**
      * Guild has set up auto moderation rules.
@@ -69,8 +65,7 @@ public sealed class GuildFeature(
     public object Banner : GuildFeature("BANNER")
 
     /**
-     * Guild can enable welcome screen, Membership Screening, stage channels and discovery, and
-     * receives community updates.
+     * Guild can enable welcome screen, Membership Screening, stage channels and discovery, and receives community updates.
      */
     public object Community : GuildFeature("COMMUNITY")
 
@@ -147,8 +142,7 @@ public sealed class GuildFeature(
     /**
      * Guild has role subscriptions that can be purchased.
      */
-    public object RoleSubscriptionsAvailableForPurchase :
-            GuildFeature("ROLE_SUBSCRIPTIONS_AVAILABLE_FOR_PURCHASE")
+    public object RoleSubscriptionsAvailableForPurchase : GuildFeature("ROLE_SUBSCRIPTIONS_AVAILABLE_FOR_PURCHASE")
 
     /**
      * Guild has enabled role subscriptions.
@@ -182,8 +176,7 @@ public sealed class GuildFeature(
 
     internal object Serializer : KSerializer<GuildFeature> {
         override val descriptor: SerialDescriptor =
-                PrimitiveSerialDescriptor("dev.kord.common.entity.GuildFeature",
-                PrimitiveKind.STRING)
+                PrimitiveSerialDescriptor("dev.kord.common.entity.GuildFeature", PrimitiveKind.STRING)
 
         override fun serialize(encoder: Encoder, `value`: GuildFeature) {
             encoder.encodeString(value.value)
@@ -229,8 +222,7 @@ public sealed class GuildFeature(
         }
 
         /**
-         * Returns an instance of [GuildFeature] with [GuildFeature.value] equal to the specified
-         * [value].
+         * Returns an instance of [GuildFeature] with [GuildFeature.value] equal to the specified [value].
          */
         public fun from(`value`: String): GuildFeature = when (value) {
             "ANIMATED_BANNER" -> AnimatedBanner

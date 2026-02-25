@@ -18,25 +18,36 @@ internal sealed class GenerationEntity(
     val docUrl: String,
     val valueName: String,
     val entries: List<Entry>,
+    val isKordPreview: Boolean,
+    val isDiscordPreview: Boolean
 ) {
     abstract val valueType: ValueType
 
     sealed interface ValueType
 
     class KordEnum(
-        name: String, kDoc: String?, docUrl: String, valueName: String, entries: List<Entry>,
+        name: String,
+        kDoc: String?,
+        docUrl: String,
+        valueName: String,
+        entries: List<Entry>,
+        isKordPreview: Boolean,
+        isDiscordPreview: Boolean,
         override val valueType: ValueType,
-    ) : GenerationEntity(name, kDoc, docUrl, valueName, entries) {
+    ) : GenerationEntity(name, kDoc, docUrl, valueName, entries, isKordPreview, isDiscordPreview) {
         enum class ValueType : GenerationEntity.ValueType { INT, STRING }
     }
 
     class BitFlags(
-        name: String, kDoc: String?, docUrl: String, valueName: String, entries: List<Entry>,
+        name: String,
+        kDoc: String?,
+        docUrl: String,
+        valueName: String,
+        entries: List<Entry>,
+        isKordPreview: Boolean,
+        isDiscordPreview: Boolean,
         override val valueType: ValueType,
-        val collectionHadCopy0: Boolean,
-        val collectionHadNewCompanion: Boolean,
-        val hadBuilderFactoryFunction0: Boolean,
-    ) : GenerationEntity(name, kDoc, docUrl, valueName, entries) {
+    ) : GenerationEntity(name, kDoc, docUrl, valueName, entries, isKordPreview, isDiscordPreview) {
         enum class ValueType : GenerationEntity.ValueType { INT, BIT_SET }
     }
 
@@ -59,36 +70,62 @@ private fun String.toKDoc() = trimIndent().ifBlank { null }
 internal fun Generate.toGenerationEntityOrNull(logger: KSPLogger, annotation: KSAnnotation): GenerationEntity? {
     val args = annotation.arguments<Generate>()
 
-    fun areNotSpecified(vararg disallowedParameters: KProperty1<Generate, Any>) = disallowedParameters
-        .filterNot { param -> args.isDefault(param) }
-        .onEach { logger.error("${it.name} is not allowed for entityType $entityType", annotation) }
-        .isEmpty()
-
-    val validParameters = when (entityType) {
-        INT_KORD_ENUM, STRING_KORD_ENUM -> areNotSpecified(
-            Generate::collectionHadCopy0, Generate::collectionHadNewCompanion, Generate::hadBuilderFactoryFunction0,
-        )
-        INT_FLAGS, BIT_SET_FLAGS -> true
-    }
-
     val mappedEntries = (entries zip args[Generate::entries]!!).mapNotNull { (entry, annotation) ->
         entry.toGenerationEntityEntryOrNull(entityType, logger, annotation)
     }
 
-    return if (!validParameters || mappedEntries.size != entries.size) {
+    return if (mappedEntries.size != entries.size) {
         null
     } else {
-        val kDoc = kDoc.toKDoc()
+        val kDoc = if (args.isDefault(Generate::kDoc)) "" else kDoc.toKDoc()
+        val valueName = if (args.isDefault(Generate::valueName)) "value" else valueName
+
+        val isKordPreview = args[Generate::isKordPreview] ?: false
+        val isDiscordPreview = args[Generate::isDiscordPreview] ?: false
+
         when (entityType) {
-            INT_KORD_ENUM -> KordEnum(name, kDoc, docUrl, valueName, mappedEntries, KordEnum.ValueType.INT)
-            STRING_KORD_ENUM -> KordEnum(name, kDoc, docUrl, valueName, mappedEntries, KordEnum.ValueType.STRING)
-            INT_FLAGS -> BitFlags(
-                name, kDoc, docUrl, valueName, mappedEntries, BitFlags.ValueType.INT, collectionHadCopy0,
-                collectionHadNewCompanion, hadBuilderFactoryFunction0,
+            INT_KORD_ENUM -> KordEnum(
+                name,
+                kDoc,
+                docUrl,
+                valueName,
+                mappedEntries,
+                isKordPreview,
+                isDiscordPreview,
+                KordEnum.ValueType.INT
             )
+
+            STRING_KORD_ENUM -> KordEnum(
+                name,
+                kDoc,
+                docUrl,
+                valueName,
+                mappedEntries,
+                isKordPreview,
+                isDiscordPreview,
+                KordEnum.ValueType.STRING
+            )
+
+            INT_FLAGS -> BitFlags(
+                name,
+                kDoc,
+                docUrl,
+                valueName,
+                mappedEntries,
+                isKordPreview,
+                isDiscordPreview,
+                BitFlags.ValueType.INT
+            )
+
             BIT_SET_FLAGS -> BitFlags(
-                name, kDoc, docUrl, valueName, mappedEntries, BitFlags.ValueType.BIT_SET, collectionHadCopy0,
-                collectionHadNewCompanion, hadBuilderFactoryFunction0,
+                name,
+                kDoc,
+                docUrl,
+                valueName,
+                mappedEntries,
+                isKordPreview,
+                isDiscordPreview,
+                BitFlags.ValueType.BIT_SET
             )
         }
     }
@@ -141,15 +178,25 @@ private fun Entry.toGenerationEntityEntryOrNull(
         }
     } ?: return null
 
+    val deprecated = if (args.isDefault(Entry::deprecated)) {
+        null
+    } else {
+        deprecated
+    }
+    val kDoc = if (args.isDefault(Entry::kDoc)) "" else kDoc.toKDoc()
+
     return GenerationEntity.Entry(
         name,
-        kDoc.toKDoc(),
+        kDoc,
         value,
         // copy annotation, the proxy instance ksp creates does not implement
         // java.lang.annotation.Annotation.annotationType() which is needed for kotlinpoet
         deprecated
-            .run { Deprecated(message, replaceWith.run { ReplaceWith(expression, *imports) }, level) }
-            .takeUnless { args.isDefault(Entry::deprecated) },
+            ?.run {
+                val replaceWith = runCatching { replaceWith }.getOrElse { ReplaceWith("") }
+                val level = runCatching { level }.getOrElse { DeprecationLevel.WARNING }
+                Deprecated(message, replaceWith.run { ReplaceWith(expression, *imports) }, level)
+            },
         // because of https://github.com/google/ksp/pull/1330#issuecomment-1616066129
         if (args.isDefault(Entry::requiresOptInAnnotations)) {
             emptyList()

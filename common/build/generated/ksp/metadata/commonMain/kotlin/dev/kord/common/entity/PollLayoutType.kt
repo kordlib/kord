@@ -1,6 +1,5 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
-@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
-                "SpellCheckingInspection", "GrazieInspection"))
+@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
@@ -14,8 +13,9 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 /**
- * See [PollLayoutType]s in the
- * [Discord Developer Documentation](https://discord.com/developers/docs/resources/poll#layout-type).
+ *
+ *
+ * See [PollLayoutType]s in the [Discord Developer Documentation](https://discord.com/developers/docs/resources/poll#layout-type).
  */
 @Serializable(with = PollLayoutType.Serializer::class)
 public sealed class PollLayoutType(
@@ -24,14 +24,11 @@ public sealed class PollLayoutType(
      */
     public val `value`: Int,
 ) {
-    final override fun equals(other: Any?): Boolean = this === other ||
-            (other is PollLayoutType && this.value == other.value)
+    final override fun equals(other: Any?): Boolean = this === other || (other is PollLayoutType && this.value == other.value)
 
     final override fun hashCode(): Int = value.hashCode()
 
-    final override fun toString(): String =
-            if (this is Unknown) "PollLayoutType.Unknown(value=$value)"
-            else "PollLayoutType.${this::class.simpleName}"
+    final override fun toString(): String = if (this is Unknown) "PollLayoutType.Unknown(value=$value)" else "PollLayoutType.${this::class.simpleName}"
 
     /**
      * An unknown [PollLayoutType].
@@ -49,8 +46,7 @@ public sealed class PollLayoutType(
 
     internal object Serializer : KSerializer<PollLayoutType> {
         override val descriptor: SerialDescriptor =
-                PrimitiveSerialDescriptor("dev.kord.common.entity.PollLayoutType",
-                PrimitiveKind.INT)
+                PrimitiveSerialDescriptor("dev.kord.common.entity.PollLayoutType", PrimitiveKind.INT)
 
         override fun serialize(encoder: Encoder, `value`: PollLayoutType) {
             encoder.encodeInt(value.value)
@@ -70,8 +66,7 @@ public sealed class PollLayoutType(
         }
 
         /**
-         * Returns an instance of [PollLayoutType] with [PollLayoutType.value] equal to the
-         * specified [value].
+         * Returns an instance of [PollLayoutType] with [PollLayoutType.value] equal to the specified [value].
          */
         public fun from(`value`: Int): PollLayoutType = when (value) {
             1 -> Default

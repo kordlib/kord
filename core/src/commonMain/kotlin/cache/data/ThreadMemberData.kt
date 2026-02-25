@@ -5,7 +5,7 @@ import dev.kord.cache.api.data.description
 import dev.kord.common.entity.DiscordThreadMember
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.OptionalSnowflake
-import kotlinx.datetime.Instant
+import kotlin.time.Instant
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 

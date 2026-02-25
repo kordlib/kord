@@ -4,7 +4,7 @@ import dev.kord.cache.api.data.DataDescription
 import dev.kord.cache.api.data.description
 import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.*
-import kotlinx.datetime.Instant
+import kotlin.time.Instant
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -32,11 +32,13 @@ public data class MessageData(
     val application: Optional<MessageApplication> = Optional.Missing(),
     val applicationId: OptionalSnowflake = OptionalSnowflake.Missing,
     val messageReference: Optional<MessageReferenceData> = Optional.Missing(),
+    val messageSnapshots: Optional<List<MessageSnapshotData>> = Optional.Missing(),
     val flags: Optional<MessageFlags> = Optional.Missing(),
     val stickers: Optional<List<StickerItemData>> = Optional.Missing(),
     val referencedMessage: Optional<MessageData?> = Optional.Missing(),
     val interaction: Optional<MessageInteractionData> = Optional.Missing(),
     val components: Optional<List<ComponentData>> = Optional.Missing(),
+    val thread: Optional<ChannelData> = Optional.Missing(),
     val roleSubscriptionData: Optional<RoleSubscription> = Optional.Missing(),
     val position: OptionalInt = OptionalInt.Missing,
     val poll: Optional<DiscordPoll> = Optional.Missing()
@@ -103,13 +105,15 @@ public data class MessageData(
             application,
             applicationId,
             messageReference,
+            messageSnapshots,
             flags,
             stickers = stickers,
             referencedMessage = referencedMessage,
             interaction = interaction,
             components = components,
             roleSubscriptionData = roleSubscriptionData,
-            position = position
+            position = position,
+            thread = thread
         )
     }
 
@@ -141,6 +145,7 @@ public data class MessageData(
                 application,
                 applicationId,
                 messageReference.map { MessageReferenceData.from(it) },
+                messageSnapshots.mapList { MessageSnapshotData.from(it) },
                 flags,
                 stickers.mapList { StickerItemData.from(it) },
                 referencedMessage.mapNotNull { from(it) },
@@ -148,7 +153,8 @@ public data class MessageData(
                 components = components.mapList { ComponentData.from(it) },
                 roleSubscriptionData = roleSubscriptionData,
                 position = position,
-                poll = poll
+                thread = thread.map { it.toData() },
+                poll = poll,
             )
         }
     }

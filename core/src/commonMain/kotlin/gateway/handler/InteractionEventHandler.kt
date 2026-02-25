@@ -1,28 +1,22 @@
 package dev.kord.core.gateway.handler
 
-import dev.kord.cache.api.put
-import dev.kord.cache.api.remove
 import dev.kord.core.Kord
-import dev.kord.core.cache.data.ApplicationCommandData
 import dev.kord.core.cache.data.GuildApplicationCommandPermissionsData
 import dev.kord.core.cache.data.InteractionData
-import dev.kord.core.cache.idEq
-import dev.kord.core.entity.application.*
+import dev.kord.core.entity.application.ApplicationCommandPermissions
 import dev.kord.core.entity.interaction.*
 import dev.kord.core.event.interaction.*
-import dev.kord.gateway.*
+import dev.kord.gateway.ApplicationCommandPermissionsUpdate
+import dev.kord.gateway.Event
+import dev.kord.gateway.InteractionCreate
 import dev.kord.core.event.Event as CoreEvent
 
 
 internal class InteractionEventHandler : BaseGatewayEventHandler() {
 
-    @Suppress("DEPRECATION_ERROR")
     override suspend fun handle(event: Event, shard: Int, kord: Kord, context: LazyContext?): CoreEvent? =
         when (event) {
             is InteractionCreate -> handle(event, shard, kord, context)
-            is ApplicationCommandCreate -> handle(event, shard, kord, context)
-            is ApplicationCommandUpdate -> handle(event, shard, kord, context)
-            is ApplicationCommandDelete -> handle(event, shard, kord, context)
             is ApplicationCommandPermissionsUpdate -> {
                 val data = GuildApplicationCommandPermissionsData.from(event.permissions)
                 ApplicationCommandPermissionsUpdateEvent(
@@ -50,62 +44,6 @@ internal class InteractionEventHandler : BaseGatewayEventHandler() {
             is GuildButtonInteraction -> GuildButtonInteractionCreateEvent(interaction, kord, shard, context?.get())
             is GuildSelectMenuInteraction -> GuildSelectMenuInteractionCreateEvent(interaction, kord, shard, context?.get())
             is GuildModalSubmitInteraction -> GuildModalSubmitInteractionCreateEvent(interaction, kord, shard, context?.get())
-        }
-        return coreEvent
-    }
-
-    @Suppress("DEPRECATION_ERROR")
-    private suspend fun handle(
-        event: ApplicationCommandCreate,
-        shard: Int,
-        kord: Kord,
-        context: LazyContext?,
-    ): ApplicationCommandCreateEvent {
-        val data = ApplicationCommandData.from(event.application)
-        kord.cache.put(data)
-        val coreEvent = when (val application = GuildApplicationCommand(data, kord.rest.interaction)) {
-            is GuildChatInputCommand -> ChatInputCommandCreateEvent(application, kord, shard, context?.get())
-            is GuildMessageCommand -> MessageCommandCreateEvent(application, kord, shard, context?.get())
-            is GuildUserCommand -> UserCommandCreateEvent(application, kord, shard, context?.get())
-            is UnknownGuildApplicationCommand -> UnknownApplicationCommandCreateEvent(application, kord, shard, context?.get())
-        }
-        return coreEvent
-    }
-
-
-    @Suppress("DEPRECATION_ERROR")
-    private suspend fun handle(
-        event: ApplicationCommandUpdate,
-        shard: Int,
-        kord: Kord,
-        context: LazyContext?,
-    ): ApplicationCommandUpdateEvent {
-        val data = ApplicationCommandData.from(event.application)
-        kord.cache.put(data)
-
-        val coreEvent = when (val application = GuildApplicationCommand(data, kord.rest.interaction)) {
-            is GuildChatInputCommand -> ChatInputCommandUpdateEvent(application, kord, shard, context?.get())
-            is GuildMessageCommand -> MessageCommandUpdateEvent(application, kord, shard, context?.get())
-            is GuildUserCommand -> UserCommandUpdateEvent(application, kord, shard, context?.get())
-            is UnknownGuildApplicationCommand -> UnknownApplicationCommandUpdateEvent(application, kord, shard, context?.get())
-        }
-        return coreEvent
-    }
-
-    @Suppress("DEPRECATION_ERROR")
-    private suspend fun handle(
-        event: ApplicationCommandDelete,
-        shard: Int,
-        kord: Kord,
-        context: LazyContext?,
-    ): ApplicationCommandDeleteEvent {
-        val data = ApplicationCommandData.from(event.application)
-        kord.cache.remove { idEq(ApplicationCommandData::id, data.id) }
-        val coreEvent = when (val application = GuildApplicationCommand(data, kord.rest.interaction)) {
-            is GuildChatInputCommand -> ChatInputCommandDeleteEvent(application, kord, shard, context?.get())
-            is GuildMessageCommand -> MessageCommandDeleteEvent(application, kord, shard, context?.get())
-            is GuildUserCommand -> UserCommandDeleteEvent(application, kord, shard, context?.get())
-            is UnknownGuildApplicationCommand -> UnknownApplicationCommandDeleteEvent(application, kord, shard, context?.get())
         }
         return coreEvent
     }

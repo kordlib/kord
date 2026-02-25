@@ -139,14 +139,6 @@ public suspend inline fun Gateway.start(token: String, config: GatewayConfigurat
     start(builder.build())
 }
 
-@Suppress("unused")
-@Deprecated(
-    "Kept for binary compatibility, this declaration will be removed in 0.16.0.",
-    level = DeprecationLevel.HIDDEN,
-)
-@PublishedApi
-internal val gatewayOnLogger: mu.KLogger = mu.KotlinLogging.logger("Gateway.on")
-
 /**
  * Logger used to report [Throwable]s caught in [Gateway.on].
  */
@@ -229,6 +221,24 @@ public fun Gateway.requestGuildMembers(request: RequestGuildMembers): Flow<Guild
             emit(it)
             return@transformWhile (it.data.chunkIndex + 1) < it.data.chunkCount
         }// 0 <= chunk_index < chunk_count
+}
+
+/**
+ * Requests the sounds for [guilds][guildIds].
+ *
+ * The returned flow is cold, and will execute the request only on subscription.
+ * Collection of this flow on a [Gateway] that is not [running][Gateway.start]
+ * will result in an [IllegalStateException] being thrown.
+ */
+public fun Gateway.requestSoundboardSounds(guildIds: List<Snowflake>): Flow<SoundboardSoundsChunk> {
+    val receivedGuilds = ArrayList<Snowflake>(guildIds.size)
+    return events
+        .onSubscription { send(RequestSoundboardSounds(guildIds)) }
+        .filterIsInstance<SoundboardSounds>()
+        .transformWhile {
+            emit(it.data)
+            receivedGuilds.size < guildIds.size
+        }
 }
 
 /**

@@ -1,5 +1,7 @@
-import org.jetbrains.dokka.gradle.AbstractDokkaLeafTask
+@file:OptIn(ExperimentalAbiValidation::class)
+
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
+import org.jetbrains.kotlin.gradle.dsl.abi.ExperimentalAbiValidation
 import org.jetbrains.kotlin.gradle.targets.js.testing.KotlinJsTest
 
 plugins {
@@ -7,7 +9,6 @@ plugins {
     org.jetbrains.kotlin.plugin.serialization
     org.jetbrains.dokka
     org.jetbrains.kotlinx.atomicfu
-    org.jetbrains.kotlinx.`binary-compatibility-validator`
     com.google.devtools.ksp
 }
 
@@ -19,14 +20,19 @@ dependencies {
     kspCommonMainMetadata(project(":ksp-processors"))
 }
 
-apiValidation {
-    applyKordBCVOptions()
-}
-
+@OptIn(ExperimentalKotlinGradlePluginApi::class)
 kotlin {
     explicitApi()
+    compilerOptions {
+        applyKordCommonCompilerOptions()
+        optIn.addAll(kordOptIns)
+    }
 
-    jvm()
+    jvm {
+        compilerOptions {
+            applyKordJvmCompilerOptions()
+        }
+    }
     js {
         nodejs {
             testTask {
@@ -36,15 +42,12 @@ kotlin {
                     timeout = "0"
                 }
             }
-        }
-        useCommonJs()
-    }
-    jvmToolchain(Jvm.target)
 
-    @OptIn(ExperimentalKotlinGradlePluginApi::class)
-    compilerOptions {
-        applyKordCompilerOptions()
-        optIn.addAll(kordOptIns)
+            compilerOptions {
+                target = "es2015"
+            }
+        }
+        useEsModules()
     }
 
     applyDefaultHierarchyTemplate()
@@ -67,6 +70,17 @@ kotlin {
             dependsOn(nonJvmMain)
         }
     }
+
+    abiValidation {
+        applyKordBCVOptions()
+        klib {
+            enabled = true
+        }
+    }
+}
+
+dokka {
+    applyKordDokkaOptions(project)
 }
 
 tasks {
@@ -78,7 +92,14 @@ tasks {
         environment("PROJECT_ROOT", rootProject.projectDir.absolutePath)
     }
 
-    for (task in listOf("compileKotlinJvm", "compileKotlinJs", "jvmSourcesJar", "jsSourcesJar")) {
+    for (task in listOf(
+        "compileKotlinJvm",
+        "compileKotlinJs",
+        "jvmSourcesJar",
+        "jsSourcesJar",
+        "dokkaGenerateModuleHtml",
+        "dokkaGeneratePublicationHtml",
+    )) {
         named(task) {
             dependsOn("kspCommonMainKotlinMetadata")
         }
@@ -88,10 +109,5 @@ tasks {
         named("sourcesJar") {
             dependsOn("kspCommonMainKotlinMetadata")
         }
-    }
-
-    withType<AbstractDokkaLeafTask>().configureEach {
-        applyKordDokkaOptions()
-        dependsOn("kspCommonMainKotlinMetadata")
     }
 }

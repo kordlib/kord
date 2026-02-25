@@ -1,6 +1,5 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
-@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
-                "SpellCheckingInspection", "GrazieInspection"))
+@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
@@ -16,8 +15,7 @@ import kotlinx.serialization.encoding.Encoder
 /**
  * Indicates in what event context a rule should be checked.
  *
- * See [AutoModerationRuleEventType]s in the
- * [Discord Developer Documentation](https://discord.com/developers/docs/resources/auto-moderation#auto-moderation-rule-object-event-types).
+ * See [AutoModerationRuleEventType]s in the [Discord Developer Documentation](https://discord.com/developers/docs/resources/auto-moderation#auto-moderation-rule-object-event-types).
  */
 @Serializable(with = AutoModerationRuleEventType.Serializer::class)
 public sealed class AutoModerationRuleEventType(
@@ -26,20 +24,16 @@ public sealed class AutoModerationRuleEventType(
      */
     public val `value`: Int,
 ) {
-    final override fun equals(other: Any?): Boolean = this === other ||
-            (other is AutoModerationRuleEventType && this.value == other.value)
+    final override fun equals(other: Any?): Boolean = this === other || (other is AutoModerationRuleEventType && this.value == other.value)
 
     final override fun hashCode(): Int = value.hashCode()
 
-    final override fun toString(): String =
-            if (this is Unknown) "AutoModerationRuleEventType.Unknown(value=$value)"
-            else "AutoModerationRuleEventType.${this::class.simpleName}"
+    final override fun toString(): String = if (this is Unknown) "AutoModerationRuleEventType.Unknown(value=$value)" else "AutoModerationRuleEventType.${this::class.simpleName}"
 
     /**
      * An unknown [AutoModerationRuleEventType].
      *
-     * This is used as a fallback for [AutoModerationRuleEventType]s that haven't been added to Kord
-     * yet.
+     * This is used as a fallback for [AutoModerationRuleEventType]s that haven't been added to Kord yet.
      */
     public class Unknown internal constructor(
         `value`: Int,
@@ -50,17 +44,20 @@ public sealed class AutoModerationRuleEventType(
      */
     public object MessageSend : AutoModerationRuleEventType(1)
 
+    /**
+     * When a member edits their profile.
+     */
+    public object MemberUpdate : AutoModerationRuleEventType(2)
+
     internal object Serializer : KSerializer<AutoModerationRuleEventType> {
         override val descriptor: SerialDescriptor =
-                PrimitiveSerialDescriptor("dev.kord.common.entity.AutoModerationRuleEventType",
-                PrimitiveKind.INT)
+                PrimitiveSerialDescriptor("dev.kord.common.entity.AutoModerationRuleEventType", PrimitiveKind.INT)
 
         override fun serialize(encoder: Encoder, `value`: AutoModerationRuleEventType) {
             encoder.encodeInt(value.value)
         }
 
-        override fun deserialize(decoder: Decoder): AutoModerationRuleEventType =
-                from(decoder.decodeInt())
+        override fun deserialize(decoder: Decoder): AutoModerationRuleEventType = from(decoder.decodeInt())
     }
 
     public companion object {
@@ -70,15 +67,16 @@ public sealed class AutoModerationRuleEventType(
         public val entries: List<AutoModerationRuleEventType> by lazy(mode = PUBLICATION) {
             listOf(
                 MessageSend,
+                MemberUpdate,
             )
         }
 
         /**
-         * Returns an instance of [AutoModerationRuleEventType] with
-         * [AutoModerationRuleEventType.value] equal to the specified [value].
+         * Returns an instance of [AutoModerationRuleEventType] with [AutoModerationRuleEventType.value] equal to the specified [value].
          */
         public fun from(`value`: Int): AutoModerationRuleEventType = when (value) {
             1 -> MessageSend
+            2 -> MemberUpdate
             else -> Unknown(value)
         }
     }
