@@ -3,9 +3,6 @@ package dev.kord.voice.handlers
 import dev.kord.voice.EncryptionMode
 import dev.kord.voice.FrameInterceptorConfiguration
 import dev.kord.voice.VoiceConnection
-import dev.kord.voice.encryption.strategies.LiteNonceStrategy
-import dev.kord.voice.encryption.strategies.NormalNonceStrategy
-import dev.kord.voice.encryption.strategies.SuffixNonceStrategy
 import dev.kord.voice.gateway.*
 import dev.kord.voice.udp.AudioFrameSenderConfiguration
 import io.github.oshai.kotlinlogging.KotlinLogging
@@ -21,7 +18,7 @@ private val udpLifeCycleLogger = KotlinLogging.logger { }
 internal class UdpLifeCycleHandler(
     flow: Flow<VoiceEvent>,
     private val connection: VoiceConnection
-) : ConnectionEventHandler<VoiceEvent>(flow, "UdpInterceptor") {
+) : ConnectionEventHandler<VoiceEvent>(flow, "Udp Handler") {
     private var ssrc: UInt? by atomic(null)
     private var server: InetSocketAddress? by atomic(null)
 
@@ -37,18 +34,12 @@ internal class UdpLifeCycleHandler(
 
             udpLifeCycleLogger.trace { "ip discovered for voice successfully" }
 
-            val encryptionMode = when (connection.nonceStrategy) {
-                is LiteNonceStrategy -> EncryptionMode.XSalsa20Poly1305Lite
-                is NormalNonceStrategy -> EncryptionMode.XSalsa20Poly1305
-                is SuffixNonceStrategy -> EncryptionMode.XSalsa20Poly1305Suffix
-            }
-
             val selectProtocol = SelectProtocol(
                 protocol = "udp",
                 data = SelectProtocol.Data(
                     address = ip.hostname,
                     port = ip.port,
-                    mode = encryptionMode
+                    mode = EncryptionMode.AeadXChaCha20Poly1305RtpSize // only supported mode for now.
                 )
             )
 

@@ -8,7 +8,8 @@ import kotlin.random.Random
 
 private const val SUFFIX_NONCE_LENGTH = 24
 
-public class SuffixNonceStrategy : NonceStrategy {
+@Deprecated(DEPRECATION_UNUSED_STRATEGY)
+public class SuffixNonceStrategy : @Suppress("DEPRECATION") NonceStrategy {
     override val nonceLength: Int = SUFFIX_NONCE_LENGTH
 
     private val nonceBuffer: ByteArray = ByteArray(SUFFIX_NONCE_LENGTH)

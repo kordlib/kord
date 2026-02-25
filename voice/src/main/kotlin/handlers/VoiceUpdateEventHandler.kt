@@ -22,7 +22,7 @@ internal class VoiceUpdateEventHandler(
     flow: Flow<GatewayEvent>,
     private val connectionDetachDuration: Duration,
     private val connection: VoiceConnection,
-) : ConnectionEventHandler<GatewayEvent>(flow, "VoiceUpdateInterceptor") {
+) : ConnectionEventHandler<GatewayEvent>(flow, "VoiceUpdate Handler") {
     private var detachJob: Job? by atomic(null)
 
     override suspend fun start() = coroutineScope {

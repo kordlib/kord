@@ -15,6 +15,8 @@ kotlin-node = "2025.7.14-22.13.10" # https://github.com/JetBrains/kotlin-wrapper
 bignum = "0.3.10" # https://github.com/ionspin/kotlin-multiplatform-bignum
 stately = "2.1.0" # https://github.com/touchlab/Stately
 fastZlib = "2.0.1" # https://github.com/timotejroiko/fast-zlib
+libsodiumBindings = "0.9.5" # https://github.com/ionspin/kotlin-multiplatform-libsodium
+jna = "5.18.1" # https://github.com/java-native-access/jna
 
 # code generation
 ksp = "2.2.10-2.0.2" # https://github.com/google/ksp
@@ -59,6 +61,8 @@ kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.
 kotlin-logging = { module = "io.github.oshai:kotlin-logging", version.ref = "kotlin-logging" }
 slf4j-api = { module = "org.slf4j:slf4j-api", version.ref = "slf4j" }
 kotlin-node = { module = "org.jetbrains.kotlin-wrappers:kotlin-node", version.ref = "kotlin-node" }
+libsodiumBindings = { module = "com.ionspin.kotlin:multiplatform-crypto-libsodium-bindings", version.ref = "libsodiumBindings" }
+jna = { module = "net.java.dev.jna:jna", version.ref = "jna" }
 
 # JDK replacements
 bignum = { module = "com.ionspin.kotlin:bignum", version.ref = "bignum" }
