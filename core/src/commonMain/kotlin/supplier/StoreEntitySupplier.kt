@@ -70,6 +70,10 @@ public class StoreEntitySupplier(
             cache.put(member.memberData)
         }
 
+    override suspend fun getMemberVoiceStateOrNull(guildId: Snowflake, userId: Snowflake): VoiceState? {
+        return storeAndReturn(supplier.getMemberVoiceStateOrNull(guildId, userId)) { it.data }
+    }
+
     override suspend fun getMessageOrNull(channelId: Snowflake, messageId: Snowflake): Message? {
         return storeAndReturn(supplier.getMessageOrNull(channelId, messageId)) { it.data }
     }
@@ -126,8 +130,13 @@ public class StoreEntitySupplier(
 
     override fun getEmojis(guildId: Snowflake): Flow<GuildEmoji> {
         return storeOnEach(supplier.getEmojis(guildId)) { it.data }
-
     }
+
+    override suspend fun getGuildSoundboardSoundOrNull(guildId: Snowflake, soundId: Snowflake): GuildSoundboardSound? =
+        storeAndReturn(supplier.getGuildSoundboardSoundOrNull(guildId, soundId)) { it.data }
+
+    override fun getGuildSoundboardSounds(guildId: Snowflake): Flow<GuildSoundboardSound> =
+        storeOnEach(supplier.getGuildSoundboardSounds(guildId)) { it.data }
 
     override fun getCurrentUserGuilds(limit: Int?): Flow<Guild> {
         return storeOnEach(supplier.getCurrentUserGuilds(limit)) { it.data }

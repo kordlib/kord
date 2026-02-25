@@ -107,6 +107,16 @@ public sealed class Intent(
     /**
      * Enables the following events:
      * - [GuildEmojisUpdate]
+     * - [GuildSoundboardSoundCreate]
+     * - [GuildSoundboardSoundUpdate]
+     * - [GuildSoundboardSoundsUpdate]
+     * - [GuildSoundboardSoundDelete]
+     */
+    public object GuildExpressions : Intent(3)
+
+    /**
+     * Enables the following events:
+     * - [GuildEmojisUpdate]
      */
     public object GuildEmojis : Intent(3)
 
@@ -241,7 +251,7 @@ public sealed class Intent(
                 Guilds,
                 GuildMembers,
                 GuildModeration,
-                GuildEmojis,
+                GuildExpressions,
                 GuildIntegrations,
                 GuildWebhooks,
                 GuildInvites,
@@ -270,7 +280,7 @@ public sealed class Intent(
             0 -> Guilds
             1 -> GuildMembers
             2 -> GuildModeration
-            3 -> GuildEmojis
+            3 -> GuildExpressions
             4 -> GuildIntegrations
             5 -> GuildWebhooks
             6 -> GuildInvites
@@ -406,15 +416,6 @@ public class Intents internal constructor(
         return Builder(code.copy()).apply(builder).build()
     }
 
-    @Deprecated(
-        level = DeprecationLevel.HIDDEN,
-        message = "Kept for binary compatibility, this declaration will be removed in 0.17.0.",
-    )
-    public inline fun copy0(builder: Builder.() -> Unit): Intents {
-        contract { callsInPlace(builder, EXACTLY_ONCE) }
-        return copy(builder)
-    }
-
     override fun equals(other: Any?): Boolean = this === other || (other is Intents && this.code == other.code)
 
     override fun hashCode(): Int = code.hashCode()
@@ -478,16 +479,6 @@ public class Intents internal constructor(
 public inline fun Intents(builder: Intents.Builder.() -> Unit = {}): Intents {
     contract { callsInPlace(builder, EXACTLY_ONCE) }
     return Intents.Builder().apply(builder).build()
-}
-
-@Suppress(names = arrayOf("FunctionName"))
-@Deprecated(
-    level = DeprecationLevel.HIDDEN,
-    message = "Kept for binary compatibility, this declaration will be removed in 0.17.0.",
-)
-public inline fun Intents0(builder: Intents.Builder.() -> Unit = {}): Intents {
-    contract { callsInPlace(builder, EXACTLY_ONCE) }
-    return Intents(builder)
 }
 
 /**

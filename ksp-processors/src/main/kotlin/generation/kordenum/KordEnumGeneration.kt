@@ -1,6 +1,7 @@
 package dev.kord.ksp.generation.kordenum
 
 import com.google.devtools.ksp.symbol.KSFile
+import com.squareup.kotlinpoet.ClassName
 import com.squareup.kotlinpoet.KModifier.PUBLIC
 import com.squareup.kotlinpoet.KModifier.SEALED
 import com.squareup.kotlinpoet.ksp.addOriginatingKSFile
@@ -17,6 +18,8 @@ internal fun KordEnum.generateFileSpec(originatingFile: KSFile) = fileSpecForGen
         addAnnotation<Serializable> {
             addMember("with·=·%T.Serializer::class", currentContext.entityCN)
         }
+        if (isKordPreview) addAnnotation(ClassName("dev.kord.common.annotation", "KordPreview"))
+        if (isDiscordPreview) addAnnotation(ClassName("dev.kord.common.annotation", "DiscordAPIPreview"))
         addModifiers(PUBLIC, SEALED)
         primaryConstructor {
             addParameter(valueName, currentContext.valueCN)

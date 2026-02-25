@@ -133,7 +133,7 @@ public interface EntitySupplier {
     public fun getChannelPins(channelId: Snowflake): Flow<Message>
 
     /**
-     * Requests the [Member] with the given [userId] in the [Guild] wit the given [guildId],
+     * Requests the [Member] with the given [userId] in the [Guild] with the given [guildId],
      * returns `null` when the member isn't present.
      *
      * @throws RequestException if something went wrong while retrieving the member.
@@ -141,7 +141,7 @@ public interface EntitySupplier {
     public suspend fun getMemberOrNull(guildId: Snowflake, userId: Snowflake): Member?
 
     /**
-     * Requests the [Member] with the given [userId] in the [Guild] wit the given [guildId].
+     * Requests the [Member] with the given [userId] in the [Guild] with the given [guildId].
      *
      * @throws RequestException if something went wrong while retrieving the member.
      * @throws EntityNotFoundException if the member was null.
@@ -149,6 +149,23 @@ public interface EntitySupplier {
     public suspend fun getMember(guildId: Snowflake, userId: Snowflake): Member =
         getMemberOrNull(guildId, userId)
             ?: EntityNotFoundException.memberNotFound(guildId = guildId, userId = userId)
+
+    /**
+     * Requests the member's [VoiceState] with the given [userId] in the [Guild] with the given [guildId].
+     *
+     * @throws RequestException if something went wrong while retrieving the member's voice state.
+     */
+    public suspend fun getMemberVoiceStateOrNull(guildId: Snowflake, userId: Snowflake): VoiceState?
+
+    /**
+     * Requests the member's [VoiceState] with the given [userId] in the [Guild] with the given [guildId].
+     *
+     * @throws RequestException if something went wrong while retrieving the member's voice state.
+     * @throws EntityNotFoundException if the [VoiceState] wasn't present.
+     */
+    public suspend fun getMemberVoiceState(guildId: Snowflake, userId: Snowflake): VoiceState =
+        getMemberVoiceStateOrNull(guildId, userId)
+            ?: EntityNotFoundException.memberVoiceStateNotFound(guildId = guildId, userId = userId)
 
     /**
      * Requests the [Message] with the given [messageId] in the [MessageChannel] with the given [channelId],
@@ -337,6 +354,30 @@ public interface EntitySupplier {
      * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
      */
     public fun getEmojis(guildId: Snowflake): Flow<GuildEmoji>
+
+    /**
+     * Requests the [GuildSoundboardSound] with the [soundId] in the [Guild] with the given [guildId].
+     *
+     * @throws RequestException if something went wrong while retrieving the emoji.
+     */
+    public suspend fun getGuildSoundboardSoundOrNull(guildId: Snowflake, soundId: Snowflake): GuildSoundboardSound?
+
+    /**
+     * Requests the [GuildSoundboardSound] with the [soundId] in the [Guild] wit the given [guildId].
+     *
+     * @throws RequestException if something went wrong while retrieving the emoji.
+     * @throws EntityNotFoundException if the sound was null.
+     */
+    public suspend fun getGuildSoundboardSound(guildId: Snowflake, soundId: Snowflake): GuildSoundboardSound =
+        getGuildSoundboardSoundOrNull(guildId, soundId) ?: EntityNotFoundException.soundboardSoundNotFound(guildId, soundId)
+
+    /**
+     * Requests the [guild soundboard sound][GuildSoundboardSound] of the [Guild] with the given [guildId].
+     *
+     * The returned flow is lazily executed, any [RequestException] will be thrown on
+     * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
+     */
+    public fun getGuildSoundboardSounds(guildId: Snowflake): Flow<GuildSoundboardSound>
 
     /**
      * Requests [guilds][Guild] this bot is known to be part of.

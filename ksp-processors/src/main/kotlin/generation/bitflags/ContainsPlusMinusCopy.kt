@@ -2,9 +2,11 @@
 
 package dev.kord.ksp.generation.bitflags
 
-import com.squareup.kotlinpoet.*
 import com.squareup.kotlinpoet.KModifier.*
-import dev.kord.ksp.addAnnotation
+import com.squareup.kotlinpoet.LambdaTypeName
+import com.squareup.kotlinpoet.TypeName
+import com.squareup.kotlinpoet.TypeSpec
+import com.squareup.kotlinpoet.UNIT
 import dev.kord.ksp.addFunction
 import dev.kord.ksp.generation.GenerationEntity.BitFlags
 import dev.kord.ksp.generation.GenerationEntity.BitFlags.ValueType.BIT_SET
@@ -77,21 +79,4 @@ internal fun TypeSpec.Builder.addCopy() = addFunction("copy") {
         BIT_SET -> ".copy()"
     }
     addStatement("return·%T(${entity.valueName}$valueCopy).apply(builder).build()", entity.builderCN)
-}
-
-// TODO remove eventually
-context(entity: BitFlags, _: GenerationContext)
-internal fun TypeSpec.Builder.addCopy0() = addFunction("copy0") {
-    @OptIn(DelicateKotlinPoetApi::class)
-    addAnnotation(
-        Deprecated(
-            "Kept for binary compatibility, this declaration will be removed in 0.17.0.",
-            level = DeprecationLevel.HIDDEN,
-        )
-    )
-    addModifiers(PUBLIC, INLINE)
-    addParameter("builder", type = LambdaTypeName.get(receiver = entity.builderCN, returnType = UNIT))
-    returns(entity.collectionCN)
-    addStatement("%M·{·callsInPlace(builder,·%M)·}", CONTRACT, EXACTLY_ONCE)
-    addStatement("return·copy(builder)")
 }

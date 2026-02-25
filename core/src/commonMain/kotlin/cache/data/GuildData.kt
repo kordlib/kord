@@ -23,6 +23,7 @@ public data class GuildData(
     val iconHash: Optional<String?> = Optional.Missing(),
     val splash: Optional<String?> = Optional.Missing(),
     val discoverySplash: Optional<String?> = Optional.Missing(),
+    val homeHeader: String? = null,
     //val owner: OptionalBoolean = OptionalBoolean.Missing, useless?
     val ownerId: Snowflake,
     val permissions: Optional<Permissions> = Optional.Missing(),
@@ -87,6 +88,7 @@ public data class GuildData(
             link(GuildData::id to EmojiData::guildId)
             link(GuildData::id to AutoModerationRuleData::guildId)
             link(GuildData::id to EntitlementData::nullableGuildId)
+            link(GuildData::id to SoundboardSoundData::guildId)
         }
 
         public fun from(entity: DiscordGuild): GuildData = with(entity) {
@@ -97,6 +99,7 @@ public data class GuildData(
                 iconHash = iconHash,
                 splash = splash,
                 discoverySplash = discoverySplash,
+                homeHeader = homeHeader,
                 //owner = owner,
                 ownerId = ownerId,
                 permissions = permissions,

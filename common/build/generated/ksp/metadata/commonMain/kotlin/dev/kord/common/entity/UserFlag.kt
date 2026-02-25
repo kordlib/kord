@@ -306,15 +306,6 @@ public class UserFlags internal constructor(
         return Builder(code).apply(builder).build()
     }
 
-    @Deprecated(
-        level = DeprecationLevel.HIDDEN,
-        message = "Kept for binary compatibility, this declaration will be removed in 0.17.0.",
-    )
-    public inline fun copy0(builder: Builder.() -> Unit): UserFlags {
-        contract { callsInPlace(builder, EXACTLY_ONCE) }
-        return copy(builder)
-    }
-
     override fun equals(other: Any?): Boolean = this === other || (other is UserFlags && this.code == other.code)
 
     override fun hashCode(): Int = code.hashCode()

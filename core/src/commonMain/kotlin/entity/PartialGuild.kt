@@ -1,5 +1,6 @@
 package dev.kord.core.entity
 
+import dev.kord.common.annotation.DiscordAPIPreview
 import dev.kord.common.entity.NsfwLevel
 import dev.kord.common.entity.Permissions
 import dev.kord.common.entity.Snowflake

@@ -66,6 +66,11 @@
             "SuppressNotifications", shift = 12, kDoc = "This message will not trigger push and desktop notifications.",
         ),
         Entry("IsVoiceMessage", shift = 13, kDoc = "This message is a voice message."),
+        Entry(
+            "IsComponentsV2", shift = 15,
+            kDoc = "Allows you to create fully [component](https://discord.com/developers/docs/components/overview)-" +
+                "driven messages.",
+        ),
     ],
 )
 
@@ -122,6 +127,15 @@
     ],
 )
 
+@file:Generate(
+    INT_KORD_ENUM, name = "MessageReferenceType",
+    docUrl = "https://discord.com/developers/docs/resources/message#message-reference-structure",
+    entries = [
+        Entry("Default", intValue = 0, kDoc = "A standard reference used by replies."),
+        Entry("Forward", intValue = 1, kDoc = "Reference used to point to a message at a point in time."),
+    ]
+)
+
 package dev.kord.common.entity
 
 import dev.kord.common.entity.optional.Optional
@@ -131,7 +145,9 @@ import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.common.serialization.DurationInDoubleSeconds
 import dev.kord.common.serialization.LongOrStringSerializer
 import dev.kord.ksp.Generate
-import dev.kord.ksp.Generate.EntityType.*
+import dev.kord.ksp.Generate.EntityType.INT_FLAGS
+import dev.kord.ksp.Generate.EntityType.INT_KORD_ENUM
+import dev.kord.ksp.Generate.EntityType.STRING_KORD_ENUM
 import dev.kord.ksp.Generate.Entry
 import kotlin.time.Instant
 import kotlinx.serialization.SerialName
@@ -222,6 +238,7 @@ public data class DiscordMessage(
     val applicationId: OptionalSnowflake = OptionalSnowflake.Missing,
     @SerialName("message_reference")
     val messageReference: Optional<DiscordMessageReference> = Optional.Missing(),
+    val messageSnapshots: Optional<List<DiscordMessageSnapshot>> = Optional.Missing(),
     val flags: Optional<MessageFlags> = Optional.Missing(),
     @SerialName("sticker_items")
     val stickers: Optional<List<DiscordStickerItem>> = Optional.Missing(),
@@ -239,7 +256,7 @@ public data class DiscordMessage(
     @Deprecated("Deprecated in favor of interactionMetadata", ReplaceWith("interactionMetadata"))
     val interaction: Optional<DiscordMessageInteraction> = Optional.Missing(),
     val thread: Optional<DiscordChannel> = Optional.Missing(),
-    val position: OptionalInt = OptionalInt.Missing
+    val position: OptionalInt = OptionalInt.Missing,
 )
 
 /**
@@ -292,7 +309,7 @@ public data class DiscordMessageSticker(
     val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
     val user: Optional<DiscordUser> = Optional.Missing(),
     @SerialName("sort_value")
-    val sortValue: OptionalInt = OptionalInt.Missing
+    val sortValue: OptionalInt = OptionalInt.Missing,
 )
 
 @Serializable
@@ -306,7 +323,7 @@ public data class DiscordStickerPack(
     val coverStickerId: OptionalSnowflake = OptionalSnowflake.Missing,
     val description: String,
     @SerialName("banner_asset_id")
-    val bannerAssetId: Snowflake
+    val bannerAssetId: Snowflake,
 )
 
 @Serializable
@@ -314,7 +331,7 @@ public data class DiscordStickerItem(
     val id: Snowflake,
     val name: String,
     @SerialName("format_type")
-    val formatType: MessageStickerType
+    val formatType: MessageStickerType,
 )
 
 /**
@@ -408,6 +425,7 @@ public data class DiscordPartialMessage(
 
 @Serializable
 public data class DiscordMessageReference(
+    val type: Optional<MessageReferenceType> = Optional.Missing(),
     @SerialName("message_id")
     val id: OptionalSnowflake = OptionalSnowflake.Missing,
     @SerialName("channel_id")
@@ -415,8 +433,11 @@ public data class DiscordMessageReference(
     @SerialName("guild_id")
     val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
     @SerialName("fail_if_not_exists")
-    val failIfNotExists: OptionalBoolean = OptionalBoolean.Missing
+    val failIfNotExists: OptionalBoolean = OptionalBoolean.Missing,
 )
+
+@Serializable
+public data class DiscordMessageSnapshot(val message: DiscordMessage)
 
 /**
  * A representation of a [Discord Channel Mention structure](https://discord.com/developers/docs/resources/channel#channel-mention-object-channel-mention-structure).
@@ -721,5 +742,5 @@ public data class RoleSubscription(
     @SerialName("total_months_subscribed")
     val totalMonthsSubscribed: Int,
     @SerialName("is_renewal")
-    val isRenewal: Boolean
+    val isRenewal: Boolean,
 )

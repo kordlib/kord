@@ -52,7 +52,7 @@ internal class EntryPointCreateBuilderImpl(
     override var contexts: MutableList<InteractionContextType>? by state::contexts.delegate()
 
     @Deprecated("'defaultPermission' is deprecated in favor of 'defaultMemberPermissions' and 'dmPermission'. Setting 'defaultPermission' to false can be replaced by setting 'defaultMemberPermissions' to empty Permissions and 'dmPermission' to false ('dmPermission' is only available for global commands).")
-    override var defaultPermission: Boolean? by @Suppress("DEPRECATION") state::defaultPermission.delegate()
+    override var defaultPermission: Boolean? by @Suppress("DEPRECATION_ERROR") state::defaultPermission.delegate()
 
     override var nsfw: Boolean? by state::nsfw.delegate()
 
@@ -66,7 +66,7 @@ internal class EntryPointCreateBuilderImpl(
             state.options.mapList { it.toRequest() },
             state.defaultMemberPermissions,
             state.dmPermission,
-            @Suppress("DEPRECATION") state.defaultPermission,
+            @Suppress("DEPRECATION_ERROR") state.defaultPermission,
             nsfw = state.nsfw,
             integrationTypes = state.integrationTypes.missingOnEmpty(),
             contexts = state.contexts.missingOnEmpty(),
@@ -90,7 +90,7 @@ internal class EntryPointModifyBuilderImpl : GlobalEntryPointModifyBuilder, Entr
     override var dmPermission: Boolean? by state::dmPermission.delegate()
 
     @Deprecated("'defaultPermission' is deprecated in favor of 'defaultMemberPermissions' and 'dmPermission'. Setting 'defaultPermission' to false can be replaced by setting 'defaultMemberPermissions' to empty Permissions and 'dmPermission' to false ('dmPermission' is only available for global commands).")
-    override var defaultPermission: Boolean? by @Suppress("DEPRECATION") state::defaultPermission.delegate()
+    override var defaultPermission: Boolean? by @Suppress("DEPRECATION_ERROR") state::defaultPermission.delegate()
 
     override var nsfw: Boolean? by state::nsfw.delegate()
 

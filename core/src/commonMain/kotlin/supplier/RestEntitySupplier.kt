@@ -111,6 +111,12 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
         Member(memberData, userData, kord)
     }
 
+    override suspend fun getMemberVoiceStateOrNull(guildId: Snowflake, userId: Snowflake): VoiceState? = catchNotFound {
+        val voiceState = guild.getGuildMemberVoiceState(guildId = guildId, userId = userId)
+        val voiceStateData = VoiceStateData.from(guildId = guildId, entity = voiceState)
+        VoiceState(voiceStateData, kord)
+    }
+
     override suspend fun getMessageOrNull(channelId: Snowflake, messageId: Snowflake): Message? = catchNotFound {
         Message(channel.getMessage(channelId = channelId, messageId = messageId).toData(), kord)
     }
@@ -221,6 +227,19 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
         for (emoji in emoji.getEmojis(guildId)) {
             val data = EmojiData.from(guildId = guildId, id = emoji.id!!, entity = emoji)
             emit(GuildEmoji(data, kord))
+        }
+    }
+
+    override suspend fun getGuildSoundboardSoundOrNull(guildId: Snowflake, soundId: Snowflake): GuildSoundboardSound? = catchNotFound {
+        val data = SoundboardSoundData.from(guild.getGuildSoundboardSound(guildId, soundId))
+
+        return GuildSoundboardSound(data, kord)
+    }
+
+    override fun getGuildSoundboardSounds(guildId: Snowflake): Flow<GuildSoundboardSound> = flow {
+        for (sound in guild.listGuildSoundboardSounds(guildId).items) {
+            val data = SoundboardSoundData.from(sound)
+            emit(GuildSoundboardSound(data, kord))
         }
     }
 

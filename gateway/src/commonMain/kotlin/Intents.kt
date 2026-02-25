@@ -1,6 +1,5 @@
 @file:Generate(
     BIT_SET_FLAGS, name = "Intent", valueName = "code",
-    collectionHadCopy0 = true, hadBuilderFactoryFunction0 = true,
     kDoc = "Values that enable a group of events as defined by Discord.",
     docUrl = "https://discord.com/developers/docs/topics/gateway#gateway-intents",
     entries = [
@@ -46,6 +45,17 @@
                 - [GuildBanAdd]
                 - [GuildBanRemove]
             """,
+        ),
+        Entry(
+            "GuildExpressions", shift = 3,
+            kDoc = """
+                Enables the following events:
+                - [GuildEmojisUpdate]
+                - [GuildSoundboardSoundCreate]
+                - [GuildSoundboardSoundUpdate]
+                - [GuildSoundboardSoundsUpdate]
+                - [GuildSoundboardSoundDelete]
+            """
         ),
         Entry(
             "GuildEmojis", shift = 3,

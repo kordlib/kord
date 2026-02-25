@@ -148,6 +148,15 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
         return Member(memberData, userData, kord)
     }
 
+    override suspend fun getMemberVoiceStateOrNull(guildId: Snowflake, userId: Snowflake): VoiceState? {
+        val voiceStateData = cache.query {
+            idEq(VoiceStateData::userId, userId)
+            idEq(VoiceStateData::guildId, guildId)
+        }.singleOrNull() ?: return null
+
+        return VoiceState(voiceStateData, kord)
+    }
+
     override suspend fun getMessageOrNull(channelId: Snowflake, messageId: Snowflake): Message? {
         val data = cache.query { idEq(MessageData::id, messageId) }.singleOrNull()
             ?: return null
@@ -239,6 +248,19 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
     override fun getEmojis(guildId: Snowflake): Flow<GuildEmoji> = cache.query {
         idEq(EmojiData::guildId, guildId)
     }.asFlow().map { GuildEmoji(it, kord) }
+
+    override suspend fun getGuildSoundboardSoundOrNull(guildId: Snowflake, soundId: Snowflake): GuildSoundboardSound? {
+        val data = cache.query {
+            idEq(SoundboardSoundData::guildId, guildId)
+            idEq(SoundboardSoundData::id, soundId)
+        }.asFlow().singleOrNull() ?: return null
+
+        return GuildSoundboardSound(data, kord)
+    }
+
+    override fun getGuildSoundboardSounds(guildId: Snowflake): Flow<GuildSoundboardSound> = cache.query {
+        idEq(SoundboardSoundData::guildId, guildId)
+    }.asFlow().map { GuildSoundboardSound(it, kord) }
 
     override fun getCurrentUserGuilds(limit: Int?): Flow<Guild> {
         checkLimit(limit)

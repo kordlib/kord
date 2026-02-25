@@ -149,7 +149,9 @@ public data class DiscordApplicationCommand(
     @SerialName("dm_permission")
     val dmPermission: OptionalBoolean = OptionalBoolean.Missing,
     @SerialName("default_permission")
-    @Deprecated("'defaultPermission' is deprecated in favor of 'defaultMemberPermissions' and 'dmPermission'.")
+    @Deprecated("'defaultPermission' is deprecated in favor of 'defaultMemberPermissions' and 'dmPermission'." +
+            " The deprecation level will be raised to HIDDEN in 0.19.0 and this declaration will be removed in 0.20.0" ,
+        level = DeprecationLevel.ERROR)
     val defaultPermission: OptionalBoolean? = OptionalBoolean.Missing,
     val nsfw: OptionalBoolean = OptionalBoolean.Missing,
     @SerialName("integration_types")
@@ -403,7 +405,7 @@ public sealed class Option {
             return when (type) {
                 ApplicationCommandOptionType.SubCommand -> {
                     val options = if (jsonOptions == null) Optional.Missing()
-                    else Optional.Value(jsonOptions!!.map {
+                    else Optional.Value(jsonOptions.map {
                         json.decodeFromJsonElement(serializer(), it) as CommandArgument<*>
                     })
 
@@ -412,7 +414,7 @@ public sealed class Option {
 
                 ApplicationCommandOptionType.SubCommandGroup -> {
                     val options = if (jsonOptions == null) Optional.Missing()
-                    else Optional.Value(jsonOptions!!.map {
+                    else Optional.Value(jsonOptions.map {
                         json.decodeFromJsonElement(serializer(), it) as SubCommand
                     })
 
@@ -428,7 +430,7 @@ public sealed class Option {
                 ApplicationCommandOptionType.String,
                 ApplicationCommandOptionType.Attachment,
                 ApplicationCommandOptionType.User -> CommandArgument.Serializer.deserialize(
-                    json, jsonValue!!, name, type!!, focused
+                    json, jsonValue!!, name, type, focused
                 )
 
                 is ApplicationCommandOptionType.Unknown -> error("unknown ApplicationCommandOptionType $type")

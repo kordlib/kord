@@ -89,3 +89,20 @@ public annotation class DeprecatedSinceKord(val version: String)
 @Retention(BINARY)
 @Target(CLASS, PROPERTY, FUNCTION, TYPEALIAS)
 public annotation class KordInternal
+
+/**
+ * Marks a Discord-Related API as a feature preview.
+ *
+ * A Discord preview has **no** backward compatibility guarantees, including both binary and source compatibility.
+ *
+ * API's marked as a Discord Preview have been retrieved and implemented using the Discord User documentation, rather
+ * than the official documentation provided by Discord. Though testing has taken place, it could be wholly or partially
+ * incorrect and may be changed or removed.
+ *
+ * Features marked with this annotation will have its api evaluated and changed over time.
+ */
+@MustBeDocumented
+@RequiresOptIn(level = WARNING)
+@Retention(BINARY)
+@Target(CLASS, PROPERTY, CONSTRUCTOR, FUNCTION, TYPEALIAS)
+public annotation class DiscordAPIPreview

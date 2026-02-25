@@ -64,6 +64,7 @@ class GuildTest {
             nsfwLevel shouldBe NsfwLevel.Default
             premiumProgressBarEnabled shouldBe false
             safetyAlertsChannelId shouldBe "587324906702766226"
+            homeHeader shouldBe null
         }
     }
 
