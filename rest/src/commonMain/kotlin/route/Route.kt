@@ -1184,14 +1184,14 @@ public sealed class Route<T>(
      * https://discord.com/developers/docs/resources/poll
      */
 
-    public object GetVoteAnswer :
+    public object AnswerVotersGet :
         Route<AnswerVotersGetResponse>(
             HttpMethod.Get,
             "/channels/$ChannelId/polls/$MessageId/answers/$PollAnswerId",
             AnswerVotersGetResponse.serializer(),
         )
 
-    public object PostExpirePoll :
+    public object PollEnd :
         Route<DiscordMessage>(
             HttpMethod.Post,
             "/channels/$ChannelId/polls/$MessageId/expire",

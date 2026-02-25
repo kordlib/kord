@@ -6,31 +6,33 @@ import dev.kord.common.entity.DiscordPoll
 import dev.kord.common.entity.PollLayoutType
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.Optional
+import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.coerceToMissing
 import dev.kord.common.entity.optional.delegate.delegate
+import dev.kord.common.serialization.DurationInHours
 import dev.kord.rest.builder.RequestBuilder
-import dev.kord.rest.json.request.CreatablePoll
+import dev.kord.rest.json.request.PollCreateRequest
 import kotlin.time.Clock
 import kotlin.time.Duration
-import kotlin.time.Instant
 
 /**
- * A builder for a [CreatablePoll].
+ * A builder for a [PollCreateRequest].
  *
  * @property question the question
  * @property answers a list of possible answers
- * @property expiry the [Instant] of poll expiry
+ * @property duration the [Duration] of poll expiry
  * @property allowMultiselect whether users should be allowed to select multiple answers
  * @property layoutType the [PollLayoutType]
  */
 @KordDsl
-public class PollBuilder : RequestBuilder<CreatablePoll> {
-    public var question: DiscordPoll.Media? = null
-    public val answers: MutableList<DiscordPoll.Answer> = mutableListOf()
+public class PollBuilder(public var question: DiscordPoll.Media) : RequestBuilder<PollCreateRequest> {
+    public var answers: MutableList<DiscordPoll.Answer> = mutableListOf()
 
-    public var expiry: Instant? = null
+    internal var _duration: Optional<DurationInHours> = Optional.Missing()
 
-    internal var _allowMultiselect: Optional<Boolean> = Optional.Missing()
+    public var duration: Duration? by ::_duration.delegate()
+
+    internal var _allowMultiselect: OptionalBoolean = OptionalBoolean.Missing
     public var allowMultiselect: Boolean? by ::_allowMultiselect.delegate()
 
     public var layoutType: PollLayoutType = PollLayoutType.Default
@@ -39,33 +41,7 @@ public class PollBuilder : RequestBuilder<CreatablePoll> {
      * Sets the polls [Duration] to [duration].
      */
     public fun expiresIn(duration: Duration) {
-        expiry = Clock.System.now() + duration
-    }
-
-    /**
-     * Adds a question with [title].
-     */
-    // to resolve resolution ambiguity
-    public fun question(title: String): Unit = question(title, emoji = null)
-
-    /**
-     * Adds a question with [title] and [emojiUnicode].
-     */
-    public fun question(title: String, emojiUnicode: String? = null) {
-        question = DiscordPoll.Media(
-            Optional(title),
-            Optional(emojiUnicode?.let { DiscordPartialEmoji(name = it) }).coerceToMissing()
-        )
-    }
-
-    /**
-     * Adds a question with [title] and [emoji].
-     */
-    public fun question(title: String, emoji: Snowflake? = null) {
-        question = DiscordPoll.Media(
-            Optional(title),
-            Optional(emoji?.let { DiscordPartialEmoji(id = it) }).coerceToMissing()
-        )
+        this@PollBuilder.duration = Duration.parse((Clock.System.now() + duration).toString())
     }
 
     /**
@@ -112,11 +88,11 @@ public class PollBuilder : RequestBuilder<CreatablePoll> {
         )
     }
 
-    override fun toRequest(): CreatablePoll = CreatablePoll(
-        question ?: error("Please set a question"),
-        answers,
-        expiry,
+    override fun toRequest(): PollCreateRequest = PollCreateRequest(
+        question,
+        answers.toList(),
+        _duration,
         _allowMultiselect,
-        layoutType
+        Optional(layoutType)
     )
 }

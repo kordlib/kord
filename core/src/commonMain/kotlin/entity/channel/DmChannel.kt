@@ -6,7 +6,6 @@ import dev.kord.common.exception.RequestException
 import dev.kord.core.Kord
 import dev.kord.core.behavior.UserBehavior
 import dev.kord.core.behavior.channel.ChannelBehavior
-import dev.kord.core.behavior.channel.PollParentChannelBehavior
 import dev.kord.core.cache.data.ChannelData
 import dev.kord.core.entity.User
 import dev.kord.core.hash
@@ -24,7 +23,7 @@ public data class DmChannel(
     override val data: ChannelData,
     override val kord: Kord,
     override val supplier: EntitySupplier = kord.defaultSupplier
-) : MessageChannel, PollParentChannelBehavior {
+) : MessageChannel {
     /**
      * The ids of the recipients of the channel.
      */

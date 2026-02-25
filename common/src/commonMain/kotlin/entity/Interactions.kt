@@ -313,7 +313,6 @@ public data class InteractionCallbackData(
     val componentType: Optional<ComponentType> = Optional.Missing(),
     val values: Optional<List<String>> = Optional.Missing(),
     val components: Optional<List<DiscordComponent>> = Optional.Missing(),
-    val poll: Optional<DiscordPoll> = Optional.Missing()
 )
 
 @Serializable(with = Option.Serializer::class)

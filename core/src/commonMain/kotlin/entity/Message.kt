@@ -33,9 +33,11 @@ import kotlin.time.Instant
 /**
  * An instance of a [Discord Message][https://discord.com/developers/docs/resources/channel#message-object].
  */
-public interface Message : MessageBehavior {
-    public val data: MessageData
-
+public open class Message(
+    public open val data: MessageData,
+    override val kord: Kord,
+    override val supplier: EntitySupplier = kord.defaultSupplier
+) : MessageBehavior {
     /**
      * An instance of [MessageInteraction](https://discord.com/developers/docs/interactions/receiving-and-responding#message-interaction-object)
      *
@@ -355,14 +357,13 @@ public interface Message : MessageBehavior {
      */
     public suspend fun getGuildOrNull(): Guild? = supplier.getChannelOfOrNull<GuildChannel>(channelId)?.getGuildOrNull()
 
-    override fun withStrategy(strategy: EntitySupplyStrategy<*>): Message
 }
 
 public class DefaultMessage(
     override val data: MessageData,
     override val kord: Kord,
     override val supplier: EntitySupplier = kord.defaultSupplier,
-) : Message {
+) : Message(data, kord, supplier) {
     override fun hashCode(): Int = hash(id)
 
     override fun equals(other: Any?): Boolean = when (other) {
@@ -381,7 +382,7 @@ public class Poll(
     override val data: MessageData,
     override val kord: Kord,
     override val supplier: EntitySupplier = kord.defaultSupplier,
-) : Message, PollBehavior {
+) : Message(data, kord, supplier), PollBehavior {
     /**
      * The [poll][DiscordPoll].
      */
@@ -401,16 +402,4 @@ public class Poll(
     override fun toString(): String {
         return "Poll(data=$data, kord=$kord, supplier=$supplier)"
     }
-}
-
-/**
- * Constructor for [Message]
- */
-public fun Message(
-    data: MessageData,
-    kord: Kord,
-    supplier: EntitySupplier = kord.defaultSupplier
-): Message = when {
-    data.poll is Optional.Value<*> -> Poll(data, kord, supplier)
-    else -> DefaultMessage(data, kord, supplier)
 }

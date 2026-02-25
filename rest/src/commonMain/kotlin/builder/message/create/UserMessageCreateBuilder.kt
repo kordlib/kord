@@ -77,7 +77,7 @@ public class UserMessageCreateBuilder : AbstractMessageCreateBuilder(), RequestB
             attachments = _attachments.mapList { it.toRequest() },
             flags = buildMessageFlags(flags, suppressEmbeds, suppressNotifications),
             enforceNonce = _enforceNonce,
-            poll = _poll,
+            poll = _poll.map { it.toRequest() },
         ),
         files = files.toList(),
     )

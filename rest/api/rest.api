@@ -2502,7 +2502,7 @@ public final class dev/kord/rest/builder/message/MessageBuilderKt {
 }
 
 public final class dev/kord/rest/builder/message/PollBuilder : dev/kord/rest/builder/RequestBuilder {
-	public fun <init> ()V
+	public fun <init> (Ldev/kord/common/entity/DiscordPoll$Media;)V
 	public final fun answer (Ljava/lang/String;I)V
 	public final fun answer (Ljava/lang/String;Ldev/kord/common/entity/Snowflake;I)V
 	public final fun answer (Ljava/lang/String;Ljava/lang/String;I)V
@@ -2512,19 +2512,15 @@ public final class dev/kord/rest/builder/message/PollBuilder : dev/kord/rest/bui
 	public final fun expiresIn-LRDsOJo (J)V
 	public final fun getAllowMultiselect ()Ljava/lang/Boolean;
 	public final fun getAnswers ()Ljava/util/List;
-	public final fun getExpiry ()Lkotlin/time/Instant;
+	public final fun getDuration-FghU774 ()Lkotlin/time/Duration;
 	public final fun getLayoutType ()Ldev/kord/common/entity/PollLayoutType;
 	public final fun getQuestion ()Ldev/kord/common/entity/DiscordPoll$Media;
-	public final fun question (Ljava/lang/String;)V
-	public final fun question (Ljava/lang/String;Ldev/kord/common/entity/Snowflake;)V
-	public final fun question (Ljava/lang/String;Ljava/lang/String;)V
-	public static synthetic fun question$default (Ldev/kord/rest/builder/message/PollBuilder;Ljava/lang/String;Ldev/kord/common/entity/Snowflake;ILjava/lang/Object;)V
-	public static synthetic fun question$default (Ldev/kord/rest/builder/message/PollBuilder;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)V
 	public final fun setAllowMultiselect (Ljava/lang/Boolean;)V
-	public final fun setExpiry (Lkotlin/time/Instant;)V
+	public final fun setAnswers (Ljava/util/List;)V
+	public final fun setDuration-BwNAW2A (Lkotlin/time/Duration;)V
 	public final fun setLayoutType (Ldev/kord/common/entity/PollLayoutType;)V
 	public final fun setQuestion (Ldev/kord/common/entity/DiscordPoll$Media;)V
-	public fun toRequest ()Ldev/kord/rest/json/request/CreatablePoll;
+	public fun toRequest ()Ldev/kord/rest/json/request/PollCreateRequest;
 	public synthetic fun toRequest ()Ljava/lang/Object;
 }
 
@@ -2538,7 +2534,7 @@ public abstract class dev/kord/rest/builder/message/create/AbstractMessageCreate
 	public final fun getEmbeds ()Ljava/util/List;
 	public final fun getFiles ()Ljava/util/List;
 	public final fun getFlags ()Ldev/kord/common/entity/MessageFlags;
-	public final fun getPoll ()Ldev/kord/rest/json/request/CreatablePoll;
+	public final fun getPoll ()Ldev/kord/rest/builder/message/PollBuilder;
 	public final fun getSuppressEmbeds ()Ljava/lang/Boolean;
 	public final fun getSuppressNotifications ()Ljava/lang/Boolean;
 	public final fun getTts ()Ljava/lang/Boolean;
@@ -2549,7 +2545,7 @@ public abstract class dev/kord/rest/builder/message/create/AbstractMessageCreate
 	public final fun setContent (Ljava/lang/String;)V
 	public final fun setEmbeds (Ljava/util/List;)V
 	public final fun setFlags (Ldev/kord/common/entity/MessageFlags;)V
-	public final fun setPoll (Ldev/kord/rest/json/request/CreatablePoll;)V
+	public final fun setPoll (Ldev/kord/rest/builder/message/PollBuilder;)V
 	public final fun setSuppressEmbeds (Ljava/lang/Boolean;)V
 	public final fun setSuppressNotifications (Ljava/lang/Boolean;)V
 	public final fun setTts (Ljava/lang/Boolean;)V
@@ -2586,11 +2582,11 @@ public final class dev/kord/rest/builder/message/create/InteractionResponseCreat
 
 public abstract interface class dev/kord/rest/builder/message/create/MessageCreateBuilder : dev/kord/rest/builder/message/MessageBuilder {
 	public abstract fun getFlags ()Ldev/kord/common/entity/MessageFlags;
-	public abstract fun getPoll ()Ldev/kord/rest/json/request/CreatablePoll;
+	public abstract fun getPoll ()Ldev/kord/rest/builder/message/PollBuilder;
 	public abstract fun getSuppressNotifications ()Ljava/lang/Boolean;
 	public abstract fun getTts ()Ljava/lang/Boolean;
 	public abstract fun setFlags (Ldev/kord/common/entity/MessageFlags;)V
-	public abstract fun setPoll (Ldev/kord/rest/json/request/CreatablePoll;)V
+	public abstract fun setPoll (Ldev/kord/rest/builder/message/PollBuilder;)V
 	public abstract fun setSuppressNotifications (Ljava/lang/Boolean;)V
 	public abstract fun setTts (Ljava/lang/Boolean;)V
 }
@@ -2603,7 +2599,7 @@ public final class dev/kord/rest/builder/message/create/MessageCreateBuilder$Def
 }
 
 public final class dev/kord/rest/builder/message/create/MessageCreateBuilderKt {
-	public static final fun poll (Ldev/kord/rest/builder/message/create/MessageCreateBuilder;Lkotlin/jvm/functions/Function1;)V
+	public static final fun poll (Ldev/kord/rest/builder/message/create/MessageCreateBuilder;Ldev/kord/common/entity/DiscordPoll$Media;Lkotlin/jvm/functions/Function1;)V
 }
 
 public final class dev/kord/rest/builder/message/create/UpdateMessageInteractionResponseCreateBuilder : dev/kord/rest/builder/message/create/AbstractMessageCreateBuilder, dev/kord/rest/builder/RequestBuilder {
@@ -4130,42 +4126,6 @@ public final synthetic class dev/kord/rest/json/request/ChannelPositionSwapReque
 }
 
 public final class dev/kord/rest/json/request/ChannelPositionSwapRequest$Companion {
-	public final fun serializer ()Lkotlinx/serialization/KSerializer;
-}
-
-public final class dev/kord/rest/json/request/CreatablePoll {
-	public static final field Companion Ldev/kord/rest/json/request/CreatablePoll$Companion;
-	public fun <init> (Ldev/kord/common/entity/DiscordPoll$Media;Ljava/util/List;Lkotlin/time/Instant;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/PollLayoutType;)V
-	public synthetic fun <init> (Ldev/kord/common/entity/DiscordPoll$Media;Ljava/util/List;Lkotlin/time/Instant;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/PollLayoutType;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun component1 ()Ldev/kord/common/entity/DiscordPoll$Media;
-	public final fun component2 ()Ljava/util/List;
-	public final fun component3 ()Lkotlin/time/Instant;
-	public final fun component4 ()Ldev/kord/common/entity/optional/Optional;
-	public final fun component5 ()Ldev/kord/common/entity/PollLayoutType;
-	public final fun copy (Ldev/kord/common/entity/DiscordPoll$Media;Ljava/util/List;Lkotlin/time/Instant;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/PollLayoutType;)Ldev/kord/rest/json/request/CreatablePoll;
-	public static synthetic fun copy$default (Ldev/kord/rest/json/request/CreatablePoll;Ldev/kord/common/entity/DiscordPoll$Media;Ljava/util/List;Lkotlin/time/Instant;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/PollLayoutType;ILjava/lang/Object;)Ldev/kord/rest/json/request/CreatablePoll;
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getAllowMultiselect ()Ldev/kord/common/entity/optional/Optional;
-	public final fun getAnswers ()Ljava/util/List;
-	public final fun getExpiry ()Lkotlin/time/Instant;
-	public final fun getLayoutType ()Ldev/kord/common/entity/PollLayoutType;
-	public final fun getQuestion ()Ldev/kord/common/entity/DiscordPoll$Media;
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-}
-
-public final synthetic class dev/kord/rest/json/request/CreatablePoll$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
-	public static final field INSTANCE Ldev/kord/rest/json/request/CreatablePoll$$serializer;
-	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
-	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/rest/json/request/CreatablePoll;
-	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
-	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/rest/json/request/CreatablePoll;)V
-	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
-}
-
-public final class dev/kord/rest/json/request/CreatablePoll$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
@@ -6340,6 +6300,42 @@ public final class dev/kord/rest/json/request/OnboardingPromptRequest$Companion 
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
+public final class dev/kord/rest/json/request/PollCreateRequest {
+	public static final field Companion Ldev/kord/rest/json/request/PollCreateRequest$Companion;
+	public fun <init> (Ldev/kord/common/entity/DiscordPoll$Media;Ljava/util/List;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;)V
+	public synthetic fun <init> (Ldev/kord/common/entity/DiscordPoll$Media;Ljava/util/List;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ldev/kord/common/entity/DiscordPoll$Media;
+	public final fun component2 ()Ljava/util/List;
+	public final fun component3 ()Ldev/kord/common/entity/optional/Optional;
+	public final fun component4 ()Ldev/kord/common/entity/optional/OptionalBoolean;
+	public final fun component5 ()Ldev/kord/common/entity/optional/Optional;
+	public final fun copy (Ldev/kord/common/entity/DiscordPoll$Media;Ljava/util/List;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;)Ldev/kord/rest/json/request/PollCreateRequest;
+	public static synthetic fun copy$default (Ldev/kord/rest/json/request/PollCreateRequest;Ldev/kord/common/entity/DiscordPoll$Media;Ljava/util/List;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;ILjava/lang/Object;)Ldev/kord/rest/json/request/PollCreateRequest;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getAllowMultiselect ()Ldev/kord/common/entity/optional/OptionalBoolean;
+	public final fun getAnswers ()Ljava/util/List;
+	public final fun getExpiry ()Ldev/kord/common/entity/optional/Optional;
+	public final fun getLayoutType ()Ldev/kord/common/entity/optional/Optional;
+	public final fun getQuestion ()Ldev/kord/common/entity/DiscordPoll$Media;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final synthetic class dev/kord/rest/json/request/PollCreateRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Ldev/kord/rest/json/request/PollCreateRequest$$serializer;
+	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/rest/json/request/PollCreateRequest;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/rest/json/request/PollCreateRequest;)V
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class dev/kord/rest/json/request/PollCreateRequest$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
 public final class dev/kord/rest/json/request/ScheduledEventModifyRequest {
 	public static final field Companion Ldev/kord/rest/json/request/ScheduledEventModifyRequest$Companion;
 	public fun <init> ()V
@@ -7773,6 +7769,10 @@ public final class dev/kord/rest/route/Route$AllReactionsDelete : dev/kord/rest/
 	public static final field INSTANCE Ldev/kord/rest/route/Route$AllReactionsDelete;
 }
 
+public final class dev/kord/rest/route/Route$AnswerVotersGet : dev/kord/rest/route/Route {
+	public static final field INSTANCE Ldev/kord/rest/route/Route$AnswerVotersGet;
+}
+
 public final class dev/kord/rest/route/Route$ApplicationCommandPermissionsGet : dev/kord/rest/route/Route {
 	public static final field INSTANCE Ldev/kord/rest/route/Route$ApplicationCommandPermissionsGet;
 }
@@ -7979,10 +7979,6 @@ public final class dev/kord/rest/route/Route$GetGuildsSoundboardSound : dev/kord
 
 public final class dev/kord/rest/route/Route$GetSoundboardDefaultSounds : dev/kord/rest/route/Route {
 	public static final field INSTANCE Ldev/kord/rest/route/Route$GetSoundboardDefaultSounds;
-}
-
-public final class dev/kord/rest/route/Route$GetVoteAnswer : dev/kord/rest/route/Route {
-	public static final field INSTANCE Ldev/kord/rest/route/Route$GetVoteAnswer;
 }
 
 public final class dev/kord/rest/route/Route$GetWebhookMessage : dev/kord/rest/route/Route {
@@ -8513,12 +8509,12 @@ public final class dev/kord/rest/route/Route$PollAnswerId : dev/kord/rest/route/
 	public static final field INSTANCE Ldev/kord/rest/route/Route$PollAnswerId;
 }
 
-public final class dev/kord/rest/route/Route$PostApplicationEmoji : dev/kord/rest/route/Route {
-	public static final field INSTANCE Ldev/kord/rest/route/Route$PostApplicationEmoji;
+public final class dev/kord/rest/route/Route$PollEnd : dev/kord/rest/route/Route {
+	public static final field INSTANCE Ldev/kord/rest/route/Route$PollEnd;
 }
 
-public final class dev/kord/rest/route/Route$PostExpirePoll : dev/kord/rest/route/Route {
-	public static final field INSTANCE Ldev/kord/rest/route/Route$PostExpirePoll;
+public final class dev/kord/rest/route/Route$PostApplicationEmoji : dev/kord/rest/route/Route {
+	public static final field INSTANCE Ldev/kord/rest/route/Route$PostApplicationEmoji;
 }
 
 public final class dev/kord/rest/route/Route$PostGuildsSoundboardSounds : dev/kord/rest/route/Route {
@@ -8793,7 +8789,6 @@ public final class dev/kord/rest/service/ChannelService : dev/kord/rest/service/
 	public final fun editMessage (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/rest/json/request/MultipartMessagePatchRequest;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun editMessage (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/rest/json/request/MultipartWebhookEditMessageRequest;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun editMessage (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public final fun expirePoll (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun followNewsChannel (Ldev/kord/common/entity/Snowflake;Ldev/kord/rest/json/request/ChannelFollowRequest;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun getChannel (Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun getChannelInvites (Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -8801,8 +8796,6 @@ public final class dev/kord/rest/service/ChannelService : dev/kord/rest/service/
 	public final fun getMessage (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun getMessages (Ldev/kord/common/entity/Snowflake;Ldev/kord/rest/route/Position;Ljava/lang/Integer;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static synthetic fun getMessages$default (Ldev/kord/rest/service/ChannelService;Ldev/kord/common/entity/Snowflake;Ldev/kord/rest/route/Position;Ljava/lang/Integer;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
-	public final fun getPollUsersByAnswer (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;ILdev/kord/common/entity/Snowflake;Ljava/lang/Integer;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static synthetic fun getPollUsersByAnswer$default (Ldev/kord/rest/service/ChannelService;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;ILdev/kord/common/entity/Snowflake;Ljava/lang/Integer;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public final fun getReactions (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/rest/route/Position$After;Ljava/lang/Integer;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static synthetic fun getReactions$default (Ldev/kord/rest/service/ChannelService;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/rest/route/Position$After;Ljava/lang/Integer;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public final fun joinThread (Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -9082,6 +9075,13 @@ public final class dev/kord/rest/service/InviteService : dev/kord/rest/service/R
 	public static synthetic fun deleteInvite$default (Ldev/kord/rest/service/InviteService;Ljava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public final fun getInvite (Ljava/lang/String;Ljava/lang/Boolean;Ljava/lang/Boolean;Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static synthetic fun getInvite$default (Ldev/kord/rest/service/InviteService;Ljava/lang/String;Ljava/lang/Boolean;Ljava/lang/Boolean;Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+}
+
+public final class dev/kord/rest/service/PollService : dev/kord/rest/service/RestService {
+	public fun <init> (Ldev/kord/rest/request/RequestHandler;)V
+	public final fun endPoll (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun getAnswerVoters (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;ILdev/kord/common/entity/Snowflake;Ljava/lang/Integer;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static synthetic fun getAnswerVoters$default (Ldev/kord/rest/service/PollService;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;ILdev/kord/common/entity/Snowflake;Ljava/lang/Integer;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 }
 
 public final class dev/kord/rest/service/RestClient : dev/kord/rest/service/RestService {

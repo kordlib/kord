@@ -25,6 +25,7 @@ public class FollowupMessageCreateBuilder(public val ephemeral: Boolean) :
             components = _components.mapList { it.build() },
             attachments = _attachments.mapList { it.toRequest() },
             flags = buildMessageFlags(flags, suppressEmbeds, suppressNotifications, ephemeral),
+            poll = _poll.map { it.toRequest() }
         ),
         files = files.toList(),
     )

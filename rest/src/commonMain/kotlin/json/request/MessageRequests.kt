@@ -4,6 +4,7 @@ import dev.kord.common.Color
 import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
+import dev.kord.common.serialization.DurationInHours
 import dev.kord.rest.NamedFile
 import kotlin.time.Instant
 import kotlinx.serialization.SerialName
@@ -26,7 +27,7 @@ public data class MessageCreateRequest(
     val flags: Optional<MessageFlags> = Optional.Missing(),
     @SerialName("enforce_nonce")
     val enforceNonce: OptionalBoolean = OptionalBoolean.Missing,
-    val poll: Optional<CreatablePoll> = Optional.Missing(),
+    val poll: Optional<PollCreateRequest> = Optional.Missing(),
 )
 
 public data class MultipartMessageCreateRequest(
@@ -115,7 +116,7 @@ public data class ForumThreadMessageRequest(
     val stickerIds: Optional<List<Snowflake>> = Optional.Missing(),
     val attachments: Optional<List<AttachmentRequest>> = Optional.Missing(),
     val flags: Optional<MessageFlags> = Optional.Missing(),
-    val poll: Optional<CreatablePoll> = Optional.Missing(),
+    val poll: Optional<PollCreateRequest> = Optional.Missing(),
 )
 
 public data class MultipartForumThreadMessageCreateRequest(
@@ -125,12 +126,12 @@ public data class MultipartForumThreadMessageCreateRequest(
 
 
 @Serializable
-public data class CreatablePoll(
+public data class PollCreateRequest(
     val question: DiscordPoll.Media,
     val answers: List<DiscordPoll.Answer>,
-    val expiry: Instant?,
+    val expiry: Optional<DurationInHours> = Optional.Missing(),
     @SerialName("allow_multiselect")
-    val allowMultiselect: Optional<Boolean> = Optional.Missing(),
+    val allowMultiselect: OptionalBoolean = OptionalBoolean.Missing,
     @SerialName("layout_type")
-    val layoutType: PollLayoutType,
+    val layoutType: Optional<PollLayoutType> = Optional.Missing(),
 )

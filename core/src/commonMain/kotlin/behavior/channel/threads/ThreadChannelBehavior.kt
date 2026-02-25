@@ -4,7 +4,6 @@ import dev.kord.common.entity.Snowflake
 import dev.kord.common.exception.RequestException
 import dev.kord.core.Kord
 import dev.kord.core.behavior.channel.GuildMessageChannelBehavior
-import dev.kord.core.behavior.channel.PollParentChannelBehavior
 import dev.kord.core.cache.data.toData
 import dev.kord.core.entity.channel.Channel
 import dev.kord.core.entity.channel.ThreadParentChannel
@@ -20,7 +19,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
-public interface ThreadChannelBehavior : GuildMessageChannelBehavior, PollParentChannelBehavior {
+public interface ThreadChannelBehavior : GuildMessageChannelBehavior {
 
     public val parentId: Snowflake
 

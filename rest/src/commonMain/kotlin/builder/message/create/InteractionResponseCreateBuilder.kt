@@ -30,7 +30,7 @@ public class InteractionResponseCreateBuilder(public val ephemeral: Boolean = fa
                 flags = buildMessageFlags(flags, suppressEmbeds, suppressNotifications, ephemeral),
                 components = _components.mapList { it.build() },
                 attachments = _attachments.mapList { it.toRequest() },
-                poll = _poll
+                poll = _poll.map { it.toRequest() }
             ).optional(),
         ),
         files = files.toList(),

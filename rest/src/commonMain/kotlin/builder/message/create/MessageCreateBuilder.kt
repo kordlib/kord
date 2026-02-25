@@ -3,6 +3,7 @@ package dev.kord.rest.builder.message.create
 import dev.kord.common.annotation.KordDsl
 import dev.kord.common.annotation.KordUnsafe
 import dev.kord.common.entity.DiscordMessage
+import dev.kord.common.entity.DiscordPoll
 import dev.kord.common.entity.MessageFlags
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
@@ -10,7 +11,6 @@ import dev.kord.common.entity.optional.delegate.delegate
 import dev.kord.rest.NamedFile
 import dev.kord.rest.builder.component.MessageComponentBuilder
 import dev.kord.rest.builder.message.*
-import dev.kord.rest.json.request.CreatablePoll
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -24,7 +24,7 @@ public sealed interface MessageCreateBuilder : MessageBuilder {
      * The poll of this message.
      */
     @set:KordUnsafe
-    public var poll: CreatablePoll?
+    public var poll: PollBuilder?
 
     /** Whether this message should be played as a text-to-speech message. */
     public var tts: Boolean?
@@ -48,12 +48,12 @@ public sealed interface MessageCreateBuilder : MessageBuilder {
  * [MessageBuilder.attachments], [MessageBuilder.embeds] or [MessageBuilder.components]**
  */
 @KordUnsafe
-public inline fun MessageCreateBuilder.poll(builder: PollBuilder.() -> Unit) {
+public inline fun MessageCreateBuilder.poll(question: DiscordPoll.Media, builder: PollBuilder.() -> Unit) {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }
 
-    poll = PollBuilder().apply(builder).toRequest()
+    poll = PollBuilder(question).apply(builder)
 }
 
 
@@ -87,7 +87,7 @@ public sealed class AbstractMessageCreateBuilder : MessageCreateBuilder {
     final override var suppressEmbeds: Boolean? = null
     final override var suppressNotifications: Boolean? = null
 
-    internal var _poll: Optional<CreatablePoll> = Optional.Missing()
+    internal var _poll: Optional<PollBuilder> = Optional.Missing()
     @KordUnsafe
-    final override var poll: CreatablePoll? by ::_poll.delegate()
+    final override var poll: PollBuilder? by ::_poll.delegate()
 }

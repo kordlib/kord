@@ -227,7 +227,7 @@ public interface PollBehavior : MessageBehavior {
      * Retrieves the voters who voted for the specified [answer][answerId].
      */
     public suspend fun getAnswerVoters(answerId: Int): List<User> =
-        kord.rest.channel.getPollUsersByAnswer(channelId, id, answerId).users.map {
+        kord.rest.poll.getAnswerVoters(channelId, id, answerId).users.map {
             val data = UserData.from(it)
 
             User(data, kord, supplier)
@@ -237,7 +237,7 @@ public interface PollBehavior : MessageBehavior {
      * Ends this poll.
      */
     public suspend fun end(): Poll {
-        val message = kord.rest.channel.expirePoll(channelId, id)
+        val message = kord.rest.poll.endPoll(channelId, id)
         val data = MessageData.from(message)
 
         return Message(data, kord, supplier) as Poll
