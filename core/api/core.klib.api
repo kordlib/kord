@@ -3010,13 +3010,13 @@ final class dev.kord.core.cache.data/ClientStatusData { // dev.kord.core.cache.d
 }
 
 final class dev.kord.core.cache.data/CollectibleData { // dev.kord.core.cache.data/CollectibleData|null[0]
-    constructor <init>(dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordNameplate> = ...) // dev.kord.core.cache.data/CollectibleData.<init>|<init>(dev.kord.common.entity.optional.Optional<dev.kord.common.entity.DiscordNameplate>){}[0]
+    constructor <init>(dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordNameplate?> = ...) // dev.kord.core.cache.data/CollectibleData.<init>|<init>(dev.kord.common.entity.optional.Optional<dev.kord.common.entity.DiscordNameplate?>){}[0]
 
     final val nameplate // dev.kord.core.cache.data/CollectibleData.nameplate|{}nameplate[0]
-        final fun <get-nameplate>(): dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordNameplate> // dev.kord.core.cache.data/CollectibleData.nameplate.<get-nameplate>|<get-nameplate>(){}[0]
+        final fun <get-nameplate>(): dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordNameplate?> // dev.kord.core.cache.data/CollectibleData.nameplate.<get-nameplate>|<get-nameplate>(){}[0]
 
-    final fun component1(): dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordNameplate> // dev.kord.core.cache.data/CollectibleData.component1|component1(){}[0]
-    final fun copy(dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordNameplate> = ...): dev.kord.core.cache.data/CollectibleData // dev.kord.core.cache.data/CollectibleData.copy|copy(dev.kord.common.entity.optional.Optional<dev.kord.common.entity.DiscordNameplate>){}[0]
+    final fun component1(): dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordNameplate?> // dev.kord.core.cache.data/CollectibleData.component1|component1(){}[0]
+    final fun copy(dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordNameplate?> = ...): dev.kord.core.cache.data/CollectibleData // dev.kord.core.cache.data/CollectibleData.copy|copy(dev.kord.common.entity.optional.Optional<dev.kord.common.entity.DiscordNameplate?>){}[0]
     final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.core.cache.data/CollectibleData.equals|equals(kotlin.Any?){}[0]
     final fun hashCode(): kotlin/Int // dev.kord.core.cache.data/CollectibleData.hashCode|hashCode(){}[0]
     final fun toString(): kotlin/String // dev.kord.core.cache.data/CollectibleData.toString|toString(){}[0]

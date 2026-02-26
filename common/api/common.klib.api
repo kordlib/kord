@@ -1962,13 +1962,13 @@ final class dev.kord.common.entity/DiscordClientStatus { // dev.kord.common.enti
 }
 
 final class dev.kord.common.entity/DiscordCollectible { // dev.kord.common.entity/DiscordCollectible|null[0]
-    constructor <init>(dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordNameplate> = ...) // dev.kord.common.entity/DiscordCollectible.<init>|<init>(dev.kord.common.entity.optional.Optional<dev.kord.common.entity.DiscordNameplate>){}[0]
+    constructor <init>(dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordNameplate?> = ...) // dev.kord.common.entity/DiscordCollectible.<init>|<init>(dev.kord.common.entity.optional.Optional<dev.kord.common.entity.DiscordNameplate?>){}[0]
 
     final val nameplate // dev.kord.common.entity/DiscordCollectible.nameplate|{}nameplate[0]
-        final fun <get-nameplate>(): dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordNameplate> // dev.kord.common.entity/DiscordCollectible.nameplate.<get-nameplate>|<get-nameplate>(){}[0]
+        final fun <get-nameplate>(): dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordNameplate?> // dev.kord.common.entity/DiscordCollectible.nameplate.<get-nameplate>|<get-nameplate>(){}[0]
 
-    final fun component1(): dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordNameplate> // dev.kord.common.entity/DiscordCollectible.component1|component1(){}[0]
-    final fun copy(dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordNameplate> = ...): dev.kord.common.entity/DiscordCollectible // dev.kord.common.entity/DiscordCollectible.copy|copy(dev.kord.common.entity.optional.Optional<dev.kord.common.entity.DiscordNameplate>){}[0]
+    final fun component1(): dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordNameplate?> // dev.kord.common.entity/DiscordCollectible.component1|component1(){}[0]
+    final fun copy(dev.kord.common.entity.optional/Optional<dev.kord.common.entity/DiscordNameplate?> = ...): dev.kord.common.entity/DiscordCollectible // dev.kord.common.entity/DiscordCollectible.copy|copy(dev.kord.common.entity.optional.Optional<dev.kord.common.entity.DiscordNameplate?>){}[0]
     final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.common.entity/DiscordCollectible.equals|equals(kotlin.Any?){}[0]
     final fun hashCode(): kotlin/Int // dev.kord.common.entity/DiscordCollectible.hashCode|hashCode(){}[0]
     final fun toString(): kotlin/String // dev.kord.common.entity/DiscordCollectible.toString|toString(){}[0]
