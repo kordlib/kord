@@ -9483,7 +9483,7 @@ final class dev.kord.core.entity/Member : dev.kord.core.behavior/MemberBehavior,
     final suspend fun asMember(): dev.kord.core.entity/Member // dev.kord.core.entity/Member.asMember|asMember(){}[0]
     final suspend fun asMember(dev.kord.common.entity/Snowflake): dev.kord.core.entity/Member // dev.kord.core.entity/Member.asMember|asMember(dev.kord.common.entity.Snowflake){}[0]
     final suspend fun asMemberOrNull(): dev.kord.core.entity/Member // dev.kord.core.entity/Member.asMemberOrNull|asMemberOrNull(){}[0]
-    final suspend fun asMemberOrNull(dev.kord.common.entity/Snowflake): dev.kord.core.entity/Member // dev.kord.core.entity/Member.asMemberOrNull|asMemberOrNull(dev.kord.common.entity.Snowflake){}[0]
+    final suspend fun asMemberOrNull(dev.kord.common.entity/Snowflake): dev.kord.core.entity/Member? // dev.kord.core.entity/Member.asMemberOrNull|asMemberOrNull(dev.kord.common.entity.Snowflake){}[0]
     final suspend fun asUser(): dev.kord.core.entity/User // dev.kord.core.entity/Member.asUser|asUser(){}[0]
     final suspend fun asUserOrNull(): dev.kord.core.entity/User // dev.kord.core.entity/Member.asUserOrNull|asUserOrNull(){}[0]
     final suspend fun getPermissions(): dev.kord.common.entity/Permissions // dev.kord.core.entity/Member.getPermissions|getPermissions(){}[0]
