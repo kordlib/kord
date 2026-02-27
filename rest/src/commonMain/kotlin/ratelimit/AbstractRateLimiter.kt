@@ -11,8 +11,8 @@ import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.sync.Mutex
 import kotlin.time.Clock
-import kotlin.time.Instant
 import kotlin.time.Duration.Companion.minutes
+import kotlin.time.Instant
 
 public abstract class AbstractRateLimiter internal constructor(public val clock: Clock) : RequestRateLimiter {
     internal abstract val logger: KLogger

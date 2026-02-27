@@ -14,8 +14,8 @@ import dev.kord.core.cache.data.InviteWithMetadataData
 import dev.kord.core.entity.channel.Channel
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
-import kotlin.time.Instant
 import kotlin.time.Duration
+import kotlin.time.Instant
 
 /**
  * An instance of a [Discord Invite](https://discord.com/developers/docs/resources/invite).

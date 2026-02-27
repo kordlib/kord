@@ -2,7 +2,6 @@ package dev.kord.common.entity.optional
 
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.SerializationException
-import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import kotlin.js.JsName
 import kotlin.test.Test
@@ -17,7 +16,7 @@ internal class OptionalBooleanTest {
 
     @Test
     @JsName("test1")
-    fun `deserializing nothing in optional assigns Missing`(){
+    fun `deserializing nothing in optional assigns Missing`() {
         //language=json
         val json = """{}"""
 
@@ -31,7 +30,7 @@ internal class OptionalBooleanTest {
 
     @Test
     @JsName("test2")
-    fun `deserializing null in optional throws SerializationException`(){
+    fun `deserializing null in optional throws SerializationException`() {
         //language=json
         val json = """{ "value":null }"""
 
@@ -45,7 +44,7 @@ internal class OptionalBooleanTest {
 
     @Test
     @JsName("test3")
-    fun `deserializing value in optional assigns Value`(){
+    fun `deserializing value in optional assigns Value`() {
         //language=json
         val json = """{ "value":true }"""
 

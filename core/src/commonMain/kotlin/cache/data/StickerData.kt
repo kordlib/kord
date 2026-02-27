@@ -27,7 +27,18 @@ public data class StickerData(
         public val description: DataDescription<StickerData, Snowflake> = description(StickerData::id)
 
         public fun from(entity: DiscordMessageSticker): StickerData = with(entity) {
-            StickerData(id, packId, name, description, tags, formatType, available, guildId, user.map { it.toData() }, sortValue)
+            StickerData(
+                id,
+                packId,
+                name,
+                description,
+                tags,
+                formatType,
+                available,
+                guildId,
+                user.map { it.toData() },
+                sortValue
+            )
         }
     }
 }
@@ -63,7 +74,15 @@ public data class StickerPackData(
         }
 
         public fun from(entity: DiscordStickerPack): StickerPackData = with(entity) {
-            StickerPackData(id, stickers.map { StickerData.from(it) }, name, skuId, coverStickerId, description, bannerAssetId)
+            StickerPackData(
+                id,
+                stickers.map { StickerData.from(it) },
+                name,
+                skuId,
+                coverStickerId,
+                description,
+                bannerAssetId
+            )
         }
     }
 }

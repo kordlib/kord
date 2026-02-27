@@ -1,12 +1,7 @@
 package dev.kord.core.entity.component
 
 import dev.kord.common.entity.ComponentType
-import dev.kord.core.cache.data.ChatComponentData
-import dev.kord.core.cache.data.CheckboxComponentData
-import dev.kord.core.cache.data.ComponentData
-import dev.kord.core.cache.data.LabelComponentData
-import dev.kord.core.cache.data.SelectComponentData
-import dev.kord.core.cache.data.TextInputComponentData
+import dev.kord.core.cache.data.*
 import dev.kord.core.entity.Message
 
 /**

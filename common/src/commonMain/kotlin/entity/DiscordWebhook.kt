@@ -9,7 +9,7 @@
         Entry(
             "ChannelFollower", intValue = 2,
             kDoc = "Channel Follower Webhooks are internal webhooks used with Channel Following to post new messages " +
-                    "into channels.",
+                "into channels.",
         ),
         Entry("Application", intValue = 3, kDoc = "Application webhooks are webhooks used with Interactions."),
     ],
@@ -22,7 +22,8 @@ import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.ksp.Generate
 import dev.kord.ksp.Generate.EntityType.INT_KORD_ENUM
 import dev.kord.ksp.Generate.Entry
-import kotlinx.serialization.*
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
 /**
  * A representation of the [Discord Webhook structure](https://discord.com/developers/docs/resources/webhook#webhook-object).

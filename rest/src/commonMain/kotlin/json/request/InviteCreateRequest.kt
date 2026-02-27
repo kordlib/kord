@@ -1,7 +1,10 @@
 package dev.kord.rest.json.request
 
 import dev.kord.common.entity.InviteTargetType
-import dev.kord.common.entity.optional.*
+import dev.kord.common.entity.optional.Optional
+import dev.kord.common.entity.optional.OptionalBoolean
+import dev.kord.common.entity.optional.OptionalInt
+import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.common.serialization.DurationInSeconds
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

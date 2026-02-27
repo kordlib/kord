@@ -362,9 +362,9 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
                 .filter {
                     val time = it.threadMetadata.value?.archiveTimestamp
                     it.threadMetadata.value?.archived == true
-                            && time != null
-                            && (before == null || time < before)
-                            && (it.type == ChannelType.PublicGuildThread || it.type == ChannelType.PublicNewsThread)
+                        && time != null
+                        && (before == null || time < before)
+                        && (it.type == ChannelType.PublicGuildThread || it.type == ChannelType.PublicNewsThread)
                 }
                 .limit(limit)
                 .mapNotNull { Channel.from(it, kord) as? ThreadChannel }
@@ -383,9 +383,9 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
                 .filter {
                     val time = it.threadMetadata.value?.archiveTimestamp
                     it.threadMetadata.value?.archived == true
-                            && time != null
-                            && (before == null || time < before)
-                            && it.type == ChannelType.PrivateThread
+                        && time != null
+                        && (before == null || time < before)
+                        && it.type == ChannelType.PrivateThread
                 }
                 .limit(limit)
                 .mapNotNull { Channel.from(it, kord) as? ThreadChannel }
@@ -407,9 +407,9 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
                 .asFlow()
                 .filter {
                     it.threadMetadata.value?.archived == true
-                            && (before == null || it.id < before)
-                            && it.type == ChannelType.PrivateThread
-                            && it.member !is Optional.Missing
+                        && (before == null || it.id < before)
+                        && it.type == ChannelType.PrivateThread
+                        && it.member !is Optional.Missing
                 }
                 .limit(limit)
                 .mapNotNull { Channel.from(it, kord) as? ThreadChannel }
@@ -465,7 +465,10 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
         return GlobalApplicationCommand(data, kord.rest.interaction)
     }
 
-    override fun getGlobalApplicationCommands(applicationId: Snowflake, withLocalizations: Boolean?): Flow<GlobalApplicationCommand> =
+    override fun getGlobalApplicationCommands(
+        applicationId: Snowflake,
+        withLocalizations: Boolean?
+    ): Flow<GlobalApplicationCommand> =
         cache.query {
             idEq(ApplicationCommandData::guildId, null)
             idEq(ApplicationCommandData::applicationId, applicationId)

@@ -5,8 +5,8 @@ import dev.kord.cache.api.data.description
 import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.*
 import dev.kord.common.serialization.DurationInSeconds
-import kotlin.time.Instant
 import kotlinx.serialization.Serializable
+import kotlin.time.Instant
 
 @Serializable
 public data class ChannelData(

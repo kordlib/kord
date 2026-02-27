@@ -8,7 +8,7 @@ import dev.kord.core.mockKord
 import io.mockk.every
 import io.mockk.mockk
 
-internal class GuildTest: EntityEqualityTest<Guild> by EntityEqualityTest({
+internal class GuildTest : EntityEqualityTest<Guild> by EntityEqualityTest({
     val kord = mockKord()
     val data = mockk<GuildData>()
     every { data.id } returns it

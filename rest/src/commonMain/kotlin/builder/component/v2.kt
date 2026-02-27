@@ -1,14 +1,6 @@
 package dev.kord.rest.builder.component
 
-import dev.kord.common.entity.ComponentType
-import dev.kord.common.entity.DiscordChatComponent
-import dev.kord.common.entity.DiscordCheckboxComponent
-import dev.kord.common.entity.DiscordComponent
-import dev.kord.common.entity.DiscordSelectComponent
-import dev.kord.common.entity.DiscordSelectOption
-import dev.kord.common.entity.MediaGalleryItem
-import dev.kord.common.entity.SeparatorSpacingSize
-import dev.kord.common.entity.UnfurledMediaItem
+import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalInt
@@ -70,9 +62,9 @@ public class MediaGalleryBuilder : ContainerComponentBuilder {
 
 public class SeparatorBuilder : ContainerComponentBuilder {
     private var _spacing: Optional<SeparatorSpacingSize> = Optional.Missing()
-private var _divider: OptionalBoolean = OptionalBoolean.Missing
+    private var _divider: OptionalBoolean = OptionalBoolean.Missing
 
-public var divider: Boolean? by ::_divider.delegate()
+    public var divider: Boolean? by ::_divider.delegate()
     public var spacing: SeparatorSpacingSize? by ::_spacing.delegate()
 
     override fun build(): DiscordComponent = DiscordChatComponent(
@@ -126,7 +118,7 @@ public class RadioGroupBuilder(public val customId: String) : ContainerComponent
 
     public var required: Boolean? by ::_required.delegate()
 
-    override fun build() : DiscordComponent = DiscordChatComponent(
+    override fun build(): DiscordComponent = DiscordChatComponent(
         type = ComponentType.RadioGroup,
         customId = Optional(customId),
         options = _options,

@@ -1,7 +1,9 @@
 package dev.kord.core.entity.application
 
 import dev.kord.common.entity.Snowflake
-import dev.kord.core.behavior.*
+import dev.kord.core.behavior.GlobalUserCommandBehavior
+import dev.kord.core.behavior.GuildUserCommandBehavior
+import dev.kord.core.behavior.UserCommandBehavior
 import dev.kord.core.cache.data.ApplicationCommandData
 import dev.kord.rest.service.InteractionService
 

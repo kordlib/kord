@@ -45,7 +45,7 @@ public class AutoModerationRuleCreateEvent(
         AutoModerationRuleCreateEvent(rule, kord, shard, customContext, strategy.supply(kord))
 
     override fun toString(): String = "AutoModerationRuleCreateEvent(rule=$rule, kord=$kord, shard=$shard, " +
-            "customContext=$customContext, supplier=$supplier)"
+        "customContext=$customContext, supplier=$supplier)"
 }
 
 /**
@@ -68,7 +68,7 @@ public class AutoModerationRuleUpdateEvent(
         AutoModerationRuleUpdateEvent(rule, old, kord, shard, customContext, strategy.supply(kord))
 
     override fun toString(): String = "AutoModerationRuleUpdateEvent(rule=$rule, old=$old, kord=$kord, shard=$shard, " +
-            "customContext=$customContext, supplier=$supplier)"
+        "customContext=$customContext, supplier=$supplier)"
 }
 
 /**
@@ -89,5 +89,5 @@ public class AutoModerationRuleDeleteEvent(
         AutoModerationRuleDeleteEvent(rule, kord, shard, customContext, strategy.supply(kord))
 
     override fun toString(): String = "AutoModerationRuleDeleteEvent(rule=$rule, kord=$kord, shard=$shard, " +
-            "customContext=$customContext, supplier=$supplier)"
+        "customContext=$customContext, supplier=$supplier)"
 }

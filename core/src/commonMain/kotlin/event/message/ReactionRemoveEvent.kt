@@ -45,7 +45,8 @@ public class ReactionRemoveEvent(
 
     public suspend fun getMessage(): Message = supplier.getMessage(channelId = channelId, messageId = messageId)
 
-    public suspend fun getMessageOrNull(): Message? = supplier.getMessageOrNull(channelId = channelId, messageId = messageId)
+    public suspend fun getMessageOrNull(): Message? =
+        supplier.getMessageOrNull(channelId = channelId, messageId = messageId)
 
     public suspend fun getUser(): User = supplier.getUser(userId)
 
@@ -55,7 +56,17 @@ public class ReactionRemoveEvent(
         guildId?.let { supplier.getMemberOrNull(guildId = guildId, userId = userId) }
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): ReactionRemoveEvent =
-        ReactionRemoveEvent(userId, channelId, messageId, guildId, emoji, kord, shard, customContext, strategy.supply(kord))
+        ReactionRemoveEvent(
+            userId,
+            channelId,
+            messageId,
+            guildId,
+            emoji,
+            kord,
+            shard,
+            customContext,
+            strategy.supply(kord)
+        )
 
     override fun toString(): String {
         return "ReactionRemoveEvent(userId=$userId, channelId=$channelId, messageId=$messageId, guildId=$guildId, emoji=$emoji, kord=$kord, shard=$shard, supplier=$supplier)"

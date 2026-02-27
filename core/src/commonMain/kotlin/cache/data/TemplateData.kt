@@ -2,8 +2,8 @@ package dev.kord.core.cache.data
 
 import dev.kord.common.entity.DiscordTemplate
 import dev.kord.common.entity.Snowflake
-import kotlin.time.Instant
 import kotlinx.serialization.Serializable
+import kotlin.time.Instant
 
 @Serializable
 public data class TemplateData(

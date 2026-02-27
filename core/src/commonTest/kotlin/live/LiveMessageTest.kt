@@ -14,9 +14,9 @@ import dev.kord.core.randomId
 import dev.kord.gateway.*
 import kotlinx.coroutines.job
 import kotlinx.coroutines.test.runTest
-import kotlin.time.Instant
 import kotlin.js.JsName
 import kotlin.test.*
+import kotlin.time.Instant
 
 @Ignore
 class LiveMessageTest : AbstractLiveEntityTest<LiveMessage>() {

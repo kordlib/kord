@@ -56,9 +56,11 @@ public sealed interface ApplicationCommand : ApplicationCommandBehavior {
      * whether the command is enabled by default when the app is added to a guild.
      */
     @Suppress("DEPRECATION_ERROR")
-    @Deprecated("'defaultPermission' is deprecated in favor of 'defaultMemberPermissions' and 'dmPermission'." +
+    @Deprecated(
+        "'defaultPermission' is deprecated in favor of 'defaultMemberPermissions' and 'dmPermission'." +
             " The deprecation level will be raised to HIDDEN in 0.19.0 and this declaration will be removed in 0.20.0",
-        level = DeprecationLevel.ERROR)
+        level = DeprecationLevel.ERROR
+    )
     public val defaultPermission: Boolean? get() = data.defaultPermission.value
 
     /** Indicates whether the command is age-restricted. */
@@ -72,6 +74,7 @@ public interface GlobalApplicationCommand : ApplicationCommand, GlobalApplicatio
      */
     public val dmPermission: Boolean get() = data.dmPermission.orElse(true)
 }
+
 public class UnknownGlobalApplicationCommand(
     override val data: ApplicationCommandData,
     override val service: InteractionService,
@@ -82,12 +85,15 @@ public class UnknownGlobalApplicationCommand(
  * A representation of [Discord Application Command](https://discord.com/developers/docs/interactions/application-commands)
  * in a global context.
  */
-public fun GlobalApplicationCommand(data: ApplicationCommandData, service: InteractionService): GlobalApplicationCommand {
-    return when(data.type.value) {
+public fun GlobalApplicationCommand(
+    data: ApplicationCommandData,
+    service: InteractionService
+): GlobalApplicationCommand {
+    return when (data.type.value) {
         ApplicationCommandType.ChatInput -> GlobalChatInputCommand(data, service)
         ApplicationCommandType.Message -> GlobalMessageCommand(data, service)
         ApplicationCommandType.User -> GlobalUserCommand(data, service)
-        is ApplicationCommandType.Unknown ->  UnknownGlobalApplicationCommand(data, service)
+        is ApplicationCommandType.Unknown -> UnknownGlobalApplicationCommand(data, service)
         null -> error("The type value is missing, can't determine the type")
     }
 }
@@ -108,18 +114,15 @@ public class UnknownGuildApplicationCommand(
 }
 
 
-
-
 public fun GuildApplicationCommand(data: ApplicationCommandData, service: InteractionService): GuildApplicationCommand {
-    return when(data.type.value) {
+    return when (data.type.value) {
         ApplicationCommandType.ChatInput -> GuildChatInputCommand(data, service)
         ApplicationCommandType.Message -> GuildMessageCommand(data, service)
         ApplicationCommandType.User -> GuildUserCommand(data, service)
-        is ApplicationCommandType.Unknown ->  UnknownGuildApplicationCommand(data, service)
+        is ApplicationCommandType.Unknown -> UnknownGuildApplicationCommand(data, service)
         null -> error("The type value is missing, can't determine the type")
     }
 }
-
 
 
 public class ApplicationCommandParameter(

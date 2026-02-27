@@ -111,49 +111,50 @@ public class VoiceConnectionBuilder(
         this.voiceGatewayBuilder = builder
     }
 
-    private suspend fun Gateway.updateVoiceState(): Pair<VoiceConnectionData, VoiceGatewayConfiguration> = coroutineScope {
-        val voiceStateDeferred = async {
-            withTimeoutOrNull(timeout) {
-                gateway.events.filterIsInstance<VoiceStateUpdate>()
-                    .filter { it.voiceState.guildId.value == guildId && it.voiceState.userId == selfId }
-                    .first()
-                    .voiceState
+    private suspend fun Gateway.updateVoiceState(): Pair<VoiceConnectionData, VoiceGatewayConfiguration> =
+        coroutineScope {
+            val voiceStateDeferred = async {
+                withTimeoutOrNull(timeout) {
+                    gateway.events.filterIsInstance<VoiceStateUpdate>()
+                        .filter { it.voiceState.guildId.value == guildId && it.voiceState.userId == selfId }
+                        .first()
+                        .voiceState
+                }
             }
-        }
 
-        val voiceServerDeferred = async {
-            withTimeoutOrNull(timeout) {
-                gateway.events.filterIsInstance<VoiceServerUpdate>()
-                    .filter { it.voiceServerUpdateData.guildId == guildId }
-                    .first()
-                    .voiceServerUpdateData
+            val voiceServerDeferred = async {
+                withTimeoutOrNull(timeout) {
+                    gateway.events.filterIsInstance<VoiceServerUpdate>()
+                        .filter { it.voiceServerUpdateData.guildId == guildId }
+                        .first()
+                        .voiceServerUpdateData
+                }
             }
-        }
 
-        send(
-            UpdateVoiceStatus(
-                guildId = guildId,
-                channelId = channelId,
-                selfMute = selfMute,
-                selfDeaf = selfDeaf,
+            send(
+                UpdateVoiceStatus(
+                    guildId = guildId,
+                    channelId = channelId,
+                    selfMute = selfMute,
+                    selfDeaf = selfDeaf,
+                )
             )
-        )
 
-        val voiceServer = voiceServerDeferred.await()
-        val voiceState = voiceStateDeferred.await()
+            val voiceServer = voiceServerDeferred.await()
+            val voiceState = voiceStateDeferred.await()
 
-        if (voiceServer == null || voiceState == null)
-            throw VoiceConnectionInitializationException("Did not receive a VoiceStateUpdate and or a VoiceServerUpdate in time!")
+            if (voiceServer == null || voiceState == null)
+                throw VoiceConnectionInitializationException("Did not receive a VoiceStateUpdate and or a VoiceServerUpdate in time!")
 
-        VoiceConnectionData(
-            selfId,
-            guildId,
-            voiceState.sessionId
-        ) to VoiceGatewayConfiguration(
-            voiceServer.token,
-            "wss://${voiceServer.endpoint}/?v=${KordConfiguration.VOICE_GATEWAY_VERSION}",
-        )
-    }
+            VoiceConnectionData(
+                selfId,
+                guildId,
+                voiceState.sessionId
+            ) to VoiceGatewayConfiguration(
+                voiceServer.token,
+                "wss://${voiceServer.endpoint}/?v=${KordConfiguration.VOICE_GATEWAY_VERSION}",
+            )
+        }
 
     /**
      * @throws dev.kord.voice.exception.VoiceConnectionInitializationException when there was a problem retrieving voice information from Discord.

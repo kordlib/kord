@@ -37,7 +37,8 @@ public class ReactionRemoveAllEvent(
     public suspend fun getGuildOrNull(): Guild? = guildId?.let { supplier.getGuildOrNull(it) }
 
     public suspend fun getMessage(): Message = supplier.getMessage(channelId = channelId, messageId = messageId)
-    public suspend fun getMessageOrNull(): Message? = supplier.getMessageOrNull(channelId = channelId, messageId = messageId)
+    public suspend fun getMessageOrNull(): Message? =
+        supplier.getMessageOrNull(channelId = channelId, messageId = messageId)
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): ReactionRemoveAllEvent =
         ReactionRemoveAllEvent(channelId, messageId, guildId, kord, shard, customContext, strategy.supply(kord))

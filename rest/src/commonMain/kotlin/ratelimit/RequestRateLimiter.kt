@@ -1,10 +1,10 @@
 package dev.kord.rest.ratelimit
 
 import dev.kord.rest.request.Request
-import kotlin.time.Instant
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 import kotlin.jvm.JvmInline
+import kotlin.time.Instant
 
 /**
  * A rate limiter that follows [Discord's rate limits](https://discord.com/developers/docs/topics/rate-limits) for

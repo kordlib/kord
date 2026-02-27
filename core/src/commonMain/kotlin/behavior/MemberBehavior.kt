@@ -7,7 +7,6 @@ import dev.kord.core.Kord
 import dev.kord.core.cache.data.MemberData
 import dev.kord.core.cache.data.PresenceData
 import dev.kord.core.cache.data.UserData
-import dev.kord.core.cache.data.VoiceStateData
 import dev.kord.core.cache.idEq
 import dev.kord.core.entity.*
 import dev.kord.core.exception.EntityNotFoundException

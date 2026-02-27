@@ -182,14 +182,21 @@ public class Message(
      * so its state is unknown.
      * If the field exists but is null, the referenced message was deleted.
      */
-    public val messageReference: MessageReference? get() = data.messageReference.value?.let { MessageReference(it, kord) }
+    public val messageReference: MessageReference?
+        get() = data.messageReference.value?.let {
+            MessageReference(
+                it,
+                kord
+            )
+        }
 
     /**
      * If this message is a [MessageReferenceType.Forward] this will contain snapshots of the original message.
      */
-    public val messageSnapshots: List<MessageSnapshot>? get() = data.messageSnapshots.value?.map {
-        MessageSnapshot(it, kord)
-    }
+    public val messageSnapshots: List<MessageSnapshot>?
+        get() = data.messageSnapshots.value?.map {
+            MessageSnapshot(it, kord)
+        }
 
     /**
      * The [Channels][Channel] specifically mentioned in this message.

@@ -154,10 +154,20 @@ public class ReadyEvent(
     public fun getGuilds(): Flow<Guild> = supplier.guilds.filter { it.id in guildIds }
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): ReadyEvent =
-        ReadyEvent(gatewayVersion, guildIds, self, sessionId, resumeGatewayUrl, kord, shard, customContext, strategy.supply(kord))
+        ReadyEvent(
+            gatewayVersion,
+            guildIds,
+            self,
+            sessionId,
+            resumeGatewayUrl,
+            kord,
+            shard,
+            customContext,
+            strategy.supply(kord)
+        )
 
     override fun toString(): String = "ReadyEvent(gatewayVersion=$gatewayVersion, guildIds=$guildIds, self=$self, " +
-            "sessionId='$sessionId', resumeGatewayUrl=$resumeGatewayUrl, kord=$kord, shard=$shard, supplier=$supplier)"
+        "sessionId='$sessionId', resumeGatewayUrl=$resumeGatewayUrl, kord=$kord, shard=$shard, supplier=$supplier)"
 }
 
 public class ResumedEvent(

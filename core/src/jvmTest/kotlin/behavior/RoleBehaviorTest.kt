@@ -12,7 +12,7 @@ internal class RoleBehaviorTest : GuildEntityEqualityTest<RoleBehavior> by Guild
 }) {
 
     @Test
-    fun `everyone role mention is properly formatted`(){
+    fun `everyone role mention is properly formatted`() {
         val kord = mockKord()
 
         val id = Snowflake(1337u)

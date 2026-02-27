@@ -22,11 +22,11 @@ import dev.kord.rest.json.JsonErrorCode
 import dev.kord.rest.request.RestRequestException
 import dev.kord.rest.route.Position
 import kotlinx.coroutines.flow.*
-import kotlin.time.Clock
-import kotlin.time.Instant
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 import kotlin.reflect.KClass
+import kotlin.time.Clock
+import kotlin.time.Instant
 
 internal inline fun <T> catchNotFound(block: () -> T): T? {
     // block is called exactly once, but might not be executed fully, even if catchNotFound returns normally
@@ -349,7 +349,7 @@ public fun Intents.Builder.enableEvent(event: KClass<out Event>): Unit = when (e
     ThreadListSyncEvent::class,
 
     ThreadMemberUpdateEvent::class,
-    -> +Guilds
+        -> +Guilds
 
 
     MemberJoinEvent::class, MemberUpdateEvent::class, MemberLeaveEvent::class -> +GuildMembers
@@ -387,20 +387,20 @@ public fun Intents.Builder.enableEvent(event: KClass<out Event>): Unit = when (e
     GuildScheduledEventUserEvent::class,
     GuildScheduledEventUserAddEvent::class,
     GuildScheduledEventUserRemoveEvent::class,
-    -> +GuildScheduledEvents
+        -> +GuildScheduledEvents
 
 
     AutoModerationRuleConfigurationEvent::class,
     AutoModerationRuleCreateEvent::class,
     AutoModerationRuleUpdateEvent::class,
     AutoModerationRuleDeleteEvent::class,
-    -> +AutoModerationConfiguration
+        -> +AutoModerationConfiguration
 
     EmojisUpdateEvent::class,
-        GuildSoundboardSoundCreateEvent::class,
-        GuildSoundboardSoundUpdateEvent::class,
-        GuildSoundboardSoundsUpdateEvent::class,
-        GuildSoundboardSoundDeletEvent::class,
+    GuildSoundboardSoundCreateEvent::class,
+    GuildSoundboardSoundUpdateEvent::class,
+    GuildSoundboardSoundsUpdateEvent::class,
+    GuildSoundboardSoundDeletEvent::class,
         -> +GuildExpressions
 
 

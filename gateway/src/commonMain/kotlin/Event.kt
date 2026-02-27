@@ -82,7 +82,7 @@ public sealed class Event {
                 // OpCodes for Commands (aka send events), they shouldn't be received
                 OpCode.Identify, OpCode.StatusUpdate, OpCode.VoiceStateUpdate, OpCode.Resume,
                 OpCode.RequestGuildMembers, OpCode.RequestSoundboardSounds
-                -> throw IllegalArgumentException("Illegal opcode for gateway event: $op")
+                    -> throw IllegalArgumentException("Illegal opcode for gateway event: $op")
                 OpCode.Unknown -> throw IllegalArgumentException("Unknown opcode for gateway event")
             }
         }
@@ -204,10 +204,22 @@ public sealed class Event {
                 "VOICE_STATE_UPDATE" -> VoiceStateUpdate(decode(DiscordVoiceState.serializer()), sequence)
                 "VOICE_SERVER_UPDATE" -> VoiceServerUpdate(decode(DiscordVoiceServerUpdateData.serializer()), sequence)
                 "WEBHOOKS_UPDATE" -> WebhooksUpdate(decode(DiscordWebhooksUpdateData.serializer()), sequence)
-                "GUILD_SOUNDBOARD_SOUND_CREATE" -> GuildSoundboardSoundCreate(decode(DiscordSoundboardSound.serializer()), sequence)
-                "GUILD_SOUNDBOARD_SOUND_UPDATE" -> GuildSoundboardSoundUpdate(decode(DiscordSoundboardSound.serializer()), sequence)
-                "GUILD_SOUNDBOARD_SOUNDS_UPDATE" -> GuildSoundboardSoundsUpdate(decode(SoundboardSoundsChunk.serializer()), sequence)
-                "GUILD_SOUNDBOARD_SOUNDS_DELETE" -> GuildSoundboardSoundDelete(decode(DeletedSound.serializer()), sequence)
+                "GUILD_SOUNDBOARD_SOUND_CREATE" -> GuildSoundboardSoundCreate(
+                    decode(DiscordSoundboardSound.serializer()),
+                    sequence
+                )
+                "GUILD_SOUNDBOARD_SOUND_UPDATE" -> GuildSoundboardSoundUpdate(
+                    decode(DiscordSoundboardSound.serializer()),
+                    sequence
+                )
+                "GUILD_SOUNDBOARD_SOUNDS_UPDATE" -> GuildSoundboardSoundsUpdate(
+                    decode(SoundboardSoundsChunk.serializer()),
+                    sequence
+                )
+                "GUILD_SOUNDBOARD_SOUNDS_DELETE" -> GuildSoundboardSoundDelete(
+                    decode(DeletedSound.serializer()),
+                    sequence
+                )
                 "VOICE_CHANNEL_EFFECT_SEND" -> VoiceEffectSend(decode(VoiceChannelEffect.serializer()), sequence)
                 "SOUNDBOARD_SOUNDS" -> SoundboardSounds(decode(SoundboardSoundsChunk.serializer()), sequence)
                 else -> {
@@ -387,7 +399,8 @@ public data class ChannelDelete(val channel: DiscordChannel, override val sequen
 public data class ChannelPinsUpdate(val pins: DiscordPinsUpdateData, override val sequence: Int?) : DispatchEvent()
 
 public data class TypingStart(val data: DiscordTyping, override val sequence: Int?) : DispatchEvent()
-public data class GuildAuditLogEntryCreate(val entry: DiscordAuditLogEntry, override val sequence: Int?): DispatchEvent()
+public data class GuildAuditLogEntryCreate(val entry: DiscordAuditLogEntry, override val sequence: Int?) :
+    DispatchEvent()
 public data class GuildCreate(val guild: DiscordGuild, override val sequence: Int?) : DispatchEvent()
 public data class GuildUpdate(val guild: DiscordGuild, override val sequence: Int?) : DispatchEvent()
 public data class GuildDelete(val guild: DiscordUnavailableGuild, override val sequence: Int?) : DispatchEvent()
@@ -402,14 +415,11 @@ public data class IntegrationCreate(val integration: DiscordIntegration, overrid
     DispatchEvent()
 public data class IntegrationUpdate(val integration: DiscordIntegration, override val sequence: Int?) :
     DispatchEvent()
-
 public data class GuildMemberAdd(val member: DiscordAddedGuildMember, override val sequence: Int?) : DispatchEvent()
 public data class GuildMemberRemove(val member: DiscordRemovedGuildMember, override val sequence: Int?) :
     DispatchEvent()
-
 public data class GuildMemberUpdate(val member: DiscordUpdatedGuildMember, override val sequence: Int?) :
     DispatchEvent()
-
 public data class GuildRoleCreate(val role: DiscordGuildRole, override val sequence: Int?) : DispatchEvent()
 public data class GuildRoleUpdate(val role: DiscordGuildRole, override val sequence: Int?) : DispatchEvent()
 public data class GuildRoleDelete(val role: DiscordDeletedGuildRole, override val sequence: Int?) : DispatchEvent()

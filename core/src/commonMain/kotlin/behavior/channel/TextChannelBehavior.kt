@@ -22,9 +22,9 @@ import dev.kord.rest.request.RestRequestException
 import dev.kord.rest.service.patchTextChannel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filterIsInstance
-import kotlin.time.Instant
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
+import kotlin.time.Instant
 
 public interface TextChannelBehavior : TopGuildMessageChannelBehavior, PrivateThreadParentChannelBehavior {
 
@@ -46,7 +46,8 @@ public interface TextChannelBehavior : TopGuildMessageChannelBehavior, PrivateTh
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
-    override suspend fun asChannelOrNull(): TextChannel? = super<TopGuildMessageChannelBehavior>.asChannelOrNull() as? TextChannel
+    override suspend fun asChannelOrNull(): TextChannel? =
+        super<TopGuildMessageChannelBehavior>.asChannelOrNull() as? TextChannel
 
     /**
      * Retrieve the [TextChannel] associated with this behaviour from the provided [EntitySupplier]
@@ -54,7 +55,8 @@ public interface TextChannelBehavior : TopGuildMessageChannelBehavior, PrivateTh
      * @throws [RequestException] if anything went wrong during the request.
      * @throws [EntityNotFoundException] if the user wasn't present.
      */
-    override suspend fun fetchChannel(): TextChannel = super<TopGuildMessageChannelBehavior>.fetchChannel() as TextChannel
+    override suspend fun fetchChannel(): TextChannel =
+        super<TopGuildMessageChannelBehavior>.fetchChannel() as TextChannel
 
 
     /**
@@ -63,7 +65,8 @@ public interface TextChannelBehavior : TopGuildMessageChannelBehavior, PrivateTh
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
-    override suspend fun fetchChannelOrNull(): TextChannel? = super<TopGuildMessageChannelBehavior>.fetchChannelOrNull() as? TextChannel
+    override suspend fun fetchChannelOrNull(): TextChannel? =
+        super<TopGuildMessageChannelBehavior>.fetchChannelOrNull() as? TextChannel
 
     public suspend fun startPublicThread(
         name: String,

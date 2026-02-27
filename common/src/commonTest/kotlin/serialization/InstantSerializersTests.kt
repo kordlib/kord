@@ -1,6 +1,5 @@
 package dev.kord.common.serialization
 
-import kotlin.time.Instant
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerializationException
 import kotlinx.serialization.json.Json
@@ -9,6 +8,7 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 import kotlin.time.Duration.Companion.nanoseconds
+import kotlin.time.Instant
 
 private val EPOCH = Instant.fromEpochSeconds(0)
 

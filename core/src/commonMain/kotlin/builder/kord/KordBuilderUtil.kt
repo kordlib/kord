@@ -50,4 +50,4 @@ public fun getBotIdFromToken(token: String): Snowflake = try {
 }
 
 @Suppress("UnusedReceiverParameter")
-private val Base64.TokenSafe get()= Base64.withPadding(Base64.PaddingOption.ABSENT_OPTIONAL)
+private val Base64.TokenSafe get() = Base64.withPadding(Base64.PaddingOption.ABSENT_OPTIONAL)

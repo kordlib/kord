@@ -13,6 +13,7 @@ import kotlin.js.JsName
 import kotlin.test.Test
 
 expect class StackTraceElement
+
 expect fun currentThreadStackTrace(): StackTraceElement
 internal expect fun RecoveredStackTrace.validate(expected: StackTraceElement)
 

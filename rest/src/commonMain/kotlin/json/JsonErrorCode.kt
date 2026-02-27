@@ -1033,20 +1033,28 @@ public enum class JsonErrorCode(public val code: Int) {
 
     /** 50110	The provided file is invalid. */
     InvalidFile(50110),
+
     /** 50111	Invalid guild join request application status query. */
     InvalidGuildJoinRequest(50111),
+
     /** 50112	Cannot delete a subscription group that has listings. */
     CannotDeleteSubscriptionGroup(50112),
+
     /** 50113	Cannot create more than 1 subscription group. */
     CannotCreateMoreThanOneSubscriptionGroup(50113),
+
     /** 50119	This guild is not allowed to use monetization features. */
     GuildCannotUseMonetization(50119),
+
     /** 50121	This server is not eligible to request monetization. */
     ServerNotEligibleToRequestMonetization(50121),
+
     /** 50123	The provided file type is invalid. */
     InvalidFileType(50123),
+
     /** 50124	The provided file duration exceeds maximum of 5.2 seconds. */
     FileDurationTooLong(50124),
+
     /** 50129	You must have Nitro to launch this activity. */
     MustHaveNitroForActivity(50129),
 
@@ -1703,12 +1711,16 @@ public enum class JsonErrorCode(public val code: Int) {
 
     /** You must join the server to take this action. */
     MustJoinServer(180003),
+
     /** This route requires a recurring event. */
     RecurringEventRequired(180004),
+
     /** Recurring event exceptions must have a modified event field from the event series. */
     RecurringEventMustHaveModifiedEventField(180005),
+
     /** Cannot RSVP to a finished event. */
     CannotRSVPFinishedEvent(180006),
+
     /** We are temporarily not accepting Verified Server Applications while we tidy up things on our end. */
     VerifiedServerApplicationsTemporarilyUnavailable(181000),
 

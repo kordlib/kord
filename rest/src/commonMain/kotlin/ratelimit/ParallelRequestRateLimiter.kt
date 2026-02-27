@@ -32,7 +32,11 @@ public class ParallelRequestRateLimiter(clock: Clock = Clock.System) : AbstractR
     override fun newToken(request: Request<*, *>, buckets: List<Bucket>): RequestToken =
         ParallelRequestToken(this, request.identifier, buckets)
 
-    private inner class ParallelRequestToken(rateLimiter: ParallelRequestRateLimiter, identity: RequestIdentifier, requestBuckets: List<Bucket>) :
+    private inner class ParallelRequestToken(
+        rateLimiter: ParallelRequestRateLimiter,
+        identity: RequestIdentifier,
+        requestBuckets: List<Bucket>
+    ) :
         AbstractRequestToken(rateLimiter, identity, requestBuckets)
 
 }

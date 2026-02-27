@@ -14,9 +14,9 @@ import dev.kord.common.entity.optional.Optional
 import dev.kord.ksp.Generate
 import dev.kord.ksp.Generate.EntityType.INT_KORD_ENUM
 import dev.kord.ksp.Generate.Entry
-import kotlin.time.Instant
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import kotlin.time.Instant
 
 @Serializable
 public data class DiscordSubscription(

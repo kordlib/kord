@@ -149,11 +149,13 @@ internal class ChatInputCreateBuilderImpl(
     override var defaultMemberPermissions: Permissions? by state::defaultMemberPermissions.delegate()
     override var dmPermission: Boolean? by state::dmPermission.delegate()
 
-    @Deprecated("'defaultPermission' is deprecated in favor of 'defaultMemberPermissions' and 'dmPermission'." +
+    @Deprecated(
+        "'defaultPermission' is deprecated in favor of 'defaultMemberPermissions' and 'dmPermission'." +
             " Setting 'defaultPermission' to false can be replaced by setting 'defaultMemberPermissions' to empty " +
             "Permissions and 'dmPermission' to false ('dmPermission' is only available for global commands). The " +
             "deprecation level will be raised to HIDDEN in 0.19.0 and this declaration will be removed in 0.20.0",
-        level = DeprecationLevel.ERROR)
+        level = DeprecationLevel.ERROR
+    )
     override var defaultPermission: Boolean? by @Suppress("DEPRECATION_ERROR") state::defaultPermission.delegate()
 
     override var nsfw: Boolean? by state::nsfw.delegate()
@@ -198,11 +200,13 @@ internal class ChatInputModifyBuilderImpl : GlobalChatInputModifyBuilder {
     override var defaultMemberPermissions: Permissions? by state::defaultMemberPermissions.delegate()
     override var dmPermission: Boolean? by state::dmPermission.delegate()
 
-    @Deprecated("'defaultPermission' is deprecated in favor of 'defaultMemberPermissions' and 'dmPermission'." +
+    @Deprecated(
+        "'defaultPermission' is deprecated in favor of 'defaultMemberPermissions' and 'dmPermission'." +
             " Setting 'defaultPermission' to false can be replaced by setting 'defaultMemberPermissions' to empty " +
             "Permissions and 'dmPermission' to false ('dmPermission' is only available for global commands). The " +
             "deprecation level will be raised to HIDDEN in 0.19.0 and this declaration will be removed in 0.20.0",
-        level = DeprecationLevel.ERROR)
+        level = DeprecationLevel.ERROR
+    )
     override var defaultPermission: Boolean? by @Suppress("DEPRECATION_ERROR") state::defaultPermission.delegate()
 
     override var nsfw: Boolean? by state::nsfw.delegate()

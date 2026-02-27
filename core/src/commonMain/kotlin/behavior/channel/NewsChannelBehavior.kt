@@ -24,9 +24,9 @@ import dev.kord.rest.request.RestRequestException
 import dev.kord.rest.service.patchNewsChannel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filterIsInstance
-import kotlin.time.Instant
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
+import kotlin.time.Instant
 
 /**
  * The behavior of a Discord News Channel associated to a guild.
@@ -51,7 +51,8 @@ public interface NewsChannelBehavior : TopGuildMessageChannelBehavior, ThreadPar
      *
      * @throws [RequestException] if something went wrong during the request.
      */
-    override suspend fun asChannelOrNull(): NewsChannel? = super<TopGuildMessageChannelBehavior>.asChannelOrNull() as? NewsChannel
+    override suspend fun asChannelOrNull(): NewsChannel? =
+        super<TopGuildMessageChannelBehavior>.asChannelOrNull() as? NewsChannel
 
     /**
      * Retrieve the [NewsChannel] associated with this behaviour from the provided [EntitySupplier]
@@ -59,7 +60,8 @@ public interface NewsChannelBehavior : TopGuildMessageChannelBehavior, ThreadPar
      * @throws [RequestException] if anything went wrong during the request.
      * @throws [EntityNotFoundException] if the user wasn't present.
      */
-    override suspend fun fetchChannel(): NewsChannel = super<TopGuildMessageChannelBehavior>.fetchChannel() as NewsChannel
+    override suspend fun fetchChannel(): NewsChannel =
+        super<TopGuildMessageChannelBehavior>.fetchChannel() as NewsChannel
 
 
     /**
@@ -68,7 +70,8 @@ public interface NewsChannelBehavior : TopGuildMessageChannelBehavior, ThreadPar
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
-    override suspend fun fetchChannelOrNull(): NewsChannel? = super<TopGuildMessageChannelBehavior>.fetchChannelOrNull() as? NewsChannel
+    override suspend fun fetchChannelOrNull(): NewsChannel? =
+        super<TopGuildMessageChannelBehavior>.fetchChannelOrNull() as? NewsChannel
 
 
     /**

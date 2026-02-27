@@ -3,7 +3,10 @@ package dev.kord.core.behavior.interaction.response
 import dev.kord.common.entity.MessageFlag
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.Kord
-import dev.kord.core.behavior.interaction.*
+import dev.kord.core.behavior.interaction.ActionInteractionBehavior
+import dev.kord.core.behavior.interaction.ComponentInteractionBehavior
+import dev.kord.core.behavior.interaction.respondEphemeral
+import dev.kord.core.behavior.interaction.updateEphemeralMessage
 import dev.kord.core.entity.interaction.Interaction
 import dev.kord.core.entity.interaction.response.EphemeralMessageInteractionResponse
 import dev.kord.core.supplier.EntitySupplier

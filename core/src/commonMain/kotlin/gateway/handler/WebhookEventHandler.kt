@@ -14,7 +14,12 @@ internal class WebhookEventHandler : BaseGatewayEventHandler() {
             else -> null
         }
 
-    private suspend fun handle(event: WebhooksUpdate, shard: Int, kord: Kord, context: LazyContext?): WebhookUpdateEvent =
+    private suspend fun handle(
+        event: WebhooksUpdate,
+        shard: Int,
+        kord: Kord,
+        context: LazyContext?
+    ): WebhookUpdateEvent =
         with(event.webhooksUpdateData) {
             WebhookUpdateEvent(guildId, channelId, kord, shard, context?.get())
         }

@@ -227,7 +227,10 @@ public class StoreEntitySupplier(
         return storeAndReturn(supplier.getGlobalApplicationCommandOrNull(applicationId, commandId)) { it.data }
     }
 
-    override fun getGlobalApplicationCommands(applicationId: Snowflake, withLocalizations: Boolean?): Flow<GlobalApplicationCommand> {
+    override fun getGlobalApplicationCommands(
+        applicationId: Snowflake,
+        withLocalizations: Boolean?
+    ): Flow<GlobalApplicationCommand> {
         return storeOnEach(supplier.getGlobalApplicationCommands(applicationId, withLocalizations)) { it.data }
     }
 

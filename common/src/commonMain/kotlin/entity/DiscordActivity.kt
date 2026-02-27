@@ -49,14 +49,16 @@ import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.common.serialization.InstantInEpochMilliseconds
 import dev.kord.ksp.Generate
-import dev.kord.ksp.Generate.EntityType.INT_FLAGS
-import dev.kord.ksp.Generate.EntityType.INT_KORD_ENUM
-import dev.kord.ksp.Generate.EntityType.STRING_KORD_ENUM
+import dev.kord.ksp.Generate.EntityType.*
 import dev.kord.ksp.Generate.Entry
-import kotlinx.serialization.*
+import kotlinx.serialization.ExperimentalSerializationApi
+import kotlinx.serialization.KSerializer
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.builtins.serializer
-import kotlinx.serialization.descriptors.*
+import kotlinx.serialization.descriptors.SerialDescriptor
+import kotlinx.serialization.descriptors.listSerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 

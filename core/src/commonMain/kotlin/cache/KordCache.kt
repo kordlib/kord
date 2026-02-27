@@ -19,7 +19,7 @@ public class KordCacheBuilder {
      * The default behavior for all types not explicitly configured, by default a [concurrentHashMap] is supplied.
      */
     public var defaultGenerator: Generator<Any, Any> = { cache, description ->
-       MapEntryCache(cache, description, MapLikeCollection.concurrentHashMap())
+        MapEntryCache(cache, description, MapLikeCollection.concurrentHashMap())
     }
 
     private val descriptionGenerators: MutableMap<DataDescription<*, *>, Generator<*, *>> = mutableMapOf()
@@ -61,7 +61,8 @@ public class KordCacheBuilder {
      *  }
      *  ```
      */
-    public fun messages(generator: Generator<MessageData, Snowflake>): Unit = forDescription(MessageData.description, generator)
+    public fun messages(generator: Generator<MessageData, Snowflake>): Unit =
+        forDescription(MessageData.description, generator)
 
     /**
      *  Configures the caching for [RoleData].
@@ -71,19 +72,22 @@ public class KordCacheBuilder {
     /**
      *  Configures the caching for [ChannelData].
      */
-    public fun channels(generator: Generator<ChannelData, Snowflake>): Unit = forDescription(ChannelData.description, generator)
+    public fun channels(generator: Generator<ChannelData, Snowflake>): Unit =
+        forDescription(ChannelData.description, generator)
 
     /**
      *  Configures the caching for [GuildData].
      */
-    public fun guilds(generator: Generator<GuildData, Snowflake>): Unit = forDescription(GuildData.description, generator)
+    public fun guilds(generator: Generator<GuildData, Snowflake>): Unit =
+        forDescription(GuildData.description, generator)
 
     /**
      *  Configures the caching for [MemberData].
      *  It's advised to configure user and member data similarly, so that every member in cache also has its user data cached.
      *  Failing to do so would result in a performance hit when fetching members.
      */
-    public fun members(generator: Generator<MemberData, String>): Unit = forDescription(MemberData.description, generator)
+    public fun members(generator: Generator<MemberData, String>): Unit =
+        forDescription(MemberData.description, generator)
 
     /**
      *  Configures the caching for [UserData].
@@ -92,13 +96,15 @@ public class KordCacheBuilder {
      */
     public fun users(generator: Generator<UserData, Snowflake>): Unit = forDescription(UserData.description, generator)
 
-    public fun stickers(generator: Generator<StickerData, Snowflake>): Unit = forDescription(StickerData.description, generator)
+    public fun stickers(generator: Generator<StickerData, Snowflake>): Unit =
+        forDescription(StickerData.description, generator)
 
 
     /**
      *  Configures the caching for [EmojiData].
      */
-    public fun emojis(generator: Generator<EmojiData, Snowflake>): Unit = forDescription(EmojiData.description, generator)
+    public fun emojis(generator: Generator<EmojiData, Snowflake>): Unit =
+        forDescription(EmojiData.description, generator)
 
     /**
      * Configures the caching for [SoundboardSoundData].
@@ -109,17 +115,20 @@ public class KordCacheBuilder {
     /**
      *  Configures the caching for [WebhookData].
      */
-    public fun webhooks(generator: Generator<WebhookData, Snowflake>): Unit = forDescription(WebhookData.description, generator)
+    public fun webhooks(generator: Generator<WebhookData, Snowflake>): Unit =
+        forDescription(WebhookData.description, generator)
 
     /**
      *  Configures the caching for [PresenceData].
      */
-    public fun presences(generator: Generator<PresenceData, String>): Unit = forDescription(PresenceData.description, generator)
+    public fun presences(generator: Generator<PresenceData, String>): Unit =
+        forDescription(PresenceData.description, generator)
 
     /**
      *  Configures the caching for [VoiceStateData].
      */
-    public fun voiceState(generator: Generator<VoiceStateData, String>): Unit = forDescription(VoiceStateData.description, generator)
+    public fun voiceState(generator: Generator<VoiceStateData, String>): Unit =
+        forDescription(VoiceStateData.description, generator)
 
     /** Configures the caching for [AutoModerationRuleData]. */
     public fun autoModerationRules(generator: Generator<AutoModerationRuleData, Snowflake>): Unit =

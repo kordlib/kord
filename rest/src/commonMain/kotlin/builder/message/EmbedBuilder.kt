@@ -8,6 +8,7 @@ import dev.kord.common.entity.optional.delegate.delegate
 import dev.kord.common.entity.optional.map
 import dev.kord.common.entity.optional.mapList
 import dev.kord.rest.builder.RequestBuilder
+import dev.kord.rest.builder.message.EmbedBuilder.Companion.ZERO_WIDTH_SPACE
 import dev.kord.rest.json.request.*
 import kotlin.time.Instant
 

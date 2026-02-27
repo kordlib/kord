@@ -468,5 +468,5 @@ private class UnknownAutoModerationRuleBehavior(
     override fun equals(other: Any?) = autoModerationRuleEquals(other)
     override fun hashCode() = autoModerationRuleHashCode()
     override fun toString() = "UnknownAutoModerationRuleBehavior(guildId=$guildId, id=$id, " +
-            "triggerType=$triggerType, kord=$kord, supplier=$supplier)"
+        "triggerType=$triggerType, kord=$kord, supplier=$supplier)"
 }

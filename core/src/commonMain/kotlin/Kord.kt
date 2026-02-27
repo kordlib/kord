@@ -9,11 +9,7 @@ import dev.kord.common.exception.RequestException
 import dev.kord.core.builder.kord.KordBuilder
 import dev.kord.core.builder.kord.KordProxyBuilder
 import dev.kord.core.builder.kord.KordRestOnlyBuilder
-import dev.kord.core.cache.data.ApplicationCommandData
-import dev.kord.core.cache.data.EmojiData
-import dev.kord.core.cache.data.GuildData
-import dev.kord.core.cache.data.SoundboardSoundData
-import dev.kord.core.cache.data.UserData
+import dev.kord.core.cache.data.*
 import dev.kord.core.entity.*
 import dev.kord.core.entity.application.*
 import dev.kord.core.entity.channel.Channel
@@ -41,7 +37,6 @@ import dev.kord.rest.service.RestClient
 import io.github.oshai.kotlinlogging.KotlinLogging
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
-import kotlin.collections.map
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 import kotlin.coroutines.CoroutineContext
@@ -97,7 +92,7 @@ public class Kord(
      * Use [Flow.launchIn] with [Kord] as [CoroutineScope] to cease event processing
      * on [Kord.shutdown].
      *
-     * Behavior like replay cache size, buffer size and overflow behavior are dependant on the
+     * Behavior like replay cache size, buffer size and overflow behavior are dependent on the
      * supplied [eventFlow]. See [KordBuilder.eventFlow] for more details.
      */
     public val events: SharedFlow<Event>
@@ -129,7 +124,7 @@ public class Kord(
 
     init {
         gateway.events
-            .buffer(kotlinx.coroutines.channels.Channel.UNLIMITED)
+            .buffer(CoroutineChannel.UNLIMITED)
             .onEach { event ->
                 val coreEvent = interceptor.handle(event, this)
                 coreEvent?.let { eventFlow.emit(it) }

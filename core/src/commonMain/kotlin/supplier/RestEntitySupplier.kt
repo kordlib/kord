@@ -27,10 +27,10 @@ import dev.kord.rest.request.RestRequestException
 import dev.kord.rest.route.Position
 import dev.kord.rest.service.RestClient
 import kotlinx.coroutines.flow.*
-import kotlin.time.Instant
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 import kotlin.math.min
+import kotlin.time.Instant
 
 /**
  * [EntitySupplier] that uses a [RestClient] to resolve entities.
@@ -230,11 +230,12 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
         }
     }
 
-    override suspend fun getGuildSoundboardSoundOrNull(guildId: Snowflake, soundId: Snowflake): GuildSoundboardSound? = catchNotFound {
-        val data = SoundboardSoundData.from(guild.getGuildSoundboardSound(guildId, soundId))
+    override suspend fun getGuildSoundboardSoundOrNull(guildId: Snowflake, soundId: Snowflake): GuildSoundboardSound? =
+        catchNotFound {
+            val data = SoundboardSoundData.from(guild.getGuildSoundboardSound(guildId, soundId))
 
-        return GuildSoundboardSound(data, kord)
-    }
+            return GuildSoundboardSound(data, kord)
+        }
 
     override fun getGuildSoundboardSounds(guildId: Snowflake): Flow<GuildSoundboardSound> = flow {
         for (sound in guild.listGuildSoundboardSounds(guildId).items) {
@@ -466,7 +467,10 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
         GlobalApplicationCommand(data, interaction)
     }
 
-    override fun getGlobalApplicationCommands(applicationId: Snowflake, withLocalizations: Boolean?): Flow<GlobalApplicationCommand> = flow {
+    override fun getGlobalApplicationCommands(
+        applicationId: Snowflake,
+        withLocalizations: Boolean?
+    ): Flow<GlobalApplicationCommand> = flow {
         for (command in interaction.getGlobalApplicationCommands(applicationId, withLocalizations)) {
             val data = ApplicationCommandData.from(command)
             emit(GlobalApplicationCommand(data, interaction))

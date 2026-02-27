@@ -35,7 +35,10 @@ public inline fun Channel.live(
 ): LiveChannel = this.live(coroutineScope).apply(block)
 
 @KordPreview
-public fun LiveChannel.onVoiceStateUpdate(scope: CoroutineScope = this, block: suspend (VoiceStateUpdateEvent) -> Unit): Job =
+public fun LiveChannel.onVoiceStateUpdate(
+    scope: CoroutineScope = this,
+    block: suspend (VoiceStateUpdateEvent) -> Unit
+): Job =
     on(scope = scope, consumer = block)
 
 @KordPreview
@@ -54,7 +57,10 @@ public inline fun LiveChannel.onReactionAdd(
 }
 
 @KordPreview
-public fun LiveChannel.onReactionRemove(scope: CoroutineScope = this, block: suspend (ReactionRemoveEvent) -> Unit): Job =
+public fun LiveChannel.onReactionRemove(
+    scope: CoroutineScope = this,
+    block: suspend (ReactionRemoveEvent) -> Unit
+): Job =
     on(scope = scope, consumer = block)
 
 @KordPreview
@@ -69,7 +75,10 @@ public inline fun LiveChannel.onReactionRemove(
 }
 
 @KordPreview
-public fun LiveChannel.onReactionRemoveAll(scope: CoroutineScope = this, block: suspend (ReactionRemoveAllEvent) -> Unit): Job =
+public fun LiveChannel.onReactionRemoveAll(
+    scope: CoroutineScope = this,
+    block: suspend (ReactionRemoveAllEvent) -> Unit
+): Job =
     on(scope = scope, consumer = block)
 
 @KordPreview

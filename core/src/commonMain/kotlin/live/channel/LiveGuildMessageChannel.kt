@@ -25,7 +25,10 @@ public inline fun TopGuildMessageChannel.live(
 ): LiveGuildMessageChannel = this.live(coroutineScope).apply(block)
 
 @KordPreview
-public fun LiveGuildMessageChannel.onUpdate(scope: CoroutineScope = this, block: suspend (ChannelUpdateEvent) -> Unit): Job =
+public fun LiveGuildMessageChannel.onUpdate(
+    scope: CoroutineScope = this,
+    block: suspend (ChannelUpdateEvent) -> Unit
+): Job =
     on(scope = scope, consumer = block)
 
 @KordPreview

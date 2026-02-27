@@ -13,11 +13,13 @@ public interface ApplicationCommandCreateBuilder : LocalizedNameCreateBuilder,
 
     public var defaultMemberPermissions: Permissions?
 
-    @Deprecated("'defaultPermission' is deprecated in favor of 'defaultMemberPermissions' and 'dmPermission'." +
+    @Deprecated(
+        "'defaultPermission' is deprecated in favor of 'defaultMemberPermissions' and 'dmPermission'." +
             " Setting 'defaultPermission' to false can be replaced by setting 'defaultMemberPermissions' to empty " +
             "Permissions and 'dmPermission' to false ('dmPermission' is only available for global commands). The " +
             "deprecation level will be raised to HIDDEN in 0.19.0 and this declaration will be removed in 0.20.0",
-        level = DeprecationLevel.ERROR)
+        level = DeprecationLevel.ERROR
+    )
     public var defaultPermission: Boolean?
     public val type: ApplicationCommandType
 
@@ -50,11 +52,13 @@ public interface ApplicationCommandModifyBuilder : LocalizedNameModifyBuilder,
 
     public var defaultMemberPermissions: Permissions?
 
-    @Deprecated("'defaultPermission' is deprecated in favor of 'defaultMemberPermissions' and 'dmPermission'." +
+    @Deprecated(
+        "'defaultPermission' is deprecated in favor of 'defaultMemberPermissions' and 'dmPermission'." +
             " Setting 'defaultPermission' to false can be replaced by setting 'defaultMemberPermissions' to empty " +
             "Permissions and 'dmPermission' to false ('dmPermission' is only available for global commands). The " +
             "deprecation level will be raised to HIDDEN in 0.19.0 and this declaration will be removed in 0.20.0",
-        level = DeprecationLevel.ERROR)
+        level = DeprecationLevel.ERROR
+    )
     public var defaultPermission: Boolean?
 
     /** Indicates whether the command is age-restricted. */

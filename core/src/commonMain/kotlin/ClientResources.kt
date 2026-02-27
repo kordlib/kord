@@ -14,5 +14,5 @@ public class ClientResources(
     public val defaultStrategy: EntitySupplyStrategy<*>,
 ) {
     override fun toString(): String = "ClientResources(token=hunter2, applicationId=$applicationId, shards=$shards, " +
-            "maxConcurrency=$maxConcurrency, httpClient=$httpClient, defaultStrategy=$defaultStrategy)"
+        "maxConcurrency=$maxConcurrency, httpClient=$httpClient, defaultStrategy=$defaultStrategy)"
 }

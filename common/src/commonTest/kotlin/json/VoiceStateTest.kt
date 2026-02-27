@@ -3,10 +3,10 @@ package dev.kord.common.json
 import dev.kord.common.entity.DiscordVoiceState
 import dev.kord.common.readFile
 import kotlinx.coroutines.test.runTest
-import kotlin.time.Instant
 import kotlinx.serialization.json.Json
 import kotlin.js.JsName
 import kotlin.test.Test
+import kotlin.time.Instant
 
 private suspend fun file(name: String): String = readFile("voice", name)
 

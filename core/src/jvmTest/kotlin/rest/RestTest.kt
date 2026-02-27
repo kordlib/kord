@@ -1,7 +1,9 @@
 package dev.kord.core.rest
 
 import dev.kord.common.Color
-import dev.kord.common.entity.*
+import dev.kord.common.entity.Permission
+import dev.kord.common.entity.Permissions
+import dev.kord.common.entity.Snowflake
 import dev.kord.core.Kord
 import dev.kord.core.behavior.*
 import dev.kord.core.behavior.channel.*

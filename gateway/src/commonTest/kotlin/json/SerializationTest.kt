@@ -7,7 +7,6 @@ import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.value
 import dev.kord.gateway.*
 import kotlinx.coroutines.test.runTest
-import kotlin.time.Instant
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.MissingFieldException
 import kotlinx.serialization.json.Json
@@ -18,6 +17,7 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 import kotlin.time.Duration.Companion.seconds
+import kotlin.time.Instant
 
 private suspend fun file(name: String): String = readFile("event", name)
 

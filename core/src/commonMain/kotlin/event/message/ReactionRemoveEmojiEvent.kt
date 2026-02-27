@@ -49,7 +49,12 @@ public class ReactionRemoveEmojiEvent(
      */
     public val messageId: Snowflake get() = data.messageId
 
-    public val message: MessageBehavior get() = MessageBehavior(channelId = channelId, messageId = messageId, kord = kord)
+    public val message: MessageBehavior
+        get() = MessageBehavior(
+            channelId = channelId,
+            messageId = messageId,
+            kord = kord
+        )
 
     /**
      * The emoji that was removed.
@@ -66,7 +71,8 @@ public class ReactionRemoveEmojiEvent(
 
     public suspend fun getMessage(): Message = supplier.getMessage(channelId = channelId, messageId = messageId)
 
-    public suspend fun getMessageOrNull(): Message? = supplier.getMessageOrNull(channelId = channelId, messageId = messageId)
+    public suspend fun getMessageOrNull(): Message? =
+        supplier.getMessageOrNull(channelId = channelId, messageId = messageId)
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): ReactionRemoveEmojiEvent =
         ReactionRemoveEmojiEvent(data, kord, shard, customContext, strategy.supply(kord))
