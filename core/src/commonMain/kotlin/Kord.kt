@@ -92,7 +92,7 @@ public class Kord(
      * Use [Flow.launchIn] with [Kord] as [CoroutineScope] to cease event processing
      * on [Kord.shutdown].
      *
-     * Behavior like replay cache size, buffer size and overflow behavior are dependant on the
+     * Behavior like replay cache size, buffer size and overflow behavior are dependent on the
      * supplied [eventFlow]. See [KordBuilder.eventFlow] for more details.
      */
     public val events: SharedFlow<Event>
@@ -124,7 +124,7 @@ public class Kord(
 
     init {
         gateway.events
-            .buffer(kotlinx.coroutines.channels.Channel.UNLIMITED)
+            .buffer(CoroutineChannel.UNLIMITED)
             .onEach { event ->
                 val coreEvent = interceptor.handle(event, this)
                 coreEvent?.let { eventFlow.emit(it) }

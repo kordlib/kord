@@ -13,4 +13,4 @@ max_line_length = 120
 indent_size = 2
 
 [*.json]
-tab_width = 8
+indent_size = 2
