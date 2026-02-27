@@ -136,11 +136,11 @@ public class Member(
 
     override suspend fun asUserOrNull(): User = this
 
-    override suspend fun asMember(guildId: Snowflake): Member = this
+    override suspend fun asMember(guildId: Snowflake): Member = if(guildId == this.guildId) this else super<User>.asMember(guildId)
 
     override suspend fun asMember(): Member = this
 
-    override suspend fun asMemberOrNull(guildId: Snowflake): Member = this
+    override suspend fun asMemberOrNull(guildId: Snowflake): Member? = if(guildId == this.guildId) this else super<User>.asMemberOrNull(guildId)
 
     override suspend fun asMemberOrNull(): Member = this
 
