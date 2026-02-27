@@ -3545,7 +3545,7 @@ final class dev.kord.rest.builder.message/EmbedBuilder : dev.kord.rest.builder/R
 }
 
 final class dev.kord.rest.builder.message/PollBuilder : dev.kord.rest.builder/RequestBuilder<dev.kord.rest.json.request/PollCreateRequest> { // dev.kord.rest.builder.message/PollBuilder|null[0]
-    constructor <init>(dev.kord.common.entity/DiscordPoll.Media) // dev.kord.rest.builder.message/PollBuilder.<init>|<init>(dev.kord.common.entity.DiscordPoll.Media){}[0]
+    constructor <init>(kotlin/String) // dev.kord.rest.builder.message/PollBuilder.<init>|<init>(kotlin.String){}[0]
 
     final var allowMultiselect // dev.kord.rest.builder.message/PollBuilder.allowMultiselect|{}allowMultiselect[0]
         final fun <get-allowMultiselect>(): kotlin/Boolean? // dev.kord.rest.builder.message/PollBuilder.allowMultiselect.<get-allowMultiselect>|<get-allowMultiselect>(){}[0]
@@ -3554,8 +3554,8 @@ final class dev.kord.rest.builder.message/PollBuilder : dev.kord.rest.builder/Re
         final fun <get-answers>(): kotlin.collections/MutableList<dev.kord.common.entity/DiscordPoll.Answer> // dev.kord.rest.builder.message/PollBuilder.answers.<get-answers>|<get-answers>(){}[0]
         final fun <set-answers>(kotlin.collections/MutableList<dev.kord.common.entity/DiscordPoll.Answer>) // dev.kord.rest.builder.message/PollBuilder.answers.<set-answers>|<set-answers>(kotlin.collections.MutableList<dev.kord.common.entity.DiscordPoll.Answer>){}[0]
     final var duration // dev.kord.rest.builder.message/PollBuilder.duration|{}duration[0]
-        final fun <get-duration>(): kotlin.time/Duration? // dev.kord.rest.builder.message/PollBuilder.duration.<get-duration>|<get-duration>(){}[0]
-        final fun <set-duration>(kotlin.time/Duration?) // dev.kord.rest.builder.message/PollBuilder.duration.<set-duration>|<set-duration>(kotlin.time.Duration?){}[0]
+        final fun <get-duration>(): kotlin/Int? // dev.kord.rest.builder.message/PollBuilder.duration.<get-duration>|<get-duration>(){}[0]
+        final fun <set-duration>(kotlin/Int?) // dev.kord.rest.builder.message/PollBuilder.duration.<set-duration>|<set-duration>(kotlin.Int?){}[0]
     final var layoutType // dev.kord.rest.builder.message/PollBuilder.layoutType|{}layoutType[0]
         final fun <get-layoutType>(): dev.kord.common.entity/PollLayoutType // dev.kord.rest.builder.message/PollBuilder.layoutType.<get-layoutType>|<get-layoutType>(){}[0]
         final fun <set-layoutType>(dev.kord.common.entity/PollLayoutType) // dev.kord.rest.builder.message/PollBuilder.layoutType.<set-layoutType>|<set-layoutType>(dev.kord.common.entity.PollLayoutType){}[0]
@@ -3566,6 +3566,8 @@ final class dev.kord.rest.builder.message/PollBuilder : dev.kord.rest.builder/Re
     final fun answer(kotlin/String, dev.kord.common.entity/Snowflake? = ..., kotlin/Int = ...) // dev.kord.rest.builder.message/PollBuilder.answer|answer(kotlin.String;dev.kord.common.entity.Snowflake?;kotlin.Int){}[0]
     final fun answer(kotlin/String, kotlin/Int = ...) // dev.kord.rest.builder.message/PollBuilder.answer|answer(kotlin.String;kotlin.Int){}[0]
     final fun answer(kotlin/String, kotlin/String? = ..., kotlin/Int = ...) // dev.kord.rest.builder.message/PollBuilder.answer|answer(kotlin.String;kotlin.String?;kotlin.Int){}[0]
+    final fun emoji(dev.kord.common.entity/Snowflake) // dev.kord.rest.builder.message/PollBuilder.emoji|emoji(dev.kord.common.entity.Snowflake){}[0]
+    final fun emoji(kotlin/String) // dev.kord.rest.builder.message/PollBuilder.emoji|emoji(kotlin.String){}[0]
     final fun expiresIn(kotlin.time/Duration) // dev.kord.rest.builder.message/PollBuilder.expiresIn|expiresIn(kotlin.time.Duration){}[0]
     final fun toRequest(): dev.kord.rest.json.request/PollCreateRequest // dev.kord.rest.builder.message/PollBuilder.toRequest|toRequest(){}[0]
 }
@@ -6798,14 +6800,14 @@ final class dev.kord.rest.json.request/OnboardingPromptRequest { // dev.kord.res
 }
 
 final class dev.kord.rest.json.request/PollCreateRequest { // dev.kord.rest.json.request/PollCreateRequest|null[0]
-    constructor <init>(dev.kord.common.entity/DiscordPoll.Media, kotlin.collections/List<dev.kord.common.entity/DiscordPoll.Answer>, dev.kord.common.entity.optional/Optional<kotlin.time/Duration> = ..., dev.kord.common.entity.optional/OptionalBoolean = ..., dev.kord.common.entity.optional/Optional<dev.kord.common.entity/PollLayoutType> = ...) // dev.kord.rest.json.request/PollCreateRequest.<init>|<init>(dev.kord.common.entity.DiscordPoll.Media;kotlin.collections.List<dev.kord.common.entity.DiscordPoll.Answer>;dev.kord.common.entity.optional.Optional<kotlin.time.Duration>;dev.kord.common.entity.optional.OptionalBoolean;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.PollLayoutType>){}[0]
+    constructor <init>(dev.kord.common.entity/DiscordPoll.Media, kotlin.collections/List<dev.kord.common.entity/DiscordPoll.Answer>, kotlin/Int?, dev.kord.common.entity.optional/OptionalBoolean = ..., dev.kord.common.entity.optional/Optional<dev.kord.common.entity/PollLayoutType> = ...) // dev.kord.rest.json.request/PollCreateRequest.<init>|<init>(dev.kord.common.entity.DiscordPoll.Media;kotlin.collections.List<dev.kord.common.entity.DiscordPoll.Answer>;kotlin.Int?;dev.kord.common.entity.optional.OptionalBoolean;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.PollLayoutType>){}[0]
 
     final val allowMultiselect // dev.kord.rest.json.request/PollCreateRequest.allowMultiselect|{}allowMultiselect[0]
         final fun <get-allowMultiselect>(): dev.kord.common.entity.optional/OptionalBoolean // dev.kord.rest.json.request/PollCreateRequest.allowMultiselect.<get-allowMultiselect>|<get-allowMultiselect>(){}[0]
     final val answers // dev.kord.rest.json.request/PollCreateRequest.answers|{}answers[0]
         final fun <get-answers>(): kotlin.collections/List<dev.kord.common.entity/DiscordPoll.Answer> // dev.kord.rest.json.request/PollCreateRequest.answers.<get-answers>|<get-answers>(){}[0]
-    final val expiry // dev.kord.rest.json.request/PollCreateRequest.expiry|{}expiry[0]
-        final fun <get-expiry>(): dev.kord.common.entity.optional/Optional<kotlin.time/Duration> // dev.kord.rest.json.request/PollCreateRequest.expiry.<get-expiry>|<get-expiry>(){}[0]
+    final val duration // dev.kord.rest.json.request/PollCreateRequest.duration|{}duration[0]
+        final fun <get-duration>(): kotlin/Int? // dev.kord.rest.json.request/PollCreateRequest.duration.<get-duration>|<get-duration>(){}[0]
     final val layoutType // dev.kord.rest.json.request/PollCreateRequest.layoutType|{}layoutType[0]
         final fun <get-layoutType>(): dev.kord.common.entity.optional/Optional<dev.kord.common.entity/PollLayoutType> // dev.kord.rest.json.request/PollCreateRequest.layoutType.<get-layoutType>|<get-layoutType>(){}[0]
     final val question // dev.kord.rest.json.request/PollCreateRequest.question|{}question[0]
@@ -6813,10 +6815,10 @@ final class dev.kord.rest.json.request/PollCreateRequest { // dev.kord.rest.json
 
     final fun component1(): dev.kord.common.entity/DiscordPoll.Media // dev.kord.rest.json.request/PollCreateRequest.component1|component1(){}[0]
     final fun component2(): kotlin.collections/List<dev.kord.common.entity/DiscordPoll.Answer> // dev.kord.rest.json.request/PollCreateRequest.component2|component2(){}[0]
-    final fun component3(): dev.kord.common.entity.optional/Optional<kotlin.time/Duration> // dev.kord.rest.json.request/PollCreateRequest.component3|component3(){}[0]
+    final fun component3(): kotlin/Int? // dev.kord.rest.json.request/PollCreateRequest.component3|component3(){}[0]
     final fun component4(): dev.kord.common.entity.optional/OptionalBoolean // dev.kord.rest.json.request/PollCreateRequest.component4|component4(){}[0]
     final fun component5(): dev.kord.common.entity.optional/Optional<dev.kord.common.entity/PollLayoutType> // dev.kord.rest.json.request/PollCreateRequest.component5|component5(){}[0]
-    final fun copy(dev.kord.common.entity/DiscordPoll.Media = ..., kotlin.collections/List<dev.kord.common.entity/DiscordPoll.Answer> = ..., dev.kord.common.entity.optional/Optional<kotlin.time/Duration> = ..., dev.kord.common.entity.optional/OptionalBoolean = ..., dev.kord.common.entity.optional/Optional<dev.kord.common.entity/PollLayoutType> = ...): dev.kord.rest.json.request/PollCreateRequest // dev.kord.rest.json.request/PollCreateRequest.copy|copy(dev.kord.common.entity.DiscordPoll.Media;kotlin.collections.List<dev.kord.common.entity.DiscordPoll.Answer>;dev.kord.common.entity.optional.Optional<kotlin.time.Duration>;dev.kord.common.entity.optional.OptionalBoolean;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.PollLayoutType>){}[0]
+    final fun copy(dev.kord.common.entity/DiscordPoll.Media = ..., kotlin.collections/List<dev.kord.common.entity/DiscordPoll.Answer> = ..., kotlin/Int? = ..., dev.kord.common.entity.optional/OptionalBoolean = ..., dev.kord.common.entity.optional/Optional<dev.kord.common.entity/PollLayoutType> = ...): dev.kord.rest.json.request/PollCreateRequest // dev.kord.rest.json.request/PollCreateRequest.copy|copy(dev.kord.common.entity.DiscordPoll.Media;kotlin.collections.List<dev.kord.common.entity.DiscordPoll.Answer>;kotlin.Int?;dev.kord.common.entity.optional.OptionalBoolean;dev.kord.common.entity.optional.Optional<dev.kord.common.entity.PollLayoutType>){}[0]
     final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.json.request/PollCreateRequest.equals|equals(kotlin.Any?){}[0]
     final fun hashCode(): kotlin/Int // dev.kord.rest.json.request/PollCreateRequest.hashCode|hashCode(){}[0]
     final fun toString(): kotlin/String // dev.kord.rest.json.request/PollCreateRequest.toString|toString(){}[0]
@@ -8259,6 +8261,8 @@ final class dev.kord.rest.service/RestClient : dev.kord.rest.service/RestService
         final fun <get-interaction>(): dev.kord.rest.service/InteractionService // dev.kord.rest.service/RestClient.interaction.<get-interaction>|<get-interaction>(){}[0]
     final val invite // dev.kord.rest.service/RestClient.invite|{}invite[0]
         final fun <get-invite>(): dev.kord.rest.service/InviteService // dev.kord.rest.service/RestClient.invite.<get-invite>|<get-invite>(){}[0]
+    final val poll // dev.kord.rest.service/RestClient.poll|{}poll[0]
+        final fun <get-poll>(): dev.kord.rest.service/PollService // dev.kord.rest.service/RestClient.poll.<get-poll>|<get-poll>(){}[0]
     final val sku // dev.kord.rest.service/RestClient.sku|{}sku[0]
         final fun <get-sku>(): dev.kord.rest.service/SkuService // dev.kord.rest.service/RestClient.sku.<get-sku>|<get-sku>(){}[0]
     final val soundboard // dev.kord.rest.service/RestClient.soundboard|{}soundboard[0]
@@ -9548,7 +9552,7 @@ final inline fun (dev.kord.rest.builder.interaction/MultiApplicationCommandBuild
 final inline fun (dev.kord.rest.builder.interaction/MultiApplicationCommandBuilder).dev.kord.rest.builder.interaction/user(kotlin/String, kotlin/Function1<dev.kord.rest.builder.interaction/UserCommandCreateBuilder, kotlin/Unit> = ...) // dev.kord.rest.builder.interaction/user|user@dev.kord.rest.builder.interaction.MultiApplicationCommandBuilder(kotlin.String;kotlin.Function1<dev.kord.rest.builder.interaction.UserCommandCreateBuilder,kotlin.Unit>){}[0]
 final inline fun (dev.kord.rest.builder.interaction/RootInputChatBuilder).dev.kord.rest.builder.interaction/group(kotlin/String, kotlin/String, kotlin/Function1<dev.kord.rest.builder.interaction/GroupCommandBuilder, kotlin/Unit> = ...) // dev.kord.rest.builder.interaction/group|group@dev.kord.rest.builder.interaction.RootInputChatBuilder(kotlin.String;kotlin.String;kotlin.Function1<dev.kord.rest.builder.interaction.GroupCommandBuilder,kotlin.Unit>){}[0]
 final inline fun (dev.kord.rest.builder.interaction/RootInputChatBuilder).dev.kord.rest.builder.interaction/subCommand(kotlin/String, kotlin/String, kotlin/Function1<dev.kord.rest.builder.interaction/SubCommandBuilder, kotlin/Unit> = ...) // dev.kord.rest.builder.interaction/subCommand|subCommand@dev.kord.rest.builder.interaction.RootInputChatBuilder(kotlin.String;kotlin.String;kotlin.Function1<dev.kord.rest.builder.interaction.SubCommandBuilder,kotlin.Unit>){}[0]
-final inline fun (dev.kord.rest.builder.message.create/MessageCreateBuilder).dev.kord.rest.builder.message.create/poll(dev.kord.common.entity/DiscordPoll.Media, kotlin/Function1<dev.kord.rest.builder.message/PollBuilder, kotlin/Unit>) // dev.kord.rest.builder.message.create/poll|poll@dev.kord.rest.builder.message.create.MessageCreateBuilder(dev.kord.common.entity.DiscordPoll.Media;kotlin.Function1<dev.kord.rest.builder.message.PollBuilder,kotlin.Unit>){}[0]
+final inline fun (dev.kord.rest.builder.message.create/MessageCreateBuilder).dev.kord.rest.builder.message.create/poll(kotlin/String, kotlin/Function1<dev.kord.rest.builder.message/PollBuilder, kotlin/Unit>) // dev.kord.rest.builder.message.create/poll|poll@dev.kord.rest.builder.message.create.MessageCreateBuilder(kotlin.String;kotlin.Function1<dev.kord.rest.builder.message.PollBuilder,kotlin.Unit>){}[0]
 final inline fun (dev.kord.rest.builder.message.modify/MessageModifyBuilder).dev.kord.rest.builder.message.modify/keepAttachment(dev.kord.common.entity/Snowflake, kotlin/Function1<dev.kord.rest.builder.message/AttachmentBuilder, kotlin/Unit> = ...) // dev.kord.rest.builder.message.modify/keepAttachment|keepAttachment@dev.kord.rest.builder.message.modify.MessageModifyBuilder(dev.kord.common.entity.Snowflake;kotlin.Function1<dev.kord.rest.builder.message.AttachmentBuilder,kotlin.Unit>){}[0]
 final inline fun (dev.kord.rest.builder.message/MessageBuilder).dev.kord.rest.builder.message/actionRow(kotlin/Function1<dev.kord.rest.builder.component/ActionRowBuilder, kotlin/Unit>) // dev.kord.rest.builder.message/actionRow|actionRow@dev.kord.rest.builder.message.MessageBuilder(kotlin.Function1<dev.kord.rest.builder.component.ActionRowBuilder,kotlin.Unit>){}[0]
 final inline fun (dev.kord.rest.builder.message/MessageBuilder).dev.kord.rest.builder.message/addFile(kotlin/String, io.ktor.client.request.forms/ChannelProvider, kotlin/Function1<dev.kord.rest.builder.message/AttachmentBuilder, kotlin/Unit>): dev.kord.rest/NamedFile // dev.kord.rest.builder.message/addFile|addFile@dev.kord.rest.builder.message.MessageBuilder(kotlin.String;io.ktor.client.request.forms.ChannelProvider;kotlin.Function1<dev.kord.rest.builder.message.AttachmentBuilder,kotlin.Unit>){}[0]

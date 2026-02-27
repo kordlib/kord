@@ -10100,6 +10100,8 @@ sealed class dev.kord.common.entity/Permission { // dev.kord.common.entity/Permi
 
     final object SendMessagesInThreads : dev.kord.common.entity/Permission // dev.kord.common.entity/Permission.SendMessagesInThreads|null[0]
 
+    final object SendPolls : dev.kord.common.entity/Permission // dev.kord.common.entity/Permission.SendPolls|null[0]
+
     final object SendTTSMessages : dev.kord.common.entity/Permission // dev.kord.common.entity/Permission.SendTTSMessages|null[0]
 
     final object SendVoiceMessages : dev.kord.common.entity/Permission // dev.kord.common.entity/Permission.SendVoiceMessages|null[0]

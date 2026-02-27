@@ -1299,6 +1299,10 @@ public final class dev/kord/gateway/Intent$Companion {
 	public final fun getEntries ()Ljava/util/List;
 }
 
+public final class dev/kord/gateway/Intent$DirectMessagePolls : dev/kord/gateway/Intent {
+	public static final field INSTANCE Ldev/kord/gateway/Intent$DirectMessagePolls;
+}
+
 public final class dev/kord/gateway/Intent$DirectMessageTyping : dev/kord/gateway/Intent {
 	public static final field INSTANCE Ldev/kord/gateway/Intent$DirectMessageTyping;
 }
@@ -1329,6 +1333,10 @@ public final class dev/kord/gateway/Intent$GuildInvites : dev/kord/gateway/Inten
 
 public final class dev/kord/gateway/Intent$GuildMembers : dev/kord/gateway/Intent {
 	public static final field INSTANCE Ldev/kord/gateway/Intent$GuildMembers;
+}
+
+public final class dev/kord/gateway/Intent$GuildMessagePolls : dev/kord/gateway/Intent {
+	public static final field INSTANCE Ldev/kord/gateway/Intent$GuildMessagePolls;
 }
 
 public final class dev/kord/gateway/Intent$GuildMessageReactions : dev/kord/gateway/Intent {

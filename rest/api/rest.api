@@ -2502,22 +2502,24 @@ public final class dev/kord/rest/builder/message/MessageBuilderKt {
 }
 
 public final class dev/kord/rest/builder/message/PollBuilder : dev/kord/rest/builder/RequestBuilder {
-	public fun <init> (Ldev/kord/common/entity/DiscordPoll$Media;)V
+	public fun <init> (Ljava/lang/String;)V
 	public final fun answer (Ljava/lang/String;I)V
 	public final fun answer (Ljava/lang/String;Ldev/kord/common/entity/Snowflake;I)V
 	public final fun answer (Ljava/lang/String;Ljava/lang/String;I)V
 	public static synthetic fun answer$default (Ldev/kord/rest/builder/message/PollBuilder;Ljava/lang/String;IILjava/lang/Object;)V
 	public static synthetic fun answer$default (Ldev/kord/rest/builder/message/PollBuilder;Ljava/lang/String;Ldev/kord/common/entity/Snowflake;IILjava/lang/Object;)V
 	public static synthetic fun answer$default (Ldev/kord/rest/builder/message/PollBuilder;Ljava/lang/String;Ljava/lang/String;IILjava/lang/Object;)V
+	public final fun emoji (Ldev/kord/common/entity/Snowflake;)V
+	public final fun emoji (Ljava/lang/String;)V
 	public final fun expiresIn-LRDsOJo (J)V
 	public final fun getAllowMultiselect ()Ljava/lang/Boolean;
 	public final fun getAnswers ()Ljava/util/List;
-	public final fun getDuration-FghU774 ()Lkotlin/time/Duration;
+	public final fun getDuration ()Ljava/lang/Integer;
 	public final fun getLayoutType ()Ldev/kord/common/entity/PollLayoutType;
 	public final fun getQuestion ()Ldev/kord/common/entity/DiscordPoll$Media;
 	public final fun setAllowMultiselect (Ljava/lang/Boolean;)V
 	public final fun setAnswers (Ljava/util/List;)V
-	public final fun setDuration-BwNAW2A (Lkotlin/time/Duration;)V
+	public final fun setDuration (Ljava/lang/Integer;)V
 	public final fun setLayoutType (Ldev/kord/common/entity/PollLayoutType;)V
 	public final fun setQuestion (Ldev/kord/common/entity/DiscordPoll$Media;)V
 	public fun toRequest ()Ldev/kord/rest/json/request/PollCreateRequest;
@@ -2599,7 +2601,7 @@ public final class dev/kord/rest/builder/message/create/MessageCreateBuilder$Def
 }
 
 public final class dev/kord/rest/builder/message/create/MessageCreateBuilderKt {
-	public static final fun poll (Ldev/kord/rest/builder/message/create/MessageCreateBuilder;Ldev/kord/common/entity/DiscordPoll$Media;Lkotlin/jvm/functions/Function1;)V
+	public static final fun poll (Ldev/kord/rest/builder/message/create/MessageCreateBuilder;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
 }
 
 public final class dev/kord/rest/builder/message/create/UpdateMessageInteractionResponseCreateBuilder : dev/kord/rest/builder/message/create/AbstractMessageCreateBuilder, dev/kord/rest/builder/RequestBuilder {
@@ -6302,19 +6304,19 @@ public final class dev/kord/rest/json/request/OnboardingPromptRequest$Companion 
 
 public final class dev/kord/rest/json/request/PollCreateRequest {
 	public static final field Companion Ldev/kord/rest/json/request/PollCreateRequest$Companion;
-	public fun <init> (Ldev/kord/common/entity/DiscordPoll$Media;Ljava/util/List;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;)V
-	public synthetic fun <init> (Ldev/kord/common/entity/DiscordPoll$Media;Ljava/util/List;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Ldev/kord/common/entity/DiscordPoll$Media;Ljava/util/List;Ljava/lang/Integer;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;)V
+	public synthetic fun <init> (Ldev/kord/common/entity/DiscordPoll$Media;Ljava/util/List;Ljava/lang/Integer;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ldev/kord/common/entity/DiscordPoll$Media;
 	public final fun component2 ()Ljava/util/List;
-	public final fun component3 ()Ldev/kord/common/entity/optional/Optional;
+	public final fun component3 ()Ljava/lang/Integer;
 	public final fun component4 ()Ldev/kord/common/entity/optional/OptionalBoolean;
 	public final fun component5 ()Ldev/kord/common/entity/optional/Optional;
-	public final fun copy (Ldev/kord/common/entity/DiscordPoll$Media;Ljava/util/List;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;)Ldev/kord/rest/json/request/PollCreateRequest;
-	public static synthetic fun copy$default (Ldev/kord/rest/json/request/PollCreateRequest;Ldev/kord/common/entity/DiscordPoll$Media;Ljava/util/List;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;ILjava/lang/Object;)Ldev/kord/rest/json/request/PollCreateRequest;
+	public final fun copy (Ldev/kord/common/entity/DiscordPoll$Media;Ljava/util/List;Ljava/lang/Integer;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;)Ldev/kord/rest/json/request/PollCreateRequest;
+	public static synthetic fun copy$default (Ldev/kord/rest/json/request/PollCreateRequest;Ldev/kord/common/entity/DiscordPoll$Media;Ljava/util/List;Ljava/lang/Integer;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;ILjava/lang/Object;)Ldev/kord/rest/json/request/PollCreateRequest;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getAllowMultiselect ()Ldev/kord/common/entity/optional/OptionalBoolean;
 	public final fun getAnswers ()Ljava/util/List;
-	public final fun getExpiry ()Ldev/kord/common/entity/optional/Optional;
+	public final fun getDuration ()Ljava/lang/Integer;
 	public final fun getLayoutType ()Ldev/kord/common/entity/optional/Optional;
 	public final fun getQuestion ()Ldev/kord/common/entity/DiscordPoll$Media;
 	public fun hashCode ()I
@@ -9096,6 +9098,7 @@ public final class dev/kord/rest/service/RestClient : dev/kord/rest/service/Rest
 	public final fun getGuild ()Ldev/kord/rest/service/GuildService;
 	public final fun getInteraction ()Ldev/kord/rest/service/InteractionService;
 	public final fun getInvite ()Ldev/kord/rest/service/InviteService;
+	public final fun getPoll ()Ldev/kord/rest/service/PollService;
 	public final fun getSku ()Ldev/kord/rest/service/SkuService;
 	public final fun getSoundboard ()Ldev/kord/rest/service/SoundboardService;
 	public final fun getStageInstance ()Ldev/kord/rest/service/StageInstanceService;

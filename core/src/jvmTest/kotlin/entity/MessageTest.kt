@@ -14,7 +14,7 @@ internal class MessageTest : EntityEqualityTest<Message> by EntityEqualityTest({
     val data = mockk<MessageData>()
     every { data.id } returns it
     every { data.channelId } returns it
-    every { data.poll } returns Optional.Missing()
+    //every { data.poll } returns Optional.Missing()
     Message(data, kord)
 }), BehaviorEqualityTest<Message> {
     override fun Message.behavior(): KordEntity = MessageBehavior(messageId = id, channelId = id, kord = kord)

@@ -9,11 +9,11 @@ import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.coerceToMissing
 import dev.kord.common.entity.optional.delegate.delegate
-import dev.kord.common.serialization.DurationInHours
 import dev.kord.rest.builder.RequestBuilder
 import dev.kord.rest.json.request.PollCreateRequest
-import kotlin.time.Clock
 import kotlin.time.Duration
+import kotlin.time.Duration.Companion.days
+import kotlin.time.Duration.Companion.hours
 
 /**
  * A builder for a [PollCreateRequest].
@@ -25,12 +25,12 @@ import kotlin.time.Duration
  * @property layoutType the [PollLayoutType]
  */
 @KordDsl
-public class PollBuilder(public var question: DiscordPoll.Media) : RequestBuilder<PollCreateRequest> {
+public class PollBuilder(questionText: String) : RequestBuilder<PollCreateRequest> {
+    public var question: DiscordPoll.Media = DiscordPoll.Media(Optional(questionText))
+
     public var answers: MutableList<DiscordPoll.Answer> = mutableListOf()
 
-    internal var _duration: Optional<DurationInHours> = Optional.Missing()
-
-    public var duration: Duration? by ::_duration.delegate()
+    public var duration: Int? = 24
 
     internal var _allowMultiselect: OptionalBoolean = OptionalBoolean.Missing
     public var allowMultiselect: Boolean? by ::_allowMultiselect.delegate()
@@ -39,9 +39,33 @@ public class PollBuilder(public var question: DiscordPoll.Media) : RequestBuilde
 
     /**
      * Sets the polls [Duration] to [duration].
+     *
+     * The minimum duration of polls is 1 hour.
+     * The maximum duration of polls is 32 days.
      */
     public fun expiresIn(duration: Duration) {
-        this@PollBuilder.duration = Duration.parse((Clock.System.now() + duration).toString())
+        if (duration > 32.days) error("Polls cannot have a duration of more than 32 days!")
+        if (duration < 1.hours) error("Polls cannot have a duration of less than 1 hour!")
+
+        this@PollBuilder.duration = duration.inWholeHours.toInt()
+    }
+
+    /**
+     * Adds an emoji to the question using its name
+     */
+    public fun emoji(emoji: String) {
+        question = DiscordPoll.Media(
+            question.text, Optional(DiscordPartialEmoji(name = emoji))
+        )
+    }
+
+    /**
+     * Adds an emoji to the question using its ID
+     */
+    public fun emoji(emoji: Snowflake) {
+        question = DiscordPoll.Media(
+            question.text, Optional(DiscordPartialEmoji(id = emoji))
+        )
     }
 
     /**
@@ -91,7 +115,7 @@ public class PollBuilder(public var question: DiscordPoll.Media) : RequestBuilde
     override fun toRequest(): PollCreateRequest = PollCreateRequest(
         question,
         answers.toList(),
-        _duration,
+        duration,
         _allowMultiselect,
         Optional(layoutType)
     )

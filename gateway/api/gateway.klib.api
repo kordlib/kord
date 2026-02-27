@@ -2569,6 +2569,8 @@ sealed class dev.kord.gateway/Intent { // dev.kord.gateway/Intent|null[0]
         final fun fromShift(kotlin/Int): dev.kord.gateway/Intent // dev.kord.gateway/Intent.Companion.fromShift|fromShift(kotlin.Int){}[0]
     }
 
+    final object DirectMessagePolls : dev.kord.gateway/Intent // dev.kord.gateway/Intent.DirectMessagePolls|null[0]
+
     final object DirectMessageTyping : dev.kord.gateway/Intent // dev.kord.gateway/Intent.DirectMessageTyping|null[0]
 
     final object DirectMessages : dev.kord.gateway/Intent // dev.kord.gateway/Intent.DirectMessages|null[0]
@@ -2584,6 +2586,8 @@ sealed class dev.kord.gateway/Intent { // dev.kord.gateway/Intent|null[0]
     final object GuildInvites : dev.kord.gateway/Intent // dev.kord.gateway/Intent.GuildInvites|null[0]
 
     final object GuildMembers : dev.kord.gateway/Intent // dev.kord.gateway/Intent.GuildMembers|null[0]
+
+    final object GuildMessagePolls : dev.kord.gateway/Intent // dev.kord.gateway/Intent.GuildMessagePolls|null[0]
 
     final object GuildMessageReactions : dev.kord.gateway/Intent // dev.kord.gateway/Intent.GuildMessageReactions|null[0]
 

@@ -9374,6 +9374,10 @@ public final class dev/kord/common/entity/Permission$SendMessagesInThreads : dev
 	public static final field INSTANCE Ldev/kord/common/entity/Permission$SendMessagesInThreads;
 }
 
+public final class dev/kord/common/entity/Permission$SendPolls : dev/kord/common/entity/Permission {
+	public static final field INSTANCE Ldev/kord/common/entity/Permission$SendPolls;
+}
+
 public final class dev/kord/common/entity/Permission$SendTTSMessages : dev/kord/common/entity/Permission {
 	public static final field INSTANCE Ldev/kord/common/entity/Permission$SendTTSMessages;
 }

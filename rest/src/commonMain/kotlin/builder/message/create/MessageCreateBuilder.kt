@@ -23,7 +23,6 @@ public sealed interface MessageCreateBuilder : MessageBuilder {
     /**
      * The poll of this message.
      */
-    @set:KordUnsafe
     public var poll: PollBuilder?
 
     /** Whether this message should be played as a text-to-speech message. */
@@ -47,8 +46,7 @@ public sealed interface MessageCreateBuilder : MessageBuilder {
  * **Please note that if poll is set, you currently cannot set [MessageBuilder.content],
  * [MessageBuilder.attachments], [MessageBuilder.embeds] or [MessageBuilder.components]**
  */
-@KordUnsafe
-public inline fun MessageCreateBuilder.poll(question: DiscordPoll.Media, builder: PollBuilder.() -> Unit) {
+public inline fun MessageCreateBuilder.poll(question: String, builder: PollBuilder.() -> Unit) {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }
@@ -88,6 +86,5 @@ public sealed class AbstractMessageCreateBuilder : MessageCreateBuilder {
     final override var suppressNotifications: Boolean? = null
 
     internal var _poll: Optional<PollBuilder> = Optional.Missing()
-    @KordUnsafe
     final override var poll: PollBuilder? by ::_poll.delegate()
 }

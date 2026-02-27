@@ -300,6 +300,11 @@ public sealed class Permission(
      */
     public object SendVoiceMessages : Permission(46)
 
+    /**
+     * Allows sending polls.
+     */
+    public object SendPolls : Permission(49)
+
     public companion object {
         /**
          * A [List] of all known [Permission]s.
@@ -353,6 +358,7 @@ public sealed class Permission(
                 CreateEvents,
                 UseExternalSounds,
                 SendVoiceMessages,
+                SendPolls,
             )
         }
 
@@ -409,6 +415,7 @@ public sealed class Permission(
             44 -> CreateEvents
             45 -> UseExternalSounds
             46 -> SendVoiceMessages
+            49 -> SendPolls
             else -> Unknown(shift)
         }
     }

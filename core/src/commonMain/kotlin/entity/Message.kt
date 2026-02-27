@@ -6,7 +6,6 @@ import dev.kord.common.entity.optional.*
 import dev.kord.common.exception.RequestException
 import dev.kord.core.Kord
 import dev.kord.core.behavior.MessageBehavior
-import dev.kord.core.behavior.PollBehavior
 import dev.kord.core.behavior.UserBehavior
 import dev.kord.core.behavior.channel.ChannelBehavior
 import dev.kord.core.behavior.interaction.response.InteractionResponseBehavior
@@ -309,6 +308,12 @@ public open class Message(
         get() = data.components.orEmpty().map { ActionRowComponent(it) }
 
     /**
+     * The [poll][DiscordPoll].
+     */
+    public val poll: DiscordPoll
+        get() = data.poll.value!!
+
+    /**
      * Returns itself.
      */
     override suspend fun asMessage(): Message = this
@@ -357,49 +362,4 @@ public open class Message(
      */
     public suspend fun getGuildOrNull(): Guild? = supplier.getChannelOfOrNull<GuildChannel>(channelId)?.getGuildOrNull()
 
-}
-
-public class DefaultMessage(
-    override val data: MessageData,
-    override val kord: Kord,
-    override val supplier: EntitySupplier = kord.defaultSupplier,
-) : Message(data, kord, supplier) {
-    override fun hashCode(): Int = hash(id)
-
-    override fun equals(other: Any?): Boolean = when (other) {
-        is MessageBehavior -> other.id == id && other.channelId == channelId
-        else -> false
-    }
-
-    override fun withStrategy(strategy: EntitySupplyStrategy<*>): DefaultMessage =
-        DefaultMessage(data, kord, strategy.supply(kord))
-}
-
-/**
- * A message which has a [poll].
- */
-public class Poll(
-    override val data: MessageData,
-    override val kord: Kord,
-    override val supplier: EntitySupplier = kord.defaultSupplier,
-) : Message(data, kord, supplier), PollBehavior {
-    /**
-     * The [poll][DiscordPoll].
-     */
-    public val poll: DiscordPoll
-        get() = data.poll.value!!
-
-    override fun hashCode(): Int = hash(id)
-
-    override fun equals(other: Any?): Boolean = when (other) {
-        is MessageBehavior -> other.id == id && other.channelId == channelId
-        else -> false
-    }
-
-    override fun withStrategy(strategy: EntitySupplyStrategy<*>): Poll =
-        Poll(data, kord, strategy.supply(kord))
-
-    override fun toString(): String {
-        return "Poll(data=$data, kord=$kord, supplier=$supplier)"
-    }
 }

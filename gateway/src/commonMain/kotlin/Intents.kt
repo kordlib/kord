@@ -200,6 +200,22 @@
                 - [AutoModerationActionExecution]
             """,
         ),
+        Entry(
+            "GuildMessagePolls", shift = 24,
+            kDoc = """
+                Enables the following events:
+                - [MessagePollVoteAdd]
+                - [MessagePollVoteRemove]
+            """,
+        ),
+        Entry(
+            "DirectMessagePolls", shift = 25,
+            kDoc = """
+                Enables the following events:
+                - [MessagePollVoteAdd]
+                - [MessagePollVoteRemove]
+            """,
+        ),
     ],
 )
 

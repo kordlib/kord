@@ -211,19 +211,6 @@ public interface MessageBehavior : KordEntity, Strategizable {
     }
 
     /**
-     * Returns a new [MessageBehavior] with the given [strategy].
-     */
-    override fun withStrategy(
-        strategy: EntitySupplyStrategy<*>,
-    ): MessageBehavior = MessageBehavior(channelId, id, kord, strategy)
-}
-
-/**
- * Behavior of a Poll message.
- */
-public interface PollBehavior : MessageBehavior {
-
-    /**
      * Retrieves the voters who voted for the specified [answer][answerId].
      */
     public suspend fun getAnswerVoters(answerId: Int): List<User> =
@@ -236,12 +223,19 @@ public interface PollBehavior : MessageBehavior {
     /**
      * Ends this poll.
      */
-    public suspend fun end(): Poll {
+    public suspend fun end(): Message {
         val message = kord.rest.poll.endPoll(channelId, id)
         val data = MessageData.from(message)
 
-        return Message(data, kord, supplier) as Poll
+        return Message(data, kord, supplier)
     }
+
+    /**
+     * Returns a new [MessageBehavior] with the given [strategy].
+     */
+    override fun withStrategy(
+        strategy: EntitySupplyStrategy<*>,
+    ): MessageBehavior = MessageBehavior(channelId, id, kord, strategy)
 }
 
 public fun MessageBehavior(

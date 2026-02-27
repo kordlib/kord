@@ -4,7 +4,6 @@ import dev.kord.common.Color
 import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
-import dev.kord.common.serialization.DurationInHours
 import dev.kord.rest.NamedFile
 import kotlin.time.Instant
 import kotlinx.serialization.SerialName
@@ -129,7 +128,7 @@ public data class MultipartForumThreadMessageCreateRequest(
 public data class PollCreateRequest(
     val question: DiscordPoll.Media,
     val answers: List<DiscordPoll.Answer>,
-    val expiry: Optional<DurationInHours> = Optional.Missing(),
+    val duration: Int?,
     @SerialName("allow_multiselect")
     val allowMultiselect: OptionalBoolean = OptionalBoolean.Missing,
     @SerialName("layout_type")

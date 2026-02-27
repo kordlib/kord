@@ -527,8 +527,7 @@ class RestServiceTest {
     @Test
     @Order(29)
     fun `poll in channel`() = runTest {
-        val poll = channel.createPoll {
-            question("Is Kord great?")
+        val poll = channel.createPoll("Is Kord great?") {
             answer("Yes")
             answer("no")
         }
