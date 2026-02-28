@@ -362,4 +362,18 @@ public open class Message(
      */
     public suspend fun getGuildOrNull(): Guild? = supplier.getChannelOfOrNull<GuildChannel>(channelId)?.getGuildOrNull()
 
+    /**
+     * Returns a new [Message] with the given [strategy]
+     */
+    override fun withStrategy(strategy: EntitySupplyStrategy<*>): Message =
+        Message(data, kord, strategy.supply(kord))
+
+    override fun hashCode(): Int = hash(id)
+
+    override fun equals(other: Any?): Boolean = when (other) {
+        is MessageBehavior -> other.id == id && other.channelId == channelId
+        else -> false
+    }
+
+    override fun toString(): String = "Message(data=$data, kord=$kord, supplier=$supplier"
 }

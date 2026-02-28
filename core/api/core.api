@@ -7974,6 +7974,7 @@ public class dev/kord/core/entity/Message : dev/kord/core/behavior/MessageBehavi
 	public fun deleteReaction (Ldev/kord/common/entity/Snowflake;Ldev/kord/core/entity/ReactionEmoji;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun deleteReaction (Ldev/kord/core/entity/ReactionEmoji;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun end (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun equals (Ljava/lang/Object;)Z
 	public fun fetchMessage (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun fetchMessageOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun getActionRows ()Ljava/util/List;
@@ -8021,11 +8022,14 @@ public class dev/kord/core/entity/Message : dev/kord/core/behavior/MessageBehavi
 	public final fun getTts ()Z
 	public final fun getType ()Ldev/kord/common/entity/MessageType;
 	public final fun getWebhookId ()Ldev/kord/common/entity/Snowflake;
+	public fun hashCode ()I
 	public final fun isPinned ()Z
 	public fun pin (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun publish (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun toString ()Ljava/lang/String;
 	public fun unpin (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/MessageBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/MessageBehavior;
+	public fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/Message;
 	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/Strategizable;
 }
 

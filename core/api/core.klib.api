@@ -13402,6 +13402,10 @@ open class dev.kord.core.entity/Message : dev.kord.core.behavior/MessageBehavior
     final suspend fun getAuthorAsMemberOrNull(): dev.kord.core.entity/Member? // dev.kord.core.entity/Message.getAuthorAsMemberOrNull|getAuthorAsMemberOrNull(){}[0]
     final suspend fun getGuild(): dev.kord.core.entity/Guild // dev.kord.core.entity/Message.getGuild|getGuild(){}[0]
     final suspend fun getGuildOrNull(): dev.kord.core.entity/Guild? // dev.kord.core.entity/Message.getGuildOrNull|getGuildOrNull(){}[0]
+    open fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.core.entity/Message.equals|equals(kotlin.Any?){}[0]
+    open fun hashCode(): kotlin/Int // dev.kord.core.entity/Message.hashCode|hashCode(){}[0]
+    open fun toString(): kotlin/String // dev.kord.core.entity/Message.toString|toString(){}[0]
+    open fun withStrategy(dev.kord.core.supplier/EntitySupplyStrategy<*>): dev.kord.core.entity/Message // dev.kord.core.entity/Message.withStrategy|withStrategy(dev.kord.core.supplier.EntitySupplyStrategy<*>){}[0]
     open suspend fun asMessage(): dev.kord.core.entity/Message // dev.kord.core.entity/Message.asMessage|asMessage(){}[0]
     open suspend fun asMessageOrNull(): dev.kord.core.entity/Message // dev.kord.core.entity/Message.asMessageOrNull|asMessageOrNull(){}[0]
 
