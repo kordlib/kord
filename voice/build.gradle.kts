@@ -15,4 +15,7 @@ dependencies {
     compileOnly(projects.kspAnnotations)
 
     api(libs.ktor.network)
+
+    implementation(libs.libsodiumBindings)
+    compileOnly(libs.jna)
 }

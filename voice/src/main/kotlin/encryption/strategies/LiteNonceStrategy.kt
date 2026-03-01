@@ -7,7 +7,11 @@ import dev.kord.voice.io.view
 import dev.kord.voice.udp.RTPPacket
 import kotlinx.atomicfu.atomic
 
-public class LiteNonceStrategy : NonceStrategy {
+@Deprecated(
+    DEPRECATION_INTERNAL_STRATEGY,
+    level = DeprecationLevel.WARNING,
+)
+public class LiteNonceStrategy : @Suppress("DEPRECATION") NonceStrategy {
     override val nonceLength: Int = 4
 
     private var count: Int by atomic(0)

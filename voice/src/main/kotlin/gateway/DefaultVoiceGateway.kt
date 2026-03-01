@@ -131,7 +131,7 @@ public class DefaultVoiceGateway(
     private suspend fun readSocket() {
         socket.incoming.asFlow().buffer(Channel.UNLIMITED).collect {
             when (it) {
-                is Frame.Binary, is Frame.Text -> read(it)
+                is Frame.Text -> read(it)
                 else -> { /*ignore*/
                 }
             }

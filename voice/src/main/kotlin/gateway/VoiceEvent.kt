@@ -5,7 +5,10 @@ import dev.kord.voice.EncryptionMode
 import dev.kord.voice.SpeakingFlags
 import io.github.oshai.kotlinlogging.KotlinLogging
 import kotlinx.serialization.*
-import kotlinx.serialization.descriptors.*
+import kotlinx.serialization.descriptors.SerialDescriptor
+import kotlinx.serialization.descriptors.StructureKind
+import kotlinx.serialization.descriptors.buildClassSerialDescriptor
+import kotlinx.serialization.descriptors.buildSerialDescriptor
 import kotlinx.serialization.encoding.*
 import kotlinx.serialization.json.JsonDecoder
 import kotlinx.serialization.json.JsonElement
@@ -82,14 +85,8 @@ public data class Hello(
     val heartbeatInterval: Double
 ) : VoiceEvent()
 
-@Serializable(with = HeartbeatAck.Serializer::class)
-public data class HeartbeatAck(val nonce: Long) : VoiceEvent() {
-    internal object Serializer : KSerializer<HeartbeatAck> {
-        override val descriptor = PrimitiveSerialDescriptor("dev.kord.voice.gateway.HeartbeatAck", PrimitiveKind.LONG)
-        override fun serialize(encoder: Encoder, value: HeartbeatAck) = encoder.encodeLong(value.nonce)
-        override fun deserialize(decoder: Decoder) = HeartbeatAck(nonce = decoder.decodeLong())
-    }
-}
+@Serializable
+public data class HeartbeatAck(@SerialName("t") val nonce: Long) : VoiceEvent()
 
 @Serializable
 public data class SessionDescription(

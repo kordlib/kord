@@ -36,5 +36,5 @@ public object KordConfiguration {
      */
     @Volatile
     @set:KordUnsafe
-    public var VOICE_GATEWAY_VERSION: Int = 4
+    public var VOICE_GATEWAY_VERSION: Int = 8
 }
