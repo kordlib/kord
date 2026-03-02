@@ -51,7 +51,12 @@ internal class EntryPointCreateBuilderImpl(
     override var integrationTypes: MutableList<ApplicationIntegrationType>? by state::integrationTypes.delegate()
     override var contexts: MutableList<InteractionContextType>? by state::contexts.delegate()
 
-    @Deprecated("'defaultPermission' is deprecated in favor of 'defaultMemberPermissions' and 'dmPermission'. Setting 'defaultPermission' to false can be replaced by setting 'defaultMemberPermissions' to empty Permissions and 'dmPermission' to false ('dmPermission' is only available for global commands).")
+    @Deprecated(
+        "'defaultPermission' is deprecated in favor of 'defaultMemberPermissions' and 'dmPermission'. Setting" +
+                " 'defaultPermission' to false can be replaced by setting 'defaultMemberPermissions' to empty Permissions" +
+                " and 'dmPermission' to false ('dmPermission' is only available for global commands).",
+        level = DeprecationLevel.WARNING
+    )
     override var defaultPermission: Boolean? by @Suppress("DEPRECATION_ERROR") state::defaultPermission.delegate()
 
     override var nsfw: Boolean? by state::nsfw.delegate()
@@ -89,7 +94,12 @@ internal class EntryPointModifyBuilderImpl : GlobalEntryPointModifyBuilder, Entr
     @Suppress("OVERRIDE_DEPRECATION")
     override var dmPermission: Boolean? by state::dmPermission.delegate()
 
-    @Deprecated("'defaultPermission' is deprecated in favor of 'defaultMemberPermissions' and 'dmPermission'. Setting 'defaultPermission' to false can be replaced by setting 'defaultMemberPermissions' to empty Permissions and 'dmPermission' to false ('dmPermission' is only available for global commands).")
+    @Deprecated(
+        "'defaultPermission' is deprecated in favor of 'defaultMemberPermissions' and 'dmPermission'. Setting" +
+                " 'defaultPermission' to false can be replaced by setting 'defaultMemberPermissions' to empty Permissions" +
+                " and 'dmPermission' to false ('dmPermission' is only available for global commands).",
+        level = DeprecationLevel.WARNING
+    )
     override var defaultPermission: Boolean? by @Suppress("DEPRECATION_ERROR") state::defaultPermission.delegate()
 
     override var nsfw: Boolean? by state::nsfw.delegate()

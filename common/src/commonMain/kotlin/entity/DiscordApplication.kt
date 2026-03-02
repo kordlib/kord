@@ -124,6 +124,8 @@ public data class DiscordApplication(
     val approximateGuildCount: OptionalInt = OptionalInt.Missing,
     @SerialName("approximate_user_install_count")
     val approximateUserInstallCount: OptionalInt = OptionalInt.Missing,
+    @SerialName("approximate_user_authorization_count")
+    val approximateUserAuthorizationCount: OptionalInt = OptionalInt.Missing,
     override val tags: Optional<List<String>> = Optional.Missing(),
     @SerialName("install_params")
     override val installParams: Optional<InstallParams> = Optional.Missing(),

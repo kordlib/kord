@@ -1,12 +1,7 @@
 package dev.kord.core.cache.data
 
-import dev.kord.common.entity.DiscordInteractionMetadata
-import dev.kord.common.entity.DiscordMessageInteraction
-import dev.kord.common.entity.IntegrationOwners
-import dev.kord.common.entity.InteractionType
-import dev.kord.common.entity.Snowflake
+import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.Optional
-import dev.kord.common.entity.optional.Optional.Missing.Companion.invoke
 import dev.kord.common.entity.optional.OptionalSnowflake
 import kotlinx.serialization.Serializable
 
@@ -32,7 +27,9 @@ public data class InteractionMetadataData(
     val authorizingIntegrationOwners: IntegrationOwners,
     val originalResponseMessageId: OptionalSnowflake = OptionalSnowflake.Missing,
     val interactedMessageId: OptionalSnowflake = OptionalSnowflake.Missing,
-    val triggeringInteractionMetadata: Optional<DiscordInteractionMetadata> = Optional.Missing()
+    val triggeringInteractionMetadata: Optional<DiscordInteractionMetadata> = Optional.Missing(),
+    val targetUser: Optional<DiscordUser> = Optional.Missing(),
+    val targetMessageId: OptionalSnowflake = OptionalSnowflake.Missing,
 ) {
     public companion object {
         public fun from(entity: DiscordInteractionMetadata): InteractionMetadataData = with(entity) {
@@ -43,7 +40,9 @@ public data class InteractionMetadataData(
                 authorizingIntegrationOwners,
                 originalResponseMessageId,
                 interactedMessageId,
-                triggeringInteractionMetadata
+                triggeringInteractionMetadata,
+                targetUser,
+                targetMessageId
             )
         }
     }

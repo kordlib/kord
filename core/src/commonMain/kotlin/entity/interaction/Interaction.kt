@@ -2,8 +2,6 @@ package dev.kord.core.entity.interaction
 
 import dev.kord.common.Locale
 import dev.kord.common.entity.ApplicationIntegrationType
-import dev.kord.common.entity.ApplicationIntegrationType.GuildInstall
-import dev.kord.common.entity.ApplicationIntegrationType.UserInstall
 import dev.kord.common.entity.InteractionContextType
 import dev.kord.common.entity.InteractionType
 import dev.kord.common.entity.Snowflake
@@ -15,6 +13,7 @@ import dev.kord.core.behavior.interaction.InteractionBehavior
 import dev.kord.core.cache.data.InteractionData
 import dev.kord.core.entity.User
 import dev.kord.core.entity.monetization.Entitlement
+import dev.kord.core.entity.monetization.Sku
 import dev.kord.core.supplier.EntitySupplyStrategy
 
 /**
@@ -83,6 +82,11 @@ public sealed interface Interaction : InteractionBehavior {
      * [Context][InteractionContextType] where the interaction was triggered from.
      */
     public val context: InteractionContextType? get() = data.context.value
+
+    /**
+     * Attachment size limit in bytes
+     */
+    public val attachmentSizeLimit: Int get() = data.attachmentSizeLimit
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): Interaction
 

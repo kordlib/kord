@@ -58,5 +58,6 @@
       "type":8,
       "deleted":false
     }
-  ]
+  ],
+  "attachment_size_limit": 1
 }

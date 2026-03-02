@@ -589,8 +589,9 @@ class DispatchEventDeserializationTest {
             appPermissions = Permissions(),
             authorizingIntegrationOwners = mapOf(ApplicationIntegrationType.GuildInstall to Snowflake.min),
             version = 1,
+            attachmentSizeLimit = 1
         ),
-        json = """{"id":"0","application_id":"0","type":1,"data":{},"token":"hunter2","version":1, "app_permissions":"0", "authorizing_integration_owners": {"0": 0}}""",
+        json = """{"id":"0","application_id":"0","type":1,"data":{},"token":"hunter2","version":1, "app_permissions":"0", "authorizing_integration_owners": {"0": 0}, "attachment_size_limit": 1}"""
     )
 
     @Test

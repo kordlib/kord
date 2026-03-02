@@ -100,9 +100,8 @@
         Entry("Guild", intValue = 0, kDoc = "Interaction can be used within servers"),
         Entry("BotDM", intValue = 1, kDoc = "Interaction can be used within DMs with the app's bot user"),
         Entry(
-            "PrivateChannel",
-            intValue = 2,
-            kDoc = "Interaction can be used within Group DMs and DMs other than the app's bot user\n"
+            "PrivateChannel", intValue = 2,
+            kDoc = "Interaction can be used within Group DMs and DMs other than the app's bot user"
         ),
     ]
 )
@@ -283,9 +282,9 @@ public data class DiscordInteraction(
     val applicationId: Snowflake,
     val type: InteractionType,
     val data: InteractionCallbackData,
+    val guild: Optional<DiscordPartialGuild> = Optional.Missing(),
     @SerialName("guild_id")
     val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
-    val guild: Optional<Guild> = Optional.Missing(),
     val channel: Optional<DiscordChannel> = Optional.Missing(),
     @SerialName("channel_id")
     val channelId: OptionalSnowflake = OptionalSnowflake.Missing,
@@ -305,11 +304,9 @@ public data class DiscordInteraction(
     val context: Optional<InteractionContextType> = Optional.Missing(),
     // Don't trust the docs: This can be missing
     val entitlements: Optional<List<DiscordEntitlement>> = Optional.Missing(),
+    @SerialName("attachment_size_limit")
+    val attachmentSizeLimit: Int,
 ) {
-
-    @Serializable
-    public data class Guild(val locale: Locale, val id: Snowflake, val features: List<GuildFeature>)
-
     /**
      * Serializer that handles incomplete messages in [DiscordInteraction.message]. Discards
      * any incomplete messages as missing optionals.

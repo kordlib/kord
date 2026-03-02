@@ -16,6 +16,7 @@ import dev.kord.core.cache.data.ChannelData
 import dev.kord.core.cache.data.InteractionMetadataData
 import dev.kord.core.cache.data.MessageData
 import dev.kord.core.cache.data.MessageInteractionData
+import dev.kord.core.cache.data.toData
 import dev.kord.core.entity.application.ApplicationCommand
 import dev.kord.core.entity.channel.Channel
 import dev.kord.core.entity.channel.GuildChannel
@@ -58,6 +59,8 @@ public class Message(
         public val originalResponseMessageId: Snowflake? get() = data.originalResponseMessageId.value
         public val interactedMessageId: Snowflake? get() = data.interactedMessageId.value
         public val triggeringInteractionMetadata: DiscordInteractionMetadata? get() = data.triggeringInteractionMetadata.value
+        public val targetUser: User? get() = data.targetUser.value?.let { User(it.toData(), kord, supplier) }
+        public val targetMessageId: Snowflake? get() = data.targetMessageId.value
 
         override fun withStrategy(strategy: EntitySupplyStrategy<*>): Strategizable =
             InteractionMetadata(data, kord, strategy.supply(kord))
@@ -68,7 +71,11 @@ public class Message(
      *
      * This is sent on the [Message] object when the message is a response to an [ActionInteraction].
      */
-    @Deprecated("Deprecated in favor of InteractionMetadata")
+    @Deprecated(
+        "Deprecated in favor of InteractionMetadata",
+        ReplaceWith("InteractionMetadata(data, kord, supplier)"),
+        DeprecationLevel.WARNING
+    )
     public class Interaction(
         public val data: MessageInteractionData,
         override val kord: Kord,
@@ -217,9 +224,10 @@ public class Message(
     /**
      * If this message is a [MessageReferenceType.Forward] this will contain snapshots of the original message.
      */
-    public val messageSnapshots: List<MessageSnapshot>? get() = data.messageSnapshots.value?.map {
-        MessageSnapshot(it, kord)
-    }
+    public val messageSnapshots: List<MessageSnapshot>?
+        get() = data.messageSnapshots.value?.map {
+            MessageSnapshot(it, kord)
+        }
 
     /**
      * The [Channels][Channel] specifically mentioned in this message.
@@ -276,7 +284,7 @@ public class Message(
     /**
      * The [Message.Interaction] sent on this message object when it is a response to an [ActionInteraction].
      */
-    @Deprecated("Deprecated in favor of interactionMetadata", ReplaceWith("interactionMetadata"))
+    @Deprecated("Deprecated in favor of interactionMetadata", ReplaceWith("interactionMetadata"), DeprecationLevel.WARNING)
     @Suppress("DEPRECATION")
     public val interaction: Interaction? get() = data.interaction.mapNullable { Interaction(it, kord) }.value
 

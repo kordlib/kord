@@ -32,6 +32,7 @@ public data class InteractionData(
     val authorizingIntegrationOwners: Map<ApplicationIntegrationType, Snowflake>,
     val context: Optional<InteractionContextType> = Optional.Missing(),
     val entitlements: Optional<List<EntitlementData>> = Optional.Missing(),
+    val attachmentSizeLimit: Int
 ) {
     public companion object {
         public fun from(interaction: DiscordInteraction): InteractionData {
@@ -59,6 +60,7 @@ public data class InteractionData(
                     authorizingIntegrationOwners,
                     context,
                     entitlements.mapList { EntitlementData.from(it) },
+                    attachmentSizeLimit
                 )
             }
         }

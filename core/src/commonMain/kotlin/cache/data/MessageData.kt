@@ -37,7 +37,7 @@ public data class MessageData(
     val stickers: Optional<List<StickerItemData>> = Optional.Missing(),
     val referencedMessage: Optional<MessageData?> = Optional.Missing(),
     val interactionMetadata: Optional<InteractionMetadataData> = Optional.Missing(),
-    @Deprecated("Deprecated in favor of interactionMetadata", ReplaceWith("interactionMetadata"))
+    @Deprecated("Deprecated in favor of interactionMetadata", ReplaceWith("interactionMetadata"), DeprecationLevel.WARNING)
     val interaction: Optional<MessageInteractionData> = Optional.Missing(),
     val components: Optional<List<ComponentData>> = Optional.Missing(),
     val thread: Optional<ChannelData> = Optional.Missing(),

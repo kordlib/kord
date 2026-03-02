@@ -253,7 +253,7 @@ public data class DiscordMessage(
      */
     val components: Optional<List<DiscordComponent>> = Optional.Missing(),
     val interactionMetadata: Optional<DiscordInteractionMetadata> = Optional.Missing(),
-    @Deprecated("Deprecated in favor of interactionMetadata", ReplaceWith("interactionMetadata"))
+    @Deprecated("Deprecated in favor of interactionMetadata", ReplaceWith("interactionMetadata"), DeprecationLevel.WARNING)
     val interaction: Optional<DiscordMessageInteraction> = Optional.Missing(),
     val thread: Optional<DiscordChannel> = Optional.Missing(),
     val position: OptionalInt = OptionalInt.Missing,
@@ -269,6 +269,8 @@ public data class DiscordMessage(
  * @property originalResponseMessageId ID of the original response message, present only on follow-up messages
  * @property interactedMessageId ID of the message that contained interactive component, present only on messages created from component interactions
  * @property triggeringInteractionMetadata 	Metadata for the interaction that was used to open the modal, present only on modal submit interactions
+ * @property targetUser The user the command was run on, present only on user command interactions
+ * @property targetMessageId The ID of the message the command was run on, present only on message command interactions. The original response message will also have `message_reference` and `referenced_message` pointing to this message
  */
 @Serializable
 public data class DiscordInteractionMetadata(
@@ -282,7 +284,11 @@ public data class DiscordInteractionMetadata(
     @SerialName("interacted_message_id")
     val interactedMessageId: OptionalSnowflake = OptionalSnowflake.Missing,
     @SerialName("triggering_interaction_metadata")
-    val triggeringInteractionMetadata: Optional<DiscordInteractionMetadata> = Optional.Missing()
+    val triggeringInteractionMetadata: Optional<DiscordInteractionMetadata> = Optional.Missing(),
+    @SerialName("target_user")
+    val targetUser: Optional<DiscordUser> = Optional.Missing(),
+    @SerialName("target_message_id")
+    val targetMessageId: OptionalSnowflake = OptionalSnowflake.Missing
 )
 
 /**
@@ -418,7 +424,7 @@ public data class DiscordPartialMessage(
     @SerialName("referenced_message")
     val referencedMessage: Optional<DiscordMessage?> = Optional.Missing(),
     val interactionMetadata: Optional<DiscordInteractionMetadata> = Optional.Missing(),
-    @Deprecated("Deprecated in favor of interactionMetadata")
+    @Deprecated("Deprecated in favor of interactionMetadata", ReplaceWith("interactionMetadata"), DeprecationLevel.WARNING)
     val interaction: Optional<DiscordMessageInteraction> = Optional.Missing(),
     val position: OptionalInt = OptionalInt.Missing,
 )
