@@ -68,9 +68,7 @@ in [`gradle.properties`](gradle.properties))
 ```kotlin
 repositories {
     mavenCentral()
-    // Kord Snapshot Repositories (optional, choose one of these):
-    maven("https://repo.kord.dev/snapshots")
-    maven("https://oss.sonatype.org/content/repositories/snapshots")
+    maven("https://snapshots.kord.dev")
 }
 
 dependencies {
@@ -83,12 +81,8 @@ dependencies {
 ```groovy
 repositories {
     mavenCentral()
-    // Kord Snapshot Repositories (optional, choose one of these):
     maven {
-        url "https://repo.kord.dev/snapshots"
-    }
-    maven {
-        url "https://oss.sonatype.org/content/repositories/snapshots"
+        url "https://snapshots.kord.dev/"
     }
 }
 
@@ -99,23 +93,12 @@ dependencies {
 
 ### Maven
 
-##### Kord Snapshot Repositories (optional, choose one of these):
+##### Kord Snapshot Repositories:
 
 ```xml
 <repository>
     <id>snapshots-repo</id>
-    <url>https://repo.kord.dev/snapshots</url>
-    <releases>
-        <enabled>false</enabled>
-    </releases>
-    <snapshots>
-        <enabled>true</enabled>
-    </snapshots>
-</repository>
-
-<repository>
-    <id>snapshots-repo</id>
-    <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+    <url>https://snapshots.kord.dev</url>
     <releases>
         <enabled>false</enabled>
     </releases>
