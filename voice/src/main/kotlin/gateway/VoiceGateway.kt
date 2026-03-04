@@ -132,6 +132,10 @@ public sealed class VoiceGatewayCloseCode(public val code: Int) {
     public object Disconnect : VoiceGatewayCloseCode(4014)
     public object VoiceServerCrashed : VoiceGatewayCloseCode(4015)
     public object UnknownEncryptionMode : VoiceGatewayCloseCode(4016)
+    public object DAVEProtocolRequired : VoiceGatewayCloseCode(4017)
+    public object BadRequest : VoiceGatewayCloseCode(4020)
+    public object RateLimited: VoiceGatewayCloseCode(4021)
+    public object CallTerminated : VoiceGatewayCloseCode(4022)
 
     public companion object {
         public fun of(code: Int): VoiceGatewayCloseCode =
@@ -148,6 +152,10 @@ public sealed class VoiceGatewayCloseCode(public val code: Int) {
                 4014 -> Disconnect
                 4015 -> VoiceServerCrashed
                 4016 -> UnknownEncryptionMode
+                4017 -> DAVEProtocolRequired
+                4020 -> BadRequest
+                4021 -> RateLimited
+                4022 -> CallTerminated
                 else -> Unknown(code)
             }
     }

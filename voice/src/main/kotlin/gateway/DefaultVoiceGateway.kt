@@ -250,6 +250,10 @@ internal val VoiceGatewayCloseCode.retry
         VoiceGatewayCloseCode.Disconnect -> false
         VoiceGatewayCloseCode.VoiceServerCrashed -> true
         VoiceGatewayCloseCode.UnknownEncryptionMode -> false
+        VoiceGatewayCloseCode.DAVEProtocolRequired -> false
+        VoiceGatewayCloseCode.BadRequest -> false
+        VoiceGatewayCloseCode.RateLimited -> false
+        VoiceGatewayCloseCode.CallTerminated -> false
         is VoiceGatewayCloseCode.Unknown -> true
     }
 
@@ -270,6 +274,10 @@ internal val VoiceGatewayCloseCode.exceptional
         VoiceGatewayCloseCode.Disconnect -> false
         VoiceGatewayCloseCode.VoiceServerCrashed -> false
         VoiceGatewayCloseCode.UnknownEncryptionMode -> true
+        VoiceGatewayCloseCode.DAVEProtocolRequired -> true
+        VoiceGatewayCloseCode.BadRequest -> true
+        VoiceGatewayCloseCode.RateLimited -> false
+        VoiceGatewayCloseCode.CallTerminated -> false
         is VoiceGatewayCloseCode.Unknown -> false
     }
 

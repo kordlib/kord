@@ -53,6 +53,13 @@ public sealed class VoiceEvent {
                     jsonLogger.debug { "Unknown voice gateway event with opcode $op : $d" }
                     null
                 }
+                OpCode.DavePrepareTransition, OpCode.DaveExecuteTransition, OpCode.DaveTransitionReady, OpCode
+                    .DavePrepareEpoch, OpCode.DaveMlsExternalSender, OpCode.DaveMlsKeyPackage, OpCode
+                        .DaveMlsProposals, OpCode.DaveMlsCommitWelcome, OpCode.DaveMlsAnnounceCommitTransition,
+                OpCode.DaveMlsWelcome, OpCode.DaveMlsInvalidCommitWelcome -> {
+                    // TODO Support these codes
+                    null
+                }
             }
         }
 

@@ -680,6 +680,17 @@ public final class dev/kord/voice/gateway/Identify$Companion {
 public final class dev/kord/voice/gateway/OpCode : java/lang/Enum {
 	public static final field ClientDisconnect Ldev/kord/voice/gateway/OpCode;
 	public static final field Companion Ldev/kord/voice/gateway/OpCode$Companion;
+	public static final field DaveExecuteTransition Ldev/kord/voice/gateway/OpCode;
+	public static final field DaveMlsAnnounceCommitTransition Ldev/kord/voice/gateway/OpCode;
+	public static final field DaveMlsCommitWelcome Ldev/kord/voice/gateway/OpCode;
+	public static final field DaveMlsExternalSender Ldev/kord/voice/gateway/OpCode;
+	public static final field DaveMlsInvalidCommitWelcome Ldev/kord/voice/gateway/OpCode;
+	public static final field DaveMlsKeyPackage Ldev/kord/voice/gateway/OpCode;
+	public static final field DaveMlsProposals Ldev/kord/voice/gateway/OpCode;
+	public static final field DaveMlsWelcome Ldev/kord/voice/gateway/OpCode;
+	public static final field DavePrepareEpoch Ldev/kord/voice/gateway/OpCode;
+	public static final field DavePrepareTransition Ldev/kord/voice/gateway/OpCode;
+	public static final field DaveTransitionReady Ldev/kord/voice/gateway/OpCode;
 	public static final field Heartbeat Ldev/kord/voice/gateway/OpCode;
 	public static final field HeartbeatAck Ldev/kord/voice/gateway/OpCode;
 	public static final field Hello Ldev/kord/voice/gateway/OpCode;
@@ -955,8 +966,20 @@ public final class dev/kord/voice/gateway/VoiceGatewayCloseCode$AuthenticationFa
 	public static final field INSTANCE Ldev/kord/voice/gateway/VoiceGatewayCloseCode$AuthenticationFailed;
 }
 
+public final class dev/kord/voice/gateway/VoiceGatewayCloseCode$BadRequest : dev/kord/voice/gateway/VoiceGatewayCloseCode {
+	public static final field INSTANCE Ldev/kord/voice/gateway/VoiceGatewayCloseCode$BadRequest;
+}
+
+public final class dev/kord/voice/gateway/VoiceGatewayCloseCode$CallTerminated : dev/kord/voice/gateway/VoiceGatewayCloseCode {
+	public static final field INSTANCE Ldev/kord/voice/gateway/VoiceGatewayCloseCode$CallTerminated;
+}
+
 public final class dev/kord/voice/gateway/VoiceGatewayCloseCode$Companion {
 	public final fun of (I)Ldev/kord/voice/gateway/VoiceGatewayCloseCode;
+}
+
+public final class dev/kord/voice/gateway/VoiceGatewayCloseCode$DAVEProtocolRequired : dev/kord/voice/gateway/VoiceGatewayCloseCode {
+	public static final field INSTANCE Ldev/kord/voice/gateway/VoiceGatewayCloseCode$DAVEProtocolRequired;
 }
 
 public final class dev/kord/voice/gateway/VoiceGatewayCloseCode$Disconnect : dev/kord/voice/gateway/VoiceGatewayCloseCode {
@@ -969,6 +992,10 @@ public final class dev/kord/voice/gateway/VoiceGatewayCloseCode$FailedToDecodePa
 
 public final class dev/kord/voice/gateway/VoiceGatewayCloseCode$NotAuthenticated : dev/kord/voice/gateway/VoiceGatewayCloseCode {
 	public static final field INSTANCE Ldev/kord/voice/gateway/VoiceGatewayCloseCode$NotAuthenticated;
+}
+
+public final class dev/kord/voice/gateway/VoiceGatewayCloseCode$RateLimited : dev/kord/voice/gateway/VoiceGatewayCloseCode {
+	public static final field INSTANCE Ldev/kord/voice/gateway/VoiceGatewayCloseCode$RateLimited;
 }
 
 public final class dev/kord/voice/gateway/VoiceGatewayCloseCode$ServerNotFound : dev/kord/voice/gateway/VoiceGatewayCloseCode {

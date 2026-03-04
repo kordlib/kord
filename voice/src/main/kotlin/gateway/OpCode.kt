@@ -20,7 +20,18 @@ public enum class OpCode(public val code: Int) {
     Resume(7),
     Hello(8),
     Resumed(9),
-    ClientDisconnect(13);
+    ClientDisconnect(13),
+    DavePrepareTransition(21),
+    DaveExecuteTransition(22),
+    DaveTransitionReady(23),
+    DavePrepareEpoch(24),
+    DaveMlsExternalSender(25),
+    DaveMlsKeyPackage(26),
+    DaveMlsProposals(27),
+    DaveMlsCommitWelcome(28),
+    DaveMlsAnnounceCommitTransition(29),
+    DaveMlsWelcome(30),
+    DaveMlsInvalidCommitWelcome(31);
 
     internal object Serializer : KSerializer<OpCode> {
         override val descriptor = PrimitiveSerialDescriptor("dev.kord.voice.gateway.OpCode", PrimitiveKind.INT)

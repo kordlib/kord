@@ -4,6 +4,7 @@ import dev.kord.voice.gateway.*
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
 
+// TODO Change to 1 to when DAVE support implemented!
 private const val SUPPORTED_DAVE_PROTOCOL_VERSION = 0
 
 internal class HandshakeHandler(

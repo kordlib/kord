@@ -39,6 +39,7 @@ internal class UdpLifeCycleHandler(
                 data = SelectProtocol.Data(
                     address = ip.hostname,
                     port = ip.port,
+                    // TODO Allow choosing between AeadXChaCha and AeadAes256
                     mode = EncryptionMode.AeadXChaCha20Poly1305RtpSize // only supported mode for now.
                 )
             )
