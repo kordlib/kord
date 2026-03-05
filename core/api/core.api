@@ -9,7 +9,7 @@ public final class dev/kord/core/ClientResources {
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class dev/kord/core/Kord : kotlinx/coroutines/CoroutineScope {
+public final class dev/kord/core/Kord : dev/kord/core/WebhookClient, kotlinx/coroutines/CoroutineScope {
 	public static final field Companion Ldev/kord/core/Kord$Companion;
 	public fun <init> (Ldev/kord/core/ClientResources;Ldev/kord/cache/api/DataCache;Ldev/kord/core/gateway/MasterGateway;Ldev/kord/rest/service/RestClient;Ldev/kord/common/entity/Snowflake;Lkotlinx/coroutines/flow/MutableSharedFlow;Lkotlinx/coroutines/CoroutineDispatcher;Ldev/kord/core/gateway/handler/GatewayEventInterceptor;)V
 	public final fun createGlobalApplicationCommands (Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -67,24 +67,21 @@ public final class dev/kord/core/Kord : kotlinx/coroutines/CoroutineScope {
 	public static synthetic fun getInviteOrNull$default (Ldev/kord/core/Kord;Ljava/lang/String;ZZLdev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public final fun getNitroStickerPacks ()Lkotlinx/coroutines/flow/Flow;
 	public final fun getRegions ()Lkotlinx/coroutines/flow/Flow;
-	public final fun getResources ()Ldev/kord/core/ClientResources;
+	public fun getResources ()Ldev/kord/core/ClientResources;
 	public final fun getRest ()Ldev/kord/rest/service/RestClient;
 	public final fun getSelf (Ldev/kord/core/supplier/EntitySupplyStrategy;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static synthetic fun getSelf$default (Ldev/kord/core/Kord;Ldev/kord/core/supplier/EntitySupplyStrategy;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public final fun getSelfId ()Ldev/kord/common/entity/Snowflake;
 	public final fun getSkus (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun getSticker (Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public final fun getUnsafe ()Ldev/kord/core/Unsafe;
+	public fun getUnsafe ()Ldev/kord/core/Unsafe;
+	public synthetic fun getUnsafe ()Ldev/kord/core/WebhookUnsafe;
 	public final fun getUser (Ldev/kord/common/entity/Snowflake;Ldev/kord/core/supplier/EntitySupplyStrategy;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static synthetic fun getUser$default (Ldev/kord/core/Kord;Ldev/kord/common/entity/Snowflake;Ldev/kord/core/supplier/EntitySupplyStrategy;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
-	public final fun getWebhook (Ldev/kord/common/entity/Snowflake;Ldev/kord/core/supplier/EntitySupplyStrategy;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static synthetic fun getWebhook$default (Ldev/kord/core/Kord;Ldev/kord/common/entity/Snowflake;Ldev/kord/core/supplier/EntitySupplyStrategy;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
-	public final fun getWebhookOrNull (Ldev/kord/common/entity/Snowflake;Ldev/kord/core/supplier/EntitySupplyStrategy;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static synthetic fun getWebhookOrNull$default (Ldev/kord/core/Kord;Ldev/kord/common/entity/Snowflake;Ldev/kord/core/supplier/EntitySupplyStrategy;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
-	public final fun getWebhookWithToken (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/core/supplier/EntitySupplyStrategy;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static synthetic fun getWebhookWithToken$default (Ldev/kord/core/Kord;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/core/supplier/EntitySupplyStrategy;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
-	public final fun getWebhookWithTokenOrNull (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/core/supplier/EntitySupplyStrategy;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static synthetic fun getWebhookWithTokenOrNull$default (Ldev/kord/core/Kord;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/core/supplier/EntitySupplyStrategy;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+	public fun getWebhook (Ldev/kord/common/entity/Snowflake;Ldev/kord/core/supplier/EntitySupplyStrategy;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getWebhookOrNull (Ldev/kord/common/entity/Snowflake;Ldev/kord/core/supplier/EntitySupplyStrategy;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getWebhookWithToken (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/core/supplier/EntitySupplyStrategy;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getWebhookWithTokenOrNull (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/core/supplier/EntitySupplyStrategy;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun hashCode ()I
 	public final fun login (Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static synthetic fun login$default (Ldev/kord/core/Kord;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
@@ -101,6 +98,7 @@ public final class dev/kord/core/Kord$Companion {
 	public static synthetic fun proxy$default (Ldev/kord/core/Kord$Companion;Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Ldev/kord/core/Kord;
 	public final fun restOnly (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)Ldev/kord/core/Kord;
 	public static synthetic fun restOnly$default (Ldev/kord/core/Kord$Companion;Ljava/lang/String;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Ldev/kord/core/Kord;
+	public final fun webhookClient (Lkotlin/jvm/functions/Function1;)Ldev/kord/core/WebhookClient;
 }
 
 public final class dev/kord/core/KordKt {
@@ -113,7 +111,7 @@ public abstract interface class dev/kord/core/KordObject {
 	public abstract fun getKord ()Ldev/kord/core/Kord;
 }
 
-public final class dev/kord/core/Unsafe {
+public final class dev/kord/core/Unsafe : dev/kord/core/WebhookUnsafe {
 	public fun <init> (Ldev/kord/core/Kord;)V
 	public final fun applicationCommandInteraction (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/common/entity/Snowflake;)Ldev/kord/core/behavior/interaction/ApplicationCommandInteractionBehavior;
 	public final fun autoModerationRule (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;)Ldev/kord/core/behavior/automoderation/AutoModerationRuleBehavior;
@@ -155,13 +153,33 @@ public final class dev/kord/core/Unsafe {
 	public final fun topGuildMessageChannel (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;)Ldev/kord/core/behavior/channel/TopGuildMessageChannelBehavior;
 	public final fun user (Ldev/kord/common/entity/Snowflake;)Ldev/kord/core/behavior/UserBehavior;
 	public final fun voiceChannel (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;)Ldev/kord/core/behavior/channel/VoiceChannelBehavior;
-	public final fun webhook (Ldev/kord/common/entity/Snowflake;)Ldev/kord/core/behavior/WebhookBehavior;
+	public fun webhook (Ldev/kord/common/entity/Snowflake;)Ldev/kord/core/behavior/WebhookBehavior;
 }
 
 public final class dev/kord/core/UtilKt {
 	public static final fun enableEvent (Ldev/kord/gateway/Intents$Builder;Lkotlin/reflect/KClass;)V
 	public static final fun enableEvents (Ldev/kord/gateway/Intents$Builder;Ljava/lang/Iterable;)V
 	public static final fun enableEvents (Ldev/kord/gateway/Intents$Builder;[Lkotlin/reflect/KClass;)V
+}
+
+public abstract interface class dev/kord/core/WebhookClient {
+	public abstract fun getResources ()Ldev/kord/core/ClientResources;
+	public abstract fun getUnsafe ()Ldev/kord/core/WebhookUnsafe;
+	public abstract fun getWebhook (Ldev/kord/common/entity/Snowflake;Ldev/kord/core/supplier/EntitySupplyStrategy;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun getWebhookOrNull (Ldev/kord/common/entity/Snowflake;Ldev/kord/core/supplier/EntitySupplyStrategy;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun getWebhookWithToken (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/core/supplier/EntitySupplyStrategy;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun getWebhookWithTokenOrNull (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/core/supplier/EntitySupplyStrategy;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class dev/kord/core/WebhookClient$DefaultImpls {
+	public static synthetic fun getWebhook$default (Ldev/kord/core/WebhookClient;Ldev/kord/common/entity/Snowflake;Ldev/kord/core/supplier/EntitySupplyStrategy;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+	public static synthetic fun getWebhookOrNull$default (Ldev/kord/core/WebhookClient;Ldev/kord/common/entity/Snowflake;Ldev/kord/core/supplier/EntitySupplyStrategy;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+	public static synthetic fun getWebhookWithToken$default (Ldev/kord/core/WebhookClient;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/core/supplier/EntitySupplyStrategy;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+	public static synthetic fun getWebhookWithTokenOrNull$default (Ldev/kord/core/WebhookClient;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/core/supplier/EntitySupplyStrategy;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+}
+
+public abstract interface class dev/kord/core/WebhookUnsafe {
+	public abstract fun webhook (Ldev/kord/common/entity/Snowflake;)Ldev/kord/core/behavior/WebhookBehavior;
 }
 
 public abstract interface class dev/kord/core/behavior/ApplicationCommandBehavior : dev/kord/core/entity/Entity {
@@ -2405,28 +2423,46 @@ public final class dev/kord/core/builder/components/ButtonBuilderExtensionsKt {
 	public static final fun emoji (Ldev/kord/rest/builder/component/ButtonBuilder;Ldev/kord/core/entity/ReactionEmoji$Unicode;)V
 }
 
-public abstract class dev/kord/core/builder/kord/BaseKordBuilder {
+public abstract class dev/kord/core/builder/kord/AbstractKordBuilder {
+	protected final fun buildRequestHandler (Ldev/kord/core/ClientResources;)Ldev/kord/rest/request/RequestHandler;
+	public final fun getDefaultDispatcher ()Lkotlinx/coroutines/CoroutineDispatcher;
+	protected final fun getHandlerBuilder ()Lkotlin/jvm/functions/Function1;
+	public final fun getHttpClient ()Lio/ktor/client/HttpClient;
+	public final fun getStackTraceRecovery ()Z
+	public final fun requestHandler (Lkotlin/jvm/functions/Function1;)V
+	public final fun setDefaultDispatcher (Lkotlinx/coroutines/CoroutineDispatcher;)V
+	protected final fun setHandlerBuilder (Lkotlin/jvm/functions/Function1;)V
+	public final fun setHttpClient (Lio/ktor/client/HttpClient;)V
+	public final fun setStackTraceRecovery (Z)V
+}
+
+public abstract class dev/kord/core/builder/kord/BaseKordBuilder : dev/kord/core/builder/kord/AbstractKordBuilder, dev/kord/core/builder/kord/HasApplication {
 	public fun build (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	protected final fun buildBase (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun cache (Lkotlin/jvm/functions/Function2;)V
 	public final fun gateways (Lkotlin/jvm/functions/Function2;)V
-	public final fun getApplicationId ()Ldev/kord/common/entity/Snowflake;
-	public final fun getDefaultDispatcher ()Lkotlinx/coroutines/CoroutineDispatcher;
+	public fun getActualApplicationId ()Ldev/kord/common/entity/Snowflake;
+	public fun getApplicationId ()Ldev/kord/common/entity/Snowflake;
 	public final fun getDefaultStrategy ()Ldev/kord/core/supplier/EntitySupplyStrategy;
 	public final fun getEventFlow ()Lkotlinx/coroutines/flow/MutableSharedFlow;
 	public final fun getGatewayEventInterceptor ()Ldev/kord/core/gateway/handler/GatewayEventInterceptor;
-	public final fun getHttpClient ()Lio/ktor/client/HttpClient;
-	public final fun getStackTraceRecovery ()Z
-	public final fun getToken ()Ljava/lang/String;
-	public final fun requestHandler (Lkotlin/jvm/functions/Function1;)V
-	public final fun setApplicationId (Ldev/kord/common/entity/Snowflake;)V
-	public final fun setDefaultDispatcher (Lkotlinx/coroutines/CoroutineDispatcher;)V
+	public fun getToken ()Ljava/lang/String;
+	public fun setApplicationId (Ldev/kord/common/entity/Snowflake;)V
 	public final fun setDefaultStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)V
 	public final fun setEventFlow (Lkotlinx/coroutines/flow/MutableSharedFlow;)V
 	public final fun setGatewayEventInterceptor (Ldev/kord/core/gateway/handler/GatewayEventInterceptor;)V
-	public final fun setHttpClient (Lio/ktor/client/HttpClient;)V
-	public final fun setStackTraceRecovery (Z)V
 	public final fun sharding (Lkotlin/jvm/functions/Function1;)V
+}
+
+public abstract interface class dev/kord/core/builder/kord/HasApplication {
+	public abstract fun getActualApplicationId ()Ldev/kord/common/entity/Snowflake;
+	public abstract fun getApplicationId ()Ldev/kord/common/entity/Snowflake;
+	public abstract fun getToken ()Ljava/lang/String;
+	public abstract fun setApplicationId (Ldev/kord/common/entity/Snowflake;)V
+}
+
+public final class dev/kord/core/builder/kord/HasApplication$DefaultImpls {
+	public static fun getActualApplicationId (Ldev/kord/core/builder/kord/HasApplication;)Ldev/kord/common/entity/Snowflake;
 }
 
 public final class dev/kord/core/builder/kord/KordBuilder : dev/kord/core/builder/kord/BaseKordBuilder {
@@ -2439,6 +2475,7 @@ public final class dev/kord/core/builder/kord/KordBuilder : dev/kord/core/builde
 public final class dev/kord/core/builder/kord/KordProxyBuilder : dev/kord/core/builder/kord/RestOnlyBuilder {
 	public fun <init> (Ldev/kord/common/entity/Snowflake;)V
 	public fun getApplicationId ()Ldev/kord/common/entity/Snowflake;
+	public fun getToken ()Ljava/lang/String;
 	public fun setApplicationId (Ldev/kord/common/entity/Snowflake;)V
 }
 
@@ -2450,19 +2487,15 @@ public final class dev/kord/core/builder/kord/KordRestOnlyBuilder : dev/kord/cor
 	public fun setToken (Ljava/lang/String;)V
 }
 
-public abstract class dev/kord/core/builder/kord/RestOnlyBuilder {
+public abstract class dev/kord/core/builder/kord/RestOnlyBuilder : dev/kord/core/builder/kord/AbstractKordBuilder, dev/kord/core/builder/kord/HasApplication {
 	public fun <init> ()V
 	public final fun build ()Ldev/kord/core/Kord;
-	public abstract fun getApplicationId ()Ldev/kord/common/entity/Snowflake;
-	public final fun getDefaultDispatcher ()Lkotlinx/coroutines/CoroutineDispatcher;
-	protected final fun getHandlerBuilder ()Lkotlin/jvm/functions/Function1;
-	public final fun getHttpClient ()Lio/ktor/client/HttpClient;
-	protected abstract fun getToken ()Ljava/lang/String;
-	public final fun requestHandler (Lkotlin/jvm/functions/Function1;)V
-	public abstract fun setApplicationId (Ldev/kord/common/entity/Snowflake;)V
-	public final fun setDefaultDispatcher (Lkotlinx/coroutines/CoroutineDispatcher;)V
-	protected final fun setHandlerBuilder (Lkotlin/jvm/functions/Function1;)V
-	public final fun setHttpClient (Lio/ktor/client/HttpClient;)V
+	public fun getActualApplicationId ()Ldev/kord/common/entity/Snowflake;
+}
+
+public final class dev/kord/core/builder/kord/WebhookClientBuilder : dev/kord/core/builder/kord/AbstractKordBuilder {
+	public fun <init> ()V
+	public final fun build ()Ldev/kord/core/WebhookClient;
 }
 
 public final class dev/kord/core/cache/CachingGateway : dev/kord/cache/api/DataCache, dev/kord/gateway/Gateway, kotlinx/coroutines/CoroutineScope {
