@@ -2,10 +2,7 @@ package dev.kord.core.entity
 
 import dev.kord.common.entity.*
 import dev.kord.common.entity.MessageType.RoleSubscriptionPurchase
-import dev.kord.common.entity.optional.mapNullable
-import dev.kord.common.entity.optional.orEmpty
-import dev.kord.common.entity.optional.unwrap
-import dev.kord.common.entity.optional.value
+import dev.kord.common.entity.optional.*
 import dev.kord.common.exception.RequestException
 import dev.kord.core.Kord
 import dev.kord.core.behavior.MessageBehavior
@@ -35,12 +32,11 @@ import kotlin.time.Instant
 /**
  * An instance of a [Discord Message][https://discord.com/developers/docs/resources/channel#message-object].
  */
-public class Message(
-    public val data: MessageData,
+public open class Message(
+    public open val data: MessageData,
     override val kord: Kord,
-    override val supplier: EntitySupplier = kord.defaultSupplier,
+    override val supplier: EntitySupplier = kord.defaultSupplier
 ) : MessageBehavior {
-
     /**
      * An instance of [MessageInteraction](https://discord.com/developers/docs/interactions/receiving-and-responding#message-interaction-object)
      *
@@ -312,6 +308,12 @@ public class Message(
         get() = data.components.orEmpty().map { ActionRowComponent(it) }
 
     /**
+     * The [poll][DiscordPoll].
+     */
+    public val poll: DiscordPoll
+        get() = data.poll.value!!
+
+    /**
      * Returns itself.
      */
     override suspend fun asMessage(): Message = this
@@ -361,9 +363,10 @@ public class Message(
     public suspend fun getGuildOrNull(): Guild? = supplier.getChannelOfOrNull<GuildChannel>(channelId)?.getGuildOrNull()
 
     /**
-     * Returns a new [Message] with the given [strategy].
+     * Returns a new [Message] with the given [strategy]
      */
-    override fun withStrategy(strategy: EntitySupplyStrategy<*>): Message = Message(data, kord, strategy.supply(kord))
+    override fun withStrategy(strategy: EntitySupplyStrategy<*>): Message =
+        Message(data, kord, strategy.supply(kord))
 
     override fun hashCode(): Int = hash(id)
 
@@ -372,8 +375,5 @@ public class Message(
         else -> false
     }
 
-    override fun toString(): String {
-        return "Message(data=$data, kord=$kord, supplier=$supplier)"
-    }
-
+    override fun toString(): String = "Message(data=$data, kord=$kord, supplier=$supplier"
 }

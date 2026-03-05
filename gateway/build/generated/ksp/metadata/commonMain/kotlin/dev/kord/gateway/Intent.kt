@@ -241,6 +241,20 @@ public sealed class Intent(
      */
     public object AutoModerationExecution : Intent(21)
 
+    /**
+     * Enables the following events:
+     * - [MessagePollVoteAdd]
+     * - [MessagePollVoteRemove]
+     */
+    public object GuildMessagePolls : Intent(24)
+
+    /**
+     * Enables the following events:
+     * - [MessagePollVoteAdd]
+     * - [MessagePollVoteRemove]
+     */
+    public object DirectMessagePolls : Intent(25)
+
     public companion object {
         /**
          * A [List] of all known [Intent]s.
@@ -267,6 +281,8 @@ public sealed class Intent(
                 GuildScheduledEvents,
                 AutoModerationConfiguration,
                 AutoModerationExecution,
+                GuildMessagePolls,
+                DirectMessagePolls,
             )
         }
 
@@ -296,6 +312,8 @@ public sealed class Intent(
             16 -> GuildScheduledEvents
             20 -> AutoModerationConfiguration
             21 -> AutoModerationExecution
+            24 -> GuildMessagePolls
+            25 -> DirectMessagePolls
             else -> Unknown(shift)
         }
     }

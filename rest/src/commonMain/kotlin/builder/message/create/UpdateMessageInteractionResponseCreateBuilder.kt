@@ -27,6 +27,7 @@ public class UpdateMessageInteractionResponseCreateBuilder :
                 flags = buildMessageFlags(flags, suppressEmbeds, suppressNotifications),
                 components = _components.mapList { it.build() },
                 attachments = _attachments.mapList { it.toRequest() },
+                poll = _poll.map { it.toRequest() }
             ).optional(),
         ),
         files = files.toList(),

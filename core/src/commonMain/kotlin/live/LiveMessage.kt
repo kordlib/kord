@@ -18,17 +18,17 @@ import dev.kord.core.live.exception.LiveCancellationException
 import dev.kord.core.supplier.EntitySupplyStrategy
 import kotlinx.coroutines.*
 
-@KordPreview
-public suspend fun Message.live(
-    coroutineScope: CoroutineScope = kord + SupervisorJob(kord.coroutineContext.job)
-): LiveMessage =
-    LiveMessage(this, withStrategy(EntitySupplyStrategy.cacheWithRestFallback).getGuildOrNull()?.id, coroutineScope)
-
-@KordPreview
-public suspend fun Message.live(
-    coroutineScope: CoroutineScope = kord + SupervisorJob(kord.coroutineContext.job),
-    block: LiveMessage.() -> Unit
-): LiveMessage = this.live(coroutineScope).apply(block)
+//@KordPreview
+//public suspend fun Message.live(
+//    coroutineScope: CoroutineScope = kord + SupervisorJob(kord.coroutineContext.job)
+//): LiveMessage =
+//    LiveMessage(this, withStrategy(EntitySupplyStrategy.cacheWithRestFallback).getGuildOrNull()?.id, coroutineScope)
+//
+//@KordPreview
+//public suspend fun Message.live(
+//    coroutineScope: CoroutineScope = kord + SupervisorJob(kord.coroutineContext.job),
+//    block: LiveMessage.() -> Unit
+//): LiveMessage = this.live(coroutineScope).apply(block)
 
 @KordPreview
 public fun LiveMessage.onReactionAdd(scope: CoroutineScope = this, block: suspend (ReactionAddEvent) -> Unit): Job =

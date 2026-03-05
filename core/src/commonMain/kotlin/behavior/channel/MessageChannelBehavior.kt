@@ -1,5 +1,6 @@
 package dev.kord.core.behavior.channel
 
+import dev.kord.common.annotation.KordUnsafe
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.exception.RequestException
 import dev.kord.core.Kord
@@ -12,8 +13,10 @@ import dev.kord.core.hash
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.rest.builder.message.EmbedBuilder
+import dev.kord.rest.builder.message.PollBuilder
 import dev.kord.rest.builder.message.create.MessageCreateBuilder
 import dev.kord.rest.builder.message.create.UserMessageCreateBuilder
+import dev.kord.rest.builder.message.create.poll
 import dev.kord.rest.builder.message.embed
 import dev.kord.rest.request.RestRequestException
 import dev.kord.rest.service.RestClient
@@ -298,6 +301,19 @@ public suspend inline fun MessageChannelBehavior.createEmbed(block: EmbedBuilder
         callsInPlace(block, InvocationKind.EXACTLY_ONCE)
     }
     return createMessage { embed(block) }
+}
+
+/**
+ * Requests to create a message with only a [poll][MessageCreateBuilder.poll].
+ *
+ * @throws [RestRequestException] if something went wrong during the request.
+ */
+public suspend inline fun MessageChannelBehavior.createPoll(question: String, builder: PollBuilder.() -> Unit): Message {
+    contract {
+        callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+    }
+
+    return createMessage { poll(question, builder) }
 }
 
 /**

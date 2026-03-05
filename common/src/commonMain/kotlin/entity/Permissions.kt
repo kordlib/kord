@@ -95,6 +95,7 @@
             kDoc = "Allows the usage of custom soundboard sounds from other servers."
         ),
         Entry("SendVoiceMessages", shift = 46, kDoc = "Allows sending voice messages."),
+        Entry("SendPolls", shift = 49, kDoc = "Allows sending polls.")
     ],
 )
 
