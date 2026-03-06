@@ -576,7 +576,7 @@ internal class GuildEventHandler : BaseGatewayEventHandler() {
         val data = query.singleOrNull()
         query.remove()
 
-        GuildSoundboardSoundDeletEvent(
+        GuildSoundboardSoundDeleteEvent(
             data?.let { GuildSoundboardSound(it, kord) },
             event.sound.soundId,
             event.sound.guildId,
