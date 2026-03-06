@@ -61,7 +61,7 @@ public class GuildSoundboardSoundsUpdateEvent(
  * @property guildId the id of the guild the sound was on
  * @property old the old value of the sound (if cached)
  */
-public class GuildSoundboardSoundDeletEvent(
+public class GuildSoundboardSoundDeleteEvent(
     public val old: GuildSoundboardSound?,
     public val soundId: Snowflake,
     public val guildId: Snowflake,

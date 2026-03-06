@@ -13836,7 +13836,7 @@ public final class dev/kord/core/event/guild/GuildSoundboardSoundCreateEvent : d
 	public final fun getSound ()Ldev/kord/core/entity/GuildSoundboardSound;
 }
 
-public final class dev/kord/core/event/guild/GuildSoundboardSoundDeletEvent : dev/kord/core/event/Event {
+public final class dev/kord/core/event/guild/GuildSoundboardSoundDeleteEvent : dev/kord/core/event/Event {
 	public fun <init> (Ldev/kord/core/entity/GuildSoundboardSound;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;ILjava/lang/Object;Ldev/kord/core/Kord;)V
 	public fun getCustomContext ()Ljava/lang/Object;
 	public fun getGateway ()Ldev/kord/gateway/Gateway;
