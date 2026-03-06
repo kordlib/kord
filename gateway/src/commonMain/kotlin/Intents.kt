@@ -24,6 +24,9 @@
                 - [ThreadMemberUpdate]
                 - [ThreadMembersUpdate] (contains different data depending on which intents are used, see
                 [here](https://discord.com/developers/docs/topics/gateway-events#thread-members-update))
+                - [StageInstanceCreate]
+                - [StageInstanceUpdate]
+                - [StageInstanceDelete]
             """,
         ),
         Entry(

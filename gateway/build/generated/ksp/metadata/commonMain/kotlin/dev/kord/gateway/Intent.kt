@@ -82,6 +82,9 @@ public sealed class Intent(
      * - [ThreadMemberUpdate]
      * - [ThreadMembersUpdate] (contains different data depending on which intents are used, see
      * [here](https://discord.com/developers/docs/topics/gateway-events#thread-members-update))
+     * - [StageInstanceCreate]
+     * - [StageInstanceUpdate]
+     * - [StageInstanceDelete]
      */
     public object Guilds : Intent(0)
 

@@ -1993,6 +1993,54 @@ final class dev.kord.gateway/SoundboardSoundsChunk { // dev.kord.gateway/Soundbo
     }
 }
 
+final class dev.kord.gateway/StageInstanceCreate : dev.kord.gateway/DispatchEvent { // dev.kord.gateway/StageInstanceCreate|null[0]
+    constructor <init>(dev.kord.common.entity/DiscordStageInstance, kotlin/Int?) // dev.kord.gateway/StageInstanceCreate.<init>|<init>(dev.kord.common.entity.DiscordStageInstance;kotlin.Int?){}[0]
+
+    final val sequence // dev.kord.gateway/StageInstanceCreate.sequence|{}sequence[0]
+        final fun <get-sequence>(): kotlin/Int? // dev.kord.gateway/StageInstanceCreate.sequence.<get-sequence>|<get-sequence>(){}[0]
+    final val stageInstance // dev.kord.gateway/StageInstanceCreate.stageInstance|{}stageInstance[0]
+        final fun <get-stageInstance>(): dev.kord.common.entity/DiscordStageInstance // dev.kord.gateway/StageInstanceCreate.stageInstance.<get-stageInstance>|<get-stageInstance>(){}[0]
+
+    final fun component1(): dev.kord.common.entity/DiscordStageInstance // dev.kord.gateway/StageInstanceCreate.component1|component1(){}[0]
+    final fun component2(): kotlin/Int? // dev.kord.gateway/StageInstanceCreate.component2|component2(){}[0]
+    final fun copy(dev.kord.common.entity/DiscordStageInstance = ..., kotlin/Int? = ...): dev.kord.gateway/StageInstanceCreate // dev.kord.gateway/StageInstanceCreate.copy|copy(dev.kord.common.entity.DiscordStageInstance;kotlin.Int?){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.gateway/StageInstanceCreate.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.gateway/StageInstanceCreate.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // dev.kord.gateway/StageInstanceCreate.toString|toString(){}[0]
+}
+
+final class dev.kord.gateway/StageInstanceDelete : dev.kord.gateway/DispatchEvent { // dev.kord.gateway/StageInstanceDelete|null[0]
+    constructor <init>(dev.kord.common.entity/DiscordStageInstance, kotlin/Int?) // dev.kord.gateway/StageInstanceDelete.<init>|<init>(dev.kord.common.entity.DiscordStageInstance;kotlin.Int?){}[0]
+
+    final val sequence // dev.kord.gateway/StageInstanceDelete.sequence|{}sequence[0]
+        final fun <get-sequence>(): kotlin/Int? // dev.kord.gateway/StageInstanceDelete.sequence.<get-sequence>|<get-sequence>(){}[0]
+    final val stageInstance // dev.kord.gateway/StageInstanceDelete.stageInstance|{}stageInstance[0]
+        final fun <get-stageInstance>(): dev.kord.common.entity/DiscordStageInstance // dev.kord.gateway/StageInstanceDelete.stageInstance.<get-stageInstance>|<get-stageInstance>(){}[0]
+
+    final fun component1(): dev.kord.common.entity/DiscordStageInstance // dev.kord.gateway/StageInstanceDelete.component1|component1(){}[0]
+    final fun component2(): kotlin/Int? // dev.kord.gateway/StageInstanceDelete.component2|component2(){}[0]
+    final fun copy(dev.kord.common.entity/DiscordStageInstance = ..., kotlin/Int? = ...): dev.kord.gateway/StageInstanceDelete // dev.kord.gateway/StageInstanceDelete.copy|copy(dev.kord.common.entity.DiscordStageInstance;kotlin.Int?){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.gateway/StageInstanceDelete.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.gateway/StageInstanceDelete.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // dev.kord.gateway/StageInstanceDelete.toString|toString(){}[0]
+}
+
+final class dev.kord.gateway/StageInstanceUpdate : dev.kord.gateway/DispatchEvent { // dev.kord.gateway/StageInstanceUpdate|null[0]
+    constructor <init>(dev.kord.common.entity/DiscordStageInstance, kotlin/Int?) // dev.kord.gateway/StageInstanceUpdate.<init>|<init>(dev.kord.common.entity.DiscordStageInstance;kotlin.Int?){}[0]
+
+    final val sequence // dev.kord.gateway/StageInstanceUpdate.sequence|{}sequence[0]
+        final fun <get-sequence>(): kotlin/Int? // dev.kord.gateway/StageInstanceUpdate.sequence.<get-sequence>|<get-sequence>(){}[0]
+    final val stageInstance // dev.kord.gateway/StageInstanceUpdate.stageInstance|{}stageInstance[0]
+        final fun <get-stageInstance>(): dev.kord.common.entity/DiscordStageInstance // dev.kord.gateway/StageInstanceUpdate.stageInstance.<get-stageInstance>|<get-stageInstance>(){}[0]
+
+    final fun component1(): dev.kord.common.entity/DiscordStageInstance // dev.kord.gateway/StageInstanceUpdate.component1|component1(){}[0]
+    final fun component2(): kotlin/Int? // dev.kord.gateway/StageInstanceUpdate.component2|component2(){}[0]
+    final fun copy(dev.kord.common.entity/DiscordStageInstance = ..., kotlin/Int? = ...): dev.kord.gateway/StageInstanceUpdate // dev.kord.gateway/StageInstanceUpdate.copy|copy(dev.kord.common.entity.DiscordStageInstance;kotlin.Int?){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.gateway/StageInstanceUpdate.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.gateway/StageInstanceUpdate.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // dev.kord.gateway/StageInstanceUpdate.toString|toString(){}[0]
+}
+
 final class dev.kord.gateway/SubscriptionCreate : dev.kord.gateway/DispatchEvent { // dev.kord.gateway/SubscriptionCreate|null[0]
     constructor <init>(dev.kord.common.entity/DiscordSubscription, kotlin/Int?) // dev.kord.gateway/SubscriptionCreate.<init>|<init>(dev.kord.common.entity.DiscordSubscription;kotlin.Int?){}[0]
 
