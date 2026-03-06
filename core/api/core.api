@@ -6083,6 +6083,7 @@ public final synthetic class dev/kord/core/cache/data/StageInstanceData$$seriali
 
 public final class dev/kord/core/cache/data/StageInstanceData$Companion {
 	public final fun from (Ldev/kord/common/entity/DiscordStageInstance;)Ldev/kord/core/cache/data/StageInstanceData;
+	public final fun getDescription ()Ldev/kord/cache/api/data/DataDescription;
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
@@ -14112,6 +14113,37 @@ public final class dev/kord/core/event/guild/SoundboardSounds : dev/kord/core/en
 	public final fun getSounds ()Ljava/util/List;
 	public fun getSupplier ()Ldev/kord/core/supplier/EntitySupplier;
 	public fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/Strategizable;
+}
+
+public final class dev/kord/core/event/guild/StageInstanceCreateEvent : dev/kord/core/event/Event {
+	public fun <init> (Ldev/kord/core/entity/StageInstance;ILjava/lang/Object;Ldev/kord/core/Kord;)V
+	public fun getCustomContext ()Ljava/lang/Object;
+	public fun getGateway ()Ldev/kord/gateway/Gateway;
+	public fun getKord ()Ldev/kord/core/Kord;
+	public fun getShard ()I
+	public final fun getStageInstace ()Ldev/kord/core/entity/StageInstance;
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class dev/kord/core/event/guild/StageInstanceDeleteEvent : dev/kord/core/event/Event {
+	public fun <init> (Ldev/kord/core/entity/StageInstance;ILjava/lang/Object;Ldev/kord/core/Kord;)V
+	public fun getCustomContext ()Ljava/lang/Object;
+	public fun getGateway ()Ldev/kord/gateway/Gateway;
+	public fun getKord ()Ldev/kord/core/Kord;
+	public fun getShard ()I
+	public final fun getStageInstace ()Ldev/kord/core/entity/StageInstance;
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class dev/kord/core/event/guild/StageInstanceUpdateEvent : dev/kord/core/event/Event {
+	public fun <init> (Ldev/kord/core/entity/StageInstance;Ldev/kord/core/entity/StageInstance;ILjava/lang/Object;Ldev/kord/core/Kord;)V
+	public fun getCustomContext ()Ljava/lang/Object;
+	public fun getGateway ()Ldev/kord/gateway/Gateway;
+	public fun getKord ()Ldev/kord/core/Kord;
+	public final fun getOld ()Ldev/kord/core/entity/StageInstance;
+	public fun getShard ()I
+	public final fun getStageInstace ()Ldev/kord/core/entity/StageInstance;
+	public fun toString ()Ljava/lang/String;
 }
 
 public final class dev/kord/core/event/guild/VoiceChannelEffectSentEvent : dev/kord/core/event/Event {

@@ -194,7 +194,9 @@ public sealed class Event {
                 "MESSAGE_REACTION_REMOVE_EMOJI" ->
                     MessageReactionRemoveEmoji(decode(DiscordRemovedEmoji.serializer()), sequence)
                 "PRESENCE_UPDATE" -> PresenceUpdate(decode(DiscordPresenceUpdate.serializer()), sequence)
-                // Missing: Stage Instance Create, Stage Instance Update, Stage Instance Delete
+                "STAGE_INSTANCE_CREATE" -> StageInstanceCreate(decode(DiscordStageInstance.serializer()), sequence)
+                "STAGE_INSTANCE_UPDATE" -> StageInstanceUpdate(decode(DiscordStageInstance.serializer()), sequence)
+                "STAGE_INSTANCE_DELETE" -> StageInstanceDelete(decode(DiscordStageInstance.serializer()), sequence)
                 "SUBSCRIPTION_CREATE" -> SubscriptionCreate(decode(DiscordSubscription.serializer()), sequence)
                 "SUBSCRIPTION_UPDATE" -> SubscriptionUpdate(decode(DiscordSubscription.serializer()), sequence)
                 "SUBSCRIPTION_DELETE" -> SubscriptionDelete(decode(DiscordSubscription.serializer()), sequence)
@@ -517,6 +519,10 @@ public data class ThreadListSync(val sync: DiscordThreadListSync, override val s
 
 public data class ThreadMembersUpdate(val members: DiscordThreadMembersUpdate, override val sequence: Int?) :
     DispatchEvent()
+
+public data class StageInstanceCreate(val stageInstance: DiscordStageInstance, override val sequence: Int?) : DispatchEvent()
+public data class StageInstanceUpdate(val stageInstance: DiscordStageInstance, override val sequence: Int?) : DispatchEvent()
+public data class StageInstanceDelete(val stageInstance: DiscordStageInstance, override val sequence: Int?) : DispatchEvent()
 
 public data class GuildScheduledEventCreate(val event: DiscordGuildScheduledEvent, override val sequence: Int?) :
     DispatchEvent()

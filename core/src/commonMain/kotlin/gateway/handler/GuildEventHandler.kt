@@ -55,6 +55,9 @@ internal class GuildEventHandler : BaseGatewayEventHandler() {
             is GuildSoundboardSoundsUpdate -> handle(event, shard, kord, context)
             is GuildSoundboardSoundUpdate -> handle(event, shard, kord, context)
             is GuildSoundboardSoundDelete -> handle(event, shard, kord, context)
+            is StageInstanceCreate -> handle(event, shard, kord, context)
+            is StageInstanceUpdate -> handle(event, shard, kord, context)
+            is StageInstanceDelete -> handle(event, shard, kord, context)
             is SoundboardSounds -> handle(event, shard, kord, context)
             is PresenceUpdate -> handle(event, shard, kord, context)
             is InviteCreate -> handle(event, shard, kord, context)
@@ -581,6 +584,57 @@ internal class GuildEventHandler : BaseGatewayEventHandler() {
             context?.get(),
             kord
         )
+    }
+
+    private suspend fun handle(
+        event: StageInstanceCreate,
+        shard: Int,
+        kord: Kord,
+        context: LazyContext?,
+    ) = with(event) {
+        val data = StageInstanceData.from(event.stageInstance)
+
+        kord.cache.put(data)
+
+        StageInstanceCreateEvent(StageInstance(data, kord), shard, context?.get(), kord)
+    }
+
+    private suspend fun handle(
+        event: StageInstanceUpdate,
+        shard: Int,
+        kord: Kord,
+        context: LazyContext?,
+    ) = with(event.stageInstance) {
+        val data = StageInstanceData.from(this)
+
+        val old = kord.cache.query<StageInstanceData> {
+            idEq(StageInstanceData::id, data.id)
+            idEq(StageInstanceData::guildId, data.guildId)
+        }.singleOrNull()?.let { StageInstance(it, kord) }
+
+        kord.cache.put(data)
+
+        val new = StageInstance(data, kord)
+
+        StageInstanceUpdateEvent(new, old, shard, context?.get(), kord)
+    }
+
+    private suspend fun handle(
+        event: StageInstanceDelete,
+        shard: Int,
+        kord: Kord,
+        context: LazyContext?,
+    ) = with(event.stageInstance) {
+        val data = StageInstanceData.from(this)
+
+        kord.cache.query {
+            idEq(StageInstanceData::id, data.id)
+            idEq(StageInstanceData::guildId, data.guildId)
+        }.remove()
+
+        val stageInstance = StageInstance(data, kord)
+
+        StageInstanceDeleteEvent(stageInstance, shard, context?.get(), kord)
     }
 
     private suspend fun handle(
