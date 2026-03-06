@@ -12,6 +12,7 @@ import dev.kord.core.behavior.UserBehavior
 import dev.kord.core.cache.data.MemberData
 import dev.kord.core.cache.data.UserData
 import dev.kord.core.entity.interaction.GuildInteraction
+import dev.kord.core.hash
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import kotlinx.coroutines.flow.*

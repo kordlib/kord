@@ -36,6 +36,8 @@ public data class MessageData(
     val flags: Optional<MessageFlags> = Optional.Missing(),
     val stickers: Optional<List<StickerItemData>> = Optional.Missing(),
     val referencedMessage: Optional<MessageData?> = Optional.Missing(),
+    val interactionMetadata: Optional<InteractionMetadataData> = Optional.Missing(),
+    @Deprecated("Deprecated in favor of interactionMetadata", ReplaceWith("interactionMetadata"), DeprecationLevel.WARNING)
     val interaction: Optional<MessageInteractionData> = Optional.Missing(),
     val components: Optional<List<ComponentData>> = Optional.Missing(),
     val thread: Optional<ChannelData> = Optional.Missing(),
@@ -77,8 +79,13 @@ public data class MessageData(
                 .coerceToMissing()
         val stickers = partialMessage.stickers.mapList { StickerItemData.from(it) }.switchOnMissing(this.stickers)
         val referencedMessage = partialMessage.referencedMessage.mapNullable { it?.toData() ?: referencedMessage.value }
+
+        @Suppress("DEPRECATION")
         val interaction =
             partialMessage.interaction.map { MessageInteractionData.from(it) }.switchOnMissing(interaction)
+        val interactionMetadata =
+            partialMessage.interactionMetadata.map { InteractionMetadataData.from(it) }
+                .switchOnMissing(interactionMetadata)
 
         return MessageData(
             id,
@@ -109,6 +116,7 @@ public data class MessageData(
             stickers = stickers,
             referencedMessage = referencedMessage,
             interaction = interaction,
+            interactionMetadata = interactionMetadata,
             components = components,
             roleSubscriptionData = roleSubscriptionData,
             position = position,
@@ -120,6 +128,7 @@ public data class MessageData(
         public val description: DataDescription<MessageData, Snowflake> = description(MessageData::id)
 
         public fun from(entity: DiscordMessage): MessageData = with(entity) {
+            @Suppress("DEPRECATION")
             MessageData(
                 id,
                 channelId,
@@ -148,6 +157,7 @@ public data class MessageData(
                 flags,
                 stickers.mapList { StickerItemData.from(it) },
                 referencedMessage.mapNotNull { from(it) },
+                interactionMetadata.map { InteractionMetadataData.from(it) },
                 interaction.map { MessageInteractionData.from(it) },
                 components = components.mapList { ComponentData.from(it) },
                 roleSubscriptionData = roleSubscriptionData,

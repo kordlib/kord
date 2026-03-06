@@ -6,6 +6,7 @@ import dev.kord.core.Kord
 import dev.kord.core.entity.PermissionOverwrite
 import dev.kord.core.entity.channel.TopGuildChannel
 import dev.kord.core.exception.EntityNotFoundException
+import dev.kord.core.hash
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.rest.builder.channel.ChannelPermissionModifyBuilder
@@ -14,7 +15,6 @@ import dev.kord.rest.service.editMemberPermissions
 import dev.kord.rest.service.editRolePermission
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.withIndex
-import dev.kord.core.hash
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 

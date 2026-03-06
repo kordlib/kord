@@ -26,10 +26,13 @@ public data class InteractionData(
     val permissions: Optional<Permissions> = Optional.Missing(),
     val version: Int,
     val message: Optional<MessageData> = Optional.Missing(),
-    val appPermissions: Optional<Permissions> = Optional.Missing(),
+    val appPermissions: Permissions,
     val locale: Optional<Locale> = Optional.Missing(),
     val guildLocale: Optional<Locale> = Optional.Missing(),
+    val authorizingIntegrationOwners: Map<ApplicationIntegrationType, Snowflake>,
+    val context: Optional<InteractionContextType> = Optional.Missing(),
     val entitlements: Optional<List<EntitlementData>> = Optional.Missing(),
+    val attachmentSizeLimit: Int
 ) {
     public companion object {
         public fun from(interaction: DiscordInteraction): InteractionData {
@@ -54,7 +57,10 @@ public data class InteractionData(
                     appPermissions,
                     locale,
                     guildLocale,
+                    authorizingIntegrationOwners,
+                    context,
                     entitlements.mapList { EntitlementData.from(it) },
+                    attachmentSizeLimit
                 )
             }
         }
