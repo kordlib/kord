@@ -20,7 +20,7 @@ import kotlin.contracts.contract
 public class ThumbnailBuilder : AccessoryComponentBuilder {
     private var _url: Optional<String> = Optional.Missing()
 
-    private var _description: Optional<String> = Optional.Missing()
+    private var _description: Optional<String?> = Optional.Missing()
 
     private var _spoiler: OptionalBoolean = OptionalBoolean.Missing
 

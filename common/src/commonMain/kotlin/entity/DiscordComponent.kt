@@ -198,7 +198,7 @@ public data class DiscordChatComponent(
     val accessory: Optional<DiscordComponent> = Optional.Missing(),
     val content: Optional<String> = Optional.Missing(),
     val media: Optional<UnfurledMediaItem> = Optional.Missing(),
-    val description: Optional<String> = Optional.Missing(),
+    val description: Optional<String?> = Optional.Missing(),
     val spoiler: OptionalBoolean = OptionalBoolean.Missing,
     val items: Optional<List<MediaGalleryItem>> = Optional.Missing(),
     val divider: OptionalBoolean = OptionalBoolean.Missing,
