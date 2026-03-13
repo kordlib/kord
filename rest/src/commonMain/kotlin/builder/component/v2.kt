@@ -149,7 +149,7 @@ public class CheckboxGroupBuilder(public val customId: String) : ContainerCompon
     public var required: Boolean? by ::_required.delegate()
 
     override fun build(): DiscordComponent = DiscordSelectComponent(
-        type = ComponentType.FileUpload,
+        type = ComponentType.CheckboxGroup,
         customId = Optional(customId),
         options = _options,
         minValues = _minValues,
