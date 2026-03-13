@@ -31,6 +31,8 @@ internal class MessageEventHandler : BaseGatewayEventHandler() {
         is MessageReactionRemove -> handle(event, shard, kord, context)
         is MessageReactionRemoveAll -> handle(event, shard, kord, context)
         is MessageReactionRemoveEmoji -> handle(event, shard, kord, context)
+        is MessagePollVoteAdd -> handle(event, shard, kord, context)
+        is MessagePollVoteRemove -> handle(event, shard, kord, context)
         else -> null
     }
 
@@ -286,4 +288,45 @@ internal class MessageEventHandler : BaseGatewayEventHandler() {
             ReactionRemoveEmojiEvent(data, kord, shard, context?.get())
         }
 
+    private suspend fun handle(
+        event: MessagePollVoteAdd,
+        shard: Int,
+        kord: Kord,
+        context: LazyContext?,
+    ): MessagePollVoteAddEvent =
+        with(event.data) {
+            // FIXME not certain how to do this
+
+            MessagePollVoteAddEvent(
+                userId,
+                channelId,
+                messageId,
+                guildId.value,
+                answerId,
+                kord,
+                shard,
+                context?.get()
+            )
+        }
+
+    private suspend fun handle(
+        event: MessagePollVoteRemove,
+        shard: Int,
+        kord: Kord,
+        context: LazyContext?,
+    ): MessagePollVoteRemoveEvent =
+        with(event.data) {
+            // FIXME not certain how to do this
+
+            MessagePollVoteRemoveEvent(
+                userId,
+                channelId,
+                messageId,
+                guildId.value,
+                answerId,
+                kord,
+                shard,
+                context?.get()
+            )
+        }
 }

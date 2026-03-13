@@ -7,9 +7,11 @@ import dev.kord.core.Kord
 import dev.kord.core.behavior.channel.MessageChannelBehavior
 import dev.kord.core.behavior.channel.createMessage
 import dev.kord.core.cache.data.MessageData
+import dev.kord.core.cache.data.UserData
 import dev.kord.core.entity.*
 import dev.kord.core.entity.channel.MessageChannel
 import dev.kord.core.exception.EntityNotFoundException
+import dev.kord.core.hash
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.core.supplier.getChannelOf
@@ -20,7 +22,6 @@ import dev.kord.rest.builder.message.modify.WebhookMessageModifyBuilder
 import dev.kord.rest.request.RestRequestException
 import dev.kord.rest.service.RestClient
 import kotlinx.coroutines.flow.Flow
-import dev.kord.core.hash
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -210,12 +211,31 @@ public interface MessageBehavior : KordEntity, Strategizable {
     }
 
     /**
+     * Retrieves the voters who voted for the specified [answer][answerId].
+     */
+    public suspend fun getAnswerVoters(answerId: Int): List<User> =
+        kord.rest.poll.getAnswerVoters(channelId, id, answerId).users.map {
+            val data = UserData.from(it)
+
+            User(data, kord, supplier)
+        }
+
+    /**
+     * Ends this poll.
+     */
+    public suspend fun end(): Message {
+        val message = kord.rest.poll.endPoll(channelId, id)
+        val data = MessageData.from(message)
+
+        return Message(data, kord, supplier)
+    }
+
+    /**
      * Returns a new [MessageBehavior] with the given [strategy].
      */
     override fun withStrategy(
         strategy: EntitySupplyStrategy<*>,
     ): MessageBehavior = MessageBehavior(channelId, id, kord, strategy)
-
 }
 
 public fun MessageBehavior(

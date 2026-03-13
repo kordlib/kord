@@ -93,6 +93,7 @@ public sealed class Route<T>(
     public object AutoModerationRuleId : Key("{auto_moderation_rule.id}")
     @DiscordAPIPreview public object GuildJoinRequestId : Key("{guild_join_request.id}")
     public object SoundId : Key("{sound.id}")
+    public object PollAnswerId : Key("{poll.answer.id}")
 
 
     protected constructor(
@@ -1175,6 +1176,26 @@ public sealed class Route<T>(
             NoStrategy,
             requiresAuthorizationHeader = false,
             affectedByGlobalRateLimit = false
+        )
+
+
+    /*
+     * Poll:
+     * https://discord.com/developers/docs/resources/poll
+     */
+
+    public object AnswerVotersGet :
+        Route<AnswerVotersGetResponse>(
+            HttpMethod.Get,
+            "/channels/$ChannelId/polls/$MessageId/answers/$PollAnswerId",
+            AnswerVotersGetResponse.serializer(),
+        )
+
+    public object PollEnd :
+        Route<DiscordMessage>(
+            HttpMethod.Post,
+            "/channels/$ChannelId/polls/$MessageId/expire",
+            DiscordMessage.serializer(),
         )
 
 

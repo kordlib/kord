@@ -212,6 +212,8 @@ public sealed class Event {
                 "GUILD_SOUNDBOARD_SOUNDS_DELETE" -> GuildSoundboardSoundDelete(decode(DeletedSound.serializer()), sequence)
                 "VOICE_CHANNEL_EFFECT_SEND" -> VoiceEffectSend(decode(VoiceChannelEffect.serializer()), sequence)
                 "SOUNDBOARD_SOUNDS" -> SoundboardSounds(decode(SoundboardSoundsChunk.serializer()), sequence)
+                "MESSAGE_POLL_VOTE_ADD" -> MessagePollVoteAdd(decode(MessagePollEventData.serializer()), sequence)
+                "MESSAGE_POLL_VOTE_REMOVE" -> MessagePollVoteRemove(decode(MessagePollEventData.serializer()), sequence)
                 else -> {
                     jsonLogger.debug { "Unknown gateway event name: $eventName" }
                     UnknownDispatchEvent(eventName, eventData, sequence)
@@ -650,3 +652,20 @@ public data class GuildSoundboardSoundsUpdate(val data: SoundboardSoundsChunk, o
 public data class GuildSoundboardSoundDelete(val sound: DeletedSound, override val sequence: Int?) : DispatchEvent()
 
 public data class VoiceEffectSend(val effect: VoiceChannelEffect, override val sequence: Int?) : DispatchEvent()
+
+public data class MessagePollVoteAdd(val data: MessagePollEventData, override val sequence: Int?) : DispatchEvent()
+public data class MessagePollVoteRemove(val data: MessagePollEventData, override val sequence: Int?) : DispatchEvent()
+
+@Serializable
+public data class MessagePollEventData(
+    @SerialName("user_id")
+    val userId: Snowflake,
+    @SerialName("channel_id")
+    val channelId: Snowflake,
+    @SerialName("message_id")
+    val messageId: Snowflake,
+    @SerialName("guild_id")
+    val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
+    @SerialName("answer_id")
+    val answerId: Int
+)

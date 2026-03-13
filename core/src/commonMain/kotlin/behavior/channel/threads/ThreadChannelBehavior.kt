@@ -88,7 +88,7 @@ public interface ThreadChannelBehavior : GuildMessageChannelBehavior {
      * Deleting a thread requires the [Manage Threads][dev.kord.common.entity.Permission.ManageThreads] permission.
      */
     override suspend fun delete(reason: String?) {
-        super.delete(reason)
+        super<GuildMessageChannelBehavior>.delete(reason)
     }
 
     /**
@@ -113,11 +113,11 @@ public interface ThreadChannelBehavior : GuildMessageChannelBehavior {
 
 
     override suspend fun asChannel(): ThreadChannel {
-        return super.asChannel() as ThreadChannel
+        return super<GuildMessageChannelBehavior>.asChannel() as ThreadChannel
     }
 
     override suspend fun asChannelOrNull(): ThreadChannel? {
-        return super.asChannelOrNull() as? ThreadChannel
+        return super<GuildMessageChannelBehavior>.asChannelOrNull() as? ThreadChannel
     }
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): ThreadChannelBehavior {

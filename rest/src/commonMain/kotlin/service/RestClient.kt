@@ -28,6 +28,7 @@ public class RestClient(requestHandler: RequestHandler) : RestService(requestHan
     public val guild: GuildService = GuildService(requestHandler)
     public val template: TemplateService = TemplateService(requestHandler)
     public val invite: InviteService = InviteService(requestHandler)
+    public val poll: PollService = PollService(requestHandler)
     public val sku: SkuService = SkuService(requestHandler)
     public val stageInstance: StageInstanceService = StageInstanceService(requestHandler)
     public val sticker: StickerService = StickerService(requestHandler)

@@ -21,6 +21,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.*
 import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable
 import kotlin.io.path.toPath
@@ -521,6 +522,18 @@ class RestServiceTest {
         assertTrue(privateArchive.toList().isNotEmpty())
 
 
+    }
+
+    @Test
+    @Order(29)
+    fun `poll in channel`() = runTest {
+        val poll = channel.createPoll("Is Kord great?") {
+            answer("Yes")
+            answer("no")
+        }
+
+        assertEquals(emptyList(), poll.getAnswerVoters(1))
+        poll.end()
     }
 
     @Test
