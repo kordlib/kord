@@ -7976,6 +7976,7 @@ public final class dev/kord/core/entity/Message : dev/kord/core/behavior/Message
 	public final fun getAuthor ()Ldev/kord/core/entity/User;
 	public final fun getAuthorAsMember (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun getAuthorAsMemberOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun getButtons ()Ljava/util/List;
 	public fun getChannel ()Ldev/kord/core/behavior/channel/MessageChannelBehavior;
 	public fun getChannel (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getChannelId ()Ldev/kord/common/entity/Snowflake;
@@ -8006,6 +8007,7 @@ public final class dev/kord/core/entity/Message : dev/kord/core/behavior/Message
 	public fun getReactors (Ldev/kord/core/entity/ReactionEmoji;)Lkotlinx/coroutines/flow/Flow;
 	public final fun getReferencedMessage ()Ldev/kord/core/entity/Message;
 	public final fun getRoleSubscriptionData ()Ldev/kord/common/entity/RoleSubscription;
+	public final fun getSelectMenus ()Ljava/util/List;
 	public final fun getStickers ()Ljava/util/List;
 	public fun getSupplier ()Ldev/kord/core/supplier/EntitySupplier;
 	public final fun getThread ()Ldev/kord/core/cache/data/ChannelData;
