@@ -94,14 +94,29 @@
   <div class="breadcrumbs"><a href="../../index.html">kord-rest</a><span class="delimiter">/</span><a href="../index.html">dev.kord.rest.builder.interaction</a><span class="delimiter">/</span><span class="current">GlobalChatInputCreateBuilder</span></div>
   <div class="cover ">
     <h1 class="cover"><span>Global</span><wbr><span>Chat</span><wbr><span>Input</span><wbr><span>Create</span><wbr><span><span>Builder</span></span></h1>
-    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":rest/commonMain"><div class="symbol monospace"><span class="token keyword">interface </span><a href="index.html">GlobalChatInputCreateBuilder</a> : <a href="../-chat-input-create-builder/index.html">ChatInputCreateBuilder</a>, <a href="../-global-application-command-create-builder/index.html">GlobalApplicationCommandCreateBuilder</a><span class="source-link-wrapper"><span class="source-link" data-element-type="source-link">(<a href="https://github.com/kordlib/kord/blob/map(map(map(valueof(ProcessOutputValueSource))))/rest/src/commonMain/kotlin/builder/interaction/InputChatBuilders.kt#L133">source</a>)</span></span></div></div></div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":rest/commonMain"><div class="symbol monospace"><span class="token keyword">interface </span><a href="index.html">GlobalChatInputCreateBuilder</a> : <a href="../-chat-input-create-builder/index.html">ChatInputCreateBuilder</a>, <a href="../-global-application-command-create-builder/index.html">GlobalApplicationCommandCreateBuilder</a><span class="source-link-wrapper"><span class="source-link" data-element-type="source-link">(<a href="https://github.com/kordlib/kord/blob/map(map(map(valueof(ProcessOutputValueSource))))/rest/src/commonMain/kotlin/builder/interaction/InputChatBuilders.kt#L136">source</a>)</span></span></div></div></div>
   </div>
   <div class="tabbedcontent">
     <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="CONSTRUCTOR,TYPE,PROPERTY,FUNCTION">Members</button><button class="section-tab" data-togglable="CONSTRUCTOR,TYPE,PROPERTY,FUNCTION,EXTENSION_PROPERTY,EXTENSION_FUNCTION">Members &amp; Extensions</button></div>
     <div class="tabs-section-body">
       <div data-togglable="PROPERTY">
         <h2 class="tableheader">Properties</h2>
-        <div class="table"><a data-name="853686814%2FProperties%2F-555443553" anchor-label="defaultMemberPermissions" id="853686814%2FProperties%2F-555443553" data-filterable-set=":rest/commonMain"></a>
+        <div class="table"><a data-name="871324451%2FProperties%2F-555443553" anchor-label="contexts" id="871324451%2FProperties%2F-555443553" data-filterable-set=":rest/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../-application-command-create-builder/contexts.html"><span><span>contexts</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="871324451%2FProperties%2F-555443553"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":rest/commonMain"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="../-application-command-create-builder/contexts.html">contexts</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-mutable-list/index.html">MutableList</a><span class="token operator">&lt;</span><a href="../../../common/dev.kord.common.entity/-interaction-context-type/index.html">InteractionContextType</a><span class="token operator">&gt;</span><span class="token operator">?</span></div><div class="brief "><p class="paragraph"><a href="../../../common/dev.kord.common.entity/-interaction-context-type/index.html">InteractionContextTypes</a> the command is available in.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="853686814%2FProperties%2F-555443553" anchor-label="defaultMemberPermissions" id="853686814%2FProperties%2F-555443553" data-filterable-set=":rest/commonMain"></a>
           <div class="table-row table-row_content" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
@@ -171,7 +186,22 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":rest/commonMain"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="../-global-application-command-create-builder/dm-permission.html">dmPermission</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator">?</span></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":rest/commonMain"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="../-global-application-command-create-builder/dm-permission.html"><strike>dmPermission</strike></a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1579448802%2FProperties%2F-555443553" anchor-label="integrationTypes" id="1579448802%2FProperties%2F-555443553" data-filterable-set=":rest/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../-application-command-create-builder/integration-types.html"><span>integration</span><wbr><span><span>Types</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1579448802%2FProperties%2F-555443553"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":rest/commonMain"><div class="symbol monospace"><span class="token keyword">abstract </span><span class="token keyword">var </span><a href="../-application-command-create-builder/integration-types.html">integrationTypes</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-mutable-list/index.html">MutableList</a><span class="token operator">&lt;</span><a href="../../../common/dev.kord.common.entity/-application-integration-type/index.html">ApplicationIntegrationType</a><span class="token operator">&gt;</span><span class="token operator">?</span></div><div class="brief "><p class="paragraph"><a href="../../../common/dev.kord.common.entity/-application-integration-type/index.html">IntegrationTypes</a> the command is available in.</p></div></div></div>
                 </div>
               </div>
             </div>
@@ -401,6 +431,36 @@
               <div>
                 <div class="title">
                   <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":rest/commonMain"><div class="symbol monospace"><span class="token keyword">inline </span><span class="token keyword">fun </span><a href="../-base-input-chat-builder/index.html">BaseInputChatBuilder</a><span class="token punctuation">.</span><a href="../number.html"><span class="token function">number</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">name<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">description<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">builder<span class="token operator">: </span><a href="../-number-option-builder/index.html">NumberOptionBuilder</a><span class="token punctuation">.</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-unit/index.html">Unit</a><span class="token operator"> = </span>{}</span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1384050631%2FFunctions%2F-555443553" anchor-label="requireContext" id="1384050631%2FFunctions%2F-555443553" data-filterable-set=":rest/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../-application-command-create-builder/require-context.html"><span>require</span><wbr><span><span>Context</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1384050631%2FFunctions%2F-555443553"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":rest/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">fun </span><a href="../-application-command-create-builder/require-context.html"><span class="token function">requireContext</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">vararg </span>types<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-interaction-context-type/index.html">InteractionContextType</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Requires this command to be executed in a specific <a href="../../../common/dev.kord.common.entity/-interaction-context-type/index.html">interaction context</a>.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-46131692%2FFunctions%2F-555443553" anchor-label="requireIntegrationTypes" id="-46131692%2FFunctions%2F-555443553" data-filterable-set=":rest/commonMain"></a>
+          <div class="table-row table-row_content" data-filterable-current=":rest/commonMain" data-filterable-set=":rest/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../-application-command-create-builder/require-integration-types.html"><span>require</span><wbr><span>Integration</span><wbr><span><span>Types</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-46131692%2FFunctions%2F-555443553"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":rest/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">fun </span><a href="../-application-command-create-builder/require-integration-types.html"><span class="token function">requireIntegrationTypes</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">vararg </span>types<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-application-integration-type/index.html">ApplicationIntegrationType</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Requires this command to be executed in a specific <a href="../../../common/dev.kord.common.entity/-application-integration-type/index.html">installation context</a>.</p></div></div></div>
                 </div>
               </div>
             </div>
