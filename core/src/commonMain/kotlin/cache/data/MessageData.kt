@@ -41,6 +41,7 @@ public data class MessageData(
     val thread: Optional<ChannelData> = Optional.Missing(),
     val roleSubscriptionData: Optional<RoleSubscription> = Optional.Missing(),
     val position: OptionalInt = OptionalInt.Missing,
+    val sharedClientTheme: Optional<SharedClientTheme> = Optional.Missing()
 ) {
 
     public fun plus(selfId: Snowflake, reaction: MessageReactionAddData): MessageData {
@@ -112,7 +113,8 @@ public data class MessageData(
             components = components,
             roleSubscriptionData = roleSubscriptionData,
             position = position,
-            thread = thread
+            thread = thread,
+            sharedClientTheme = sharedClientTheme
         )
     }
 
@@ -152,7 +154,8 @@ public data class MessageData(
                 components = components.mapList { ComponentData.from(it) },
                 roleSubscriptionData = roleSubscriptionData,
                 position = position,
-                thread = thread.map { it.toData() }
+                thread = thread.map { it.toData() },
+                sharedClientTheme = sharedClientTheme
             )
         }
     }

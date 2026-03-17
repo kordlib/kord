@@ -319,6 +319,9 @@ public class Message(
     /** The thread that was started from this message, includes thread member object. */
     public val thread: ChannelData? get() = data.thread.value
 
+    /** The custom client-side theme shared via the message. */
+    public val sharedClientTheme: SharedClientTheme? get() = data.sharedClientTheme.value
+
     /** The [ActionRowComponent]s of this message. */
     public val actionRows: List<ActionRowComponent>
         get() = data.components.orEmpty().map { ActionRowComponent(it) }

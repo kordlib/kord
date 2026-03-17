@@ -136,8 +136,20 @@
     ]
 )
 
+@file:Generate(
+    INT_KORD_ENUM, name = "BaseClientThemeType",
+    docUrl = "https://docs.discord.com/developers/resources/message#shared-client-theme-object",
+    entries = [
+        Entry("Dark", intValue = 1),
+        Entry("Light", intValue = 2),
+        Entry("Darker", intValue = 3),
+        Entry("Midnight", intValue = 4)
+    ]
+)
+
 package dev.kord.common.entity
 
+import dev.kord.common.Color
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalInt
@@ -201,6 +213,7 @@ import kotlinx.serialization.Serializable
  * @param roleSubscriptionData [RoleSubscription] object data of the role subscription purchase or renewal that prompted this message.
  * @param applicationId if the message is a response to an [Interaction][DiscordInteraction], this is the id of the interaction's application
  * @param components a list of [components][DiscordComponent] which have been added to this message
+ * @param sharedClientTheme the custom client-side theme shared via thee message
  */
 
 @Serializable
@@ -255,6 +268,7 @@ public data class DiscordMessage(
     val interaction: Optional<DiscordMessageInteraction> = Optional.Missing(),
     val thread: Optional<DiscordChannel> = Optional.Missing(),
     val position: OptionalInt = OptionalInt.Missing,
+    val sharedClientTheme: Optional<SharedClientTheme> = Optional.Missing()
 )
 
 /**
@@ -713,4 +727,15 @@ public data class RoleSubscription(
     val totalMonthsSubscribed: Int,
     @SerialName("is_renewal")
     val isRenewal: Boolean,
+)
+
+@Serializable
+public data class SharedClientTheme(
+    val color: List<Color>,
+    @SerialName("gradient_angle")
+    val gradientAngle: Int,
+    @SerialName("base_mix")
+    val baseMix: Int,
+    @SerialName("base_theme")
+    val baseTheme: Optional<BaseClientThemeType?> = Optional.Missing()
 )
