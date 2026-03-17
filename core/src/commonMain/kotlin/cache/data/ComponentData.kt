@@ -47,7 +47,7 @@ public sealed class ComponentData {
     public abstract val minLength: OptionalInt
     public abstract val maxLength: OptionalInt
     public abstract val required: OptionalBoolean
-    public abstract val value: Optional<String>
+    public abstract val value: Optional<String?>
     public abstract val channelTypes: Optional<List<ChannelType>>
 
     public companion object {
@@ -198,13 +198,13 @@ public data class ChatComponentData(
     override val minLength: OptionalInt = OptionalInt.Missing,
     override val maxLength: OptionalInt = OptionalInt.Missing,
     override val required: OptionalBoolean = OptionalBoolean.Missing,
-    override val value: Optional<String> = Optional.Missing(),
+    override val value: Optional<String?> = Optional.Missing(),
     override val channelTypes: Optional<List<ChannelType>> = Optional.Missing(),
     val skuId: OptionalSnowflake = OptionalSnowflake.Missing,
     val accessory: Optional<ChatComponentData> = Optional.Missing(),
     val content: Optional<String> = Optional.Missing(),
     val image: Optional<UnfurledMediaItem> = Optional.Missing(),
-    val description: Optional<String> = Optional.Missing(),
+    val description: Optional<String?> = Optional.Missing(),
     val spoiler: OptionalBoolean = OptionalBoolean.Missing,
     val items: Optional<List<MediaGalleryItem>> = Optional.Missing(),
     val divider: OptionalBoolean = OptionalBoolean.Missing,
@@ -232,7 +232,7 @@ public data class TextInputComponentData(
     override val minLength: OptionalInt = OptionalInt.Missing,
     override val maxLength: OptionalInt = OptionalInt.Missing,
     override val required: OptionalBoolean = OptionalBoolean.Missing,
-    override val value: Optional<String> = Optional.Missing(),
+    override val value: Optional<String?> = Optional.Missing(),
     override val channelTypes: Optional<List<ChannelType>> = Optional.Missing(),
 ) : ComponentData()
 
@@ -254,7 +254,7 @@ public data class LabelComponentData(
     override val minLength: OptionalInt = OptionalInt.Missing,
     override val maxLength: OptionalInt = OptionalInt.Missing,
     override val required: OptionalBoolean = OptionalBoolean.Missing,
-    override val value: Optional<String> = Optional.Missing(),
+    override val value: Optional<String?> = Optional.Missing(),
     override val channelTypes: Optional<List<ChannelType>> = Optional.Missing(),
     val description: Optional<String> = Optional.Missing(),
 ) : ComponentData()
@@ -276,7 +276,7 @@ public data class SelectComponentData(
     override val minLength: OptionalInt = OptionalInt.Missing,
     override val maxLength: OptionalInt = OptionalInt.Missing,
     override val required: OptionalBoolean = OptionalBoolean.Missing,
-    override val value: Optional<String> = Optional.Missing(),
+    override val value: Optional<String?> = Optional.Missing(),
     val values: Optional<List<String>> = Optional.Missing(),
     override val channelTypes: Optional<List<ChannelType>> = Optional.Missing(),
 ) : ComponentData()
@@ -298,7 +298,7 @@ public data class CheckboxComponentData(
     override val minLength: OptionalInt = OptionalInt.Missing,
     override val maxLength: OptionalInt = OptionalInt.Missing,
     override val required: OptionalBoolean = OptionalBoolean.Missing,
-    override val value: Optional<String> = Optional.Missing(),
+    override val value: Optional<String?> = Optional.Missing(),
     override val channelTypes: Optional<List<ChannelType>> = Optional.Missing(),
     val default: OptionalBoolean = OptionalBoolean.Missing
 ) : ComponentData()

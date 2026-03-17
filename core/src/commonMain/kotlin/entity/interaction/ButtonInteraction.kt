@@ -11,7 +11,7 @@ import dev.kord.core.supplier.EntitySupplyStrategy
 public sealed interface ButtonInteraction : ComponentInteraction {
 
     override val component: ButtonComponent
-        get() = message.actionRows.firstNotNullOf { it.interactionButtons[componentId] }
+        get() = message.buttons.first { it.customId == componentId }
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): ButtonInteraction
 }

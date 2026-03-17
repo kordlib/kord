@@ -33,7 +33,7 @@ import kotlinx.serialization.Serializable
  */
 @Serializable
 public data class DiscordCollectible(
-    val nameplate: Optional<DiscordNameplate> = Optional.Missing()
+    val nameplate: Optional<DiscordNameplate?> = Optional.Missing()
 )
 
 /**

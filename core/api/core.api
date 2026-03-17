@@ -6183,6 +6183,7 @@ public final synthetic class dev/kord/core/cache/data/StageInstanceData$$seriali
 
 public final class dev/kord/core/cache/data/StageInstanceData$Companion {
 	public final fun from (Ldev/kord/common/entity/DiscordStageInstance;)Ldev/kord/core/cache/data/StageInstanceData;
+	public final fun getDescription ()Ldev/kord/cache/api/data/DataDescription;
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
@@ -8078,6 +8079,7 @@ public final class dev/kord/core/entity/Message : dev/kord/core/behavior/Message
 	public final fun getAuthor ()Ldev/kord/core/entity/User;
 	public final fun getAuthorAsMember (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun getAuthorAsMemberOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun getButtons ()Ljava/util/List;
 	public fun getChannel ()Ldev/kord/core/behavior/channel/MessageChannelBehavior;
 	public fun getChannel (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getChannelId ()Ldev/kord/common/entity/Snowflake;
@@ -8109,6 +8111,7 @@ public final class dev/kord/core/entity/Message : dev/kord/core/behavior/Message
 	public fun getReactors (Ldev/kord/core/entity/ReactionEmoji;)Lkotlinx/coroutines/flow/Flow;
 	public final fun getReferencedMessage ()Ldev/kord/core/entity/Message;
 	public final fun getRoleSubscriptionData ()Ldev/kord/common/entity/RoleSubscription;
+	public final fun getSelectMenus ()Ljava/util/List;
 	public final fun getStickers ()Ljava/util/List;
 	public fun getSupplier ()Ldev/kord/core/supplier/EntitySupplier;
 	public final fun getThread ()Ldev/kord/core/cache/data/ChannelData;
@@ -14565,6 +14568,37 @@ public final class dev/kord/core/event/guild/SoundboardSounds : dev/kord/core/en
 	public final fun getSounds ()Ljava/util/List;
 	public fun getSupplier ()Ldev/kord/core/supplier/EntitySupplier;
 	public fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/Strategizable;
+}
+
+public final class dev/kord/core/event/guild/StageInstanceCreateEvent : dev/kord/core/event/Event {
+	public fun <init> (Ldev/kord/core/entity/StageInstance;ILjava/lang/Object;Ldev/kord/core/Kord;)V
+	public fun getCustomContext ()Ljava/lang/Object;
+	public fun getGateway ()Ldev/kord/gateway/Gateway;
+	public fun getKord ()Ldev/kord/core/Kord;
+	public fun getShard ()I
+	public final fun getStageInstace ()Ldev/kord/core/entity/StageInstance;
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class dev/kord/core/event/guild/StageInstanceDeleteEvent : dev/kord/core/event/Event {
+	public fun <init> (Ldev/kord/core/entity/StageInstance;ILjava/lang/Object;Ldev/kord/core/Kord;)V
+	public fun getCustomContext ()Ljava/lang/Object;
+	public fun getGateway ()Ldev/kord/gateway/Gateway;
+	public fun getKord ()Ldev/kord/core/Kord;
+	public fun getShard ()I
+	public final fun getStageInstace ()Ldev/kord/core/entity/StageInstance;
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class dev/kord/core/event/guild/StageInstanceUpdateEvent : dev/kord/core/event/Event {
+	public fun <init> (Ldev/kord/core/entity/StageInstance;Ldev/kord/core/entity/StageInstance;ILjava/lang/Object;Ldev/kord/core/Kord;)V
+	public fun getCustomContext ()Ljava/lang/Object;
+	public fun getGateway ()Ldev/kord/gateway/Gateway;
+	public fun getKord ()Ldev/kord/core/Kord;
+	public final fun getOld ()Ldev/kord/core/entity/StageInstance;
+	public fun getShard ()I
+	public final fun getStageInstace ()Ldev/kord/core/entity/StageInstance;
+	public fun toString ()Ljava/lang/String;
 }
 
 public final class dev/kord/core/event/guild/VoiceChannelEffectSentEvent : dev/kord/core/event/Event {

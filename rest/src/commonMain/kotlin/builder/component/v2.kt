@@ -20,7 +20,7 @@ import kotlin.contracts.contract
 public class ThumbnailBuilder : AccessoryComponentBuilder {
     private var _url: Optional<String> = Optional.Missing()
 
-    private var _description: Optional<String> = Optional.Missing()
+    private var _description: Optional<String?> = Optional.Missing()
 
     private var _spoiler: OptionalBoolean = OptionalBoolean.Missing
 
@@ -149,7 +149,7 @@ public class CheckboxGroupBuilder(public val customId: String) : ContainerCompon
     public var required: Boolean? by ::_required.delegate()
 
     override fun build(): DiscordComponent = DiscordSelectComponent(
-        type = ComponentType.FileUpload,
+        type = ComponentType.CheckboxGroup,
         customId = Optional(customId),
         options = _options,
         minValues = _minValues,

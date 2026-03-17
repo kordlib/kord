@@ -13,9 +13,11 @@ import dev.kord.core.behavior.UserBehavior
 import dev.kord.core.behavior.channel.ChannelBehavior
 import dev.kord.core.behavior.interaction.response.InteractionResponseBehavior
 import dev.kord.core.cache.data.ChannelData
+import dev.kord.core.cache.data.ChatComponentData
 import dev.kord.core.cache.data.InteractionMetadataData
 import dev.kord.core.cache.data.MessageData
 import dev.kord.core.cache.data.MessageInteractionData
+import dev.kord.core.cache.data.SelectComponentData
 import dev.kord.core.cache.data.toData
 import dev.kord.core.entity.application.ApplicationCommand
 import dev.kord.core.entity.channel.Channel
@@ -23,10 +25,13 @@ import dev.kord.core.entity.channel.GuildChannel
 import dev.kord.core.entity.channel.MessageChannel
 import dev.kord.core.entity.channel.TopGuildMessageChannel
 import dev.kord.core.entity.component.ActionRowComponent
+import dev.kord.core.entity.component.ButtonComponent
+import dev.kord.core.entity.component.SelectMenuComponent
 import dev.kord.core.entity.interaction.ActionInteraction
 import dev.kord.core.entity.interaction.followup.FollowupMessage
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.hash
+import dev.kord.core.componentToSelectMenu
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.core.supplier.getChannelOf
@@ -356,6 +361,51 @@ public class Message(
     /** The [ActionRowComponent]s of this message. */
     public val actionRows: List<ActionRowComponent>
         get() = data.components.orEmpty().map { ActionRowComponent(it) }
+
+    /** The [ButtonComponent]s within this message. */
+    public val buttons: List<ButtonComponent>
+        get() {
+            val list = mutableListOf<ButtonComponent>()
+            for (component in data.components.orEmpty()) {
+                if (component.type == ComponentType.Container) {
+                    for (container in component.components.orEmpty()) {
+                        if (container.type != ComponentType.ActionRow) continue
+
+                        list.addAll(container.components.orEmpty().mapNotNull {
+                            if (it.type == ComponentType.Button) ButtonComponent(it as ChatComponentData) else null
+                        })
+                    }
+                } else if (component.type == ComponentType.ActionRow) {
+                    list.addAll(component.components.orEmpty().mapNotNull {
+                        if (it.type == ComponentType.Button) ButtonComponent(it as ChatComponentData) else null
+                    })
+                }
+            }
+
+            return list
+        }
+
+    /** The [SelectMenuComponent]s within this message. */
+    public val selectMenus: List<SelectMenuComponent>
+        get() {
+            val list = mutableListOf<SelectMenuComponent>()
+            for (component in data.components.orEmpty()) {
+                if (component.type == ComponentType.Container) {
+                    for (container in component.components.orEmpty()) {
+                        if (container.type != ComponentType.ActionRow) continue
+
+                        list.addAll(container.components.orEmpty().mapNotNull {
+                            componentToSelectMenu(it as SelectComponentData)
+                        })
+                    }
+                } else if (component.type == ComponentType.ActionRow) {
+                    list.addAll(component.components.orEmpty().mapNotNull {
+                        componentToSelectMenu(it as SelectComponentData)
+                    })
+                }
+            }
+            return list
+        }
 
     /**
      * Returns itself.

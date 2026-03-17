@@ -17,8 +17,8 @@ public data class AudioFrameSenderConfiguration(
 @KordVoice
 public interface AudioFrameSender {
     /**
-     * This should start polling frames from [the audio provider][DefaultAudioFrameSenderData.provider] and
-     * send them to Discord.
+     * Starts polling frames from [the audio provider][DefaultAudioFrameSenderData.provider] and
+     * sends them to Discord.
      */
     public suspend fun start(configuration: AudioFrameSenderConfiguration)
 }

@@ -10,7 +10,7 @@ plugins {
 mavenPublishing {
     coordinates(Library.group, "kord-${project.name}", libraryVersion.get())
 
-    publishToMavenCentral()
+    publishToMavenCentral(automaticRelease = true)
     signAllPublications()
 
     pom {

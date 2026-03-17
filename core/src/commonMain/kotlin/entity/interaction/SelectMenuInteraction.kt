@@ -21,7 +21,7 @@ public sealed interface SelectMenuInteraction : ComponentInteraction {
     public val values: List<String> get() = data.data.values.orEmpty()
 
     override val component: SelectMenuComponent
-        get() = message.actionRows.firstNotNullOf { it.selectMenus[componentId] }
+        get() = message.selectMenus.first { it.customId == componentId }
 
     /**
      * The resolved object is included in interaction payloads for user, role, mentionable, and channel select menu components

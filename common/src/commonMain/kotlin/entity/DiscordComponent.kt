@@ -122,7 +122,7 @@ public sealed class DiscordComponent {
     @SerialName("max_length")
     public abstract val maxLength: OptionalInt
     public abstract val required: OptionalBoolean
-    public abstract val value: Optional<String>
+    public abstract val value: Optional<String?>
 
     @SerialName("channel_types")
     public abstract val channelTypes: Optional<List<ChannelType>>
@@ -190,7 +190,7 @@ public data class DiscordChatComponent(
     @SerialName("max_length")
     override val maxLength: OptionalInt = OptionalInt.Missing,
     override val required: OptionalBoolean = OptionalBoolean.Missing,
-    override val value: Optional<String> = Optional.Missing(),
+    override val value: Optional<String?> = Optional.Missing(),
     @SerialName("channel_types")
     override val channelTypes: Optional<List<ChannelType>> = Optional.Missing(),
     @SerialName("sku_id")
@@ -198,7 +198,7 @@ public data class DiscordChatComponent(
     val accessory: Optional<DiscordComponent> = Optional.Missing(),
     val content: Optional<String> = Optional.Missing(),
     val media: Optional<UnfurledMediaItem> = Optional.Missing(),
-    val description: Optional<String> = Optional.Missing(),
+    val description: Optional<String?> = Optional.Missing(),
     val spoiler: OptionalBoolean = OptionalBoolean.Missing,
     val items: Optional<List<MediaGalleryItem>> = Optional.Missing(),
     val divider: OptionalBoolean = OptionalBoolean.Missing,
@@ -232,7 +232,7 @@ public data class DiscordTextInputComponent(
     @SerialName("max_length")
     override val maxLength: OptionalInt = OptionalInt.Missing,
     override val required: OptionalBoolean = OptionalBoolean.Missing,
-    override val value: Optional<String> = Optional.Missing(),
+    override val value: Optional<String?> = Optional.Missing(),
     @SerialName("channel_types")
     override val channelTypes: Optional<List<ChannelType>> = Optional.Missing(),
 ) : DiscordComponent()
@@ -259,7 +259,7 @@ public data class DiscordModalComponent(
     @SerialName("max_length")
     override val maxLength: OptionalInt = OptionalInt.Missing,
     override val required: OptionalBoolean = OptionalBoolean.Missing,
-    override val value: Optional<String> = Optional.Missing(),
+    override val value: Optional<String?> = Optional.Missing(),
     @SerialName("channel_types")
     override val channelTypes: Optional<List<ChannelType>> = Optional.Missing(),
     override val label: Optional<String> = Optional.Missing(),
@@ -288,7 +288,7 @@ public data class DiscordSelectComponent(
     @SerialName("max_length")
     override val maxLength: OptionalInt = OptionalInt.Missing,
     override val required: OptionalBoolean = OptionalBoolean.Missing,
-    override val value: Optional<String> = Optional.Missing(),
+    override val value: Optional<String?> = Optional.Missing(),
     val values: Optional<List<String>> = Optional.Missing(),
     @SerialName("channel_types")
     override val channelTypes: Optional<List<ChannelType>> = Optional.Missing(),
@@ -317,7 +317,7 @@ public data class DiscordCheckboxComponent(
     @SerialName("max_length")
     override val maxLength: OptionalInt = OptionalInt.Missing,
     override val required: OptionalBoolean = OptionalBoolean.Missing,
-    override val value: Optional<String> = Optional.Missing(),
+    override val value: Optional<String?> = Optional.Missing(),
     @SerialName("channel_types")
     override val channelTypes: Optional<List<ChannelType>> = Optional.Missing(),
     override val label: Optional<String> = Optional.Missing(),

@@ -29,7 +29,7 @@ public sealed class Command {
                 }
                 is Heartbeat -> {
                     composite.encodeSerializableElement(descriptor, 0, OpCode.serializer(), OpCode.Heartbeat)
-                    composite.encodeLongElement(descriptor, 1, value.nonce)
+                    composite.encodeSerializableElement(descriptor, 1, Heartbeat.serializer(), value)
                 }
                 is SendSpeaking -> {
                     composite.encodeSerializableElement(descriptor, 0, OpCode.serializer(), OpCode.Speaking)
@@ -58,11 +58,16 @@ public data class Identify(
     val userId: Snowflake,
     @SerialName("session_id")
     val sessionId: String,
-    val token: String
+    val token: String,
+    @SerialName("max_dave_protocol_version")
+    val maxDaveProtocolVersion: Int,
 ) : Command()
 
 @Serializable
-public data class Heartbeat(val nonce: Long) : Command()
+public data class Heartbeat(
+    val t: Long,
+    @SerialName("seq_ack") val seqAck: Long
+) : Command()
 
 @KordVoice
 @Serializable
