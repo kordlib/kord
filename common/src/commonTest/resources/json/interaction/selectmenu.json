@@ -131,5 +131,7 @@
       "type":8,
       "deleted":false
     }
-  ]
+  ],
+  "authorizing_integration_owners": {"0":  "0"},
+  "attachment_size_limit": 1
 }

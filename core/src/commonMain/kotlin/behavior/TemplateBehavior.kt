@@ -6,9 +6,9 @@ import dev.kord.core.KordObject
 import dev.kord.core.cache.data.toData
 import dev.kord.core.entity.Guild
 import dev.kord.core.entity.Template
+import dev.kord.core.hash
 import dev.kord.rest.builder.template.GuildFromTemplateCreateBuilder
 import dev.kord.rest.builder.template.GuildTemplateModifyBuilder
-import dev.kord.core.hash
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 

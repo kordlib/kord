@@ -14,9 +14,11 @@ import dev.kord.core.behavior.channel.ChannelBehavior
 import dev.kord.core.behavior.interaction.response.InteractionResponseBehavior
 import dev.kord.core.cache.data.ChannelData
 import dev.kord.core.cache.data.ChatComponentData
+import dev.kord.core.cache.data.InteractionMetadataData
 import dev.kord.core.cache.data.MessageData
 import dev.kord.core.cache.data.MessageInteractionData
 import dev.kord.core.cache.data.SelectComponentData
+import dev.kord.core.cache.data.toData
 import dev.kord.core.entity.application.ApplicationCommand
 import dev.kord.core.entity.channel.Channel
 import dev.kord.core.entity.channel.GuildChannel
@@ -47,10 +49,38 @@ public class Message(
 ) : MessageBehavior {
 
     /**
+     * An instance of [InteractionMetadata](https://discord.com/developers/docs/resources/message#message-interaction-metadata-object)
+     */
+    public class InteractionMetadata(
+        public val data: InteractionMetadataData,
+        override val kord: Kord,
+        override val supplier: EntitySupplier = kord.defaultSupplier,
+    ) : KordEntity, Strategizable {
+        override val id: Snowflake get() = data.id
+        public val type: InteractionType get() = data.type
+        public val user: User get() = User(data.user, kord, supplier)
+
+        public val authorizingIntegrationOwners: IntegrationOwners get() = data.authorizingIntegrationOwners
+        public val originalResponseMessageId: Snowflake? get() = data.originalResponseMessageId.value
+        public val interactedMessageId: Snowflake? get() = data.interactedMessageId.value
+        public val triggeringInteractionMetadata: DiscordInteractionMetadata? get() = data.triggeringInteractionMetadata.value
+        public val targetUser: User? get() = data.targetUser.value?.let { User(it.toData(), kord, supplier) }
+        public val targetMessageId: Snowflake? get() = data.targetMessageId.value
+
+        override fun withStrategy(strategy: EntitySupplyStrategy<*>): Strategizable =
+            InteractionMetadata(data, kord, strategy.supply(kord))
+    }
+
+    /**
      * An instance of [MessageInteraction](https://discord.com/developers/docs/interactions/receiving-and-responding#message-interaction-object)
      *
      * This is sent on the [Message] object when the message is a response to an [ActionInteraction].
      */
+    @Deprecated(
+        "Deprecated in favor of InteractionMetadata",
+        ReplaceWith("InteractionMetadata(data, kord, supplier)"),
+        DeprecationLevel.WARNING
+    )
     public class Interaction(
         public val data: MessageInteractionData,
         override val kord: Kord,
@@ -88,6 +118,7 @@ public class Message(
          */
         public suspend fun getUserOrNull(): User? = supplier.getUserOrNull(user.id)
 
+        @Suppress("DEPRECATION")
         override fun withStrategy(strategy: EntitySupplyStrategy<*>): Interaction =
             Interaction(data, kord, strategy.supply(kord))
     }
@@ -258,7 +289,15 @@ public class Message(
     /**
      * The [Message.Interaction] sent on this message object when it is a response to an [ActionInteraction].
      */
+    @Deprecated("Deprecated in favor of interactionMetadata", ReplaceWith("interactionMetadata"), DeprecationLevel.WARNING)
+    @Suppress("DEPRECATION")
     public val interaction: Interaction? get() = data.interaction.mapNullable { Interaction(it, kord) }.value
+
+    /**
+     * The [Message.Interaction] sent on this message object when it is a response to an [ActionInteraction].
+     */
+    public val interactionMetadata: InteractionMetadata?
+        get() = data.interactionMetadata.mapNullable { InteractionMetadata(it, kord) }.value
 
     /**
      * The [users][User] mentioned in this message.

@@ -74,6 +74,11 @@ public sealed class InteractionResponseType(
      */
     public object Modal : InteractionResponseType(9)
 
+    /**
+     * Launch the Activity associated with the app. Only available for apps with Activities enabled
+     */
+    public object LaunchActivity : InteractionResponseType(12)
+
     internal object Serializer : KSerializer<InteractionResponseType> {
         override val descriptor: SerialDescriptor =
                 PrimitiveSerialDescriptor("dev.kord.common.entity.InteractionResponseType", PrimitiveKind.INT)
@@ -98,6 +103,7 @@ public sealed class InteractionResponseType(
                 UpdateMessage,
                 ApplicationCommandAutoCompleteResult,
                 Modal,
+                LaunchActivity,
             )
         }
 
@@ -112,6 +118,7 @@ public sealed class InteractionResponseType(
             7 -> UpdateMessage
             8 -> ApplicationCommandAutoCompleteResult
             9 -> Modal
+            12 -> LaunchActivity
             else -> Unknown(type)
         }
     }
