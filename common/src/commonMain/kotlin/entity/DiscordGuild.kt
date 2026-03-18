@@ -363,6 +363,22 @@ public data class DiscordPartialGuild(
     val premiumProgressBarEnabled: OptionalBoolean = OptionalBoolean.Missing,
 )
 
+/**
+ * A partial representation of a [Discord Guild structure](https://discord.com/developers/docs/resources/guild#guild-object)
+ *
+ * see [The user-docs](https://docs.discord.food/interactions/receiving-and-responding#interaction-guild-structure)
+ *
+ * @param id The guild id.
+ * @param features The enabled guild features.
+ * @param locale The current guild locale.
+ */
+@Serializable
+public data class DiscordInteractionPartialGuild(
+    val id: Snowflake,
+    val features: List<GuildFeature>,
+    val locale: String,
+)
+
 @Serializable
 public data class DiscordGuildBan(
     @SerialName("guild_id") val guildId: Snowflake,

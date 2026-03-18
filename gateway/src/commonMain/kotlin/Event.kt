@@ -94,8 +94,13 @@ public sealed class Event {
             eventData: JsonElement?,
         ): T {
             requireNotNull(eventData) { "Gateway event is missing 'd' field for opcode $op" }
-            // this cast will always succeed, otherwise decoder couldn't have decoded eventData
-            return (decoder as JsonDecoder).json.decodeFromJsonElement(deserializer, eventData)
+            try {
+                // this cast will always succeed, otherwise decoder couldn't have decoded eventData
+                return (decoder as JsonDecoder).json.decodeFromJsonElement(deserializer, eventData)
+            } catch (e: SerializationException) {
+                jsonLogger.error { "Serialization failed while decoding opcode $op: $eventData" }
+                throw e
+            }
         }
 
         private fun decodeDispatchEvent(
@@ -106,8 +111,13 @@ public sealed class Event {
         ): DispatchEvent {
             fun <T> decode(deserializer: KDeserializationStrategy<T>): T {
                 requireNotNull(eventData) { "Gateway event is missing 'd' field for event name $eventName" }
-                // this cast will always succeed, otherwise decoder couldn't have decoded eventData
-                return (decoder as JsonDecoder).json.decodeFromJsonElement(deserializer, eventData)
+                try {
+                    // this cast will always succeed, otherwise decoder couldn't have decoded eventData
+                    return (decoder as JsonDecoder).json.decodeFromJsonElement(deserializer, eventData)
+                } catch (e: SerializationException) {
+                    jsonLogger.error { "Serialization failed while decoding event $eventName: $eventData" }
+                    throw e
+                }
             }
             /*
              * Keep ordered like this table: https://discord.com/developers/docs/topics/gateway-events#receive-events
