@@ -39,8 +39,9 @@ public class PresenceBuilder {
         game = DiscordBotActivity(name, ActivityType.Competing)
     }
     
-    public fun custom(name: String) {
-        game = DiscordBotActivity(name, ActivityType.Custom)
+    public fun custom(state: String) {
+        game = null
+        this.state = state
     }
     
 
