@@ -2,7 +2,7 @@
 <html class="no-js" lang="en">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
-    <title>defaultPermission</title>
+    <title>contexts</title>
 <link href="../../../images/logo-icon.svg" rel="icon" type="image/svg"><script>var pathToRoot = "../../../";</script>
     <script>document.documentElement.classList.replace("no-js", "js");</script>
     <script>const storage = localStorage.getItem("dokka-dark-mode")
@@ -43,7 +43,7 @@
         </div>
         <div class="navigation-controls">
         <ul class="filter-section filter-section_loading" id="filter-section" aria-label="Target filter">
-                <button class="platform-tag platform-selector common-like" data-active="" aria-pressed="true" data-filter=":rest/commonMain">common</button>
+                <button class="platform-tag platform-selector common-like" data-active="" aria-pressed="true" data-filter=":core/commonMain">common</button>
             <div class="dropdown filter-section--dropdown" data-role="dropdown" id="filter-section-dropdown">
                 <button class="button button_dropdown filter-section--dropdown-toggle" role="combobox" data-role="dropdown-toggle" aria-controls="platform-tags-listbox" aria-haspopup="listbox" aria-expanded="false" aria-label="Toggle source sets"></button>
                 <ul role="listbox" id="platform-tags-listbox" class="dropdown--list" data-role="dropdown-listbox" aria-label="Target filter">
@@ -54,7 +54,7 @@
                     </div>
                         <li role="option" class="dropdown--option platform-selector-option common-like" tabindex="0">
                             <label class="checkbox">
-                                <input type="checkbox" class="checkbox--input" id=":rest/commonMain" data-filter=":rest/commonMain">
+                                <input type="checkbox" class="checkbox--input" id=":core/commonMain" data-filter=":core/commonMain">
                                 <span class="checkbox--icon"></span>
                                 common
                             </label>
@@ -90,12 +90,12 @@
         </nav>
         <div id="resizer" class="resizer" data-item-type="BAR"></div>
         <div id="main" data-item-type="SECTION" role="main">
-<div class="main-content" data-page-type="member" id="content" pageids="kord-rest::dev.kord.rest.json.request/ApplicationCommandCreateRequest/defaultPermission/#/PointingToDeclaration//-555443553">
-  <div class="breadcrumbs"><a href="../../index.html">kord-rest</a><span class="delimiter">/</span><a href="../index.html">dev.kord.rest.json.request</a><span class="delimiter">/</span><a href="index.html">ApplicationCommandCreateRequest</a><span class="delimiter">/</span><span class="current">defaultPermission</span></div>
+<div class="main-content" data-page-type="member" id="content" pageids="kord-core::dev.kord.core.cache.data/ApplicationCommandData/contexts/#/PointingToDeclaration//1239919082">
+  <div class="breadcrumbs"><a href="../../index.html">kord-core</a><span class="delimiter">/</span><a href="../index.html">dev.kord.core.cache.data</a><span class="delimiter">/</span><a href="index.html">ApplicationCommandData</a><span class="delimiter">/</span><span class="current">contexts</span></div>
   <div class="cover ">
-    <h1 class="cover"><span>default</span><wbr><span><span>Permission</span></span></h1>
+    <h1 class="cover"><span><span>contexts</span></span></h1>
   </div>
-  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":rest/commonMain"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://kotlinlang.org/api/kotlinx.serialization/kotlinx-serialization-core/kotlinx.serialization/-serial-name/index.html"><span class="token annotation builtin">SerialName</span></a><span class="token punctuation">(</span><span>value<span class="token operator"> = </span><span class="breakable-word"><span class="token string">"default_permission"</span></span></span><wbr><span class="token punctuation">)</span></div></div><span class="token keyword">val </span><a href="default-permission.html"><strike>defaultPermission</strike></a><span class="token operator">: </span><a href="../../../common/dev.kord.common.entity.optional/-optional-boolean/index.html">OptionalBoolean</a><span class="source-link-wrapper"><span class="source-link" data-element-type="source-link">(<a href="https://github.com/kordlib/kord/blob/map(map(map(valueof(ProcessOutputValueSource))))/rest/src/commonMain/kotlin/json/request/InteractionsRequests.kt#L32">source</a>)</span></span></div><div class="deprecation-content"><h3 class="">Deprecated (with error)</h3><p class="paragraph">'defaultPermission' is deprecated in favor of 'defaultMemberPermissions' and 'dmPermission'. Setting 'defaultPermission' to false can be replaced by setting 'defaultMemberPermissions' to empty Permissions and 'dmPermission' to false ('dmPermission' is only available for global commands). The deprecation level will be raised to HIDDEN in 0.19.0 and this declaration will be removed in 0.20.0</p></div></div></div>
+  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">val </span><a href="contexts.html">contexts</a><span class="token operator">: </span><a href="../../../common/dev.kord.common.entity.optional/-optional/index.html">Optional</a><span class="token operator">&lt;</span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><a href="../../../common/dev.kord.common.entity/-interaction-context-type/index.html">InteractionContextType</a><span class="token operator">&gt;</span><span class="token operator">?</span><span class="token operator">&gt;</span><span class="source-link-wrapper"><span class="source-link" data-element-type="source-link">(<a href="https://github.com/kordlib/kord/blob/map(map(map(valueof(ProcessOutputValueSource))))/core/src/commonMain/kotlin/cache/data/ApplicationCommandData.kt#L25">source</a>)</span></span></div></div></div>
 </div>
     <div class="footer">
         <div class="footer--container">
