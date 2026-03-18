@@ -4,6 +4,7 @@ import dev.kord.cache.api.DataCache
 import dev.kord.common.annotation.KordExperimental
 import dev.kord.common.annotation.KordUnsafe
 import dev.kord.common.entity.DiscordShard
+import dev.kord.common.entity.PrimaryEntryPointCommandHandlerType
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.exception.RequestException
 import dev.kord.core.builder.kord.KordBuilder
@@ -12,6 +13,7 @@ import dev.kord.core.builder.kord.KordRestOnlyBuilder
 import dev.kord.core.cache.data.ApplicationCommandData
 import dev.kord.core.cache.data.EmojiData
 import dev.kord.core.cache.data.GuildData
+import dev.kord.core.cache.data.SoundboardSoundData
 import dev.kord.core.cache.data.UserData
 import dev.kord.core.entity.*
 import dev.kord.core.entity.application.*
@@ -28,6 +30,8 @@ import dev.kord.core.supplier.*
 import dev.kord.gateway.Gateway
 import dev.kord.gateway.builder.LoginBuilder
 import dev.kord.gateway.builder.PresenceBuilder
+import dev.kord.gateway.requestSoundboardSounds
+import dev.kord.gateway.start
 import dev.kord.rest.builder.application.ApplicationRoleConnectionMetadataRecordsBuilder
 import dev.kord.rest.builder.guild.GuildCreateBuilder
 import dev.kord.rest.builder.interaction.*
@@ -38,6 +42,7 @@ import dev.kord.rest.service.RestClient
 import io.github.oshai.kotlinlogging.KotlinLogging
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
+import kotlin.collections.map
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 import kotlin.coroutines.CoroutineContext
@@ -106,6 +111,12 @@ public class Kord(
 
     public val guilds: Flow<Guild>
         get() = defaultSupplier.guilds
+
+    public val defaultSoundboardSounds: Flow<DefaultSoundboardSound>
+        get() = flow {
+            rest.soundboard.getDefaultSounds()
+                .forEach { emit(DefaultSoundboardSound(SoundboardSoundData.from(it), this@Kord)) }
+        }
 
     /**
      * Flow of [application emojis][ApplicationEmoji].
@@ -417,6 +428,34 @@ public class Kord(
         gateway.sendAll(status)
     }
 
+    /**
+     * Requests guild emojis [through the gateway][requestSoundboardSounds] for [guildIds].
+     *
+     * The returned flow is cold, and will execute the request only on subscription.
+     * Collection of this flow on a [Gateway] that is not [running][Gateway.start]
+     * will result in an [IllegalStateException] being thrown.
+     *
+     * Executing the request on a [MasterGateway] with a [Shard][dev.kord.common.entity.DiscordShard] that
+     * [does not match the guild id](https://discord.com/developers/docs/topics/gateway#sharding)
+     * can result in undefined behavior for the returned flow and inconsistencies in the cache.
+     */
+    @OptIn(ExperimentalCoroutinesApi::class, KordUnsafe::class)
+    public fun requestSoundboardSounds(guildIds: List<Snowflake>): Flow<GuildSoundboardSound> {
+        return guildIds.groupBy { guildId ->
+            val guild = unsafe.guild(guildId)
+            guild.gateway
+        }.mapNotNull { (gateway, guilds) ->
+            val gateway = gateway ?: return@mapNotNull null
+
+            gateway.requestSoundboardSounds(guilds).flatMapConcat {
+                it.soundboardSounds.map { sound ->
+                    val data = SoundboardSoundData.from(sound)
+                    GuildSoundboardSound(data, this)
+                }.asFlow()
+            }
+        }.asFlow().flattenConcat()
+    }
+
     override fun equals(other: Any?): Boolean = other is Kord && this.resources.token == other.resources.token
     override fun hashCode(): Int = resources.token.hashCode()
     override fun toString(): String =
@@ -520,34 +559,6 @@ public class Kord(
     public suspend inline fun <reified T : GlobalApplicationCommand> getGlobalApplicationCommandOfOrNull(
         commandId: Snowflake,
     ): T? = defaultSupplier.getGlobalApplicationCommandOfOrNull(resources.applicationId, commandId)
-
-
-    @Suppress("TYPE_INTERSECTION_AS_REIFIED_WARNING")
-    @Deprecated(
-        "This function has bad semantics: the type argument for T is effectively ignored. It no longer compiles " +
-            "without a 'TYPE_INTERSECTION_AS_REIFIED_WARNING' since Kotlin 2.1.0 " +
-            "(https://youtrack.jetbrains.com/issue/KT-52469). The replacement function has a proper bounded reified " +
-            "type parameter that is actually used. This declaration is kept for binary compatibility, it will be " +
-            "removed in 0.18.0. The replacement function should then be migrated away from using @JvmName.",
-        level = DeprecationLevel.HIDDEN,
-    )
-    public suspend fun <T> getGlobalApplicationCommandOf(commandId: Snowflake): T {
-        return defaultSupplier.getGlobalApplicationCommandOf(resources.applicationId, commandId)
-    }
-
-
-    @Suppress("TYPE_INTERSECTION_AS_REIFIED_WARNING")
-    @Deprecated(
-        "This function has bad semantics: the type argument for T is effectively ignored. It no longer compiles " +
-            "without a 'TYPE_INTERSECTION_AS_REIFIED_WARNING' since Kotlin 2.1.0 " +
-            "(https://youtrack.jetbrains.com/issue/KT-52469). The replacement function has a proper bounded reified " +
-            "type parameter that is actually used. This declaration is kept for binary compatibility, it will be " +
-            "removed in 0.18.0. The replacement function should then be migrated away from using @JvmName.",
-        level = DeprecationLevel.HIDDEN,
-    )
-    public suspend fun <T> getGlobalApplicationCommandOfOrNull(commandId: Snowflake): T? {
-        return defaultSupplier.getGlobalApplicationCommandOfOrNull(resources.applicationId, commandId)
-    }
 
 
     public suspend inline fun createGlobalChatInputCommand(
@@ -656,6 +667,46 @@ public class Kord(
         return GuildUserCommand(data, rest.interaction)
     }
 
+    public suspend inline fun createGuildPrimaryEntryPointCommand(
+        guildId: Snowflake,
+        name: String,
+        description: String,
+        handler: PrimaryEntryPointCommandHandlerType,
+        builder: EntryPointCreateBuilder.() -> Unit = {},
+    ): GuildPrimaryEntryPointCommand {
+        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+        val response = rest.interaction.createGuildPrimaryEntryPointCommand(
+            resources.applicationId,
+            guildId,
+            name,
+            description,
+            handler,
+            builder
+        )
+
+        val data = ApplicationCommandData.from(response)
+        return GuildPrimaryEntryPointCommand(data, rest.interaction)
+    }
+
+
+    public suspend inline fun createGlobalPrimaryEntryPointCommand(
+        name: String,
+        description: String,
+        handler: PrimaryEntryPointCommandHandlerType,
+        builder: EntryPointCreateBuilder.() -> Unit = {},
+    ): GlobalPrimaryEntryPointCommand {
+        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+        val response = rest.interaction.createGlobalPrimaryEntryPointCommand(
+            resources.applicationId,
+            name,
+            description,
+            handler,
+            builder
+        )
+
+        val data = ApplicationCommandData.from(response)
+        return GlobalPrimaryEntryPointCommand(data, rest.interaction)
+    }
 
     public suspend inline fun createGuildApplicationCommands(
         guildId: Snowflake,

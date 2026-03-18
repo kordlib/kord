@@ -18,6 +18,8 @@ internal class HeartbeatHandler(
 ) : GatewayEventHandler(flow, "HeartbeatHandler") {
     private var timestamp: TimeMark = timeSource.markNow()
     private var interval by atomic(0L)
+    // To my knowledge, this is driven by incoming DAVE binary messages. Intentionally unimplemented.
+    private var seqAck by atomic(-1L)
 
     override suspend fun start() = coroutineScope {
         on<Hello> {
@@ -27,7 +29,7 @@ internal class HeartbeatHandler(
         on<Ready> {
             launch {
                 ticker.tickAt(interval) {
-                    send(Heartbeat(timestamp.elapsedNow().inWholeMilliseconds))
+                    send(Heartbeat(timestamp.elapsedNow().inWholeMilliseconds, seqAck))
                     timestamp = timeSource.markNow()
                 }
             }

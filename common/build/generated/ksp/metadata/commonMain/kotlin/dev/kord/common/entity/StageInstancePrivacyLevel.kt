@@ -1,6 +1,5 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
-@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
-                "SpellCheckingInspection", "GrazieInspection"))
+@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
@@ -14,8 +13,9 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 /**
- * See [StageInstancePrivacyLevel]s in the
- * [Discord Developer Documentation](https://discord.com/developers/docs/resources/stage-instance#stage-instance-object-privacy-level).
+ *
+ *
+ * See [StageInstancePrivacyLevel]s in the [Discord Developer Documentation](https://discord.com/developers/docs/resources/stage-instance#stage-instance-object-privacy-level).
  */
 @Serializable(with = StageInstancePrivacyLevel.Serializer::class)
 public sealed class StageInstancePrivacyLevel(
@@ -24,20 +24,16 @@ public sealed class StageInstancePrivacyLevel(
      */
     public val `value`: Int,
 ) {
-    final override fun equals(other: Any?): Boolean = this === other ||
-            (other is StageInstancePrivacyLevel && this.value == other.value)
+    final override fun equals(other: Any?): Boolean = this === other || (other is StageInstancePrivacyLevel && this.value == other.value)
 
     final override fun hashCode(): Int = value.hashCode()
 
-    final override fun toString(): String =
-            if (this is Unknown) "StageInstancePrivacyLevel.Unknown(value=$value)"
-            else "StageInstancePrivacyLevel.${this::class.simpleName}"
+    final override fun toString(): String = if (this is Unknown) "StageInstancePrivacyLevel.Unknown(value=$value)" else "StageInstancePrivacyLevel.${this::class.simpleName}"
 
     /**
      * An unknown [StageInstancePrivacyLevel].
      *
-     * This is used as a fallback for [StageInstancePrivacyLevel]s that haven't been added to Kord
-     * yet.
+     * This is used as a fallback for [StageInstancePrivacyLevel]s that haven't been added to Kord yet.
      */
     public class Unknown internal constructor(
         `value`: Int,
@@ -46,7 +42,10 @@ public sealed class StageInstancePrivacyLevel(
     /**
      * The Stage instance is visible publicly.
      */
-    @Deprecated(message = "Stages are no longer discoverable")
+    @Deprecated(
+        level = DeprecationLevel.ERROR,
+        message = "Stages are no longer discoverable. The deprecation level will be raised to HIDDEN in 0.19.0 and this declaration will be removed in 0.20.0",
+    )
     public object Public : StageInstancePrivacyLevel(1)
 
     /**
@@ -56,15 +55,13 @@ public sealed class StageInstancePrivacyLevel(
 
     internal object Serializer : KSerializer<StageInstancePrivacyLevel> {
         override val descriptor: SerialDescriptor =
-                PrimitiveSerialDescriptor("dev.kord.common.entity.StageInstancePrivacyLevel",
-                PrimitiveKind.INT)
+                PrimitiveSerialDescriptor("dev.kord.common.entity.StageInstancePrivacyLevel", PrimitiveKind.INT)
 
         override fun serialize(encoder: Encoder, `value`: StageInstancePrivacyLevel) {
             encoder.encodeInt(value.value)
         }
 
-        override fun deserialize(decoder: Decoder): StageInstancePrivacyLevel =
-                from(decoder.decodeInt())
+        override fun deserialize(decoder: Decoder): StageInstancePrivacyLevel = from(decoder.decodeInt())
     }
 
     public companion object {
@@ -73,17 +70,16 @@ public sealed class StageInstancePrivacyLevel(
          */
         public val entries: List<StageInstancePrivacyLevel> by lazy(mode = PUBLICATION) {
             listOf(
-                @Suppress("DEPRECATION") Public,
+                @Suppress("DEPRECATION_ERROR") Public,
                 GuildOnly,
             )
         }
 
         /**
-         * Returns an instance of [StageInstancePrivacyLevel] with [StageInstancePrivacyLevel.value]
-         * equal to the specified [value].
+         * Returns an instance of [StageInstancePrivacyLevel] with [StageInstancePrivacyLevel.value] equal to the specified [value].
          */
         public fun from(`value`: Int): StageInstancePrivacyLevel = when (value) {
-            1 -> @Suppress("DEPRECATION") Public
+            1 -> @Suppress("DEPRECATION_ERROR") Public
             2 -> GuildOnly
             else -> Unknown(value)
         }

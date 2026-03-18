@@ -1,6 +1,5 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
-@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
-                "SpellCheckingInspection", "GrazieInspection"))
+@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
@@ -14,8 +13,9 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 /**
- * See [VerificationLevel]s in the
- * [Discord Developer Documentation](https://discord.com/developers/docs/resources/guild#guild-object-verification-level).
+ *
+ *
+ * See [VerificationLevel]s in the [Discord Developer Documentation](https://discord.com/developers/docs/resources/guild#guild-object-verification-level).
  */
 @Serializable(with = VerificationLevel.Serializer::class)
 public sealed class VerificationLevel(
@@ -24,14 +24,11 @@ public sealed class VerificationLevel(
      */
     public val `value`: Int,
 ) {
-    final override fun equals(other: Any?): Boolean = this === other ||
-            (other is VerificationLevel && this.value == other.value)
+    final override fun equals(other: Any?): Boolean = this === other || (other is VerificationLevel && this.value == other.value)
 
     final override fun hashCode(): Int = value.hashCode()
 
-    final override fun toString(): String =
-            if (this is Unknown) "VerificationLevel.Unknown(value=$value)"
-            else "VerificationLevel.${this::class.simpleName}"
+    final override fun toString(): String = if (this is Unknown) "VerificationLevel.Unknown(value=$value)" else "VerificationLevel.${this::class.simpleName}"
 
     /**
      * An unknown [VerificationLevel].
@@ -69,8 +66,7 @@ public sealed class VerificationLevel(
 
     internal object Serializer : KSerializer<VerificationLevel> {
         override val descriptor: SerialDescriptor =
-                PrimitiveSerialDescriptor("dev.kord.common.entity.VerificationLevel",
-                PrimitiveKind.INT)
+                PrimitiveSerialDescriptor("dev.kord.common.entity.VerificationLevel", PrimitiveKind.INT)
 
         override fun serialize(encoder: Encoder, `value`: VerificationLevel) {
             encoder.encodeInt(value.value)
@@ -94,8 +90,7 @@ public sealed class VerificationLevel(
         }
 
         /**
-         * Returns an instance of [VerificationLevel] with [VerificationLevel.value] equal to the
-         * specified [value].
+         * Returns an instance of [VerificationLevel] with [VerificationLevel.value] equal to the specified [value].
          */
         public fun from(`value`: Int): VerificationLevel = when (value) {
             0 -> None

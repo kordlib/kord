@@ -1,6 +1,5 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
-@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
-                "SpellCheckingInspection", "GrazieInspection"))
+@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
@@ -14,8 +13,9 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 /**
- * See [DefaultMessageNotificationLevel]s in the
- * [Discord Developer Documentation](https://discord.com/developers/docs/resources/guild#guild-object-default-message-notification-level).
+ *
+ *
+ * See [DefaultMessageNotificationLevel]s in the [Discord Developer Documentation](https://discord.com/developers/docs/resources/guild#guild-object-default-message-notification-level).
  */
 @Serializable(with = DefaultMessageNotificationLevel.Serializer::class)
 public sealed class DefaultMessageNotificationLevel(
@@ -24,20 +24,16 @@ public sealed class DefaultMessageNotificationLevel(
      */
     public val `value`: Int,
 ) {
-    final override fun equals(other: Any?): Boolean = this === other ||
-            (other is DefaultMessageNotificationLevel && this.value == other.value)
+    final override fun equals(other: Any?): Boolean = this === other || (other is DefaultMessageNotificationLevel && this.value == other.value)
 
     final override fun hashCode(): Int = value.hashCode()
 
-    final override fun toString(): String =
-            if (this is Unknown) "DefaultMessageNotificationLevel.Unknown(value=$value)"
-            else "DefaultMessageNotificationLevel.${this::class.simpleName}"
+    final override fun toString(): String = if (this is Unknown) "DefaultMessageNotificationLevel.Unknown(value=$value)" else "DefaultMessageNotificationLevel.${this::class.simpleName}"
 
     /**
      * An unknown [DefaultMessageNotificationLevel].
      *
-     * This is used as a fallback for [DefaultMessageNotificationLevel]s that haven't been added to
-     * Kord yet.
+     * This is used as a fallback for [DefaultMessageNotificationLevel]s that haven't been added to Kord yet.
      */
     public class Unknown internal constructor(
         `value`: Int,
@@ -55,15 +51,13 @@ public sealed class DefaultMessageNotificationLevel(
 
     internal object Serializer : KSerializer<DefaultMessageNotificationLevel> {
         override val descriptor: SerialDescriptor =
-                PrimitiveSerialDescriptor("dev.kord.common.entity.DefaultMessageNotificationLevel",
-                PrimitiveKind.INT)
+                PrimitiveSerialDescriptor("dev.kord.common.entity.DefaultMessageNotificationLevel", PrimitiveKind.INT)
 
         override fun serialize(encoder: Encoder, `value`: DefaultMessageNotificationLevel) {
             encoder.encodeInt(value.value)
         }
 
-        override fun deserialize(decoder: Decoder): DefaultMessageNotificationLevel =
-                from(decoder.decodeInt())
+        override fun deserialize(decoder: Decoder): DefaultMessageNotificationLevel = from(decoder.decodeInt())
     }
 
     public companion object {
@@ -78,8 +72,7 @@ public sealed class DefaultMessageNotificationLevel(
         }
 
         /**
-         * Returns an instance of [DefaultMessageNotificationLevel] with
-         * [DefaultMessageNotificationLevel.value] equal to the specified [value].
+         * Returns an instance of [DefaultMessageNotificationLevel] with [DefaultMessageNotificationLevel.value] equal to the specified [value].
          */
         public fun from(`value`: Int): DefaultMessageNotificationLevel = when (value) {
             0 -> AllMessages

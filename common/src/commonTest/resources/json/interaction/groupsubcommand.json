@@ -55,6 +55,7 @@
   "app_permissions": "2147483647",
   "locale": "de",
   "guild_locale": "en-US",
+  "authorizing_integration_owners": {"0":  "0"},
   "entitlements": [
     {
       "id":"0",
@@ -64,5 +65,6 @@
       "deleted":false
     }
   ],
-  "context": 0
+  "context": 0,
+  "attachment_size_limit": 1
 }

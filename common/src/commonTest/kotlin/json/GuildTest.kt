@@ -4,7 +4,7 @@ import dev.kord.common.entity.*
 import dev.kord.common.entity.Permission.*
 import dev.kord.common.readFile
 import kotlinx.coroutines.test.runTest
-import kotlinx.datetime.Instant
+import kotlin.time.Instant
 import kotlinx.serialization.json.Json
 import kotlin.js.JsName
 import kotlin.test.Test
@@ -64,6 +64,7 @@ class GuildTest {
             nsfwLevel shouldBe NsfwLevel.Default
             premiumProgressBarEnabled shouldBe false
             safetyAlertsChannelId shouldBe "587324906702766226"
+            homeHeader shouldBe null
         }
     }
 

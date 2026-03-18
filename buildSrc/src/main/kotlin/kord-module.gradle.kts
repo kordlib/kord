@@ -3,9 +3,7 @@ plugins {
     org.jetbrains.kotlin.plugin.serialization
     org.jetbrains.dokka
     org.jetbrains.kotlinx.atomicfu
-    org.jetbrains.kotlinx.`binary-compatibility-validator`
     com.google.devtools.ksp
-    `maven-publish`
 }
 
 repositories {
@@ -14,10 +12,6 @@ repositories {
 
 dependencies {
     ksp(project(":ksp-processors"))
-}
-
-apiValidation {
-    applyKordBCVOptions()
 }
 
 kotlin {
@@ -29,6 +23,10 @@ kotlin {
 
     sourceSets {
         applyKordTestOptIns()
+    }
+
+    abiValidation {
+        applyKordBCVOptions()
     }
 }
 
@@ -43,12 +41,5 @@ tasks {
 
     withType<JavaCompile>().configureEach {
         options.release = KORD_JVM_TARGET
-    }
-}
-
-publishing {
-    publications.register<MavenPublication>(Library.name) {
-        from(components["java"])
-        artifact(tasks.kotlinSourcesJar)
     }
 }

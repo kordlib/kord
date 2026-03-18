@@ -3,8 +3,8 @@ package dev.kord.core.behavior
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.Kord
 import dev.kord.core.cache.data.EmojiData
-import dev.kord.core.entity.KordEntity
 import dev.kord.core.entity.GuildEmoji
+import dev.kord.core.entity.KordEntity
 import dev.kord.core.entity.Strategizable
 import dev.kord.core.hash
 import dev.kord.core.supplier.EntitySupplier

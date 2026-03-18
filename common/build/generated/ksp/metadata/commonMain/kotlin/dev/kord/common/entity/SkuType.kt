@@ -1,6 +1,5 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
-@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
-                "SpellCheckingInspection", "GrazieInspection"))
+@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
@@ -14,8 +13,9 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 /**
- * See [SkuType]s in the
- * [Discord Developer Documentation](https://discord.com/developers/docs/resources/sku#sku-object-sku-types).
+ *
+ *
+ * See [SkuType]s in the [Discord Developer Documentation](https://discord.com/developers/docs/resources/sku#sku-object-sku-types).
  */
 @Serializable(with = SkuType.Serializer::class)
 public sealed class SkuType(
@@ -24,13 +24,11 @@ public sealed class SkuType(
      */
     public val `value`: Int,
 ) {
-    final override fun equals(other: Any?): Boolean = this === other ||
-            (other is SkuType && this.value == other.value)
+    final override fun equals(other: Any?): Boolean = this === other || (other is SkuType && this.value == other.value)
 
     final override fun hashCode(): Int = value.hashCode()
 
-    final override fun toString(): String = if (this is Unknown) "SkuType.Unknown(value=$value)"
-            else "SkuType.${this::class.simpleName}"
+    final override fun toString(): String = if (this is Unknown) "SkuType.Unknown(value=$value)" else "SkuType.${this::class.simpleName}"
 
     /**
      * An unknown [SkuType].

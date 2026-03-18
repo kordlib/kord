@@ -5,7 +5,7 @@ import dev.kord.core.Kord
 import dev.kord.core.KordObject
 import dev.kord.core.behavior.TemplateBehavior
 import dev.kord.core.cache.data.TemplateData
-import kotlinx.datetime.Instant
+import kotlin.time.Instant
 
 public class Template(public val data: TemplateData, override val kord: Kord) : KordObject, TemplateBehavior {
     override val code: String get() = data.code

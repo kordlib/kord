@@ -8,7 +8,6 @@ import kotlinx.serialization.builtins.IntArraySerializer
 import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
-import kotlin.jvm.JvmField
 
 /**
  * An instance of a [Discord shard](https://discord.com/developers/docs/topics/gateway#sharding).
@@ -30,25 +29,5 @@ public data class DiscordShard(val index: Int, val count: Int) {
             if (array.size != 2) throw SerializationException("Expected IntArray with exactly two elements")
             return DiscordShard(index = array[0], count = array[1])
         }
-    }
-
-    public companion object {
-        @Suppress("DEPRECATION_ERROR")
-        @Deprecated(
-            "Renamed to 'Companion'. This declaration will be removed in 0.17.0.",
-            ReplaceWith("DiscordShard.Companion", imports = ["dev.kord.common.entity.DiscordShard"]),
-            DeprecationLevel.HIDDEN,
-        )
-        @JvmField
-        public val NewCompanion: NewCompanion = NewCompanion()
-    }
-
-    @Deprecated(
-        "Renamed to 'Companion'. This declaration will be removed in 0.17.0.",
-        ReplaceWith("DiscordShard.Companion", imports = ["dev.kord.common.entity.DiscordShard"]),
-        DeprecationLevel.HIDDEN,
-    )
-    public class NewCompanion internal constructor() {
-        public fun serializer(): KSerializer<DiscordShard> = DiscordShard.serializer()
     }
 }

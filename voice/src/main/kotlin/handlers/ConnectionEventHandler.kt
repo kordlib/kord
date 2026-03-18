@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
-private val logger = KotlinLogging.logger("[Interceptor]")
+private val logger = KotlinLogging.logger("[Voice Handler]")
 
 internal abstract class ConnectionEventHandler<Event>(
     val flow: Flow<Event>,

@@ -22,8 +22,10 @@ public data class ApplicationCommandData(
     val defaultMemberPermissions: Permissions?,
     @Deprecated("'dmPermission' is deprecated in favor of 'contexts'.")
     val dmPermission: OptionalBoolean = OptionalBoolean.Missing,
-    val contexts: Optional<List<InteractionContextType>> = Optional.Missing(),
-    @Deprecated("'defaultPermission' is deprecated in favor of 'defaultMemberPermissions' and 'dmPermission'.")
+    val contexts: Optional<List<InteractionContextType>?> = Optional.Missing(),
+    @Deprecated("'defaultPermission' is deprecated in favor of 'defaultMemberPermissions' and 'dmPermission'." +
+            " The deprecation level will be raised to HIDDEN in 0.19.0 and this declaration will be removed in 0.20.0" ,
+        level = DeprecationLevel.ERROR)
     val defaultPermission: OptionalBoolean? = OptionalBoolean.Missing,
     val nsfw: OptionalBoolean = OptionalBoolean.Missing,
     val version: Snowflake
@@ -49,7 +51,7 @@ public data class ApplicationCommandData(
                     defaultMemberPermissions,
                     @Suppress("DEPRECATION") dmPermission,
                     contexts,
-                    @Suppress("DEPRECATION") defaultPermission,
+                    @Suppress("DEPRECATION_ERROR") defaultPermission,
                     nsfw,
                     version
                 )

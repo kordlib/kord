@@ -1,6 +1,7 @@
 package dev.kord.core.entity.interaction
 
 import dev.kord.common.Locale
+import dev.kord.common.entity.ApplicationIntegrationType
 import dev.kord.common.entity.InteractionContextType
 import dev.kord.common.entity.InteractionType
 import dev.kord.common.entity.Snowflake
@@ -65,9 +66,27 @@ public sealed interface Interaction : InteractionBehavior {
     public val entitlements: List<Entitlement> get() = data.entitlements.mapList { Entitlement(it, kord) }.orEmpty()
 
     /**
-     * Context where the interaction was triggered from
+     * Map of the authorizing users id by [type][ApplicationIntegrationType].
+     *
+     * For [ApplicationIntegrationType.GuildInstall] this will be:
+     *  - the guildId, if it's on a guild
+     *  - `0` if it is from a user DM
+     *
+     * For [ApplicationIntegrationType.UserInstall] this will be:
+     * - The id of the authorizing user
+     */
+    public val authorizingIntegrationOwners: Map<ApplicationIntegrationType, Snowflake>
+        get() = data.authorizingIntegrationOwners
+
+    /**
+     * [Context][InteractionContextType] where the interaction was triggered from.
      */
     public val context: InteractionContextType? get() = data.context.value
+
+    /**
+     * Attachment size limit in bytes
+     */
+    public val attachmentSizeLimit: Int get() = data.attachmentSizeLimit
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): Interaction
 

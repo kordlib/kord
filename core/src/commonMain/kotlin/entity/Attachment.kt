@@ -8,7 +8,7 @@ import dev.kord.core.Kord
 import dev.kord.core.cache.data.AttachmentData
 import dev.kord.core.hash
 import dev.kord.rest.Image
-import io.ktor.util.*
+import kotlin.io.encoding.Base64
 import kotlin.time.Duration
 
 /**
@@ -77,7 +77,7 @@ public data class Attachment(val data: AttachmentData, override val kord: Kord) 
     /**
      * A sampled waveform (currently for voice messages).
      */
-    val waveform: ByteArray? get() = data.waveform.value?.decodeBase64Bytes()
+    val waveform: ByteArray? get() = data.waveform.value?.let(Base64::decode)
 
     /** The [AttachmentFlags] of this attachment. */
     val flags: AttachmentFlags? get() = data.flags.value

@@ -1,5 +1,6 @@
 package dev.kord.rest.route
 
+import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.Snowflake
 
 public object DiscordCdn {
@@ -18,6 +19,12 @@ public object DiscordCdn {
 
     public fun guildBanner(guildId: Snowflake, hash: String): CdnUrl = CdnUrl("$BASE_URL/banners/$guildId/$hash")
 
+    @KordPreview
+    public fun guildHomeHeader(guildId: Snowflake, hash: String): CdnUrl = CdnUrl("$BASE_URL/guilds/$guildId/home-headers/$hash")
+
+    @KordPreview
+    public fun guildTagBadge(guildId: Snowflake, hash: String): CdnUrl = CdnUrl("$BASE_URL/guild-tag-badge/$guildId/$hash")
+
     public fun userBanner(userId: Snowflake, hash: String): CdnUrl = CdnUrl("$BASE_URL/banners/$userId/$hash")
 
     public fun defaultUserAvatar(discriminator: Int): CdnUrl = CdnUrl("$BASE_URL/embed/avatars/${discriminator % 5}")
@@ -30,8 +37,11 @@ public object DiscordCdn {
     public fun memberAvatar(guildId: Snowflake, userId: Snowflake, hash: String): CdnUrl =
         CdnUrl("$BASE_URL/guilds/$guildId/users/$userId/avatars/$hash")
 
-    public fun userAvatarDecoration(userId: Snowflake, hash: String): CdnUrl =
-        CdnUrl("$BASE_URL/avatar-decorations/$userId/$hash")
+    public fun avatarDecoration(hash: String): CdnUrl = CdnUrl("$BASE_URL/avatar-decoration-preset/$hash")
+
+    public fun staticNameplate(path: String): CdnUrl = CdnUrl("$BASE_URL/assets/collectibles/$path/static.png")
+
+    public fun animatedNameplate(path: String): CdnUrl = CdnUrl("$BASE_URL/assets/collectibles/$path/asset.webm")
 
     public fun applicationIcon(applicationId: Snowflake, hash: String): CdnUrl =
         CdnUrl("$BASE_URL/app-icons/$applicationId/$hash")
@@ -53,4 +63,7 @@ public object DiscordCdn {
 
     public fun memberBanner(guildId: Snowflake, userId: Snowflake, hash: String): CdnUrl =
         CdnUrl("$BASE_URL/guilds/$guildId/users/$userId/banners/$hash")
+
+    public fun tagBadge(guildId: Snowflake, hash: String): CdnUrl =
+        CdnUrl("$BASE_URL/guild-tag-badges/$guildId/$hash")
 }

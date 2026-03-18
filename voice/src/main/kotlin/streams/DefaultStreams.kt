@@ -1,14 +1,14 @@
 package dev.kord.voice.streams
 
-import com.iwebpp.crypto.TweetNaclFast
 import dev.kord.common.annotation.KordVoice
 import dev.kord.common.entity.Snowflake
 import dev.kord.voice.AudioFrame
-import dev.kord.voice.encryption.XSalsa20Poly1305Codec
-import dev.kord.voice.encryption.strategies.NonceStrategy
+import dev.kord.voice.encryption.XChaCha20Poly1305Codec
+import dev.kord.voice.encryption.strategies.*
 import dev.kord.voice.gateway.Speaking
 import dev.kord.voice.gateway.VoiceGateway
-import dev.kord.voice.io.*
+import dev.kord.voice.io.mutableCursor
+import dev.kord.voice.io.view
 import dev.kord.voice.udp.PayloadType
 import dev.kord.voice.udp.RTPPacket
 import dev.kord.voice.udp.VoiceUdpSocket
@@ -21,6 +21,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.*
+import kotlinx.io.readByteArray
 
 private val defaultStreamsLogger = KotlinLogging.logger { }
 
@@ -28,15 +29,18 @@ private val defaultStreamsLogger = KotlinLogging.logger { }
 public class DefaultStreams(
     private val voiceGateway: VoiceGateway,
     private val udp: VoiceUdpSocket,
-    private val nonceStrategy: NonceStrategy
+    private val nonceStrategy: @Suppress("DEPRECATION") NonceStrategy
 ) : Streams {
-    private fun CoroutineScope.listenForIncoming(key: ByteArray, server: SocketAddress) {
+
+    public constructor(voiceGateway: VoiceGateway, udp: VoiceUdpSocket) : this(voiceGateway, udp, @Suppress("DEPRECATION") LiteNonceStrategy())
+
+    private suspend fun CoroutineScope.listenForIncoming(key: ByteArray, server: SocketAddress) {
         udp.incoming
             .filter { it.address == server }
             .mapNotNull { RTPPacket.fromPacket(it.packet) }
             .filter { it.payloadType == PayloadType.Audio.raw }
             .decrypt(nonceStrategy, key)
-            .clean()
+            .strip()
             .onEach { _incomingAudioPackets.emit(it) }
             .launchIn(this)
     }
@@ -86,22 +90,29 @@ public class DefaultStreams(
     override val ssrcToUser: Map<UInt, Snowflake> get() = _ssrcToUser.value
 }
 
-private fun Flow<RTPPacket>.decrypt(nonceStrategy: NonceStrategy, key: ByteArray): Flow<RTPPacket> {
-    val codec = XSalsa20Poly1305Codec(key)
-    val nonceBuffer = ByteArray(TweetNaclFast.SecretBox.nonceLength).mutableCursor()
+@OptIn(ExperimentalUnsignedTypes::class)
+private suspend fun Flow<RTPPacket>.decrypt(nonceStrategy: @Suppress("DEPRECATION") NonceStrategy, key: ByteArray): Flow<RTPPacket> {
+    val codec = XChaCha20Poly1305Codec(key)
+    codec.init()
+    val nonceBuffer = ByteArray(nonceStrategy.nonceLength).mutableCursor()
 
     val decryptedBuffer = ByteArray(512)
     val decryptedCursor = decryptedBuffer.mutableCursor()
     val decryptedView = decryptedBuffer.view()
 
     return mapNotNull {
+        if (it.source == null) {
+            defaultStreamsLogger.error { "no source for incoming packet." }
+            return@mapNotNull null
+        }
+
         nonceBuffer.reset()
         decryptedCursor.reset()
 
         nonceBuffer.writeByteView(nonceStrategy.strip(it))
 
         val decrypted = with(it.payload) {
-            codec.decrypt(data, dataStart, viewSize, nonceBuffer.data, decryptedCursor)
+            codec.decrypt(data, dataStart, viewSize, it.source, 0, it.unencryptedLength, nonceBuffer.data, decryptedCursor)
         }
 
         if (!decrypted) {
@@ -112,26 +123,20 @@ private fun Flow<RTPPacket>.decrypt(nonceStrategy: NonceStrategy, key: ByteArray
         decryptedView.resize(0, decryptedCursor.cursor)
 
         // mutate the payload data and update the view
-        it.payload.data.mutableCursor().writeByteViewOrResize(decryptedView)
-        it.payload.resize(0, decryptedView.viewSize)
+        it.payload.mutableCursor().writeByteView(decryptedView)
+        it.payload.resize(end = it.payload.dataStart + decryptedView.viewSize)
 
         it
     }
 }
 
-private fun Flow<RTPPacket>.clean(): Flow<RTPPacket> {
-    fun processExtensionHeader(payload: ByteArrayView) = with(payload.readableCursor()) {
-        consume(Short.SIZE_BYTES) // profile, ignore it
-        val countOf32BitWords = readShort() // amount of extension header "words"
-        consume((countOf32BitWords * 32) / Byte.SIZE_BITS) // consume extension header
-
-        payload.resize(start = cursor)
+private fun Flow<RTPPacket>.strip(): Flow<RTPPacket> {
+    fun stripExtensionData(packet: RTPPacket) {
+        packet.payload.resize(start = packet.payload.dataStart + packet.extensionLengthWords.toInt() * 4)
     }
 
-    return map { packet ->
+    return onEach { packet ->
         if (packet.hasExtension)
-            processExtensionHeader(packet.payload)
-
-        packet
+            stripExtensionData(packet)
     }
 }

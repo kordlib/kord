@@ -1,6 +1,5 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
-@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
-                "SpellCheckingInspection", "GrazieInspection"))
+@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
@@ -14,24 +13,22 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 /**
- * See [InteractionContextType]s in the
- * [Discord Developer Documentation](https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-interaction-context-types).
+ * Context in Discord where an interaction can be used, or where it was triggered from.
+ *
+ * See [InteractionContextType]s in the [Discord Developer Documentation](https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-interaction-context-types).
  */
 @Serializable(with = InteractionContextType.Serializer::class)
 public sealed class InteractionContextType(
     /**
-     * The raw type used by Discord.
+     * The raw value used by Discord.
      */
-    public val type: Int,
+    public val `value`: Int,
 ) {
-    final override fun equals(other: Any?): Boolean = this === other ||
-            (other is InteractionContextType && this.type == other.type)
+    final override fun equals(other: Any?): Boolean = this === other || (other is InteractionContextType && this.value == other.value)
 
-    final override fun hashCode(): Int = type.hashCode()
+    final override fun hashCode(): Int = value.hashCode()
 
-    final override fun toString(): String =
-            if (this is Unknown) "InteractionContextType.Unknown(type=$type)"
-            else "InteractionContextType.${this::class.simpleName}"
+    final override fun toString(): String = if (this is Unknown) "InteractionContextType.Unknown(value=$value)" else "InteractionContextType.${this::class.simpleName}"
 
     /**
      * An unknown [InteractionContextType].
@@ -39,26 +36,33 @@ public sealed class InteractionContextType(
      * This is used as a fallback for [InteractionContextType]s that haven't been added to Kord yet.
      */
     public class Unknown internal constructor(
-        type: Int,
-    ) : InteractionContextType(type)
+        `value`: Int,
+    ) : InteractionContextType(value)
 
+    /**
+     * Interaction can be used within servers
+     */
     public object Guild : InteractionContextType(0)
 
-    public object BotDm : InteractionContextType(1)
+    /**
+     * Interaction can be used within DMs with the app's bot user
+     */
+    public object BotDM : InteractionContextType(1)
 
+    /**
+     * Interaction can be used within Group DMs and DMs other than the app's bot user
+     */
     public object PrivateChannel : InteractionContextType(2)
 
     internal object Serializer : KSerializer<InteractionContextType> {
         override val descriptor: SerialDescriptor =
-                PrimitiveSerialDescriptor("dev.kord.common.entity.InteractionContextType",
-                PrimitiveKind.INT)
+                PrimitiveSerialDescriptor("dev.kord.common.entity.InteractionContextType", PrimitiveKind.INT)
 
         override fun serialize(encoder: Encoder, `value`: InteractionContextType) {
-            encoder.encodeInt(value.type)
+            encoder.encodeInt(value.value)
         }
 
-        override fun deserialize(decoder: Decoder): InteractionContextType =
-                from(decoder.decodeInt())
+        override fun deserialize(decoder: Decoder): InteractionContextType = from(decoder.decodeInt())
     }
 
     public companion object {
@@ -68,20 +72,19 @@ public sealed class InteractionContextType(
         public val entries: List<InteractionContextType> by lazy(mode = PUBLICATION) {
             listOf(
                 Guild,
-                BotDm,
+                BotDM,
                 PrivateChannel,
             )
         }
 
         /**
-         * Returns an instance of [InteractionContextType] with [InteractionContextType.type] equal
-         * to the specified [type].
+         * Returns an instance of [InteractionContextType] with [InteractionContextType.value] equal to the specified [value].
          */
-        public fun from(type: Int): InteractionContextType = when (type) {
+        public fun from(`value`: Int): InteractionContextType = when (value) {
             0 -> Guild
-            1 -> BotDm
+            1 -> BotDM
             2 -> PrivateChannel
-            else -> Unknown(type)
+            else -> Unknown(value)
         }
     }
 }

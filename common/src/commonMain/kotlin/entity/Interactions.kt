@@ -8,7 +8,23 @@
             "Message", intValue = 3,
             kDoc = "A UI-based command that shows up when you right-click or tap on a message.",
         ),
+        Entry(
+            "PrimaryEntryPoint", intValue = 4,
+            kDoc = "A UI-based command that represents the primary way to invoke an app's [Activity](https://discord.com/developers/docs/activities/overview)"
+        )
     ],
+)
+
+@file:Generate(
+    INT_KORD_ENUM, name = "PrimaryEntryPointCommandHandlerType",
+    docUrl = "https://discord.com/developers/docs/interactions/application-commands#application-command-object-entry-point-command-handler-types",
+    entries = [
+        Entry("AppHandler", intValue = 1, kDoc = "The app handles the interaction using an interaction token"),
+        Entry(
+            "DiscordLaunchActivity", intValue = 2,
+            kDoc = "Discord handles the interaction by launching an Activity and sending a follow-up message without coordinating with the app"
+        )
+    ]
 )
 
 @file:Generate(
@@ -54,7 +70,7 @@
         Entry(
             "DeferredUpdateMessage", intValue = 6,
             kDoc = "For components, ACK an interaction and edit the original message later; the user does not see a " +
-                    "loading state.",
+                "loading state.",
         ),
         Entry("UpdateMessage", intValue = 7, kDoc = "For components, edit the message the component was attached to."),
         Entry(
@@ -62,6 +78,7 @@
             kDoc = "Respond to an autocomplete interaction with suggested choices.",
         ),
         Entry("Modal", intValue = 9, kDoc = "Respond to an interaction with a popup modal."),
+        Entry("LaunchActivity", intValue = 12, kDoc = "\tLaunch the Activity associated with the app. Only available for apps with Activities enabled")
     ],
 )
 
@@ -76,12 +93,16 @@
 )
 
 @file:Generate(
-    INT_KORD_ENUM, name = "InteractionContextType", valueName = "type",
+    INT_KORD_ENUM, name = "InteractionContextType",
     docUrl = "https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-interaction-context-types",
+    kDoc = "Context in Discord where an interaction can be used, or where it was triggered from.",
     entries = [
-        Entry("Guild", intValue = 0),
-        Entry("BotDm", intValue = 1),
-        Entry("PrivateChannel", intValue = 2),
+        Entry("Guild", intValue = 0, kDoc = "Interaction can be used within servers"),
+        Entry("BotDM", intValue = 1, kDoc = "Interaction can be used within DMs with the app's bot user"),
+        Entry(
+            "PrivateChannel", intValue = 2,
+            kDoc = "Interaction can be used within Group DMs and DMs other than the app's bot user"
+        ),
     ]
 )
 
@@ -101,6 +122,8 @@ import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.descriptors.buildClassSerialDescriptor
 import kotlinx.serialization.encoding.*
 import kotlinx.serialization.json.*
+
+public typealias IntegrationOwners = Map<ApplicationIntegrationType, Snowflake>
 
 @Serializable
 public data class DiscordApplicationCommand(
@@ -125,11 +148,15 @@ public data class DiscordApplicationCommand(
     @SerialName("dm_permission")
     @Deprecated("'dm_permission' is deprecated in favor of 'contexts'.")
     val dmPermission: OptionalBoolean = OptionalBoolean.Missing,
-    val contexts: Optional<List<InteractionContextType>> = Optional.Missing(),
     @SerialName("default_permission")
-    @Deprecated("'defaultPermission' is deprecated in favor of 'defaultMemberPermissions' and 'dmPermission'.")
+    @Deprecated("'defaultPermission' is deprecated in favor of 'defaultMemberPermissions' and 'dmPermission'." +
+            " The deprecation level will be raised to HIDDEN in 0.19.0 and this declaration will be removed in 0.20.0" ,
+        level = DeprecationLevel.ERROR)
     val defaultPermission: OptionalBoolean? = OptionalBoolean.Missing,
     val nsfw: OptionalBoolean = OptionalBoolean.Missing,
+    @SerialName("integration_types")
+    val integrationTypes: Optional<List<ApplicationIntegrationType>> = Optional.Missing(),
+    val contexts: Optional<List<InteractionContextType>?> = Optional.Missing(),
     val version: Snowflake
 )
 
@@ -256,6 +283,7 @@ public data class DiscordInteraction(
     val applicationId: Snowflake,
     val type: InteractionType,
     val data: InteractionCallbackData,
+    val guild: Optional<DiscordPartialGuild> = Optional.Missing(),
     @SerialName("guild_id")
     val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
     val channel: Optional<DiscordChannel> = Optional.Missing(),
@@ -268,15 +296,18 @@ public data class DiscordInteraction(
     @Serializable(with = MaybeMessageSerializer::class)
     val message: Optional<DiscordMessage> = Optional.Missing(),
     @SerialName("app_permissions")
-    val appPermissions: Optional<Permissions> = Optional.Missing(),
+    val appPermissions: Permissions,
     val locale: Optional<Locale> = Optional.Missing(),
     @SerialName("guild_locale")
     val guildLocale: Optional<Locale> = Optional.Missing(),
+    @SerialName("authorizing_integration_owners")
+    val authorizingIntegrationOwners: IntegrationOwners,
+    val context: Optional<InteractionContextType> = Optional.Missing(),
     // Don't trust the docs: This can be missing
     val entitlements: Optional<List<DiscordEntitlement>> = Optional.Missing(),
-    val context: Optional<InteractionContextType> = Optional.Missing(),
+    @SerialName("attachment_size_limit")
+    val attachmentSizeLimit: Int,
 ) {
-
     /**
      * Serializer that handles incomplete messages in [DiscordInteraction.message]. Discards
      * any incomplete messages as missing optionals.
@@ -305,7 +336,6 @@ public data class DiscordInteraction(
 
     }
 }
-
 
 @Serializable
 public data class InteractionCallbackData(
@@ -358,8 +388,10 @@ public sealed class Option {
                         2 -> jsonOptions = decodeSerializableElement(descriptor, index, JsonArray.serializer())
                         3 -> type =
                             decodeSerializableElement(descriptor, index, ApplicationCommandOptionType.serializer())
+
                         4 -> focused =
                             decodeSerializableElement(descriptor, index, OptionalBoolean.serializer())
+
                         CompositeDecoder.DECODE_DONE -> return@decodeStructure
                         else -> throw SerializationException("unknown index: $index")
                     }
@@ -371,7 +403,7 @@ public sealed class Option {
             return when (type) {
                 ApplicationCommandOptionType.SubCommand -> {
                     val options = if (jsonOptions == null) Optional.Missing()
-                    else Optional.Value(jsonOptions!!.map {
+                    else Optional.Value(jsonOptions.map {
                         json.decodeFromJsonElement(serializer(), it) as CommandArgument<*>
                     })
 
@@ -380,12 +412,13 @@ public sealed class Option {
 
                 ApplicationCommandOptionType.SubCommandGroup -> {
                     val options = if (jsonOptions == null) Optional.Missing()
-                    else Optional.Value(jsonOptions!!.map {
+                    else Optional.Value(jsonOptions.map {
                         json.decodeFromJsonElement(serializer(), it) as SubCommand
                     })
 
                     CommandGroup(name, options)
                 }
+
                 ApplicationCommandOptionType.Boolean,
                 ApplicationCommandOptionType.Channel,
                 ApplicationCommandOptionType.Integer,
@@ -395,8 +428,9 @@ public sealed class Option {
                 ApplicationCommandOptionType.String,
                 ApplicationCommandOptionType.Attachment,
                 ApplicationCommandOptionType.User -> CommandArgument.Serializer.deserialize(
-                    json, jsonValue!!, name, type!!, focused
+                    json, jsonValue!!, name, type, focused
                 )
+
                 is ApplicationCommandOptionType.Unknown -> error("unknown ApplicationCommandOptionType $type")
             }
         }
@@ -416,6 +450,7 @@ public sealed class Option {
                         descriptor, 3, ApplicationCommandOptionType.serializer(), value.type
                     )
                 }
+
                 is SubCommand -> encoder.encodeStructure(descriptor) {
                     encodeSerializableElement(
                         descriptor, 0, String.serializer(), value.name
@@ -565,24 +600,28 @@ public sealed class CommandArgument<out T> : Option() {
                         Snowflake.serializer(),
                         value.value
                     )
+
                     is RoleArgument -> encodeSerializableElement(
                         descriptor,
                         1,
                         Snowflake.serializer(),
                         value.value
                     )
+
                     is MentionableArgument -> encodeSerializableElement(
                         descriptor,
                         1,
                         Snowflake.serializer(),
                         value.value
                     )
+
                     is UserArgument -> encodeSerializableElement(
                         descriptor,
                         1,
                         Snowflake.serializer(),
                         value.value
                     )
+
                     is IntegerArgument -> encodeLongElement(descriptor, 1, value.value)
                     is NumberArgument -> encodeDoubleElement(descriptor, 1, value.value)
                     is AttachmentArgument -> encodeSerializableElement(
@@ -591,6 +630,7 @@ public sealed class CommandArgument<out T> : Option() {
                         Snowflake.serializer(),
                         value.value
                     )
+
                     is AutoCompleteArgument, is StringArgument -> encodeStringElement(
                         descriptor,
                         1,
@@ -618,9 +658,11 @@ public sealed class CommandArgument<out T> : Option() {
                 ApplicationCommandOptionType.Boolean -> BooleanArgument(
                     name, json.decodeFromJsonElement(Boolean.serializer(), element), focused
                 )
+
                 ApplicationCommandOptionType.String -> StringArgument(
                     name, json.decodeFromJsonElement(String.serializer(), element), focused
                 )
+
                 ApplicationCommandOptionType.Integer -> IntegerArgument(
                     name, json.decodeFromJsonElement(Long.serializer(), element), focused
                 )
@@ -628,21 +670,27 @@ public sealed class CommandArgument<out T> : Option() {
                 ApplicationCommandOptionType.Number -> NumberArgument(
                     name, json.decodeFromJsonElement(Double.serializer(), element), focused
                 )
+
                 ApplicationCommandOptionType.Channel -> ChannelArgument(
                     name, json.decodeFromJsonElement(Snowflake.serializer(), element), focused
                 )
+
                 ApplicationCommandOptionType.Mentionable -> MentionableArgument(
                     name, json.decodeFromJsonElement(Snowflake.serializer(), element), focused
                 )
+
                 ApplicationCommandOptionType.Role -> RoleArgument(
                     name, json.decodeFromJsonElement(Snowflake.serializer(), element), focused
                 )
+
                 ApplicationCommandOptionType.User -> UserArgument(
                     name, json.decodeFromJsonElement(Snowflake.serializer(), element), focused
                 )
+
                 ApplicationCommandOptionType.Attachment -> AttachmentArgument(
                     name, json.decodeFromJsonElement(Snowflake.serializer(), element), focused
                 )
+
                 ApplicationCommandOptionType.SubCommand,
                 ApplicationCommandOptionType.SubCommandGroup,
                 is ApplicationCommandOptionType.Unknown -> error("unknown CommandArgument type ${type.type}")

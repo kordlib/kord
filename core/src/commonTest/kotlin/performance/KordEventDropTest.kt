@@ -23,7 +23,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.runTest
-import kotlinx.datetime.Clock
+import kotlin.time.Clock
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.EmptyCoroutineContext
 import kotlin.js.JsName
@@ -73,6 +73,7 @@ class KordEventDropTest {
                 "discord guild",
                 afkTimeout = 0.seconds,
                 defaultMessageNotifications = DefaultMessageNotificationLevel.AllMessages,
+                homeHeader = null,
                 emojis = emptyList(),
                 explicitContentFilter = ExplicitContentFilter.AllMembers,
                 features = emptyList(),

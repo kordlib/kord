@@ -1,6 +1,7 @@
 package dev.kord.ksp.generation.kordenum
 
 import com.google.devtools.ksp.symbol.KSFile
+import com.squareup.kotlinpoet.ClassName
 import com.squareup.kotlinpoet.KModifier.PUBLIC
 import com.squareup.kotlinpoet.KModifier.SEALED
 import com.squareup.kotlinpoet.ksp.addOriginatingKSFile
@@ -10,24 +11,26 @@ import dev.kord.ksp.generation.shared.*
 import kotlinx.serialization.Serializable
 
 internal fun KordEnum.generateFileSpec(originatingFile: KSFile) = fileSpecForGenerationEntity(originatingFile) {
-    addClass(entityCN) {
+    addClass(currentContext.entityCN) {
         // for ksp incremental processing
         addOriginatingKSFile(originatingFile)
         addEntityKDoc()
         addAnnotation<Serializable> {
-            addMember("with·=·%T.Serializer::class", entityCN)
+            addMember("with·=·%T.Serializer::class", currentContext.entityCN)
         }
+        if (isKordPreview) addAnnotation(ClassName("dev.kord.common.annotation", "KordPreview"))
+        if (isDiscordPreview) addAnnotation(ClassName("dev.kord.common.annotation", "DiscordAPIPreview"))
         addModifiers(PUBLIC, SEALED)
         primaryConstructor {
-            addParameter(valueName, valueCN)
+            addParameter(valueName, currentContext.valueCN)
         }
-        addProperty(valueName, valueCN, PUBLIC) {
+        addProperty(valueName, currentContext.valueCN, PUBLIC) {
             addKdoc("The raw $valueName used by Discord.")
             initializer(valueName)
         }
-        addEqualsAndHashCodeBasedOnClassAndSingleProperty(entityCN, property = valueName, isFinal = true)
+        addEqualsAndHashCodeBasedOnClassAndSingleProperty(currentContext.entityCN, property = valueName, isFinal = true)
         addEntityToString(property = valueName)
-        addUnknownClass(constructorParameterName = valueName, constructorParameterType = valueCN)
+        addUnknownClass(constructorParameterName = valueName, constructorParameterType = currentContext.valueCN)
         addEntityEntries()
         addSerializer()
         addCompanionObject {
@@ -35,13 +38,13 @@ internal fun KordEnum.generateFileSpec(originatingFile: KSFile) = fileSpecForGen
             addFunction("from") {
                 addKdoc(
                     "Returns an instance of [%1T] with [%1T.$valueName] equal to the specified [$valueName].",
-                    entityCN,
+                    currentContext.entityCN,
                 )
-                addParameter(valueName, valueCN)
-                returns(entityCN)
+                addParameter(valueName, currentContext.valueCN)
+                returns(currentContext.entityCN)
                 withControlFlow("return when·($valueName)") {
-                    for (entry in entriesDistinctByValue) {
-                        addStatement("$valueFormat·->·${entry.nameWithSuppressedDeprecation}", entry.value)
+                    for (entry in currentContext.entriesDistinctByValue) {
+                        addStatement("${currentContext.valueFormat}·->·${entry.nameWithSuppressedDeprecation}", entry.value)
                     }
                     addStatement("else·->·Unknown($valueName)")
                 }

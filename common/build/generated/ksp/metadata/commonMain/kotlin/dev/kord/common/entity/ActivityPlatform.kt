@@ -1,6 +1,5 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
-@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
-                "SpellCheckingInspection", "GrazieInspection"))
+@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
@@ -14,8 +13,9 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 /**
- * See [ActivityPlatform]s in the
- * [Discord Developer Documentation](https://discord.com/developers/docs/events/gateway-events#activity-object).
+ *
+ *
+ * See [ActivityPlatform]s in the [Discord Developer Documentation](https://discord.com/developers/docs/events/gateway-events#activity-object).
  */
 @Serializable(with = ActivityPlatform.Serializer::class)
 public sealed class ActivityPlatform(
@@ -24,14 +24,11 @@ public sealed class ActivityPlatform(
      */
     public val `value`: String,
 ) {
-    final override fun equals(other: Any?): Boolean = this === other ||
-            (other is ActivityPlatform && this.value == other.value)
+    final override fun equals(other: Any?): Boolean = this === other || (other is ActivityPlatform && this.value == other.value)
 
     final override fun hashCode(): Int = value.hashCode()
 
-    final override fun toString(): String =
-            if (this is Unknown) "ActivityPlatform.Unknown(value=$value)"
-            else "ActivityPlatform.${this::class.simpleName}"
+    final override fun toString(): String = if (this is Unknown) "ActivityPlatform.Unknown(value=$value)" else "ActivityPlatform.${this::class.simpleName}"
 
     /**
      * An unknown [ActivityPlatform].
@@ -60,8 +57,7 @@ public sealed class ActivityPlatform(
 
     internal object Serializer : KSerializer<ActivityPlatform> {
         override val descriptor: SerialDescriptor =
-                PrimitiveSerialDescriptor("dev.kord.common.entity.ActivityPlatform",
-                PrimitiveKind.STRING)
+                PrimitiveSerialDescriptor("dev.kord.common.entity.ActivityPlatform", PrimitiveKind.STRING)
 
         override fun serialize(encoder: Encoder, `value`: ActivityPlatform) {
             encoder.encodeString(value.value)
@@ -88,8 +84,7 @@ public sealed class ActivityPlatform(
         }
 
         /**
-         * Returns an instance of [ActivityPlatform] with [ActivityPlatform.value] equal to the
-         * specified [value].
+         * Returns an instance of [ActivityPlatform] with [ActivityPlatform.value] equal to the specified [value].
          */
         public fun from(`value`: String): ActivityPlatform = when (value) {
             "desktop" -> Desktop

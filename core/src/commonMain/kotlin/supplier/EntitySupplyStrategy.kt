@@ -1,7 +1,6 @@
 package dev.kord.core.supplier
 
 import dev.kord.core.Kord
-import dev.kord.core.supplier.EntitySupplyStrategy.Companion.cache
 
 /**
  *  A supplier that accepts a [Kord] instance and returns an [EntitySupplier] of type [T].

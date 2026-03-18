@@ -2,8 +2,8 @@ package dev.kord.rest.ratelimit
 
 import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.currentTime
-import kotlinx.datetime.Clock
-import kotlinx.datetime.Instant
+import kotlin.time.Clock
+import kotlin.time.Instant
 import kotlin.time.Duration.Companion.milliseconds
 
 class TestClock(private val instant: Instant, private val scope: TestScope) : Clock {

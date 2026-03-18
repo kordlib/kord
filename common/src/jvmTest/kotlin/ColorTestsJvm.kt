@@ -1,8 +1,7 @@
 package dev.kord.common
 
-import kotlin.test.assertEquals
-
 import kotlin.test.Test
+import kotlin.test.assertEquals
 
 class ColorTestsJvm {
     @Test

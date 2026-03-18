@@ -12,7 +12,7 @@ import dev.kord.core.randomId
 import dev.kord.gateway.*
 import kotlinx.coroutines.job
 import kotlinx.coroutines.test.runTest
-import kotlinx.datetime.Instant
+import kotlin.time.Instant
 import kotlinx.serialization.json.JsonObject
 import kotlin.js.JsName
 import kotlin.test.BeforeTest
@@ -714,6 +714,7 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
                         id = it,
                         name = "",
                         icon = null,
+                        homeHeader = null,
                         ownerId = randomId(),
                         region = "",
                         afkChannelId = null,
@@ -760,6 +761,7 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
                         id = it,
                         name = "",
                         icon = null,
+                        homeHeader = null,
                         ownerId = randomId(),
                         region = "",
                         afkChannelId = null,
