@@ -152,7 +152,7 @@ internal class ChatInputCreateBuilderImpl(
     override var defaultMemberPermissions: Permissions? by state::defaultMemberPermissions.delegate()
 
     @Suppress("OVERRIDE_DEPRECATION")
-    override var dmPermission: Boolean? by state::dmPermission.delegate()
+    override var dmPermission: Boolean? by @Suppress("DEPRECATION") state::dmPermission.delegate()
     override var integrationTypes: MutableList<ApplicationIntegrationType>? by state::integrationTypes.delegate()
     override var contexts: MutableList<InteractionContextType>? by state::contexts.delegate()
 
@@ -174,7 +174,7 @@ internal class ChatInputCreateBuilderImpl(
             state.descriptionLocalizations,
             state.options.mapList { it.toRequest() },
             state.defaultMemberPermissions,
-            state.dmPermission,
+            @Suppress("DEPRECATION") state.dmPermission,
             @Suppress("DEPRECATION_ERROR") state.defaultPermission,
             nsfw = state.nsfw,
             integrationTypes = state.integrationTypes.missingOnEmpty(),
@@ -206,7 +206,7 @@ internal class ChatInputModifyBuilderImpl : GlobalChatInputModifyBuilder {
 
     override var defaultMemberPermissions: Permissions? by state::defaultMemberPermissions.delegate()
     @Suppress("OVERRIDE_DEPRECATION")
-    override var dmPermission: Boolean? by state::dmPermission.delegate()
+    override var dmPermission: Boolean? by @Suppress("DEPRECATION") state::dmPermission.delegate()
 
     @Deprecated("'defaultPermission' is deprecated in favor of 'defaultMemberPermissions' and 'dmPermission'." +
             " Setting 'defaultPermission' to false can be replaced by setting 'defaultMemberPermissions' to empty " +
@@ -228,7 +228,7 @@ internal class ChatInputModifyBuilderImpl : GlobalChatInputModifyBuilder {
             state.descriptionLocalizations,
             state.options.mapList { it.toRequest() },
             state.defaultMemberPermissions,
-            state.dmPermission,
+            @Suppress("DEPRECATION") state.dmPermission,
             @Suppress("DEPRECATION_ERROR") state.defaultPermission,
             nsfw = state.nsfw,
             integrationTypes = state.integrationTypes,

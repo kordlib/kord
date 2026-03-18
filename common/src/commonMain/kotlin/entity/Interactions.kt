@@ -146,6 +146,7 @@ public data class DiscordApplicationCommand(
     @SerialName("default_member_permissions")
     val defaultMemberPermissions: Permissions?,
     @SerialName("dm_permission")
+    @Deprecated("'dm_permission' is deprecated in favor of 'contexts'.")
     val dmPermission: OptionalBoolean = OptionalBoolean.Missing,
     @SerialName("default_permission")
     @Deprecated("'defaultPermission' is deprecated in favor of 'defaultMemberPermissions' and 'dmPermission'." +

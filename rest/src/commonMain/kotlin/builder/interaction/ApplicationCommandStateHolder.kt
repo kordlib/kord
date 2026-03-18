@@ -25,6 +25,7 @@ internal class ApplicationCommandModifyStateHolder {
     var options: Optional<MutableList<OptionsBuilder>> = Optional.Missing()
 
     var defaultMemberPermissions: Optional<Permissions?> = Optional.Missing()
+    @Deprecated("'dmPermission' is deprecated in favor of 'contexts'.")
     var dmPermission: OptionalBoolean? = OptionalBoolean.Missing
     var integrationTypes: Optional<MutableList<ApplicationIntegrationType>> = Optional.Missing()
     var contexts: Optional<MutableList<InteractionContextType>> = Optional.Missing()

@@ -20,6 +20,7 @@ public data class ApplicationCommandCreateRequest(
     val options: Optional<List<ApplicationCommandOption>> = Optional.Missing(),
     @SerialName("default_member_permissions")
     public val defaultMemberPermissions: Optional<Permissions?> = Optional.Missing(),
+    @Deprecated("'dmPermission' is deprecated in favor of 'contexts'.")
     @SerialName("dm_permission")
     public val dmPermission: OptionalBoolean? = OptionalBoolean.Missing,
     @Deprecated("'defaultPermission' is deprecated in favor of 'defaultMemberPermissions' and 'dmPermission'." +
@@ -47,6 +48,7 @@ public data class ApplicationCommandModifyRequest(
     val options: Optional<List<ApplicationCommandOption>> = Optional.Missing(),
     @SerialName("default_member_permissions")
     public val defaultMemberPermissions: Optional<Permissions?> = Optional.Missing(),
+    @Deprecated("'dmPermission' is deprecated in favor of 'contexts'.")
     @SerialName("dm_permission")
     public val dmPermission: OptionalBoolean? = OptionalBoolean.Missing,
     @Deprecated("'defaultPermission' is deprecated in favor of 'defaultMemberPermissions' and 'dmPermission'." +

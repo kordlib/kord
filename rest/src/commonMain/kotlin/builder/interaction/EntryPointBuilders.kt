@@ -47,7 +47,7 @@ internal class EntryPointCreateBuilderImpl(
     override var defaultMemberPermissions: Permissions? by state::defaultMemberPermissions.delegate()
 
     @Suppress("OVERRIDE_DEPRECATION")
-    override var dmPermission: Boolean? by state::dmPermission.delegate()
+    override var dmPermission: Boolean? by @Suppress("DEPRECATION") state::dmPermission.delegate()
     override var integrationTypes: MutableList<ApplicationIntegrationType>? by state::integrationTypes.delegate()
     override var contexts: MutableList<InteractionContextType>? by state::contexts.delegate()
 
@@ -70,7 +70,7 @@ internal class EntryPointCreateBuilderImpl(
             state.descriptionLocalizations,
             state.options.mapList { it.toRequest() },
             state.defaultMemberPermissions,
-            state.dmPermission,
+            @Suppress("DEPRECATION") state.dmPermission,
             @Suppress("DEPRECATION_ERROR") state.defaultPermission,
             nsfw = state.nsfw,
             integrationTypes = state.integrationTypes.missingOnEmpty(),
@@ -92,7 +92,7 @@ internal class EntryPointModifyBuilderImpl : GlobalEntryPointModifyBuilder, Entr
     override var defaultMemberPermissions: Permissions? by state::defaultMemberPermissions.delegate()
 
     @Suppress("OVERRIDE_DEPRECATION")
-    override var dmPermission: Boolean? by state::dmPermission.delegate()
+    override var dmPermission: Boolean? by @Suppress("DEPRECATION") state::dmPermission.delegate()
 
     @Deprecated(
         "'defaultPermission' is deprecated in favor of 'defaultMemberPermissions' and 'dmPermission'. Setting" +
@@ -114,7 +114,7 @@ internal class EntryPointModifyBuilderImpl : GlobalEntryPointModifyBuilder, Entr
         state.description,
         state.descriptionLocalizations,
         defaultMemberPermissions = state.defaultMemberPermissions,
-        dmPermission = state.dmPermission,
+        dmPermission = @Suppress("DEPRECATION") state.dmPermission,
         nsfw = state.nsfw,
         integrationTypes = state.integrationTypes.missingOnEmpty(),
         contexts = state.contexts.missingOnEmpty(),

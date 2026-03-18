@@ -28,7 +28,7 @@ internal class MessageCommandModifyBuilderImpl : GlobalMessageCommandModifyBuild
 
     override var defaultMemberPermissions: Permissions? by state::defaultMemberPermissions.delegate()
     @Suppress("OVERRIDE_DEPRECATION")
-    override var dmPermission: Boolean? by state::dmPermission.delegate()
+    override var dmPermission: Boolean? by @Suppress("DEPRECATION") state::dmPermission.delegate()
 
     @Deprecated("'defaultPermission' is deprecated in favor of 'defaultMemberPermissions' and 'dmPermission'." +
             " Setting 'defaultPermission' to false can be replaced by setting 'defaultMemberPermissions' to empty " +
@@ -46,7 +46,7 @@ internal class MessageCommandModifyBuilderImpl : GlobalMessageCommandModifyBuild
         return ApplicationCommandModifyRequest(
             name = state.name,
             nameLocalizations = state.nameLocalizations,
-            dmPermission = state.dmPermission,
+            dmPermission = @Suppress("DEPRECATION") state.dmPermission,
             defaultMemberPermissions = state.defaultMemberPermissions,
             defaultPermission = @Suppress("DEPRECATION_ERROR") state.defaultPermission,
             nsfw = state.nsfw,
@@ -67,14 +67,13 @@ internal class MessageCommandCreateBuilderImpl(override var name: String) : Glob
     override val type: ApplicationCommandType
         get() = ApplicationCommandType.Message
 
-
     private val state = ApplicationCommandModifyStateHolder()
 
     override var nameLocalizations: MutableMap<Locale, String>? by state::nameLocalizations.delegate()
 
     override var defaultMemberPermissions: Permissions? by state::defaultMemberPermissions.delegate()
     @Suppress("OVERRIDE_DEPRECATION")
-    override var dmPermission: Boolean? by state::dmPermission.delegate()
+    override var dmPermission: Boolean? by @Suppress("DEPRECATION") state::dmPermission.delegate()
     override var integrationTypes: MutableList<ApplicationIntegrationType>? by state::integrationTypes.delegate()
     override var contexts: MutableList<InteractionContextType>? by state::contexts.delegate()
 
@@ -92,7 +91,7 @@ internal class MessageCommandCreateBuilderImpl(override var name: String) : Glob
             name = name,
             nameLocalizations = state.nameLocalizations,
             type = type,
-            dmPermission = state.dmPermission,
+            dmPermission =  @Suppress("DEPRECATION") state.dmPermission,
             defaultMemberPermissions = state.defaultMemberPermissions,
             defaultPermission = @Suppress("DEPRECATION_ERROR") state.defaultPermission,
             nsfw = state.nsfw,

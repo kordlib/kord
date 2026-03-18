@@ -133,5 +133,6 @@
     }
   ],
   "authorizing_integration_owners": {"0":  "0"},
+  "context": 2,
   "attachment_size_limit": 1
 }
