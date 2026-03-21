@@ -1458,19 +1458,19 @@ final class dev.kord.common.entity/DiscordAutoModerationAction { // dev.kord.com
 }
 
 final class dev.kord.common.entity/DiscordAutoModerationActionMetadata { // dev.kord.common.entity/DiscordAutoModerationActionMetadata|null[0]
-    constructor <init>(dev.kord.common.entity.optional/OptionalSnowflake = ..., dev.kord.common.entity.optional/Optional<kotlin.time/Duration> = ..., dev.kord.common.entity.optional/Optional<kotlin/String> = ...) // dev.kord.common.entity/DiscordAutoModerationActionMetadata.<init>|<init>(dev.kord.common.entity.optional.OptionalSnowflake;dev.kord.common.entity.optional.Optional<kotlin.time.Duration>;dev.kord.common.entity.optional.Optional<kotlin.String>){}[0]
+    constructor <init>(dev.kord.common.entity.optional/OptionalSnowflake = ..., dev.kord.common.entity.optional/Optional<kotlin.time/Duration> = ..., dev.kord.common.entity.optional/Optional<kotlin/String?> = ...) // dev.kord.common.entity/DiscordAutoModerationActionMetadata.<init>|<init>(dev.kord.common.entity.optional.OptionalSnowflake;dev.kord.common.entity.optional.Optional<kotlin.time.Duration>;dev.kord.common.entity.optional.Optional<kotlin.String?>){}[0]
 
     final val channelId // dev.kord.common.entity/DiscordAutoModerationActionMetadata.channelId|{}channelId[0]
         final fun <get-channelId>(): dev.kord.common.entity.optional/OptionalSnowflake // dev.kord.common.entity/DiscordAutoModerationActionMetadata.channelId.<get-channelId>|<get-channelId>(){}[0]
     final val customMessage // dev.kord.common.entity/DiscordAutoModerationActionMetadata.customMessage|{}customMessage[0]
-        final fun <get-customMessage>(): dev.kord.common.entity.optional/Optional<kotlin/String> // dev.kord.common.entity/DiscordAutoModerationActionMetadata.customMessage.<get-customMessage>|<get-customMessage>(){}[0]
+        final fun <get-customMessage>(): dev.kord.common.entity.optional/Optional<kotlin/String?> // dev.kord.common.entity/DiscordAutoModerationActionMetadata.customMessage.<get-customMessage>|<get-customMessage>(){}[0]
     final val durationSeconds // dev.kord.common.entity/DiscordAutoModerationActionMetadata.durationSeconds|{}durationSeconds[0]
         final fun <get-durationSeconds>(): dev.kord.common.entity.optional/Optional<kotlin.time/Duration> // dev.kord.common.entity/DiscordAutoModerationActionMetadata.durationSeconds.<get-durationSeconds>|<get-durationSeconds>(){}[0]
 
     final fun component1(): dev.kord.common.entity.optional/OptionalSnowflake // dev.kord.common.entity/DiscordAutoModerationActionMetadata.component1|component1(){}[0]
     final fun component2(): dev.kord.common.entity.optional/Optional<kotlin.time/Duration> // dev.kord.common.entity/DiscordAutoModerationActionMetadata.component2|component2(){}[0]
-    final fun component3(): dev.kord.common.entity.optional/Optional<kotlin/String> // dev.kord.common.entity/DiscordAutoModerationActionMetadata.component3|component3(){}[0]
-    final fun copy(dev.kord.common.entity.optional/OptionalSnowflake = ..., dev.kord.common.entity.optional/Optional<kotlin.time/Duration> = ..., dev.kord.common.entity.optional/Optional<kotlin/String> = ...): dev.kord.common.entity/DiscordAutoModerationActionMetadata // dev.kord.common.entity/DiscordAutoModerationActionMetadata.copy|copy(dev.kord.common.entity.optional.OptionalSnowflake;dev.kord.common.entity.optional.Optional<kotlin.time.Duration>;dev.kord.common.entity.optional.Optional<kotlin.String>){}[0]
+    final fun component3(): dev.kord.common.entity.optional/Optional<kotlin/String?> // dev.kord.common.entity/DiscordAutoModerationActionMetadata.component3|component3(){}[0]
+    final fun copy(dev.kord.common.entity.optional/OptionalSnowflake = ..., dev.kord.common.entity.optional/Optional<kotlin.time/Duration> = ..., dev.kord.common.entity.optional/Optional<kotlin/String?> = ...): dev.kord.common.entity/DiscordAutoModerationActionMetadata // dev.kord.common.entity/DiscordAutoModerationActionMetadata.copy|copy(dev.kord.common.entity.optional.OptionalSnowflake;dev.kord.common.entity.optional.Optional<kotlin.time.Duration>;dev.kord.common.entity.optional.Optional<kotlin.String?>){}[0]
     final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.common.entity/DiscordAutoModerationActionMetadata.equals|equals(kotlin.Any?){}[0]
     final fun hashCode(): kotlin/Int // dev.kord.common.entity/DiscordAutoModerationActionMetadata.hashCode|hashCode(){}[0]
     final fun toString(): kotlin/String // dev.kord.common.entity/DiscordAutoModerationActionMetadata.toString|toString(){}[0]

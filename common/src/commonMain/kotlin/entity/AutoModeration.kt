@@ -127,5 +127,5 @@ public data class DiscordAutoModerationActionMetadata(
     @SerialName("duration_seconds")
     val durationSeconds: Optional<DurationInSeconds> = Optional.Missing(),
     @SerialName("custom_message")
-    val customMessage: Optional<String> = Optional.Missing(),
+    val customMessage: Optional<String?> = Optional.Missing(),
 )
