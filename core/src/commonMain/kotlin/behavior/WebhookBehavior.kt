@@ -164,7 +164,7 @@ public suspend inline fun WebhookBehavior.execute(
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }
-    val response = kord.rest.webhook.executeWebhook(id, token, wait = true, threadId, builder)!!
+    val response = kord.rest.webhook.executeWebhook(id, token, wait = true, threadId, builder = builder)!!
     val data = MessageData.from(response)
     return Message(data, kord)
 }
@@ -187,5 +187,5 @@ public suspend inline fun WebhookBehavior.executeIgnored(
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }
-    kord.rest.webhook.executeWebhook(id, token, wait = false, threadId, builder)
+    kord.rest.webhook.executeWebhook(id, token, wait = false, threadId, builder = builder)
 }

@@ -9295,8 +9295,8 @@ public final class dev/kord/rest/service/WebhookService : dev/kord/rest/service/
 	public static synthetic fun executeGithubWebhook$default (Ldev/kord/rest/service/WebhookService;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Lkotlinx/serialization/json/JsonObject;Ljava/lang/Boolean;Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public final fun executeSlackWebhook (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Lkotlinx/serialization/json/JsonObject;Ljava/lang/Boolean;Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static synthetic fun executeSlackWebhook$default (Ldev/kord/rest/service/WebhookService;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Lkotlinx/serialization/json/JsonObject;Ljava/lang/Boolean;Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
-	public final fun executeWebhook (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ljava/lang/Boolean;Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static synthetic fun executeWebhook$default (Ldev/kord/rest/service/WebhookService;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ljava/lang/Boolean;Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+	public final fun executeWebhook (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ljava/lang/Boolean;Ldev/kord/common/entity/Snowflake;Ljava/lang/Boolean;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static synthetic fun executeWebhook$default (Ldev/kord/rest/service/WebhookService;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ljava/lang/Boolean;Ldev/kord/common/entity/Snowflake;Ljava/lang/Boolean;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public final fun getChannelWebhooks (Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun getGuildWebhooks (Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun getWebhook (Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -9310,6 +9310,7 @@ public final class dev/kord/rest/service/WebhookService : dev/kord/rest/service/
 public final class dev/kord/rest/service/WebhookServiceKt {
 	public static final fun webhookIdToken (Ldev/kord/rest/request/RequestBuilder;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;)V
 	public static final fun webhookIdTokenMessageIdThreadId (Ldev/kord/rest/request/RequestBuilder;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;)V
-	public static final fun webhookIdTokenWaitThreadId (Ldev/kord/rest/request/RequestBuilder;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ljava/lang/Boolean;Ldev/kord/common/entity/Snowflake;)V
+	public static final fun webhookIdTokenWaitThreadId (Ldev/kord/rest/request/RequestBuilder;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ljava/lang/Boolean;Ldev/kord/common/entity/Snowflake;Ljava/lang/Boolean;)V
+	public static synthetic fun webhookIdTokenWaitThreadId$default (Ldev/kord/rest/request/RequestBuilder;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ljava/lang/Boolean;Ldev/kord/common/entity/Snowflake;Ljava/lang/Boolean;ILjava/lang/Object;)V
 }
 
