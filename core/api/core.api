@@ -980,10 +980,10 @@ public final class dev/kord/core/behavior/WebhookBehavior$DefaultImpls {
 public final class dev/kord/core/behavior/WebhookBehaviorKt {
 	public static final fun edit (Ldev/kord/core/behavior/WebhookBehavior;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static final fun edit (Ldev/kord/core/behavior/WebhookBehavior;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static final fun execute (Ldev/kord/core/behavior/WebhookBehavior;Ljava/lang/String;Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static synthetic fun execute$default (Ldev/kord/core/behavior/WebhookBehavior;Ljava/lang/String;Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
-	public static final fun executeIgnored (Ldev/kord/core/behavior/WebhookBehavior;Ljava/lang/String;Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static synthetic fun executeIgnored$default (Ldev/kord/core/behavior/WebhookBehavior;Ljava/lang/String;Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+	public static final fun execute (Ldev/kord/core/behavior/WebhookBehavior;Ljava/lang/String;Ldev/kord/common/entity/Snowflake;Ljava/lang/Boolean;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static synthetic fun execute$default (Ldev/kord/core/behavior/WebhookBehavior;Ljava/lang/String;Ldev/kord/common/entity/Snowflake;Ljava/lang/Boolean;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+	public static final fun executeIgnored (Ldev/kord/core/behavior/WebhookBehavior;Ljava/lang/String;Ldev/kord/common/entity/Snowflake;Ljava/lang/Boolean;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static synthetic fun executeIgnored$default (Ldev/kord/core/behavior/WebhookBehavior;Ljava/lang/String;Ldev/kord/common/entity/Snowflake;Ljava/lang/Boolean;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 }
 
 public abstract interface class dev/kord/core/behavior/automoderation/AutoModerationRuleBehavior : dev/kord/core/entity/KordEntity, dev/kord/core/entity/Strategizable {

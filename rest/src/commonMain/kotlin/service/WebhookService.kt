@@ -105,6 +105,7 @@ public class WebhookService(requestHandler: RequestHandler) : RestService(reques
         token: String,
         wait: Boolean? = null,
         threadId: Snowflake? = null,
+        withComponents: Boolean? = null,
         builder: WebhookMessageCreateBuilder.() -> Unit
     ): DiscordMessage? {
         contract {
@@ -112,7 +113,7 @@ public class WebhookService(requestHandler: RequestHandler) : RestService(reques
         }
 
         return call(Route.ExecuteWebhookPost) {
-            webhookIdTokenWaitThreadId(webhookId, token, wait, threadId)
+            webhookIdTokenWaitThreadId(webhookId, token, wait, threadId, withComponents)
             val request = WebhookMessageCreateBuilder().apply(builder).toRequest()
             body(WebhookExecuteRequest.serializer(), request.request)
             request.files.forEach { file(it) }
@@ -193,10 +194,12 @@ internal fun RequestBuilder<*>.webhookIdTokenWaitThreadId(
     token: String,
     wait: Boolean?,
     threadId: Snowflake?,
+    withComponents: Boolean? = null,
 ) {
     webhookIdToken(webhookId, token)
     wait?.let { parameter("wait", it) }
     threadId?.let { parameter("thread_id", it) }
+    withComponents?.let { parameter("with_components", it) }
 }
 
 @PublishedApi
