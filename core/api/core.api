@@ -14585,7 +14585,7 @@ public final class dev/kord/core/event/guild/StageInstanceCreateEvent : dev/kord
 	public fun getGateway ()Ldev/kord/gateway/Gateway;
 	public fun getKord ()Ldev/kord/core/Kord;
 	public fun getShard ()I
-	public final fun getStageInstace ()Ldev/kord/core/entity/StageInstance;
+	public final fun getStageInstance ()Ldev/kord/core/entity/StageInstance;
 	public fun toString ()Ljava/lang/String;
 }
 
@@ -14595,7 +14595,7 @@ public final class dev/kord/core/event/guild/StageInstanceDeleteEvent : dev/kord
 	public fun getGateway ()Ldev/kord/gateway/Gateway;
 	public fun getKord ()Ldev/kord/core/Kord;
 	public fun getShard ()I
-	public final fun getStageInstace ()Ldev/kord/core/entity/StageInstance;
+	public final fun getStageInstance ()Ldev/kord/core/entity/StageInstance;
 	public fun toString ()Ljava/lang/String;
 }
 
@@ -14606,7 +14606,7 @@ public final class dev/kord/core/event/guild/StageInstanceUpdateEvent : dev/kord
 	public fun getKord ()Ldev/kord/core/Kord;
 	public final fun getOld ()Ldev/kord/core/entity/StageInstance;
 	public fun getShard ()I
-	public final fun getStageInstace ()Ldev/kord/core/entity/StageInstance;
+	public final fun getStageInstance ()Ldev/kord/core/entity/StageInstance;
 	public fun toString ()Ljava/lang/String;
 }
 

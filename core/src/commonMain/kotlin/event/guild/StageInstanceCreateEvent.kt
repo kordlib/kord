@@ -5,12 +5,12 @@ import dev.kord.core.entity.StageInstance
 import dev.kord.core.event.Event
 
 public class StageInstanceCreateEvent(
-    public val stageInstace: StageInstance,
+    public val stageInstance: StageInstance,
     override val shard: Int,
     override val customContext: Any?,
     override val kord: Kord
 ) : Event {
     override fun toString(): String {
-        return "StageInstanceCreateEvent(stageInstace=$stageInstace, shard=$shard)"
+        return "StageInstanceCreateEvent(stageInstance=$stageInstance, shard=$shard)"
     }
 }
