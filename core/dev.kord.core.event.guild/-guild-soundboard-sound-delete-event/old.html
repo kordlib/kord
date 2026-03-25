@@ -2,7 +2,7 @@
 <html class="no-js" lang="en">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
-    <title>customContext</title>
+    <title>old</title>
 <link href="../../../images/logo-icon.svg" rel="icon" type="image/svg"><script>var pathToRoot = "../../../";</script>
     <script>document.documentElement.classList.replace("no-js", "js");</script>
     <script>const storage = localStorage.getItem("dokka-dark-mode")
@@ -90,12 +90,12 @@
         </nav>
         <div id="resizer" class="resizer" data-item-type="BAR"></div>
         <div id="main" data-item-type="SECTION" role="main">
-<div class="main-content" data-page-type="member" id="content" pageids="kord-core::dev.kord.core.event.guild/GuildSoundboardSoundDeletEvent/customContext/#/PointingToDeclaration//1239919082">
-  <div class="breadcrumbs"><a href="../../index.html">kord-core</a><span class="delimiter">/</span><a href="../index.html">dev.kord.core.event.guild</a><span class="delimiter">/</span><a href="index.html">GuildSoundboardSoundDeletEvent</a><span class="delimiter">/</span><span class="current">customContext</span></div>
+<div class="main-content" data-page-type="member" id="content" pageids="kord-core::dev.kord.core.event.guild/GuildSoundboardSoundDeleteEvent/old/#/PointingToDeclaration//1239919082">
+  <div class="breadcrumbs"><a href="../../index.html">kord-core</a><span class="delimiter">/</span><a href="../index.html">dev.kord.core.event.guild</a><span class="delimiter">/</span><a href="index.html">GuildSoundboardSoundDeleteEvent</a><span class="delimiter">/</span><span class="current">old</span></div>
   <div class="cover ">
-    <h1 class="cover"><span>custom</span><wbr><span><span>Context</span></span></h1>
+    <h1 class="cover"><span><span>old</span></span></h1>
   </div>
-  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="../../../common/dev.kord.common.annotation/-kord-preview/index.html"><span class="token annotation builtin">KordPreview</span></a></div></div><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">val </span><a href="custom-context.html">customContext</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-any/index.html">Any</a><span class="token operator">?</span><span class="source-link-wrapper"><span class="source-link" data-element-type="source-link">(<a href="https://github.com/kordlib/kord/blob/map(map(map(valueof(ProcessOutputValueSource))))/core/src/commonMain/kotlin/event/guild/Soundboard.kt#L69">source</a>)</span></span></div><p class="paragraph">A custom object that can be inserted when creating events. By default, this is just <code class="lang-kotlin">null</code>.</p><p class="paragraph">This can be used to associate a custom context with an event, e.g. like this:</p><div class="sample-container"><pre><code class="block lang-kotlin" theme="idea">class YourCustomContext(...)<br><br>val kord = Kord(token) {<br>    gatewayEventInterceptor = DefaultGatewayEventInterceptor(<br>        customContextCreator = { event, kord -&gt; YourCustomContext(...) }<br>    )<br>}<br><br>kord.on&lt;MessageCreateEvent&gt; {<br>    // receive the value previously set when creating the event<br>    val context = customContext as YourCustomContext<br>    // ...<br>}<br><br>kord.login()</code></pre><span class="copy-tooltip"><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div><span class="copy-icon"></span></span></div><p class="paragraph">Note that <a href="../../dev.kord.core.entity/-strategizable/with-strategy.html">withStrategy</a> for <a href="../../dev.kord.core.entity/-strategizable/index.html">strategizable</a> <a href="../../dev.kord.core.event/-event/index.html">Event</a>s will copy <a href="../../dev.kord.core.event/-event/custom-context.html">customContext</a> only by reference. This should be considered when inserting mutable objects into <a href="../../dev.kord.core.event/-event/custom-context.html">customContext</a>.</p></div></div>
+  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core/commonMain"><div class="symbol monospace"><span class="token keyword">val </span><a href="old.html">old</a><span class="token operator">: </span><a href="../../dev.kord.core.entity/-guild-soundboard-sound/index.html">GuildSoundboardSound</a><span class="token operator">?</span><span class="source-link-wrapper"><span class="source-link" data-element-type="source-link">(<a href="https://github.com/kordlib/kord/blob/map(map(map(valueof(ProcessOutputValueSource))))/core/src/commonMain/kotlin/event/guild/Soundboard.kt#L65">source</a>)</span></span></div></div></div>
 </div>
     <div class="footer">
         <div class="footer--container">
