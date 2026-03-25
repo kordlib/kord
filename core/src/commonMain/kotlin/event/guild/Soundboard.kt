@@ -61,13 +61,20 @@ public class GuildSoundboardSoundsUpdateEvent(
  * @property guildId the id of the guild the sound was on
  * @property old the old value of the sound (if cached)
  */
-public class GuildSoundboardSoundDeletEvent(
+public class GuildSoundboardSoundDeleteEvent(
     public val old: GuildSoundboardSound?,
     public val soundId: Snowflake,
     public val guildId: Snowflake,
     override val shard: Int, @KordPreview
     override val customContext: Any?, override val kord: Kord
 ) : Event
+
+@Deprecated(
+    level = DeprecationLevel.WARNING,
+    message = "GuildSoundboardSoundDeletEvent has a typo. Please use GuildSoundboardSoundDeleteEvent instead",
+    replaceWith = ReplaceWith("GuildSoundboardSoundDeleteEvent"),
+)
+public typealias GuildSoundboardSoundDeletEvent = GuildSoundboardSoundDeleteEvent
 
 /**
  * Event fired when a [VoiceChannelEffect] is sent.

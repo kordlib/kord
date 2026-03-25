@@ -408,7 +408,7 @@ public fun Intents.Builder.enableEvent(event: KClass<out Event>): Unit = when (e
         GuildSoundboardSoundCreateEvent::class,
         GuildSoundboardSoundUpdateEvent::class,
         GuildSoundboardSoundsUpdateEvent::class,
-        GuildSoundboardSoundDeletEvent::class,
+        GuildSoundboardSoundDeleteEvent::class,
         -> +GuildExpressions
 
 
