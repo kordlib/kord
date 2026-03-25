@@ -12110,8 +12110,8 @@ final class dev.kord.core.event.guild/StageInstanceCreateEvent : dev.kord.core.e
         final fun <get-kord>(): dev.kord.core/Kord // dev.kord.core.event.guild/StageInstanceCreateEvent.kord.<get-kord>|<get-kord>(){}[0]
     final val shard // dev.kord.core.event.guild/StageInstanceCreateEvent.shard|{}shard[0]
         final fun <get-shard>(): kotlin/Int // dev.kord.core.event.guild/StageInstanceCreateEvent.shard.<get-shard>|<get-shard>(){}[0]
-    final val stageInstace // dev.kord.core.event.guild/StageInstanceCreateEvent.stageInstace|{}stageInstace[0]
-        final fun <get-stageInstace>(): dev.kord.core.entity/StageInstance // dev.kord.core.event.guild/StageInstanceCreateEvent.stageInstace.<get-stageInstace>|<get-stageInstace>(){}[0]
+    final val stageInstance // dev.kord.core.event.guild/StageInstanceCreateEvent.stageInstance|{}stageInstance[0]
+        final fun <get-stageInstance>(): dev.kord.core.entity/StageInstance // dev.kord.core.event.guild/StageInstanceCreateEvent.stageInstance.<get-stageInstance>|<get-stageInstance>(){}[0]
 
     final fun toString(): kotlin/String // dev.kord.core.event.guild/StageInstanceCreateEvent.toString|toString(){}[0]
 }
@@ -12125,8 +12125,8 @@ final class dev.kord.core.event.guild/StageInstanceDeleteEvent : dev.kord.core.e
         final fun <get-kord>(): dev.kord.core/Kord // dev.kord.core.event.guild/StageInstanceDeleteEvent.kord.<get-kord>|<get-kord>(){}[0]
     final val shard // dev.kord.core.event.guild/StageInstanceDeleteEvent.shard|{}shard[0]
         final fun <get-shard>(): kotlin/Int // dev.kord.core.event.guild/StageInstanceDeleteEvent.shard.<get-shard>|<get-shard>(){}[0]
-    final val stageInstace // dev.kord.core.event.guild/StageInstanceDeleteEvent.stageInstace|{}stageInstace[0]
-        final fun <get-stageInstace>(): dev.kord.core.entity/StageInstance // dev.kord.core.event.guild/StageInstanceDeleteEvent.stageInstace.<get-stageInstace>|<get-stageInstace>(){}[0]
+    final val stageInstance // dev.kord.core.event.guild/StageInstanceDeleteEvent.stageInstance|{}stageInstance[0]
+        final fun <get-stageInstance>(): dev.kord.core.entity/StageInstance // dev.kord.core.event.guild/StageInstanceDeleteEvent.stageInstance.<get-stageInstance>|<get-stageInstance>(){}[0]
 
     final fun toString(): kotlin/String // dev.kord.core.event.guild/StageInstanceDeleteEvent.toString|toString(){}[0]
 }
@@ -12142,8 +12142,8 @@ final class dev.kord.core.event.guild/StageInstanceUpdateEvent : dev.kord.core.e
         final fun <get-old>(): dev.kord.core.entity/StageInstance? // dev.kord.core.event.guild/StageInstanceUpdateEvent.old.<get-old>|<get-old>(){}[0]
     final val shard // dev.kord.core.event.guild/StageInstanceUpdateEvent.shard|{}shard[0]
         final fun <get-shard>(): kotlin/Int // dev.kord.core.event.guild/StageInstanceUpdateEvent.shard.<get-shard>|<get-shard>(){}[0]
-    final val stageInstace // dev.kord.core.event.guild/StageInstanceUpdateEvent.stageInstace|{}stageInstace[0]
-        final fun <get-stageInstace>(): dev.kord.core.entity/StageInstance // dev.kord.core.event.guild/StageInstanceUpdateEvent.stageInstace.<get-stageInstace>|<get-stageInstace>(){}[0]
+    final val stageInstance // dev.kord.core.event.guild/StageInstanceUpdateEvent.stageInstance|{}stageInstance[0]
+        final fun <get-stageInstance>(): dev.kord.core.entity/StageInstance // dev.kord.core.event.guild/StageInstanceUpdateEvent.stageInstance.<get-stageInstance>|<get-stageInstance>(){}[0]
 
     final fun toString(): kotlin/String // dev.kord.core.event.guild/StageInstanceUpdateEvent.toString|toString(){}[0]
 }
