@@ -37,9 +37,9 @@ public class GuildService(requestHandler: RequestHandler) : RestService(requestH
 
     /**
      * @param withCounts whether to include the [DiscordGuild.approximateMemberCount]
-     * and [DiscordGuild.approximatePresenceCount] fields, `false` by default.
+     * and [DiscordGuild.approximatePresenceCount] fields, `true` by default.
      */
-    public suspend fun getGuild(guildId: Snowflake, withCounts: Boolean = false): DiscordGuild = call(Route.GuildGet) {
+    public suspend fun getGuild(guildId: Snowflake, withCounts: Boolean = true): DiscordGuild = call(Route.GuildGet) {
         keys[Route.GuildId] = guildId
         parameter("with_counts", withCounts.toString())
     }

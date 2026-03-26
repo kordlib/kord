@@ -71,7 +71,7 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
         get() = paginateForwards(batchSize = 200, idSelector = { it.id }) { after ->
             user.getCurrentUserGuilds(position = after, limit = 200)
         }.map {
-            val data = guild.getGuild(it.id).toData()
+            val data = guild.getGuild(it.id, withCounts = true).toData()
             Guild(data, kord)
         }
 
@@ -97,7 +97,7 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
     }
 
     override suspend fun getGuildOrNull(id: Snowflake): Guild? =
-        catchNotFound { Guild(guild.getGuild(id).toData(), kord) }
+        catchNotFound { Guild(guild.getGuild(id, withCounts = true).toData(), kord) }
 
     override suspend fun getGuildPreviewOrNull(guildId: Snowflake): GuildPreview? = catchNotFound {
         val discordPreview = guild.getGuildPreview(guildId)
@@ -250,7 +250,7 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
                 user.getCurrentUserGuilds(position = after, limit = batchSize)
             }
         }.map {
-            val data = guild.getGuild(it.id).toData()
+            val data = guild.getGuild(it.id, withCounts = true).toData()
             Guild(data, kord)
         }
 
