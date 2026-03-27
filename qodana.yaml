@@ -8,6 +8,6 @@ exclude:
     paths:
       - voice/src/main/java/com/iwebpp/crypto/TweetNaclFast.java
 
-projectJDK: "8"
+projectJDK: "17"
 
 linter: jetbrains/qodana-jvm

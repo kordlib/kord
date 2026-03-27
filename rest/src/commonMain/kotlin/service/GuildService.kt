@@ -1,7 +1,9 @@
 package dev.kord.rest.service
 
 import dev.kord.common.annotation.KordExperimental
+import dev.kord.common.annotation.DiscordAPIPreview
 import dev.kord.common.entity.*
+import dev.kord.rest.Sound
 import dev.kord.rest.builder.ban.BanCreateBuilder
 import dev.kord.rest.builder.channel.*
 import dev.kord.rest.builder.guild.*
@@ -18,7 +20,7 @@ import dev.kord.rest.request.RequestHandler
 import dev.kord.rest.request.auditLogReason
 import dev.kord.rest.route.Position
 import dev.kord.rest.route.Route
-import kotlinx.datetime.Instant
+import kotlin.time.Instant
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -35,9 +37,9 @@ public class GuildService(requestHandler: RequestHandler) : RestService(requestH
 
     /**
      * @param withCounts whether to include the [DiscordGuild.approximateMemberCount]
-     * and [DiscordGuild.approximatePresenceCount] fields, `false` by default.
+     * and [DiscordGuild.approximatePresenceCount] fields, `true` by default.
      */
-    public suspend fun getGuild(guildId: Snowflake, withCounts: Boolean = false): DiscordGuild = call(Route.GuildGet) {
+    public suspend fun getGuild(guildId: Snowflake, withCounts: Boolean = true): DiscordGuild = call(Route.GuildGet) {
         keys[Route.GuildId] = guildId
         parameter("with_counts", withCounts.toString())
     }
@@ -121,6 +123,12 @@ public class GuildService(requestHandler: RequestHandler) : RestService(requestH
 
     public suspend fun getGuildMember(guildId: Snowflake, userId: Snowflake): DiscordGuildMember =
         call(Route.GuildMemberGet) {
+            keys[Route.GuildId] = guildId
+            keys[Route.UserId] = userId
+        }
+
+    public suspend fun getGuildMemberVoiceState(guildId: Snowflake, userId: Snowflake): DiscordVoiceState =
+        call(Route.GuildVoiceStatesGet) {
             keys[Route.GuildId] = guildId
             keys[Route.UserId] = userId
         }
@@ -415,6 +423,143 @@ public class GuildService(requestHandler: RequestHandler) : RestService(requestH
         keys[Route.GuildId] = guildId
     }
 
+    @DiscordAPIPreview
+    public suspend fun getGuildMemberVerification(
+        guildId: Snowflake, inviteCode: String? = null, withGuild: Boolean? = false
+    ): DiscordMemberVerification = call(Route.GuildMemberVerificationGet) {
+        keys[Route.GuildId] = guildId
+        inviteCode?.let { parameter("invite_code", it) }
+        withGuild?.let { parameter("with_guild", it) }
+    }
+
+    @DiscordAPIPreview
+    public suspend fun modifyGuildMemberVerification(
+        guildId: Snowflake,
+        memberVerification: GuildMemberVerificationModifyRequest,
+        reason: String?
+    ): DiscordMemberVerification = call(Route.GuildMemberVerificationPatch) {
+        keys[Route.GuildId] = guildId
+        body(GuildMemberVerificationModifyRequest.serializer(), memberVerification)
+        auditLogReason(reason)
+    }
+
+    @DiscordAPIPreview
+    public suspend inline fun modifyGuildMemberVerification(
+        guildId: Snowflake,
+        builder: MemberVerificationModifyBuilder.() -> Unit
+    ): DiscordMemberVerification {
+        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+        val modifyBuilder = MemberVerificationModifyBuilder().apply(builder)
+        return modifyGuildMemberVerification(guildId, modifyBuilder.toRequest(), modifyBuilder.reason)
+    }
+
+    @DiscordAPIPreview
+    public suspend fun getGuildJoinRequests(
+        guildId: Snowflake,
+        status: String,
+        limit: Int? = null,
+        position: Position.BeforeOrAfter? = null
+    ): GuildJoinRequestsResponse = call(Route.GuildJoinRequestsGet) {
+        keys[Route.GuildId] = guildId
+        parameter("status", status)
+        limit?.let { parameter("limit", it) }
+        position?.let { parameter(it.key, it.value) }
+    }
+
+    @DiscordAPIPreview
+    public suspend fun getGuildJoinRequestsBefore(
+        guildId: Snowflake,
+        status: String,
+        limit: Int? = null,
+        before: Snowflake
+    ): GuildJoinRequestsResponse = getGuildJoinRequests(
+        guildId, status, limit, Position.Before(before)
+    )
+
+    @DiscordAPIPreview
+    public suspend fun getGuildJoinRequestsAfter(
+        guildId: Snowflake,
+        status: String,
+        limit: Int? = null,
+        after: Snowflake
+    ): GuildJoinRequestsResponse = getGuildJoinRequests(
+        guildId, status, limit, Position.After(after)
+    )
+
+    @DiscordAPIPreview
+    public suspend fun getGuildJoinRequest(joinRequestId: Snowflake): DiscordGuildJoinRequest =
+        call(Route.GuildJoinRequestGet) {
+            keys[Route.GuildJoinRequestId] = joinRequestId
+        }
+
+    @DiscordAPIPreview
+    public suspend fun getGuildJoinRequestCooldown(guildId: Snowflake): GuildJoinRequestCooldownResponse =
+        call(Route.GuildJoinRequestCooldownGet) {
+            keys[Route.GuildId] = guildId
+        }
+
+    @DiscordAPIPreview
+    public suspend fun createGuildJoinRequest(
+        guildId: Snowflake,
+        request: GuildJoinRequestCreateRequest
+    ): DiscordGuildJoinRequest = call(Route.GuildJoinRequestCreate) {
+        keys[Route.GuildId] = guildId
+        body(GuildJoinRequestCreateRequest.serializer(), request)
+    }
+
+    @DiscordAPIPreview
+    public suspend fun resetGuildJoinRequest(guildId: Snowflake): DiscordGuildJoinRequest =
+        call(Route.GuildJoinRequestReset) {
+            keys[Route.GuildId] = guildId
+        }
+
+    @DiscordAPIPreview
+    public suspend fun ackGuildJoinRequest(guildId: Snowflake, joinRequestId: Snowflake): Unit =
+        call(Route.GuildJoinRequestAck) {
+            keys[Route.GuildId] = guildId
+            keys[Route.GuildJoinRequestId] = joinRequestId
+        }
+
+    @DiscordAPIPreview
+    public suspend fun deleteGuildJoinRequest(guildId: Snowflake): Unit = call(Route.GuildJoinRequestDelete) {
+        keys[Route.GuildId] = guildId
+    }
+
+    @DiscordAPIPreview
+    public suspend fun createGuildJoinRequestInterview(joinRequestId: Snowflake): DiscordChannel =
+        call(Route.GuildJoinRequestInterviewCreate) {
+            keys[Route.GuildJoinRequestId] = joinRequestId
+        }
+
+    @DiscordAPIPreview
+    public suspend fun actionGuildJoinRequest(
+        guildId: Snowflake,
+        joinRequestId: Snowflake,
+        action: GuildJoinRequestActionRequest
+    ): DiscordGuildJoinRequest = call(Route.GuildJoinRequestAction) {
+        keys[Route.GuildId] = guildId
+        keys[Route.GuildJoinRequestId] = joinRequestId
+        body(GuildJoinRequestActionRequest.serializer(), action)
+    }
+
+    @DiscordAPIPreview
+    public suspend fun actionGuildJoinRequestByUser(
+        guildId: Snowflake,
+        userId: Snowflake,
+        action: GuildJoinRequestActionRequest
+    ): DiscordGuildJoinRequest = call(Route.GuildJoinRequestActionByUser) {
+        keys[Route.GuildId] = guildId
+        keys[Route.UserId] = userId
+        body(GuildJoinRequestActionRequest.serializer(), action)
+    }
+
+    @DiscordAPIPreview
+    public suspend fun bulkActionGuildJoinRequest(guildId: Snowflake, action: GuildJoinRequestActionRequest): Unit =
+        call(Route.GuildJoinRequestBulkAction) {
+            keys[Route.GuildId] = guildId
+            body(GuildJoinRequestActionRequest.serializer(), action)
+        }
+
     public suspend fun modifyCurrentUserNickname(
         guildId: Snowflake,
         nick: CurrentUserNicknameModifyRequest,
@@ -543,6 +688,80 @@ public class GuildService(requestHandler: RequestHandler) : RestService(requestH
         withMember,
         limit,
     )
+
+    @DiscordAPIPreview
+    public suspend fun getGuildProfile(guildId: Snowflake): DiscordGuildProfile = call(Route.GuildProfileGet) {
+        keys[Route.GuildId] = guildId
+    }
+
+    @DiscordAPIPreview
+    public suspend fun modifyGuildProfile(guildId: Snowflake, request: ModifyGuildProfileRequest): DiscordGuildProfile =
+        call(Route.GuildProfilePatch) {
+            keys[Route.GuildId] = guildId
+            body(ModifyGuildProfileRequest.serializer(), request)
+        }
+
+    /**
+     * Returns the [sounds][GuildSoundboardSoundsResponse] of [guild][guildId].
+     */
+    public suspend fun listGuildSoundboardSounds(guildId: Snowflake): GuildSoundboardSoundsResponse =
+        call(Route.GetGuildSoundboardSounds) {
+            keys[Route.GuildId] = guildId
+        }
+
+    /**
+     * Returns the [sound][soundId] on [guild][guildId].
+     *
+     * @see DiscordSoundboardSound
+     */
+    public suspend fun getGuildSoundboardSound(guildId: Snowflake, soundId: Snowflake): DiscordSoundboardSound =
+        call(Route.GetGuildsSoundboardSound) {
+            keys[Route.GuildId] = guildId
+            keys[Route.SoundId] = soundId
+        }
+
+    /**
+     * Creates a new [sound][request] on [guild][guildId].
+     *
+     * @param reason the audit log reason for this change
+     */
+    public suspend fun createGuildSoundboardSound(guildId: Snowflake, request: CreateSoundboardSoundRequest, reason: String? = null): DiscordSoundboardSound =
+        call(Route.GetGuildsSoundboardSound) {
+            keys[Route.GuildId] = guildId
+            auditLogReason(reason)
+            body(CreateSoundboardSoundRequest.serializer(), request)
+        }
+
+    /**
+     * Modifies [sound][soundId] on [guild][guildId].
+     *
+     * @param request the data to change
+     * @param reason the audit log reason for this change
+     */
+    public suspend fun modifyGuildSoundboardSound(guildId: Snowflake, soundId: Snowflake, request: UpdateSoundboardSoundRequest, reason: String? = null): DiscordSoundboardSound =
+        call(Route.GetGuildsSoundboardSound) {
+            keys[Route.GuildId] = guildId
+            keys[Route.SoundId] = soundId
+            auditLogReason(reason)
+
+            body(UpdateSoundboardSoundRequest.serializer(), request)
+        }
+
+    /**
+     * Deletes [sound][soundId] on [guild][guildId].
+     *
+     * @param reason the audit log reason for this change
+     */
+    public suspend fun deleteGuildSoundboardSound(
+        guildId: Snowflake,
+        soundId: Snowflake,
+        reason: String? = null
+    ): Unit =
+        call(Route.DeleteGuildsSoundboardSound) {
+            keys[Route.GuildId] = guildId
+            keys[Route.SoundId] = soundId
+            auditLogReason(reason)
+        }
 }
 
 public suspend inline fun GuildService.modifyGuildWelcomeScreen(
@@ -678,4 +897,45 @@ public suspend inline fun GuildService.modifyScheduledEvent(
     val appliedBuilder = ScheduledEventModifyBuilder().apply(builder)
 
     return modifyScheduledEvent(guildId, eventId, appliedBuilder.toRequest(), appliedBuilder.reason)
+}
+
+/**
+ * Creates a new sound on [guild][guildId].
+ *
+ * @param name the name of the sound
+ * @param sound the [audio data][Sound] of the sound
+ * @param builder additional data for the sound
+ */
+public suspend inline fun GuildService.createGuildSoundboardSound(
+    guildId: Snowflake,
+    name: String,
+    sound: Sound,
+    builder: SoundboardSoundCreateBuilder.() -> Unit = {}
+): DiscordSoundboardSound {
+    contract {
+        callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+    }
+
+    val appliedBuilder = SoundboardSoundCreateBuilder(name, sound).apply(builder)
+
+    return createGuildSoundboardSound(guildId, appliedBuilder.toRequest(), appliedBuilder.reason)
+}
+
+/**
+ * Updates [sound][soundId] on [guild][guildId].
+ *
+ * @param builder the data to update
+ */
+public suspend inline fun GuildService.modifyGuildSoundboardSound(
+    guildId: Snowflake,
+    soundId: Snowflake,
+    builder: SoundboardSoundModifyBuilder.() -> Unit = {}
+): DiscordSoundboardSound {
+    contract {
+        callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+    }
+
+    val appliedBuilder = SoundboardSoundModifyBuilder().apply(builder)
+
+    return modifyGuildSoundboardSound(guildId, soundId, appliedBuilder.toRequest(), appliedBuilder.reason)
 }

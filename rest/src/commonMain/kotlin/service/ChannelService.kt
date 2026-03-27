@@ -1,6 +1,7 @@
 package dev.kord.rest.service
 
 import dev.kord.common.entity.*
+import dev.kord.common.entity.optional.missingIfNull
 import dev.kord.rest.builder.channel.*
 import dev.kord.rest.builder.channel.thread.StartForumThreadBuilder
 import dev.kord.rest.builder.channel.thread.StartThreadBuilder
@@ -413,6 +414,21 @@ public class ChannelService(requestHandler: RequestHandler) : RestService(reques
         request: ListThreadsBySnowflakeRequest,
     ): ListThreadsResponse = call(Route.JoinedPrivateArchivedThreadsGet) {
         listThreadsConfig(channelId, request.before, request.limit)
+    }
+
+    /**
+     * Plays the specified [sound][soundId] in [channel][channelId].
+     *
+     * @param sourceGuildId the id the sound is from
+     */
+    public suspend fun sendSoundboardSound(
+        soundId: Snowflake,
+        channelId: Snowflake,
+        sourceGuildId: Snowflake? = null
+    ): Unit = call(Route.SendSoundboardSound) {
+        keys[Route.ChannelId] = channelId
+
+        body(SendSoundboardSoundRequest.serializer(), SendSoundboardSoundRequest(soundId, sourceGuildId.missingIfNull))
     }
 }
 

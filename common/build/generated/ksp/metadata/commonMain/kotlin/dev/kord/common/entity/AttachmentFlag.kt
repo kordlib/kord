@@ -1,6 +1,5 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
-@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
-                "SpellCheckingInspection", "GrazieInspection"))
+@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
@@ -18,8 +17,9 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 /**
- * See [AttachmentFlag]s in the
- * [Discord Developer Documentation](https://discord.com/developers/docs/resources/channel#attachment-object-attachment-flags).
+ *
+ *
+ * See [AttachmentFlag]s in the [Discord Developer Documentation](https://discord.com/developers/docs/resources/channel#attachment-object-attachment-flags).
  */
 public sealed class AttachmentFlag(
     /**
@@ -38,27 +38,20 @@ public sealed class AttachmentFlag(
         get() = 1 shl shift
 
     /**
-     * Returns an instance of [AttachmentFlags] that has all bits set that are set in `this` and
-     * [flag].
+     * Returns an instance of [AttachmentFlags] that has all bits set that are set in `this` and [flag].
      */
-    public operator fun plus(flag: AttachmentFlag): AttachmentFlags =
-            AttachmentFlags(this.value or flag.value)
+    public operator fun plus(flag: AttachmentFlag): AttachmentFlags = AttachmentFlags(this.value or flag.value)
 
     /**
-     * Returns an instance of [AttachmentFlags] that has all bits set that are set in `this` and
-     * [flags].
+     * Returns an instance of [AttachmentFlags] that has all bits set that are set in `this` and [flags].
      */
-    public operator fun plus(flags: AttachmentFlags): AttachmentFlags =
-            AttachmentFlags(this.value or flags.value)
+    public operator fun plus(flags: AttachmentFlags): AttachmentFlags = AttachmentFlags(this.value or flags.value)
 
-    final override fun equals(other: Any?): Boolean = this === other ||
-            (other is AttachmentFlag && this.shift == other.shift)
+    final override fun equals(other: Any?): Boolean = this === other || (other is AttachmentFlag && this.shift == other.shift)
 
     final override fun hashCode(): Int = shift.hashCode()
 
-    final override fun toString(): String =
-            if (this is Unknown) "AttachmentFlag.Unknown(shift=$shift)"
-            else "AttachmentFlag.${this::class.simpleName}"
+    final override fun toString(): String = if (this is Unknown) "AttachmentFlag.Unknown(shift=$shift)" else "AttachmentFlag.${this::class.simpleName}"
 
     /**
      * An unknown [AttachmentFlag].
@@ -85,8 +78,7 @@ public sealed class AttachmentFlag(
         }
 
         /**
-         * Returns an instance of [AttachmentFlag] with [AttachmentFlag.shift] equal to the
-         * specified [shift].
+         * Returns an instance of [AttachmentFlag] with [AttachmentFlag.shift] equal to the specified [shift].
          *
          * @throws IllegalArgumentException if [shift] is not in 0..30.
          */
@@ -121,8 +113,7 @@ public sealed class AttachmentFlag(
  *
  * ## Modifying an existing instance of [AttachmentFlags]
  *
- * You can create a modified copy of an existing instance of [AttachmentFlags] using the [copy]
- * method:
+ * You can create a modified copy of an existing instance of [AttachmentFlags] using the [copy] method:
  * ```kotlin
  * attachmentFlags.copy {
  *     +AttachmentFlag.IsRemix
@@ -140,8 +131,7 @@ public sealed class AttachmentFlag(
  *
  * ## Checking for [AttachmentFlag]s
  *
- * You can use the [contains] operator to check whether an instance of [AttachmentFlags] contains
- * specific [AttachmentFlag]s:
+ * You can use the [contains] operator to check whether an instance of [AttachmentFlags] contains specific [AttachmentFlag]s:
  * ```kotlin
  * val hasAttachmentFlag = AttachmentFlag.IsRemix in attachmentFlags
  * val hasAttachmentFlags = AttachmentFlags(AttachmentFlag.IsRemix, AttachmentFlag.fromShift(22)) in attachmentFlags
@@ -149,11 +139,9 @@ public sealed class AttachmentFlag(
  *
  * ## Unknown [AttachmentFlag]s
  *
- * Whenever [AttachmentFlag]s haven't been added to Kord yet, they will be deserialized as instances
- * of [AttachmentFlag.Unknown].
+ * Whenever [AttachmentFlag]s haven't been added to Kord yet, they will be deserialized as instances of [AttachmentFlag.Unknown].
  *
- * You can also use [AttachmentFlag.fromShift] to check for [unknown][AttachmentFlag.Unknown]
- * [AttachmentFlag]s.
+ * You can also use [AttachmentFlag.fromShift] to check for [unknown][AttachmentFlag.Unknown] [AttachmentFlag]s.
  * ```kotlin
  * val hasUnknownAttachmentFlag = AttachmentFlag.fromShift(23) in attachmentFlags
  * ```
@@ -185,42 +173,32 @@ public class AttachmentFlags internal constructor(
     /**
      * Checks if this instance of [AttachmentFlags] has all bits set that are set in [flag].
      */
-    public operator fun contains(flag: AttachmentFlag): Boolean =
-            this.value and flag.value == flag.value
+    public operator fun contains(flag: AttachmentFlag): Boolean = this.value and flag.value == flag.value
 
     /**
      * Checks if this instance of [AttachmentFlags] has all bits set that are set in [flags].
      */
-    public operator fun contains(flags: AttachmentFlags): Boolean =
-            this.value and flags.value == flags.value
+    public operator fun contains(flags: AttachmentFlags): Boolean = this.value and flags.value == flags.value
 
     /**
-     * Returns an instance of [AttachmentFlags] that has all bits set that are set in `this` and
-     * [flag].
+     * Returns an instance of [AttachmentFlags] that has all bits set that are set in `this` and [flag].
      */
-    public operator fun plus(flag: AttachmentFlag): AttachmentFlags =
-            AttachmentFlags(this.value or flag.value)
+    public operator fun plus(flag: AttachmentFlag): AttachmentFlags = AttachmentFlags(this.value or flag.value)
 
     /**
-     * Returns an instance of [AttachmentFlags] that has all bits set that are set in `this` and
-     * [flags].
+     * Returns an instance of [AttachmentFlags] that has all bits set that are set in `this` and [flags].
      */
-    public operator fun plus(flags: AttachmentFlags): AttachmentFlags =
-            AttachmentFlags(this.value or flags.value)
+    public operator fun plus(flags: AttachmentFlags): AttachmentFlags = AttachmentFlags(this.value or flags.value)
 
     /**
-     * Returns an instance of [AttachmentFlags] that has all bits set that are set in `this` except
-     * the bits that are set in [flag].
+     * Returns an instance of [AttachmentFlags] that has all bits set that are set in `this` except the bits that are set in [flag].
      */
-    public operator fun minus(flag: AttachmentFlag): AttachmentFlags =
-            AttachmentFlags(this.value and flag.value.inv())
+    public operator fun minus(flag: AttachmentFlag): AttachmentFlags = AttachmentFlags(this.value and flag.value.inv())
 
     /**
-     * Returns an instance of [AttachmentFlags] that has all bits set that are set in `this` except
-     * the bits that are set in [flags].
+     * Returns an instance of [AttachmentFlags] that has all bits set that are set in `this` except the bits that are set in [flags].
      */
-    public operator fun minus(flags: AttachmentFlags): AttachmentFlags =
-            AttachmentFlags(this.value and flags.value.inv())
+    public operator fun minus(flags: AttachmentFlags): AttachmentFlags = AttachmentFlags(this.value and flags.value.inv())
 
     /**
      * Returns a copy of this instance of [AttachmentFlags] modified with [builder].
@@ -230,8 +208,7 @@ public class AttachmentFlags internal constructor(
         return Builder(value).apply(builder).build()
     }
 
-    override fun equals(other: Any?): Boolean = this === other ||
-            (other is AttachmentFlags && this.value == other.value)
+    override fun equals(other: Any?): Boolean = this === other || (other is AttachmentFlags && this.value == other.value)
 
     override fun hashCode(): Int = value.hashCode()
 
@@ -269,16 +246,14 @@ public class AttachmentFlags internal constructor(
         }
 
         /**
-         * Returns an instance of [AttachmentFlags] that has all bits set that are currently set in
-         * this [Builder].
+         * Returns an instance of [AttachmentFlags] that has all bits set that are currently set in this [Builder].
          */
         public fun build(): AttachmentFlags = AttachmentFlags(value)
     }
 
     internal object Serializer : KSerializer<AttachmentFlags> {
         override val descriptor: SerialDescriptor =
-                PrimitiveSerialDescriptor("dev.kord.common.entity.AttachmentFlags",
-                PrimitiveKind.INT)
+                PrimitiveSerialDescriptor("dev.kord.common.entity.AttachmentFlags", PrimitiveKind.INT)
 
         private val `delegate`: KSerializer<Int> = Int.serializer()
 
@@ -286,47 +261,41 @@ public class AttachmentFlags internal constructor(
             encoder.encodeSerializableValue(delegate, value.value)
         }
 
-        override fun deserialize(decoder: Decoder): AttachmentFlags =
-                AttachmentFlags(decoder.decodeSerializableValue(delegate))
+        override fun deserialize(decoder: Decoder): AttachmentFlags = AttachmentFlags(decoder.decodeSerializableValue(delegate))
     }
 }
 
 /**
  * Returns an instance of [AttachmentFlags] built with [AttachmentFlags.Builder].
  */
-public inline fun AttachmentFlags(builder: AttachmentFlags.Builder.() -> Unit = {}):
-        AttachmentFlags {
+public inline fun AttachmentFlags(builder: AttachmentFlags.Builder.() -> Unit = {}): AttachmentFlags {
     contract { callsInPlace(builder, EXACTLY_ONCE) }
     return AttachmentFlags.Builder().apply(builder).build()
 }
 
 /**
- * Returns an instance of [AttachmentFlags] that has all bits set that are set in any element of
- * [flags].
+ * Returns an instance of [AttachmentFlags] that has all bits set that are set in any element of [flags].
  */
 public fun AttachmentFlags(vararg flags: AttachmentFlag): AttachmentFlags = AttachmentFlags {
     flags.forEach { +it }
 }
 
 /**
- * Returns an instance of [AttachmentFlags] that has all bits set that are set in any element of
- * [flags].
+ * Returns an instance of [AttachmentFlags] that has all bits set that are set in any element of [flags].
  */
 public fun AttachmentFlags(vararg flags: AttachmentFlags): AttachmentFlags = AttachmentFlags {
     flags.forEach { +it }
 }
 
 /**
- * Returns an instance of [AttachmentFlags] that has all bits set that are set in any element of
- * [flags].
+ * Returns an instance of [AttachmentFlags] that has all bits set that are set in any element of [flags].
  */
 public fun AttachmentFlags(flags: Iterable<AttachmentFlag>): AttachmentFlags = AttachmentFlags {
     flags.forEach { +it }
 }
 
 /**
- * Returns an instance of [AttachmentFlags] that has all bits set that are set in any element of
- * [flags].
+ * Returns an instance of [AttachmentFlags] that has all bits set that are set in any element of [flags].
  */
 @JvmName("AttachmentFlags0")
 public fun AttachmentFlags(flags: Iterable<AttachmentFlags>): AttachmentFlags = AttachmentFlags {

@@ -4,13 +4,14 @@ import dev.kord.voice.io.ByteArrayView
 import dev.kord.voice.io.MutableByteArrayCursor
 import dev.kord.voice.io.mutableCursor
 import dev.kord.voice.io.view
+import io.ktor.utils.io.core.*
 import kotlinx.io.Source
 import kotlinx.io.readByteArray
 import kotlinx.io.readUInt
 import kotlinx.io.readUShort
 import kotlin.experimental.and
 
-internal const val RTP_HEADER_LENGTH = 12
+internal const val RTP_BASE_HEADER_LENGTH = 12
 
 /**
  * Originally from [this GitHub library](https://github.com/vidtec/rtp-packet/blob/0b54fdeab5666089215b0074c64a6735b8937f8d/src/main/java/org/vidtec/rfc3550/rtp/RTPPacket.java).
@@ -36,72 +37,96 @@ public data class RTPPacket(
     val csrcIdentifiers: UIntArray,
     val hasMarker: Boolean,
     val hasExtension: Boolean,
+    val extensionLengthWords: UShort,
     val payload: ByteArrayView,
+    val source: ByteArray?
 ) {
     public companion object {
         internal const val VERSION = 2
 
-        public fun fromPacket(packet: Source): RTPPacket? = with(packet) base@{
-            if (!request(byteCount = 14)) return@base null
+        public fun fromPacket(packet: Source): RTPPacket? {
+            val headerSource = packet.peek()
 
-            /*
-             * first byte | bit table
-             * 0 = version
-             * 1 = padding bit
-             * 2 = extension bit
-             * 3-7 = csrc count
-             */
-            val hasPadding: Boolean
-            val hasExtension: Boolean
-            val csrcCount: Byte
-            with(readByte()) {
-                // invalid rtp version
-                if ((toInt() and 0xC0) != VERSION shl 6) return@base null
+            return with(headerSource) base@{
+                if (!request(byteCount = 14)) return@base null
 
-                hasPadding = (toInt() and 0x20) == 0x20
-                hasExtension = (toInt() and 0x10) == 0x10
-                csrcCount = this and 0x0F
+                /*
+                * first byte | bit table
+                * 0 = version
+                * 1 = padding bit
+                * 2 = extension bit
+                * 3-7 = csrc count
+                */
+                val hasPadding: Boolean
+                val hasExtension: Boolean
+                val csrcCount: Byte
+                with(readByte()) {
+                    // invalid rtp version
+                    if ((toInt() and 0xC0) != VERSION shl 6) return@base null
+
+                    hasPadding = (toInt() and 0x20) == 0x20
+                    hasExtension = (toInt() and 0x10) == 0x10
+                    csrcCount = this and 0x0F
+                }
+
+                /*
+                * second byte | bit table
+                * 0 = marker
+                * 1-7 = payload type
+                */
+                val marker: Boolean
+                val payloadType: Byte
+                with(readByte()) {
+                    marker = (this and 0x80.toByte()) == 0x80.toByte()
+                    payloadType = this and 0x7F
+                }
+
+                val sequence = readUShort()
+                val timestamp = readUInt()
+                val ssrc = readUInt()
+
+                // each csrc takes up 4 bytes, plus more data is required
+                if (!request(byteCount = csrcCount * 4L + 2)) return@base null
+                val csrcIdentifiers = UIntArray(csrcCount.toInt()) { readUInt() }
+
+                // if extension bit set, RTP header extension is present:
+                // 16-bit profile id, 16-bit length (in 32-bit words), then extension data is part of the payload, often encrypted.
+                var extensionLengthWords: UShort = 0u
+                if (hasExtension) {
+                    // need 4 bytes for extension header
+                    if (!request(byteCount = 4)) return@base null
+
+                    skip(2) // extension profile
+                    extensionLengthWords = readUShort()
+                }
+
+                val source = packet.readByteArray()
+                val payload = source.view(source.size - remaining.toInt(), source.size)!!
+
+                val paddingBytes = if (hasPadding) {
+                    payload[payload.viewSize - 1]
+                } else 0
+
+                payload.resize(end = payload.dataStart + payload.viewSize - paddingBytes)
+
+                RTPPacket(
+                    paddingBytes.toUByte(),
+                    payloadType,
+                    sequence,
+                    timestamp,
+                    ssrc,
+                    csrcIdentifiers,
+                    marker,
+                    hasExtension,
+                    extensionLengthWords,
+                    payload,
+                    source
+                )
             }
-
-            /*
-             * second byte | bit table
-             * 0 = marker
-             * 1-7 = payload type
-             */
-            val marker: Boolean
-            val payloadType: Byte
-            with(readByte()) {
-                marker = (this and 0x80.toByte()) == 0x80.toByte()
-                payloadType = this and 0x7F
-            }
-
-            val sequence = readUShort()
-            val timestamp = readUInt()
-            val ssrc = readUInt()
-
-            // each csrc takes up 4 bytes, plus more data is required
-            if (!request(byteCount = csrcCount * 4L + 2)) return@base null
-            val csrcIdentifiers = UIntArray(csrcCount.toInt()) { readUInt() }
-
-            val payload = readByteArray().view()
-
-            val paddingBytes = if (hasPadding) { payload[payload.viewSize - 1] } else 0
-
-            payload.resize(end = payload.dataStart + payload.viewSize - paddingBytes)
-
-            RTPPacket(
-                paddingBytes.toUByte(),
-                payloadType,
-                sequence,
-                timestamp,
-                ssrc,
-                csrcIdentifiers,
-                marker,
-                hasExtension,
-                payload
-            )
         }
     }
+
+    public val unencryptedLength: Int = RTP_BASE_HEADER_LENGTH + (csrcIdentifiers.size * 4) + (if (hasExtension) 4 else 0)
 
     public fun clone(): RTPPacket {
         return RTPPacket(
@@ -113,7 +138,9 @@ public data class RTPPacket(
             csrcIdentifiers.copyOf(),
             hasMarker,
             hasExtension,
-            payload.toByteArray().view()
+            extensionLengthWords,
+            payload.toByteArray().view(),
+            source
         )
     }
 
@@ -124,7 +151,7 @@ public data class RTPPacket(
     }
 
     public fun writeHeader(buffer: MutableByteArrayCursor): Unit = with(buffer) {
-        resize(cursor + RTP_HEADER_LENGTH)
+        resize(cursor + RTP_BASE_HEADER_LENGTH)
 
         val hasPadding = if (paddingBytes > 0u) 0x20 else 0x00
         val hasExtension = if (hasExtension) 0x10 else 0x0
@@ -136,13 +163,13 @@ public data class RTPPacket(
     }
 
     public fun asByteArray(): ByteArray {
-        val buffer = ByteArray(RTP_HEADER_LENGTH + payload.viewSize + paddingBytes.toInt())
+        val buffer = ByteArray(RTP_BASE_HEADER_LENGTH + payload.viewSize + paddingBytes.toInt())
         asByteArrayView(buffer.mutableCursor())
         return buffer
     }
 
     public fun asByteArrayView(buffer: MutableByteArrayCursor): ByteArrayView = with(buffer) {
-        resize(cursor + (RTP_HEADER_LENGTH + payload.viewSize + paddingBytes.toInt()))
+        resize(cursor + (RTP_BASE_HEADER_LENGTH + payload.viewSize + paddingBytes.toInt()))
 
         val initial = cursor
 
@@ -181,7 +208,9 @@ public data class RTPPacket(
             csrcIdentifiers,
             marker,
             hasExtension,
-            payload.view()
+            0u,
+            payload.view(),
+            null
         )
     }
 }

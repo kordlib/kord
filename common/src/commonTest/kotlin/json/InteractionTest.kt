@@ -62,6 +62,8 @@ class InteractionTest {
             arg.value shouldBe 1L
             appPermissions shouldBe perms
             entitlements shouldBe testEntitlements
+            context shouldBe InteractionContextType.Guild
+            attachmentSizeLimit shouldBe 1
         }
     }
 
@@ -89,6 +91,7 @@ class InteractionTest {
             arg.value shouldBe 1L
             appPermissions shouldBe perms
             entitlements shouldBe testEntitlements
+            attachmentSizeLimit shouldBe 1
         }
     }
 
@@ -115,6 +118,8 @@ class InteractionTest {
             arg.value shouldBe 1L
             appPermissions shouldBe perms
             entitlements shouldBe testEntitlements
+            context shouldBe InteractionContextType.BotDM
+            attachmentSizeLimit shouldBe 1
         }
     }
 
@@ -156,6 +161,8 @@ class InteractionTest {
             id shouldBe "847587388497854464"
             appPermissions shouldBe perms
             entitlements shouldBe testEntitlements
+            context shouldBe InteractionContextType.PrivateChannel
+            attachmentSizeLimit shouldBe 1
         }
     }
 

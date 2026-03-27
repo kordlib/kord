@@ -1,6 +1,5 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
-@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
-                "SpellCheckingInspection", "GrazieInspection"))
+@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
@@ -14,8 +13,9 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 /**
- * See [EntitlementOwnerType]s in the
- * [Discord Developer Documentation](https://discord.com/developers/docs/resources/entitlement#create-test-entitlement-json-params).
+ *
+ *
+ * See [EntitlementOwnerType]s in the [Discord Developer Documentation](https://discord.com/developers/docs/resources/entitlement#create-test-entitlement-json-params).
  */
 @Serializable(with = EntitlementOwnerType.Serializer::class)
 public sealed class EntitlementOwnerType(
@@ -24,14 +24,11 @@ public sealed class EntitlementOwnerType(
      */
     public val `value`: Int,
 ) {
-    final override fun equals(other: Any?): Boolean = this === other ||
-            (other is EntitlementOwnerType && this.value == other.value)
+    final override fun equals(other: Any?): Boolean = this === other || (other is EntitlementOwnerType && this.value == other.value)
 
     final override fun hashCode(): Int = value.hashCode()
 
-    final override fun toString(): String =
-            if (this is Unknown) "EntitlementOwnerType.Unknown(value=$value)"
-            else "EntitlementOwnerType.${this::class.simpleName}"
+    final override fun toString(): String = if (this is Unknown) "EntitlementOwnerType.Unknown(value=$value)" else "EntitlementOwnerType.${this::class.simpleName}"
 
     /**
      * An unknown [EntitlementOwnerType].
@@ -54,8 +51,7 @@ public sealed class EntitlementOwnerType(
 
     internal object Serializer : KSerializer<EntitlementOwnerType> {
         override val descriptor: SerialDescriptor =
-                PrimitiveSerialDescriptor("dev.kord.common.entity.EntitlementOwnerType",
-                PrimitiveKind.INT)
+                PrimitiveSerialDescriptor("dev.kord.common.entity.EntitlementOwnerType", PrimitiveKind.INT)
 
         override fun serialize(encoder: Encoder, `value`: EntitlementOwnerType) {
             encoder.encodeInt(value.value)
@@ -76,8 +72,7 @@ public sealed class EntitlementOwnerType(
         }
 
         /**
-         * Returns an instance of [EntitlementOwnerType] with [EntitlementOwnerType.value] equal to
-         * the specified [value].
+         * Returns an instance of [EntitlementOwnerType] with [EntitlementOwnerType.value] equal to the specified [value].
          */
         public fun from(`value`: Int): EntitlementOwnerType = when (value) {
             1 -> Guild

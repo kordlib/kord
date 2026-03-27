@@ -1,6 +1,9 @@
 package dev.kord.rest.builder.interaction
 
 import dev.kord.common.Locale
+import dev.kord.common.entity.ApplicationIntegrationType
+import dev.kord.common.entity.PrimaryEntryPointCommandHandlerType
+import dev.kord.common.entity.InteractionContextType
 import dev.kord.common.entity.Permissions
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
@@ -22,10 +25,18 @@ internal class ApplicationCommandModifyStateHolder {
     var options: Optional<MutableList<OptionsBuilder>> = Optional.Missing()
 
     var defaultMemberPermissions: Optional<Permissions?> = Optional.Missing()
+    @Deprecated("'dmPermission' is deprecated in favor of 'contexts'.")
     var dmPermission: OptionalBoolean? = OptionalBoolean.Missing
+    var integrationTypes: Optional<MutableList<ApplicationIntegrationType>> = Optional.Missing()
+    var contexts: Optional<MutableList<InteractionContextType>> = Optional.Missing()
 
+    var handler: Optional<PrimaryEntryPointCommandHandlerType> = Optional.Missing()
 
-    @Deprecated("'defaultPermission' is deprecated in favor of 'defaultMemberPermissions' and 'dmPermission'. Setting 'defaultPermission' to false can be replaced by setting 'defaultMemberPermissions' to empty Permissions and 'dmPermission' to false ('dmPermission' is only available for global commands).")
+    @Deprecated("'defaultPermission' is deprecated in favor of 'defaultMemberPermissions' and 'dmPermission'." +
+            " Setting 'defaultPermission' to false can be replaced by setting 'defaultMemberPermissions' to empty " +
+            "Permissions and 'dmPermission' to false ('dmPermission' is only available for global commands). The " +
+            "deprecation level will be raised to HIDDEN in 0.19.0 and this declaration will be removed in 0.20.0",
+        level = DeprecationLevel.ERROR)
     @SerialName("default_permission")
     var defaultPermission: OptionalBoolean = OptionalBoolean.Missing
 

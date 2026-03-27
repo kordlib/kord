@@ -2,8 +2,8 @@ package dev.kord.rest.request
 
 import dev.kord.rest.ratelimit.BucketKey
 import io.ktor.client.statement.*
-import kotlinx.datetime.Clock
-import kotlinx.datetime.Instant
+import kotlin.time.Clock
+import kotlin.time.Instant
 import kotlin.time.Duration.Companion.seconds
 
 private const val rateLimitGlobalHeader = "X-RateLimit-Global"

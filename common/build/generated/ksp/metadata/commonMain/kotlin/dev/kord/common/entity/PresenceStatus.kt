@@ -1,6 +1,5 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
-@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
-                "SpellCheckingInspection", "GrazieInspection"))
+@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
@@ -14,8 +13,9 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 /**
- * See [PresenceStatus]es in the
- * [Discord Developer Documentation](https://discord.com/developers/docs/topics/gateway-events#update-presence-status-types).
+ *
+ *
+ * See [PresenceStatus]es in the [Discord Developer Documentation](https://discord.com/developers/docs/topics/gateway-events#update-presence-status-types).
  */
 @Serializable(with = PresenceStatus.Serializer::class)
 public sealed class PresenceStatus(
@@ -24,14 +24,11 @@ public sealed class PresenceStatus(
      */
     public val `value`: String,
 ) {
-    final override fun equals(other: Any?): Boolean = this === other ||
-            (other is PresenceStatus && this.value == other.value)
+    final override fun equals(other: Any?): Boolean = this === other || (other is PresenceStatus && this.value == other.value)
 
     final override fun hashCode(): Int = value.hashCode()
 
-    final override fun toString(): String =
-            if (this is Unknown) "PresenceStatus.Unknown(value=$value)"
-            else "PresenceStatus.${this::class.simpleName}"
+    final override fun toString(): String = if (this is Unknown) "PresenceStatus.Unknown(value=$value)" else "PresenceStatus.${this::class.simpleName}"
 
     /**
      * An unknown [PresenceStatus].
@@ -69,8 +66,7 @@ public sealed class PresenceStatus(
 
     internal object Serializer : KSerializer<PresenceStatus> {
         override val descriptor: SerialDescriptor =
-                PrimitiveSerialDescriptor("dev.kord.common.entity.PresenceStatus",
-                PrimitiveKind.STRING)
+                PrimitiveSerialDescriptor("dev.kord.common.entity.PresenceStatus", PrimitiveKind.STRING)
 
         override fun serialize(encoder: Encoder, `value`: PresenceStatus) {
             encoder.encodeString(value.value)
@@ -94,8 +90,7 @@ public sealed class PresenceStatus(
         }
 
         /**
-         * Returns an instance of [PresenceStatus] with [PresenceStatus.value] equal to the
-         * specified [value].
+         * Returns an instance of [PresenceStatus] with [PresenceStatus.value] equal to the specified [value].
          */
         public fun from(`value`: String): PresenceStatus = when (value) {
             "online" -> Online

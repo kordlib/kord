@@ -7,7 +7,7 @@ import dev.kord.core.behavior.MessageBehavior
 import dev.kord.core.behavior.channel.MessageChannelBehavior
 import dev.kord.core.entity.Message
 import dev.kord.core.supplier.EntitySupplyStrategy
-import kotlinx.datetime.Instant
+import kotlin.time.Instant
 
 /**
  * An instance of a Discord channel that can use messages.

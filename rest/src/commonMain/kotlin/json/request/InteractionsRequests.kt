@@ -20,12 +20,21 @@ public data class ApplicationCommandCreateRequest(
     val options: Optional<List<ApplicationCommandOption>> = Optional.Missing(),
     @SerialName("default_member_permissions")
     public val defaultMemberPermissions: Optional<Permissions?> = Optional.Missing(),
+    @Deprecated("'dmPermission' is deprecated in favor of 'contexts'.")
     @SerialName("dm_permission")
     public val dmPermission: OptionalBoolean? = OptionalBoolean.Missing,
-    @Deprecated("'defaultPermission' is deprecated in favor of 'defaultMemberPermissions' and 'dmPermission'. Setting 'defaultPermission' to false can be replaced by setting 'defaultMemberPermissions' to empty Permissions and 'dmPermission' to false ('dmPermission' is only available for global commands).")
+    @Deprecated("'defaultPermission' is deprecated in favor of 'defaultMemberPermissions' and 'dmPermission'." +
+            " Setting 'defaultPermission' to false can be replaced by setting 'defaultMemberPermissions' to empty " +
+            "Permissions and 'dmPermission' to false ('dmPermission' is only available for global commands). The " +
+            "deprecation level will be raised to HIDDEN in 0.19.0 and this declaration will be removed in 0.20.0",
+        level = DeprecationLevel.ERROR)
     @SerialName("default_permission")
     val defaultPermission: OptionalBoolean = OptionalBoolean.Missing,
     val nsfw: OptionalBoolean = OptionalBoolean.Missing,
+    @SerialName("integration_types")
+    val integrationTypes: Optional<List<ApplicationIntegrationType>> = Optional.Missing(),
+    val contexts: Optional<List<InteractionContextType>?> = Optional.Missing(),
+    val handler: Optional<PrimaryEntryPointCommandHandlerType> = Optional.Missing()
 )
 
 @Serializable
@@ -39,12 +48,21 @@ public data class ApplicationCommandModifyRequest(
     val options: Optional<List<ApplicationCommandOption>> = Optional.Missing(),
     @SerialName("default_member_permissions")
     public val defaultMemberPermissions: Optional<Permissions?> = Optional.Missing(),
+    @Deprecated("'dmPermission' is deprecated in favor of 'contexts'.")
     @SerialName("dm_permission")
     public val dmPermission: OptionalBoolean? = OptionalBoolean.Missing,
-    @Deprecated("'defaultPermission' is deprecated in favor of 'defaultMemberPermissions' and 'dmPermission'. Setting 'defaultPermission' to false can be replaced by setting 'defaultMemberPermissions' to empty Permissions and 'dmPermission' to false ('dmPermission' is only available for global commands).")
+    @Deprecated("'defaultPermission' is deprecated in favor of 'defaultMemberPermissions' and 'dmPermission'." +
+            " Setting 'defaultPermission' to false can be replaced by setting 'defaultMemberPermissions' to empty " +
+            "Permissions and 'dmPermission' to false ('dmPermission' is only available for global commands). The " +
+            "deprecation level will be raised to HIDDEN in 0.19.0 and this declaration will be removed in 0.20.0",
+        level = DeprecationLevel.ERROR)
     @SerialName("default_permission")
     val defaultPermission: OptionalBoolean = OptionalBoolean.Missing,
     val nsfw: OptionalBoolean = OptionalBoolean.Missing,
+    @SerialName("integration_types")
+    val integrationTypes: Optional<List<ApplicationIntegrationType>> = Optional.Missing(),
+    val contexts: Optional<List<InteractionContextType>?> = Optional.Missing(),
+    val handler: Optional<PrimaryEntryPointCommandHandlerType> = Optional.Missing()
 )
 
 @Serializable

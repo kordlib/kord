@@ -21,7 +21,11 @@ kotlin {
     }
     js {
         nodejs()
-        useCommonJs()
+        useEsModules()
+
+        compilerOptions {
+            target = "es2015"
+        }
     }
 }
 

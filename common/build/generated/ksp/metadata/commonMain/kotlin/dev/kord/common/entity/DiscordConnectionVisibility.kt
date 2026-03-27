@@ -1,6 +1,5 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
-@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
-                "SpellCheckingInspection", "GrazieInspection"))
+@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
@@ -14,8 +13,9 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 /**
- * See [DiscordConnectionVisibility]s in the
- * [Discord Developer Documentation](https://discord.com/developers/docs/resources/user#connection-object-visibility-types).
+ *
+ *
+ * See [DiscordConnectionVisibility]s in the [Discord Developer Documentation](https://discord.com/developers/docs/resources/user#connection-object-visibility-types).
  */
 @Serializable(with = DiscordConnectionVisibility.Serializer::class)
 public sealed class DiscordConnectionVisibility(
@@ -24,20 +24,16 @@ public sealed class DiscordConnectionVisibility(
      */
     public val `value`: Int,
 ) {
-    final override fun equals(other: Any?): Boolean = this === other ||
-            (other is DiscordConnectionVisibility && this.value == other.value)
+    final override fun equals(other: Any?): Boolean = this === other || (other is DiscordConnectionVisibility && this.value == other.value)
 
     final override fun hashCode(): Int = value.hashCode()
 
-    final override fun toString(): String =
-            if (this is Unknown) "DiscordConnectionVisibility.Unknown(value=$value)"
-            else "DiscordConnectionVisibility.${this::class.simpleName}"
+    final override fun toString(): String = if (this is Unknown) "DiscordConnectionVisibility.Unknown(value=$value)" else "DiscordConnectionVisibility.${this::class.simpleName}"
 
     /**
      * An unknown [DiscordConnectionVisibility].
      *
-     * This is used as a fallback for [DiscordConnectionVisibility]s that haven't been added to Kord
-     * yet.
+     * This is used as a fallback for [DiscordConnectionVisibility]s that haven't been added to Kord yet.
      */
     public class Unknown internal constructor(
         `value`: Int,
@@ -55,15 +51,13 @@ public sealed class DiscordConnectionVisibility(
 
     internal object Serializer : KSerializer<DiscordConnectionVisibility> {
         override val descriptor: SerialDescriptor =
-                PrimitiveSerialDescriptor("dev.kord.common.entity.DiscordConnectionVisibility",
-                PrimitiveKind.INT)
+                PrimitiveSerialDescriptor("dev.kord.common.entity.DiscordConnectionVisibility", PrimitiveKind.INT)
 
         override fun serialize(encoder: Encoder, `value`: DiscordConnectionVisibility) {
             encoder.encodeInt(value.value)
         }
 
-        override fun deserialize(decoder: Decoder): DiscordConnectionVisibility =
-                from(decoder.decodeInt())
+        override fun deserialize(decoder: Decoder): DiscordConnectionVisibility = from(decoder.decodeInt())
     }
 
     public companion object {
@@ -78,8 +72,7 @@ public sealed class DiscordConnectionVisibility(
         }
 
         /**
-         * Returns an instance of [DiscordConnectionVisibility] with
-         * [DiscordConnectionVisibility.value] equal to the specified [value].
+         * Returns an instance of [DiscordConnectionVisibility] with [DiscordConnectionVisibility.value] equal to the specified [value].
          */
         public fun from(`value`: Int): DiscordConnectionVisibility = when (value) {
             0 -> None

@@ -71,6 +71,14 @@
     docUrl = "https://discord.com/developers/docs/resources/guild#guild-object-guild-features",
     entries = [
         Entry(
+            "ActivityFeedDisabled", stringValue = "ACTIVITY_FEED_DISABLED_BY_USER",
+            kDoc = "Guild has disabled the activity feed."
+        ),
+        Entry(
+            "ActivityFeedEnabled", stringValue = "ACTIVITY_FEED_ENABLED_BY_USER",
+            kDoc = "Guild has enabled the activity feed."
+        ),
+        Entry(
             "AnimatedBanner", stringValue = "ANIMATED_BANNER",
             kDoc = "Guild has access to set an animated guild banner image.",
         ),
@@ -152,7 +160,6 @@
 
 @file:Generate(
     INT_FLAGS, name = "SystemChannelFlag", valueName = "code",
-    collectionHadNewCompanion = true,
     docUrl = "https://discord.com/developers/docs/resources/guild#guild-object-system-channel-flags",
     entries = [
         Entry("SuppressJoinNotifications", shift = 0, kDoc = "Suppress member join notifications."),
@@ -172,6 +179,7 @@
 
 package dev.kord.common.entity
 
+import dev.kord.common.annotation.DiscordAPIPreview
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalInt
@@ -180,9 +188,9 @@ import dev.kord.common.serialization.DurationInSeconds
 import dev.kord.ksp.Generate
 import dev.kord.ksp.Generate.EntityType.*
 import dev.kord.ksp.Generate.Entry
-import kotlinx.datetime.Instant
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import kotlin.time.Instant
 
 /**
  * A partial representation of a [DiscordGuild] that may be [unavailable].
@@ -205,6 +213,7 @@ public data class DiscordUnavailableGuild(
  * @param iconHash The icon hash, returned when in the template object.
  * @param splash The splash hash.
  * @param discoverySplash The discovery splash hash; only present for guilds with the [GuildFeature.Discoverable] feature.
+ * @param homeHeader The home header hash; Used in new member welcome
  * @param owner True if [DiscordUser] is the owner of the guild.
  * @param ownerId The id of the owner.
  * @param permissions The total permissions for [DiscordUser] in the guild (excludes [overwrites][Overwrite]).
@@ -256,6 +265,7 @@ public data class DiscordGuild(
     @SerialName("icon_hash") val iconHash: Optional<String?> = Optional.Missing(),
     val splash: Optional<String?> = Optional.Missing(),
     @SerialName("discovery_splash") val discoverySplash: Optional<String?> = Optional.Missing(),
+    @SerialName("home_header") val homeHeader: String?,
     val owner: OptionalBoolean = OptionalBoolean.Missing,
     @SerialName("owner_id") val ownerId: Snowflake,
     val permissions: Optional<Permissions> = Optional.Missing(),
@@ -353,6 +363,22 @@ public data class DiscordPartialGuild(
     val premiumProgressBarEnabled: OptionalBoolean = OptionalBoolean.Missing,
 )
 
+/**
+ * A partial representation of a [Discord Guild structure](https://discord.com/developers/docs/resources/guild#guild-object)
+ *
+ * see [The user-docs](https://docs.discord.food/interactions/receiving-and-responding#interaction-guild-structure)
+ *
+ * @param id The guild id.
+ * @param features The enabled guild features.
+ * @param locale The current guild locale.
+ */
+@Serializable
+public data class DiscordInteractionPartialGuild(
+    val id: Snowflake,
+    val features: List<GuildFeature>,
+    val locale: String,
+)
+
 @Serializable
 public data class DiscordGuildBan(
     @SerialName("guild_id") val guildId: Snowflake,
@@ -375,6 +401,42 @@ public data class DiscordIntegrationDelete(
 public data class DiscordIntegrationAccount(
     val id: String,
     val name: String,
+)
+
+/**
+ * A representation of a [Discord Member Verification Guild structure](https://docs.discord.food/resources/guild#member-verification-guild-structure)
+ *
+ * @param id The guild ID
+ * @param name The name of the guild (2-100 characters)
+ * @param icon The guild icon hash
+ * @param description The description for the guild (max 300 characters)
+ * @param splash The guilds splash hash
+ * @param discoverySplash The guilds discovery splash hash
+ * @param homeHeader The guilds home header hash, used in new member welcome
+ * @param verificationLevel The [VerificationLevel] required for the guild
+ * @param features A list of enabled [GuildFeature]s
+ * @param emojis A List of custom guild emoji
+ * @param approximateMemberCount Approximate total of guild members
+ * @param approximatePresenceCount Approximate total of non-offline guild members
+ */
+@DiscordAPIPreview
+@Serializable
+public data class DiscordMemberVerificationGuild(
+    val id: Snowflake,
+    val name: String,
+    val icon: String?,
+    val description: String?,
+    val splash: String?,
+    @SerialName("discovery_splash")
+    val discoverySplash: String?,
+    @SerialName("home_header")
+    val homeHeader: String?,
+    @SerialName("verification_level")
+    val verificationLevel: VerificationLevel,
+    val features: List<GuildFeature>,
+    val emojis: List<Snowflake>,
+    val approximateMemberCount: Int,
+    val approximatePresenceCount: Int
 )
 
 
@@ -465,3 +527,4 @@ public data class DiscordWelcomeScreen(
     val description: String?,
     @SerialName("welcome_channels") val welcomeChannels: List<DiscordWelcomeScreenChannel>,
 )
+

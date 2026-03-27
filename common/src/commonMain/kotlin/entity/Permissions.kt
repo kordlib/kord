@@ -1,6 +1,5 @@
 @file:Generate(
     BIT_SET_FLAGS, name = "Permission", valueName = "code",
-    collectionHadCopy0 = true, collectionHadNewCompanion = true, hadBuilderFactoryFunction0 = true,
     docUrl = "https://discord.com/developers/docs/topics/permissions",
     entries = [
         Entry("CreateInstantInvite", shift = 0, kDoc = "Allows creation of instant invites."),
@@ -96,6 +95,11 @@
             kDoc = "Allows the usage of custom soundboard sounds from other servers."
         ),
         Entry("SendVoiceMessages", shift = 46, kDoc = "Allows sending voice messages."),
+        Entry(
+            "USE_EXTERNAL_APPS",
+            shift = 50,
+            kDoc = "Allows user-installed apps to send public responses. When disabled, users will still be allowed to use their apps but the responses will be ephemeral. This only applies to apps not also installed to the server."
+        )
     ],
 )
 
@@ -109,12 +113,3 @@ private val ALL_PERMISSIONS = Permissions(flags = Permission.entries)
 
 /** All known [Permission]s (as contained in [Permission.entries]) combined into a single [Permissions] instance. */
 public val Permissions.Companion.ALL: Permissions get() = ALL_PERMISSIONS
-
-@Suppress("UnusedReceiverParameter", "DEPRECATION_ERROR")
-@Deprecated(
-    "'Permissions.NewCompanion' was renamed to 'Permissions.Companion'. Use 'Permissions.Companion.ALL' instead. " +
-        "This declaration will be removed in 0.17.0.",
-    ReplaceWith("Permissions.ALL", imports = ["dev.kord.common.entity.Permissions", "dev.kord.common.entity.ALL"]),
-    DeprecationLevel.HIDDEN,
-)
-public val Permissions.NewCompanion.ALL: Permissions get() = ALL_PERMISSIONS

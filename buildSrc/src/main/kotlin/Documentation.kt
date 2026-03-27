@@ -36,7 +36,6 @@ internal fun DokkaExtension.applyKordDokkaOptions(project: Project) {
             }
             register("kotlinx-datetime") {
                 url("https://kotlinlang.org/api/kotlinx-datetime/")
-                packageListUrl("https://kotlinlang.org/api/kotlinx-datetime/kotlinx-datetime/package-list")
             }
             register("Ktor") {
                 url("https://api.ktor.io/")

@@ -2,9 +2,11 @@
     STRING_KORD_ENUM, name = "EncryptionMode",
     docUrl = "https://discord.com/developers/docs/topics/voice-connections#establishing-a-voice-udp-connection-encryption-modes",
     entries = [
-        Entry("XSalsa20Poly1305", stringValue = "xsalsa20_poly1305"),
-        Entry("XSalsa20Poly1305Suffix", stringValue = "xsalsa20_poly1305_suffix"),
-        Entry("XSalsa20Poly1305Lite", stringValue = "xsalsa20_poly1305_lite")
+        Entry("AeadAes256GcmRtpSize", stringValue = "aead_aes256_gcm_rtpsize"),
+        Entry("AeadXChaCha20Poly1305RtpSize", stringValue = "aead_xchacha20_poly1305_rtpsize"),
+        Entry("XSalsa20Poly1305", stringValue = "xsalsa20_poly1305", deprecated = Deprecated(MODE_DEPRECATION, level = DeprecationLevel.ERROR)),
+        Entry("XSalsa20Poly1305Suffix", stringValue = "xsalsa20_poly1305_suffix", deprecated = Deprecated(MODE_DEPRECATION, level = DeprecationLevel.ERROR)),
+        Entry("XSalsa20Poly1305Lite", stringValue = "xsalsa20_poly1305_lite", deprecated = Deprecated(MODE_DEPRECATION, level = DeprecationLevel.ERROR))
     ]
 )
 
@@ -13,3 +15,5 @@ package dev.kord.voice
 import dev.kord.ksp.Generate
 import dev.kord.ksp.Generate.EntityType.STRING_KORD_ENUM
 import dev.kord.ksp.Generate.Entry
+
+private const val MODE_DEPRECATION = "This encryption mode is no longer supported by Discord."

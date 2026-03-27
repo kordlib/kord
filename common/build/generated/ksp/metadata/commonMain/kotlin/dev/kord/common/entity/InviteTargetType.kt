@@ -1,6 +1,5 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
-@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
-                "SpellCheckingInspection", "GrazieInspection"))
+@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
@@ -14,8 +13,9 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 /**
- * See [InviteTargetType]s in the
- * [Discord Developer Documentation](https://discord.com/developers/docs/resources/invite#invite-object-invite-target-types).
+ *
+ *
+ * See [InviteTargetType]s in the [Discord Developer Documentation](https://discord.com/developers/docs/resources/invite#invite-object-invite-target-types).
  */
 @Serializable(with = InviteTargetType.Serializer::class)
 public sealed class InviteTargetType(
@@ -24,14 +24,11 @@ public sealed class InviteTargetType(
      */
     public val `value`: Int,
 ) {
-    final override fun equals(other: Any?): Boolean = this === other ||
-            (other is InviteTargetType && this.value == other.value)
+    final override fun equals(other: Any?): Boolean = this === other || (other is InviteTargetType && this.value == other.value)
 
     final override fun hashCode(): Int = value.hashCode()
 
-    final override fun toString(): String =
-            if (this is Unknown) "InviteTargetType.Unknown(value=$value)"
-            else "InviteTargetType.${this::class.simpleName}"
+    final override fun toString(): String = if (this is Unknown) "InviteTargetType.Unknown(value=$value)" else "InviteTargetType.${this::class.simpleName}"
 
     /**
      * An unknown [InviteTargetType].
@@ -48,8 +45,7 @@ public sealed class InviteTargetType(
 
     internal object Serializer : KSerializer<InviteTargetType> {
         override val descriptor: SerialDescriptor =
-                PrimitiveSerialDescriptor("dev.kord.common.entity.InviteTargetType",
-                PrimitiveKind.INT)
+                PrimitiveSerialDescriptor("dev.kord.common.entity.InviteTargetType", PrimitiveKind.INT)
 
         override fun serialize(encoder: Encoder, `value`: InviteTargetType) {
             encoder.encodeInt(value.value)
@@ -70,8 +66,7 @@ public sealed class InviteTargetType(
         }
 
         /**
-         * Returns an instance of [InviteTargetType] with [InviteTargetType.value] equal to the
-         * specified [value].
+         * Returns an instance of [InviteTargetType] with [InviteTargetType.value] equal to the specified [value].
          */
         public fun from(`value`: Int): InviteTargetType = when (value) {
             1 -> Stream

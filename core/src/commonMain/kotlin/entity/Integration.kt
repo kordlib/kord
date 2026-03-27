@@ -2,7 +2,6 @@ package dev.kord.core.entity
 
 import dev.kord.common.entity.IntegrationExpireBehavior
 import dev.kord.common.entity.Snowflake
-import dev.kord.common.entity.optional.value
 import dev.kord.common.exception.RequestException
 import dev.kord.core.Kord
 import dev.kord.core.behavior.GuildBehavior
@@ -15,7 +14,7 @@ import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.rest.builder.integration.IntegrationModifyBuilder
 import dev.kord.rest.request.RestRequestException
-import kotlinx.datetime.Instant
+import kotlin.time.Instant
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 import kotlin.time.Duration
@@ -49,12 +48,6 @@ public class Integration(
      */
     public val isEnabled: Boolean
         get() = data.enabled
-
-    /**
-     * Whether this integrations is syncing.
-     */
-    public val isSyncing: Boolean?
-        get() = data.syncing.value
 
     /**
      * The id of the [guild][Guild] this integration is tied to.

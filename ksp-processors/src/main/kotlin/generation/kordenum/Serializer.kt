@@ -21,19 +21,19 @@ private fun ValueType.toEncodingPostfix() = when (this) {
     STRING -> "String"
 }
 
-context(KordEnum, GenerationContext)
+context(enum: KordEnum, context: GenerationContext)
 internal fun TypeSpec.Builder.addSerializer() = addObject("Serializer") {
-    addSharedSerializerContent(entityCN)
-    val encodingPostfix = valueType.toEncodingPostfix()
+    addSharedSerializerContent(context.entityCN)
+    val encodingPostfix = enum.valueType.toEncodingPostfix()
     addFunction("serialize") {
         addModifiers(OVERRIDE)
         addParameter<Encoder>("encoder")
-        addParameter("value", entityCN)
-        addStatement("encoder.encode$encodingPostfix(value.$valueName)")
+        addParameter("value", context.entityCN)
+        addStatement("encoder.encode$encodingPostfix(value.${enum.valueName})")
     }
     addFunction("deserialize") {
         addModifiers(OVERRIDE)
-        returns(entityCN)
+        returns(context.entityCN)
         addParameter<Decoder>("decoder")
         addStatement("return from(decoder.decode$encodingPostfix())")
     }

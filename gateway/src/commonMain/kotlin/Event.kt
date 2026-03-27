@@ -1,11 +1,23 @@
+@file:Generate(
+    Generate.EntityType.INT_KORD_ENUM,
+    "AnimationType",
+    "https://discord.com/developers/docs/events/gateway-events#voice-channel-effect-send-animation-types",
+    entries = [
+        Generate.Entry("Basic", intValue = 0),
+        Generate.Entry("Premium", intValue = 1),
+    ]
+)
+
 package dev.kord.gateway
 
 import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.Optional
+import dev.kord.common.entity.optional.OptionalDouble
+import dev.kord.common.entity.optional.OptionalInt
 import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.common.serialization.DurationInSeconds
+import dev.kord.ksp.Generate
 import io.github.oshai.kotlinlogging.KotlinLogging
-import kotlinx.datetime.Instant
 import kotlinx.serialization.*
 import kotlinx.serialization.builtins.nullable
 import kotlinx.serialization.builtins.serializer
@@ -16,8 +28,7 @@ import kotlinx.serialization.encoding.Encoder
 import kotlinx.serialization.encoding.decodeStructure
 import kotlinx.serialization.json.JsonDecoder
 import kotlinx.serialization.json.JsonElement
-import kotlin.jvm.JvmField
-import kotlin.jvm.JvmName
+import kotlin.time.Instant
 import kotlinx.serialization.DeserializationStrategy as KDeserializationStrategy
 
 private val jsonLogger = KotlinLogging.logger { }
@@ -70,7 +81,7 @@ public sealed class Event {
                 }
                 // OpCodes for Commands (aka send events), they shouldn't be received
                 OpCode.Identify, OpCode.StatusUpdate, OpCode.VoiceStateUpdate, OpCode.Resume,
-                OpCode.RequestGuildMembers,
+                OpCode.RequestGuildMembers, OpCode.RequestSoundboardSounds
                 -> throw IllegalArgumentException("Illegal opcode for gateway event: $op")
                 OpCode.Unknown -> throw IllegalArgumentException("Unknown opcode for gateway event")
             }
@@ -83,8 +94,13 @@ public sealed class Event {
             eventData: JsonElement?,
         ): T {
             requireNotNull(eventData) { "Gateway event is missing 'd' field for opcode $op" }
-            // this cast will always succeed, otherwise decoder couldn't have decoded eventData
-            return (decoder as JsonDecoder).json.decodeFromJsonElement(deserializer, eventData)
+            try {
+                // this cast will always succeed, otherwise decoder couldn't have decoded eventData
+                return (decoder as JsonDecoder).json.decodeFromJsonElement(deserializer, eventData)
+            } catch (e: SerializationException) {
+                jsonLogger.error { "Serialization failed while decoding opcode $op: $eventData" }
+                throw e
+            }
         }
 
         private fun decodeDispatchEvent(
@@ -95,8 +111,13 @@ public sealed class Event {
         ): DispatchEvent {
             fun <T> decode(deserializer: KDeserializationStrategy<T>): T {
                 requireNotNull(eventData) { "Gateway event is missing 'd' field for event name $eventName" }
-                // this cast will always succeed, otherwise decoder couldn't have decoded eventData
-                return (decoder as JsonDecoder).json.decodeFromJsonElement(deserializer, eventData)
+                try {
+                    // this cast will always succeed, otherwise decoder couldn't have decoded eventData
+                    return (decoder as JsonDecoder).json.decodeFromJsonElement(deserializer, eventData)
+                } catch (e: SerializationException) {
+                    jsonLogger.error { "Serialization failed while decoding event $eventName: $eventData" }
+                    throw e
+                }
             }
             /*
              * Keep ordered like this table: https://discord.com/developers/docs/topics/gateway-events#receive-events
@@ -183,7 +204,9 @@ public sealed class Event {
                 "MESSAGE_REACTION_REMOVE_EMOJI" ->
                     MessageReactionRemoveEmoji(decode(DiscordRemovedEmoji.serializer()), sequence)
                 "PRESENCE_UPDATE" -> PresenceUpdate(decode(DiscordPresenceUpdate.serializer()), sequence)
-                // Missing: Stage Instance Create, Stage Instance Update, Stage Instance Delete
+                "STAGE_INSTANCE_CREATE" -> StageInstanceCreate(decode(DiscordStageInstance.serializer()), sequence)
+                "STAGE_INSTANCE_UPDATE" -> StageInstanceUpdate(decode(DiscordStageInstance.serializer()), sequence)
+                "STAGE_INSTANCE_DELETE" -> StageInstanceDelete(decode(DiscordStageInstance.serializer()), sequence)
                 "SUBSCRIPTION_CREATE" -> SubscriptionCreate(decode(DiscordSubscription.serializer()), sequence)
                 "SUBSCRIPTION_UPDATE" -> SubscriptionUpdate(decode(DiscordSubscription.serializer()), sequence)
                 "SUBSCRIPTION_DELETE" -> SubscriptionDelete(decode(DiscordSubscription.serializer()), sequence)
@@ -193,18 +216,12 @@ public sealed class Event {
                 "VOICE_STATE_UPDATE" -> VoiceStateUpdate(decode(DiscordVoiceState.serializer()), sequence)
                 "VOICE_SERVER_UPDATE" -> VoiceServerUpdate(decode(DiscordVoiceServerUpdateData.serializer()), sequence)
                 "WEBHOOKS_UPDATE" -> WebhooksUpdate(decode(DiscordWebhooksUpdateData.serializer()), sequence)
-                // The following three events have been removed from Discord's documentation, we should probably remove
-                // them too.
-                // See https://github.com/discord/discord-api-docs/pull/3691
-                "APPLICATION_COMMAND_CREATE" ->
-                    @Suppress("DEPRECATION_ERROR")
-                    ApplicationCommandCreate(decode(DiscordApplicationCommand.serializer()), sequence)
-                "APPLICATION_COMMAND_UPDATE" ->
-                    @Suppress("DEPRECATION_ERROR")
-                    ApplicationCommandUpdate(decode(DiscordApplicationCommand.serializer()), sequence)
-                "APPLICATION_COMMAND_DELETE" ->
-                    @Suppress("DEPRECATION_ERROR")
-                    ApplicationCommandDelete(decode(DiscordApplicationCommand.serializer()), sequence)
+                "GUILD_SOUNDBOARD_SOUND_CREATE" -> GuildSoundboardSoundCreate(decode(DiscordSoundboardSound.serializer()), sequence)
+                "GUILD_SOUNDBOARD_SOUND_UPDATE" -> GuildSoundboardSoundUpdate(decode(DiscordSoundboardSound.serializer()), sequence)
+                "GUILD_SOUNDBOARD_SOUNDS_UPDATE" -> GuildSoundboardSoundsUpdate(decode(SoundboardSoundsChunk.serializer()), sequence)
+                "GUILD_SOUNDBOARD_SOUNDS_DELETE" -> GuildSoundboardSoundDelete(decode(DeletedSound.serializer()), sequence)
+                "VOICE_CHANNEL_EFFECT_SEND" -> VoiceEffectSend(decode(VoiceChannelEffect.serializer()), sequence)
+                "SOUNDBOARD_SOUNDS" -> SoundboardSounds(decode(SoundboardSoundsChunk.serializer()), sequence)
                 else -> {
                     jsonLogger.debug { "Unknown gateway event name: $eventName" }
                     UnknownDispatchEvent(eventName, eventData, sequence)
@@ -308,59 +325,9 @@ public data class Heartbeat(val data: Long?) : Event() {
         override fun deserialize(decoder: Decoder) = Heartbeat(decoder.decodeSerializableValue(delegate))
     }
 
-    @Deprecated(
-        "Kept for binary compatibility, this declaration will be removed in 0.18.0.",
-        level = DeprecationLevel.HIDDEN,
-    )
-    public constructor(data: Long) : this(data as Long?)
-
-    @Suppress("PropertyName")
-    @Deprecated(
-        "Kept for binary compatibility, this declaration will be removed in 0.18.0.",
-        level = DeprecationLevel.HIDDEN,
-    )
-    @get:JvmName("getData")
-    public val data_: Long
-        get() = data ?: throw NullPointerException("This heartbeat request contains a null sequence number")
-
-    @Suppress("FunctionName")
-    @Deprecated(
-        "Kept for binary compatibility, this declaration will be removed in 0.18.0.",
-        level = DeprecationLevel.HIDDEN,
-    )
-    @JvmName("component1")
-    public fun component1_(): Long =
-        component1() ?: throw NullPointerException("This heartbeat request contains a null sequence number")
-
-    @Suppress("FunctionName")
-    @Deprecated(
-        "Kept for binary compatibility, this declaration will be removed in 0.18.0.",
-        level = DeprecationLevel.HIDDEN,
-    )
-    @JvmName("copy")
-    public fun copy_(
+    public fun copy(
         data: Long = this.data ?: throw NullPointerException("This heartbeat request contains a null sequence number"),
     ): Heartbeat = Heartbeat(data as Long?)
-
-    public companion object {
-        @Suppress("DEPRECATION_ERROR")
-        @Deprecated(
-            "Renamed to 'Companion'. This declaration will be removed in 0.17.0.",
-            ReplaceWith("Heartbeat.Companion", imports = ["dev.kord.gateway.Heartbeat"]),
-            DeprecationLevel.HIDDEN,
-        )
-        @JvmField
-        public val NewCompanion: NewCompanion = NewCompanion()
-    }
-
-    @Deprecated(
-        "Renamed to 'Companion'. This declaration will be removed in 0.17.0.",
-        ReplaceWith("Heartbeat.Companion", imports = ["dev.kord.gateway.Heartbeat"]),
-        DeprecationLevel.HIDDEN,
-    )
-    public class NewCompanion internal constructor() {
-        public fun serializer(): KSerializer<Heartbeat> = Heartbeat.serializer()
-    }
 }
 
 @Serializable
@@ -550,33 +517,6 @@ public data class WebhooksUpdate(val webhooksUpdateData: DiscordWebhooksUpdateDa
 
 public data class InteractionCreate(val interaction: DiscordInteraction, override val sequence: Int?) : DispatchEvent()
 
-
-@Deprecated(
-    "This event is not supposed to be sent to bots. See https://github.com/discord/discord-api-docs/issues/3690 for " +
-        "details. This declaration will be removed in 0.17.0.",
-    level = DeprecationLevel.HIDDEN,
-)
-public data class ApplicationCommandCreate(val application: DiscordApplicationCommand, override val sequence: Int?) :
-    DispatchEvent()
-
-
-@Deprecated(
-    "This event is not supposed to be sent to bots. See https://github.com/discord/discord-api-docs/issues/3690 for " +
-        "details. This declaration will be removed in 0.17.0.",
-    level = DeprecationLevel.HIDDEN,
-)
-public data class ApplicationCommandUpdate(val application: DiscordApplicationCommand, override val sequence: Int?) :
-    DispatchEvent()
-
-
-@Deprecated(
-    "This event is not supposed to be sent to bots. See https://github.com/discord/discord-api-docs/issues/3690 for " +
-        "details. This declaration will be removed in 0.17.0.",
-    level = DeprecationLevel.HIDDEN,
-)
-public data class ApplicationCommandDelete(val application: DiscordApplicationCommand, override val sequence: Int?) :
-    DispatchEvent()
-
 public data class ThreadCreate(val channel: DiscordChannel, override val sequence: Int?) : DispatchEvent()
 
 public data class ThreadUpdate(val channel: DiscordChannel, override val sequence: Int?) : DispatchEvent()
@@ -589,6 +529,10 @@ public data class ThreadListSync(val sync: DiscordThreadListSync, override val s
 
 public data class ThreadMembersUpdate(val members: DiscordThreadMembersUpdate, override val sequence: Int?) :
     DispatchEvent()
+
+public data class StageInstanceCreate(val stageInstance: DiscordStageInstance, override val sequence: Int?) : DispatchEvent()
+public data class StageInstanceUpdate(val stageInstance: DiscordStageInstance, override val sequence: Int?) : DispatchEvent()
+public data class StageInstanceDelete(val stageInstance: DiscordStageInstance, override val sequence: Int?) : DispatchEvent()
 
 public data class GuildScheduledEventCreate(val event: DiscordGuildScheduledEvent, override val sequence: Int?) :
     DispatchEvent()
@@ -662,3 +606,57 @@ public data class SubscriptionUpdate(val subscription: DiscordSubscription, over
 
 public data class SubscriptionDelete(val subscription: DiscordSubscription, override val sequence: Int?) :
     DispatchEvent()
+
+@Serializable
+public data class SoundboardSoundsChunk(
+    @SerialName("soundboard_sounds") val soundboardSounds: List<DiscordSoundboardSound>,
+    @SerialName("guild_id") val guildId: Snowflake
+)
+
+@Serializable
+public data class DeletedSound(
+    @SerialName("sound_id")
+    val soundId: Snowflake,
+    @SerialName("guild_id")
+    val guildId: Snowflake
+)
+
+@Serializable
+public data class VoiceChannelEffect(
+    @SerialName("channel_id")
+    val channelId: Snowflake,
+    @SerialName("guild_id")
+    val guildId: Snowflake,
+    @SerialName("user_id")
+    val userId: Snowflake,
+    val emoji: Optional<DiscordEmoji?> = Optional.Missing(),
+    @SerialName("animation_type")
+    val animationType: Optional<AnimationType?> = Optional.Missing(),
+    @SerialName("animation_id")
+    val animationId: OptionalInt = OptionalInt.Missing,
+    @SerialName("sound_id")
+    val soundId: OptionalSnowflake = OptionalSnowflake.Missing,
+    @SerialName("sound_volume")
+    val soundVolume: OptionalDouble = OptionalDouble.Missing
+)
+
+/**
+ * Event sent in response to [RequestSoundboardSounds] containing the [sounds][data] for [SoundboardSoundsChunk.guildId].
+ */
+public data class SoundboardSounds(
+    val data: SoundboardSoundsChunk,
+    override val sequence: Int?
+) : DispatchEvent()
+
+public data class GuildSoundboardSoundCreate(val sound: DiscordSoundboardSound, override val sequence: Int?) :
+    DispatchEvent()
+
+public data class GuildSoundboardSoundUpdate(val sound: DiscordSoundboardSound, override val sequence: Int?) :
+    DispatchEvent()
+
+public data class GuildSoundboardSoundsUpdate(val data: SoundboardSoundsChunk, override val sequence: Int?) :
+    DispatchEvent()
+
+public data class GuildSoundboardSoundDelete(val sound: DeletedSound, override val sequence: Int?) : DispatchEvent()
+
+public data class VoiceEffectSend(val effect: VoiceChannelEffect, override val sequence: Int?) : DispatchEvent()
