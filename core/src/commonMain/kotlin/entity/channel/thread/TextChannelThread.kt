@@ -20,7 +20,7 @@ public class TextChannelThread(
     override val data: ChannelData,
     override val kord: Kord,
     override val supplier: EntitySupplier = kord.defaultSupplier,
-) : ThreadChannel, MaybeThreadChannel {
+) : ThreadChannel {
 
     public override val id: Snowflake = data.id
 
@@ -28,12 +28,6 @@ public class TextChannelThread(
      * Whether this thread is private.
      */
     public val isPrivate: Boolean get() = data.type == ChannelType.PrivateThread
-
-    public override val parentId: Snowflake = super<ThreadChannel>.parentId
-
-    public override val parent: ThreadParentChannelBehavior = super<ThreadChannel>.parent
-
-    public override val type: ChannelType = super<ThreadChannel>.type
 
     /**
      * Whether non-moderators can add other non-moderators to a thread.
@@ -44,16 +38,6 @@ public class TextChannelThread(
 
     override val guildId: Snowflake
         get() = data.guildId.value!!
-
-    override val guild: GuildBehavior = super<ThreadChannel>.guild
-
-    override suspend fun getGuild(): Guild = super<ThreadChannel>.getGuild()
-
-    override suspend fun getGuildOrNull(): Guild? = super<ThreadChannel>.getGuildOrNull()
-
-    override suspend fun getParent(): ThreadParentChannel = super<ThreadChannel>.getParent()
-
-    override suspend fun getParentOrNull(): ThreadParentChannel? = super<ThreadChannel>.getParentOrNull()
 
     override suspend fun asChannel(): TextChannelThread = this
 
