@@ -58,4 +58,16 @@ public sealed interface MaybeThreadChannel : Strategizable {
      * @throws [RequestException] if something went wrong during the request.
      */
     public suspend fun getParentOrNull(): ThreadParentChannel? = supplier.getChannelOfOrNull(parentId)
+
+    /**
+     * Return the value of the function in parameter if the thread is not deleted.
+     *
+     * MIGHT FAIL!
+     */
+    public fun <T> MaybeThreadChannel.flatMap(func: () -> T): Result<T>
+
+    /**
+     * Execute the function in parameter if the thread is not deleted.
+     */
+    public fun <T> doIfStillExist(func: () -> T): Unit
 }

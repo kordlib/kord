@@ -10341,6 +10341,8 @@ public final class dev/kord/core/entity/channel/WelcomeScreenChannel : dev/kord/
 public final class dev/kord/core/entity/channel/thread/DeletedThreadChannel : dev/kord/core/entity/channel/thread/MaybeThreadChannel {
 	public fun <init> (Ldev/kord/core/cache/data/ChannelData;Ldev/kord/core/Kord;Ldev/kord/core/supplier/EntitySupplier;)V
 	public synthetic fun <init> (Ldev/kord/core/cache/data/ChannelData;Ldev/kord/core/Kord;Ldev/kord/core/supplier/EntitySupplier;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun doIfStillExist (Lkotlin/jvm/functions/Function0;)V
+	public fun flatMap-gIAlu-s (Ldev/kord/core/entity/channel/thread/MaybeThreadChannel;Lkotlin/jvm/functions/Function0;)Ljava/lang/Object;
 	public fun getData ()Ldev/kord/core/cache/data/ChannelData;
 	public fun getGuild ()Ldev/kord/core/behavior/GuildBehavior;
 	public fun getGuild (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -10359,6 +10361,8 @@ public final class dev/kord/core/entity/channel/thread/DeletedThreadChannel : de
 }
 
 public abstract interface class dev/kord/core/entity/channel/thread/MaybeThreadChannel : dev/kord/core/entity/Strategizable {
+	public abstract fun doIfStillExist (Lkotlin/jvm/functions/Function0;)V
+	public abstract fun flatMap-gIAlu-s (Ldev/kord/core/entity/channel/thread/MaybeThreadChannel;Lkotlin/jvm/functions/Function0;)Ljava/lang/Object;
 	public abstract fun getData ()Ldev/kord/core/cache/data/ChannelData;
 	public fun getGuild ()Ldev/kord/core/behavior/GuildBehavior;
 	public fun getGuild (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -10400,8 +10404,10 @@ public final class dev/kord/core/entity/channel/thread/NewsChannelThread : dev/k
 	public fun createMessage (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun delete (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun deleteMessage (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun doIfStillExist (Lkotlin/jvm/functions/Function0;)V
 	public fun fetchChannel (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun fetchChannelOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun flatMap-gIAlu-s (Ldev/kord/core/entity/channel/thread/MaybeThreadChannel;Lkotlin/jvm/functions/Function0;)Ljava/lang/Object;
 	public fun getAppliedTags ()Ljava/util/List;
 	public fun getArchiveTimestamp ()Lkotlin/time/Instant;
 	public fun getAutoArchiveDuration ()Ldev/kord/common/entity/ArchiveDuration;
@@ -10478,8 +10484,10 @@ public final class dev/kord/core/entity/channel/thread/TextChannelThread : dev/k
 	public fun createMessage (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun delete (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun deleteMessage (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun doIfStillExist (Lkotlin/jvm/functions/Function0;)V
 	public fun fetchChannel (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun fetchChannelOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun flatMap-gIAlu-s (Ldev/kord/core/entity/channel/thread/MaybeThreadChannel;Lkotlin/jvm/functions/Function0;)Ljava/lang/Object;
 	public fun getAppliedTags ()Ljava/util/List;
 	public fun getArchiveTimestamp ()Lkotlin/time/Instant;
 	public fun getAutoArchiveDuration ()Ldev/kord/common/entity/ArchiveDuration;
@@ -10547,6 +10555,8 @@ public final class dev/kord/core/entity/channel/thread/TextChannelThread : dev/k
 }
 
 public abstract interface class dev/kord/core/entity/channel/thread/ThreadChannel : dev/kord/core/behavior/channel/threads/ThreadChannelBehavior, dev/kord/core/entity/channel/GuildMessageChannel, dev/kord/core/entity/channel/thread/MaybeThreadChannel {
+	public fun doIfStillExist (Lkotlin/jvm/functions/Function0;)V
+	public fun flatMap-gIAlu-s (Ldev/kord/core/entity/channel/thread/MaybeThreadChannel;Lkotlin/jvm/functions/Function0;)Ljava/lang/Object;
 	public fun getAppliedTags ()Ljava/util/List;
 	public fun getArchiveTimestamp ()Lkotlin/time/Instant;
 	public fun getAutoArchiveDuration ()Ldev/kord/common/entity/ArchiveDuration;
@@ -10595,8 +10605,10 @@ public final class dev/kord/core/entity/channel/thread/ThreadChannel$DefaultImpl
 	public static fun createMessage (Ldev/kord/core/entity/channel/thread/ThreadChannel;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun delete (Ldev/kord/core/entity/channel/thread/ThreadChannel;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun deleteMessage (Ldev/kord/core/entity/channel/thread/ThreadChannel;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static fun doIfStillExist (Ldev/kord/core/entity/channel/thread/ThreadChannel;Lkotlin/jvm/functions/Function0;)V
 	public static fun fetchChannel (Ldev/kord/core/entity/channel/thread/ThreadChannel;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun fetchChannelOrNull (Ldev/kord/core/entity/channel/thread/ThreadChannel;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static fun flatMap-gIAlu-s (Ldev/kord/core/entity/channel/thread/ThreadChannel;Ldev/kord/core/entity/channel/thread/MaybeThreadChannel;Lkotlin/jvm/functions/Function0;)Ljava/lang/Object;
 	public static fun getAppliedTags (Ldev/kord/core/entity/channel/thread/ThreadChannel;)Ljava/util/List;
 	public static fun getArchiveTimestamp (Ldev/kord/core/entity/channel/thread/ThreadChannel;)Lkotlin/time/Instant;
 	public static fun getAutoArchiveDuration (Ldev/kord/core/entity/channel/thread/ThreadChannel;)Ldev/kord/common/entity/ArchiveDuration;

@@ -131,6 +131,12 @@ public interface ThreadChannel : GuildMessageChannel, ThreadChannelBehavior, May
      */
     public val appliedTags: List<Snowflake> get() = data.appliedTags.value ?: emptyList()
 
+    override fun <T> MaybeThreadChannel.flatMap(func: () -> T): Result<T> = Result.success(func())
+
+    override fun <T> doIfStillExist(func: () -> T) {
+        func()
+    }
+
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): ThreadChannel {
         return ThreadChannel(data, kord, strategy.supply(kord))
     }

@@ -832,6 +832,8 @@ abstract interface dev.kord.core.entity.channel.thread/ThreadChannel : dev.kord.
     open val type // dev.kord.core.entity.channel.thread/ThreadChannel.type|{}type[0]
         open fun <get-type>(): dev.kord.common.entity/ChannelType // dev.kord.core.entity.channel.thread/ThreadChannel.type.<get-type>|<get-type>(){}[0]
 
+    open fun <#A1: kotlin/Any?> (dev.kord.core.entity.channel.thread/MaybeThreadChannel).flatMap(kotlin/Function0<#A1>): kotlin/Result<#A1> // dev.kord.core.entity.channel.thread/ThreadChannel.flatMap|flatMap@dev.kord.core.entity.channel.thread.MaybeThreadChannel(kotlin.Function0<0:0>){0§<kotlin.Any?>}[0]
+    open fun <#A1: kotlin/Any?> doIfStillExist(kotlin/Function0<#A1>) // dev.kord.core.entity.channel.thread/ThreadChannel.doIfStillExist|doIfStillExist(kotlin.Function0<0:0>){0§<kotlin.Any?>}[0]
     open fun withStrategy(dev.kord.core.supplier/EntitySupplyStrategy<*>): dev.kord.core.entity.channel.thread/ThreadChannel // dev.kord.core.entity.channel.thread/ThreadChannel.withStrategy|withStrategy(dev.kord.core.supplier.EntitySupplyStrategy<*>){}[0]
     open suspend fun getGuild(): dev.kord.core.entity/Guild // dev.kord.core.entity.channel.thread/ThreadChannel.getGuild|getGuild(){}[0]
     open suspend fun getGuildOrNull(): dev.kord.core.entity/Guild? // dev.kord.core.entity.channel.thread/ThreadChannel.getGuildOrNull|getGuildOrNull(){}[0]
@@ -1296,6 +1298,8 @@ sealed interface dev.kord.core.entity.channel.thread/MaybeThreadChannel : dev.ko
     open val type // dev.kord.core.entity.channel.thread/MaybeThreadChannel.type|{}type[0]
         open fun <get-type>(): dev.kord.common.entity/ChannelType // dev.kord.core.entity.channel.thread/MaybeThreadChannel.type.<get-type>|<get-type>(){}[0]
 
+    abstract fun <#A1: kotlin/Any?> (dev.kord.core.entity.channel.thread/MaybeThreadChannel).flatMap(kotlin/Function0<#A1>): kotlin/Result<#A1> // dev.kord.core.entity.channel.thread/MaybeThreadChannel.flatMap|flatMap@dev.kord.core.entity.channel.thread.MaybeThreadChannel(kotlin.Function0<0:0>){0§<kotlin.Any?>}[0]
+    abstract fun <#A1: kotlin/Any?> doIfStillExist(kotlin/Function0<#A1>) // dev.kord.core.entity.channel.thread/MaybeThreadChannel.doIfStillExist|doIfStillExist(kotlin.Function0<0:0>){0§<kotlin.Any?>}[0]
     open suspend fun getGuild(): dev.kord.core.entity/Guild // dev.kord.core.entity.channel.thread/MaybeThreadChannel.getGuild|getGuild(){}[0]
     open suspend fun getGuildOrNull(): dev.kord.core.entity/Guild? // dev.kord.core.entity.channel.thread/MaybeThreadChannel.getGuildOrNull|getGuildOrNull(){}[0]
     open suspend fun getParent(): dev.kord.core.entity.channel/ThreadParentChannel // dev.kord.core.entity.channel.thread/MaybeThreadChannel.getParent|getParent(){}[0]
@@ -7250,6 +7254,8 @@ final class dev.kord.core.entity.channel.thread/DeletedThreadChannel : dev.kord.
     final val supplier // dev.kord.core.entity.channel.thread/DeletedThreadChannel.supplier|{}supplier[0]
         final fun <get-supplier>(): dev.kord.core.supplier/EntitySupplier // dev.kord.core.entity.channel.thread/DeletedThreadChannel.supplier.<get-supplier>|<get-supplier>(){}[0]
 
+    final fun <#A1: kotlin/Any?> (dev.kord.core.entity.channel.thread/MaybeThreadChannel).flatMap(kotlin/Function0<#A1>): kotlin/Result<#A1> // dev.kord.core.entity.channel.thread/DeletedThreadChannel.flatMap|flatMap@dev.kord.core.entity.channel.thread.MaybeThreadChannel(kotlin.Function0<0:0>){0§<kotlin.Any?>}[0]
+    final fun <#A1: kotlin/Any?> doIfStillExist(kotlin/Function0<#A1>) // dev.kord.core.entity.channel.thread/DeletedThreadChannel.doIfStillExist|doIfStillExist(kotlin.Function0<0:0>){0§<kotlin.Any?>}[0]
     final fun withStrategy(dev.kord.core.supplier/EntitySupplyStrategy<*>): dev.kord.core.entity.channel.thread/DeletedThreadChannel // dev.kord.core.entity.channel.thread/DeletedThreadChannel.withStrategy|withStrategy(dev.kord.core.supplier.EntitySupplyStrategy<*>){}[0]
 }
 
