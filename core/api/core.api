@@ -10338,24 +10338,54 @@ public final class dev/kord/core/entity/channel/WelcomeScreenChannel : dev/kord/
 	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/Strategizable;
 }
 
-public final class dev/kord/core/entity/channel/thread/DeletedThreadChannel : dev/kord/core/entity/Strategizable {
+public final class dev/kord/core/entity/channel/thread/DeletedThreadChannel : dev/kord/core/entity/channel/thread/MaybeThreadChannel {
 	public fun <init> (Ldev/kord/core/cache/data/ChannelData;Ldev/kord/core/Kord;Ldev/kord/core/supplier/EntitySupplier;)V
 	public synthetic fun <init> (Ldev/kord/core/cache/data/ChannelData;Ldev/kord/core/Kord;Ldev/kord/core/supplier/EntitySupplier;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun getData ()Ldev/kord/core/cache/data/ChannelData;
-	public final fun getGuild ()Ldev/kord/core/behavior/GuildBehavior;
-	public final fun getGuild (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public final fun getGuildId ()Ldev/kord/common/entity/Snowflake;
-	public final fun getGuildOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public final fun getId ()Ldev/kord/common/entity/Snowflake;
-	public final fun getKord ()Ldev/kord/core/Kord;
-	public final fun getParent ()Ldev/kord/core/behavior/channel/threads/ThreadParentChannelBehavior;
-	public final fun getParent (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public final fun getParentId ()Ldev/kord/common/entity/Snowflake;
-	public final fun getParentOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getData ()Ldev/kord/core/cache/data/ChannelData;
+	public fun getGuild ()Ldev/kord/core/behavior/GuildBehavior;
+	public fun getGuild (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getGuildId ()Ldev/kord/common/entity/Snowflake;
+	public fun getGuildOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getId ()Ldev/kord/common/entity/Snowflake;
+	public fun getKord ()Ldev/kord/core/Kord;
+	public fun getParent ()Ldev/kord/core/behavior/channel/threads/ThreadParentChannelBehavior;
+	public fun getParent (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getParentId ()Ldev/kord/common/entity/Snowflake;
+	public fun getParentOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getSupplier ()Ldev/kord/core/supplier/EntitySupplier;
-	public final fun getType ()Ldev/kord/common/entity/ChannelType;
+	public fun getType ()Ldev/kord/common/entity/ChannelType;
 	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/Strategizable;
 	public fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/channel/thread/DeletedThreadChannel;
+}
+
+public abstract interface class dev/kord/core/entity/channel/thread/MaybeThreadChannel : dev/kord/core/entity/Strategizable {
+	public abstract fun getData ()Ldev/kord/core/cache/data/ChannelData;
+	public fun getGuild ()Ldev/kord/core/behavior/GuildBehavior;
+	public fun getGuild (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getGuildId ()Ldev/kord/common/entity/Snowflake;
+	public fun getGuildOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getId ()Ldev/kord/common/entity/Snowflake;
+	public abstract fun getKord ()Ldev/kord/core/Kord;
+	public fun getParent ()Ldev/kord/core/behavior/channel/threads/ThreadParentChannelBehavior;
+	public fun getParent (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getParentId ()Ldev/kord/common/entity/Snowflake;
+	public fun getParentOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getSupplier ()Ldev/kord/core/supplier/EntitySupplier;
+	public fun getType ()Ldev/kord/common/entity/ChannelType;
+}
+
+public final class dev/kord/core/entity/channel/thread/MaybeThreadChannel$DefaultImpls {
+	public static fun getGuild (Ldev/kord/core/entity/channel/thread/MaybeThreadChannel;)Ldev/kord/core/behavior/GuildBehavior;
+	public static fun getGuild (Ldev/kord/core/entity/channel/thread/MaybeThreadChannel;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static fun getGuildId (Ldev/kord/core/entity/channel/thread/MaybeThreadChannel;)Ldev/kord/common/entity/Snowflake;
+	public static fun getGuildOrNull (Ldev/kord/core/entity/channel/thread/MaybeThreadChannel;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static fun getId (Ldev/kord/core/entity/channel/thread/MaybeThreadChannel;)Ldev/kord/common/entity/Snowflake;
+	public static fun getParent (Ldev/kord/core/entity/channel/thread/MaybeThreadChannel;)Ldev/kord/core/behavior/channel/threads/ThreadParentChannelBehavior;
+	public static fun getParent (Ldev/kord/core/entity/channel/thread/MaybeThreadChannel;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static fun getParentId (Ldev/kord/core/entity/channel/thread/MaybeThreadChannel;)Ldev/kord/common/entity/Snowflake;
+	public static fun getParentOrNull (Ldev/kord/core/entity/channel/thread/MaybeThreadChannel;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static fun getSupplier (Ldev/kord/core/entity/channel/thread/MaybeThreadChannel;)Ldev/kord/core/supplier/EntitySupplier;
+	public static fun getType (Ldev/kord/core/entity/channel/thread/MaybeThreadChannel;)Ldev/kord/common/entity/ChannelType;
 }
 
 public final class dev/kord/core/entity/channel/thread/NewsChannelThread : dev/kord/core/entity/channel/thread/ThreadChannel {
@@ -10516,21 +10546,30 @@ public final class dev/kord/core/entity/channel/thread/TextChannelThread : dev/k
 	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/channel/thread/ThreadChannel;
 }
 
-public abstract interface class dev/kord/core/entity/channel/thread/ThreadChannel : dev/kord/core/behavior/channel/threads/ThreadChannelBehavior, dev/kord/core/entity/channel/GuildMessageChannel {
+public abstract interface class dev/kord/core/entity/channel/thread/ThreadChannel : dev/kord/core/behavior/channel/threads/ThreadChannelBehavior, dev/kord/core/entity/channel/GuildMessageChannel, dev/kord/core/entity/channel/thread/MaybeThreadChannel {
 	public fun getAppliedTags ()Ljava/util/List;
 	public fun getArchiveTimestamp ()Lkotlin/time/Instant;
 	public fun getAutoArchiveDuration ()Ldev/kord/common/entity/ArchiveDuration;
 	public fun getCreateTimestamp ()Lkotlin/time/Instant;
 	public fun getDefaultAutoArchiveDuration ()Ldev/kord/common/entity/ArchiveDuration;
+	public fun getGuild ()Ldev/kord/core/behavior/GuildBehavior;
+	public fun getGuild (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getGuildId ()Ldev/kord/common/entity/Snowflake;
+	public fun getGuildOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getId ()Ldev/kord/common/entity/Snowflake;
 	public fun getMember ()Ldev/kord/core/entity/channel/thread/ThreadMember;
 	public fun getMemberCount ()Ljava/lang/Integer;
 	public fun getMessage ()Ldev/kord/core/entity/Message;
 	public fun getMessageCount ()Ljava/lang/Integer;
 	public fun getOwner ()Ldev/kord/core/behavior/UserBehavior;
 	public fun getOwnerId ()Ldev/kord/common/entity/Snowflake;
+	public fun getParent ()Ldev/kord/core/behavior/channel/threads/ThreadParentChannelBehavior;
+	public fun getParent (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getParentId ()Ldev/kord/common/entity/Snowflake;
+	public fun getParentOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getRateLimitPerUser-FghU774 ()Lkotlin/time/Duration;
 	public fun getTotalMessageSent ()Ljava/lang/Integer;
+	public fun getType ()Ldev/kord/common/entity/ChannelType;
 	public fun isArchived ()Z
 	public fun isLocked ()Z
 	public fun isNsfw ()Z
@@ -10594,6 +10633,7 @@ public final class dev/kord/core/entity/channel/thread/ThreadChannel$DefaultImpl
 	public static fun getParentOrNull (Ldev/kord/core/entity/channel/thread/ThreadChannel;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun getPinnedMessages (Ldev/kord/core/entity/channel/thread/ThreadChannel;)Lkotlinx/coroutines/flow/Flow;
 	public static fun getRateLimitPerUser-FghU774 (Ldev/kord/core/entity/channel/thread/ThreadChannel;)Lkotlin/time/Duration;
+	public static fun getSupplier (Ldev/kord/core/entity/channel/thread/ThreadChannel;)Ldev/kord/core/supplier/EntitySupplier;
 	public static fun getTotalMessageSent (Ldev/kord/core/entity/channel/thread/ThreadChannel;)Ljava/lang/Integer;
 	public static fun getType (Ldev/kord/core/entity/channel/thread/ThreadChannel;)Ldev/kord/common/entity/ChannelType;
 	public static fun isArchived (Ldev/kord/core/entity/channel/thread/ThreadChannel;)Z
@@ -13273,9 +13313,7 @@ public final class dev/kord/core/event/channel/CategoryUpdateEvent : dev/kord/co
 	public fun toString ()Ljava/lang/String;
 }
 
-public abstract interface class dev/kord/core/event/channel/ChannelCreateEvent : dev/kord/core/event/Event {
-	public abstract fun getChannel ()Ldev/kord/core/entity/channel/Channel;
-	public fun getKord ()Ldev/kord/core/Kord;
+public abstract interface class dev/kord/core/event/channel/ChannelCreateEvent : dev/kord/core/event/channel/ChannelsChangeEvent {
 }
 
 public final class dev/kord/core/event/channel/ChannelCreateEvent$DefaultImpls {
@@ -13283,9 +13321,7 @@ public final class dev/kord/core/event/channel/ChannelCreateEvent$DefaultImpls {
 	public static fun getKord (Ldev/kord/core/event/channel/ChannelCreateEvent;)Ldev/kord/core/Kord;
 }
 
-public abstract interface class dev/kord/core/event/channel/ChannelDeleteEvent : dev/kord/core/event/Event {
-	public abstract fun getChannel ()Ldev/kord/core/entity/channel/Channel;
-	public fun getKord ()Ldev/kord/core/Kord;
+public abstract interface class dev/kord/core/event/channel/ChannelDeleteEvent : dev/kord/core/event/channel/ChannelsChangeEvent {
 }
 
 public final class dev/kord/core/event/channel/ChannelDeleteEvent$DefaultImpls {
@@ -13314,15 +13350,23 @@ public final class dev/kord/core/event/channel/ChannelPinsUpdateEvent : dev/kord
 	public fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/event/channel/ChannelPinsUpdateEvent;
 }
 
-public abstract interface class dev/kord/core/event/channel/ChannelUpdateEvent : dev/kord/core/event/Event {
-	public abstract fun getChannel ()Ldev/kord/core/entity/channel/Channel;
-	public fun getKord ()Ldev/kord/core/Kord;
+public abstract interface class dev/kord/core/event/channel/ChannelUpdateEvent : dev/kord/core/event/channel/ChannelsChangeEvent {
 	public abstract fun getOld ()Ldev/kord/core/entity/channel/Channel;
 }
 
 public final class dev/kord/core/event/channel/ChannelUpdateEvent$DefaultImpls {
 	public static fun getGateway (Ldev/kord/core/event/channel/ChannelUpdateEvent;)Ldev/kord/gateway/Gateway;
 	public static fun getKord (Ldev/kord/core/event/channel/ChannelUpdateEvent;)Ldev/kord/core/Kord;
+}
+
+public abstract interface class dev/kord/core/event/channel/ChannelsChangeEvent : dev/kord/core/event/Event {
+	public abstract fun getChannel ()Ldev/kord/core/entity/channel/Channel;
+	public fun getKord ()Ldev/kord/core/Kord;
+}
+
+public final class dev/kord/core/event/channel/ChannelsChangeEvent$DefaultImpls {
+	public static fun getGateway (Ldev/kord/core/event/channel/ChannelsChangeEvent;)Ldev/kord/gateway/Gateway;
+	public static fun getKord (Ldev/kord/core/event/channel/ChannelsChangeEvent;)Ldev/kord/core/Kord;
 }
 
 public final class dev/kord/core/event/channel/DMChannelCreateEvent : dev/kord/core/event/channel/ChannelCreateEvent {
@@ -13700,6 +13744,7 @@ public final class dev/kord/core/event/channel/data/TypingStartEventData$Compani
 public final class dev/kord/core/event/channel/thread/NewsChannelThreadCreateEvent : dev/kord/core/event/channel/thread/ThreadChannelCreateEvent {
 	public fun <init> (Ldev/kord/core/entity/channel/thread/NewsChannelThread;ILjava/lang/Object;)V
 	public synthetic fun getChannel ()Ldev/kord/core/entity/channel/Channel;
+	public synthetic fun getChannel ()Ldev/kord/core/entity/channel/thread/MaybeThreadChannel;
 	public fun getChannel ()Ldev/kord/core/entity/channel/thread/NewsChannelThread;
 	public synthetic fun getChannel ()Ldev/kord/core/entity/channel/thread/ThreadChannel;
 	public fun getCustomContext ()Ljava/lang/Object;
@@ -13712,6 +13757,7 @@ public final class dev/kord/core/event/channel/thread/NewsChannelThreadCreateEve
 public final class dev/kord/core/event/channel/thread/NewsChannelThreadDeleteEvent : dev/kord/core/event/channel/thread/ThreadChannelDeleteEvent {
 	public fun <init> (Ldev/kord/core/entity/channel/thread/DeletedThreadChannel;Ldev/kord/core/entity/channel/thread/NewsChannelThread;ILjava/lang/Object;)V
 	public fun getChannel ()Ldev/kord/core/entity/channel/thread/DeletedThreadChannel;
+	public synthetic fun getChannel ()Ldev/kord/core/entity/channel/thread/MaybeThreadChannel;
 	public fun getCustomContext ()Ljava/lang/Object;
 	public fun getGateway ()Ldev/kord/gateway/Gateway;
 	public fun getKord ()Ldev/kord/core/Kord;
@@ -13738,6 +13784,7 @@ public final class dev/kord/core/event/channel/thread/NewsChannelThreadUpdateEve
 public final class dev/kord/core/event/channel/thread/TextChannelThreadCreateEvent : dev/kord/core/event/channel/thread/ThreadChannelCreateEvent {
 	public fun <init> (Ldev/kord/core/entity/channel/thread/TextChannelThread;ILjava/lang/Object;)V
 	public synthetic fun getChannel ()Ldev/kord/core/entity/channel/Channel;
+	public synthetic fun getChannel ()Ldev/kord/core/entity/channel/thread/MaybeThreadChannel;
 	public fun getChannel ()Ldev/kord/core/entity/channel/thread/TextChannelThread;
 	public synthetic fun getChannel ()Ldev/kord/core/entity/channel/thread/ThreadChannel;
 	public fun getCustomContext ()Ljava/lang/Object;
@@ -13750,6 +13797,7 @@ public final class dev/kord/core/event/channel/thread/TextChannelThreadCreateEve
 public final class dev/kord/core/event/channel/thread/TextChannelThreadDeleteEvent : dev/kord/core/event/channel/thread/ThreadChannelDeleteEvent {
 	public fun <init> (Ldev/kord/core/entity/channel/thread/DeletedThreadChannel;Ldev/kord/core/entity/channel/thread/TextChannelThread;ILjava/lang/Object;)V
 	public fun getChannel ()Ldev/kord/core/entity/channel/thread/DeletedThreadChannel;
+	public synthetic fun getChannel ()Ldev/kord/core/entity/channel/thread/MaybeThreadChannel;
 	public fun getCustomContext ()Ljava/lang/Object;
 	public fun getGateway ()Ldev/kord/gateway/Gateway;
 	public fun getKord ()Ldev/kord/core/Kord;
@@ -13773,7 +13821,7 @@ public final class dev/kord/core/event/channel/thread/TextChannelThreadUpdateEve
 	public fun toString ()Ljava/lang/String;
 }
 
-public abstract interface class dev/kord/core/event/channel/thread/ThreadChannelCreateEvent : dev/kord/core/event/channel/ChannelCreateEvent {
+public abstract interface class dev/kord/core/event/channel/thread/ThreadChannelCreateEvent : dev/kord/core/event/channel/ChannelCreateEvent, dev/kord/core/event/channel/thread/ThreadsChangeEvent {
 	public abstract fun getChannel ()Ldev/kord/core/entity/channel/thread/ThreadChannel;
 }
 
@@ -13782,7 +13830,7 @@ public final class dev/kord/core/event/channel/thread/ThreadChannelCreateEvent$D
 	public static fun getKord (Ldev/kord/core/event/channel/thread/ThreadChannelCreateEvent;)Ldev/kord/core/Kord;
 }
 
-public abstract interface class dev/kord/core/event/channel/thread/ThreadChannelDeleteEvent : dev/kord/core/event/Event {
+public abstract interface class dev/kord/core/event/channel/thread/ThreadChannelDeleteEvent : dev/kord/core/event/channel/thread/ThreadsChangeEvent {
 	public abstract fun getChannel ()Ldev/kord/core/entity/channel/thread/DeletedThreadChannel;
 	public fun getKord ()Ldev/kord/core/Kord;
 	public abstract fun getOld ()Ldev/kord/core/entity/channel/thread/ThreadChannel;
@@ -13848,9 +13896,20 @@ public final class dev/kord/core/event/channel/thread/ThreadUpdateEvent$DefaultI
 	public static fun getKord (Ldev/kord/core/event/channel/thread/ThreadUpdateEvent;)Ldev/kord/core/Kord;
 }
 
+public abstract interface class dev/kord/core/event/channel/thread/ThreadsChangeEvent : dev/kord/core/event/Event {
+	public abstract fun getChannel ()Ldev/kord/core/entity/channel/thread/MaybeThreadChannel;
+	public abstract fun getCustomContext ()Ljava/lang/Object;
+	public abstract fun getShard ()I
+}
+
+public final class dev/kord/core/event/channel/thread/ThreadsChangeEvent$DefaultImpls {
+	public static fun getGateway (Ldev/kord/core/event/channel/thread/ThreadsChangeEvent;)Ldev/kord/gateway/Gateway;
+}
+
 public final class dev/kord/core/event/channel/thread/UnknownChannelThreadCreateEvent : dev/kord/core/event/channel/thread/ThreadChannelCreateEvent {
 	public fun <init> (Ldev/kord/core/entity/channel/thread/ThreadChannel;ILjava/lang/Object;)V
 	public synthetic fun getChannel ()Ldev/kord/core/entity/channel/Channel;
+	public synthetic fun getChannel ()Ldev/kord/core/entity/channel/thread/MaybeThreadChannel;
 	public fun getChannel ()Ldev/kord/core/entity/channel/thread/ThreadChannel;
 	public fun getCustomContext ()Ljava/lang/Object;
 	public fun getGateway ()Ldev/kord/gateway/Gateway;
@@ -13862,6 +13921,7 @@ public final class dev/kord/core/event/channel/thread/UnknownChannelThreadCreate
 public final class dev/kord/core/event/channel/thread/UnknownChannelThreadDeleteEvent : dev/kord/core/event/channel/thread/ThreadChannelDeleteEvent {
 	public fun <init> (Ldev/kord/core/entity/channel/thread/DeletedThreadChannel;Ldev/kord/core/entity/channel/thread/ThreadChannel;ILjava/lang/Object;)V
 	public fun getChannel ()Ldev/kord/core/entity/channel/thread/DeletedThreadChannel;
+	public synthetic fun getChannel ()Ldev/kord/core/entity/channel/thread/MaybeThreadChannel;
 	public fun getCustomContext ()Ljava/lang/Object;
 	public fun getGateway ()Ldev/kord/gateway/Gateway;
 	public fun getKord ()Ldev/kord/core/Kord;
@@ -15020,18 +15080,18 @@ public final class dev/kord/core/event/interaction/UserCommandInteractionCreateE
 	public static fun getGateway (Ldev/kord/core/event/interaction/UserCommandInteractionCreateEvent;)Ldev/kord/gateway/Gateway;
 }
 
-public final class dev/kord/core/event/message/MessageBulkDeleteEvent : dev/kord/core/entity/Strategizable, dev/kord/core/event/Event {
+public final class dev/kord/core/event/message/MessageBulkDeleteEvent : dev/kord/core/entity/Strategizable, dev/kord/core/event/message/MessagesChangeEvent {
 	public fun <init> (Ljava/util/Set;Ljava/util/Set;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/core/Kord;ILjava/lang/Object;Ldev/kord/core/supplier/EntitySupplier;)V
 	public synthetic fun <init> (Ljava/util/Set;Ljava/util/Set;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/core/Kord;ILjava/lang/Object;Ldev/kord/core/supplier/EntitySupplier;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun getChannel ()Ldev/kord/core/behavior/channel/MessageChannelBehavior;
-	public final fun getChannel (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public final fun getChannelId ()Ldev/kord/common/entity/Snowflake;
-	public final fun getChannelOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getChannel ()Ldev/kord/core/behavior/channel/MessageChannelBehavior;
+	public fun getChannel (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getChannelId ()Ldev/kord/common/entity/Snowflake;
+	public fun getChannelOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getCustomContext ()Ljava/lang/Object;
 	public fun getGateway ()Ldev/kord/gateway/Gateway;
-	public final fun getGuild ()Ldev/kord/core/behavior/GuildBehavior;
-	public final fun getGuildId ()Ldev/kord/common/entity/Snowflake;
-	public final fun getGuildOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getGuild ()Ldev/kord/core/behavior/GuildBehavior;
+	public fun getGuildId ()Ldev/kord/common/entity/Snowflake;
+	public fun getGuildOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getKord ()Ldev/kord/core/Kord;
 	public final fun getMessageIds ()Ljava/util/Set;
 	public final fun getMessages ()Ljava/util/Set;
@@ -15042,16 +15102,37 @@ public final class dev/kord/core/event/message/MessageBulkDeleteEvent : dev/kord
 	public fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/event/message/MessageBulkDeleteEvent;
 }
 
-public final class dev/kord/core/event/message/MessageCreateEvent : dev/kord/core/entity/Strategizable, dev/kord/core/event/Event {
+public abstract interface class dev/kord/core/event/message/MessageChangeEvent : dev/kord/core/event/message/MessagesChangeEvent {
+	public abstract fun getMessage ()Ldev/kord/core/behavior/MessageBehavior;
+	public abstract fun getMessageId ()Ldev/kord/common/entity/Snowflake;
+}
+
+public final class dev/kord/core/event/message/MessageChangeEvent$DefaultImpls {
+	public static fun getChannel (Ldev/kord/core/event/message/MessageChangeEvent;)Ldev/kord/core/behavior/channel/MessageChannelBehavior;
+	public static fun getChannel (Ldev/kord/core/event/message/MessageChangeEvent;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static fun getChannelOrNull (Ldev/kord/core/event/message/MessageChangeEvent;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static fun getGateway (Ldev/kord/core/event/message/MessageChangeEvent;)Ldev/kord/gateway/Gateway;
+	public static fun getGuild (Ldev/kord/core/event/message/MessageChangeEvent;)Ldev/kord/core/behavior/GuildBehavior;
+	public static fun getGuildOrNull (Ldev/kord/core/event/message/MessageChangeEvent;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class dev/kord/core/event/message/MessageCreateEvent : dev/kord/core/entity/Strategizable, dev/kord/core/event/message/MessageChangeEvent {
 	public fun <init> (Ldev/kord/core/entity/Message;Ldev/kord/common/entity/Snowflake;Ldev/kord/core/entity/Member;ILjava/lang/Object;Ldev/kord/core/supplier/EntitySupplier;)V
 	public synthetic fun <init> (Ldev/kord/core/entity/Message;Ldev/kord/common/entity/Snowflake;Ldev/kord/core/entity/Member;ILjava/lang/Object;Ldev/kord/core/supplier/EntitySupplier;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun getChannel ()Ldev/kord/core/behavior/channel/MessageChannelBehavior;
+	public fun getChannel (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getChannelId ()Ldev/kord/common/entity/Snowflake;
+	public fun getChannelOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getCustomContext ()Ljava/lang/Object;
 	public fun getGateway ()Ldev/kord/gateway/Gateway;
-	public final fun getGuildId ()Ldev/kord/common/entity/Snowflake;
-	public final fun getGuildOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getGuild ()Ldev/kord/core/behavior/GuildBehavior;
+	public fun getGuildId ()Ldev/kord/common/entity/Snowflake;
+	public fun getGuildOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getKord ()Ldev/kord/core/Kord;
 	public final fun getMember ()Ldev/kord/core/entity/Member;
-	public final fun getMessage ()Ldev/kord/core/entity/Message;
+	public synthetic fun getMessage ()Ldev/kord/core/behavior/MessageBehavior;
+	public fun getMessage ()Ldev/kord/core/entity/Message;
+	public fun getMessageId ()Ldev/kord/common/entity/Snowflake;
 	public fun getShard ()I
 	public fun getSupplier ()Ldev/kord/core/supplier/EntitySupplier;
 	public fun toString ()Ljava/lang/String;
@@ -15059,21 +15140,22 @@ public final class dev/kord/core/event/message/MessageCreateEvent : dev/kord/cor
 	public fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/event/message/MessageCreateEvent;
 }
 
-public final class dev/kord/core/event/message/MessageDeleteEvent : dev/kord/core/entity/Strategizable, dev/kord/core/event/Event {
+public final class dev/kord/core/event/message/MessageDeleteEvent : dev/kord/core/entity/Strategizable, dev/kord/core/event/message/MessageChangeEvent {
 	public fun <init> (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/core/entity/Message;Ldev/kord/core/Kord;ILjava/lang/Object;Ldev/kord/core/supplier/EntitySupplier;)V
 	public synthetic fun <init> (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/core/entity/Message;Ldev/kord/core/Kord;ILjava/lang/Object;Ldev/kord/core/supplier/EntitySupplier;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun getChannel ()Ldev/kord/core/behavior/channel/MessageChannelBehavior;
-	public final fun getChannel (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public final fun getChannelId ()Ldev/kord/common/entity/Snowflake;
-	public final fun getChannelOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getChannel ()Ldev/kord/core/behavior/channel/MessageChannelBehavior;
+	public fun getChannel (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getChannelId ()Ldev/kord/common/entity/Snowflake;
+	public fun getChannelOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getCustomContext ()Ljava/lang/Object;
 	public fun getGateway ()Ldev/kord/gateway/Gateway;
-	public final fun getGuild ()Ldev/kord/core/behavior/GuildBehavior;
-	public final fun getGuildId ()Ldev/kord/common/entity/Snowflake;
-	public final fun getGuildOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getGuild ()Ldev/kord/core/behavior/GuildBehavior;
+	public fun getGuildId ()Ldev/kord/common/entity/Snowflake;
+	public fun getGuildOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getKord ()Ldev/kord/core/Kord;
-	public final fun getMessage ()Ldev/kord/core/entity/Message;
-	public final fun getMessageId ()Ldev/kord/common/entity/Snowflake;
+	public synthetic fun getMessage ()Ldev/kord/core/behavior/MessageBehavior;
+	public fun getMessage ()Ldev/kord/core/entity/Message;
+	public fun getMessageId ()Ldev/kord/common/entity/Snowflake;
 	public fun getShard ()I
 	public fun getSupplier ()Ldev/kord/core/supplier/EntitySupplier;
 	public fun toString ()Ljava/lang/String;
@@ -15081,17 +15163,22 @@ public final class dev/kord/core/event/message/MessageDeleteEvent : dev/kord/cor
 	public fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/event/message/MessageDeleteEvent;
 }
 
-public final class dev/kord/core/event/message/MessageUpdateEvent : dev/kord/core/entity/Strategizable, dev/kord/core/event/Event {
+public final class dev/kord/core/event/message/MessageUpdateEvent : dev/kord/core/entity/Strategizable, dev/kord/core/event/message/MessageChangeEvent {
 	public fun <init> (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/DiscordPartialMessage;Ldev/kord/core/entity/Message;Ldev/kord/core/Kord;ILjava/lang/Object;Ldev/kord/core/supplier/EntitySupplier;)V
 	public synthetic fun <init> (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/DiscordPartialMessage;Ldev/kord/core/entity/Message;Ldev/kord/core/Kord;ILjava/lang/Object;Ldev/kord/core/supplier/EntitySupplier;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun getChannel ()Ldev/kord/core/behavior/channel/MessageChannelBehavior;
-	public final fun getChannelId ()Ldev/kord/common/entity/Snowflake;
+	public fun getChannel ()Ldev/kord/core/behavior/channel/MessageChannelBehavior;
+	public fun getChannel (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getChannelId ()Ldev/kord/common/entity/Snowflake;
+	public fun getChannelOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getCustomContext ()Ljava/lang/Object;
 	public fun getGateway ()Ldev/kord/gateway/Gateway;
+	public fun getGuild ()Ldev/kord/core/behavior/GuildBehavior;
+	public fun getGuildId ()Ldev/kord/common/entity/Snowflake;
+	public fun getGuildOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getKord ()Ldev/kord/core/Kord;
-	public final fun getMessage ()Ldev/kord/core/behavior/MessageBehavior;
+	public fun getMessage ()Ldev/kord/core/behavior/MessageBehavior;
 	public final fun getMessage (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public final fun getMessageId ()Ldev/kord/common/entity/Snowflake;
+	public fun getMessageId ()Ldev/kord/common/entity/Snowflake;
 	public final fun getMessageOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun getNew ()Ldev/kord/common/entity/DiscordPartialMessage;
 	public final fun getOld ()Ldev/kord/core/entity/Message;
@@ -15100,6 +15187,25 @@ public final class dev/kord/core/event/message/MessageUpdateEvent : dev/kord/cor
 	public fun toString ()Ljava/lang/String;
 	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/Strategizable;
 	public fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/event/message/MessageUpdateEvent;
+}
+
+public abstract interface class dev/kord/core/event/message/MessagesChangeEvent : dev/kord/core/entity/Strategizable, dev/kord/core/event/Event {
+	public fun getChannel ()Ldev/kord/core/behavior/channel/MessageChannelBehavior;
+	public fun getChannel (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun getChannelId ()Ldev/kord/common/entity/Snowflake;
+	public fun getChannelOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getGuild ()Ldev/kord/core/behavior/GuildBehavior;
+	public abstract fun getGuildId ()Ldev/kord/common/entity/Snowflake;
+	public fun getGuildOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class dev/kord/core/event/message/MessagesChangeEvent$DefaultImpls {
+	public static fun getChannel (Ldev/kord/core/event/message/MessagesChangeEvent;)Ldev/kord/core/behavior/channel/MessageChannelBehavior;
+	public static fun getChannel (Ldev/kord/core/event/message/MessagesChangeEvent;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static fun getChannelOrNull (Ldev/kord/core/event/message/MessagesChangeEvent;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static fun getGateway (Ldev/kord/core/event/message/MessagesChangeEvent;)Ldev/kord/gateway/Gateway;
+	public static fun getGuild (Ldev/kord/core/event/message/MessagesChangeEvent;)Ldev/kord/core/behavior/GuildBehavior;
+	public static fun getGuildOrNull (Ldev/kord/core/event/message/MessagesChangeEvent;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class dev/kord/core/event/message/ReactionAddEvent : dev/kord/core/event/message/ReactionEvent {

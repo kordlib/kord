@@ -786,7 +786,7 @@ abstract interface dev.kord.core.entity.application/GlobalApplicationCommand : d
 
 abstract interface dev.kord.core.entity.application/PrimaryEntryPointCommand : dev.kord.core.behavior/EntryPointCommandBehavior, dev.kord.core.entity.application/ApplicationCommand // dev.kord.core.entity.application/PrimaryEntryPointCommand|null[0]
 
-abstract interface dev.kord.core.entity.channel.thread/ThreadChannel : dev.kord.core.behavior.channel.threads/ThreadChannelBehavior, dev.kord.core.entity.channel/GuildMessageChannel { // dev.kord.core.entity.channel.thread/ThreadChannel|null[0]
+abstract interface dev.kord.core.entity.channel.thread/ThreadChannel : dev.kord.core.behavior.channel.threads/ThreadChannelBehavior, dev.kord.core.entity.channel.thread/MaybeThreadChannel, dev.kord.core.entity.channel/GuildMessageChannel { // dev.kord.core.entity.channel.thread/ThreadChannel|null[0]
     open val appliedTags // dev.kord.core.entity.channel.thread/ThreadChannel.appliedTags|{}appliedTags[0]
         open fun <get-appliedTags>(): kotlin.collections/List<dev.kord.common.entity/Snowflake> // dev.kord.core.entity.channel.thread/ThreadChannel.appliedTags.<get-appliedTags>|<get-appliedTags>(){}[0]
     open val archiveTimestamp // dev.kord.core.entity.channel.thread/ThreadChannel.archiveTimestamp|{}archiveTimestamp[0]
@@ -797,6 +797,12 @@ abstract interface dev.kord.core.entity.channel.thread/ThreadChannel : dev.kord.
         open fun <get-createTimestamp>(): kotlin.time/Instant? // dev.kord.core.entity.channel.thread/ThreadChannel.createTimestamp.<get-createTimestamp>|<get-createTimestamp>(){}[0]
     open val defaultAutoArchiveDuration // dev.kord.core.entity.channel.thread/ThreadChannel.defaultAutoArchiveDuration|{}defaultAutoArchiveDuration[0]
         open fun <get-defaultAutoArchiveDuration>(): dev.kord.common.entity/ArchiveDuration? // dev.kord.core.entity.channel.thread/ThreadChannel.defaultAutoArchiveDuration.<get-defaultAutoArchiveDuration>|<get-defaultAutoArchiveDuration>(){}[0]
+    open val guild // dev.kord.core.entity.channel.thread/ThreadChannel.guild|{}guild[0]
+        open fun <get-guild>(): dev.kord.core.behavior/GuildBehavior // dev.kord.core.entity.channel.thread/ThreadChannel.guild.<get-guild>|<get-guild>(){}[0]
+    open val guildId // dev.kord.core.entity.channel.thread/ThreadChannel.guildId|{}guildId[0]
+        open fun <get-guildId>(): dev.kord.common.entity/Snowflake // dev.kord.core.entity.channel.thread/ThreadChannel.guildId.<get-guildId>|<get-guildId>(){}[0]
+    open val id // dev.kord.core.entity.channel.thread/ThreadChannel.id|{}id[0]
+        open fun <get-id>(): dev.kord.common.entity/Snowflake // dev.kord.core.entity.channel.thread/ThreadChannel.id.<get-id>|<get-id>(){}[0]
     open val isArchived // dev.kord.core.entity.channel.thread/ThreadChannel.isArchived|{}isArchived[0]
         open fun <get-isArchived>(): kotlin/Boolean // dev.kord.core.entity.channel.thread/ThreadChannel.isArchived.<get-isArchived>|<get-isArchived>(){}[0]
     open val isLocked // dev.kord.core.entity.channel.thread/ThreadChannel.isLocked|{}isLocked[0]
@@ -815,14 +821,22 @@ abstract interface dev.kord.core.entity.channel.thread/ThreadChannel : dev.kord.
         open fun <get-owner>(): dev.kord.core.behavior/UserBehavior // dev.kord.core.entity.channel.thread/ThreadChannel.owner.<get-owner>|<get-owner>(){}[0]
     open val ownerId // dev.kord.core.entity.channel.thread/ThreadChannel.ownerId|{}ownerId[0]
         open fun <get-ownerId>(): dev.kord.common.entity/Snowflake // dev.kord.core.entity.channel.thread/ThreadChannel.ownerId.<get-ownerId>|<get-ownerId>(){}[0]
+    open val parent // dev.kord.core.entity.channel.thread/ThreadChannel.parent|{}parent[0]
+        open fun <get-parent>(): dev.kord.core.behavior.channel.threads/ThreadParentChannelBehavior // dev.kord.core.entity.channel.thread/ThreadChannel.parent.<get-parent>|<get-parent>(){}[0]
     open val parentId // dev.kord.core.entity.channel.thread/ThreadChannel.parentId|{}parentId[0]
         open fun <get-parentId>(): dev.kord.common.entity/Snowflake // dev.kord.core.entity.channel.thread/ThreadChannel.parentId.<get-parentId>|<get-parentId>(){}[0]
     open val rateLimitPerUser // dev.kord.core.entity.channel.thread/ThreadChannel.rateLimitPerUser|{}rateLimitPerUser[0]
         open fun <get-rateLimitPerUser>(): kotlin.time/Duration? // dev.kord.core.entity.channel.thread/ThreadChannel.rateLimitPerUser.<get-rateLimitPerUser>|<get-rateLimitPerUser>(){}[0]
     open val totalMessageSent // dev.kord.core.entity.channel.thread/ThreadChannel.totalMessageSent|{}totalMessageSent[0]
         open fun <get-totalMessageSent>(): kotlin/Int? // dev.kord.core.entity.channel.thread/ThreadChannel.totalMessageSent.<get-totalMessageSent>|<get-totalMessageSent>(){}[0]
+    open val type // dev.kord.core.entity.channel.thread/ThreadChannel.type|{}type[0]
+        open fun <get-type>(): dev.kord.common.entity/ChannelType // dev.kord.core.entity.channel.thread/ThreadChannel.type.<get-type>|<get-type>(){}[0]
 
     open fun withStrategy(dev.kord.core.supplier/EntitySupplyStrategy<*>): dev.kord.core.entity.channel.thread/ThreadChannel // dev.kord.core.entity.channel.thread/ThreadChannel.withStrategy|withStrategy(dev.kord.core.supplier.EntitySupplyStrategy<*>){}[0]
+    open suspend fun getGuild(): dev.kord.core.entity/Guild // dev.kord.core.entity.channel.thread/ThreadChannel.getGuild|getGuild(){}[0]
+    open suspend fun getGuildOrNull(): dev.kord.core.entity/Guild? // dev.kord.core.entity.channel.thread/ThreadChannel.getGuildOrNull|getGuildOrNull(){}[0]
+    open suspend fun getParent(): dev.kord.core.entity.channel/ThreadParentChannel // dev.kord.core.entity.channel.thread/ThreadChannel.getParent|getParent(){}[0]
+    open suspend fun getParentOrNull(): dev.kord.core.entity.channel/ThreadParentChannel? // dev.kord.core.entity.channel.thread/ThreadChannel.getParentOrNull|getParentOrNull(){}[0]
 }
 
 abstract interface dev.kord.core.entity.channel/CategorizableChannel : dev.kord.core.behavior.channel/CategorizableChannelBehavior, dev.kord.core.entity.channel/TopGuildChannel { // dev.kord.core.entity.channel/CategorizableChannel|null[0]
@@ -939,27 +953,28 @@ abstract interface dev.kord.core.entity/Strategizable { // dev.kord.core.entity/
     abstract fun withStrategy(dev.kord.core.supplier/EntitySupplyStrategy<*>): dev.kord.core.entity/Strategizable // dev.kord.core.entity/Strategizable.withStrategy|withStrategy(dev.kord.core.supplier.EntitySupplyStrategy<*>){}[0]
 }
 
-abstract interface dev.kord.core.event.channel/ChannelCreateEvent : dev.kord.core.event/Event { // dev.kord.core.event.channel/ChannelCreateEvent|null[0]
-    abstract val channel // dev.kord.core.event.channel/ChannelCreateEvent.channel|{}channel[0]
-        abstract fun <get-channel>(): dev.kord.core.entity.channel/Channel // dev.kord.core.event.channel/ChannelCreateEvent.channel.<get-channel>|<get-channel>(){}[0]
-    open val kord // dev.kord.core.event.channel/ChannelCreateEvent.kord|{}kord[0]
-        open fun <get-kord>(): dev.kord.core/Kord // dev.kord.core.event.channel/ChannelCreateEvent.kord.<get-kord>|<get-kord>(){}[0]
-}
+abstract interface dev.kord.core.event.channel/ChannelCreateEvent : dev.kord.core.event.channel/ChannelsChangeEvent // dev.kord.core.event.channel/ChannelCreateEvent|null[0]
 
-abstract interface dev.kord.core.event.channel/ChannelDeleteEvent : dev.kord.core.event/Event { // dev.kord.core.event.channel/ChannelDeleteEvent|null[0]
-    abstract val channel // dev.kord.core.event.channel/ChannelDeleteEvent.channel|{}channel[0]
-        abstract fun <get-channel>(): dev.kord.core.entity.channel/Channel // dev.kord.core.event.channel/ChannelDeleteEvent.channel.<get-channel>|<get-channel>(){}[0]
-    open val kord // dev.kord.core.event.channel/ChannelDeleteEvent.kord|{}kord[0]
-        open fun <get-kord>(): dev.kord.core/Kord // dev.kord.core.event.channel/ChannelDeleteEvent.kord.<get-kord>|<get-kord>(){}[0]
-}
+abstract interface dev.kord.core.event.channel/ChannelDeleteEvent : dev.kord.core.event.channel/ChannelsChangeEvent // dev.kord.core.event.channel/ChannelDeleteEvent|null[0]
 
-abstract interface dev.kord.core.event.channel/ChannelUpdateEvent : dev.kord.core.event/Event { // dev.kord.core.event.channel/ChannelUpdateEvent|null[0]
-    abstract val channel // dev.kord.core.event.channel/ChannelUpdateEvent.channel|{}channel[0]
-        abstract fun <get-channel>(): dev.kord.core.entity.channel/Channel // dev.kord.core.event.channel/ChannelUpdateEvent.channel.<get-channel>|<get-channel>(){}[0]
+abstract interface dev.kord.core.event.channel/ChannelUpdateEvent : dev.kord.core.event.channel/ChannelsChangeEvent { // dev.kord.core.event.channel/ChannelUpdateEvent|null[0]
     abstract val old // dev.kord.core.event.channel/ChannelUpdateEvent.old|{}old[0]
         abstract fun <get-old>(): dev.kord.core.entity.channel/Channel? // dev.kord.core.event.channel/ChannelUpdateEvent.old.<get-old>|<get-old>(){}[0]
-    open val kord // dev.kord.core.event.channel/ChannelUpdateEvent.kord|{}kord[0]
-        open fun <get-kord>(): dev.kord.core/Kord // dev.kord.core.event.channel/ChannelUpdateEvent.kord.<get-kord>|<get-kord>(){}[0]
+}
+
+abstract interface dev.kord.core.event.message/MessagesChangeEvent : dev.kord.core.entity/Strategizable, dev.kord.core.event/Event { // dev.kord.core.event.message/MessagesChangeEvent|null[0]
+    abstract val channelId // dev.kord.core.event.message/MessagesChangeEvent.channelId|{}channelId[0]
+        abstract fun <get-channelId>(): dev.kord.common.entity/Snowflake // dev.kord.core.event.message/MessagesChangeEvent.channelId.<get-channelId>|<get-channelId>(){}[0]
+    abstract val guildId // dev.kord.core.event.message/MessagesChangeEvent.guildId|{}guildId[0]
+        abstract fun <get-guildId>(): dev.kord.common.entity/Snowflake? // dev.kord.core.event.message/MessagesChangeEvent.guildId.<get-guildId>|<get-guildId>(){}[0]
+    open val channel // dev.kord.core.event.message/MessagesChangeEvent.channel|{}channel[0]
+        open fun <get-channel>(): dev.kord.core.behavior.channel/MessageChannelBehavior // dev.kord.core.event.message/MessagesChangeEvent.channel.<get-channel>|<get-channel>(){}[0]
+    open val guild // dev.kord.core.event.message/MessagesChangeEvent.guild|{}guild[0]
+        open fun <get-guild>(): dev.kord.core.behavior/GuildBehavior? // dev.kord.core.event.message/MessagesChangeEvent.guild.<get-guild>|<get-guild>(){}[0]
+
+    open suspend fun getChannel(): dev.kord.core.entity.channel/MessageChannel // dev.kord.core.event.message/MessagesChangeEvent.getChannel|getChannel(){}[0]
+    open suspend fun getChannelOrNull(): dev.kord.core.entity.channel/MessageChannel? // dev.kord.core.event.message/MessagesChangeEvent.getChannelOrNull|getChannelOrNull(){}[0]
+    open suspend fun getGuildOrNull(): dev.kord.core.entity/Guild? // dev.kord.core.event.message/MessagesChangeEvent.getGuildOrNull|getGuildOrNull(){}[0]
 }
 
 abstract interface dev.kord.core.event/Event : dev.kord.core/KordObject { // dev.kord.core.event/Event|null[0]
@@ -1260,6 +1275,32 @@ sealed interface dev.kord.core.entity.application/GuildApplicationCommand : dev.
 sealed interface dev.kord.core.entity.application/MessageCommand : dev.kord.core.behavior/MessageCommandBehavior, dev.kord.core.entity.application/ApplicationCommand // dev.kord.core.entity.application/MessageCommand|null[0]
 
 sealed interface dev.kord.core.entity.application/UserCommand : dev.kord.core.behavior/UserCommandBehavior, dev.kord.core.entity.application/ApplicationCommand // dev.kord.core.entity.application/UserCommand|null[0]
+
+sealed interface dev.kord.core.entity.channel.thread/MaybeThreadChannel : dev.kord.core.entity/Strategizable { // dev.kord.core.entity.channel.thread/MaybeThreadChannel|null[0]
+    abstract val data // dev.kord.core.entity.channel.thread/MaybeThreadChannel.data|{}data[0]
+        abstract fun <get-data>(): dev.kord.core.cache.data/ChannelData // dev.kord.core.entity.channel.thread/MaybeThreadChannel.data.<get-data>|<get-data>(){}[0]
+    abstract val kord // dev.kord.core.entity.channel.thread/MaybeThreadChannel.kord|{}kord[0]
+        abstract fun <get-kord>(): dev.kord.core/Kord // dev.kord.core.entity.channel.thread/MaybeThreadChannel.kord.<get-kord>|<get-kord>(){}[0]
+    open val guild // dev.kord.core.entity.channel.thread/MaybeThreadChannel.guild|{}guild[0]
+        open fun <get-guild>(): dev.kord.core.behavior/GuildBehavior // dev.kord.core.entity.channel.thread/MaybeThreadChannel.guild.<get-guild>|<get-guild>(){}[0]
+    open val guildId // dev.kord.core.entity.channel.thread/MaybeThreadChannel.guildId|{}guildId[0]
+        open fun <get-guildId>(): dev.kord.common.entity/Snowflake // dev.kord.core.entity.channel.thread/MaybeThreadChannel.guildId.<get-guildId>|<get-guildId>(){}[0]
+    open val id // dev.kord.core.entity.channel.thread/MaybeThreadChannel.id|{}id[0]
+        open fun <get-id>(): dev.kord.common.entity/Snowflake // dev.kord.core.entity.channel.thread/MaybeThreadChannel.id.<get-id>|<get-id>(){}[0]
+    open val parent // dev.kord.core.entity.channel.thread/MaybeThreadChannel.parent|{}parent[0]
+        open fun <get-parent>(): dev.kord.core.behavior.channel.threads/ThreadParentChannelBehavior // dev.kord.core.entity.channel.thread/MaybeThreadChannel.parent.<get-parent>|<get-parent>(){}[0]
+    open val parentId // dev.kord.core.entity.channel.thread/MaybeThreadChannel.parentId|{}parentId[0]
+        open fun <get-parentId>(): dev.kord.common.entity/Snowflake // dev.kord.core.entity.channel.thread/MaybeThreadChannel.parentId.<get-parentId>|<get-parentId>(){}[0]
+    open val supplier // dev.kord.core.entity.channel.thread/MaybeThreadChannel.supplier|{}supplier[0]
+        open fun <get-supplier>(): dev.kord.core.supplier/EntitySupplier // dev.kord.core.entity.channel.thread/MaybeThreadChannel.supplier.<get-supplier>|<get-supplier>(){}[0]
+    open val type // dev.kord.core.entity.channel.thread/MaybeThreadChannel.type|{}type[0]
+        open fun <get-type>(): dev.kord.common.entity/ChannelType // dev.kord.core.entity.channel.thread/MaybeThreadChannel.type.<get-type>|<get-type>(){}[0]
+
+    open suspend fun getGuild(): dev.kord.core.entity/Guild // dev.kord.core.entity.channel.thread/MaybeThreadChannel.getGuild|getGuild(){}[0]
+    open suspend fun getGuildOrNull(): dev.kord.core.entity/Guild? // dev.kord.core.entity.channel.thread/MaybeThreadChannel.getGuildOrNull|getGuildOrNull(){}[0]
+    open suspend fun getParent(): dev.kord.core.entity.channel/ThreadParentChannel // dev.kord.core.entity.channel.thread/MaybeThreadChannel.getParent|getParent(){}[0]
+    open suspend fun getParentOrNull(): dev.kord.core.entity.channel/ThreadParentChannel? // dev.kord.core.entity.channel.thread/MaybeThreadChannel.getParentOrNull|getParentOrNull(){}[0]
+}
 
 sealed interface dev.kord.core.entity.channel/ThreadOnlyChannel : dev.kord.core.behavior.channel.threads/ThreadOnlyChannelBehavior, dev.kord.core.entity.channel/ThreadParentChannel { // dev.kord.core.entity.channel/ThreadOnlyChannel|null[0]
     open val availableTags // dev.kord.core.entity.channel/ThreadOnlyChannel.availableTags|{}availableTags[0]
@@ -1652,12 +1693,12 @@ sealed interface dev.kord.core.event.automoderation/AutoModerationRuleConfigurat
     abstract fun withStrategy(dev.kord.core.supplier/EntitySupplyStrategy<*>): dev.kord.core.event.automoderation/AutoModerationRuleConfigurationEvent // dev.kord.core.event.automoderation/AutoModerationRuleConfigurationEvent.withStrategy|withStrategy(dev.kord.core.supplier.EntitySupplyStrategy<*>){}[0]
 }
 
-sealed interface dev.kord.core.event.channel.thread/ThreadChannelCreateEvent : dev.kord.core.event.channel/ChannelCreateEvent { // dev.kord.core.event.channel.thread/ThreadChannelCreateEvent|null[0]
+sealed interface dev.kord.core.event.channel.thread/ThreadChannelCreateEvent : dev.kord.core.event.channel.thread/ThreadsChangeEvent, dev.kord.core.event.channel/ChannelCreateEvent { // dev.kord.core.event.channel.thread/ThreadChannelCreateEvent|null[0]
     abstract val channel // dev.kord.core.event.channel.thread/ThreadChannelCreateEvent.channel|{}channel[0]
         abstract fun <get-channel>(): dev.kord.core.entity.channel.thread/ThreadChannel // dev.kord.core.event.channel.thread/ThreadChannelCreateEvent.channel.<get-channel>|<get-channel>(){}[0]
 }
 
-sealed interface dev.kord.core.event.channel.thread/ThreadChannelDeleteEvent : dev.kord.core.event/Event { // dev.kord.core.event.channel.thread/ThreadChannelDeleteEvent|null[0]
+sealed interface dev.kord.core.event.channel.thread/ThreadChannelDeleteEvent : dev.kord.core.event.channel.thread/ThreadsChangeEvent { // dev.kord.core.event.channel.thread/ThreadChannelDeleteEvent|null[0]
     abstract val channel // dev.kord.core.event.channel.thread/ThreadChannelDeleteEvent.channel|{}channel[0]
         abstract fun <get-channel>(): dev.kord.core.entity.channel.thread/DeletedThreadChannel // dev.kord.core.event.channel.thread/ThreadChannelDeleteEvent.channel.<get-channel>|<get-channel>(){}[0]
     abstract val old // dev.kord.core.event.channel.thread/ThreadChannelDeleteEvent.old|{}old[0]
@@ -1669,6 +1710,22 @@ sealed interface dev.kord.core.event.channel.thread/ThreadChannelDeleteEvent : d
 sealed interface dev.kord.core.event.channel.thread/ThreadUpdateEvent : dev.kord.core.event.channel/ChannelUpdateEvent { // dev.kord.core.event.channel.thread/ThreadUpdateEvent|null[0]
     abstract val channel // dev.kord.core.event.channel.thread/ThreadUpdateEvent.channel|{}channel[0]
         abstract fun <get-channel>(): dev.kord.core.entity.channel.thread/ThreadChannel // dev.kord.core.event.channel.thread/ThreadUpdateEvent.channel.<get-channel>|<get-channel>(){}[0]
+}
+
+sealed interface dev.kord.core.event.channel.thread/ThreadsChangeEvent : dev.kord.core.event/Event { // dev.kord.core.event.channel.thread/ThreadsChangeEvent|null[0]
+    abstract val channel // dev.kord.core.event.channel.thread/ThreadsChangeEvent.channel|{}channel[0]
+        abstract fun <get-channel>(): dev.kord.core.entity.channel.thread/MaybeThreadChannel // dev.kord.core.event.channel.thread/ThreadsChangeEvent.channel.<get-channel>|<get-channel>(){}[0]
+    abstract val customContext // dev.kord.core.event.channel.thread/ThreadsChangeEvent.customContext|{}customContext[0]
+        abstract fun <get-customContext>(): kotlin/Any? // dev.kord.core.event.channel.thread/ThreadsChangeEvent.customContext.<get-customContext>|<get-customContext>(){}[0]
+    abstract val shard // dev.kord.core.event.channel.thread/ThreadsChangeEvent.shard|{}shard[0]
+        abstract fun <get-shard>(): kotlin/Int // dev.kord.core.event.channel.thread/ThreadsChangeEvent.shard.<get-shard>|<get-shard>(){}[0]
+}
+
+sealed interface dev.kord.core.event.channel/ChannelsChangeEvent : dev.kord.core.event/Event { // dev.kord.core.event.channel/ChannelsChangeEvent|null[0]
+    abstract val channel // dev.kord.core.event.channel/ChannelsChangeEvent.channel|{}channel[0]
+        abstract fun <get-channel>(): dev.kord.core.entity.channel/Channel // dev.kord.core.event.channel/ChannelsChangeEvent.channel.<get-channel>|<get-channel>(){}[0]
+    open val kord // dev.kord.core.event.channel/ChannelsChangeEvent.kord|{}kord[0]
+        open fun <get-kord>(): dev.kord.core/Kord // dev.kord.core.event.channel/ChannelsChangeEvent.kord.<get-kord>|<get-kord>(){}[0]
 }
 
 sealed interface dev.kord.core.event.guild/GuildScheduledEventEvent : dev.kord.core.entity/Strategizable, dev.kord.core.event/Event { // dev.kord.core.event.guild/GuildScheduledEventEvent|null[0]
@@ -1789,6 +1846,13 @@ sealed interface dev.kord.core.event.interaction/SelectMenuInteractionCreateEven
 sealed interface dev.kord.core.event.interaction/UserCommandInteractionCreateEvent : dev.kord.core.event.interaction/ApplicationCommandInteractionCreateEvent { // dev.kord.core.event.interaction/UserCommandInteractionCreateEvent|null[0]
     abstract val interaction // dev.kord.core.event.interaction/UserCommandInteractionCreateEvent.interaction|{}interaction[0]
         abstract fun <get-interaction>(): dev.kord.core.entity.interaction/UserCommandInteraction // dev.kord.core.event.interaction/UserCommandInteractionCreateEvent.interaction.<get-interaction>|<get-interaction>(){}[0]
+}
+
+sealed interface dev.kord.core.event.message/MessageChangeEvent : dev.kord.core.event.message/MessagesChangeEvent { // dev.kord.core.event.message/MessageChangeEvent|null[0]
+    abstract val message // dev.kord.core.event.message/MessageChangeEvent.message|{}message[0]
+        abstract fun <get-message>(): dev.kord.core.behavior/MessageBehavior? // dev.kord.core.event.message/MessageChangeEvent.message.<get-message>|<get-message>(){}[0]
+    abstract val messageId // dev.kord.core.event.message/MessageChangeEvent.messageId|{}messageId[0]
+        abstract fun <get-messageId>(): dev.kord.common.entity/Snowflake // dev.kord.core.event.message/MessageChangeEvent.messageId.<get-messageId>|<get-messageId>(){}[0]
 }
 
 sealed interface dev.kord.core.event.message/ReactionEvent : dev.kord.core.entity/Strategizable, dev.kord.core.event/Event { // dev.kord.core.event.message/ReactionEvent|null[0]
@@ -7176,33 +7240,17 @@ final class dev.kord.core.entity.automoderation/UnknownAutoModerationRule : dev.
     final suspend fun asAutoModerationRuleOrNull(): dev.kord.core.entity.automoderation/UnknownAutoModerationRule // dev.kord.core.entity.automoderation/UnknownAutoModerationRule.asAutoModerationRuleOrNull|asAutoModerationRuleOrNull(){}[0]
 }
 
-final class dev.kord.core.entity.channel.thread/DeletedThreadChannel : dev.kord.core.entity/Strategizable { // dev.kord.core.entity.channel.thread/DeletedThreadChannel|null[0]
+final class dev.kord.core.entity.channel.thread/DeletedThreadChannel : dev.kord.core.entity.channel.thread/MaybeThreadChannel { // dev.kord.core.entity.channel.thread/DeletedThreadChannel|null[0]
     constructor <init>(dev.kord.core.cache.data/ChannelData, dev.kord.core/Kord, dev.kord.core.supplier/EntitySupplier = ...) // dev.kord.core.entity.channel.thread/DeletedThreadChannel.<init>|<init>(dev.kord.core.cache.data.ChannelData;dev.kord.core.Kord;dev.kord.core.supplier.EntitySupplier){}[0]
 
     final val data // dev.kord.core.entity.channel.thread/DeletedThreadChannel.data|{}data[0]
         final fun <get-data>(): dev.kord.core.cache.data/ChannelData // dev.kord.core.entity.channel.thread/DeletedThreadChannel.data.<get-data>|<get-data>(){}[0]
-    final val guild // dev.kord.core.entity.channel.thread/DeletedThreadChannel.guild|{}guild[0]
-        final fun <get-guild>(): dev.kord.core.behavior/GuildBehavior // dev.kord.core.entity.channel.thread/DeletedThreadChannel.guild.<get-guild>|<get-guild>(){}[0]
-    final val guildId // dev.kord.core.entity.channel.thread/DeletedThreadChannel.guildId|{}guildId[0]
-        final fun <get-guildId>(): dev.kord.common.entity/Snowflake // dev.kord.core.entity.channel.thread/DeletedThreadChannel.guildId.<get-guildId>|<get-guildId>(){}[0]
-    final val id // dev.kord.core.entity.channel.thread/DeletedThreadChannel.id|{}id[0]
-        final fun <get-id>(): dev.kord.common.entity/Snowflake // dev.kord.core.entity.channel.thread/DeletedThreadChannel.id.<get-id>|<get-id>(){}[0]
     final val kord // dev.kord.core.entity.channel.thread/DeletedThreadChannel.kord|{}kord[0]
         final fun <get-kord>(): dev.kord.core/Kord // dev.kord.core.entity.channel.thread/DeletedThreadChannel.kord.<get-kord>|<get-kord>(){}[0]
-    final val parent // dev.kord.core.entity.channel.thread/DeletedThreadChannel.parent|{}parent[0]
-        final fun <get-parent>(): dev.kord.core.behavior.channel.threads/ThreadParentChannelBehavior // dev.kord.core.entity.channel.thread/DeletedThreadChannel.parent.<get-parent>|<get-parent>(){}[0]
-    final val parentId // dev.kord.core.entity.channel.thread/DeletedThreadChannel.parentId|{}parentId[0]
-        final fun <get-parentId>(): dev.kord.common.entity/Snowflake // dev.kord.core.entity.channel.thread/DeletedThreadChannel.parentId.<get-parentId>|<get-parentId>(){}[0]
     final val supplier // dev.kord.core.entity.channel.thread/DeletedThreadChannel.supplier|{}supplier[0]
         final fun <get-supplier>(): dev.kord.core.supplier/EntitySupplier // dev.kord.core.entity.channel.thread/DeletedThreadChannel.supplier.<get-supplier>|<get-supplier>(){}[0]
-    final val type // dev.kord.core.entity.channel.thread/DeletedThreadChannel.type|{}type[0]
-        final fun <get-type>(): dev.kord.common.entity/ChannelType // dev.kord.core.entity.channel.thread/DeletedThreadChannel.type.<get-type>|<get-type>(){}[0]
 
     final fun withStrategy(dev.kord.core.supplier/EntitySupplyStrategy<*>): dev.kord.core.entity.channel.thread/DeletedThreadChannel // dev.kord.core.entity.channel.thread/DeletedThreadChannel.withStrategy|withStrategy(dev.kord.core.supplier.EntitySupplyStrategy<*>){}[0]
-    final suspend fun getGuild(): dev.kord.core.entity/Guild // dev.kord.core.entity.channel.thread/DeletedThreadChannel.getGuild|getGuild(){}[0]
-    final suspend fun getGuildOrNull(): dev.kord.core.entity/Guild? // dev.kord.core.entity.channel.thread/DeletedThreadChannel.getGuildOrNull|getGuildOrNull(){}[0]
-    final suspend fun getParent(): dev.kord.core.entity.channel/ThreadParentChannel // dev.kord.core.entity.channel.thread/DeletedThreadChannel.getParent|getParent(){}[0]
-    final suspend fun getParentOrNull(): dev.kord.core.entity.channel/ThreadParentChannel? // dev.kord.core.entity.channel.thread/DeletedThreadChannel.getParentOrNull|getParentOrNull(){}[0]
 }
 
 final class dev.kord.core.entity.channel.thread/NewsChannelThread : dev.kord.core.entity.channel.thread/ThreadChannel { // dev.kord.core.entity.channel.thread/NewsChannelThread|null[0]
@@ -7231,6 +7279,8 @@ final class dev.kord.core.entity.channel.thread/TextChannelThread : dev.kord.cor
         final fun <get-data>(): dev.kord.core.cache.data/ChannelData // dev.kord.core.entity.channel.thread/TextChannelThread.data.<get-data>|<get-data>(){}[0]
     final val guildId // dev.kord.core.entity.channel.thread/TextChannelThread.guildId|{}guildId[0]
         final fun <get-guildId>(): dev.kord.common.entity/Snowflake // dev.kord.core.entity.channel.thread/TextChannelThread.guildId.<get-guildId>|<get-guildId>(){}[0]
+    final val id // dev.kord.core.entity.channel.thread/TextChannelThread.id|{}id[0]
+        final fun <get-id>(): dev.kord.common.entity/Snowflake // dev.kord.core.entity.channel.thread/TextChannelThread.id.<get-id>|<get-id>(){}[0]
     final val isInvitable // dev.kord.core.entity.channel.thread/TextChannelThread.isInvitable|{}isInvitable[0]
         final fun <get-isInvitable>(): kotlin/Boolean // dev.kord.core.entity.channel.thread/TextChannelThread.isInvitable.<get-isInvitable>|<get-isInvitable>(){}[0]
     final val isPrivate // dev.kord.core.entity.channel.thread/TextChannelThread.isPrivate|{}isPrivate[0]
@@ -12469,17 +12519,13 @@ final class dev.kord.core.event.interaction/GuildUserCommandInteractionCreateEve
         final fun <get-shard>(): kotlin/Int // dev.kord.core.event.interaction/GuildUserCommandInteractionCreateEvent.shard.<get-shard>|<get-shard>(){}[0]
 }
 
-final class dev.kord.core.event.message/MessageBulkDeleteEvent : dev.kord.core.entity/Strategizable, dev.kord.core.event/Event { // dev.kord.core.event.message/MessageBulkDeleteEvent|null[0]
+final class dev.kord.core.event.message/MessageBulkDeleteEvent : dev.kord.core.entity/Strategizable, dev.kord.core.event.message/MessagesChangeEvent { // dev.kord.core.event.message/MessageBulkDeleteEvent|null[0]
     constructor <init>(kotlin.collections/Set<dev.kord.common.entity/Snowflake>, kotlin.collections/Set<dev.kord.core.entity/Message>, dev.kord.common.entity/Snowflake, dev.kord.common.entity/Snowflake?, dev.kord.core/Kord, kotlin/Int, kotlin/Any?, dev.kord.core.supplier/EntitySupplier = ...) // dev.kord.core.event.message/MessageBulkDeleteEvent.<init>|<init>(kotlin.collections.Set<dev.kord.common.entity.Snowflake>;kotlin.collections.Set<dev.kord.core.entity.Message>;dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake?;dev.kord.core.Kord;kotlin.Int;kotlin.Any?;dev.kord.core.supplier.EntitySupplier){}[0]
 
-    final val channel // dev.kord.core.event.message/MessageBulkDeleteEvent.channel|{}channel[0]
-        final fun <get-channel>(): dev.kord.core.behavior.channel/MessageChannelBehavior // dev.kord.core.event.message/MessageBulkDeleteEvent.channel.<get-channel>|<get-channel>(){}[0]
     final val channelId // dev.kord.core.event.message/MessageBulkDeleteEvent.channelId|{}channelId[0]
         final fun <get-channelId>(): dev.kord.common.entity/Snowflake // dev.kord.core.event.message/MessageBulkDeleteEvent.channelId.<get-channelId>|<get-channelId>(){}[0]
     final val customContext // dev.kord.core.event.message/MessageBulkDeleteEvent.customContext|{}customContext[0]
         final fun <get-customContext>(): kotlin/Any? // dev.kord.core.event.message/MessageBulkDeleteEvent.customContext.<get-customContext>|<get-customContext>(){}[0]
-    final val guild // dev.kord.core.event.message/MessageBulkDeleteEvent.guild|{}guild[0]
-        final fun <get-guild>(): dev.kord.core.behavior/GuildBehavior? // dev.kord.core.event.message/MessageBulkDeleteEvent.guild.<get-guild>|<get-guild>(){}[0]
     final val guildId // dev.kord.core.event.message/MessageBulkDeleteEvent.guildId|{}guildId[0]
         final fun <get-guildId>(): dev.kord.common.entity/Snowflake? // dev.kord.core.event.message/MessageBulkDeleteEvent.guildId.<get-guildId>|<get-guildId>(){}[0]
     final val kord // dev.kord.core.event.message/MessageBulkDeleteEvent.kord|{}kord[0]
@@ -12495,14 +12541,13 @@ final class dev.kord.core.event.message/MessageBulkDeleteEvent : dev.kord.core.e
 
     final fun toString(): kotlin/String // dev.kord.core.event.message/MessageBulkDeleteEvent.toString|toString(){}[0]
     final fun withStrategy(dev.kord.core.supplier/EntitySupplyStrategy<*>): dev.kord.core.event.message/MessageBulkDeleteEvent // dev.kord.core.event.message/MessageBulkDeleteEvent.withStrategy|withStrategy(dev.kord.core.supplier.EntitySupplyStrategy<*>){}[0]
-    final suspend fun getChannel(): dev.kord.core.entity.channel/MessageChannel // dev.kord.core.event.message/MessageBulkDeleteEvent.getChannel|getChannel(){}[0]
-    final suspend fun getChannelOrNull(): dev.kord.core.entity.channel/MessageChannel? // dev.kord.core.event.message/MessageBulkDeleteEvent.getChannelOrNull|getChannelOrNull(){}[0]
-    final suspend fun getGuildOrNull(): dev.kord.core.entity/Guild? // dev.kord.core.event.message/MessageBulkDeleteEvent.getGuildOrNull|getGuildOrNull(){}[0]
 }
 
-final class dev.kord.core.event.message/MessageCreateEvent : dev.kord.core.entity/Strategizable, dev.kord.core.event/Event { // dev.kord.core.event.message/MessageCreateEvent|null[0]
+final class dev.kord.core.event.message/MessageCreateEvent : dev.kord.core.entity/Strategizable, dev.kord.core.event.message/MessageChangeEvent { // dev.kord.core.event.message/MessageCreateEvent|null[0]
     constructor <init>(dev.kord.core.entity/Message, dev.kord.common.entity/Snowflake?, dev.kord.core.entity/Member?, kotlin/Int, kotlin/Any?, dev.kord.core.supplier/EntitySupplier = ...) // dev.kord.core.event.message/MessageCreateEvent.<init>|<init>(dev.kord.core.entity.Message;dev.kord.common.entity.Snowflake?;dev.kord.core.entity.Member?;kotlin.Int;kotlin.Any?;dev.kord.core.supplier.EntitySupplier){}[0]
 
+    final val channelId // dev.kord.core.event.message/MessageCreateEvent.channelId|{}channelId[0]
+        final fun <get-channelId>(): dev.kord.common.entity/Snowflake // dev.kord.core.event.message/MessageCreateEvent.channelId.<get-channelId>|<get-channelId>(){}[0]
     final val customContext // dev.kord.core.event.message/MessageCreateEvent.customContext|{}customContext[0]
         final fun <get-customContext>(): kotlin/Any? // dev.kord.core.event.message/MessageCreateEvent.customContext.<get-customContext>|<get-customContext>(){}[0]
     final val guildId // dev.kord.core.event.message/MessageCreateEvent.guildId|{}guildId[0]
@@ -12513,6 +12558,8 @@ final class dev.kord.core.event.message/MessageCreateEvent : dev.kord.core.entit
         final fun <get-member>(): dev.kord.core.entity/Member? // dev.kord.core.event.message/MessageCreateEvent.member.<get-member>|<get-member>(){}[0]
     final val message // dev.kord.core.event.message/MessageCreateEvent.message|{}message[0]
         final fun <get-message>(): dev.kord.core.entity/Message // dev.kord.core.event.message/MessageCreateEvent.message.<get-message>|<get-message>(){}[0]
+    final val messageId // dev.kord.core.event.message/MessageCreateEvent.messageId|{}messageId[0]
+        final fun <get-messageId>(): dev.kord.common.entity/Snowflake // dev.kord.core.event.message/MessageCreateEvent.messageId.<get-messageId>|<get-messageId>(){}[0]
     final val shard // dev.kord.core.event.message/MessageCreateEvent.shard|{}shard[0]
         final fun <get-shard>(): kotlin/Int // dev.kord.core.event.message/MessageCreateEvent.shard.<get-shard>|<get-shard>(){}[0]
     final val supplier // dev.kord.core.event.message/MessageCreateEvent.supplier|{}supplier[0]
@@ -12523,17 +12570,13 @@ final class dev.kord.core.event.message/MessageCreateEvent : dev.kord.core.entit
     final suspend fun getGuildOrNull(): dev.kord.core.entity/Guild? // dev.kord.core.event.message/MessageCreateEvent.getGuildOrNull|getGuildOrNull(){}[0]
 }
 
-final class dev.kord.core.event.message/MessageDeleteEvent : dev.kord.core.entity/Strategizable, dev.kord.core.event/Event { // dev.kord.core.event.message/MessageDeleteEvent|null[0]
+final class dev.kord.core.event.message/MessageDeleteEvent : dev.kord.core.entity/Strategizable, dev.kord.core.event.message/MessageChangeEvent { // dev.kord.core.event.message/MessageDeleteEvent|null[0]
     constructor <init>(dev.kord.common.entity/Snowflake, dev.kord.common.entity/Snowflake, dev.kord.common.entity/Snowflake?, dev.kord.core.entity/Message?, dev.kord.core/Kord, kotlin/Int, kotlin/Any?, dev.kord.core.supplier/EntitySupplier = ...) // dev.kord.core.event.message/MessageDeleteEvent.<init>|<init>(dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake?;dev.kord.core.entity.Message?;dev.kord.core.Kord;kotlin.Int;kotlin.Any?;dev.kord.core.supplier.EntitySupplier){}[0]
 
-    final val channel // dev.kord.core.event.message/MessageDeleteEvent.channel|{}channel[0]
-        final fun <get-channel>(): dev.kord.core.behavior.channel/MessageChannelBehavior // dev.kord.core.event.message/MessageDeleteEvent.channel.<get-channel>|<get-channel>(){}[0]
     final val channelId // dev.kord.core.event.message/MessageDeleteEvent.channelId|{}channelId[0]
         final fun <get-channelId>(): dev.kord.common.entity/Snowflake // dev.kord.core.event.message/MessageDeleteEvent.channelId.<get-channelId>|<get-channelId>(){}[0]
     final val customContext // dev.kord.core.event.message/MessageDeleteEvent.customContext|{}customContext[0]
         final fun <get-customContext>(): kotlin/Any? // dev.kord.core.event.message/MessageDeleteEvent.customContext.<get-customContext>|<get-customContext>(){}[0]
-    final val guild // dev.kord.core.event.message/MessageDeleteEvent.guild|{}guild[0]
-        final fun <get-guild>(): dev.kord.core.behavior/GuildBehavior? // dev.kord.core.event.message/MessageDeleteEvent.guild.<get-guild>|<get-guild>(){}[0]
     final val guildId // dev.kord.core.event.message/MessageDeleteEvent.guildId|{}guildId[0]
         final fun <get-guildId>(): dev.kord.common.entity/Snowflake? // dev.kord.core.event.message/MessageDeleteEvent.guildId.<get-guildId>|<get-guildId>(){}[0]
     final val kord // dev.kord.core.event.message/MessageDeleteEvent.kord|{}kord[0]
@@ -12549,12 +12592,9 @@ final class dev.kord.core.event.message/MessageDeleteEvent : dev.kord.core.entit
 
     final fun toString(): kotlin/String // dev.kord.core.event.message/MessageDeleteEvent.toString|toString(){}[0]
     final fun withStrategy(dev.kord.core.supplier/EntitySupplyStrategy<*>): dev.kord.core.event.message/MessageDeleteEvent // dev.kord.core.event.message/MessageDeleteEvent.withStrategy|withStrategy(dev.kord.core.supplier.EntitySupplyStrategy<*>){}[0]
-    final suspend fun getChannel(): dev.kord.core.entity.channel/MessageChannel // dev.kord.core.event.message/MessageDeleteEvent.getChannel|getChannel(){}[0]
-    final suspend fun getChannelOrNull(): dev.kord.core.entity.channel/MessageChannel? // dev.kord.core.event.message/MessageDeleteEvent.getChannelOrNull|getChannelOrNull(){}[0]
-    final suspend fun getGuildOrNull(): dev.kord.core.entity/Guild? // dev.kord.core.event.message/MessageDeleteEvent.getGuildOrNull|getGuildOrNull(){}[0]
 }
 
-final class dev.kord.core.event.message/MessageUpdateEvent : dev.kord.core.entity/Strategizable, dev.kord.core.event/Event { // dev.kord.core.event.message/MessageUpdateEvent|null[0]
+final class dev.kord.core.event.message/MessageUpdateEvent : dev.kord.core.entity/Strategizable, dev.kord.core.event.message/MessageChangeEvent { // dev.kord.core.event.message/MessageUpdateEvent|null[0]
     constructor <init>(dev.kord.common.entity/Snowflake, dev.kord.common.entity/Snowflake, dev.kord.common.entity/DiscordPartialMessage, dev.kord.core.entity/Message?, dev.kord.core/Kord, kotlin/Int, kotlin/Any?, dev.kord.core.supplier/EntitySupplier = ...) // dev.kord.core.event.message/MessageUpdateEvent.<init>|<init>(dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake;dev.kord.common.entity.DiscordPartialMessage;dev.kord.core.entity.Message?;dev.kord.core.Kord;kotlin.Int;kotlin.Any?;dev.kord.core.supplier.EntitySupplier){}[0]
 
     final val channel // dev.kord.core.event.message/MessageUpdateEvent.channel|{}channel[0]
@@ -12563,6 +12603,8 @@ final class dev.kord.core.event.message/MessageUpdateEvent : dev.kord.core.entit
         final fun <get-channelId>(): dev.kord.common.entity/Snowflake // dev.kord.core.event.message/MessageUpdateEvent.channelId.<get-channelId>|<get-channelId>(){}[0]
     final val customContext // dev.kord.core.event.message/MessageUpdateEvent.customContext|{}customContext[0]
         final fun <get-customContext>(): kotlin/Any? // dev.kord.core.event.message/MessageUpdateEvent.customContext.<get-customContext>|<get-customContext>(){}[0]
+    final val guildId // dev.kord.core.event.message/MessageUpdateEvent.guildId|{}guildId[0]
+        final fun <get-guildId>(): dev.kord.common.entity/Snowflake? // dev.kord.core.event.message/MessageUpdateEvent.guildId.<get-guildId>|<get-guildId>(){}[0]
     final val kord // dev.kord.core.event.message/MessageUpdateEvent.kord|{}kord[0]
         final fun <get-kord>(): dev.kord.core/Kord // dev.kord.core.event.message/MessageUpdateEvent.kord.<get-kord>|<get-kord>(){}[0]
     final val message // dev.kord.core.event.message/MessageUpdateEvent.message|{}message[0]
