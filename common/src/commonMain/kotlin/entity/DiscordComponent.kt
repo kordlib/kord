@@ -161,7 +161,7 @@ public data class UnfurledMediaItem(
     val height: OptionalInt? = OptionalInt.Missing,
     val width: OptionalInt? = OptionalInt.Missing,
     @SerialName("content_type")
-    val contentType: Optional<String> = Optional.Missing(),
+    val contentType: Optional<String?> = Optional.Missing(),
     @SerialName("attachment_id")
     val attachmentId: OptionalSnowflake = OptionalSnowflake.Missing
 )
