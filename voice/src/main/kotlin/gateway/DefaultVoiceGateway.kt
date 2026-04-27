@@ -47,7 +47,7 @@ public class DefaultVoiceGateway(
     private val data: DefaultVoiceGatewayData
 ) : VoiceGateway {
     override val scope: CoroutineScope =
-        CoroutineScope(SupervisorJob() + CoroutineName("kord-voice-gateway[$${data.guildId.value}]"))
+        CoroutineScope(SupervisorJob() + CoroutineName("kord-voice-gateway[${data.guildId.value}]"))
 
     private lateinit var socket: DefaultClientWebSocketSession
 
@@ -87,7 +87,7 @@ public class DefaultVoiceGateway(
             } catch (exception: Exception) {
                 if (exception is CancellationException) break
 
-                defaultVoiceGatewayLogger.error(exception) { "" }
+                defaultVoiceGatewayLogger.error(exception) { "failed to connect to voice gateway" }
                 if (exception is java.nio.channels.UnresolvedAddressException) {
                     data.eventFlow.emit(Close.Timeout)
                 }
@@ -111,9 +111,9 @@ public class DefaultVoiceGateway(
             try {
                 handleClose()
             } catch (exception: CancellationException) {
-                defaultVoiceGatewayLogger.trace(exception) { "" }
+                defaultVoiceGatewayLogger.trace(exception) { "voice gateway close handler cancelled" }
             } catch (exception: Exception) {
-                defaultVoiceGatewayLogger.error(exception) { "" }
+                defaultVoiceGatewayLogger.error(exception) { "error handling voice gateway close" }
             }
 
             defaultVoiceGatewayLogger.trace { "handled voice gateway connection closed" }
@@ -139,7 +139,15 @@ public class DefaultVoiceGateway(
     }
 
     private suspend fun read(frame: Frame) {
-        val json = String(frame.data, Charsets.UTF_8)
+        when (frame) {
+            is Frame.Binary -> readBinary(frame.data)
+            is Frame.Text -> readJson(frame.data)
+            else -> { /* ignore */ }
+        }
+    }
+
+    private suspend fun readJson(frameData: ByteArray) {
+        val json = String(frameData, Charsets.UTF_8)
 
         try {
             val event = jsonParser.decodeFromString(VoiceEvent.DeserializationStrategy, json)
@@ -153,7 +161,62 @@ public class DefaultVoiceGateway(
 
             data.eventFlow.emit(event)
         } catch (exception: Exception) {
-            defaultVoiceGatewayLogger.error(exception) { "" }
+            defaultVoiceGatewayLogger.error(exception) { "error reading JSON from voice gateway" }
+        }
+    }
+
+    private suspend fun readBinary(frameData: ByteArray) {
+        if (frameData.isEmpty()) return
+
+        try {
+            // Binary frames: first byte is the opcode
+            val opcode = frameData[0].toInt() and 0xFF
+            val payload = frameData.copyOfRange(1, frameData.size)
+
+            val event: VoiceEvent? = when (opcode) {
+                OpCode.DaveMlsExternalSenderPackage.code -> {
+                    defaultVoiceGatewayLogger.trace { "Voice Gateway <<< DAVE_MLS_EXTERNAL_SENDER_PACKAGE (${payload.size} bytes)" }
+                    DaveMlsExternalSenderPackage(payload)
+                }
+                OpCode.DaveMlsProposals.code -> {
+                    defaultVoiceGatewayLogger.trace { "Voice Gateway <<< DAVE_MLS_PROPOSALS (${payload.size} bytes)" }
+                    DaveMlsProposals(payload)
+                }
+                OpCode.DaveMlsAnnounceCommitTransition.code -> {
+                    if (payload.size < 2) {
+                        defaultVoiceGatewayLogger.warn { "DAVE_MLS_ANNOUNCE_COMMIT_TRANSITION payload too short" }
+                        return
+                    }
+                    // First 2 bytes: transition_id (big-endian unsigned short)
+                    val transitionId = ((payload[0].toInt() and 0xFF) shl 8) or (payload[1].toInt() and 0xFF)
+                    val commitData = payload.copyOfRange(2, payload.size)
+                    defaultVoiceGatewayLogger.trace { "Voice Gateway <<< DAVE_MLS_ANNOUNCE_COMMIT_TRANSITION (transition=$transitionId, ${commitData.size} bytes)" }
+                    DaveMlsAnnounceCommitTransition(transitionId, commitData)
+                }
+                OpCode.DaveMlsWelcome.code -> {
+                    if (payload.size < 2) {
+                        defaultVoiceGatewayLogger.warn { "DAVE_MLS_WELCOME payload too short" }
+                        return
+                    }
+                    // First 2 bytes: transition_id (big-endian unsigned short)
+                    val transitionId = ((payload[0].toInt() and 0xFF) shl 8) or (payload[1].toInt() and 0xFF)
+                    val welcomeData = payload.copyOfRange(2, payload.size)
+                    defaultVoiceGatewayLogger.trace { "Voice Gateway <<< DAVE_MLS_WELCOME (transition=$transitionId, ${welcomeData.size} bytes)" }
+                    DaveMlsWelcome(transitionId, welcomeData)
+                }
+                else -> {
+                    // Not a known binary opcode - try to parse as JSON (some servers may send text frames as binary)
+                    defaultVoiceGatewayLogger.trace { "Unknown binary frame with opcode $opcode, trying JSON fallback" }
+                    readJson(frameData)
+                    return
+                }
+            }
+
+            if (event != null) {
+                data.eventFlow.emit(event)
+            }
+        } catch (exception: Exception) {
+            defaultVoiceGatewayLogger.error(exception) { "Error processing binary frame" }
         }
     }
 
@@ -196,9 +259,23 @@ public class DefaultVoiceGateway(
                     "Voice Gateway >>> ${Json.encodeToString(Command.SerializationStrategy, copy)}"
                 }
                 is Heartbeat, is Resume, is SendSpeaking -> "Voice Gateway >>> $json"
+                is DaveProtocolReadyForTransition, is DaveMlsInvalidCommitWelcome -> "Voice Gateway >>> $json"
             }
         }
         socket.send(Frame.Text(json))
+    }
+
+    override suspend fun sendBinary(opcode: Int, data: ByteArray): Unit = stateMutex.withLock {
+        if (state.value !is State.Running) return@withLock
+        sendBinaryUnsafe(opcode, data)
+    }
+
+    private suspend fun sendBinaryUnsafe(opcode: Int, data: ByteArray) {
+        val frame = ByteArray(1 + data.size)
+        frame[0] = opcode.toByte()
+        data.copyInto(frame, 1)
+        defaultVoiceGatewayLogger.trace { "Voice Gateway >>> BINARY opcode=$opcode (${data.size} bytes)" }
+        socket.send(Frame.Binary(true, frame))
     }
 
     @OptIn(DelicateCoroutinesApi::class)
@@ -250,6 +327,7 @@ internal val VoiceGatewayCloseCode.retry
         VoiceGatewayCloseCode.Disconnect -> false
         VoiceGatewayCloseCode.VoiceServerCrashed -> true
         VoiceGatewayCloseCode.UnknownEncryptionMode -> false
+        VoiceGatewayCloseCode.DaveProtocolRequired -> false
         is VoiceGatewayCloseCode.Unknown -> true
     }
 
@@ -270,6 +348,7 @@ internal val VoiceGatewayCloseCode.exceptional
         VoiceGatewayCloseCode.Disconnect -> false
         VoiceGatewayCloseCode.VoiceServerCrashed -> false
         VoiceGatewayCloseCode.UnknownEncryptionMode -> true
+        VoiceGatewayCloseCode.DaveProtocolRequired -> false
         is VoiceGatewayCloseCode.Unknown -> false
     }
 
