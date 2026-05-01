@@ -4,6 +4,7 @@ import dev.kord.common.annotation.KordDsl
 import dev.kord.common.entity.*
 import dev.kord.common.entity.SelectDefaultValueType.*
 import dev.kord.common.entity.optional.Optional
+import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalInt
 import dev.kord.common.entity.optional.delegate.delegate
 import dev.kord.common.entity.optional.mapCopy
@@ -36,6 +37,12 @@ public sealed class SelectMenuBuilder(public var customId: String) : ActionRowCo
      */
     public var placeholder: String? by ::_placeholder.delegate()
 
+    /**
+     * Whether the select is required to answer in a modal. This field is only available for modals; It is ignored in
+     * messages.
+     */
+    public var required: Boolean = true
+
     protected abstract val type: ComponentType
     protected open fun buildOptions(): Optional<List<DiscordSelectOption>> = Optional.Missing()
     protected open fun buildChannelTypes(): Optional<List<ChannelType>> = Optional.Missing()
@@ -49,6 +56,7 @@ public sealed class SelectMenuBuilder(public var customId: String) : ActionRowCo
         defaultValues = buildDefaultValues(),
         minValues = OptionalInt.Value(allowedValues.start),
         maxValues = OptionalInt.Value(allowedValues.endInclusive),
+        required = OptionalBoolean.Value(required),
         disabled = _disabled,
     )
 }

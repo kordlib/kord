@@ -1344,10 +1344,12 @@ public abstract class dev/kord/rest/builder/component/SelectMenuBuilder : dev/ko
 	public final fun getAllowedValues ()Lkotlin/ranges/ClosedRange;
 	public final fun getCustomId ()Ljava/lang/String;
 	public final fun getPlaceholder ()Ljava/lang/String;
+	public final fun getRequired ()Z
 	protected abstract fun getType ()Ldev/kord/common/entity/ComponentType;
 	public final fun setAllowedValues (Lkotlin/ranges/ClosedRange;)V
 	public final fun setCustomId (Ljava/lang/String;)V
 	public final fun setPlaceholder (Ljava/lang/String;)V
+	public final fun setRequired (Z)V
 }
 
 public final class dev/kord/rest/builder/component/SelectMenuBuilderKt {

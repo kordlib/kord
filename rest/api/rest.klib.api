@@ -9261,6 +9261,9 @@ sealed class dev.kord.rest.builder.component/SelectMenuBuilder : dev.kord.rest.b
     final var placeholder // dev.kord.rest.builder.component/SelectMenuBuilder.placeholder|{}placeholder[0]
         final fun <get-placeholder>(): kotlin/String? // dev.kord.rest.builder.component/SelectMenuBuilder.placeholder.<get-placeholder>|<get-placeholder>(){}[0]
         final fun <set-placeholder>(kotlin/String?) // dev.kord.rest.builder.component/SelectMenuBuilder.placeholder.<set-placeholder>|<set-placeholder>(kotlin.String?){}[0]
+    final var required // dev.kord.rest.builder.component/SelectMenuBuilder.required|{}required[0]
+        final fun <get-required>(): kotlin/Boolean // dev.kord.rest.builder.component/SelectMenuBuilder.required.<get-required>|<get-required>(){}[0]
+        final fun <set-required>(kotlin/Boolean) // dev.kord.rest.builder.component/SelectMenuBuilder.required.<set-required>|<set-required>(kotlin.Boolean){}[0]
 
     final fun build(): dev.kord.common.entity/DiscordChatComponent // dev.kord.rest.builder.component/SelectMenuBuilder.build|build(){}[0]
     open fun buildChannelTypes(): dev.kord.common.entity.optional/Optional<kotlin.collections/List<dev.kord.common.entity/ChannelType>> // dev.kord.rest.builder.component/SelectMenuBuilder.buildChannelTypes|buildChannelTypes(){}[0]
