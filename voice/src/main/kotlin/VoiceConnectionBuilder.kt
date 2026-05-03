@@ -7,6 +7,7 @@ import dev.kord.gateway.Gateway
 import dev.kord.gateway.UpdateVoiceStatus
 import dev.kord.gateway.VoiceServerUpdate
 import dev.kord.gateway.VoiceStateUpdate
+import dev.kord.voice.dave.DaveProtocol
 import dev.kord.voice.encryption.strategies.*
 import dev.kord.voice.exception.VoiceConnectionInitializationException
 import dev.kord.voice.gateway.DefaultVoiceGatewayBuilder
@@ -156,6 +157,7 @@ public class VoiceConnectionBuilder(
         VoiceConnectionData(
             selfId,
             guildId,
+            channelId,
             voiceState.sessionId
         ) to VoiceGatewayConfiguration(
             voiceServer.token,
@@ -185,8 +187,11 @@ public class VoiceConnectionBuilder(
                     nonceStrategy
                 )
             )
+        val daveProtocol: DaveProtocol = dev.kord.voice.dave.LibdaveDaveProtocol.create()
+            ?: dev.kord.voice.dave.NoOpDaveProtocol
+
         val streams =
-            streams ?: if (receiveVoice) DefaultStreams(voiceGateway, udpSocket, nonceStrategy) else NOPStreams
+            streams ?: if (receiveVoice) DefaultStreams(voiceGateway, udpSocket, nonceStrategy, daveProtocol) else NOPStreams
 
         return VoiceConnection(
             voiceConnectionData,
@@ -198,7 +203,9 @@ public class VoiceConnectionBuilder(
             audioProvider,
             frameInterceptor,
             audioSender,
-            connectionDetachDuration
+            daveProtocol,
+            connectionDetachDuration,
+            nonceStrategy
         )
     }
 

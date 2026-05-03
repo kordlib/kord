@@ -4,9 +4,11 @@ import dev.kord.common.annotation.KordVoice
 import dev.kord.common.entity.Snowflake
 import dev.kord.gateway.Gateway
 import dev.kord.gateway.UpdateVoiceStatus
+import dev.kord.voice.dave.DaveProtocol
 import dev.kord.voice.encryption.strategies.*
 import dev.kord.voice.gateway.VoiceGateway
 import dev.kord.voice.gateway.VoiceGatewayConfiguration
+import dev.kord.voice.handlers.DaveProtocolHandler
 import dev.kord.voice.handlers.StreamsHandler
 import dev.kord.voice.handlers.UdpLifeCycleHandler
 import dev.kord.voice.handlers.VoiceUpdateEventHandler
@@ -23,11 +25,13 @@ import kotlin.time.Duration
  *
  * @param selfId the id of the bot connecting to a voice channel.
  * @param guildId the id of the guild that the bot is connecting to.
+ * @param channelId the id of the voice channel that the bot is connecting to.
  * @param sessionId the id of the current voice session, given by Discord.
  */
 public data class VoiceConnectionData(
     val selfId: Snowflake,
     val guildId: Snowflake,
+    val channelId: Snowflake,
     val sessionId: String,
 )
 
@@ -53,6 +57,7 @@ public class VoiceConnection internal constructor(
     public val audioProvider: AudioProvider,
     public val frameInterceptor: FrameInterceptor,
     public val frameSender: AudioFrameSender,
+    public val daveProtocol: DaveProtocol,
     connectionDetachDuration: Duration,
     internal val strategy: @Suppress("DEPRECATION") NonceStrategy?
 ) {
@@ -72,7 +77,7 @@ public class VoiceConnection internal constructor(
         nonceStrategy: @Suppress("DEPRECATION") NonceStrategy, connectionDetachDuration: Duration,
     ) : this(
         data, gateway, voiceGateway, socket, voiceGatewayConfiguration, streams, audioProvider, frameInterceptor,
-        frameSender, connectionDetachDuration, nonceStrategy,
+        frameSender, dev.kord.voice.dave.NoOpDaveProtocol, connectionDetachDuration, nonceStrategy,
     )
 
     public constructor(
@@ -81,7 +86,7 @@ public class VoiceConnection internal constructor(
         frameInterceptor: FrameInterceptor, frameSender: AudioFrameSender, connectionDetachDuration: Duration,
     ) : this(
         data, gateway, voiceGateway, socket, voiceGatewayConfiguration, streams, audioProvider, frameInterceptor,
-        frameSender, connectionDetachDuration, strategy = null,
+        frameSender, dev.kord.voice.dave.NoOpDaveProtocol, connectionDetachDuration, strategy = null,
     )
 
     @Suppress("DeprecatedCallableAddReplaceWith")
@@ -104,6 +109,7 @@ public class VoiceConnection internal constructor(
             launch { VoiceUpdateEventHandler(gateway.events, connectionDetachDuration, this@VoiceConnection).start() }
             launch { StreamsHandler(voiceGateway.events, streams).start() }
             launch { UdpLifeCycleHandler(voiceGateway.events, this@VoiceConnection).start() }
+            launch { DaveProtocolHandler(voiceGateway.events, daveProtocol, voiceGateway).start() }
         }
     }
 
@@ -163,6 +169,7 @@ public class VoiceConnection internal constructor(
     public suspend fun shutdown() {
         leave()
         voiceGateway.detach()
+        daveProtocol.close()
 
         scope.cancel()
     }

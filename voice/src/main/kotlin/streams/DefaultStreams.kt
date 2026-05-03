@@ -3,6 +3,7 @@ package dev.kord.voice.streams
 import dev.kord.common.annotation.KordVoice
 import dev.kord.common.entity.Snowflake
 import dev.kord.voice.AudioFrame
+import dev.kord.voice.dave.DaveProtocol
 import dev.kord.voice.encryption.XChaCha20Poly1305Codec
 import dev.kord.voice.encryption.strategies.*
 import dev.kord.voice.gateway.Speaking
@@ -29,7 +30,8 @@ private val defaultStreamsLogger = KotlinLogging.logger { }
 public class DefaultStreams(
     private val voiceGateway: VoiceGateway,
     private val udp: VoiceUdpSocket,
-    private val nonceStrategy: @Suppress("DEPRECATION") NonceStrategy
+    private val nonceStrategy: @Suppress("DEPRECATION") NonceStrategy,
+    private val daveProtocol: DaveProtocol = dev.kord.voice.dave.NoOpDaveProtocol
 ) : Streams {
 
     public constructor(voiceGateway: VoiceGateway, udp: VoiceUdpSocket) : this(voiceGateway, udp, @Suppress("DEPRECATION") LiteNonceStrategy())
@@ -41,6 +43,7 @@ public class DefaultStreams(
             .filter { it.payloadType == PayloadType.Audio.raw }
             .decrypt(nonceStrategy, key)
             .strip()
+            .daveDecrypt()
             .onEach { _incomingAudioPackets.emit(it) }
             .launchIn(this)
     }
@@ -83,6 +86,28 @@ public class DefaultStreams(
 
     override val incomingUserStreams: SharedFlow<Pair<Snowflake, AudioFrame>> =
         _incomingUserAudioFrames
+
+    private fun Flow<RTPPacket>.daveDecrypt(): Flow<RTPPacket> = mapNotNull { packet ->
+        if (!daveProtocol.isActive) return@mapNotNull packet
+
+        val userId = _ssrcToUser.value[packet.ssrc]
+        if (userId != null) {
+            try {
+                val payloadBytes = with(packet.payload) {
+                    data.copyOfRange(dataStart, dataStart + viewSize)
+                }
+                val decrypted = daveProtocol.decryptFrame(userId.value.toLong(), payloadBytes)
+                    ?: return@mapNotNull null // decryption failed, drop frame
+                // Decrypted is always ≤ encrypted size, so it fits in the existing buffer
+                decrypted.copyInto(packet.payload.data, packet.payload.dataStart)
+                packet.payload.resize(packet.payload.dataStart, packet.payload.dataStart + decrypted.size)
+            } catch (e: Exception) {
+                defaultStreamsLogger.trace { "DAVE: decryption error for ssrc=${packet.ssrc}: ${e.message}" }
+                return@mapNotNull null // drop frame — passing encrypted data would cause garbled audio
+            }
+        }
+        packet
+    }
 
     private val _ssrcToUser: AtomicRef<MutableMap<UInt, Snowflake>> =
         atomic(mutableMapOf())

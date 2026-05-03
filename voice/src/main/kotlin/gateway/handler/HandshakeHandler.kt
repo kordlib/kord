@@ -4,8 +4,6 @@ import dev.kord.voice.gateway.*
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
 
-private const val SUPPORTED_DAVE_PROTOCOL_VERSION = 0
-
 internal class HandshakeHandler(
     flow: Flow<VoiceEvent>,
     private val data: DefaultVoiceGatewayData,
@@ -20,13 +18,26 @@ internal class HandshakeHandler(
             data.selfId,
             data.sessionId,
             configuration.token,
-            SUPPORTED_DAVE_PROTOCOL_VERSION
+            maxDaveProtocolVersion
         )
 
     override suspend fun start() = coroutineScope {
         on<Hello> {
             data.reconnectRetry.reset()
             send(identify)
+        }
+    }
+
+    internal companion object {
+        /**
+         * Cached max DAVE protocol version. Detected once from the native library.
+         */
+        val maxDaveProtocolVersion: Int by lazy {
+            try {
+                moe.kyokobot.libdave.NativeDaveFactory().maxSupportedProtocolVersion()
+            } catch (_: Throwable) {
+                0
+            }
         }
     }
 }

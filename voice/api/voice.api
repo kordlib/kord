@@ -332,6 +332,7 @@ public final class dev/kord/voice/VoiceConnection {
 	public final fun disconnect (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun getAudioProvider ()Ldev/kord/voice/AudioProvider;
 	public final fun getData ()Ldev/kord/voice/VoiceConnectionData;
+	public final fun getDaveProtocol ()Ldev/kord/voice/dave/DaveProtocol;
 	public final fun getFrameInterceptor ()Ldev/kord/voice/FrameInterceptor;
 	public final fun getFrameSender ()Ldev/kord/voice/udp/AudioFrameSender;
 	public final fun getGateway ()Ldev/kord/gateway/Gateway;
@@ -387,13 +388,15 @@ public final class dev/kord/voice/VoiceConnectionBuilder {
 }
 
 public final class dev/kord/voice/VoiceConnectionData {
-	public fun <init> (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;)V
+	public fun <init> (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;)V
 	public final fun component1 ()Ldev/kord/common/entity/Snowflake;
 	public final fun component2 ()Ldev/kord/common/entity/Snowflake;
-	public final fun component3 ()Ljava/lang/String;
-	public final fun copy (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;)Ldev/kord/voice/VoiceConnectionData;
-	public static synthetic fun copy$default (Ldev/kord/voice/VoiceConnectionData;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;ILjava/lang/Object;)Ldev/kord/voice/VoiceConnectionData;
+	public final fun component3 ()Ldev/kord/common/entity/Snowflake;
+	public final fun component4 ()Ljava/lang/String;
+	public final fun copy (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;)Ldev/kord/voice/VoiceConnectionData;
+	public static synthetic fun copy$default (Ldev/kord/voice/VoiceConnectionData;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;ILjava/lang/Object;)Ldev/kord/voice/VoiceConnectionData;
 	public fun equals (Ljava/lang/Object;)Z
+	public final fun getChannelId ()Ldev/kord/common/entity/Snowflake;
 	public final fun getGuildId ()Ldev/kord/common/entity/Snowflake;
 	public final fun getSelfId ()Ldev/kord/common/entity/Snowflake;
 	public final fun getSessionId ()Ljava/lang/String;
@@ -404,6 +407,103 @@ public final class dev/kord/voice/VoiceConnectionData {
 public final class dev/kord/voice/VoiceConnectionKt {
 	public static final fun VoiceConnection (Ldev/kord/gateway/Gateway;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static synthetic fun VoiceConnection$default (Ldev/kord/gateway/Gateway;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+}
+
+public abstract class dev/kord/voice/dave/DaveCommitResult {
+}
+
+public final class dev/kord/voice/dave/DaveCommitResult$Failed : dev/kord/voice/dave/DaveCommitResult {
+	public static final field INSTANCE Ldev/kord/voice/dave/DaveCommitResult$Failed;
+}
+
+public final class dev/kord/voice/dave/DaveCommitResult$Ignored : dev/kord/voice/dave/DaveCommitResult {
+	public static final field INSTANCE Ldev/kord/voice/dave/DaveCommitResult$Ignored;
+}
+
+public final class dev/kord/voice/dave/DaveCommitResult$Success : dev/kord/voice/dave/DaveCommitResult {
+	public fun <init> (Ljava/util/Map;)V
+	public final fun component1 ()Ljava/util/Map;
+	public final fun copy (Ljava/util/Map;)Ldev/kord/voice/dave/DaveCommitResult$Success;
+	public static synthetic fun copy$default (Ldev/kord/voice/dave/DaveCommitResult$Success;Ljava/util/Map;ILjava/lang/Object;)Ldev/kord/voice/dave/DaveCommitResult$Success;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getRosterMap ()Ljava/util/Map;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public abstract interface class dev/kord/voice/dave/DaveProtocol : java/io/Closeable {
+	public abstract fun addUser (J)V
+	public abstract fun assignSsrcToCodec-WZ4Q5Ns (I)V
+	public abstract fun decryptFrame (J[B)[B
+	public abstract fun encryptFrame-qim9Vi0 (I[B)[B
+	public abstract fun executeTransition (I)V
+	public abstract fun getCurrentProtocolVersion ()I
+	public abstract fun getLastEpochAuthenticator ()[B
+	public abstract fun getMarshalledKeyPackage ()[B
+	public abstract fun getMaxProtocolVersion ()I
+	public abstract fun initialize (ILjava/lang/String;JLjava/lang/String;)V
+	public abstract fun isActive ()Z
+	public abstract fun prepareKeyRatchets (II)V
+	public abstract fun processCommit ([B)Ldev/kord/voice/dave/DaveCommitResult;
+	public abstract fun processProposals ([BLjava/util/Set;)[B
+	public abstract fun processWelcome ([BLjava/util/Set;)Ljava/util/Map;
+	public abstract fun removeUser (J)V
+	public abstract fun reset ()V
+	public abstract fun setExternalSender ([B)V
+	public abstract fun setProtocolVersion (I)V
+}
+
+public final class dev/kord/voice/dave/LibdaveDaveProtocol : dev/kord/voice/dave/DaveProtocol {
+	public static final field Companion Ldev/kord/voice/dave/LibdaveDaveProtocol$Companion;
+	public static final field INIT_TRANSITION_ID I
+	public fun addUser (J)V
+	public fun assignSsrcToCodec-WZ4Q5Ns (I)V
+	public fun close ()V
+	public fun decryptFrame (J[B)[B
+	public fun encryptFrame-qim9Vi0 (I[B)[B
+	public fun executeTransition (I)V
+	public fun getCurrentProtocolVersion ()I
+	public fun getLastEpochAuthenticator ()[B
+	public fun getMarshalledKeyPackage ()[B
+	public fun getMaxProtocolVersion ()I
+	public fun initialize (ILjava/lang/String;JLjava/lang/String;)V
+	public fun isActive ()Z
+	public fun prepareKeyRatchets (II)V
+	public fun processCommit ([B)Ldev/kord/voice/dave/DaveCommitResult;
+	public fun processProposals ([BLjava/util/Set;)[B
+	public fun processWelcome ([BLjava/util/Set;)Ljava/util/Map;
+	public fun removeUser (J)V
+	public fun reset ()V
+	public fun setExternalSender ([B)V
+	public fun setProtocolVersion (I)V
+}
+
+public final class dev/kord/voice/dave/LibdaveDaveProtocol$Companion {
+	public final fun create ()Ldev/kord/voice/dave/LibdaveDaveProtocol;
+}
+
+public final class dev/kord/voice/dave/NoOpDaveProtocol : dev/kord/voice/dave/DaveProtocol {
+	public static final field INSTANCE Ldev/kord/voice/dave/NoOpDaveProtocol;
+	public fun addUser (J)V
+	public fun assignSsrcToCodec-WZ4Q5Ns (I)V
+	public fun close ()V
+	public fun decryptFrame (J[B)[B
+	public fun encryptFrame-qim9Vi0 (I[B)[B
+	public fun executeTransition (I)V
+	public fun getCurrentProtocolVersion ()I
+	public fun getLastEpochAuthenticator ()[B
+	public fun getMarshalledKeyPackage ()[B
+	public fun getMaxProtocolVersion ()I
+	public fun initialize (ILjava/lang/String;JLjava/lang/String;)V
+	public fun isActive ()Z
+	public fun prepareKeyRatchets (II)V
+	public fun processCommit ([B)Ldev/kord/voice/dave/DaveCommitResult;
+	public fun processProposals ([BLjava/util/Set;)[B
+	public fun processWelcome ([BLjava/util/Set;)Ljava/util/Map;
+	public fun removeUser (J)V
+	public fun reset ()V
+	public fun setExternalSender ([B)V
+	public fun setProtocolVersion (I)V
 }
 
 public final class dev/kord/voice/encryption/XChaCha20Poly1305Codec {
@@ -469,6 +569,60 @@ public final class dev/kord/voice/exception/VoiceConnectionInitializationExcepti
 	public fun <init> (Ljava/lang/Throwable;)V
 }
 
+public final class dev/kord/voice/gateway/ClientDisconnect : dev/kord/voice/gateway/VoiceEvent {
+	public static final field Companion Ldev/kord/voice/gateway/ClientDisconnect$Companion;
+	public fun <init> (Ldev/kord/common/entity/Snowflake;)V
+	public final fun component1 ()Ldev/kord/common/entity/Snowflake;
+	public final fun copy (Ldev/kord/common/entity/Snowflake;)Ldev/kord/voice/gateway/ClientDisconnect;
+	public static synthetic fun copy$default (Ldev/kord/voice/gateway/ClientDisconnect;Ldev/kord/common/entity/Snowflake;ILjava/lang/Object;)Ldev/kord/voice/gateway/ClientDisconnect;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getUserId ()Ldev/kord/common/entity/Snowflake;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final synthetic class dev/kord/voice/gateway/ClientDisconnect$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Ldev/kord/voice/gateway/ClientDisconnect$$serializer;
+	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/voice/gateway/ClientDisconnect;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/voice/gateway/ClientDisconnect;)V
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class dev/kord/voice/gateway/ClientDisconnect$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class dev/kord/voice/gateway/ClientsConnect : dev/kord/voice/gateway/VoiceEvent {
+	public static final field Companion Ldev/kord/voice/gateway/ClientsConnect$Companion;
+	public fun <init> (Ljava/util/List;)V
+	public final fun component1 ()Ljava/util/List;
+	public final fun copy (Ljava/util/List;)Ldev/kord/voice/gateway/ClientsConnect;
+	public static synthetic fun copy$default (Ldev/kord/voice/gateway/ClientsConnect;Ljava/util/List;ILjava/lang/Object;)Ldev/kord/voice/gateway/ClientsConnect;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getUserIds ()Ljava/util/List;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final synthetic class dev/kord/voice/gateway/ClientsConnect$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Ldev/kord/voice/gateway/ClientsConnect$$serializer;
+	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/voice/gateway/ClientsConnect;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/voice/gateway/ClientsConnect;)V
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class dev/kord/voice/gateway/ClientsConnect$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
 public abstract class dev/kord/voice/gateway/Close : dev/kord/voice/gateway/VoiceEvent {
 }
 
@@ -511,6 +665,193 @@ public final class dev/kord/voice/gateway/Command$SerializationStrategy : kotlin
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
 }
 
+public final class dev/kord/voice/gateway/DaveMlsAnnounceCommitTransition : dev/kord/voice/gateway/VoiceEvent {
+	public fun <init> (I[B)V
+	public final fun component1 ()I
+	public final fun component2 ()[B
+	public final fun copy (I[B)Ldev/kord/voice/gateway/DaveMlsAnnounceCommitTransition;
+	public static synthetic fun copy$default (Ldev/kord/voice/gateway/DaveMlsAnnounceCommitTransition;I[BILjava/lang/Object;)Ldev/kord/voice/gateway/DaveMlsAnnounceCommitTransition;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getData ()[B
+	public final fun getTransitionId ()I
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class dev/kord/voice/gateway/DaveMlsExternalSenderPackage : dev/kord/voice/gateway/VoiceEvent {
+	public fun <init> ([B)V
+	public final fun component1 ()[B
+	public final fun copy ([B)Ldev/kord/voice/gateway/DaveMlsExternalSenderPackage;
+	public static synthetic fun copy$default (Ldev/kord/voice/gateway/DaveMlsExternalSenderPackage;[BILjava/lang/Object;)Ldev/kord/voice/gateway/DaveMlsExternalSenderPackage;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getData ()[B
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class dev/kord/voice/gateway/DaveMlsInvalidCommitWelcome : dev/kord/voice/gateway/Command {
+	public static final field Companion Ldev/kord/voice/gateway/DaveMlsInvalidCommitWelcome$Companion;
+	public fun <init> (I)V
+	public final fun component1 ()I
+	public final fun copy (I)Ldev/kord/voice/gateway/DaveMlsInvalidCommitWelcome;
+	public static synthetic fun copy$default (Ldev/kord/voice/gateway/DaveMlsInvalidCommitWelcome;IILjava/lang/Object;)Ldev/kord/voice/gateway/DaveMlsInvalidCommitWelcome;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getTransitionId ()I
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final synthetic class dev/kord/voice/gateway/DaveMlsInvalidCommitWelcome$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Ldev/kord/voice/gateway/DaveMlsInvalidCommitWelcome$$serializer;
+	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/voice/gateway/DaveMlsInvalidCommitWelcome;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/voice/gateway/DaveMlsInvalidCommitWelcome;)V
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class dev/kord/voice/gateway/DaveMlsInvalidCommitWelcome$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class dev/kord/voice/gateway/DaveMlsProposals : dev/kord/voice/gateway/VoiceEvent {
+	public fun <init> ([B)V
+	public final fun component1 ()[B
+	public final fun copy ([B)Ldev/kord/voice/gateway/DaveMlsProposals;
+	public static synthetic fun copy$default (Ldev/kord/voice/gateway/DaveMlsProposals;[BILjava/lang/Object;)Ldev/kord/voice/gateway/DaveMlsProposals;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getData ()[B
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class dev/kord/voice/gateway/DaveMlsWelcome : dev/kord/voice/gateway/VoiceEvent {
+	public fun <init> (I[B)V
+	public final fun component1 ()I
+	public final fun component2 ()[B
+	public final fun copy (I[B)Ldev/kord/voice/gateway/DaveMlsWelcome;
+	public static synthetic fun copy$default (Ldev/kord/voice/gateway/DaveMlsWelcome;I[BILjava/lang/Object;)Ldev/kord/voice/gateway/DaveMlsWelcome;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getData ()[B
+	public final fun getTransitionId ()I
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class dev/kord/voice/gateway/DaveProtocolExecuteTransition : dev/kord/voice/gateway/VoiceEvent {
+	public static final field Companion Ldev/kord/voice/gateway/DaveProtocolExecuteTransition$Companion;
+	public fun <init> (I)V
+	public final fun component1 ()I
+	public final fun copy (I)Ldev/kord/voice/gateway/DaveProtocolExecuteTransition;
+	public static synthetic fun copy$default (Ldev/kord/voice/gateway/DaveProtocolExecuteTransition;IILjava/lang/Object;)Ldev/kord/voice/gateway/DaveProtocolExecuteTransition;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getTransitionId ()I
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final synthetic class dev/kord/voice/gateway/DaveProtocolExecuteTransition$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Ldev/kord/voice/gateway/DaveProtocolExecuteTransition$$serializer;
+	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/voice/gateway/DaveProtocolExecuteTransition;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/voice/gateway/DaveProtocolExecuteTransition;)V
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class dev/kord/voice/gateway/DaveProtocolExecuteTransition$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class dev/kord/voice/gateway/DaveProtocolPrepareEpoch : dev/kord/voice/gateway/VoiceEvent {
+	public static final field Companion Ldev/kord/voice/gateway/DaveProtocolPrepareEpoch$Companion;
+	public fun <init> (II)V
+	public final fun component1 ()I
+	public final fun component2 ()I
+	public final fun copy (II)Ldev/kord/voice/gateway/DaveProtocolPrepareEpoch;
+	public static synthetic fun copy$default (Ldev/kord/voice/gateway/DaveProtocolPrepareEpoch;IIILjava/lang/Object;)Ldev/kord/voice/gateway/DaveProtocolPrepareEpoch;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getEpoch ()I
+	public final fun getProtocolVersion ()I
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final synthetic class dev/kord/voice/gateway/DaveProtocolPrepareEpoch$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Ldev/kord/voice/gateway/DaveProtocolPrepareEpoch$$serializer;
+	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/voice/gateway/DaveProtocolPrepareEpoch;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/voice/gateway/DaveProtocolPrepareEpoch;)V
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class dev/kord/voice/gateway/DaveProtocolPrepareEpoch$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class dev/kord/voice/gateway/DaveProtocolPrepareTransition : dev/kord/voice/gateway/VoiceEvent {
+	public static final field Companion Ldev/kord/voice/gateway/DaveProtocolPrepareTransition$Companion;
+	public fun <init> (II)V
+	public final fun component1 ()I
+	public final fun component2 ()I
+	public final fun copy (II)Ldev/kord/voice/gateway/DaveProtocolPrepareTransition;
+	public static synthetic fun copy$default (Ldev/kord/voice/gateway/DaveProtocolPrepareTransition;IIILjava/lang/Object;)Ldev/kord/voice/gateway/DaveProtocolPrepareTransition;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getProtocolVersion ()I
+	public final fun getTransitionId ()I
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final synthetic class dev/kord/voice/gateway/DaveProtocolPrepareTransition$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Ldev/kord/voice/gateway/DaveProtocolPrepareTransition$$serializer;
+	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/voice/gateway/DaveProtocolPrepareTransition;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/voice/gateway/DaveProtocolPrepareTransition;)V
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class dev/kord/voice/gateway/DaveProtocolPrepareTransition$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class dev/kord/voice/gateway/DaveProtocolReadyForTransition : dev/kord/voice/gateway/Command {
+	public static final field Companion Ldev/kord/voice/gateway/DaveProtocolReadyForTransition$Companion;
+	public fun <init> (I)V
+	public final fun component1 ()I
+	public final fun copy (I)Ldev/kord/voice/gateway/DaveProtocolReadyForTransition;
+	public static synthetic fun copy$default (Ldev/kord/voice/gateway/DaveProtocolReadyForTransition;IILjava/lang/Object;)Ldev/kord/voice/gateway/DaveProtocolReadyForTransition;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getTransitionId ()I
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final synthetic class dev/kord/voice/gateway/DaveProtocolReadyForTransition$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Ldev/kord/voice/gateway/DaveProtocolReadyForTransition$$serializer;
+	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/voice/gateway/DaveProtocolReadyForTransition;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/voice/gateway/DaveProtocolReadyForTransition;)V
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class dev/kord/voice/gateway/DaveProtocolReadyForTransition$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
 public final class dev/kord/voice/gateway/DefaultVoiceGateway : dev/kord/voice/gateway/VoiceGateway {
 	public fun <init> (Ldev/kord/voice/gateway/DefaultVoiceGatewayData;)V
 	public fun detach (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -518,6 +859,7 @@ public final class dev/kord/voice/gateway/DefaultVoiceGateway : dev/kord/voice/g
 	public fun getPing ()Lkotlinx/coroutines/flow/StateFlow;
 	public fun getScope ()Lkotlinx/coroutines/CoroutineScope;
 	public fun send (Ldev/kord/voice/gateway/Command;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun sendBinary (I[BLkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun start (Ldev/kord/voice/gateway/VoiceGatewayConfiguration;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun stop (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
@@ -679,7 +1021,19 @@ public final class dev/kord/voice/gateway/Identify$Companion {
 
 public final class dev/kord/voice/gateway/OpCode : java/lang/Enum {
 	public static final field ClientDisconnect Ldev/kord/voice/gateway/OpCode;
+	public static final field ClientsConnect Ldev/kord/voice/gateway/OpCode;
 	public static final field Companion Ldev/kord/voice/gateway/OpCode$Companion;
+	public static final field DaveMlsAnnounceCommitTransition Ldev/kord/voice/gateway/OpCode;
+	public static final field DaveMlsCommitWelcome Ldev/kord/voice/gateway/OpCode;
+	public static final field DaveMlsExternalSenderPackage Ldev/kord/voice/gateway/OpCode;
+	public static final field DaveMlsInvalidCommitWelcome Ldev/kord/voice/gateway/OpCode;
+	public static final field DaveMlsKeyPackage Ldev/kord/voice/gateway/OpCode;
+	public static final field DaveMlsProposals Ldev/kord/voice/gateway/OpCode;
+	public static final field DaveMlsWelcome Ldev/kord/voice/gateway/OpCode;
+	public static final field DaveProtocolExecuteTransition Ldev/kord/voice/gateway/OpCode;
+	public static final field DaveProtocolPrepareEpoch Ldev/kord/voice/gateway/OpCode;
+	public static final field DaveProtocolPrepareTransition Ldev/kord/voice/gateway/OpCode;
+	public static final field DaveProtocolReadyForTransition Ldev/kord/voice/gateway/OpCode;
 	public static final field Heartbeat Ldev/kord/voice/gateway/OpCode;
 	public static final field HeartbeatAck Ldev/kord/voice/gateway/OpCode;
 	public static final field Hello Ldev/kord/voice/gateway/OpCode;
@@ -703,14 +1057,17 @@ public final class dev/kord/voice/gateway/OpCode$Companion {
 
 public final class dev/kord/voice/gateway/Ready : dev/kord/voice/gateway/VoiceEvent {
 	public static final field Companion Ldev/kord/voice/gateway/Ready$Companion;
-	public synthetic fun <init> (ILjava/lang/String;ILjava/util/List;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (ILjava/lang/String;ILjava/util/List;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (ILjava/lang/String;ILjava/util/List;Ljava/lang/String;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1-pVg5ArA ()I
 	public final fun component2 ()Ljava/lang/String;
 	public final fun component3 ()I
 	public final fun component4 ()Ljava/util/List;
-	public final fun copy-SGjrQA4 (ILjava/lang/String;ILjava/util/List;)Ldev/kord/voice/gateway/Ready;
-	public static synthetic fun copy-SGjrQA4$default (Ldev/kord/voice/gateway/Ready;ILjava/lang/String;ILjava/util/List;ILjava/lang/Object;)Ldev/kord/voice/gateway/Ready;
+	public final fun component5 ()Ljava/lang/String;
+	public final fun copy-iyaXS9w (ILjava/lang/String;ILjava/util/List;Ljava/lang/String;)Ldev/kord/voice/gateway/Ready;
+	public static synthetic fun copy-iyaXS9w$default (Ldev/kord/voice/gateway/Ready;ILjava/lang/String;ILjava/util/List;Ljava/lang/String;ILjava/lang/Object;)Ldev/kord/voice/gateway/Ready;
 	public fun equals (Ljava/lang/Object;)Z
+	public final fun getAuthSessionId ()Ljava/lang/String;
 	public final fun getIp ()Ljava/lang/String;
 	public final fun getModes ()Ljava/util/List;
 	public final fun getPort ()I
@@ -736,13 +1093,16 @@ public final class dev/kord/voice/gateway/Ready$Companion {
 
 public final class dev/kord/voice/gateway/Resume : dev/kord/voice/gateway/Command {
 	public static final field Companion Ldev/kord/voice/gateway/Resume$Companion;
-	public fun <init> (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ljava/lang/String;)V
+	public fun <init> (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ljava/lang/String;I)V
+	public synthetic fun <init> (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ljava/lang/String;IILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ldev/kord/common/entity/Snowflake;
 	public final fun component2 ()Ljava/lang/String;
 	public final fun component3 ()Ljava/lang/String;
-	public final fun copy (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ljava/lang/String;)Ldev/kord/voice/gateway/Resume;
-	public static synthetic fun copy$default (Ldev/kord/voice/gateway/Resume;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Ldev/kord/voice/gateway/Resume;
+	public final fun component4 ()I
+	public final fun copy (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ljava/lang/String;I)Ldev/kord/voice/gateway/Resume;
+	public static synthetic fun copy$default (Ldev/kord/voice/gateway/Resume;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ljava/lang/String;IILjava/lang/Object;)Ldev/kord/voice/gateway/Resume;
 	public fun equals (Ljava/lang/Object;)Z
+	public final fun getMaxDaveProtocolVersion ()I
 	public final fun getServerId ()Ldev/kord/common/entity/Snowflake;
 	public final fun getSessionId ()Ljava/lang/String;
 	public final fun getToken ()Ljava/lang/String;
@@ -858,12 +1218,15 @@ public final class dev/kord/voice/gateway/SendSpeaking$Companion {
 
 public final class dev/kord/voice/gateway/SessionDescription : dev/kord/voice/gateway/VoiceEvent {
 	public static final field Companion Ldev/kord/voice/gateway/SessionDescription$Companion;
-	public fun <init> (Ldev/kord/voice/EncryptionMode;Ljava/util/List;)V
+	public fun <init> (Ldev/kord/voice/EncryptionMode;Ljava/util/List;I)V
+	public synthetic fun <init> (Ldev/kord/voice/EncryptionMode;Ljava/util/List;IILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ldev/kord/voice/EncryptionMode;
 	public final fun component2 ()Ljava/util/List;
-	public final fun copy (Ldev/kord/voice/EncryptionMode;Ljava/util/List;)Ldev/kord/voice/gateway/SessionDescription;
-	public static synthetic fun copy$default (Ldev/kord/voice/gateway/SessionDescription;Ldev/kord/voice/EncryptionMode;Ljava/util/List;ILjava/lang/Object;)Ldev/kord/voice/gateway/SessionDescription;
+	public final fun component3 ()I
+	public final fun copy (Ldev/kord/voice/EncryptionMode;Ljava/util/List;I)Ldev/kord/voice/gateway/SessionDescription;
+	public static synthetic fun copy$default (Ldev/kord/voice/gateway/SessionDescription;Ldev/kord/voice/EncryptionMode;Ljava/util/List;IILjava/lang/Object;)Ldev/kord/voice/gateway/SessionDescription;
 	public fun equals (Ljava/lang/Object;)Z
+	public final fun getDaveProtocolVersion ()I
 	public final fun getMode ()Ldev/kord/voice/EncryptionMode;
 	public final fun getSecretKey ()Ljava/util/List;
 	public fun hashCode ()I
@@ -933,6 +1296,7 @@ public abstract interface class dev/kord/voice/gateway/VoiceGateway {
 	public abstract fun getPing ()Lkotlinx/coroutines/flow/StateFlow;
 	public abstract fun getScope ()Lkotlinx/coroutines/CoroutineScope;
 	public abstract fun send (Ldev/kord/voice/gateway/Command;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun sendBinary (I[BLkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun start (Ldev/kord/voice/gateway/VoiceGatewayConfiguration;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun stop (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
@@ -957,6 +1321,10 @@ public final class dev/kord/voice/gateway/VoiceGatewayCloseCode$AuthenticationFa
 
 public final class dev/kord/voice/gateway/VoiceGatewayCloseCode$Companion {
 	public final fun of (I)Ldev/kord/voice/gateway/VoiceGatewayCloseCode;
+}
+
+public final class dev/kord/voice/gateway/VoiceGatewayCloseCode$DaveProtocolRequired : dev/kord/voice/gateway/VoiceGatewayCloseCode {
+	public static final field INSTANCE Ldev/kord/voice/gateway/VoiceGatewayCloseCode$DaveProtocolRequired;
 }
 
 public final class dev/kord/voice/gateway/VoiceGatewayCloseCode$Disconnect : dev/kord/voice/gateway/VoiceGatewayCloseCode {
@@ -1091,7 +1459,8 @@ public final class dev/kord/voice/io/ReadableByteArrayCursor {
 
 public final class dev/kord/voice/streams/DefaultStreams : dev/kord/voice/streams/Streams {
 	public fun <init> (Ldev/kord/voice/gateway/VoiceGateway;Ldev/kord/voice/udp/VoiceUdpSocket;)V
-	public fun <init> (Ldev/kord/voice/gateway/VoiceGateway;Ldev/kord/voice/udp/VoiceUdpSocket;Ldev/kord/voice/encryption/strategies/NonceStrategy;)V
+	public fun <init> (Ldev/kord/voice/gateway/VoiceGateway;Ldev/kord/voice/udp/VoiceUdpSocket;Ldev/kord/voice/encryption/strategies/NonceStrategy;Ldev/kord/voice/dave/DaveProtocol;)V
+	public synthetic fun <init> (Ldev/kord/voice/gateway/VoiceGateway;Ldev/kord/voice/udp/VoiceUdpSocket;Ldev/kord/voice/encryption/strategies/NonceStrategy;Ldev/kord/voice/dave/DaveProtocol;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun getIncomingAudioFrames ()Lkotlinx/coroutines/flow/Flow;
 	public synthetic fun getIncomingAudioPackets ()Lkotlinx/coroutines/flow/Flow;
 	public fun getIncomingAudioPackets ()Lkotlinx/coroutines/flow/SharedFlow;
@@ -1118,19 +1487,29 @@ public abstract interface class dev/kord/voice/streams/Streams {
 	public abstract fun listen ([BLio/ktor/network/sockets/SocketAddress;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
+public final class dev/kord/voice/udp/AeadAudioPacketProvider {
+	public fun <init> ([B)V
+	public final fun provide-jfaDVJw (SII[B)Ldev/kord/voice/io/ByteArrayView;
+}
+
 public abstract interface class dev/kord/voice/udp/AudioFrameSender {
 	public abstract fun start (Ldev/kord/voice/udp/AudioFrameSenderConfiguration;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class dev/kord/voice/udp/AudioFrameSenderConfiguration {
-	public synthetic fun <init> (Lio/ktor/network/sockets/SocketAddress;I[BLdev/kord/voice/FrameInterceptorConfiguration;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (Lio/ktor/network/sockets/SocketAddress;I[BLdev/kord/voice/FrameInterceptorConfiguration;Ldev/kord/voice/EncryptionMode;Ldev/kord/voice/dave/DaveProtocol;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (Lio/ktor/network/sockets/SocketAddress;I[BLdev/kord/voice/FrameInterceptorConfiguration;Ldev/kord/voice/EncryptionMode;Ldev/kord/voice/dave/DaveProtocol;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Lio/ktor/network/sockets/SocketAddress;
 	public final fun component2-pVg5ArA ()I
 	public final fun component3 ()[B
 	public final fun component4 ()Ldev/kord/voice/FrameInterceptorConfiguration;
-	public final fun copy-Yuhug_o (Lio/ktor/network/sockets/SocketAddress;I[BLdev/kord/voice/FrameInterceptorConfiguration;)Ldev/kord/voice/udp/AudioFrameSenderConfiguration;
-	public static synthetic fun copy-Yuhug_o$default (Ldev/kord/voice/udp/AudioFrameSenderConfiguration;Lio/ktor/network/sockets/SocketAddress;I[BLdev/kord/voice/FrameInterceptorConfiguration;ILjava/lang/Object;)Ldev/kord/voice/udp/AudioFrameSenderConfiguration;
+	public final fun component5 ()Ldev/kord/voice/EncryptionMode;
+	public final fun component6 ()Ldev/kord/voice/dave/DaveProtocol;
+	public final fun copy-lX-1kFM (Lio/ktor/network/sockets/SocketAddress;I[BLdev/kord/voice/FrameInterceptorConfiguration;Ldev/kord/voice/EncryptionMode;Ldev/kord/voice/dave/DaveProtocol;)Ldev/kord/voice/udp/AudioFrameSenderConfiguration;
+	public static synthetic fun copy-lX-1kFM$default (Ldev/kord/voice/udp/AudioFrameSenderConfiguration;Lio/ktor/network/sockets/SocketAddress;I[BLdev/kord/voice/FrameInterceptorConfiguration;Ldev/kord/voice/EncryptionMode;Ldev/kord/voice/dave/DaveProtocol;ILjava/lang/Object;)Ldev/kord/voice/udp/AudioFrameSenderConfiguration;
 	public fun equals (Ljava/lang/Object;)Z
+	public final fun getDaveProtocol ()Ldev/kord/voice/dave/DaveProtocol;
+	public final fun getEncryptionMode ()Ldev/kord/voice/EncryptionMode;
 	public final fun getInterceptorConfiguration ()Ldev/kord/voice/FrameInterceptorConfiguration;
 	public final fun getKey ()[B
 	public final fun getServer ()Lio/ktor/network/sockets/SocketAddress;
