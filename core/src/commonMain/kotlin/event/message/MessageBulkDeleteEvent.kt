@@ -17,24 +17,13 @@ import dev.kord.core.supplier.getChannelOfOrNull
 public class MessageBulkDeleteEvent(
     public val messageIds: Set<Snowflake>,
     public val messages: Set<Message>,
-    public val channelId: Snowflake,
-    public val guildId: Snowflake?,
+    public override val channelId: Snowflake,
+    public override val guildId: Snowflake?,
     override val kord: Kord,
     override val shard: Int,
     override val customContext: Any?,
     override val supplier: EntitySupplier = kord.defaultSupplier,
-) : Event, Strategizable {
-
-    public val channel: MessageChannelBehavior get() = MessageChannelBehavior(channelId, kord)
-
-    public val guild: GuildBehavior? get() = guildId?.let { GuildBehavior(it, kord) }
-
-    public suspend fun getChannel(): MessageChannel = supplier.getChannelOf(channelId)
-
-    public suspend fun getChannelOrNull(): MessageChannel? = supplier.getChannelOfOrNull(channelId)
-
-    public suspend fun getGuildOrNull(): Guild? = guildId?.let { supplier.getGuildOrNull(it) }
-
+) : MessagesChangeEvent, Strategizable {
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): MessageBulkDeleteEvent =
         MessageBulkDeleteEvent(messageIds, messages, channelId, guildId, kord, shard, customContext, strategy.supply(kord))
 

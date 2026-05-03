@@ -5,11 +5,8 @@ import dev.kord.core.entity.channel.*
 import dev.kord.core.event.Event
 
 
-public interface ChannelUpdateEvent : Event {
-    public val channel: Channel
+public interface ChannelUpdateEvent : ChannelsChangeEvent {
     public val old: Channel?
-    override val kord: Kord
-        get() = channel.kord
 }
 
 public class CategoryUpdateEvent(

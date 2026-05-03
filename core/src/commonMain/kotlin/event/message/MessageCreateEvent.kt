@@ -8,19 +8,22 @@ import dev.kord.core.entity.Member
 import dev.kord.core.entity.Message
 import dev.kord.core.entity.Strategizable
 import dev.kord.core.entity.channel.DmChannel
-import dev.kord.core.event.Event
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 
 public class MessageCreateEvent(
-    public val message: Message,
-    public val guildId: Snowflake?,
+    public override val message: Message,
+    public override val guildId: Snowflake?,
     public val member: Member?,
     override val shard: Int,
     override val customContext: Any?,
     override val supplier: EntitySupplier = message.kord.defaultSupplier,
-) : Event, Strategizable {
+) : MessageChangeEvent, Strategizable {
     override val kord: Kord get() = message.kord
+
+    override val channelId: Snowflake get() = message.channel.id
+
+    override val messageId: Snowflake get() = message.id
 
     /**
      * Requests to get the guild this message was created in, if it was created in one,
@@ -28,7 +31,7 @@ public class MessageCreateEvent(
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
-    public suspend fun getGuildOrNull(): Guild? = guildId?.let { supplier.getGuildOrNull(it) }
+    public override suspend fun getGuildOrNull(): Guild? = guildId?.let { supplier.getGuildOrNull(it) }
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): MessageCreateEvent =
         MessageCreateEvent(message, guildId, member, shard, customContext, strategy.supply(message.kord))

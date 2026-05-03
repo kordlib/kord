@@ -3,9 +3,13 @@ package dev.kord.core.entity.channel.thread
 import dev.kord.common.entity.ChannelType
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.Kord
+import dev.kord.core.behavior.GuildBehavior
+import dev.kord.core.behavior.channel.threads.ThreadParentChannelBehavior
 import dev.kord.core.cache.data.ChannelData
+import dev.kord.core.entity.Guild
 import dev.kord.core.entity.channel.ForumChannel
 import dev.kord.core.entity.channel.TextChannel
+import dev.kord.core.entity.channel.ThreadParentChannel
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 
@@ -15,8 +19,10 @@ import dev.kord.core.supplier.EntitySupplyStrategy
 public class TextChannelThread(
     override val data: ChannelData,
     override val kord: Kord,
-    override val supplier: EntitySupplier = kord.defaultSupplier
+    override val supplier: EntitySupplier = kord.defaultSupplier,
 ) : ThreadChannel {
+
+    public override val id: Snowflake = data.id
 
     /**
      * Whether this thread is private.
