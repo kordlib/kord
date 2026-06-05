@@ -63,6 +63,8 @@ public class AuditLogEntry(public val data: DiscordAuditLogEntry, override val k
 
     public val reason: String? get() = data.reason.value
 
+    public val guildId: Snowflake? get() = data.guildId.value
+
     @Suppress("UNCHECKED_CAST")
     public operator fun <T> get(value: AuditLogChangeKey<T>): AuditLogChange<T>? =
         changes.firstOrNull { it.key == value } as? AuditLogChange<T>
