@@ -7072,6 +7072,7 @@ public final class dev/kord/core/entity/AuditLogEntry : dev/kord/core/KordObject
 	public final fun getActionType ()Ldev/kord/common/entity/AuditLogEvent;
 	public final fun getChanges ()Ljava/util/List;
 	public final fun getData ()Ldev/kord/common/entity/DiscordAuditLogEntry;
+	public final fun getGuildId ()Ldev/kord/common/entity/Snowflake;
 	public final fun getId ()Ldev/kord/common/entity/Snowflake;
 	public fun getKord ()Ldev/kord/core/Kord;
 	public final fun getOptions ()Ldev/kord/common/entity/AuditLogEntryOptionalInfo;
