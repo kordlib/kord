@@ -83,6 +83,16 @@ public data class Attachment(val data: AttachmentData, override val kord: Kord) 
     val flags: AttachmentFlags? get() = data.flags.value
 
     /**
+     * A [thumbhash](https://evanw.github.io/thumbhash/) placeholder for the file, if it is an image or video.
+     */
+    val placeholder: String? get() = data.placeholder.value
+
+    /**
+     * The version of the [placeholder], if it is present.
+     */
+    val placeholderVersion: Int? get() = data.placeholderVersion.value
+
+    /**
      * If this file is displayed as a spoiler. Denoted by the `SPOILER_` prefix in the name.
      */
     val isSpoiler: Boolean get() = filename.startsWith("SPOILER_")
@@ -119,5 +129,7 @@ public fun Attachment.toRawType(): DiscordAttachment = with(data) {
         durationSecs,
         waveform,
         flags,
+        placeholder,
+        placeholderVersion,
     )
 }

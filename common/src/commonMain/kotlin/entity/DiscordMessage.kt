@@ -477,6 +477,8 @@ public data class DiscordMentionedChannel(
  * @property ephemeral Whether this attachment is ephemeral
  * @property durationSecs The duration of the audio file (currently for voice messages)
  * @property waveform Base64 encoded bytearray representing a sampled waveform (currently for voice messages)
+ * @property placeholder Base64 encoded bytearray representing a [thumbhash](https://evanw.github.io/thumbhash/) (if image or video)
+ * @property placeholderVersion Version of the placeholder (if thumbhash is present)
  */
 @Serializable
 public data class DiscordAttachment(
@@ -496,6 +498,9 @@ public data class DiscordAttachment(
     val durationSecs: Optional<DurationInDoubleSeconds> = Optional.Missing(),
     val waveform: Optional<String> = Optional.Missing(),
     val flags: Optional<AttachmentFlags> = Optional.Missing(),
+    val placeholder: Optional<String> = Optional.Missing(),
+    @SerialName("placeholder_version")
+    val placeholderVersion: OptionalInt = OptionalInt.Missing,
 )
 
 /**
