@@ -24,6 +24,8 @@ public data class AttachmentData(
     val durationSecs: Optional<DurationInDoubleSeconds> = Optional.Missing(),
     val waveform: Optional<String> = Optional.Missing(),
     val flags: Optional<AttachmentFlags> = Optional.Missing(),
+    val placeholder: Optional<String> = Optional.Missing(),
+    val placeholderVersion: OptionalInt = OptionalInt.Missing,
 ) {
     public companion object {
         public fun from(entity: DiscordAttachment): AttachmentData = with(entity) {
@@ -41,6 +43,8 @@ public data class AttachmentData(
                 durationSecs,
                 waveform,
                 flags,
+                placeholder,
+                placeholderVersion,
             )
         }
     }
