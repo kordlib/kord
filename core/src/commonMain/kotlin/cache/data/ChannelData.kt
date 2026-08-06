@@ -25,7 +25,7 @@ public data class ChannelData(
     val recipients: Optional<List<Snowflake>> = Optional.Missing(),
     val icon: Optional<String?> = Optional.Missing(),
     val ownerId: OptionalSnowflake = OptionalSnowflake.Missing,
-    val applicationId: OptionalSnowflake = OptionalSnowflake.Missing,
+    val applicationId: OptionalSnowflake? = OptionalSnowflake.Missing,
     val parentId: OptionalSnowflake? = OptionalSnowflake.Missing,
     val lastPinTimestamp: Optional<Instant?> = Optional.Missing(),
     val rtcRegion: Optional<String?> = Optional.Missing(),
