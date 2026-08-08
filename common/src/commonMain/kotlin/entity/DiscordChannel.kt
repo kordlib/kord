@@ -148,7 +148,7 @@ public data class DiscordChannel(
     @SerialName("owner_id")
     val ownerId: OptionalSnowflake = OptionalSnowflake.Missing,
     @SerialName("application_id")
-    val applicationId: OptionalSnowflake = OptionalSnowflake.Missing,
+    val applicationId: OptionalSnowflake? = OptionalSnowflake.Missing,
     @SerialName("parent_id")
     val parentId: OptionalSnowflake? = OptionalSnowflake.Missing,
     @SerialName("last_pin_timestamp")
