@@ -125,7 +125,9 @@ public interface MessageChannelBehavior : ChannelBehavior, Strategizable {
     /**
      * Requests to get all messages in this channel that were created **before** [messageId].
      *
-     * Messages retrieved by this function will be emitted in reverse-chronological older (newest -> oldest).
+     * If using [EntitySupplyStrategy.rest], messages retrieved by this function will be emitted in
+     * **reverse-chronological** order (newest -> oldest). Otherwise, there is no guarantee of ordering.
+     * To force rest behavior, see [withStrategy].
      *
      * The flow may use paginated requests to supply messages, [limit] will limit the maximum number of messages
      * supplied and may optimize the batch size accordingly. `null` means no limit.
@@ -149,7 +151,9 @@ public interface MessageChannelBehavior : ChannelBehavior, Strategizable {
     /**
      * Requests to get all messages in this channel that were created **after** [messageId].
      *
-     * Messages retrieved by this function will be emitted in chronological older (oldest -> newest).
+     * If using [EntitySupplyStrategy.rest], messages retrieved by this function will be emitted in
+     * **chronological** order (oldest -> newest). Otherwise, there is no guarantee of ordering.
+     * To force rest behavior, see [withStrategy].
      *
      * The flow may use paginated requests to supply messages, [limit] will limit the maximum number of messages
      * supplied and may optimize the batch size accordingly. `null` means no limit.
@@ -172,7 +176,9 @@ public interface MessageChannelBehavior : ChannelBehavior, Strategizable {
     /**
      * Requests to get [Message]s around (both older and newer) the [messageId].
      *
-     * Messages retrieved by this function will be emitted in chronological older (oldest -> newest).
+     * If using [EntitySupplyStrategy.rest], messages retrieved by this function will be emitted in
+     * **reverse-chronological** order (newest -> oldest). Otherwise, there is no guarantee of ordering.
+     * To force rest behavior, see [withStrategy].
      *
      * Unlike [getMessagesAfter] and [getMessagesBefore], this flow can return **a maximum of 100 messages**.
      * As such, the accepted range of [limit] is reduced to 1..100.

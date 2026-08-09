@@ -121,18 +121,19 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
         Message(channel.getMessage(channelId = channelId, messageId = messageId).toData(), kord)
     }
 
-    // maxBatchSize: see https://discord.com/developers/docs/resources/channel#get-channel-messages
+    // maxBatchSize: see https://docs.discord.com/developers/resources/message#get-channel-messages
     override fun getMessagesAfter(messageId: Snowflake, channelId: Snowflake, limit: Int?): Flow<Message> =
         limitedPagination(limit, maxBatchSize = 100) { batchSize ->
             paginateForwards(batchSize, start = messageId, idSelector = { it.id }) { after ->
-                channel.getMessages(channelId, position = after, limit = batchSize)
+                // Discord returns in reverse-chronological order, so reverse for chronological flow
+                channel.getMessages(channelId, position = after, limit = batchSize).reversed()
             }
         }.map {
             val data = MessageData.from(it)
             Message(data, kord)
         }
 
-    // maxBatchSize: see https://discord.com/developers/docs/resources/channel#get-channel-messages
+    // maxBatchSize: see https://docs.discord.com/developers/resources/message#get-channel-messages
     override fun getMessagesBefore(messageId: Snowflake, channelId: Snowflake, limit: Int?): Flow<Message> =
         limitedPagination(limit, maxBatchSize = 100) { batchSize ->
             paginateBackwards(batchSize, start = messageId, idSelector = { it.id }) { before ->

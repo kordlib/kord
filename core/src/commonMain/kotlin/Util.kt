@@ -139,8 +139,8 @@ internal fun <Batch : Collection<Item>, Item : Any, Direction : Position.BeforeO
 
 
 /**
- * Discord returns values in order newest -> oldest (big -> small) (confirmed for messages),
- * meaning that the first item returned is the one last created (youngest) in the batch.
+ * Returns the item with the youngest id in the collection, or null if empty.
+ * Assumes that the items are ordered either chronologically or reverse-chronologically.
  */
 internal fun <T> youngestItem(idSelector: (T) -> Snowflake): (Collection<T>) -> T? = function@{
     if (it.size <= 1) return@function it.firstOrNull()
@@ -156,8 +156,8 @@ internal fun <T> youngestItem(idSelector: (T) -> Snowflake): (Collection<T>) -> 
 }
 
 /**
- * Discord returns values in order oldest -> newest (big -> small) (confirmed for messages),
- * meaning that the last item returned is the one first created (oldest) in the batch.
+ * Returns the item with the oldest id in the collection, or null if empty.
+ * Assumes that the items are ordered either chronologically or reverse-chronologically.
  */
 internal fun <T> oldestItem(idSelector: (T) -> Snowflake): (Collection<T>) -> T? = function@{
     if (it.size <= 1) return@function it.firstOrNull()
