@@ -17,7 +17,6 @@ import dev.kord.core.cache.data.ChatComponentData
 import dev.kord.core.cache.data.InteractionMetadataData
 import dev.kord.core.cache.data.MessageData
 import dev.kord.core.cache.data.MessageInteractionData
-import dev.kord.core.cache.data.SelectComponentData
 import dev.kord.core.cache.data.toData
 import dev.kord.core.entity.application.ApplicationCommand
 import dev.kord.core.entity.channel.Channel
@@ -31,7 +30,7 @@ import dev.kord.core.entity.interaction.ActionInteraction
 import dev.kord.core.entity.interaction.followup.FollowupMessage
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.hash
-import dev.kord.core.componentToSelectMenu
+import dev.kord.core.actionRowChildComponentToSelectMenu
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.core.supplier.getChannelOf
@@ -391,16 +390,16 @@ public class Message(
             val list = mutableListOf<SelectMenuComponent>()
             for (component in data.components.orEmpty()) {
                 if (component.type == ComponentType.Container) {
-                    for (container in component.components.orEmpty()) {
-                        if (container.type != ComponentType.ActionRow) continue
+                    for (innerComponent in component.components.orEmpty()) {
+                        if (innerComponent.type != ComponentType.ActionRow) continue
 
-                        list.addAll(container.components.orEmpty().mapNotNull {
-                            componentToSelectMenu(it as SelectComponentData)
+                        list.addAll(innerComponent.components.orEmpty().mapNotNull {
+                            actionRowChildComponentToSelectMenu(it)
                         })
                     }
                 } else if (component.type == ComponentType.ActionRow) {
                     list.addAll(component.components.orEmpty().mapNotNull {
-                        componentToSelectMenu(it as SelectComponentData)
+                        actionRowChildComponentToSelectMenu(it)
                     })
                 }
             }
