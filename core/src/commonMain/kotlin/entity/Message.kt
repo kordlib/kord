@@ -8,16 +8,12 @@ import dev.kord.common.entity.optional.unwrap
 import dev.kord.common.entity.optional.value
 import dev.kord.common.exception.RequestException
 import dev.kord.core.Kord
+import dev.kord.core.actionRowChildComponentToSelectMenu
 import dev.kord.core.behavior.MessageBehavior
 import dev.kord.core.behavior.UserBehavior
 import dev.kord.core.behavior.channel.ChannelBehavior
 import dev.kord.core.behavior.interaction.response.InteractionResponseBehavior
-import dev.kord.core.cache.data.ChannelData
-import dev.kord.core.cache.data.ChatComponentData
-import dev.kord.core.cache.data.InteractionMetadataData
-import dev.kord.core.cache.data.MessageData
-import dev.kord.core.cache.data.MessageInteractionData
-import dev.kord.core.cache.data.toData
+import dev.kord.core.cache.data.*
 import dev.kord.core.entity.application.ApplicationCommand
 import dev.kord.core.entity.channel.Channel
 import dev.kord.core.entity.channel.GuildChannel
@@ -29,8 +25,8 @@ import dev.kord.core.entity.component.SelectMenuComponent
 import dev.kord.core.entity.interaction.ActionInteraction
 import dev.kord.core.entity.interaction.followup.FollowupMessage
 import dev.kord.core.exception.EntityNotFoundException
+import dev.kord.core.getButtonsInMessageComponent
 import dev.kord.core.hash
-import dev.kord.core.actionRowChildComponentToSelectMenu
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.core.supplier.getChannelOf
@@ -366,19 +362,7 @@ public class Message(
         get() {
             val list = mutableListOf<ButtonComponent>()
             for (component in data.components.orEmpty()) {
-                if (component.type == ComponentType.Container) {
-                    for (container in component.components.orEmpty()) {
-                        if (container.type != ComponentType.ActionRow) continue
-
-                        list.addAll(container.components.orEmpty().mapNotNull {
-                            if (it.type == ComponentType.Button) ButtonComponent(it as ChatComponentData) else null
-                        })
-                    }
-                } else if (component.type == ComponentType.ActionRow) {
-                    list.addAll(component.components.orEmpty().mapNotNull {
-                        if (it.type == ComponentType.Button) ButtonComponent(it as ChatComponentData) else null
-                    })
-                }
+                getButtonsInMessageComponent(component, list)
             }
 
             return list
