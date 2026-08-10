@@ -158,6 +158,8 @@ public data class DiscordChannel(
     @SerialName("video_quality_mode")
     val videoQualityMode: Optional<VideoQualityMode> = Optional.Missing(),
     val permissions: Optional<Permissions> = Optional.Missing(),
+    @SerialName("app_permissions")
+    val appPermissions: Optional<Permissions> = Optional.Missing(),
     @SerialName("message_count")
     val messageCount: OptionalInt = OptionalInt.Missing,
     @SerialName("member_count")
