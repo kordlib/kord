@@ -1,14 +1,8 @@
 package dev.kord.core.event.channel
 
-import dev.kord.core.Kord
 import dev.kord.core.entity.channel.*
-import dev.kord.core.event.Event
 
-public interface ChannelCreateEvent : Event {
-    public val channel: Channel
-    override val kord: Kord
-        get() = channel.kord
-}
+public interface ChannelCreateEvent : ChannelsChangeEvent
 
 public class CategoryCreateEvent(
     override val channel: Category,
