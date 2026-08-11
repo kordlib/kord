@@ -17,6 +17,8 @@ public class ResolvedChannel(
 
     public val permissions: Permissions get() = data.permissions.value!!
 
+    public val appPermissions: Permissions? get() = data.appPermissions.value
+
     override suspend fun asChannel(): Channel = this
 
     override suspend fun asChannelOrNull(): Channel = this

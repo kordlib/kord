@@ -2,13 +2,17 @@ package dev.kord.core
 
 import dev.kord.common.entity.ComponentType
 import dev.kord.common.entity.Snowflake
+import dev.kord.common.entity.optional.orEmpty
+import dev.kord.core.cache.data.ChatComponentData
 import dev.kord.core.cache.data.ComponentData
 import dev.kord.core.cache.data.SelectComponentData
 import dev.kord.core.entity.Message
 import dev.kord.core.entity.channel.thread.ThreadChannel
+import dev.kord.core.entity.component.ButtonComponent
 import dev.kord.core.entity.component.ChannelSelectComponent
 import dev.kord.core.entity.component.MentionableSelectComponent
 import dev.kord.core.entity.component.RoleSelectComponent
+import dev.kord.core.entity.component.SelectMenuComponent
 import dev.kord.core.entity.component.StringSelectComponent
 import dev.kord.core.entity.component.UserSelectComponent
 import dev.kord.core.event.Event
@@ -30,6 +34,7 @@ import dev.kord.rest.json.JsonErrorCode
 import dev.kord.rest.request.RestRequestException
 import dev.kord.rest.route.Position
 import kotlinx.coroutines.flow.*
+import kotlin.collections.mapNotNull
 import kotlin.time.Clock
 import kotlin.time.Instant
 import kotlin.contracts.InvocationKind
@@ -134,8 +139,8 @@ internal fun <Batch : Collection<Item>, Item : Any, Direction : Position.BeforeO
 
 
 /**
- * Discord returns values in order newest -> oldest (big -> small) (confirmed for messages),
- * meaning that the first item returned is the one last created (youngest) in the batch.
+ * Returns the item with the youngest id in the collection, or null if empty.
+ * Assumes that the items are ordered either chronologically or reverse-chronologically.
  */
 internal fun <T> youngestItem(idSelector: (T) -> Snowflake): (Collection<T>) -> T? = function@{
     if (it.size <= 1) return@function it.firstOrNull()
@@ -151,8 +156,8 @@ internal fun <T> youngestItem(idSelector: (T) -> Snowflake): (Collection<T>) -> 
 }
 
 /**
- * Discord returns values in order oldest -> newest (big -> small) (confirmed for messages),
- * meaning that the last item returned is the one first created (oldest) in the batch.
+ * Returns the item with the oldest id in the collection, or null if empty.
+ * Assumes that the items are ordered either chronologically or reverse-chronologically.
  */
 internal fun <T> oldestItem(idSelector: (T) -> Snowflake): (Collection<T>) -> T? = function@{
     if (it.size <= 1) return@function it.firstOrNull()
@@ -469,13 +474,40 @@ public fun Intents.Builder.enableEvent(event: KClass<out Event>): Unit = when (e
 internal fun hash(vararg values: Any?) = values.contentHashCode()
 
 /**
- * Takes a [ComponentData] object and returns the relevant select menu or null if the component is not a select menu
+ * Takes a [ComponentData] child object from an action row and returns the relevant select menu
+ * or null if the component is not a select menu
  */
-internal fun componentToSelectMenu(component: SelectComponentData) = when (component.type) {
-    ComponentType.StringSelect -> StringSelectComponent(component)
-    ComponentType.RoleSelect -> RoleSelectComponent(component)
-    ComponentType.UserSelect -> UserSelectComponent(component)
-    ComponentType.MentionableSelect -> MentionableSelectComponent(component)
-    ComponentType.ChannelSelect -> ChannelSelectComponent(component)
-    else -> null
+internal fun actionRowChildComponentToSelectMenu(component: ComponentData): SelectMenuComponent? {
+    if (component !is SelectComponentData) return null
+    return when (component.type) {
+        ComponentType.StringSelect -> StringSelectComponent(component)
+        ComponentType.RoleSelect -> RoleSelectComponent(component)
+        ComponentType.UserSelect -> UserSelectComponent(component)
+        ComponentType.MentionableSelect -> MentionableSelectComponent(component)
+        ComponentType.ChannelSelect -> ChannelSelectComponent(component)
+        else -> throw RuntimeException("Unsupported select component type in action row: ${component.type}")
+    }
+}
+
+/**
+ * Takes a [ComponentData] object from a message and appends to [outputList] all the buttons in that component
+ * (including itself if applicable). Resolves recursively for Container components.
+ */
+internal fun getButtonsInMessageComponent(
+    component: ComponentData,
+    outputList: MutableList<ButtonComponent>
+) {
+    if (component.type == ComponentType.Container) {
+        for (innerComponent in component.components.orEmpty()) {
+            getButtonsInMessageComponent(innerComponent, outputList)
+        }
+    } else if (component.type == ComponentType.ActionRow) {
+        outputList.addAll(component.components.orEmpty().mapNotNull {
+            if (it.type == ComponentType.Button) ButtonComponent(it as ChatComponentData) else null
+        })
+    } else if (component.type == ComponentType.Section) {
+        // Accessory is required in section
+        val accessory = (component as ChatComponentData).accessory.value!!
+        if (accessory.type == ComponentType.Button) outputList.add(ButtonComponent(accessory))
+    }
 }
