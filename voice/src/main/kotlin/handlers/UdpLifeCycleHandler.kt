@@ -30,16 +30,33 @@ internal class UdpLifeCycleHandler(
             ssrc = it.ssrc
             server = InetSocketAddress(it.ip, it.port)
 
+            // Initialize DAVE protocol FIRST — before any network I/O.
+            // Discord sends SessionDescription, ExternalSenderPackage, and Proposals
+            // immediately after SelectProtocol. The DAVE session must already exist
+            // so DaveProtocolHandler can process those events with an active session.
+            if (connection.daveProtocol.maxProtocolVersion > 0) {
+                connection.daveProtocol.initialize(
+                    version = connection.daveProtocol.maxProtocolVersion,
+                    channelId = connection.data.channelId.value.toString(),
+                    selfUserId = connection.data.selfId.value.toLong(),
+                    authSessionId = it.authSessionId
+                )
+                udpLifeCycleLogger.debug { "DAVE: session initialized before IP discovery" }
+            }
+
             val ip: InetSocketAddress = connection.socket.discoverIp(server!!, ssrc!!.toInt())
 
             udpLifeCycleLogger.trace { "ip discovered for voice successfully" }
+
+            // Select best encryption mode: prefer AES-GCM, then XChaCha20
+            val encryptionMode = selectBestMode(it.modes)
 
             val selectProtocol = SelectProtocol(
                 protocol = "udp",
                 data = SelectProtocol.Data(
                     address = ip.hostname,
                     port = ip.port,
-                    mode = EncryptionMode.AeadXChaCha20Poly1305RtpSize // only supported mode for now.
+                    mode = encryptionMode
                 )
             )
 
@@ -47,12 +64,29 @@ internal class UdpLifeCycleHandler(
         }
 
         on<SessionDescription> {
+            val selectedMode = it.mode
+
             with(connection) {
+                // Set up DAVE SSRC codec mapping
+                daveProtocol.assignSsrcToCodec(ssrc!!)
+
+                // Send DAVE key package if DAVE is enabled
+                if (it.daveProtocolVersion > 0) {
+                    daveProtocol.setProtocolVersion(it.daveProtocolVersion)
+                    val keyPackage = daveProtocol.getMarshalledKeyPackage()
+                    if (keyPackage.isNotEmpty()) {
+                        voiceGateway.sendBinary(OpCode.DaveMlsKeyPackage.code, keyPackage)
+                        udpLifeCycleLogger.debug { "DAVE: sent initial key package (${keyPackage.size} bytes)" }
+                    }
+                }
+
                 val config = AudioFrameSenderConfiguration(
                     ssrc = ssrc!!,
                     key = it.secretKey.toUByteArray().toByteArray(),
                     server = server!!,
-                    interceptorConfiguration = FrameInterceptorConfiguration(gateway, voiceGateway, ssrc!!)
+                    interceptorConfiguration = FrameInterceptorConfiguration(gateway, voiceGateway, ssrc!!),
+                    encryptionMode = selectedMode,
+                    daveProtocol = daveProtocol
                 )
 
                 audioSenderJob?.cancel()
@@ -64,5 +98,10 @@ internal class UdpLifeCycleHandler(
             audioSenderJob?.cancel()
             audioSenderJob = null
         }
+    }
+
+    private fun selectBestMode(serverModes: List<EncryptionMode>): EncryptionMode {
+        if (EncryptionMode.AeadAes256GcmRtpSize in serverModes) return EncryptionMode.AeadAes256GcmRtpSize
+        return EncryptionMode.AeadXChaCha20Poly1305RtpSize
     }
 }

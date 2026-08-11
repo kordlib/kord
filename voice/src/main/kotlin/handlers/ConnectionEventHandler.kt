@@ -1,6 +1,7 @@
 package dev.kord.voice.handlers
 
 import io.github.oshai.kotlinlogging.KotlinLogging
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filterIsInstance
@@ -19,6 +20,8 @@ internal abstract class ConnectionEventHandler<Event>(
         flow.filterIsInstance<T>().onEach {
             try {
                 block(it)
+            } catch (e: CancellationException) {
+                throw e
             } catch (exception: Exception) {
                 logger.error(exception) { "[$name]" }
             }

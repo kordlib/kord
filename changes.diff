@@ -1,0 +1,926 @@
+diff --git a/gradle/libs.versions.toml b/gradle/libs.versions.toml
+index 1ad1ff84..18a71990 100644
+--- a/gradle/libs.versions.toml
++++ b/gradle/libs.versions.toml
+@@ -25,8 +25,8 @@ ksp = "2.3.5" # https://github.com/google/ksp
+ kotlinpoet = "2.2.0" # https://github.com/square/kotlinpoet
+ 
+ # tests
+-junit-jupiter = "6.0.2" # https://github.com/junit-team/junit5
+-junit-platform = "1.13.4"
++junit-jupiter = "5.11.2" # https://github.com/junit-team/junit5
++junit-platform = "1.11.2"
+ mockk = "1.14.9" # https://github.com/mockk/mockk
+ kbson = "0.4.0" # https://github.com/mongodb/kbson
+ 
+diff --git a/voice/src/main/kotlin/VoiceConnection.kt b/voice/src/main/kotlin/VoiceConnection.kt
+index c94e27dd..4761a29d 100644
+--- a/voice/src/main/kotlin/VoiceConnection.kt
++++ b/voice/src/main/kotlin/VoiceConnection.kt
+@@ -5,6 +5,7 @@ import dev.kord.common.entity.Snowflake
+ import dev.kord.gateway.Gateway
+ import dev.kord.gateway.UpdateVoiceStatus
+ import dev.kord.voice.dave.DaveProtocol
++import dev.kord.voice.dave.NoOpDaveProtocol
+ import dev.kord.voice.encryption.strategies.*
+ import dev.kord.voice.gateway.VoiceGateway
+ import dev.kord.voice.gateway.VoiceGatewayConfiguration
+@@ -77,7 +78,7 @@ public class VoiceConnection internal constructor(
+         nonceStrategy: @Suppress("DEPRECATION") NonceStrategy, connectionDetachDuration: Duration,
+     ) : this(
+         data, gateway, voiceGateway, socket, voiceGatewayConfiguration, streams, audioProvider, frameInterceptor,
+-        frameSender, dev.kord.voice.dave.NoOpDaveProtocol, connectionDetachDuration, nonceStrategy,
++        frameSender, NoOpDaveProtocol, connectionDetachDuration, nonceStrategy,
+     )
+ 
+     public constructor(
+@@ -86,7 +87,7 @@ public class VoiceConnection internal constructor(
+         frameInterceptor: FrameInterceptor, frameSender: AudioFrameSender, connectionDetachDuration: Duration,
+     ) : this(
+         data, gateway, voiceGateway, socket, voiceGatewayConfiguration, streams, audioProvider, frameInterceptor,
+-        frameSender, dev.kord.voice.dave.NoOpDaveProtocol, connectionDetachDuration, strategy = null,
++        frameSender, NoOpDaveProtocol, connectionDetachDuration, strategy = null,
+     )
+ 
+     @Suppress("DeprecatedCallableAddReplaceWith")
+diff --git a/voice/src/main/kotlin/VoiceConnectionBuilder.kt b/voice/src/main/kotlin/VoiceConnectionBuilder.kt
+index 36b0d21a..fdde122c 100644
+--- a/voice/src/main/kotlin/VoiceConnectionBuilder.kt
++++ b/voice/src/main/kotlin/VoiceConnectionBuilder.kt
+@@ -8,6 +8,8 @@ import dev.kord.gateway.UpdateVoiceStatus
+ import dev.kord.gateway.VoiceServerUpdate
+ import dev.kord.gateway.VoiceStateUpdate
+ import dev.kord.voice.dave.DaveProtocol
++import dev.kord.voice.dave.LibdaveDaveProtocol
++import dev.kord.voice.dave.NoOpDaveProtocol
+ import dev.kord.voice.encryption.strategies.*
+ import dev.kord.voice.exception.VoiceConnectionInitializationException
+ import dev.kord.voice.gateway.DefaultVoiceGatewayBuilder
+@@ -187,8 +189,8 @@ public class VoiceConnectionBuilder(
+                     nonceStrategy
+                 )
+             )
+-        val daveProtocol: DaveProtocol = dev.kord.voice.dave.LibdaveDaveProtocol.create()
+-            ?: dev.kord.voice.dave.NoOpDaveProtocol
++        val daveProtocol: DaveProtocol = LibdaveDaveProtocol.create()
++            ?: NoOpDaveProtocol
+ 
+         val streams =
+             streams ?: if (receiveVoice) DefaultStreams(voiceGateway, udpSocket, nonceStrategy, daveProtocol) else NOPStreams
+diff --git a/voice/src/main/kotlin/dave/DaveProtocol.kt b/voice/src/main/kotlin/dave/DaveProtocol.kt
+index 2786e0f8..feac8c74 100644
+--- a/voice/src/main/kotlin/dave/DaveProtocol.kt
++++ b/voice/src/main/kotlin/dave/DaveProtocol.kt
+@@ -44,6 +44,9 @@ public interface DaveProtocol : Closeable {
+      */
+     public fun initialize(version: Int, channelId: String, selfUserId: Long, authSessionId: String)
+ 
++    /** Re-create the MLS session using previously stored initialization parameters. */
++    public fun reinitialize()
++
+     /** Set the voice gateway's MLS external sender credential. */
+     public fun setExternalSender(externalSender: ByteArray)
+ 
+diff --git a/voice/src/main/kotlin/dave/LibdaveDaveProtocol.kt b/voice/src/main/kotlin/dave/LibdaveDaveProtocol.kt
+index 7c22e187..82c7fd35 100644
+--- a/voice/src/main/kotlin/dave/LibdaveDaveProtocol.kt
++++ b/voice/src/main/kotlin/dave/LibdaveDaveProtocol.kt
+@@ -42,8 +42,12 @@ public class LibdaveDaveProtocol internal constructor(
+     private val decryptors = ConcurrentHashMap<Long, Decryptor>()
+     private val recognizedUserIds: MutableSet<Long> = mutableSetOf()
+     private val activeE2eeUserIds: MutableSet<Long> = mutableSetOf()
++    private var channelId: String = ""
++    private var authSessionId: String = ""
+     private var selfUserId: Long = 0L
+     private var hasJoinedGroup: Boolean = false
++    @Volatile
++    private var mlsFailureDetected: Boolean = false
+ 
+     private data class PendingTransition(
+         val protocolVersion: Int,
+@@ -55,10 +59,13 @@ public class LibdaveDaveProtocol internal constructor(
+ 
+     private val mlsFailureCallback = MLSFailureCallback { source, reason ->
+         logger.error { "MLS failure from $source: $reason" }
++        mlsFailureDetected = true
+     }
+ 
+     override fun initialize(version: Int, channelId: String, selfUserId: Long, authSessionId: String): Unit =
+         lock.write {
++            this.channelId = channelId
++            this.authSessionId = authSessionId
+             logger.info { "Initializing DAVE session: version=$version, channel=$channelId, user=$selfUserId" }
+             this.selfUserId = selfUserId
+             currentProtocolVersion = version
+@@ -78,18 +85,47 @@ public class LibdaveDaveProtocol internal constructor(
+             newSession.init(version, channelId.toLong(), selfUserId.toString())
+             session = newSession
+ 
+-            // Create encryptor if needed
+-            if (encryptor == null) {
+-                encryptor = factory.createEncryptor()
+-            }
++            // Always recreate the encryptor to ensure clean internal state
++            // (frame counter, codec mappings, key ratchet) on each connection.
++            // Reusing a stale encryptor after reconnection causes nonce/key
++            // mismatch with peers, resulting in permanent silence.
++            encryptor?.close()
++            encryptor = factory.createEncryptor()
+ 
+             isActive = version > 0
+ 
+-            if (isActive) {
+-                encryptor?.setPassthroughMode(false)
+-            }
++            encryptor?.setPassthroughMode(!isActive)
++        }
++
++    override fun reinitialize() {
++        data class ReinitializeSnapshot(
++            val channelId: String,
++            val protocolVersion: Int,
++            val selfUserId: Long,
++            val authSessionId: String,
++        )
++
++        val snapshot = lock.read {
++            ReinitializeSnapshot(
++                channelId = this.channelId,
++                protocolVersion = this.currentProtocolVersion,
++                selfUserId = this.selfUserId,
++                authSessionId = this.authSessionId,
++            )
+         }
+ 
++        if (snapshot.channelId.isEmpty()) {
++            logger.warn { "Cannot reinitialize DAVE session: channelId is not stored" }
++            return
++        }
++
++        logger.info {
++            "Reinitializing DAVE session: version=${snapshot.protocolVersion}, " +
++                "channel=${snapshot.channelId}, user=${snapshot.selfUserId}"
++        }
++        initialize(snapshot.protocolVersion, snapshot.channelId, snapshot.selfUserId, snapshot.authSessionId)
++    }
++
+     override fun setExternalSender(externalSender: ByteArray): Unit = lock.write {
+         logger.debug { "Setting external sender (${externalSender.size} bytes)" }
+         session?.setExternalSender(externalSender)
+@@ -105,9 +141,14 @@ public class LibdaveDaveProtocol internal constructor(
+             return null
+         }
+         try {
+-            val allRecognized = (this.recognizedUserIds + setOf(selfUserId) + recognizedUserIds)
+-                .map { it.toString() }.toTypedArray()
+-            s.processProposals(proposals, allRecognized)
++            val allRecognized = buildRecognizedUserIds(recognizedUserIds)
++            mlsFailureDetected = false
++            val result = s.processProposals(proposals, allRecognized)
++            if (mlsFailureDetected) {
++                logger.warn { "MLS failure detected during processProposals, treating as failure" }
++                return null
++            }
++            result
+         } catch (e: Exception) {
+             logger.error(e) { "Failed to process MLS proposals" }
+             null
+@@ -147,9 +188,13 @@ public class LibdaveDaveProtocol internal constructor(
+                 return null
+             }
+             try {
+-                val allRecognized = (this.recognizedUserIds + setOf(selfUserId) + recognizedUserIds)
+-                    .map { it.toString() }.toTypedArray()
++                val allRecognized = buildRecognizedUserIds(recognizedUserIds)
++                mlsFailureDetected = false
+                 val roster = s.processWelcome(welcome, allRecognized) ?: return null
++                if (mlsFailureDetected) {
++                    logger.warn { "MLS failure detected during processWelcome, treating as failure" }
++                    return null
++                }
+                 hasJoinedGroup = true
+                 updateKeyRatchetsFromRoster(s, roster)
+                 roster
+@@ -159,29 +204,38 @@ public class LibdaveDaveProtocol internal constructor(
+             }
+         }
+ 
++    private fun buildRecognizedUserIds(externalRecognized: Set<Long>): Array<String> =
++        (recognizedUserIds + setOf(selfUserId) + externalRecognized)
++            .map { it.toString() }.toTypedArray()
++
+     /**
+      * Update encryptor and decryptor key ratchets from a roster map.
+      * Must be called while holding the write lock.
+      */
+     private fun updateKeyRatchetsFromRoster(session: Session, roster: Map<Long, ByteArray>) {
+         for (userId in roster.keys) {
++            var ratchet: KeyRatchet? = null
+             try {
+-                val ratchet = session.getKeyRatchet(userId.toString())
++                ratchet = session.getKeyRatchet(userId.toString())
+                 if (ratchet != null) {
+                     if (userId == selfUserId) {
+-                        // Ownership of ratchet is transferred to encryptor
+-                        encryptor?.setKeyRatchet(ratchet)
++                        val enc = encryptor
++                        if (enc != null) {
++                            enc.setKeyRatchet(ratchet)
++                            ratchet = null // Ownership transferred
++                        }
+                     } else {
+                         val decryptor = decryptors.getOrPut(userId) { factory.createDecryptor() }
+-                        // Ownership of ratchet is transferred to decryptor
+                         decryptor.transitionToKeyRatchet(ratchet)
++                        ratchet = null // Ownership transferred
+                         activeE2eeUserIds.add(userId)
+                     }
+-                } else {
+-                    logger.warn { "No key ratchet available for user $userId" }
+                 }
+             } catch (e: Exception) {
+                 logger.error(e) { "Failed to update key ratchet for user $userId" }
++            } finally {
++                // Close the ratchet if ownership was NOT transferred
++                ratchet?.close()
+             }
+         }
+     }
+@@ -208,6 +262,7 @@ public class LibdaveDaveProtocol internal constructor(
+             for ((_, decryptor) in decryptors) {
+                 decryptor.transitionToPassthroughMode(true)
+             }
++            closePendingTransition(transitionId)
+             pendingTransitions[transitionId] = PendingTransition(
+                 protocolVersion = 0,
+                 selfKeyRatchet = null,
+@@ -233,6 +288,7 @@ public class LibdaveDaveProtocol internal constructor(
+                         logger.error(e) { "Failed to get key ratchet for user $userId during prepare" }
+                     }
+                 }
++                closePendingTransition(transitionId)
+                 pendingTransitions[transitionId] = PendingTransition(
+                     protocolVersion = protocolVersion,
+                     selfKeyRatchet = selfRatchet,
+@@ -254,16 +310,29 @@ public class LibdaveDaveProtocol internal constructor(
+         currentProtocolVersion = transition.protocolVersion
+ 
+         if (transition.protocolVersion == 0) {
+-            // Downgrade: reset session, clear active users
+-            session?.reset()
+-            activeE2eeUserIds.clear()
++            // Downgrade: delegate to reset() to avoid duplicating cleanup logic.
++            // reset() handles session?.reset(), activeE2eeUserIds.clear(), hasJoinedGroup=false.
++            // ReentrantReadWriteLock is reentrant so the nested write lock is safe.
++            reset()
+             isActive = false
+         } else {
+             isActive = true
+-            hasJoinedGroup = true
++            // Only mark as joined if we actually have ratchets.
++            // An empty transition means we prepared ratchets before joining the group
++            // (e.g. a protocol-version transition right after PrepareEpoch+reset).
++            // Falsely setting hasJoinedGroup=true here would open processProposals on a
++            // session that is on the wrong epoch.
++            if (transition.selfKeyRatchet != null || transition.userKeyRatchets.isNotEmpty()) {
++                hasJoinedGroup = true
++            }
+             // Apply self key ratchet
+             transition.selfKeyRatchet?.let { ratchet ->
+-                encryptor?.setKeyRatchet(ratchet)
++                val enc = encryptor
++                if (enc != null) {
++                    enc.setKeyRatchet(ratchet)
++                } else {
++                    ratchet.close()
++                }
+             }
+             // Apply user key ratchets
+             for ((userId, ratchet) in transition.userKeyRatchets) {
+@@ -277,6 +346,11 @@ public class LibdaveDaveProtocol internal constructor(
+         logger.debug { "Resetting DAVE session" }
+         session?.reset()
+         activeE2eeUserIds.clear()
++        // Prevent stale encryption between reset and next initialize.
++        // The encryptor will be fully recreated in initialize(), but
++        // setting passthrough guards against any frames encrypted
++        // in the interim window.
++        encryptor?.setPassthroughMode(true)
+         pendingTransitions.values.forEach { transition ->
+             transition.selfKeyRatchet?.close()
+             transition.userKeyRatchets.values.forEach { it.close() }
+@@ -351,23 +425,28 @@ public class LibdaveDaveProtocol internal constructor(
+ 
+     override fun close(): Unit = lock.write {
+         logger.debug { "Closing DAVE protocol resources" }
+-        pendingTransitions.values.forEach { transition ->
+-            transition.selfKeyRatchet?.close()
+-            transition.userKeyRatchets.values.forEach { it.close() }
+-        }
+-        pendingTransitions.clear()
++        reset()  // closes pendingTransitions ratchets, resets session state, clears activeE2eeUserIds/hasJoinedGroup
+         decryptors.values.forEach { it.close() }
+         decryptors.clear()
+         encryptor?.close()
+         encryptor = null
+         session?.close()
+         session = null
+-        activeE2eeUserIds.clear()
+         recognizedUserIds.clear()
+-        hasJoinedGroup = false
+         isActive = false
+     }
+ 
++    /**
++     * Removes an existing pending transition for [transitionId] and closes its native key ratchets
++     * to prevent resource leaks when Discord re-sends a prepare for the same transition ID.
++     */
++    private fun closePendingTransition(transitionId: Int) {
++        pendingTransitions.remove(transitionId)?.let { old ->
++            old.selfKeyRatchet?.close()
++            old.userKeyRatchets.values.forEach { it.close() }
++        }
++    }
++
+     public companion object {
+         private val logger = KotlinLogging.logger {}
+ 
+diff --git a/voice/src/main/kotlin/dave/NoOpDaveProtocol.kt b/voice/src/main/kotlin/dave/NoOpDaveProtocol.kt
+index 3fc89f4d..84506be1 100644
+--- a/voice/src/main/kotlin/dave/NoOpDaveProtocol.kt
++++ b/voice/src/main/kotlin/dave/NoOpDaveProtocol.kt
+@@ -19,6 +19,8 @@ public object NoOpDaveProtocol : DaveProtocol {
+         logger.debug { "NoOp DAVE: initialize called but native library not available" }
+     }
+ 
++    override fun reinitialize() {}
++
+     override fun setExternalSender(externalSender: ByteArray) {}
+     override fun processProposals(proposals: ByteArray, recognizedUserIds: Set<Long>): ByteArray? = null
+     override fun processCommit(commit: ByteArray): DaveCommitResult = DaveCommitResult.Ignored
+diff --git a/voice/src/main/kotlin/gateway/DefaultVoiceGateway.kt b/voice/src/main/kotlin/gateway/DefaultVoiceGateway.kt
+index 7c458e38..6ed249b1 100644
+--- a/voice/src/main/kotlin/gateway/DefaultVoiceGateway.kt
++++ b/voice/src/main/kotlin/gateway/DefaultVoiceGateway.kt
+@@ -131,7 +131,7 @@ public class DefaultVoiceGateway(
+     private suspend fun readSocket() {
+         socket.incoming.asFlow().buffer(Channel.UNLIMITED).collect {
+             when (it) {
+-                is Frame.Text -> read(it)
++                is Frame.Text, is Frame.Binary -> read(it)
+                 else -> { /*ignore*/
+                 }
+             }
+@@ -166,48 +166,48 @@ public class DefaultVoiceGateway(
+     }
+ 
+     private suspend fun readBinary(frameData: ByteArray) {
+-        if (frameData.isEmpty()) return
++        if (frameData.size < 3) return
+ 
+         try {
+-            // Binary frames: first byte is the opcode
+-            val opcode = frameData[0].toInt() and 0xFF
+-            val payload = frameData.copyOfRange(1, frameData.size)
++            // Binary frames: first 2 bytes are sequence number, third byte is the opcode
++            val seq = ((frameData[0].toInt() and 0xFF) shl 8) or (frameData[1].toInt() and 0xFF)
++            val opcode = frameData[2].toInt() and 0xFF
+ 
+             val event: VoiceEvent? = when (opcode) {
+                 OpCode.DaveMlsExternalSenderPackage.code -> {
+-                    defaultVoiceGatewayLogger.trace { "Voice Gateway <<< DAVE_MLS_EXTERNAL_SENDER_PACKAGE (${payload.size} bytes)" }
+-                    DaveMlsExternalSenderPackage(payload)
++                    val data = frameData.copyOfRange(3, frameData.size)
++                    defaultVoiceGatewayLogger.trace { "Voice Gateway <<< DAVE_MLS_EXTERNAL_SENDER_PACKAGE (${data.size} bytes)" }
++                    DaveMlsExternalSenderPackage(data)
+                 }
+                 OpCode.DaveMlsProposals.code -> {
+-                    defaultVoiceGatewayLogger.trace { "Voice Gateway <<< DAVE_MLS_PROPOSALS (${payload.size} bytes)" }
+-                    DaveMlsProposals(payload)
++                    val data = frameData.copyOfRange(3, frameData.size)
++                    defaultVoiceGatewayLogger.trace { "Voice Gateway <<< DAVE_MLS_PROPOSALS (${data.size} bytes)" }
++                    DaveMlsProposals(data)
+                 }
+                 OpCode.DaveMlsAnnounceCommitTransition.code -> {
+-                    if (payload.size < 2) {
++                    if (frameData.size < 5) {
+                         defaultVoiceGatewayLogger.warn { "DAVE_MLS_ANNOUNCE_COMMIT_TRANSITION payload too short" }
+                         return
+                     }
+                     // First 2 bytes: transition_id (big-endian unsigned short)
+-                    val transitionId = ((payload[0].toInt() and 0xFF) shl 8) or (payload[1].toInt() and 0xFF)
+-                    val commitData = payload.copyOfRange(2, payload.size)
++                    val transitionId = ((frameData[3].toInt() and 0xFF) shl 8) or (frameData[4].toInt() and 0xFF)
++                    val commitData = frameData.copyOfRange(5, frameData.size)
+                     defaultVoiceGatewayLogger.trace { "Voice Gateway <<< DAVE_MLS_ANNOUNCE_COMMIT_TRANSITION (transition=$transitionId, ${commitData.size} bytes)" }
+                     DaveMlsAnnounceCommitTransition(transitionId, commitData)
+                 }
+                 OpCode.DaveMlsWelcome.code -> {
+-                    if (payload.size < 2) {
++                    if (frameData.size < 5) {
+                         defaultVoiceGatewayLogger.warn { "DAVE_MLS_WELCOME payload too short" }
+                         return
+                     }
+                     // First 2 bytes: transition_id (big-endian unsigned short)
+-                    val transitionId = ((payload[0].toInt() and 0xFF) shl 8) or (payload[1].toInt() and 0xFF)
+-                    val welcomeData = payload.copyOfRange(2, payload.size)
++                    val transitionId = ((frameData[3].toInt() and 0xFF) shl 8) or (frameData[4].toInt() and 0xFF)
++                    val welcomeData = frameData.copyOfRange(5, frameData.size)
+                     defaultVoiceGatewayLogger.trace { "Voice Gateway <<< DAVE_MLS_WELCOME (transition=$transitionId, ${welcomeData.size} bytes)" }
+                     DaveMlsWelcome(transitionId, welcomeData)
+                 }
+                 else -> {
+-                    // Not a known binary opcode - try to parse as JSON (some servers may send text frames as binary)
+-                    defaultVoiceGatewayLogger.trace { "Unknown binary frame with opcode $opcode, trying JSON fallback" }
+-                    readJson(frameData)
++                    defaultVoiceGatewayLogger.debug { "Ignoring unknown binary frame with opcode $opcode (seq=$seq, size=${frameData.size})" }
+                     return
+                 }
+             }
+diff --git a/voice/src/main/kotlin/gateway/handler/GatewayEventHandler.kt b/voice/src/main/kotlin/gateway/handler/GatewayEventHandler.kt
+index 6eb21a7b..ffe5db36 100644
+--- a/voice/src/main/kotlin/gateway/handler/GatewayEventHandler.kt
++++ b/voice/src/main/kotlin/gateway/handler/GatewayEventHandler.kt
+@@ -6,6 +6,7 @@ import kotlinx.coroutines.CoroutineScope
+ import kotlinx.coroutines.flow.Flow
+ import kotlinx.coroutines.flow.filterIsInstance
+ import kotlinx.coroutines.flow.launchIn
++import kotlinx.coroutines.CancellationException
+ import kotlinx.coroutines.flow.onEach
+ 
+ private val logger = KotlinLogging.logger("[Handler]")
+@@ -20,6 +21,8 @@ internal abstract class GatewayEventHandler(
+         flow.filterIsInstance<T>().onEach {
+             try {
+                 block(it)
++            } catch (e: CancellationException) {
++                throw e
+             } catch (exception: Exception) {
+                 logger.error(exception) { "[$name]" }
+             }
+diff --git a/voice/src/main/kotlin/gateway/handler/HandshakeHandler.kt b/voice/src/main/kotlin/gateway/handler/HandshakeHandler.kt
+index 0940a103..964164c5 100644
+--- a/voice/src/main/kotlin/gateway/handler/HandshakeHandler.kt
++++ b/voice/src/main/kotlin/gateway/handler/HandshakeHandler.kt
+@@ -1,6 +1,7 @@
+ package dev.kord.voice.gateway.handler
+ 
+ import dev.kord.voice.gateway.*
++import moe.kyokobot.libdave.NativeDaveFactory
+ import kotlinx.coroutines.coroutineScope
+ import kotlinx.coroutines.flow.Flow
+ 
+@@ -34,7 +35,7 @@ internal class HandshakeHandler(
+          */
+         val maxDaveProtocolVersion: Int by lazy {
+             try {
+-                moe.kyokobot.libdave.NativeDaveFactory().maxSupportedProtocolVersion()
++                NativeDaveFactory().maxSupportedProtocolVersion()
+             } catch (_: Throwable) {
+                 0
+             }
+diff --git a/voice/src/main/kotlin/handlers/ConnectionEventHandler.kt b/voice/src/main/kotlin/handlers/ConnectionEventHandler.kt
+index 2f21bc5a..66a882cf 100644
+--- a/voice/src/main/kotlin/handlers/ConnectionEventHandler.kt
++++ b/voice/src/main/kotlin/handlers/ConnectionEventHandler.kt
+@@ -1,6 +1,7 @@
+ package dev.kord.voice.handlers
+ 
+ import io.github.oshai.kotlinlogging.KotlinLogging
++import kotlinx.coroutines.CancellationException
+ import kotlinx.coroutines.CoroutineScope
+ import kotlinx.coroutines.flow.Flow
+ import kotlinx.coroutines.flow.filterIsInstance
+@@ -19,6 +20,8 @@ internal abstract class ConnectionEventHandler<Event>(
+         flow.filterIsInstance<T>().onEach {
+             try {
+                 block(it)
++            } catch (e: CancellationException) {
++                throw e
+             } catch (exception: Exception) {
+                 logger.error(exception) { "[$name]" }
+             }
+diff --git a/voice/src/main/kotlin/handlers/DaveProtocolHandler.kt b/voice/src/main/kotlin/handlers/DaveProtocolHandler.kt
+index 74d1d4bf..d5f0c959 100644
+--- a/voice/src/main/kotlin/handlers/DaveProtocolHandler.kt
++++ b/voice/src/main/kotlin/handlers/DaveProtocolHandler.kt
+@@ -4,8 +4,9 @@ import dev.kord.voice.dave.DaveCommitResult
+ import dev.kord.voice.dave.DaveProtocol
+ import dev.kord.voice.gateway.*
+ import io.github.oshai.kotlinlogging.KotlinLogging
+-import kotlinx.coroutines.coroutineScope
++import kotlinx.coroutines.CancellationException
+ import kotlinx.coroutines.flow.Flow
++import kotlinx.coroutines.flow.collect
+ 
+ private val daveLogger = KotlinLogging.logger { }
+ 
+@@ -14,6 +15,10 @@ private val daveLogger = KotlinLogging.logger { }
+  *
+  * Processes all DAVE-related gateway events and coordinates with a [DaveProtocol]
+  * implementation for MLS group management, key ratcheting, and transitions.
++ *
++ * All events are processed sequentially via a single flow collector to prevent
++ * race conditions between MLS protocol operations (e.g., PrepareEpoch and
++ * PrepareTransition arriving close together).
+  */
+ internal class DaveProtocolHandler(
+     flow: Flow<VoiceEvent>,
+@@ -21,125 +26,215 @@ internal class DaveProtocolHandler(
+     private val voiceGateway: VoiceGateway,
+ ) : ConnectionEventHandler<VoiceEvent>(flow, "DaveProtocolHandler") {
+ 
+-    override suspend fun start() = coroutineScope {
+-
+-        // Track connected users for MLS proposal validation
+-        on<ClientsConnect> {
+-            daveLogger.debug { "DAVE: clients connected: ${it.userIds}" }
+-            for (userId in it.userIds) {
+-                daveProtocol.addUser(userId.value.toLong())
++    /**
++     * Guards against repeated recovery attempts when processProposals fails.
++     *
++     * Starts `true` — proposals are skipped until the bot successfully joins
++     * the MLS group via a Welcome (or a PrepareEpoch epoch=1 fresh start).
++     *
++     * Set to `true` on:
++     *  - construction (initial state — not yet joined)
++     *  - proposals failure (recovery in progress)
++     *  - gateway Close (reset for next connection)
++     *
++     * Cleared to `false` on:
++     *  - Welcome processed successfully (we're in the group)
++     */
++    private var awaitingRejoin = true
++
++    private suspend fun triggerRejoin(trigger: String) {
++        daveLogger.debug { "DAVE: triggerRejoin called from $trigger, awaitingRejoin was $awaitingRejoin" }
++        awaitingRejoin = true
++        daveProtocol.reset()
++        val keyPackage = daveProtocol.getMarshalledKeyPackage()
++        if (keyPackage.isNotEmpty()) {
++            voiceGateway.sendBinary(OpCode.DaveMlsKeyPackage.code, keyPackage)
++            daveLogger.debug { "DAVE: sent key package for rejoin (${keyPackage.size} bytes)" }
++        } else {
++            daveLogger.warn { "DAVE: key package still empty after reset, escalating to full re-initialization" }
++            daveProtocol.reinitialize()
++            val reinitKeyPackage = daveProtocol.getMarshalledKeyPackage()
++            if (reinitKeyPackage.isNotEmpty()) {
++                voiceGateway.sendBinary(OpCode.DaveMlsKeyPackage.code, reinitKeyPackage)
++                daveLogger.debug { "DAVE: sent key package after re-initialization (${reinitKeyPackage.size} bytes)" }
++            } else {
++                daveLogger.error { "DAVE: failed to get key package even after re-initialization from $trigger" }
+             }
+         }
++    }
+ 
+-        // Clean up decryptor resources when a client disconnects
+-        on<ClientDisconnect> {
+-            daveLogger.debug { "DAVE: client disconnected: ${it.userId}" }
+-            daveProtocol.removeUser(it.userId.value.toLong())
++    override suspend fun start() {
++        daveLogger.info { "DAVE: handler initialized [kord-dave-fix-v3] — awaitingRejoin=$awaitingRejoin" }
++
++        flow.collect { event ->
++            try {
++                when (event) {
++                    is ClientsConnect -> handleClientsConnect(event)
++                    is ClientDisconnect -> handleClientDisconnect(event)
++                    is SessionDescription -> handleSessionDescription(event)
++                    is DaveProtocolPrepareEpoch -> handlePrepareEpoch(event)
++                    is DaveMlsExternalSenderPackage -> handleExternalSenderPackage(event)
++                    is DaveMlsProposals -> handleProposals(event)
++                    is DaveMlsAnnounceCommitTransition -> handleAnnounceCommitTransition(event)
++                    is DaveMlsWelcome -> handleWelcome(event)
++                    is DaveProtocolPrepareTransition -> handlePrepareTransition(event)
++                    is DaveProtocolExecuteTransition -> handleExecuteTransition(event)
++                    is Close -> handleClose(event)
++                    else -> { /* not a DAVE event, ignore */ }
++                }
++            } catch (e: CancellationException) {
++                throw e
++            } catch (exception: Exception) {
++                daveLogger.error(exception) { "[$name]" }
++            }
+         }
++    }
+ 
+-        // Session description includes DAVE protocol version confirmation
+-        on<SessionDescription> {
+-            val version = it.daveProtocolVersion
+-            daveLogger.debug { "DAVE: session description received, dave_protocol_version=$version" }
+-            if (version > 0) {
+-                daveProtocol.setProtocolVersion(version)
+-            }
++    // Track connected users for MLS proposal validation
++    private suspend fun handleClientsConnect(event: ClientsConnect) {
++        daveLogger.debug { "DAVE: clients connected: ${event.userIds}" }
++        for (userId in event.userIds) {
++            daveProtocol.addUser(userId.value.toLong())
+         }
++    }
+ 
+-        // Prepare epoch: announces new MLS epoch or group recreation
+-        on<DaveProtocolPrepareEpoch> {
+-            daveLogger.debug { "DAVE: prepare epoch, version=${it.protocolVersion}, epoch=${it.epoch}" }
++    // Clean up decryptor resources when a client disconnects
++    private suspend fun handleClientDisconnect(event: ClientDisconnect) {
++        daveLogger.debug { "DAVE: client disconnected: ${event.userId}" }
++        daveProtocol.removeUser(event.userId.value.toLong())
++    }
+ 
+-            val isNewGroup = it.epoch == 1
++    // Session description includes DAVE protocol version confirmation
++    private suspend fun handleSessionDescription(event: SessionDescription) {
++        val version = event.daveProtocolVersion
++        daveLogger.debug { "DAVE: session description received, dave_protocol_version=$version" }
++        if (version > 0) {
++            daveProtocol.setProtocolVersion(version)
++        }
++    }
+ 
+-            if (it.protocolVersion > 0 && isNewGroup) {
+-                // This triggers MLS group initialization and key package generation
+-                // The initialize call should be done by the voice connection when it has the channel info
+-                // Here we just need to send our key package
+-                val keyPackage = daveProtocol.getMarshalledKeyPackage()
+-                if (keyPackage.isNotEmpty()) {
+-                    voiceGateway.sendBinary(OpCode.DaveMlsKeyPackage.code, keyPackage)
+-                    daveLogger.debug { "DAVE: sent key package (${keyPackage.size} bytes)" }
+-                }
++    // Prepare epoch: announces new MLS epoch or group recreation
++    private suspend fun handlePrepareEpoch(event: DaveProtocolPrepareEpoch) {
++        daveLogger.debug { "DAVE: prepare epoch, version=${event.protocolVersion}, epoch=${event.epoch}" }
++
++        if (event.protocolVersion > 0 && event.epoch == 1) {
++            daveLogger.debug { "DAVE: new group detected (epoch=1), sending key package without reset" }
++            val keyPackage = daveProtocol.getMarshalledKeyPackage()
++            if (keyPackage.isNotEmpty()) {
++                voiceGateway.sendBinary(OpCode.DaveMlsKeyPackage.code, keyPackage)
++                daveLogger.debug { "DAVE: sent key package for new epoch (${keyPackage.size} bytes)" }
++            } else {
++                daveLogger.warn { "DAVE: failed to get key package for new epoch" }
++                triggerRejoin("PrepareEpoch(keyPackageFailed)")
+             }
+         }
++    }
++
++    // External sender package: voice gateway's MLS credential
++    private suspend fun handleExternalSenderPackage(event: DaveMlsExternalSenderPackage) {
++        daveLogger.debug { "DAVE: received external sender package (${event.data.size} bytes)" }
++        daveProtocol.setExternalSender(event.data)
++    }
+ 
+-        // External sender package: voice gateway's MLS credential
+-        on<DaveMlsExternalSenderPackage> {
+-            daveLogger.debug { "DAVE: received external sender package (${it.data.size} bytes)" }
+-            daveProtocol.setExternalSender(it.data)
++    // MLS proposals: add/remove members
++    private suspend fun handleProposals(event: DaveMlsProposals) {
++        daveLogger.debug { "DAVE: received proposals (${event.data.size} bytes), awaitingRejoin=$awaitingRejoin" }
++
++        if (awaitingRejoin) {
++            daveLogger.debug { "DAVE: skipping proposals while awaiting rejoin" }
++            return
+         }
+ 
+-        // MLS proposals: add/remove members
+-        on<DaveMlsProposals> {
+-            daveLogger.debug { "DAVE: received proposals (${it.data.size} bytes)" }
+-            val response = daveProtocol.processProposals(it.data, emptySet()) // recognizedUserIds managed internally
+-            if (response != null) {
+-                // We produced a commit+welcome in response to proposals
++        val response = daveProtocol.processProposals(event.data, emptySet()) // recognizedUserIds managed internally
++        if (response != null) {
++            // We produced a commit+welcome in response to proposals
++            try {
+                 voiceGateway.sendBinary(OpCode.DaveMlsCommitWelcome.code, response)
+                 daveLogger.debug { "DAVE: sent commit+welcome (${response.size} bytes)" }
++            } catch (e: CancellationException) {
++                throw e
++            } catch (e: Exception) {
++                daveLogger.warn(e) { "DAVE: failed to send commit+welcome, triggering recovery" }
++                triggerRejoin("Proposals(sendFailed)")
+             }
++        } else {
++            daveLogger.warn { "DAVE: processProposals failed, resetting MLS state and requesting rejoin" }
++            triggerRejoin("Proposals(processFailed)")
+         }
++    }
+ 
+-        // MLS announce commit transition: winning commit from another member
+-        on<DaveMlsAnnounceCommitTransition> {
+-            daveLogger.debug { "DAVE: received announce commit transition (transition=${it.transitionId}, ${it.data.size} bytes)" }
+-            val result = daveProtocol.processCommit(it.data)
+-            when (result) {
+-                is DaveCommitResult.Success -> {
+-                    daveLogger.debug { "DAVE: commit processed successfully, roster size=${result.rosterMap.size}" }
+-                    // Prepare key ratchets for the transition
+-                    daveProtocol.prepareKeyRatchets(it.transitionId, daveProtocol.currentProtocolVersion)
+-                    // Signal readiness for transition
+-                    voiceGateway.send(DaveProtocolReadyForTransition(it.transitionId))
+-                    daveLogger.debug { "DAVE: sent ready for transition ${it.transitionId}" }
+-                }
+-                is DaveCommitResult.Ignored -> {
+-                    daveLogger.debug { "DAVE: commit ignored (duplicate or irrelevant)" }
+-                }
+-                is DaveCommitResult.Failed -> {
+-                    daveLogger.warn { "DAVE: commit processing failed, sending invalid commit" }
+-                    voiceGateway.send(DaveMlsInvalidCommitWelcome(it.transitionId))
+-                }
+-            }
+-        }
+-
+-        // MLS welcome: joining an existing group
+-        on<DaveMlsWelcome> {
+-            daveLogger.debug { "DAVE: received welcome (transition=${it.transitionId}, ${it.data.size} bytes)" }
+-            val roster = daveProtocol.processWelcome(it.data, emptySet())
+-            if (roster != null) {
+-                daveLogger.debug { "DAVE: welcome processed, roster size=${roster.size}" }
++    // MLS announce commit transition: winning commit from another member
++    private suspend fun handleAnnounceCommitTransition(event: DaveMlsAnnounceCommitTransition) {
++        daveLogger.debug { "DAVE: received announce commit transition (transition=${event.transitionId}, ${event.data.size} bytes)" }
++        val result = daveProtocol.processCommit(event.data)
++        when (result) {
++            is DaveCommitResult.Success -> {
++                daveLogger.debug { "DAVE: commit processed successfully, roster size=${result.rosterMap.size}" }
+                 // Prepare key ratchets for the transition
+-                daveProtocol.prepareKeyRatchets(it.transitionId, daveProtocol.currentProtocolVersion)
+-                // Signal readiness
+-                voiceGateway.send(DaveProtocolReadyForTransition(it.transitionId))
+-                daveLogger.debug { "DAVE: sent ready for transition ${it.transitionId}" }
+-            } else {
+-                daveLogger.warn { "DAVE: welcome processing failed, sending invalid" }
+-                voiceGateway.send(DaveMlsInvalidCommitWelcome(it.transitionId))
++                daveProtocol.prepareKeyRatchets(event.transitionId, daveProtocol.currentProtocolVersion)
++                // Signal readiness for transition
++                voiceGateway.send(DaveProtocolReadyForTransition(event.transitionId))
++                daveLogger.debug { "DAVE: sent ready for transition ${event.transitionId}" }
++            }
++            is DaveCommitResult.Ignored -> {
++                daveLogger.debug { "DAVE: commit ignored (duplicate or irrelevant)" }
++            }
++            is DaveCommitResult.Failed -> {
++                daveLogger.warn { "DAVE: commit processing failed, sending invalid commit" }
++                voiceGateway.send(DaveMlsInvalidCommitWelcome(event.transitionId))
+             }
+         }
++    }
+ 
+-        // Prepare transition: server announces an upcoming transition
+-        on<DaveProtocolPrepareTransition> {
+-            daveLogger.debug { "DAVE: prepare transition, version=${it.protocolVersion}, transition=${it.transitionId}" }
+-            daveProtocol.prepareKeyRatchets(it.transitionId, it.protocolVersion)
++    // MLS welcome: joining an existing group
++    private suspend fun handleWelcome(event: DaveMlsWelcome) {
++        daveLogger.debug { "DAVE: received welcome (transition=${event.transitionId}, ${event.data.size} bytes)" }
++        val roster = daveProtocol.processWelcome(event.data, emptySet())
++        if (roster != null) {
++            daveLogger.debug { "DAVE: welcome processed, roster size=${roster.size}" }
++            awaitingRejoin = false // Successfully (re)joined the MLS group
++            // Prepare key ratchets for the transition
++            daveProtocol.prepareKeyRatchets(event.transitionId, daveProtocol.currentProtocolVersion)
+             // Signal readiness
+-            voiceGateway.send(DaveProtocolReadyForTransition(it.transitionId))
+-            daveLogger.debug { "DAVE: sent ready for transition ${it.transitionId}" }
++            voiceGateway.send(DaveProtocolReadyForTransition(event.transitionId))
++            daveLogger.debug { "DAVE: sent ready for transition ${event.transitionId}" }
++        } else {
++            daveLogger.warn { "DAVE: welcome processing failed, sending invalid" }
++            voiceGateway.send(DaveMlsInvalidCommitWelcome(event.transitionId))
+         }
++    }
+ 
+-        // Execute transition: server triggers the actual transition
+-        on<DaveProtocolExecuteTransition> {
+-            daveLogger.debug { "DAVE: execute transition ${it.transitionId}" }
+-            daveProtocol.executeTransition(it.transitionId)
++    // Prepare transition: server announces an upcoming transition
++    private suspend fun handlePrepareTransition(event: DaveProtocolPrepareTransition) {
++        daveLogger.debug { "DAVE: prepare transition, version=${event.protocolVersion}, transition=${event.transitionId}, awaitingRejoin=$awaitingRejoin" }
++
++        if (awaitingRejoin) {
++            // Must still respond with TransitionReady to unblock Discord's pipeline,
++            // otherwise Discord waits indefinitely and never sends the Welcome we need.
++            // Skip prepareKeyRatchets since the session is reset and ratchets would be invalid.
++            daveLogger.debug { "DAVE: awaiting rejoin — skipping prepareKeyRatchets but sending TransitionReady to unblock pipeline" }
++            voiceGateway.send(DaveProtocolReadyForTransition(event.transitionId))
++            daveLogger.debug { "DAVE: sent ready for transition ${event.transitionId} (during rejoin)" }
++            return
+         }
+ 
+-        // Clean up on close
+-        on<Close> {
+-            daveLogger.debug { "DAVE: gateway closing, resetting protocol state" }
+-            daveProtocol.reset()
+-        }
++        daveProtocol.prepareKeyRatchets(event.transitionId, event.protocolVersion)
++        // Signal readiness
++        voiceGateway.send(DaveProtocolReadyForTransition(event.transitionId))
++        daveLogger.debug { "DAVE: sent ready for transition ${event.transitionId}" }
++    }
++
++    // Execute transition: server triggers the actual transition
++    private suspend fun handleExecuteTransition(event: DaveProtocolExecuteTransition) {
++        daveLogger.debug { "DAVE: execute transition ${event.transitionId}" }
++        daveProtocol.executeTransition(event.transitionId)
++    }
++
++    // Clean up on close
++    @Suppress("UNUSED_PARAMETER")
++    private suspend fun handleClose(event: Close) {
++        daveLogger.debug { "DAVE: gateway closing, resetting protocol state" }
++        awaitingRejoin = true // Reset for next connection
++        daveProtocol.reset()
+     }
+ }
+diff --git a/voice/src/main/kotlin/streams/DefaultStreams.kt b/voice/src/main/kotlin/streams/DefaultStreams.kt
+index 78619e5c..30897ce4 100644
+--- a/voice/src/main/kotlin/streams/DefaultStreams.kt
++++ b/voice/src/main/kotlin/streams/DefaultStreams.kt
+@@ -4,6 +4,7 @@ import dev.kord.common.annotation.KordVoice
+ import dev.kord.common.entity.Snowflake
+ import dev.kord.voice.AudioFrame
+ import dev.kord.voice.dave.DaveProtocol
++import dev.kord.voice.dave.NoOpDaveProtocol
+ import dev.kord.voice.encryption.XChaCha20Poly1305Codec
+ import dev.kord.voice.encryption.strategies.*
+ import dev.kord.voice.gateway.Speaking
+@@ -22,7 +23,6 @@ import kotlinx.coroutines.CoroutineScope
+ import kotlinx.coroutines.channels.Channel
+ import kotlinx.coroutines.coroutineScope
+ import kotlinx.coroutines.flow.*
+-import kotlinx.io.readByteArray
+ 
+ private val defaultStreamsLogger = KotlinLogging.logger { }
+ 
+@@ -31,7 +31,7 @@ public class DefaultStreams(
+     private val voiceGateway: VoiceGateway,
+     private val udp: VoiceUdpSocket,
+     private val nonceStrategy: @Suppress("DEPRECATION") NonceStrategy,
+-    private val daveProtocol: DaveProtocol = dev.kord.voice.dave.NoOpDaveProtocol
++    private val daveProtocol: DaveProtocol = NoOpDaveProtocol
+ ) : Streams {
+ 
+     public constructor(voiceGateway: VoiceGateway, udp: VoiceUdpSocket) : this(voiceGateway, udp, @Suppress("DEPRECATION") LiteNonceStrategy())
+diff --git a/voice/src/main/kotlin/udp/AudioFrameSender.kt b/voice/src/main/kotlin/udp/AudioFrameSender.kt
+index 81e2176d..5e956d09 100644
+--- a/voice/src/main/kotlin/udp/AudioFrameSender.kt
++++ b/voice/src/main/kotlin/udp/AudioFrameSender.kt
+@@ -6,6 +6,7 @@ import dev.kord.common.annotation.KordVoice
+ import dev.kord.voice.EncryptionMode
+ import dev.kord.voice.FrameInterceptorConfiguration
+ import dev.kord.voice.dave.DaveProtocol
++import dev.kord.voice.dave.NoOpDaveProtocol
+ import io.ktor.network.sockets.*
+ 
+ @KordVoice
+@@ -15,7 +16,7 @@ public data class AudioFrameSenderConfiguration(
+     val key: ByteArray,
+     val interceptorConfiguration: FrameInterceptorConfiguration,
+     val encryptionMode: EncryptionMode = EncryptionMode.AeadAes256GcmRtpSize,
+-    val daveProtocol: DaveProtocol = dev.kord.voice.dave.NoOpDaveProtocol
++    val daveProtocol: DaveProtocol = NoOpDaveProtocol
+ )
+ 
+ @KordVoice
+diff --git a/voice/src/test/kotlin/dev/kord/voice/dave/NoOpDaveProtocolTest.kt b/voice/src/test/kotlin/dev/kord/voice/dave/NoOpDaveProtocolTest.kt
+index e84ddf38..d8c0c1c7 100644
+--- a/voice/src/test/kotlin/dev/kord/voice/dave/NoOpDaveProtocolTest.kt
++++ b/voice/src/test/kotlin/dev/kord/voice/dave/NoOpDaveProtocolTest.kt
+@@ -100,6 +100,11 @@ class NoOpDaveProtocolTest {
+             NoOpDaveProtocol.initialize(1, "channel123", 456L, "session789")
+         }
+ 
++        @Test
++        fun `reinitialize does not throw`() {
++            NoOpDaveProtocol.reinitialize()
++        }
++
+         @Test
+         fun `reset does not throw`() {
+             NoOpDaveProtocol.reset()
+diff --git a/voice/src/test/kotlin/dev/kord/voice/gateway/CommandSerializationTest.kt b/voice/src/test/kotlin/dev/kord/voice/gateway/CommandSerializationTest.kt
+index 1c354d98..07f8797e 100644
+--- a/voice/src/test/kotlin/dev/kord/voice/gateway/CommandSerializationTest.kt
++++ b/voice/src/test/kotlin/dev/kord/voice/gateway/CommandSerializationTest.kt
+@@ -40,7 +40,8 @@ class CommandSerializationTest {
+                 serverId = Snowflake(123456789L),
+                 userId = Snowflake(987654321L),
+                 sessionId = "test-session",
+-                token = "test-token"
++                token = "test-token",
++                maxDaveProtocolVersion = 0
+             )
+ 
+             val result = serializeCommand(identify)
+@@ -73,7 +74,8 @@ class CommandSerializationTest {
+                 serverId = Snowflake(1L),
+                 userId = Snowflake(2L),
+                 sessionId = "s",
+-                token = "t"
++                token = "t",
++                maxDaveProtocolVersion = 0
+             )
+ 
+             val result = serializeCommand(identify)

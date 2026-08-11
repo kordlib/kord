@@ -151,3 +151,27 @@ dependencies {
     <version>{version}</version>
 </dependency>
 ```
+
+## DAVE (Discord Audio & Video End-to-End Encryption)
+
+Kord supports Discord's DAVE protocol via [libdave-jvm](https://github.com/KyokoBot/libdave-jvm).
+When DAVE is available, voice channels with E2EE enabled will work transparently.
+
+### Adding native libraries
+
+Add the native library for your platform as a **runtime dependency**:
+
+```kotlin
+dependencies {
+    implementation("dev.kord:kord-voice:{version}")
+
+    // Add your platform's libdave native binary:
+    runtimeOnly("moe.kyokobot.libdave:natives-darwin:0.1.3")       // macOS
+    runtimeOnly("moe.kyokobot.libdave:natives-linux-x86-64:0.1.3") // Linux x64
+    runtimeOnly("moe.kyokobot.libdave:natives-linux-aarch64:0.1.3")// Linux ARM64
+    runtimeOnly("moe.kyokobot.libdave:natives-win-x86-64:0.1.3")   // Windows x64
+}
+```
+
+If the native library is missing, Kord falls back to a no-op implementation —
+voice channels that require DAVE will reject the connection with close code `4017`.
