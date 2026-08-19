@@ -30,11 +30,38 @@ public abstract class RestRequestException(
  */
 public data class HttpStatus(val code: Int, val message: String)
 
+
 /**
  * Implementation of the [RestRequestException] for [RestServices][RestService] using Ktor.
  */
-public class KtorRequestException(
+public open class KtorRequestException(
     @Suppress("MemberVisibilityCanBePrivate") public val httpResponse: HttpResponse,
     request: Request<*, *>,
     discordError: DiscordErrorResponse?,
 ) : RestRequestException(request, HttpStatus(httpResponse.status.value, httpResponse.status.description), discordError)
+
+public class BadRequestKtorRequestException(
+    httpResponse: HttpResponse,
+    request: Request<*, *>,
+    discordError: DiscordErrorResponse?,
+) : KtorRequestException(httpResponse, request, discordError)
+
+
+public class ForbiddenKtorRequestException(
+    httpResponse: HttpResponse,
+    request: Request<*, *>,
+    discordError: DiscordErrorResponse?,
+) : KtorRequestException(httpResponse, request, discordError)
+
+public class NotFoundKtorRequestException(
+    httpResponse: HttpResponse,
+    request: Request<*, *>,
+    discordError: DiscordErrorResponse?,
+) : KtorRequestException(httpResponse, request, discordError)
+
+public class ServerErrorKtorRequestException(
+    httpResponse: HttpResponse,
+    request: Request<*, *>,
+    discordError: DiscordErrorResponse?,
+) : KtorRequestException(httpResponse, request, discordError)
+
