@@ -13,8 +13,15 @@ import kotlin.io.encoding.Base64
 internal fun HttpClientConfig<*>.defaultConfig() {
     expectSuccess = false
 
+    val json = Json {
+        encodeDefaults = false
+        allowStructuredMapKeys = true
+        ignoreUnknownKeys = true
+        isLenient = true
+    }
+
     install(ContentNegotiation) {
-        json()
+        json(json)
     }
     install(WebSockets)
 }
@@ -26,18 +33,8 @@ public fun HttpClient?.configure(): HttpClient {
         defaultConfig()
     }
 
-    val json = Json {
-        encodeDefaults = false
-        allowStructuredMapKeys = true
-        ignoreUnknownKeys = true
-        isLenient = true
-    }
-
     return HttpClient(httpEngine()) {
         defaultConfig()
-        install(ContentNegotiation) {
-            json(json)
-        }
     }
 }
 
