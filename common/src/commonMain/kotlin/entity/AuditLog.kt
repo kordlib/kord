@@ -114,6 +114,8 @@ public data class DiscordAuditLogEntry(
     val actionType: AuditLogEvent,
     val options: Optional<AuditLogEntryOptionalInfo> = Optional.Missing(),
     val reason: Optional<String> = Optional.Missing(),
+    @SerialName("guild_id")
+    val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
 ) {
 
     @Suppress("UNCHECKED_CAST")
