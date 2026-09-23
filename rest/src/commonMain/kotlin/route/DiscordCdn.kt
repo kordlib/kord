@@ -37,7 +37,7 @@ public object DiscordCdn {
     public fun memberAvatar(guildId: Snowflake, userId: Snowflake, hash: String): CdnUrl =
         CdnUrl("$BASE_URL/guilds/$guildId/users/$userId/avatars/$hash")
 
-    public fun avatarDecoration(hash: String): CdnUrl = CdnUrl("$BASE_URL/avatar-decoration-preset/$hash")
+    public fun avatarDecoration(hash: String): CdnUrl = CdnUrl("$BASE_URL/avatar-decoration-presets/$hash")
 
     public fun staticNameplate(path: String): CdnUrl = CdnUrl("$BASE_URL/assets/collectibles/$path/static.png")
 
