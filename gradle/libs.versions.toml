@@ -17,14 +17,15 @@ stately = "2.1.0" # https://github.com/touchlab/Stately
 fastZlib = "2.0.1" # https://github.com/timotejroiko/fast-zlib
 libsodiumBindings = "0.9.5" # https://github.com/ionspin/kotlin-multiplatform-libsodium
 jna = "5.18.1" # https://github.com/java-native-access/jna
+libdave = "0.1.2"
 
 # code generation
 ksp = "2.3.5" # https://github.com/google/ksp
 kotlinpoet = "2.2.0" # https://github.com/square/kotlinpoet
 
 # tests
-junit-jupiter = "6.0.2" # https://github.com/junit-team/junit5
-junit-platform = "1.13.4"
+junit-jupiter = "5.11.2" # https://github.com/junit-team/junit5
+junit-platform = "1.11.2"
 mockk = "1.14.9" # https://github.com/mockk/mockk
 kbson = "0.4.0" # https://github.com/mongodb/kbson
 
@@ -84,6 +85,10 @@ junit-platform-launcher = { module = "org.junit.platform:junit-platform-launcher
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 slf4j-simple = { module = "org.slf4j:slf4j-simple", version.ref = "slf4j" }
 kbson = { module = "org.mongodb.kbson:kbson", version.ref = "kbson" }
+
+# libdave
+libdave-api = { module = "moe.kyokobot.libdave:api", version.ref = "libdave" }
+libdave-impl-jni = { module = "moe.kyokobot.libdave:impl-jni", version.ref = "libdave" }
 
 # actually plugins, not libraries, but used is 'buildSrc/build.gradle.kts' as implementation dependencies:
 # https://docs.gradle.org/current/userguide/implementing_gradle_plugins_precompiled.html#sec:applying_external_plugins

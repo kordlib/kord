@@ -48,6 +48,12 @@ public interface VoiceGateway {
     public suspend fun send(command: Command)
 
     /**
+     * Sends a binary frame to the gateway with the specified [opcode] and [data].
+     * Used for DAVE MLS protocol messages.
+     */
+    public suspend fun sendBinary(opcode: Int, data: ByteArray)
+
+    /**
      * Close the Gateway and ends the current session, suspending until the underlying websocket is closed.
      */
     public suspend fun stop()
@@ -64,6 +70,8 @@ public interface VoiceGateway {
                 get() = MutableStateFlow(null)
 
             override suspend fun send(command: Command) {}
+
+            override suspend fun sendBinary(opcode: Int, data: ByteArray) {}
 
             override suspend fun start(configuration: VoiceGatewayConfiguration) {}
 
@@ -132,6 +140,7 @@ public sealed class VoiceGatewayCloseCode(public val code: Int) {
     public object Disconnect : VoiceGatewayCloseCode(4014)
     public object VoiceServerCrashed : VoiceGatewayCloseCode(4015)
     public object UnknownEncryptionMode : VoiceGatewayCloseCode(4016)
+    public object DaveProtocolRequired : VoiceGatewayCloseCode(4017)
 
     public companion object {
         public fun of(code: Int): VoiceGatewayCloseCode =
@@ -148,6 +157,7 @@ public sealed class VoiceGatewayCloseCode(public val code: Int) {
                 4014 -> Disconnect
                 4015 -> VoiceServerCrashed
                 4016 -> UnknownEncryptionMode
+                4017 -> DaveProtocolRequired
                 else -> Unknown(code)
             }
     }

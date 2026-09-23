@@ -43,6 +43,14 @@ public sealed class Command {
                     composite.encodeSerializableElement(descriptor, 0, OpCode.serializer(), OpCode.Resume)
                     composite.encodeSerializableElement(descriptor, 1, Resume.serializer(), value)
                 }
+                is DaveProtocolReadyForTransition -> {
+                    composite.encodeSerializableElement(descriptor, 0, OpCode.serializer(), OpCode.DaveProtocolReadyForTransition)
+                    composite.encodeSerializableElement(descriptor, 1, DaveProtocolReadyForTransition.serializer(), value)
+                }
+                is DaveMlsInvalidCommitWelcome -> {
+                    composite.encodeSerializableElement(descriptor, 0, OpCode.serializer(), OpCode.DaveMlsInvalidCommitWelcome)
+                    composite.encodeSerializableElement(descriptor, 1, DaveMlsInvalidCommitWelcome.serializer(), value)
+                }
             }
 
             composite.endStructure(descriptor)
@@ -94,7 +102,23 @@ public data class SelectProtocol(
 
 @Serializable
 public data class Resume(
+    @SerialName("server_id")
     val serverId: Snowflake,
+    @SerialName("session_id")
     val sessionId: String,
-    val token: String
+    val token: String,
+    @SerialName("max_dave_protocol_version")
+    val maxDaveProtocolVersion: Int = 0
+) : Command()
+
+@Serializable
+public data class DaveProtocolReadyForTransition(
+    @SerialName("transition_id")
+    val transitionId: Int
+) : Command()
+
+@Serializable
+public data class DaveMlsInvalidCommitWelcome(
+    @SerialName("transition_id")
+    val transitionId: Int
 ) : Command()

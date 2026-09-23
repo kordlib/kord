@@ -47,7 +47,15 @@ public sealed class VoiceEvent {
                     // https://discord.com/developers/docs/topics/voice-connections#resuming-voice-connection-example-resumed-payload
                     null
                 }
-                OpCode.Identify, OpCode.SelectProtocol, OpCode.Heartbeat, OpCode.Resume, OpCode.ClientDisconnect,
+                OpCode.ClientsConnect -> decodeEvent(decoder, op, ClientsConnect.serializer(), d)
+                OpCode.ClientDisconnect -> decodeEvent(decoder, op, ClientDisconnect.serializer(), d)
+                OpCode.DaveProtocolPrepareTransition -> decodeEvent(decoder, op, DaveProtocolPrepareTransition.serializer(), d)
+                OpCode.DaveProtocolExecuteTransition -> decodeEvent(decoder, op, DaveProtocolExecuteTransition.serializer(), d)
+                OpCode.DaveProtocolPrepareEpoch -> decodeEvent(decoder, op, DaveProtocolPrepareEpoch.serializer(), d)
+                OpCode.Identify, OpCode.SelectProtocol, OpCode.Heartbeat, OpCode.Resume,
+                OpCode.DaveMlsExternalSenderPackage, OpCode.DaveMlsKeyPackage, OpCode.DaveMlsProposals,
+                OpCode.DaveMlsCommitWelcome, OpCode.DaveMlsAnnounceCommitTransition, OpCode.DaveMlsWelcome,
+                OpCode.DaveMlsInvalidCommitWelcome, OpCode.DaveProtocolReadyForTransition,
                 OpCode.Unknown,
                 -> {
                     jsonLogger.debug { "Unknown voice gateway event with opcode $op : $d" }
@@ -74,7 +82,9 @@ public data class Ready(
     val ssrc: UInt,
     val ip: String,
     val port: Int,
-    val modes: List<EncryptionMode>
+    val modes: List<EncryptionMode>,
+    @SerialName("auth_session_id")
+    val authSessionId: String = ""
 ) : VoiceEvent()
 
 @Serializable
@@ -92,7 +102,9 @@ public data class HeartbeatAck(@SerialName("t") val nonce: Long) : VoiceEvent()
 public data class SessionDescription(
     val mode: EncryptionMode,
     @SerialName("secret_key")
-    val secretKey: List<UByte>
+    val secretKey: List<UByte>,
+    @SerialName("dave_protocol_version")
+    val daveProtocolVersion: Int = 0
 ) : VoiceEvent()
 
 @Serializable
@@ -131,4 +143,67 @@ public sealed class Close : VoiceEvent() {
      *  The user is free to manually connect again using [VoiceGateway.start], otherwise all resources linked to the Gateway should free.
      */
     public object RetryLimitReached : Close()
+}
+
+@Serializable
+public data class ClientsConnect(
+    @SerialName("user_ids")
+    val userIds: List<Snowflake>
+) : VoiceEvent()
+
+@Serializable
+public data class ClientDisconnect(
+    @SerialName("user_id")
+    val userId: Snowflake
+) : VoiceEvent()
+
+@Serializable
+public data class DaveProtocolPrepareTransition(
+    @SerialName("protocol_version")
+    val protocolVersion: Int,
+    @SerialName("transition_id")
+    val transitionId: Int
+) : VoiceEvent()
+
+@Serializable
+public data class DaveProtocolExecuteTransition(
+    @SerialName("transition_id")
+    val transitionId: Int
+) : VoiceEvent()
+
+@Serializable
+public data class DaveProtocolPrepareEpoch(
+    @SerialName("protocol_version")
+    val protocolVersion: Int,
+    val epoch: Int
+) : VoiceEvent()
+
+public data class DaveMlsExternalSenderPackage(
+    val data: ByteArray
+) : VoiceEvent() {
+    override fun equals(other: Any?): Boolean = other is DaveMlsExternalSenderPackage && data.contentEquals(other.data)
+    override fun hashCode(): Int = data.contentHashCode()
+}
+
+public data class DaveMlsProposals(
+    val data: ByteArray
+) : VoiceEvent() {
+    override fun equals(other: Any?): Boolean = other is DaveMlsProposals && data.contentEquals(other.data)
+    override fun hashCode(): Int = data.contentHashCode()
+}
+
+public data class DaveMlsAnnounceCommitTransition(
+    val transitionId: Int,
+    val data: ByteArray
+) : VoiceEvent() {
+    override fun equals(other: Any?): Boolean = other is DaveMlsAnnounceCommitTransition && transitionId == other.transitionId && data.contentEquals(other.data)
+    override fun hashCode(): Int = 31 * transitionId + data.contentHashCode()
+}
+
+public data class DaveMlsWelcome(
+    val transitionId: Int,
+    val data: ByteArray
+) : VoiceEvent() {
+    override fun equals(other: Any?): Boolean = other is DaveMlsWelcome && transitionId == other.transitionId && data.contentEquals(other.data)
+    override fun hashCode(): Int = 31 * transitionId + data.contentHashCode()
 }

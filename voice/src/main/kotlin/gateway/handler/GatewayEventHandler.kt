@@ -6,6 +6,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.flow.onEach
 
 private val logger = KotlinLogging.logger("[Handler]")
@@ -20,6 +21,8 @@ internal abstract class GatewayEventHandler(
         flow.filterIsInstance<T>().onEach {
             try {
                 block(it)
+            } catch (e: CancellationException) {
+                throw e
             } catch (exception: Exception) {
                 logger.error(exception) { "[$name]" }
             }
