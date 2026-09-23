@@ -1,5 +1,7 @@
 plugins {
     `kord-internal-module`
+    org.jetbrains.dokka
+    `kord-publishing`
 }
 
 kotlin {
@@ -16,4 +18,11 @@ dependencies {
     implementation(libs.kotlinpoet.ksp)
 
     implementation(libs.kotlinx.serialization.json) // use types directly
+}
+
+publishing {
+    publications.register<MavenPublication>(Library.name) {
+        from(components["java"])
+        artifact(tasks.kotlinSourcesJar)
+    }
 }
