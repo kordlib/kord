@@ -7,8 +7,8 @@ import dev.kord.core.entity.channel.thread.TextChannelThread
 import dev.kord.core.entity.channel.thread.ThreadChannel
 import dev.kord.core.event.Event
 
-public sealed interface ThreadChannelDeleteEvent : Event {
-    public val channel: DeletedThreadChannel
+public sealed interface ThreadChannelDeleteEvent : ThreadsChangeEvent {
+    public override val channel: DeletedThreadChannel
 
     public val old: ThreadChannel?
 

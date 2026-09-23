@@ -1,38 +1,53 @@
 package dev.kord.core.entity.channel.thread
 
 import dev.kord.common.entity.ArchiveDuration
+import dev.kord.common.entity.ChannelType
 import dev.kord.common.entity.Permission.ManageChannels
 import dev.kord.common.entity.Permission.ManageMessages
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.unwrap
 import dev.kord.common.entity.optional.value
 import dev.kord.core.Kord
+import dev.kord.core.behavior.GuildBehavior
 import dev.kord.core.behavior.UserBehavior
 import dev.kord.core.behavior.channel.threads.ThreadChannelBehavior
+import dev.kord.core.behavior.channel.threads.ThreadParentChannelBehavior
 import dev.kord.core.cache.data.ChannelData
+import dev.kord.core.entity.Guild
 import dev.kord.core.entity.Message
 import dev.kord.core.entity.channel.ForumChannel
 import dev.kord.core.entity.channel.GuildMessageChannel
 import dev.kord.core.entity.channel.MediaChannel
+import dev.kord.core.entity.channel.ThreadParentChannel
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
-import kotlin.time.Instant
 import kotlin.time.Duration
+import kotlin.time.Instant
 
-public interface ThreadChannel : GuildMessageChannel, ThreadChannelBehavior {
+public interface ThreadChannel : GuildMessageChannel, ThreadChannelBehavior, MaybeThreadChannel {
 
     private val threadData get() = data.threadMetadata.value!!
 
     /**
      * The id of the user who created the thread.
      */
-    public val ownerId: Snowflake
-        get() = data.ownerId.value!!
+    public val ownerId: Snowflake get() = data.ownerId.value!!
 
-    public val owner: UserBehavior
-        get() = UserBehavior(ownerId, kord)
+    public val owner: UserBehavior get() = UserBehavior(ownerId, kord)
 
+    override val id: Snowflake get() = super<GuildMessageChannel>.id
+    override val guildId: Snowflake get() = super<GuildMessageChannel>.guildId
+    override val guild: GuildBehavior get() = super<GuildMessageChannel>.guild
     override val parentId: Snowflake get() = data.parentId.value!!
+    override val parent: ThreadParentChannelBehavior get() = super<ThreadChannelBehavior>.parent
+    override val type: ChannelType get() = super<GuildMessageChannel>.type
+
+    override suspend fun getGuild(): Guild = super<GuildMessageChannel>.getGuild()
+
+    override suspend fun getGuildOrNull(): Guild? = super<GuildMessageChannel>.getGuildOrNull()
+
+    override suspend fun getParent(): ThreadParentChannel = super<ThreadChannelBehavior>.getParent()
+    override suspend fun getParentOrNull(): ThreadParentChannel? = super<ThreadChannelBehavior>.getParentOrNull()
 
 
     /**
@@ -116,13 +131,23 @@ public interface ThreadChannel : GuildMessageChannel, ThreadChannelBehavior {
      */
     public val appliedTags: List<Snowflake> get() = data.appliedTags.value ?: emptyList()
 
+    override fun <T> MaybeThreadChannel.flatMap(func: () -> T): Result<T> = Result.success(func())
+
+    override fun <T> doIfStillExist(func: () -> T) {
+        func()
+    }
+
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): ThreadChannel {
         return ThreadChannel(data, kord, strategy.supply(kord))
     }
 
 }
 
-internal fun ThreadChannel(data: ChannelData, kord: Kord, supplier: EntitySupplier = kord.defaultSupplier): ThreadChannel {
+internal fun ThreadChannel(
+    data: ChannelData,
+    kord: Kord,
+    supplier: EntitySupplier = kord.defaultSupplier
+): ThreadChannel {
     return object : ThreadChannel {
 
         override val data: ChannelData
