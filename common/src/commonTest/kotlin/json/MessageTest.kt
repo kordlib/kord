@@ -94,4 +94,19 @@ class MessageTest {
             }
         }
     }
+
+    @Test
+    @JsName("test3")
+    fun `Interaction metadata serialization`() = runTest {
+        val message = Json.decodeFromString(DiscordMessage.serializer(), file("interaction_response"))
+
+        with(message.interactionMetadata.value!!) {
+            id shouldBe "1290000000000000001"
+            type shouldBe InteractionType.ApplicationCommand
+            user.id shouldBe "53908099506183680"
+            authorizingIntegrationOwners shouldBe mapOf(
+                ApplicationIntegrationType.GuildInstall to Snowflake("278325129692446720")
+            )
+        }
+    }
 }
