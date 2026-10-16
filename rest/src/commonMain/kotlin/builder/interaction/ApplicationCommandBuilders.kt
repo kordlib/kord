@@ -23,10 +23,6 @@ public interface ApplicationCommandCreateBuilder : LocalizedNameCreateBuilder,
     public var defaultPermission: Boolean?
     /** Indicates whether the command is age-restricted. Defaults to `false`. */
     public var nsfw: Boolean?
-    /** [IntegrationTypes][ApplicationIntegrationType] the command is available in. */
-    public var integrationTypes: MutableList<ApplicationIntegrationType>?
-    /** [InteractionContextTypes][InteractionContextType] the command is available in. */
-    public var contexts: MutableList<InteractionContextType>?
     public val type: ApplicationCommandType
 
     /**
@@ -37,6 +33,18 @@ public interface ApplicationCommandCreateBuilder : LocalizedNameCreateBuilder,
     public fun disableCommandInGuilds() {
         defaultMemberPermissions = Permissions()
     }
+}
+
+@KordDsl
+public interface GlobalApplicationCommandCreateBuilder : ApplicationCommandCreateBuilder {
+    @Deprecated("'dmPermission' is deprecated in favor of 'contexts'. 'dmPermission = false' corresponds to " +
+            "'contexts' without InteractionContextType.BotDM, e.g. 'requireContext(InteractionContextType.Guild)'.")
+    public var dmPermission: Boolean?
+
+    /** [IntegrationTypes][ApplicationIntegrationType] the command is available in. */
+    public var integrationTypes: MutableList<ApplicationIntegrationType>?
+    /** [InteractionContextTypes][InteractionContextType] the command is available in. */
+    public var contexts: MutableList<InteractionContextType>?
 
     /**
      * Requires this command to be executed in a specific [installation context][ApplicationIntegrationType].
@@ -54,15 +62,29 @@ public interface ApplicationCommandCreateBuilder : LocalizedNameCreateBuilder,
 }
 
 @KordDsl
-public interface GlobalApplicationCommandCreateBuilder : ApplicationCommandCreateBuilder {
-    @Deprecated("Deprecated in favor of contexts", ReplaceWith("requireContext(InteractionContextType.Guild)"))
-    public var dmPermission: Boolean?
-}
-
-@KordDsl
 public interface GlobalApplicationCommandModifyBuilder : ApplicationCommandModifyBuilder {
-    @Deprecated("Deprecated in favor of contexts", ReplaceWith("requireContext(InteractionContextType.Guild)"))
+    @Deprecated("'dmPermission' is deprecated in favor of 'contexts'. 'dmPermission = false' corresponds to " +
+            "'contexts' without InteractionContextType.BotDM, e.g. 'requireContext(InteractionContextType.Guild)'.")
     public var dmPermission: Boolean?
+
+    /** [IntegrationTypes][ApplicationIntegrationType] the command is available in. */
+    public var integrationTypes: MutableList<ApplicationIntegrationType>?
+    /** [InteractionContextTypes][InteractionContextType] the command is available in. */
+    public var contexts: MutableList<InteractionContextType>?
+
+    /**
+     * Requires this command to be executed in a specific [installation context][ApplicationIntegrationType].
+     */
+    public fun requireIntegrationTypes(vararg types: ApplicationIntegrationType) {
+        integrationTypes?.addAll(types) ?: run { integrationTypes = types.toMutableList() }
+    }
+
+    /**
+     * Requires this command to be executed in a specific [interaction context][InteractionContextType].
+     */
+    public fun requireContext(vararg types: InteractionContextType) {
+        contexts?.addAll(types) ?: run { contexts = types.toMutableList() }
+    }
 }
 
 @KordDsl
@@ -80,22 +102,4 @@ public interface ApplicationCommandModifyBuilder : LocalizedNameModifyBuilder,
 
     /** Indicates whether the command is age-restricted. */
     public var nsfw: Boolean?
-    /** [IntegrationTypes][ApplicationIntegrationType] the command is available in. */
-    public var integrationTypes: MutableList<ApplicationIntegrationType>?
-    /** [InteractionContextTypes][InteractionContextType] the command is available in. */
-    public var contexts: MutableList<InteractionContextType>?
-
-    /**
-     * Requires this command to be executed in a specific [installation context][ApplicationIntegrationType].
-     */
-    public fun requireIntegrationTypes(vararg types: ApplicationIntegrationType) {
-        integrationTypes?.addAll(types) ?: run { integrationTypes = types.toMutableList() }
-    }
-
-    /**
-     * Requires this command to be executed in a specific [interaction context][InteractionContextType].
-     */
-    public fun requireContext(vararg types: InteractionContextType) {
-        contexts?.addAll(types) ?: run { contexts = types.toMutableList() }
-    }
 }
