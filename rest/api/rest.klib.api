@@ -757,46 +757,29 @@ abstract interface dev.kord.rest.builder.interaction/ApplicationCommandCreateBui
     abstract val type // dev.kord.rest.builder.interaction/ApplicationCommandCreateBuilder.type|{}type[0]
         abstract fun <get-type>(): dev.kord.common.entity/ApplicationCommandType // dev.kord.rest.builder.interaction/ApplicationCommandCreateBuilder.type.<get-type>|<get-type>(){}[0]
 
-    abstract var contexts // dev.kord.rest.builder.interaction/ApplicationCommandCreateBuilder.contexts|{}contexts[0]
-        abstract fun <get-contexts>(): kotlin.collections/MutableList<dev.kord.common.entity/InteractionContextType>? // dev.kord.rest.builder.interaction/ApplicationCommandCreateBuilder.contexts.<get-contexts>|<get-contexts>(){}[0]
-        abstract fun <set-contexts>(kotlin.collections/MutableList<dev.kord.common.entity/InteractionContextType>?) // dev.kord.rest.builder.interaction/ApplicationCommandCreateBuilder.contexts.<set-contexts>|<set-contexts>(kotlin.collections.MutableList<dev.kord.common.entity.InteractionContextType>?){}[0]
     abstract var defaultMemberPermissions // dev.kord.rest.builder.interaction/ApplicationCommandCreateBuilder.defaultMemberPermissions|{}defaultMemberPermissions[0]
         abstract fun <get-defaultMemberPermissions>(): dev.kord.common.entity/Permissions? // dev.kord.rest.builder.interaction/ApplicationCommandCreateBuilder.defaultMemberPermissions.<get-defaultMemberPermissions>|<get-defaultMemberPermissions>(){}[0]
         abstract fun <set-defaultMemberPermissions>(dev.kord.common.entity/Permissions?) // dev.kord.rest.builder.interaction/ApplicationCommandCreateBuilder.defaultMemberPermissions.<set-defaultMemberPermissions>|<set-defaultMemberPermissions>(dev.kord.common.entity.Permissions?){}[0]
     abstract var defaultPermission // dev.kord.rest.builder.interaction/ApplicationCommandCreateBuilder.defaultPermission|{}defaultPermission[0]
         abstract fun <get-defaultPermission>(): kotlin/Boolean? // dev.kord.rest.builder.interaction/ApplicationCommandCreateBuilder.defaultPermission.<get-defaultPermission>|<get-defaultPermission>(){}[0]
         abstract fun <set-defaultPermission>(kotlin/Boolean?) // dev.kord.rest.builder.interaction/ApplicationCommandCreateBuilder.defaultPermission.<set-defaultPermission>|<set-defaultPermission>(kotlin.Boolean?){}[0]
-    abstract var integrationTypes // dev.kord.rest.builder.interaction/ApplicationCommandCreateBuilder.integrationTypes|{}integrationTypes[0]
-        abstract fun <get-integrationTypes>(): kotlin.collections/MutableList<dev.kord.common.entity/ApplicationIntegrationType>? // dev.kord.rest.builder.interaction/ApplicationCommandCreateBuilder.integrationTypes.<get-integrationTypes>|<get-integrationTypes>(){}[0]
-        abstract fun <set-integrationTypes>(kotlin.collections/MutableList<dev.kord.common.entity/ApplicationIntegrationType>?) // dev.kord.rest.builder.interaction/ApplicationCommandCreateBuilder.integrationTypes.<set-integrationTypes>|<set-integrationTypes>(kotlin.collections.MutableList<dev.kord.common.entity.ApplicationIntegrationType>?){}[0]
     abstract var nsfw // dev.kord.rest.builder.interaction/ApplicationCommandCreateBuilder.nsfw|{}nsfw[0]
         abstract fun <get-nsfw>(): kotlin/Boolean? // dev.kord.rest.builder.interaction/ApplicationCommandCreateBuilder.nsfw.<get-nsfw>|<get-nsfw>(){}[0]
         abstract fun <set-nsfw>(kotlin/Boolean?) // dev.kord.rest.builder.interaction/ApplicationCommandCreateBuilder.nsfw.<set-nsfw>|<set-nsfw>(kotlin.Boolean?){}[0]
 
     open fun disableCommandInGuilds() // dev.kord.rest.builder.interaction/ApplicationCommandCreateBuilder.disableCommandInGuilds|disableCommandInGuilds(){}[0]
-    open fun requireContext(kotlin/Array<out dev.kord.common.entity/InteractionContextType>...) // dev.kord.rest.builder.interaction/ApplicationCommandCreateBuilder.requireContext|requireContext(kotlin.Array<out|dev.kord.common.entity.InteractionContextType>...){}[0]
-    open fun requireIntegrationTypes(kotlin/Array<out dev.kord.common.entity/ApplicationIntegrationType>...) // dev.kord.rest.builder.interaction/ApplicationCommandCreateBuilder.requireIntegrationTypes|requireIntegrationTypes(kotlin.Array<out|dev.kord.common.entity.ApplicationIntegrationType>...){}[0]
 }
 
 abstract interface dev.kord.rest.builder.interaction/ApplicationCommandModifyBuilder : dev.kord.rest.builder.interaction/LocalizedNameModifyBuilder, dev.kord.rest.builder/RequestBuilder<dev.kord.rest.json.request/ApplicationCommandModifyRequest> { // dev.kord.rest.builder.interaction/ApplicationCommandModifyBuilder|null[0]
-    abstract var contexts // dev.kord.rest.builder.interaction/ApplicationCommandModifyBuilder.contexts|{}contexts[0]
-        abstract fun <get-contexts>(): kotlin.collections/MutableList<dev.kord.common.entity/InteractionContextType>? // dev.kord.rest.builder.interaction/ApplicationCommandModifyBuilder.contexts.<get-contexts>|<get-contexts>(){}[0]
-        abstract fun <set-contexts>(kotlin.collections/MutableList<dev.kord.common.entity/InteractionContextType>?) // dev.kord.rest.builder.interaction/ApplicationCommandModifyBuilder.contexts.<set-contexts>|<set-contexts>(kotlin.collections.MutableList<dev.kord.common.entity.InteractionContextType>?){}[0]
     abstract var defaultMemberPermissions // dev.kord.rest.builder.interaction/ApplicationCommandModifyBuilder.defaultMemberPermissions|{}defaultMemberPermissions[0]
         abstract fun <get-defaultMemberPermissions>(): dev.kord.common.entity/Permissions? // dev.kord.rest.builder.interaction/ApplicationCommandModifyBuilder.defaultMemberPermissions.<get-defaultMemberPermissions>|<get-defaultMemberPermissions>(){}[0]
         abstract fun <set-defaultMemberPermissions>(dev.kord.common.entity/Permissions?) // dev.kord.rest.builder.interaction/ApplicationCommandModifyBuilder.defaultMemberPermissions.<set-defaultMemberPermissions>|<set-defaultMemberPermissions>(dev.kord.common.entity.Permissions?){}[0]
     abstract var defaultPermission // dev.kord.rest.builder.interaction/ApplicationCommandModifyBuilder.defaultPermission|{}defaultPermission[0]
         abstract fun <get-defaultPermission>(): kotlin/Boolean? // dev.kord.rest.builder.interaction/ApplicationCommandModifyBuilder.defaultPermission.<get-defaultPermission>|<get-defaultPermission>(){}[0]
         abstract fun <set-defaultPermission>(kotlin/Boolean?) // dev.kord.rest.builder.interaction/ApplicationCommandModifyBuilder.defaultPermission.<set-defaultPermission>|<set-defaultPermission>(kotlin.Boolean?){}[0]
-    abstract var integrationTypes // dev.kord.rest.builder.interaction/ApplicationCommandModifyBuilder.integrationTypes|{}integrationTypes[0]
-        abstract fun <get-integrationTypes>(): kotlin.collections/MutableList<dev.kord.common.entity/ApplicationIntegrationType>? // dev.kord.rest.builder.interaction/ApplicationCommandModifyBuilder.integrationTypes.<get-integrationTypes>|<get-integrationTypes>(){}[0]
-        abstract fun <set-integrationTypes>(kotlin.collections/MutableList<dev.kord.common.entity/ApplicationIntegrationType>?) // dev.kord.rest.builder.interaction/ApplicationCommandModifyBuilder.integrationTypes.<set-integrationTypes>|<set-integrationTypes>(kotlin.collections.MutableList<dev.kord.common.entity.ApplicationIntegrationType>?){}[0]
     abstract var nsfw // dev.kord.rest.builder.interaction/ApplicationCommandModifyBuilder.nsfw|{}nsfw[0]
         abstract fun <get-nsfw>(): kotlin/Boolean? // dev.kord.rest.builder.interaction/ApplicationCommandModifyBuilder.nsfw.<get-nsfw>|<get-nsfw>(){}[0]
         abstract fun <set-nsfw>(kotlin/Boolean?) // dev.kord.rest.builder.interaction/ApplicationCommandModifyBuilder.nsfw.<set-nsfw>|<set-nsfw>(kotlin.Boolean?){}[0]
-
-    open fun requireContext(kotlin/Array<out dev.kord.common.entity/InteractionContextType>...) // dev.kord.rest.builder.interaction/ApplicationCommandModifyBuilder.requireContext|requireContext(kotlin.Array<out|dev.kord.common.entity.InteractionContextType>...){}[0]
-    open fun requireIntegrationTypes(kotlin/Array<out dev.kord.common.entity/ApplicationIntegrationType>...) // dev.kord.rest.builder.interaction/ApplicationCommandModifyBuilder.requireIntegrationTypes|requireIntegrationTypes(kotlin.Array<out|dev.kord.common.entity.ApplicationIntegrationType>...){}[0]
 }
 
 abstract interface dev.kord.rest.builder.interaction/ChatInputCreateBuilder : dev.kord.rest.builder.interaction/ApplicationCommandCreateBuilder, dev.kord.rest.builder.interaction/LocalizedDescriptionCreateBuilder, dev.kord.rest.builder.interaction/RootInputChatBuilder // dev.kord.rest.builder.interaction/ChatInputCreateBuilder|null[0]
@@ -814,15 +797,33 @@ abstract interface dev.kord.rest.builder.interaction/EntryPointModifyBuilder : d
 }
 
 abstract interface dev.kord.rest.builder.interaction/GlobalApplicationCommandCreateBuilder : dev.kord.rest.builder.interaction/ApplicationCommandCreateBuilder { // dev.kord.rest.builder.interaction/GlobalApplicationCommandCreateBuilder|null[0]
+    abstract var contexts // dev.kord.rest.builder.interaction/GlobalApplicationCommandCreateBuilder.contexts|{}contexts[0]
+        abstract fun <get-contexts>(): kotlin.collections/MutableList<dev.kord.common.entity/InteractionContextType>? // dev.kord.rest.builder.interaction/GlobalApplicationCommandCreateBuilder.contexts.<get-contexts>|<get-contexts>(){}[0]
+        abstract fun <set-contexts>(kotlin.collections/MutableList<dev.kord.common.entity/InteractionContextType>?) // dev.kord.rest.builder.interaction/GlobalApplicationCommandCreateBuilder.contexts.<set-contexts>|<set-contexts>(kotlin.collections.MutableList<dev.kord.common.entity.InteractionContextType>?){}[0]
     abstract var dmPermission // dev.kord.rest.builder.interaction/GlobalApplicationCommandCreateBuilder.dmPermission|{}dmPermission[0]
         abstract fun <get-dmPermission>(): kotlin/Boolean? // dev.kord.rest.builder.interaction/GlobalApplicationCommandCreateBuilder.dmPermission.<get-dmPermission>|<get-dmPermission>(){}[0]
         abstract fun <set-dmPermission>(kotlin/Boolean?) // dev.kord.rest.builder.interaction/GlobalApplicationCommandCreateBuilder.dmPermission.<set-dmPermission>|<set-dmPermission>(kotlin.Boolean?){}[0]
+    abstract var integrationTypes // dev.kord.rest.builder.interaction/GlobalApplicationCommandCreateBuilder.integrationTypes|{}integrationTypes[0]
+        abstract fun <get-integrationTypes>(): kotlin.collections/MutableList<dev.kord.common.entity/ApplicationIntegrationType>? // dev.kord.rest.builder.interaction/GlobalApplicationCommandCreateBuilder.integrationTypes.<get-integrationTypes>|<get-integrationTypes>(){}[0]
+        abstract fun <set-integrationTypes>(kotlin.collections/MutableList<dev.kord.common.entity/ApplicationIntegrationType>?) // dev.kord.rest.builder.interaction/GlobalApplicationCommandCreateBuilder.integrationTypes.<set-integrationTypes>|<set-integrationTypes>(kotlin.collections.MutableList<dev.kord.common.entity.ApplicationIntegrationType>?){}[0]
+
+    open fun requireContext(kotlin/Array<out dev.kord.common.entity/InteractionContextType>...) // dev.kord.rest.builder.interaction/GlobalApplicationCommandCreateBuilder.requireContext|requireContext(kotlin.Array<out|dev.kord.common.entity.InteractionContextType>...){}[0]
+    open fun requireIntegrationTypes(kotlin/Array<out dev.kord.common.entity/ApplicationIntegrationType>...) // dev.kord.rest.builder.interaction/GlobalApplicationCommandCreateBuilder.requireIntegrationTypes|requireIntegrationTypes(kotlin.Array<out|dev.kord.common.entity.ApplicationIntegrationType>...){}[0]
 }
 
 abstract interface dev.kord.rest.builder.interaction/GlobalApplicationCommandModifyBuilder : dev.kord.rest.builder.interaction/ApplicationCommandModifyBuilder { // dev.kord.rest.builder.interaction/GlobalApplicationCommandModifyBuilder|null[0]
+    abstract var contexts // dev.kord.rest.builder.interaction/GlobalApplicationCommandModifyBuilder.contexts|{}contexts[0]
+        abstract fun <get-contexts>(): kotlin.collections/MutableList<dev.kord.common.entity/InteractionContextType>? // dev.kord.rest.builder.interaction/GlobalApplicationCommandModifyBuilder.contexts.<get-contexts>|<get-contexts>(){}[0]
+        abstract fun <set-contexts>(kotlin.collections/MutableList<dev.kord.common.entity/InteractionContextType>?) // dev.kord.rest.builder.interaction/GlobalApplicationCommandModifyBuilder.contexts.<set-contexts>|<set-contexts>(kotlin.collections.MutableList<dev.kord.common.entity.InteractionContextType>?){}[0]
     abstract var dmPermission // dev.kord.rest.builder.interaction/GlobalApplicationCommandModifyBuilder.dmPermission|{}dmPermission[0]
         abstract fun <get-dmPermission>(): kotlin/Boolean? // dev.kord.rest.builder.interaction/GlobalApplicationCommandModifyBuilder.dmPermission.<get-dmPermission>|<get-dmPermission>(){}[0]
         abstract fun <set-dmPermission>(kotlin/Boolean?) // dev.kord.rest.builder.interaction/GlobalApplicationCommandModifyBuilder.dmPermission.<set-dmPermission>|<set-dmPermission>(kotlin.Boolean?){}[0]
+    abstract var integrationTypes // dev.kord.rest.builder.interaction/GlobalApplicationCommandModifyBuilder.integrationTypes|{}integrationTypes[0]
+        abstract fun <get-integrationTypes>(): kotlin.collections/MutableList<dev.kord.common.entity/ApplicationIntegrationType>? // dev.kord.rest.builder.interaction/GlobalApplicationCommandModifyBuilder.integrationTypes.<get-integrationTypes>|<get-integrationTypes>(){}[0]
+        abstract fun <set-integrationTypes>(kotlin.collections/MutableList<dev.kord.common.entity/ApplicationIntegrationType>?) // dev.kord.rest.builder.interaction/GlobalApplicationCommandModifyBuilder.integrationTypes.<set-integrationTypes>|<set-integrationTypes>(kotlin.collections.MutableList<dev.kord.common.entity.ApplicationIntegrationType>?){}[0]
+
+    open fun requireContext(kotlin/Array<out dev.kord.common.entity/InteractionContextType>...) // dev.kord.rest.builder.interaction/GlobalApplicationCommandModifyBuilder.requireContext|requireContext(kotlin.Array<out|dev.kord.common.entity.InteractionContextType>...){}[0]
+    open fun requireIntegrationTypes(kotlin/Array<out dev.kord.common.entity/ApplicationIntegrationType>...) // dev.kord.rest.builder.interaction/GlobalApplicationCommandModifyBuilder.requireIntegrationTypes|requireIntegrationTypes(kotlin.Array<out|dev.kord.common.entity.ApplicationIntegrationType>...){}[0]
 }
 
 abstract interface dev.kord.rest.builder.interaction/GlobalChatInputCreateBuilder : dev.kord.rest.builder.interaction/ChatInputCreateBuilder, dev.kord.rest.builder.interaction/GlobalApplicationCommandCreateBuilder // dev.kord.rest.builder.interaction/GlobalChatInputCreateBuilder|null[0]
