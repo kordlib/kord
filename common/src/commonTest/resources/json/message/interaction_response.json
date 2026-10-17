@@ -1,0 +1,50 @@
+{
+  "id": "1290000000000000002",
+  "channel_id": "290926798999357250",
+  "author": {
+    "username": "Kord",
+    "discriminator": "0",
+    "global_name": null,
+    "id": "1290000000000000000",
+    "avatar": null,
+    "bot": true
+  },
+  "content": "Pong!",
+  "timestamp": "2026-10-17T12:00:00.000000+00:00",
+  "edited_timestamp": null,
+  "tts": false,
+  "mention_everyone": false,
+  "mentions": [],
+  "mention_roles": [],
+  "attachments": [],
+  "embeds": [],
+  "pinned": false,
+  "type": 20,
+  "application_id": "1290000000000000000",
+  "interaction_metadata": {
+    "id": "1290000000000000001",
+    "type": 2,
+    "user": {
+      "username": "Mason",
+      "discriminator": "0",
+      "global_name": "Mason!",
+      "id": "53908099506183680",
+      "avatar": null
+    },
+    "authorizing_integration_owners": {
+      "0": "278325129692446720"
+    }
+  },
+  "interaction": {
+    "id": "1290000000000000001",
+    "type": 2,
+    "name": "ping",
+    "user": {
+      "username": "Mason",
+      "discriminator": "0",
+      "global_name": "Mason!",
+      "id": "53908099506183680",
+      "avatar": null
+    }
+  }
+}
