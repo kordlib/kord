@@ -18,7 +18,7 @@ val kordOptIns = listOf(
 internal fun KotlinCommonCompilerOptions.applyKordCommonCompilerOptions() {
     allWarningsAsErrors = true
     progressiveMode = true
-    freeCompilerArgs.add("-Xexpect-actual-classes")
+    freeCompilerArgs.addAll("-Xexpect-actual-classes", "-Xdont-warn-on-error-suppression")
 }
 
 internal const val KORD_JVM_TARGET = 8
