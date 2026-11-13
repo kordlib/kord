@@ -4,6 +4,7 @@ import dev.kord.gateway.internal.Inflate
 import io.ktor.websocket.*
 import node.buffer.Buffer
 import node.buffer.BufferEncoding
+import node.buffer.utf8
 
 internal actual fun Inflater() = object : Inflater {
     private val inflate = Inflate()

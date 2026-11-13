@@ -1,6 +1,5 @@
 public final class dev/kord/rest/Image {
 	public static final field Companion Ldev/kord/rest/Image$Companion;
-	public synthetic fun <init> ([BLdev/kord/rest/Image$Format;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun getData ()[B
 	public final fun getDataUri ()Ljava/lang/String;
 	public final fun getFormat ()Ldev/kord/rest/Image$Format;
@@ -77,7 +76,6 @@ public final class dev/kord/rest/NamedFile {
 
 public final class dev/kord/rest/Sound {
 	public static final field Companion Ldev/kord/rest/Sound$Companion;
-	public synthetic fun <init> ([BLdev/kord/rest/Sound$Format;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun getData ()[B
 	public final fun getDataUri ()Ljava/lang/String;
 	public final fun getFormat ()Ldev/kord/rest/Sound$Format;
@@ -186,7 +184,6 @@ public abstract interface class dev/kord/rest/builder/automoderation/AllowedKeyw
 }
 
 public abstract class dev/kord/rest/builder/automoderation/AutoModerationActionBuilder : dev/kord/rest/builder/RequestBuilder {
-	protected fun buildMetadata ()Ldev/kord/common/entity/optional/Optional;
 	public abstract fun getType ()Ldev/kord/common/entity/AutoModerationActionType;
 	public final fun toRequest ()Ldev/kord/common/entity/DiscordAutoModerationAction;
 	public synthetic fun toRequest ()Ljava/lang/Object;
@@ -236,7 +233,6 @@ public abstract class dev/kord/rest/builder/automoderation/AutoModerationRuleCre
 	public final fun assignActions (Ljava/util/List;)V
 	public final fun assignEventType (Ldev/kord/common/entity/AutoModerationRuleEventType;)V
 	public final fun assignName (Ljava/lang/String;)V
-	protected fun buildTriggerMetadata ()Ldev/kord/common/entity/optional/Optional;
 	public final fun getActions ()Ljava/util/List;
 	public final fun getEnabled ()Ljava/lang/Boolean;
 	public final fun getEventType ()Ldev/kord/common/entity/AutoModerationRuleEventType;
@@ -259,7 +255,6 @@ public abstract class dev/kord/rest/builder/automoderation/AutoModerationRuleMod
 	public final fun assignActions (Ljava/util/List;)V
 	public final fun assignEventType (Ldev/kord/common/entity/AutoModerationRuleEventType;)V
 	public final fun assignName (Ljava/lang/String;)V
-	protected fun buildTriggerMetadata ()Ldev/kord/common/entity/optional/Optional;
 	public final fun getActions ()Ljava/util/List;
 	public final fun getEnabled ()Ljava/lang/Boolean;
 	public final fun getEventType ()Ldev/kord/common/entity/AutoModerationRuleEventType;
@@ -1128,16 +1123,14 @@ public final class dev/kord/rest/builder/component/ActionRowBuilder : dev/kord/r
 
 public abstract class dev/kord/rest/builder/component/ActionRowComponentBuilder : dev/kord/rest/builder/component/ContainerComponentBuilder {
 	public final fun getDisabled ()Ljava/lang/Boolean;
-	protected final fun get_disabled ()Ldev/kord/common/entity/optional/OptionalBoolean;
 	public final fun setDisabled (Ljava/lang/Boolean;)V
 }
 
 public abstract class dev/kord/rest/builder/component/ButtonBuilder : dev/kord/rest/builder/component/ActionRowComponentBuilder, dev/kord/rest/builder/component/AccessoryComponentBuilder {
 	public abstract fun build ()Ldev/kord/common/entity/DiscordChatComponent;
+	public synthetic fun build ()Ldev/kord/common/entity/DiscordComponent;
 	public final fun getEmoji ()Ldev/kord/common/entity/DiscordPartialEmoji;
 	public final fun getLabel ()Ljava/lang/String;
-	protected final fun get_emoji ()Ldev/kord/common/entity/optional/Optional;
-	protected final fun get_label ()Ldev/kord/common/entity/optional/Optional;
 	public final fun setEmoji (Ldev/kord/common/entity/DiscordPartialEmoji;)V
 	public final fun setLabel (Ljava/lang/String;)V
 }
@@ -1338,14 +1331,10 @@ public abstract class dev/kord/rest/builder/component/SelectMenuBuilder : dev/ko
 	public synthetic fun <init> (Ljava/lang/String;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun build ()Ldev/kord/common/entity/DiscordChatComponent;
 	public synthetic fun build ()Ldev/kord/common/entity/DiscordComponent;
-	protected fun buildChannelTypes ()Ldev/kord/common/entity/optional/Optional;
-	protected fun buildDefaultValues ()Ldev/kord/common/entity/optional/Optional;
-	protected fun buildOptions ()Ldev/kord/common/entity/optional/Optional;
 	public final fun getAllowedValues ()Lkotlin/ranges/ClosedRange;
 	public final fun getCustomId ()Ljava/lang/String;
 	public final fun getPlaceholder ()Ljava/lang/String;
 	public final fun getRequired ()Z
-	protected abstract fun getType ()Ldev/kord/common/entity/ComponentType;
 	public final fun setAllowedValues (Lkotlin/ranges/ClosedRange;)V
 	public final fun setCustomId (Ljava/lang/String;)V
 	public final fun setPlaceholder (Ljava/lang/String;)V
@@ -7661,7 +7650,6 @@ public final class dev/kord/rest/request/MultipartRequest : dev/kord/rest/reques
 }
 
 public abstract class dev/kord/rest/request/Request {
-	public synthetic fun <init> (Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public synthetic fun <init> (Ljava/lang/String;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun getBaseUrl ()Ljava/lang/String;
 	public abstract fun getBody ()Ldev/kord/rest/request/RequestBody;
@@ -7847,9 +7835,7 @@ public abstract interface class dev/kord/rest/route/ResponseMapper {
 
 public abstract class dev/kord/rest/route/Route {
 	public static final field Companion Ldev/kord/rest/route/Route$Companion;
-	public synthetic fun <init> (Lio/ktor/http/HttpMethod;Ljava/lang/String;Ldev/kord/rest/route/ResponseMapper;ZZILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public synthetic fun <init> (Lio/ktor/http/HttpMethod;Ljava/lang/String;Ldev/kord/rest/route/ResponseMapper;ZZLkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public synthetic fun <init> (Lio/ktor/http/HttpMethod;Ljava/lang/String;Lkotlinx/serialization/DeserializationStrategy;ZZILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public synthetic fun <init> (Lio/ktor/http/HttpMethod;Ljava/lang/String;Lkotlinx/serialization/DeserializationStrategy;ZZLkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun getAffectedByGlobalRateLimit ()Z
 	public final fun getMapper ()Ldev/kord/rest/route/ResponseMapper;

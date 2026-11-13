@@ -590,6 +590,8 @@ public abstract interface class dev/kord/core/behavior/GuildSoundboardSoundBehav
 	public abstract fun getGuildId ()Ldev/kord/common/entity/Snowflake;
 	public fun send (Ldev/kord/core/behavior/channel/VoiceChannelBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/GuildSoundboardSoundBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/SoundboardSoundBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/Strategizable;
 }
 
 public final class dev/kord/core/behavior/GuildSoundboardSoundBehavior$DefaultImpls {
@@ -793,6 +795,7 @@ public final class dev/kord/core/behavior/RoleBehaviorKt {
 public abstract interface class dev/kord/core/behavior/SoundboardSoundBehavior : dev/kord/core/entity/KordEntity, dev/kord/core/entity/Strategizable {
 	public abstract fun send (Ldev/kord/core/behavior/channel/VoiceChannelBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/SoundboardSoundBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/Strategizable;
 }
 
 public final class dev/kord/core/behavior/SoundboardSoundBehavior$DefaultImpls {
@@ -1000,6 +1003,7 @@ public abstract interface class dev/kord/core/behavior/automoderation/AutoModera
 	public abstract fun hashCode ()I
 	public abstract fun toString ()Ljava/lang/String;
 	public abstract fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/automoderation/AutoModerationRuleBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/Strategizable;
 }
 
 public final class dev/kord/core/behavior/automoderation/AutoModerationRuleBehavior$DefaultImpls {
@@ -1027,7 +1031,10 @@ public abstract interface class dev/kord/core/behavior/automoderation/KeywordAut
 	public fun asAutoModerationRuleOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getTriggerType ()Ldev/kord/common/entity/AutoModerationRuleTriggerType$Keyword;
 	public synthetic fun getTriggerType ()Ldev/kord/common/entity/AutoModerationRuleTriggerType;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/automoderation/AutoModerationRuleBehavior;
 	public abstract fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/automoderation/KeywordAutoModerationRuleBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/automoderation/TypedAutoModerationRuleBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/Strategizable;
 }
 
 public final class dev/kord/core/behavior/automoderation/KeywordAutoModerationRuleBehavior$DefaultImpls {
@@ -1046,7 +1053,10 @@ public abstract interface class dev/kord/core/behavior/automoderation/KeywordPre
 	public fun asAutoModerationRuleOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getTriggerType ()Ldev/kord/common/entity/AutoModerationRuleTriggerType$KeywordPreset;
 	public synthetic fun getTriggerType ()Ldev/kord/common/entity/AutoModerationRuleTriggerType;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/automoderation/AutoModerationRuleBehavior;
 	public abstract fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/automoderation/KeywordPresetAutoModerationRuleBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/automoderation/TypedAutoModerationRuleBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/Strategizable;
 }
 
 public final class dev/kord/core/behavior/automoderation/KeywordPresetAutoModerationRuleBehavior$DefaultImpls {
@@ -1065,7 +1075,10 @@ public abstract interface class dev/kord/core/behavior/automoderation/MemberProf
 	public fun asAutoModerationRuleOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getTriggerType ()Ldev/kord/common/entity/AutoModerationRuleTriggerType$MemberProfile;
 	public synthetic fun getTriggerType ()Ldev/kord/common/entity/AutoModerationRuleTriggerType;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/automoderation/AutoModerationRuleBehavior;
 	public abstract fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/automoderation/MemberProfileAutoModerationRuleBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/automoderation/TypedAutoModerationRuleBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/Strategizable;
 }
 
 public final class dev/kord/core/behavior/automoderation/MemberProfileAutoModerationRuleBehavior$DefaultImpls {
@@ -1084,7 +1097,10 @@ public abstract interface class dev/kord/core/behavior/automoderation/MentionSpa
 	public fun asAutoModerationRuleOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getTriggerType ()Ldev/kord/common/entity/AutoModerationRuleTriggerType$MentionSpam;
 	public synthetic fun getTriggerType ()Ldev/kord/common/entity/AutoModerationRuleTriggerType;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/automoderation/AutoModerationRuleBehavior;
 	public abstract fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/automoderation/MentionSpamAutoModerationRuleBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/automoderation/TypedAutoModerationRuleBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/Strategizable;
 }
 
 public final class dev/kord/core/behavior/automoderation/MentionSpamAutoModerationRuleBehavior$DefaultImpls {
@@ -1103,7 +1119,10 @@ public abstract interface class dev/kord/core/behavior/automoderation/SpamAutoMo
 	public fun asAutoModerationRuleOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getTriggerType ()Ldev/kord/common/entity/AutoModerationRuleTriggerType$Spam;
 	public synthetic fun getTriggerType ()Ldev/kord/common/entity/AutoModerationRuleTriggerType;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/automoderation/AutoModerationRuleBehavior;
 	public abstract fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/automoderation/SpamAutoModerationRuleBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/automoderation/TypedAutoModerationRuleBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/Strategizable;
 }
 
 public final class dev/kord/core/behavior/automoderation/SpamAutoModerationRuleBehavior$DefaultImpls {
@@ -1119,7 +1138,9 @@ public final class dev/kord/core/behavior/automoderation/SpamAutoModerationRuleB
 
 public abstract interface class dev/kord/core/behavior/automoderation/TypedAutoModerationRuleBehavior : dev/kord/core/behavior/automoderation/AutoModerationRuleBehavior {
 	public abstract fun getTriggerType ()Ldev/kord/common/entity/AutoModerationRuleTriggerType;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/automoderation/AutoModerationRuleBehavior;
 	public abstract fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/automoderation/TypedAutoModerationRuleBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/Strategizable;
 }
 
 public final class dev/kord/core/behavior/automoderation/TypedAutoModerationRuleBehavior$DefaultImpls {
@@ -1272,7 +1293,14 @@ public abstract interface class dev/kord/core/behavior/channel/ForumChannelBehav
 	public fun asChannelOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun fetchChannel (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun fetchChannelOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/channel/CategorizableChannelBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/channel/ChannelBehavior;
 	public abstract fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/channel/ForumChannelBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/channel/GuildChannelBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/channel/TopGuildChannelBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/channel/threads/ThreadOnlyChannelBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/channel/threads/ThreadParentChannelBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/Strategizable;
 }
 
 public final class dev/kord/core/behavior/channel/ForumChannelBehavior$DefaultImpls {
@@ -1381,7 +1409,14 @@ public abstract interface class dev/kord/core/behavior/channel/MediaChannelBehav
 	public fun asChannelOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun fetchChannel (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun fetchChannelOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/channel/CategorizableChannelBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/channel/ChannelBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/channel/GuildChannelBehavior;
 	public abstract fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/channel/MediaChannelBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/channel/TopGuildChannelBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/channel/threads/ThreadOnlyChannelBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/channel/threads/ThreadParentChannelBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/Strategizable;
 }
 
 public final class dev/kord/core/behavior/channel/MediaChannelBehavior$DefaultImpls {
@@ -1905,7 +1940,13 @@ public abstract interface class dev/kord/core/behavior/channel/threads/ThreadOnl
 	public fun getActiveThreads ()Lkotlinx/coroutines/flow/Flow;
 	public fun getPublicArchivedThreads (Lkotlin/time/Instant;Ljava/lang/Integer;)Lkotlinx/coroutines/flow/Flow;
 	public fun startPublicThread (Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/channel/CategorizableChannelBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/channel/ChannelBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/channel/GuildChannelBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/channel/TopGuildChannelBehavior;
 	public abstract fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/channel/threads/ThreadOnlyChannelBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/channel/threads/ThreadParentChannelBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/Strategizable;
 }
 
 public final class dev/kord/core/behavior/channel/threads/ThreadOnlyChannelBehavior$DefaultImpls {
@@ -1936,7 +1977,12 @@ public abstract interface class dev/kord/core/behavior/channel/threads/ThreadPar
 	public fun getActiveThreads ()Lkotlinx/coroutines/flow/Flow;
 	public fun getPublicArchivedThreads (Lkotlin/time/Instant;Ljava/lang/Integer;)Lkotlinx/coroutines/flow/Flow;
 	public static synthetic fun getPublicArchivedThreads$default (Ldev/kord/core/behavior/channel/threads/ThreadParentChannelBehavior;Lkotlin/time/Instant;Ljava/lang/Integer;ILjava/lang/Object;)Lkotlinx/coroutines/flow/Flow;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/channel/CategorizableChannelBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/channel/ChannelBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/channel/GuildChannelBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/channel/TopGuildChannelBehavior;
 	public abstract fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/channel/threads/ThreadParentChannelBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/Strategizable;
 }
 
 public final class dev/kord/core/behavior/channel/threads/ThreadParentChannelBehavior$DefaultImpls {
@@ -2019,6 +2065,9 @@ public final class dev/kord/core/behavior/interaction/ApplicationCommandInteract
 
 public abstract interface class dev/kord/core/behavior/interaction/AutoCompleteInteractionBehavior : dev/kord/core/behavior/interaction/DataInteractionBehavior {
 	public abstract fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/AutoCompleteInteractionBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/DataInteractionBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/InteractionBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/Strategizable;
 }
 
 public final class dev/kord/core/behavior/interaction/AutoCompleteInteractionBehavior$DefaultImpls {
@@ -2070,6 +2119,8 @@ public final class dev/kord/core/behavior/interaction/ComponentInteractionBehavi
 
 public abstract interface class dev/kord/core/behavior/interaction/DataInteractionBehavior : dev/kord/core/behavior/interaction/InteractionBehavior {
 	public abstract fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/DataInteractionBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/InteractionBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/Strategizable;
 }
 
 public final class dev/kord/core/behavior/interaction/DataInteractionBehavior$DefaultImpls {
@@ -2081,6 +2132,8 @@ public final class dev/kord/core/behavior/interaction/DataInteractionBehavior$De
 
 public abstract interface class dev/kord/core/behavior/interaction/GlobalInteractionBehavior : dev/kord/core/behavior/interaction/InteractionBehavior {
 	public abstract fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/GlobalInteractionBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/InteractionBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/Strategizable;
 }
 
 public final class dev/kord/core/behavior/interaction/GlobalInteractionBehavior$DefaultImpls {
@@ -2128,6 +2181,7 @@ public abstract interface class dev/kord/core/behavior/interaction/InteractionBe
 	public fun getChannelOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun getToken ()Ljava/lang/String;
 	public abstract fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/InteractionBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/Strategizable;
 }
 
 public final class dev/kord/core/behavior/interaction/InteractionBehavior$DefaultImpls {
@@ -2138,7 +2192,10 @@ public final class dev/kord/core/behavior/interaction/InteractionBehavior$Defaul
 }
 
 public abstract interface class dev/kord/core/behavior/interaction/ModalParentInteractionBehavior : dev/kord/core/behavior/interaction/ActionInteractionBehavior {
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/ActionInteractionBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/InteractionBehavior;
 	public abstract fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/ModalParentInteractionBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/Strategizable;
 }
 
 public final class dev/kord/core/behavior/interaction/ModalParentInteractionBehavior$DefaultImpls {
@@ -2188,6 +2245,7 @@ public abstract interface class dev/kord/core/behavior/interaction/followup/Foll
 	public fun getChannelOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun getToken ()Ljava/lang/String;
 	public abstract fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/followup/FollowupMessageBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/Strategizable;
 }
 
 public final class dev/kord/core/behavior/interaction/followup/FollowupMessageBehavior$DefaultImpls {
@@ -2246,6 +2304,8 @@ public final class dev/kord/core/behavior/interaction/response/DeferredEphemeral
 public abstract interface class dev/kord/core/behavior/interaction/response/DeferredMessageInteractionResponseBehavior : dev/kord/core/behavior/interaction/response/InteractionResponseBehavior {
 	public fun delete (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/response/DeferredMessageInteractionResponseBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/response/InteractionResponseBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/Strategizable;
 }
 
 public final class dev/kord/core/behavior/interaction/response/DeferredMessageInteractionResponseBehavior$DefaultImpls {
@@ -2288,6 +2348,8 @@ public final class dev/kord/core/behavior/interaction/response/EditOriginalRespo
 
 public abstract interface class dev/kord/core/behavior/interaction/response/EphemeralInteractionResponseBehavior : dev/kord/core/behavior/interaction/response/InteractionResponseBehavior {
 	public abstract fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/response/EphemeralInteractionResponseBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/response/InteractionResponseBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/Strategizable;
 }
 
 public final class dev/kord/core/behavior/interaction/response/EphemeralInteractionResponseBehavior$DefaultImpls {
@@ -2342,6 +2404,7 @@ public abstract interface class dev/kord/core/behavior/interaction/response/Inte
 	public fun getFollowupMessageOrNull (Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun getToken ()Ljava/lang/String;
 	public abstract fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/response/InteractionResponseBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/Strategizable;
 }
 
 public final class dev/kord/core/behavior/interaction/response/InteractionResponseBehavior$DefaultImpls {
@@ -2351,7 +2414,10 @@ public final class dev/kord/core/behavior/interaction/response/InteractionRespon
 
 public abstract interface class dev/kord/core/behavior/interaction/response/MessageInteractionResponseBehavior : dev/kord/core/behavior/interaction/response/FollowupPermittingInteractionResponseBehavior {
 	public fun delete (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/response/FollowupPermittingInteractionResponseBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/response/InteractionResponseBehavior;
 	public abstract fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/response/MessageInteractionResponseBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/Strategizable;
 }
 
 public final class dev/kord/core/behavior/interaction/response/MessageInteractionResponseBehavior$DefaultImpls {
@@ -2383,7 +2449,9 @@ public final class dev/kord/core/behavior/interaction/response/PopupInteractionR
 }
 
 public abstract interface class dev/kord/core/behavior/interaction/response/PublicInteractionResponseBehavior : dev/kord/core/behavior/interaction/response/InteractionResponseBehavior {
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/response/InteractionResponseBehavior;
 	public abstract fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/response/PublicInteractionResponseBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/Strategizable;
 }
 
 public final class dev/kord/core/behavior/interaction/response/PublicInteractionResponseBehavior$DefaultImpls {
@@ -2421,6 +2489,7 @@ public abstract interface class dev/kord/core/behavior/monetization/SkuBehavior 
 	public fun getSubscription (Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getSubscriptionOrNull (Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/monetization/SkuBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/Strategizable;
 }
 
 public final class dev/kord/core/behavior/monetization/SkuBehavior$DefaultImpls {
@@ -6990,7 +7059,6 @@ public final class dev/kord/core/entity/ApplicationEmoji : dev/kord/core/entity/
 
 public final class dev/kord/core/entity/Asset : dev/kord/core/KordObject {
 	public static final field Companion Ldev/kord/core/entity/Asset$Companion;
-	public synthetic fun <init> (ZLdev/kord/rest/route/CdnUrl;Ldev/kord/core/Kord;Ldev/kord/rest/Image$Format;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun getCdnUrl ()Ldev/kord/rest/route/CdnUrl;
 	public final fun getImage (Ldev/kord/rest/Image$Format;Ldev/kord/rest/Image$Size;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static synthetic fun getImage$default (Ldev/kord/core/entity/Asset;Ldev/kord/rest/Image$Format;Ldev/kord/rest/Image$Size;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
@@ -7116,7 +7184,6 @@ public final class dev/kord/core/entity/Ban : dev/kord/core/KordObject, dev/kord
 }
 
 public abstract class dev/kord/core/entity/BaseApplication : dev/kord/core/entity/KordEntity, dev/kord/core/entity/Strategizable {
-	public synthetic fun <init> (Ldev/kord/core/Kord;Ldev/kord/core/supplier/EntitySupplier;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public synthetic fun <init> (Ldev/kord/core/Kord;Ldev/kord/core/supplier/EntitySupplier;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun compareTo (Ldev/kord/core/entity/Entity;)I
 	public synthetic fun compareTo (Ljava/lang/Object;)I
@@ -7150,6 +7217,7 @@ public abstract class dev/kord/core/entity/BaseApplication : dev/kord/core/entit
 	public final fun getVerifyKey ()Ljava/lang/String;
 	public final fun hashCode ()I
 	public abstract fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/BaseApplication;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/Strategizable;
 }
 
 public final class dev/kord/core/entity/ClientStatus {
@@ -7200,6 +7268,7 @@ public abstract interface class dev/kord/core/entity/CustomEmoji : dev/kord/core
 	public fun isAvailable ()Z
 	public fun isManaged ()Z
 	public abstract fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/CustomEmoji;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/Strategizable;
 }
 
 public final class dev/kord/core/entity/CustomEmoji$DefaultImpls {
@@ -8541,7 +8610,9 @@ public abstract interface class dev/kord/core/entity/SoundboardSound : dev/kord/
 	public fun getName ()Ljava/lang/String;
 	public fun getSoundId ()Ldev/kord/common/entity/Snowflake;
 	public fun getVolume ()D
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/SoundboardSoundBehavior;
 	public abstract fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/SoundboardSound;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/Strategizable;
 }
 
 public final class dev/kord/core/entity/SoundboardSound$DefaultImpls {
@@ -9258,6 +9329,9 @@ public abstract class dev/kord/core/entity/automoderation/AutoModerationRule : d
 	public final fun getSupplier ()Ldev/kord/core/supplier/EntitySupplier;
 	public final fun hashCode ()I
 	public final fun isEnabled ()Z
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/automoderation/AutoModerationRuleBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/automoderation/TypedAutoModerationRuleBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/Strategizable;
 	public abstract fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/automoderation/AutoModerationRule;
 }
 
@@ -9406,7 +9480,15 @@ public final class dev/kord/core/entity/automoderation/UnknownAutoModerationRule
 public abstract interface class dev/kord/core/entity/channel/CategorizableChannel : dev/kord/core/behavior/channel/CategorizableChannelBehavior, dev/kord/core/entity/channel/TopGuildChannel {
 	public fun getCategory ()Ldev/kord/core/behavior/channel/CategoryBehavior;
 	public fun getCategoryId ()Ldev/kord/common/entity/Snowflake;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/channel/CategorizableChannelBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/channel/ChannelBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/channel/GuildChannelBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/channel/TopGuildChannelBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/Strategizable;
 	public abstract fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/channel/CategorizableChannel;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/channel/Channel;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/channel/GuildChannel;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/channel/TopGuildChannel;
 }
 
 public final class dev/kord/core/entity/channel/CategorizableChannel$DefaultImpls {
@@ -9633,6 +9715,10 @@ public final class dev/kord/core/entity/channel/ForumChannel : dev/kord/core/beh
 public abstract interface class dev/kord/core/entity/channel/GuildChannel : dev/kord/core/behavior/channel/GuildChannelBehavior, dev/kord/core/entity/channel/Channel {
 	public fun getGuildId ()Ldev/kord/common/entity/Snowflake;
 	public fun getName ()Ljava/lang/String;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/channel/ChannelBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/channel/GuildChannelBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/Strategizable;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/channel/Channel;
 	public abstract fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/channel/GuildChannel;
 }
 
@@ -9655,7 +9741,15 @@ public final class dev/kord/core/entity/channel/GuildChannel$DefaultImpls {
 }
 
 public abstract interface class dev/kord/core/entity/channel/GuildMessageChannel : dev/kord/core/behavior/channel/GuildMessageChannelBehavior, dev/kord/core/entity/channel/GuildChannel, dev/kord/core/entity/channel/MessageChannel {
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/channel/ChannelBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/channel/GuildChannelBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/channel/GuildMessageChannelBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/channel/MessageChannelBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/Strategizable;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/channel/Channel;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/channel/GuildChannel;
 	public abstract fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/channel/GuildMessageChannel;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/channel/MessageChannel;
 }
 
 public final class dev/kord/core/entity/channel/GuildMessageChannel$DefaultImpls {
@@ -9763,6 +9857,10 @@ public abstract interface class dev/kord/core/entity/channel/MessageChannel : de
 	public fun getLastMessage (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getLastMessageId ()Ldev/kord/common/entity/Snowflake;
 	public fun getLastPinTimestamp ()Lkotlin/time/Instant;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/channel/ChannelBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/channel/MessageChannelBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/Strategizable;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/channel/Channel;
 	public abstract fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/channel/MessageChannel;
 }
 
@@ -10080,7 +10178,19 @@ public abstract interface class dev/kord/core/entity/channel/ThreadOnlyChannel :
 	public abstract fun hashCode ()I
 	public fun isNsfw ()Z
 	public abstract fun toString ()Ljava/lang/String;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/channel/CategorizableChannelBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/channel/ChannelBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/channel/GuildChannelBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/channel/TopGuildChannelBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/channel/threads/ThreadOnlyChannelBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/channel/threads/ThreadParentChannelBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/Strategizable;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/channel/CategorizableChannel;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/channel/Channel;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/channel/GuildChannel;
 	public abstract fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/channel/ThreadOnlyChannel;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/channel/ThreadParentChannel;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/channel/TopGuildChannel;
 }
 
 public final class dev/kord/core/entity/channel/ThreadOnlyChannel$DefaultImpls {
@@ -10123,7 +10233,17 @@ public final class dev/kord/core/entity/channel/ThreadOnlyChannel$DefaultImpls {
 }
 
 public abstract interface class dev/kord/core/entity/channel/ThreadParentChannel : dev/kord/core/behavior/channel/threads/ThreadParentChannelBehavior, dev/kord/core/entity/channel/CategorizableChannel {
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/channel/CategorizableChannelBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/channel/ChannelBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/channel/GuildChannelBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/channel/TopGuildChannelBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/channel/threads/ThreadParentChannelBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/Strategizable;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/channel/CategorizableChannel;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/channel/Channel;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/channel/GuildChannel;
 	public abstract fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/channel/ThreadParentChannel;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/channel/TopGuildChannel;
 }
 
 public final class dev/kord/core/entity/channel/ThreadParentChannel$DefaultImpls {
@@ -10164,6 +10284,12 @@ public abstract interface class dev/kord/core/entity/channel/TopGuildChannel : d
 	public fun getPermissionOverwritesForMember (Ldev/kord/common/entity/Snowflake;)Ldev/kord/core/entity/PermissionOverwriteEntity;
 	public fun getPermissionOverwritesForRole (Ldev/kord/common/entity/Snowflake;)Ldev/kord/core/entity/PermissionOverwriteEntity;
 	public fun getRawPosition ()I
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/channel/ChannelBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/channel/GuildChannelBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/channel/TopGuildChannelBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/Strategizable;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/channel/Channel;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/channel/GuildChannel;
 	public abstract fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/channel/TopGuildChannel;
 }
 
@@ -10194,6 +10320,20 @@ public final class dev/kord/core/entity/channel/TopGuildChannel$DefaultImpls {
 
 public abstract interface class dev/kord/core/entity/channel/TopGuildMessageChannel : dev/kord/core/behavior/channel/TopGuildMessageChannelBehavior, dev/kord/core/entity/channel/CategorizableChannel, dev/kord/core/entity/channel/GuildMessageChannel {
 	public fun getTopic ()Ljava/lang/String;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/channel/CategorizableChannelBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/channel/ChannelBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/channel/GuildChannelBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/channel/GuildMessageChannelBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/channel/MessageChannelBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/channel/TopGuildChannelBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/channel/TopGuildMessageChannelBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/Strategizable;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/channel/CategorizableChannel;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/channel/Channel;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/channel/GuildChannel;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/channel/GuildMessageChannel;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/channel/MessageChannel;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/channel/TopGuildChannel;
 	public abstract fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/channel/TopGuildMessageChannel;
 }
 
@@ -10956,7 +11096,11 @@ public final class dev/kord/core/entity/component/UserSelectComponent : dev/kord
 }
 
 public abstract interface class dev/kord/core/entity/interaction/ActionInteraction : dev/kord/core/behavior/interaction/ActionInteractionBehavior, dev/kord/core/entity/interaction/Interaction {
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/ActionInteractionBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/InteractionBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/Strategizable;
 	public abstract fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/interaction/ActionInteraction;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/interaction/Interaction;
 }
 
 public final class dev/kord/core/entity/interaction/ActionInteraction$DefaultImpls {
@@ -10991,7 +11135,14 @@ public abstract interface class dev/kord/core/entity/interaction/ApplicationComm
 	public fun getInvokedCommandName ()Ljava/lang/String;
 	public fun getInvokedCommandType ()Ldev/kord/common/entity/ApplicationCommandType;
 	public fun getResolvedObjects ()Ldev/kord/core/entity/interaction/ResolvedObjects;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/ActionInteractionBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/ApplicationCommandInteractionBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/InteractionBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/ModalParentInteractionBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/Strategizable;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/interaction/ActionInteraction;
 	public abstract fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/interaction/ApplicationCommandInteraction;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/interaction/Interaction;
 }
 
 public final class dev/kord/core/entity/interaction/ApplicationCommandInteraction$DefaultImpls {
@@ -11045,7 +11196,13 @@ public final class dev/kord/core/entity/interaction/AttachmentOptionValue : dev/
 public abstract interface class dev/kord/core/entity/interaction/AutoCompleteInteraction : dev/kord/core/behavior/interaction/AutoCompleteInteractionBehavior, dev/kord/core/entity/interaction/DataInteraction {
 	public fun getCommand ()Ldev/kord/core/entity/interaction/InteractionCommand;
 	public fun getFocusedOption ()Ldev/kord/core/entity/interaction/StringOptionValue;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/AutoCompleteInteractionBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/DataInteractionBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/InteractionBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/Strategizable;
 	public abstract fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/interaction/AutoCompleteInteraction;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/interaction/DataInteraction;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/interaction/Interaction;
 }
 
 public final class dev/kord/core/entity/interaction/AutoCompleteInteraction$DefaultImpls {
@@ -11080,7 +11237,15 @@ public final class dev/kord/core/entity/interaction/BooleanOptionValue : dev/kor
 public abstract interface class dev/kord/core/entity/interaction/ButtonInteraction : dev/kord/core/entity/interaction/ComponentInteraction {
 	public fun getComponent ()Ldev/kord/core/entity/component/ButtonComponent;
 	public synthetic fun getComponent ()Ldev/kord/core/entity/component/Component;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/ActionInteractionBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/ComponentInteractionBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/InteractionBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/ModalParentInteractionBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/Strategizable;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/interaction/ActionInteraction;
 	public abstract fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/interaction/ButtonInteraction;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/interaction/ComponentInteraction;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/interaction/Interaction;
 }
 
 public final class dev/kord/core/entity/interaction/ButtonInteraction$DefaultImpls {
@@ -11127,7 +11292,15 @@ public final class dev/kord/core/entity/interaction/ChannelOptionValue : dev/kor
 
 public abstract interface class dev/kord/core/entity/interaction/ChatInputCommandInteraction : dev/kord/core/entity/interaction/ApplicationCommandInteraction {
 	public fun getCommand ()Ldev/kord/core/entity/interaction/InteractionCommand;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/ActionInteractionBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/ApplicationCommandInteractionBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/InteractionBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/ModalParentInteractionBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/Strategizable;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/interaction/ActionInteraction;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/interaction/ApplicationCommandInteraction;
 	public abstract fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/interaction/ChatInputCommandInteraction;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/interaction/Interaction;
 }
 
 public final class dev/kord/core/entity/interaction/ChatInputCommandInteraction$DefaultImpls {
@@ -11167,7 +11340,14 @@ public abstract interface class dev/kord/core/entity/interaction/ComponentIntera
 	public fun getComponentId ()Ljava/lang/String;
 	public fun getComponentType ()Ldev/kord/common/entity/ComponentType;
 	public fun getMessage ()Ldev/kord/core/entity/Message;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/ActionInteractionBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/ComponentInteractionBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/InteractionBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/ModalParentInteractionBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/Strategizable;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/interaction/ActionInteraction;
 	public abstract fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/interaction/ComponentInteraction;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/interaction/Interaction;
 }
 
 public final class dev/kord/core/entity/interaction/ComponentInteraction$DefaultImpls {
@@ -11207,7 +11387,11 @@ public final class dev/kord/core/entity/interaction/ComponentInteractionKt {
 }
 
 public abstract interface class dev/kord/core/entity/interaction/DataInteraction : dev/kord/core/behavior/interaction/DataInteractionBehavior, dev/kord/core/entity/interaction/Interaction {
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/DataInteractionBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/InteractionBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/Strategizable;
 	public abstract fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/interaction/DataInteraction;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/interaction/Interaction;
 }
 
 public final class dev/kord/core/entity/interaction/DataInteraction$DefaultImpls {
@@ -11427,7 +11611,17 @@ public final class dev/kord/core/entity/interaction/GlobalChatInputCommandIntera
 }
 
 public abstract interface class dev/kord/core/entity/interaction/GlobalComponentInteraction : dev/kord/core/entity/interaction/ComponentInteraction, dev/kord/core/entity/interaction/GlobalInteraction {
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/ActionInteractionBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/ComponentInteractionBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/GlobalInteractionBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/InteractionBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/ModalParentInteractionBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/Strategizable;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/interaction/ActionInteraction;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/interaction/ComponentInteraction;
 	public abstract fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/interaction/GlobalComponentInteraction;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/interaction/GlobalInteraction;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/interaction/Interaction;
 }
 
 public final class dev/kord/core/entity/interaction/GlobalComponentInteraction$DefaultImpls {
@@ -11464,7 +11658,11 @@ public final class dev/kord/core/entity/interaction/GlobalComponentInteraction$D
 
 public abstract interface class dev/kord/core/entity/interaction/GlobalInteraction : dev/kord/core/behavior/interaction/GlobalInteractionBehavior, dev/kord/core/entity/interaction/Interaction {
 	public fun getUser ()Ldev/kord/core/entity/User;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/GlobalInteractionBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/InteractionBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/Strategizable;
 	public abstract fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/interaction/GlobalInteraction;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/interaction/Interaction;
 }
 
 public final class dev/kord/core/entity/interaction/GlobalInteraction$DefaultImpls {
@@ -12027,7 +12225,17 @@ public final class dev/kord/core/entity/interaction/GuildChatInputCommandInterac
 }
 
 public abstract interface class dev/kord/core/entity/interaction/GuildComponentInteraction : dev/kord/core/entity/interaction/ComponentInteraction, dev/kord/core/entity/interaction/GuildInteraction {
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/ActionInteractionBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/ComponentInteractionBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/GuildInteractionBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/InteractionBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/ModalParentInteractionBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/Strategizable;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/interaction/ActionInteraction;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/interaction/ComponentInteraction;
 	public abstract fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/interaction/GuildComponentInteraction;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/interaction/GuildInteraction;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/interaction/Interaction;
 }
 
 public final class dev/kord/core/entity/interaction/GuildComponentInteraction$DefaultImpls {
@@ -12074,7 +12282,11 @@ public abstract interface class dev/kord/core/entity/interaction/GuildInteractio
 	public fun getPermissions ()Ldev/kord/common/entity/Permissions;
 	public fun getUser ()Ldev/kord/core/entity/Member;
 	public synthetic fun getUser ()Ldev/kord/core/entity/User;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/GuildInteractionBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/InteractionBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/Strategizable;
 	public abstract fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/interaction/GuildInteraction;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/interaction/Interaction;
 }
 
 public final class dev/kord/core/entity/interaction/GuildInteraction$DefaultImpls {
@@ -12457,6 +12669,8 @@ public abstract interface class dev/kord/core/entity/interaction/Interaction : d
 	public fun getType ()Ldev/kord/common/entity/InteractionType;
 	public abstract fun getUser ()Ldev/kord/core/entity/User;
 	public fun getVersion ()I
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/InteractionBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/Strategizable;
 	public abstract fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/interaction/Interaction;
 }
 
@@ -12545,6 +12759,14 @@ public abstract interface class dev/kord/core/entity/interaction/MessageCommandI
 	public fun getTarget (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getTargetId ()Ldev/kord/common/entity/Snowflake;
 	public fun getTargetOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/ActionInteractionBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/ApplicationCommandInteractionBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/InteractionBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/ModalParentInteractionBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/Strategizable;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/interaction/ActionInteraction;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/interaction/ApplicationCommandInteraction;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/interaction/Interaction;
 	public abstract fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/interaction/MessageCommandInteraction;
 }
 
@@ -12601,6 +12823,12 @@ public abstract interface class dev/kord/core/entity/interaction/ModalSubmitInte
 	public fun getTextInputs ()Ljava/util/Map;
 	public fun getTextInputs0 ()Ljava/util/Map;
 	public fun getUserSelects ()Ljava/util/Map;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/ActionInteractionBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/ComponentInteractionBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/InteractionBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/Strategizable;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/interaction/ActionInteraction;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/interaction/Interaction;
 	public abstract fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/interaction/ModalSubmitInteraction;
 }
 
@@ -12671,6 +12899,14 @@ public final class dev/kord/core/entity/interaction/OptionValueKt {
 }
 
 public abstract interface class dev/kord/core/entity/interaction/PrimaryEntryPointCommandInteraction : dev/kord/core/entity/interaction/ApplicationCommandInteraction {
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/ActionInteractionBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/ApplicationCommandInteractionBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/InteractionBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/ModalParentInteractionBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/Strategizable;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/interaction/ActionInteraction;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/interaction/ApplicationCommandInteraction;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/interaction/Interaction;
 	public abstract fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/interaction/PrimaryEntryPointCommandInteraction;
 }
 
@@ -12758,6 +12994,14 @@ public abstract interface class dev/kord/core/entity/interaction/SelectMenuInter
 	public fun getComponent ()Ldev/kord/core/entity/component/SelectMenuComponent;
 	public fun getResolvedObjects ()Ldev/kord/core/entity/interaction/ResolvedObjects;
 	public fun getValues ()Ljava/util/List;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/ActionInteractionBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/ComponentInteractionBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/InteractionBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/ModalParentInteractionBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/Strategizable;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/interaction/ActionInteraction;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/interaction/ComponentInteraction;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/interaction/Interaction;
 	public abstract fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/interaction/SelectMenuInteraction;
 }
 
@@ -12830,6 +13074,14 @@ public abstract interface class dev/kord/core/entity/interaction/UserCommandInte
 	public fun getTargetId ()Ldev/kord/common/entity/Snowflake;
 	public fun getTargetOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getUsers ()Ljava/util/Map;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/ActionInteractionBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/ApplicationCommandInteractionBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/InteractionBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/ModalParentInteractionBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/Strategizable;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/interaction/ActionInteraction;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/interaction/ApplicationCommandInteraction;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/interaction/Interaction;
 	public abstract fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/interaction/UserCommandInteraction;
 }
 
@@ -12904,6 +13156,8 @@ public abstract class dev/kord/core/entity/interaction/followup/FollowupMessage 
 	public fun getChannelOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getId ()Ldev/kord/common/entity/Snowflake;
 	public final fun getMessage ()Ldev/kord/core/entity/Message;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/followup/FollowupMessageBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/Strategizable;
 	public abstract fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/interaction/followup/FollowupMessage;
 }
 
@@ -12948,6 +13202,10 @@ public abstract class dev/kord/core/entity/interaction/response/MessageInteracti
 	public fun getFollowupMessage (Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getFollowupMessageOrNull (Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun getMessage ()Ldev/kord/core/entity/Message;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/response/FollowupPermittingInteractionResponseBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/response/InteractionResponseBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/response/MessageInteractionResponseBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/Strategizable;
 	public abstract fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/interaction/response/MessageInteractionResponse;
 }
 
@@ -13105,6 +13363,7 @@ public abstract interface class dev/kord/core/event/automoderation/AutoModeratio
 	public abstract fun getRule ()Ldev/kord/core/behavior/automoderation/TypedAutoModerationRuleBehavior;
 	public abstract fun getRuleId ()Ldev/kord/common/entity/Snowflake;
 	public abstract fun toString ()Ljava/lang/String;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/Strategizable;
 	public abstract fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/event/automoderation/AutoModerationEvent;
 }
 
@@ -13117,8 +13376,11 @@ public final class dev/kord/core/event/automoderation/AutoModerationEvent$Defaul
 
 public abstract interface class dev/kord/core/event/automoderation/AutoModerationRuleConfigurationEvent : dev/kord/core/event/automoderation/AutoModerationEvent {
 	public fun getGuildId ()Ldev/kord/common/entity/Snowflake;
+	public synthetic fun getRule ()Ldev/kord/core/behavior/automoderation/TypedAutoModerationRuleBehavior;
 	public abstract fun getRule ()Ldev/kord/core/entity/automoderation/AutoModerationRule;
 	public fun getRuleId ()Ldev/kord/common/entity/Snowflake;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/Strategizable;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/event/automoderation/AutoModerationEvent;
 	public abstract fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/event/automoderation/AutoModerationRuleConfigurationEvent;
 }
 
@@ -13783,6 +14045,7 @@ public final class dev/kord/core/event/channel/thread/TextChannelThreadUpdateEve
 }
 
 public abstract interface class dev/kord/core/event/channel/thread/ThreadChannelCreateEvent : dev/kord/core/event/channel/ChannelCreateEvent {
+	public synthetic fun getChannel ()Ldev/kord/core/entity/channel/Channel;
 	public abstract fun getChannel ()Ldev/kord/core/entity/channel/thread/ThreadChannel;
 }
 
@@ -13849,6 +14112,7 @@ public final class dev/kord/core/event/channel/thread/ThreadMembersUpdateEvent :
 }
 
 public abstract interface class dev/kord/core/event/channel/thread/ThreadUpdateEvent : dev/kord/core/event/channel/ChannelUpdateEvent {
+	public synthetic fun getChannel ()Ldev/kord/core/entity/channel/Channel;
 	public abstract fun getChannel ()Ldev/kord/core/entity/channel/thread/ThreadChannel;
 }
 
@@ -14156,6 +14420,7 @@ public abstract interface class dev/kord/core/event/guild/GuildScheduledEventEve
 	public fun getGuildOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun getScheduledEvent ()Ldev/kord/core/entity/GuildScheduledEvent;
 	public fun getScheduledEventId ()Ldev/kord/common/entity/Snowflake;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/Strategizable;
 	public abstract fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/event/guild/GuildScheduledEventEvent;
 }
 
@@ -14249,6 +14514,7 @@ public abstract interface class dev/kord/core/event/guild/GuildScheduledEventUse
 	public fun getUser (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun getUserId ()Ldev/kord/common/entity/Snowflake;
 	public fun getUserOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/Strategizable;
 	public abstract fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/event/guild/GuildScheduledEventUserEvent;
 }
 
@@ -14670,6 +14936,7 @@ public final class dev/kord/core/event/guild/WebhookUpdateEvent : dev/kord/core/
 
 public abstract interface class dev/kord/core/event/interaction/ActionInteractionCreateEvent : dev/kord/core/event/interaction/InteractionCreateEvent {
 	public abstract fun getInteraction ()Ldev/kord/core/entity/interaction/ActionInteraction;
+	public synthetic fun getInteraction ()Ldev/kord/core/entity/interaction/Interaction;
 }
 
 public final class dev/kord/core/event/interaction/ActionInteractionCreateEvent$DefaultImpls {
@@ -14677,7 +14944,9 @@ public final class dev/kord/core/event/interaction/ActionInteractionCreateEvent$
 }
 
 public abstract interface class dev/kord/core/event/interaction/ApplicationCommandInteractionCreateEvent : dev/kord/core/event/interaction/ActionInteractionCreateEvent {
+	public synthetic fun getInteraction ()Ldev/kord/core/entity/interaction/ActionInteraction;
 	public abstract fun getInteraction ()Ldev/kord/core/entity/interaction/ApplicationCommandInteraction;
+	public synthetic fun getInteraction ()Ldev/kord/core/entity/interaction/Interaction;
 }
 
 public final class dev/kord/core/event/interaction/ApplicationCommandInteractionCreateEvent$DefaultImpls {
@@ -14695,6 +14964,8 @@ public final class dev/kord/core/event/interaction/ApplicationCommandPermissions
 
 public abstract interface class dev/kord/core/event/interaction/AutoCompleteInteractionCreateEvent : dev/kord/core/event/interaction/DataInteractionCreateEvent {
 	public abstract fun getInteraction ()Ldev/kord/core/entity/interaction/AutoCompleteInteraction;
+	public synthetic fun getInteraction ()Ldev/kord/core/entity/interaction/DataInteraction;
+	public synthetic fun getInteraction ()Ldev/kord/core/entity/interaction/Interaction;
 }
 
 public final class dev/kord/core/event/interaction/AutoCompleteInteractionCreateEvent$DefaultImpls {
@@ -14702,7 +14973,10 @@ public final class dev/kord/core/event/interaction/AutoCompleteInteractionCreate
 }
 
 public abstract interface class dev/kord/core/event/interaction/ButtonInteractionCreateEvent : dev/kord/core/event/interaction/ComponentInteractionCreateEvent {
+	public synthetic fun getInteraction ()Ldev/kord/core/entity/interaction/ActionInteraction;
 	public abstract fun getInteraction ()Ldev/kord/core/entity/interaction/ButtonInteraction;
+	public synthetic fun getInteraction ()Ldev/kord/core/entity/interaction/ComponentInteraction;
+	public synthetic fun getInteraction ()Ldev/kord/core/entity/interaction/Interaction;
 }
 
 public final class dev/kord/core/event/interaction/ButtonInteractionCreateEvent$DefaultImpls {
@@ -14710,7 +14984,10 @@ public final class dev/kord/core/event/interaction/ButtonInteractionCreateEvent$
 }
 
 public abstract interface class dev/kord/core/event/interaction/ChatInputCommandInteractionCreateEvent : dev/kord/core/event/interaction/ApplicationCommandInteractionCreateEvent {
+	public synthetic fun getInteraction ()Ldev/kord/core/entity/interaction/ActionInteraction;
+	public synthetic fun getInteraction ()Ldev/kord/core/entity/interaction/ApplicationCommandInteraction;
 	public abstract fun getInteraction ()Ldev/kord/core/entity/interaction/ChatInputCommandInteraction;
+	public synthetic fun getInteraction ()Ldev/kord/core/entity/interaction/Interaction;
 }
 
 public final class dev/kord/core/event/interaction/ChatInputCommandInteractionCreateEvent$DefaultImpls {
@@ -14718,7 +14995,9 @@ public final class dev/kord/core/event/interaction/ChatInputCommandInteractionCr
 }
 
 public abstract interface class dev/kord/core/event/interaction/ComponentInteractionCreateEvent : dev/kord/core/event/interaction/ActionInteractionCreateEvent {
+	public synthetic fun getInteraction ()Ldev/kord/core/entity/interaction/ActionInteraction;
 	public abstract fun getInteraction ()Ldev/kord/core/entity/interaction/ComponentInteraction;
+	public synthetic fun getInteraction ()Ldev/kord/core/entity/interaction/Interaction;
 }
 
 public final class dev/kord/core/event/interaction/ComponentInteractionCreateEvent$DefaultImpls {
@@ -14727,6 +15006,7 @@ public final class dev/kord/core/event/interaction/ComponentInteractionCreateEve
 
 public abstract interface class dev/kord/core/event/interaction/DataInteractionCreateEvent : dev/kord/core/event/interaction/InteractionCreateEvent {
 	public abstract fun getInteraction ()Ldev/kord/core/entity/interaction/DataInteraction;
+	public synthetic fun getInteraction ()Ldev/kord/core/entity/interaction/Interaction;
 }
 
 public final class dev/kord/core/event/interaction/DataInteractionCreateEvent$DefaultImpls {
@@ -14734,7 +15014,10 @@ public final class dev/kord/core/event/interaction/DataInteractionCreateEvent$De
 }
 
 public abstract interface class dev/kord/core/event/interaction/GlobalApplicationCommandInteractionCreateEvent : dev/kord/core/event/interaction/ApplicationCommandInteractionCreateEvent {
+	public synthetic fun getInteraction ()Ldev/kord/core/entity/interaction/ActionInteraction;
+	public synthetic fun getInteraction ()Ldev/kord/core/entity/interaction/ApplicationCommandInteraction;
 	public abstract fun getInteraction ()Ldev/kord/core/entity/interaction/GlobalApplicationCommandInteraction;
+	public synthetic fun getInteraction ()Ldev/kord/core/entity/interaction/Interaction;
 }
 
 public final class dev/kord/core/event/interaction/GlobalApplicationCommandInteractionCreateEvent$DefaultImpls {
@@ -14782,7 +15065,10 @@ public final class dev/kord/core/event/interaction/GlobalChatInputCommandInterac
 }
 
 public abstract interface class dev/kord/core/event/interaction/GlobalComponentInteractionCreateEvent : dev/kord/core/event/interaction/ComponentInteractionCreateEvent {
+	public synthetic fun getInteraction ()Ldev/kord/core/entity/interaction/ActionInteraction;
+	public synthetic fun getInteraction ()Ldev/kord/core/entity/interaction/ComponentInteraction;
 	public abstract fun getInteraction ()Ldev/kord/core/entity/interaction/GlobalComponentInteraction;
+	public synthetic fun getInteraction ()Ldev/kord/core/entity/interaction/Interaction;
 }
 
 public final class dev/kord/core/event/interaction/GlobalComponentInteractionCreateEvent$DefaultImpls {
@@ -14858,7 +15144,10 @@ public final class dev/kord/core/event/interaction/GlobalUserCommandInteractionC
 }
 
 public abstract interface class dev/kord/core/event/interaction/GuildApplicationCommandInteractionCreateEvent : dev/kord/core/event/interaction/ApplicationCommandInteractionCreateEvent {
+	public synthetic fun getInteraction ()Ldev/kord/core/entity/interaction/ActionInteraction;
+	public synthetic fun getInteraction ()Ldev/kord/core/entity/interaction/ApplicationCommandInteraction;
 	public abstract fun getInteraction ()Ldev/kord/core/entity/interaction/GuildApplicationCommandInteraction;
+	public synthetic fun getInteraction ()Ldev/kord/core/entity/interaction/Interaction;
 }
 
 public final class dev/kord/core/event/interaction/GuildApplicationCommandInteractionCreateEvent$DefaultImpls {
@@ -14906,7 +15195,10 @@ public final class dev/kord/core/event/interaction/GuildChatInputCommandInteract
 }
 
 public abstract interface class dev/kord/core/event/interaction/GuildComponentInteractionCreateEvent : dev/kord/core/event/interaction/ComponentInteractionCreateEvent {
+	public synthetic fun getInteraction ()Ldev/kord/core/entity/interaction/ActionInteraction;
+	public synthetic fun getInteraction ()Ldev/kord/core/entity/interaction/ComponentInteraction;
 	public abstract fun getInteraction ()Ldev/kord/core/entity/interaction/GuildComponentInteraction;
+	public synthetic fun getInteraction ()Ldev/kord/core/entity/interaction/Interaction;
 }
 
 public final class dev/kord/core/event/interaction/GuildComponentInteractionCreateEvent$DefaultImpls {
@@ -14990,6 +15282,9 @@ public final class dev/kord/core/event/interaction/InteractionCreateEvent$Defaul
 }
 
 public abstract interface class dev/kord/core/event/interaction/MessageCommandInteractionCreateEvent : dev/kord/core/event/interaction/ApplicationCommandInteractionCreateEvent {
+	public synthetic fun getInteraction ()Ldev/kord/core/entity/interaction/ActionInteraction;
+	public synthetic fun getInteraction ()Ldev/kord/core/entity/interaction/ApplicationCommandInteraction;
+	public synthetic fun getInteraction ()Ldev/kord/core/entity/interaction/Interaction;
 	public abstract fun getInteraction ()Ldev/kord/core/entity/interaction/MessageCommandInteraction;
 }
 
@@ -14998,6 +15293,8 @@ public final class dev/kord/core/event/interaction/MessageCommandInteractionCrea
 }
 
 public abstract interface class dev/kord/core/event/interaction/ModalSubmitInteractionCreateEvent : dev/kord/core/event/interaction/ActionInteractionCreateEvent {
+	public synthetic fun getInteraction ()Ldev/kord/core/entity/interaction/ActionInteraction;
+	public synthetic fun getInteraction ()Ldev/kord/core/entity/interaction/Interaction;
 	public abstract fun getInteraction ()Ldev/kord/core/entity/interaction/ModalSubmitInteraction;
 }
 
@@ -15006,6 +15303,9 @@ public final class dev/kord/core/event/interaction/ModalSubmitInteractionCreateE
 }
 
 public abstract interface class dev/kord/core/event/interaction/PrimaryEntryPointCommandInteractionCreateEvent : dev/kord/core/event/interaction/ApplicationCommandInteractionCreateEvent {
+	public synthetic fun getInteraction ()Ldev/kord/core/entity/interaction/ActionInteraction;
+	public synthetic fun getInteraction ()Ldev/kord/core/entity/interaction/ApplicationCommandInteraction;
+	public synthetic fun getInteraction ()Ldev/kord/core/entity/interaction/Interaction;
 	public abstract fun getInteraction ()Ldev/kord/core/entity/interaction/PrimaryEntryPointCommandInteraction;
 }
 
@@ -15014,6 +15314,9 @@ public final class dev/kord/core/event/interaction/PrimaryEntryPointCommandInter
 }
 
 public abstract interface class dev/kord/core/event/interaction/SelectMenuInteractionCreateEvent : dev/kord/core/event/interaction/ComponentInteractionCreateEvent {
+	public synthetic fun getInteraction ()Ldev/kord/core/entity/interaction/ActionInteraction;
+	public synthetic fun getInteraction ()Ldev/kord/core/entity/interaction/ComponentInteraction;
+	public synthetic fun getInteraction ()Ldev/kord/core/entity/interaction/Interaction;
 	public abstract fun getInteraction ()Ldev/kord/core/entity/interaction/SelectMenuInteraction;
 }
 
@@ -15022,6 +15325,9 @@ public final class dev/kord/core/event/interaction/SelectMenuInteractionCreateEv
 }
 
 public abstract interface class dev/kord/core/event/interaction/UserCommandInteractionCreateEvent : dev/kord/core/event/interaction/ApplicationCommandInteractionCreateEvent {
+	public synthetic fun getInteraction ()Ldev/kord/core/entity/interaction/ActionInteraction;
+	public synthetic fun getInteraction ()Ldev/kord/core/entity/interaction/ApplicationCommandInteraction;
+	public synthetic fun getInteraction ()Ldev/kord/core/entity/interaction/Interaction;
 	public abstract fun getInteraction ()Ldev/kord/core/entity/interaction/UserCommandInteraction;
 }
 
@@ -15167,6 +15473,7 @@ public abstract interface class dev/kord/core/event/message/ReactionEvent : dev/
 	public fun getUserAsMember (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun getUserId ()Ldev/kord/common/entity/Snowflake;
 	public fun getUserOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/Strategizable;
 	public abstract fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/event/message/ReactionEvent;
 }
 

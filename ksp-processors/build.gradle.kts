@@ -2,12 +2,6 @@ plugins {
     `kord-internal-module`
 }
 
-kotlin {
-    compilerOptions {
-        freeCompilerArgs.add("-Xcontext-parameters")
-    }
-}
-
 dependencies {
     implementation(projects.kspAnnotations)
 
