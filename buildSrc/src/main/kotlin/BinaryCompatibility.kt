@@ -1,24 +1,19 @@
+@file:Suppress("DEPRECATION_ERROR")
 @file:OptIn(ExperimentalAbiValidation::class)
 
 import org.gradle.kotlin.dsl.assign
 import org.jetbrains.kotlin.gradle.dsl.abi.AbiValidationExtension
-import org.jetbrains.kotlin.gradle.dsl.abi.AbiValidationMultiplatformExtension
-import org.jetbrains.kotlin.gradle.dsl.abi.AbiValidationVariantSpec
 import org.jetbrains.kotlin.gradle.dsl.abi.ExperimentalAbiValidation
 
 fun AbiValidationExtension.applyKordBCVOptions() {
     enabled = true
+    filters
     applyFilters()
 }
 
-fun AbiValidationMultiplatformExtension.applyKordBCVOptions() {
-    enabled = true
-    applyFilters()
-}
-
-private fun AbiValidationVariantSpec.applyFilters() {
+private fun AbiValidationExtension.applyFilters() {
     filters {
-        excluded {
+        exclude {
             annotatedWith.add("dev.kord.common.annotation.KordInternal")
         }
     }
