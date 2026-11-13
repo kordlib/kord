@@ -6,6 +6,7 @@ import com.squareup.kotlinpoet.*
 import com.squareup.kotlinpoet.KModifier.*
 import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
 import com.squareup.kotlinpoet.jvm.jvmName
+import dev.kord.ksp.addAnnotation
 import dev.kord.ksp.addFunction
 import dev.kord.ksp.addParameter
 import dev.kord.ksp.generation.GenerationEntity.BitFlags
@@ -38,7 +39,7 @@ internal fun FileSpec.Builder.addFactoryFunctions() {
 
 private enum class IterableType { VARARG, ITERABLE }
 
-context(entity: BitFlags, _:GenerationContext)
+context(entity: BitFlags, _: GenerationContext)
 private fun FileSpec.Builder.addFactoryFunctionForIterable(
     baseParameterType: TypeName,
     iterableType: IterableType,
@@ -57,5 +58,23 @@ private fun FileSpec.Builder.addFactoryFunctionForIterable(
     returns(entity.collectionCN)
     withControlFlow("return ${entity.factoryFunctionName}") {
         addStatement("flags.forEach·{·+it·}")
+    }
+}
+
+@OptIn(DelicateKotlinPoetApi::class)
+context(entity: BitFlags, context: GenerationContext)
+internal fun TypeSpec.Builder.addCollectionLiteralFactoryFunction() {
+    addFunction("of") {
+        addKdoc(
+            "Returns an instance of [%T] that has all bits set that are set in any element of [flags].",
+            entity.collectionCN,
+        )
+        addModifiers(PUBLIC, INLINE, OPERATOR)
+        addAnnotation(ClassName("dev.kord.common.annotation", "KordExperimental"))
+        addAnnotation(Suppress("NOTHING_TO_INLINE"))
+        addParameter("flags", context.entityCN, VARARG)
+        returns(entity.collectionCN)
+
+        addStatement("return %N(*%N)", entity.factoryFunctionName, "flags")
     }
 }

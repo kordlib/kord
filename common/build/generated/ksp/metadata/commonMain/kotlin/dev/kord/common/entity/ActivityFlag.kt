@@ -3,6 +3,7 @@
 
 package dev.kord.common.entity
 
+import dev.kord.common.`annotation`.KordExperimental
 import kotlin.LazyThreadSafetyMode.PUBLICATION
 import kotlin.contracts.InvocationKind.EXACTLY_ONCE
 import kotlin.contracts.contract
@@ -291,6 +292,15 @@ public class ActivityFlags internal constructor(
         }
 
         override fun deserialize(decoder: Decoder): ActivityFlags = ActivityFlags(decoder.decodeSerializableValue(delegate))
+    }
+
+    public companion object {
+        /**
+         * Returns an instance of [ActivityFlags] that has all bits set that are set in any element of [flags].
+         */
+        @KordExperimental
+        @Suppress(names = ["NOTHING_TO_INLINE"])
+        public inline operator fun of(vararg flags: ActivityFlag): ActivityFlags = ActivityFlags(*flags)
     }
 }
 
