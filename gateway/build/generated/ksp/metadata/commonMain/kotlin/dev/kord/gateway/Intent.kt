@@ -1,10 +1,11 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
-@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
+@file:Suppress(names = ["IncorrectFormatting", "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"])
 
 package dev.kord.gateway
 
 import dev.kord.common.DiscordBitSet
 import dev.kord.common.EmptyBitSet
+import dev.kord.common.`annotation`.KordExperimental
 import kotlin.LazyThreadSafetyMode.PUBLICATION
 import kotlin.contracts.InvocationKind.EXACTLY_ONCE
 import kotlin.contracts.contract
@@ -473,6 +474,15 @@ public class Intents internal constructor(
         }
 
         override fun deserialize(decoder: Decoder): Intents = Intents(decoder.decodeSerializableValue(delegate))
+    }
+
+    public companion object {
+        /**
+         * Returns an instance of [Intents] that has all bits set that are set in any element of [flags].
+         */
+        @KordExperimental
+        @Suppress(names = ["NOTHING_TO_INLINE"])
+        public inline operator fun of(vararg flags: Intent): Intents = Intents(*flags)
     }
 }
 

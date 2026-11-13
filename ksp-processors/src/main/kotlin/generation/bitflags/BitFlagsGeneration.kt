@@ -130,6 +130,8 @@ internal fun BitFlags.generateFileSpec(originatingFile: KSFile) = fileSpecForGen
         }
         addBuilder()
         addSerializer()
+
+        addCompanionObject { addCollectionLiteralFactoryFunction() }
     }
     addFactoryFunctions()
 }

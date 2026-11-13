@@ -1,11 +1,7 @@
 plugins {
     `kord-internal-module`
-}
-
-kotlin {
-    compilerOptions {
-        freeCompilerArgs.add("-Xcontext-parameters")
-    }
+    org.jetbrains.dokka
+    `kord-publishing`
 }
 
 dependencies {
@@ -16,4 +12,11 @@ dependencies {
     implementation(libs.kotlinpoet.ksp)
 
     implementation(libs.kotlinx.serialization.json) // use types directly
+}
+
+publishing {
+    publications.register<MavenPublication>(Library.name) {
+        from(components["java"])
+        artifact(tasks.kotlinSourcesJar)
+    }
 }
