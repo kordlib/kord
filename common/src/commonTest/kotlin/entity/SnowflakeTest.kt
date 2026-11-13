@@ -1,7 +1,7 @@
 package dev.kord.common.entity
 
-import kotlinx.datetime.Clock
-import kotlinx.datetime.Instant
+import kotlin.time.Clock
+import kotlin.time.Instant
 import kotlin.js.JsName
 import kotlin.test.*
 import kotlin.time.Duration.Companion.milliseconds

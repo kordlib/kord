@@ -11,9 +11,7 @@ import dev.kord.common.entity.optional.delegate.delegate
 import dev.kord.common.entity.optional.map
 import dev.kord.rest.Image
 import dev.kord.rest.builder.RequestBuilder
-import dev.kord.rest.builder.channel.CategoryCreateBuilder
-import dev.kord.rest.builder.channel.NewsChannelCreateBuilder
-import dev.kord.rest.builder.channel.TextChannelCreateBuilder
+import dev.kord.rest.builder.channel.*
 import dev.kord.rest.builder.role.RoleCreateBuilder
 import dev.kord.rest.json.request.GuildChannelCreateRequest
 import dev.kord.rest.json.request.GuildCreateRequest
@@ -116,10 +114,20 @@ public class GuildCreateBuilder(public var name: String) : RequestBuilder<GuildC
     public inline fun forumChannel(
         name: String,
         id: Snowflake = newUniqueSnowflake(),
-        builder: TextChannelCreateBuilder.() -> Unit
+        builder: ForumChannelCreateBuilder.() -> Unit,
     ): Snowflake {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-        channels.add(TextChannelCreateBuilder(name).apply(builder).toRequest().copy(id=OptionalSnowflake.Value(id)))
+        channels.add(ForumChannelCreateBuilder(name).apply(builder).toRequest().copy(id = OptionalSnowflake.Value(id)))
+        return id
+    }
+
+    public inline fun mediaChannel(
+        name: String,
+        id: Snowflake = newUniqueSnowflake(),
+        builder: MediaChannelCreateBuilder.() -> Unit,
+    ): Snowflake {
+        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+        channels.add(MediaChannelCreateBuilder(name).apply(builder).toRequest().copy(id = OptionalSnowflake.Value(id)))
         return id
     }
 

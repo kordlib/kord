@@ -17,7 +17,7 @@ import kotlinx.coroutines.launch
 internal class StreamsHandler(
     flow: Flow<VoiceEvent>,
     private val streams: Streams,
-) : GatewayEventHandler(flow, "HandshakeHandler") {
+) : GatewayEventHandler(flow, "Streams Handler") {
     private val server: AtomicRef<SocketAddress?> = atomic(null)
 
     private var streamsJob: Job? by atomic(null)

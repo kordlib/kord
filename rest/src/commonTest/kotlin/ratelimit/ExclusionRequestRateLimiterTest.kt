@@ -1,6 +1,6 @@
 package dev.kord.rest.ratelimit
 
-import kotlinx.datetime.Clock
+import kotlin.time.Clock
 
 class ExclusionRequestRateLimiterTest : AbstractRequestRateLimiterTest() {
 

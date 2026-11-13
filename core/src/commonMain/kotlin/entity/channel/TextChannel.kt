@@ -7,9 +7,9 @@ import dev.kord.core.behavior.channel.ChannelBehavior
 import dev.kord.core.behavior.channel.GuildChannelBehavior
 import dev.kord.core.behavior.channel.TextChannelBehavior
 import dev.kord.core.cache.data.ChannelData
+import dev.kord.core.hash
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
-import dev.kord.core.hash
 import kotlin.time.Duration
 
 /**

@@ -80,3 +80,13 @@ public class TimeoutAutoModerationActionBuilder(
     override fun buildMetadata(): Optional.Value<DiscordAutoModerationActionMetadata> =
         DiscordAutoModerationActionMetadata(durationSeconds = duration.optional()).optional()
 }
+
+/** An [AutoModerationActionBuilder] for building actions with type [BlockMemberInteraction]. */
+// Keep it as a class in case Discord adds more options in the future. This has happened in the past:
+// https://github.com/kordlib/kord/pull/774/files#diff-62348f559af97a22f3c91fb2c93e451395b4bd53c6cecf312f681d8b5356491c
+@Suppress("CanSealedSubClassBeObject")
+@KordDsl
+public class BlockMemberInteractionAutoModerationActionBuilder : AutoModerationActionBuilder() {
+
+    override val type: BlockMemberInteraction get() = BlockMemberInteraction
+}

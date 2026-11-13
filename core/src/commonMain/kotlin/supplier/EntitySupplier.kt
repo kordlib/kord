@@ -15,9 +15,14 @@ import dev.kord.core.entity.channel.TopGuildChannel
 import dev.kord.core.entity.channel.thread.ThreadChannel
 import dev.kord.core.entity.channel.thread.ThreadMember
 import dev.kord.core.entity.interaction.followup.FollowupMessage
+import dev.kord.core.entity.monetization.Entitlement
+import dev.kord.core.entity.monetization.Sku
+import dev.kord.core.entity.monetization.Subscription
 import dev.kord.core.exception.EntityNotFoundException
+import dev.kord.rest.json.request.EntitlementsListRequest
+import dev.kord.rest.json.request.SkuSubscriptionsListRequest
 import kotlinx.coroutines.flow.Flow
-import kotlinx.datetime.Instant
+import kotlin.time.Instant
 
 /**
  * An abstraction that allows for requesting Discord entities.
@@ -128,7 +133,7 @@ public interface EntitySupplier {
     public fun getChannelPins(channelId: Snowflake): Flow<Message>
 
     /**
-     * Requests the [Member] with the given [userId] in the [Guild] wit the given [guildId],
+     * Requests the [Member] with the given [userId] in the [Guild] with the given [guildId],
      * returns `null` when the member isn't present.
      *
      * @throws RequestException if something went wrong while retrieving the member.
@@ -136,7 +141,7 @@ public interface EntitySupplier {
     public suspend fun getMemberOrNull(guildId: Snowflake, userId: Snowflake): Member?
 
     /**
-     * Requests the [Member] with the given [userId] in the [Guild] wit the given [guildId].
+     * Requests the [Member] with the given [userId] in the [Guild] with the given [guildId].
      *
      * @throws RequestException if something went wrong while retrieving the member.
      * @throws EntityNotFoundException if the member was null.
@@ -144,6 +149,23 @@ public interface EntitySupplier {
     public suspend fun getMember(guildId: Snowflake, userId: Snowflake): Member =
         getMemberOrNull(guildId, userId)
             ?: EntityNotFoundException.memberNotFound(guildId = guildId, userId = userId)
+
+    /**
+     * Requests the member's [VoiceState] with the given [userId] in the [Guild] with the given [guildId].
+     *
+     * @throws RequestException if something went wrong while retrieving the member's voice state.
+     */
+    public suspend fun getMemberVoiceStateOrNull(guildId: Snowflake, userId: Snowflake): VoiceState?
+
+    /**
+     * Requests the member's [VoiceState] with the given [userId] in the [Guild] with the given [guildId].
+     *
+     * @throws RequestException if something went wrong while retrieving the member's voice state.
+     * @throws EntityNotFoundException if the [VoiceState] wasn't present.
+     */
+    public suspend fun getMemberVoiceState(guildId: Snowflake, userId: Snowflake): VoiceState =
+        getMemberVoiceStateOrNull(guildId, userId)
+            ?: EntityNotFoundException.memberVoiceStateNotFound(guildId = guildId, userId = userId)
 
     /**
      * Requests the [Message] with the given [messageId] in the [MessageChannel] with the given [channelId],
@@ -332,6 +354,30 @@ public interface EntitySupplier {
      * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
      */
     public fun getEmojis(guildId: Snowflake): Flow<GuildEmoji>
+
+    /**
+     * Requests the [GuildSoundboardSound] with the [soundId] in the [Guild] with the given [guildId].
+     *
+     * @throws RequestException if something went wrong while retrieving the emoji.
+     */
+    public suspend fun getGuildSoundboardSoundOrNull(guildId: Snowflake, soundId: Snowflake): GuildSoundboardSound?
+
+    /**
+     * Requests the [GuildSoundboardSound] with the [soundId] in the [Guild] wit the given [guildId].
+     *
+     * @throws RequestException if something went wrong while retrieving the emoji.
+     * @throws EntityNotFoundException if the sound was null.
+     */
+    public suspend fun getGuildSoundboardSound(guildId: Snowflake, soundId: Snowflake): GuildSoundboardSound =
+        getGuildSoundboardSoundOrNull(guildId, soundId) ?: EntityNotFoundException.soundboardSoundNotFound(guildId, soundId)
+
+    /**
+     * Requests the [guild soundboard sound][GuildSoundboardSound] of the [Guild] with the given [guildId].
+     *
+     * The returned flow is lazily executed, any [RequestException] will be thrown on
+     * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
+     */
+    public fun getGuildSoundboardSounds(guildId: Snowflake): Flow<GuildSoundboardSound>
 
     /**
      * Requests [guilds][Guild] this bot is known to be part of.
@@ -642,6 +688,39 @@ public interface EntitySupplier {
     public suspend fun getAutoModerationRule(guildId: Snowflake, ruleId: Snowflake): AutoModerationRule =
         getAutoModerationRuleOrNull(guildId, ruleId)
             ?: EntityNotFoundException.autoModerationRuleNotFound(guildId, ruleId)
+
+    /**
+     * Requests to get all [Entitlement]s for the [Application] with the given [applicationId].
+     *
+     * The returned flow is lazily executed, any [RequestException] will be thrown on
+     * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
+     */
+    public fun getEntitlements(applicationId: Snowflake, request: EntitlementsListRequest): Flow<Entitlement>
+
+    /**
+     * Requests to get all [Subscription]s containing the [Sku] with the given [skuId].
+     *
+     * The returned flow is lazily executed, any [RequestException] will be thrown on
+     * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
+     */
+    public fun getSubscriptions(skuId: Snowflake, request: SkuSubscriptionsListRequest): Flow<Subscription>
+
+    /**
+     * Requests a [Subscription] by its [id][subscriptionId]. Returns `null` if it wasn't found.
+     *
+     * @throws RequestException if something went wrong during the request.
+     */
+    public suspend fun getSubscriptionOrNull(skuId: Snowflake, subscriptionId: Snowflake): Subscription?
+
+    /**
+     * Requests a [Subscription] by its [id][subscriptionId].
+     *
+     * @throws RequestException if something went wrong during the request.
+     * @throws EntityNotFoundException if the [Subscription] wasn't found.
+     */
+    public suspend fun getSubscription(skuId: Snowflake, subscriptionId: Snowflake): Subscription =
+        getSubscriptionOrNull(skuId, subscriptionId)
+            ?: EntityNotFoundException.subscriptionNotFound(skuId, subscriptionId)
 }
 
 

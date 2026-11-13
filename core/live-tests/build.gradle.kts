@@ -3,10 +3,10 @@ plugins {
 }
 
 kotlin {
+    compilerOptions {
+        optIn.addAll(kordOptIns)
+    }
     sourceSets {
-        all {
-            applyKordOptIns()
-        }
         commonTest {
             dependencies {
                 implementation(projects.core)

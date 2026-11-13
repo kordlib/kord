@@ -5,7 +5,7 @@ import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.rest.NamedFile
-import kotlinx.datetime.Instant
+import kotlin.time.Instant
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -20,7 +20,12 @@ public data class MessageCreateRequest(
     @SerialName("message_reference")
     val messageReference: Optional<DiscordMessageReference> = Optional.Missing(),
     val components: Optional<List<DiscordComponent>> = Optional.Missing(),
-    val flags: Optional<MessageFlags> = Optional.Missing()
+    @SerialName("sticker_ids")
+    val stickerIds: Optional<List<Snowflake>> = Optional.Missing(),
+    val attachments: Optional<List<AttachmentRequest>> = Optional.Missing(),
+    val flags: Optional<MessageFlags> = Optional.Missing(),
+    @SerialName("enforce_nonce")
+    val enforceNonce: OptionalBoolean = OptionalBoolean.Missing,
 )
 
 public data class MultipartMessageCreateRequest(
@@ -72,19 +77,26 @@ public data class EmbedFieldRequest(
 )
 
 @Serializable
+public data class AttachmentRequest(
+    val id: Snowflake,
+    val filename: Optional<String> = Optional.Missing(),
+    val description: Optional<String> = Optional.Missing(),
+)
+
+@Serializable
 public data class MessageEditPatchRequest(
     val content: Optional<String?> = Optional.Missing(),
     val embeds: Optional<List<EmbedRequest>?> = Optional.Missing(),
     val flags: Optional<MessageFlags?> = Optional.Missing(),
     @SerialName("allowed_mentions")
     val allowedMentions: Optional<AllowedMentions?> = Optional.Missing(),
-    val components: Optional<List<DiscordComponent>> = Optional.Missing(),
-    val attachments: Optional<MutableList<DiscordAttachment>> = Optional.Missing(),
+    val components: Optional<List<DiscordComponent>?> = Optional.Missing(),
+    val attachments: Optional<List<AttachmentRequest>?> = Optional.Missing(),
 )
 
 public data class MultipartMessagePatchRequest(
     val requests: MessageEditPatchRequest,
-    val files: Optional<List<NamedFile>> = Optional.Missing()
+    val files: List<NamedFile> = emptyList(),
 )
 
 @Serializable
@@ -93,12 +105,14 @@ public data class BulkDeleteRequest(val messages: List<Snowflake>)
 @Serializable
 public data class ForumThreadMessageRequest(
     val content: Optional<String> = Optional.Missing(),
+    val tts: OptionalBoolean = OptionalBoolean.Missing,
     val embeds: Optional<List<EmbedRequest>> = Optional.Missing(),
     @SerialName("allowed_mentions")
     val allowedMentions: Optional<AllowedMentions> = Optional.Missing(),
     val components: Optional<List<DiscordComponent>> = Optional.Missing(),
     @SerialName("sticker_ids")
     val stickerIds: Optional<List<Snowflake>> = Optional.Missing(),
+    val attachments: Optional<List<AttachmentRequest>> = Optional.Missing(),
     val flags: Optional<MessageFlags> = Optional.Missing()
 )
 

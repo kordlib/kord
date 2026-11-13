@@ -1,5 +1,3 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 plugins {
     org.jetbrains.kotlin.jvm
 }
@@ -9,11 +7,13 @@ repositories {
 }
 
 kotlin {
-    jvmToolchain(Jvm.target)
+    compilerOptions {
+        applyKordJvmCompilerOptions()
+    }
 }
 
-tasks.withType<KotlinCompile>().configureEach {
-    compilerOptions {
-        applyKordCompilerOptions()
+tasks {
+    withType<JavaCompile>().configureEach {
+        options.release = KORD_JVM_TARGET
     }
 }

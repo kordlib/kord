@@ -1,10 +1,10 @@
 package dev.kord.common
 
+import dev.kord.common.serialization.LongOrStringSerializer
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.descriptors.PrimitiveKind
 import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
-import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 import kotlin.math.max
@@ -17,9 +17,9 @@ private const val WIDTH = Long.SIZE_BITS
 public fun EmptyBitSet(): DiscordBitSet = DiscordBitSet()
 
 internal expect fun formatIntegerFromLittleEndianLongArray(data: LongArray): String
-internal expect fun parseIntegerToBigEndianByteArray(value: String): ByteArray
+internal expect fun parseNonNegativeIntegerToBigEndianByteArray(value: String): ByteArray
 
-@Serializable(with = DiscordBitSetSerializer::class)
+@Serializable(with = DiscordBitSet.Serializer::class)
 public class DiscordBitSet(internal var data: LongArray) { // data is in little-endian order
 
     public val isEmpty: Boolean
@@ -40,7 +40,7 @@ public class DiscordBitSet(internal var data: LongArray) { // data is in little-
     override fun equals(other: Any?): Boolean {
         if (other !is DiscordBitSet) return false
         // trailing zeros are ignored -> getOrZero
-        for (i in 0 until max(this.data.size, other.data.size)) {
+        for (i in 0..<max(this.data.size, other.data.size)) {
             if (this.getOrZero(i) != other.getOrZero(i)) return false
         }
         return true
@@ -102,7 +102,7 @@ public class DiscordBitSet(internal var data: LongArray) { // data is in little-
 
 
     public fun remove(another: DiscordBitSet) {
-        for (i in 0 until min(data.size, another.data.size)) {
+        for (i in 0..<min(data.size, another.data.size)) {
             data[i] = data[i] xor (data[i] and another.data[i])
         }
     }
@@ -112,6 +112,14 @@ public class DiscordBitSet(internal var data: LongArray) { // data is in little-
         return "DiscordBitSet($binary)"
     }
 
+    public fun copy(): DiscordBitSet = DiscordBitSet(data = data.copyOf())
+
+    internal object Serializer : KSerializer<DiscordBitSet> {
+        override val descriptor = PrimitiveSerialDescriptor("dev.kord.common.DiscordBitSet", PrimitiveKind.STRING)
+        override fun serialize(encoder: Encoder, value: DiscordBitSet) = encoder.encodeString(value.value)
+        override fun deserialize(decoder: Decoder) =
+            DiscordBitSet(decoder.decodeSerializableValue(LongOrStringSerializer))
+    }
 }
 
 public fun DiscordBitSet(vararg widths: Long): DiscordBitSet {
@@ -123,7 +131,7 @@ public fun DiscordBitSet(value: String): DiscordBitSet {
         return DiscordBitSet(longArrayOf(value.toULong().toLong()))
     }
 
-    val bytes = parseIntegerToBigEndianByteArray(value)
+    val bytes = parseNonNegativeIntegerToBigEndianByteArray(value)
 
     val longSize = (bytes.size / Long.SIZE_BYTES) + 1
     val destination = LongArray(longSize)
@@ -140,18 +148,4 @@ public fun DiscordBitSet(value: String): DiscordBitSet {
     }
 
     return DiscordBitSet(destination)
-}
-
-
-public object DiscordBitSetSerializer : KSerializer<DiscordBitSet> {
-    override val descriptor: SerialDescriptor
-        get() = PrimitiveSerialDescriptor("DiscordBitSet", PrimitiveKind.STRING)
-
-    override fun deserialize(decoder: Decoder): DiscordBitSet {
-        return DiscordBitSet(decoder.decodeString())
-    }
-
-    override fun serialize(encoder: Encoder, value: DiscordBitSet) {
-        encoder.encodeString(value.value)
-    }
 }

@@ -1,27 +1,27 @@
-public final class dev/kord/gateway/ApplicationCommandCreate : dev/kord/gateway/DispatchEvent {
-	public fun <init> (Ldev/kord/common/entity/DiscordApplicationCommand;Ljava/lang/Integer;)V
-	public final fun component1 ()Ldev/kord/common/entity/DiscordApplicationCommand;
-	public final fun component2 ()Ljava/lang/Integer;
-	public final fun copy (Ldev/kord/common/entity/DiscordApplicationCommand;Ljava/lang/Integer;)Ldev/kord/gateway/ApplicationCommandCreate;
-	public static synthetic fun copy$default (Ldev/kord/gateway/ApplicationCommandCreate;Ldev/kord/common/entity/DiscordApplicationCommand;Ljava/lang/Integer;ILjava/lang/Object;)Ldev/kord/gateway/ApplicationCommandCreate;
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getApplication ()Ldev/kord/common/entity/DiscordApplicationCommand;
-	public fun getSequence ()Ljava/lang/Integer;
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
+public abstract class dev/kord/gateway/AnimationType {
+	public static final field Companion Ldev/kord/gateway/AnimationType$Companion;
+	public synthetic fun <init> (ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun equals (Ljava/lang/Object;)Z
+	public final fun getValue ()I
+	public final fun hashCode ()I
+	public final fun toString ()Ljava/lang/String;
 }
 
-public final class dev/kord/gateway/ApplicationCommandDelete : dev/kord/gateway/DispatchEvent {
-	public fun <init> (Ldev/kord/common/entity/DiscordApplicationCommand;Ljava/lang/Integer;)V
-	public final fun component1 ()Ldev/kord/common/entity/DiscordApplicationCommand;
-	public final fun component2 ()Ljava/lang/Integer;
-	public final fun copy (Ldev/kord/common/entity/DiscordApplicationCommand;Ljava/lang/Integer;)Ldev/kord/gateway/ApplicationCommandDelete;
-	public static synthetic fun copy$default (Ldev/kord/gateway/ApplicationCommandDelete;Ldev/kord/common/entity/DiscordApplicationCommand;Ljava/lang/Integer;ILjava/lang/Object;)Ldev/kord/gateway/ApplicationCommandDelete;
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getApplication ()Ldev/kord/common/entity/DiscordApplicationCommand;
-	public fun getSequence ()Ljava/lang/Integer;
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
+public final class dev/kord/gateway/AnimationType$Basic : dev/kord/gateway/AnimationType {
+	public static final field INSTANCE Ldev/kord/gateway/AnimationType$Basic;
+}
+
+public final class dev/kord/gateway/AnimationType$Companion {
+	public final fun from (I)Ldev/kord/gateway/AnimationType;
+	public final fun getEntries ()Ljava/util/List;
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class dev/kord/gateway/AnimationType$Premium : dev/kord/gateway/AnimationType {
+	public static final field INSTANCE Ldev/kord/gateway/AnimationType$Premium;
+}
+
+public final class dev/kord/gateway/AnimationType$Unknown : dev/kord/gateway/AnimationType {
 }
 
 public final class dev/kord/gateway/ApplicationCommandPermissionsUpdate : dev/kord/gateway/DispatchEvent {
@@ -32,19 +32,6 @@ public final class dev/kord/gateway/ApplicationCommandPermissionsUpdate : dev/ko
 	public static synthetic fun copy$default (Ldev/kord/gateway/ApplicationCommandPermissionsUpdate;Ldev/kord/common/entity/DiscordGuildApplicationCommandPermissions;Ljava/lang/Integer;ILjava/lang/Object;)Ldev/kord/gateway/ApplicationCommandPermissionsUpdate;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getPermissions ()Ldev/kord/common/entity/DiscordGuildApplicationCommandPermissions;
-	public fun getSequence ()Ljava/lang/Integer;
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-}
-
-public final class dev/kord/gateway/ApplicationCommandUpdate : dev/kord/gateway/DispatchEvent {
-	public fun <init> (Ldev/kord/common/entity/DiscordApplicationCommand;Ljava/lang/Integer;)V
-	public final fun component1 ()Ldev/kord/common/entity/DiscordApplicationCommand;
-	public final fun component2 ()Ljava/lang/Integer;
-	public final fun copy (Ldev/kord/common/entity/DiscordApplicationCommand;Ljava/lang/Integer;)Ldev/kord/gateway/ApplicationCommandUpdate;
-	public static synthetic fun copy$default (Ldev/kord/gateway/ApplicationCommandUpdate;Ldev/kord/common/entity/DiscordApplicationCommand;Ljava/lang/Integer;ILjava/lang/Object;)Ldev/kord/gateway/ApplicationCommandUpdate;
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getApplication ()Ldev/kord/common/entity/DiscordApplicationCommand;
 	public fun getSequence ()Ljava/lang/Integer;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
@@ -281,9 +268,37 @@ public final class dev/kord/gateway/DefaultGatewayKt {
 	public static synthetic fun DefaultGateway$default (Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Ldev/kord/gateway/DefaultGateway;
 }
 
+public final class dev/kord/gateway/DeletedSound {
+	public static final field Companion Ldev/kord/gateway/DeletedSound$Companion;
+	public fun <init> (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;)V
+	public final fun component1 ()Ldev/kord/common/entity/Snowflake;
+	public final fun component2 ()Ldev/kord/common/entity/Snowflake;
+	public final fun copy (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;)Ldev/kord/gateway/DeletedSound;
+	public static synthetic fun copy$default (Ldev/kord/gateway/DeletedSound;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;ILjava/lang/Object;)Ldev/kord/gateway/DeletedSound;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getGuildId ()Ldev/kord/common/entity/Snowflake;
+	public final fun getSoundId ()Ldev/kord/common/entity/Snowflake;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final synthetic class dev/kord/gateway/DeletedSound$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Ldev/kord/gateway/DeletedSound$$serializer;
+	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/gateway/DeletedSound;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/gateway/DeletedSound;)V
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class dev/kord/gateway/DeletedSound$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
 public final class dev/kord/gateway/DiscordAutoModerationActionExecution {
 	public static final field Companion Ldev/kord/gateway/DiscordAutoModerationActionExecution$Companion;
-	public synthetic fun <init> (ILdev/kord/common/entity/Snowflake;Ldev/kord/common/entity/DiscordAutoModerationAction;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/AutoModerationRuleTriggerType;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/OptionalSnowflake;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/DiscordAutoModerationAction;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/AutoModerationRuleTriggerType;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/OptionalSnowflake;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
 	public synthetic fun <init> (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/DiscordAutoModerationAction;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/AutoModerationRuleTriggerType;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/OptionalSnowflake;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ldev/kord/common/entity/Snowflake;
@@ -313,16 +328,15 @@ public final class dev/kord/gateway/DiscordAutoModerationActionExecution {
 	public final fun getUserId ()Ldev/kord/common/entity/Snowflake;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final synthetic fun write$Self (Ldev/kord/gateway/DiscordAutoModerationActionExecution;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
-public final class dev/kord/gateway/DiscordAutoModerationActionExecution$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+public final synthetic class dev/kord/gateway/DiscordAutoModerationActionExecution$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/gateway/DiscordAutoModerationActionExecution$$serializer;
-	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
-	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/gateway/DiscordAutoModerationActionExecution;
+	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/gateway/DiscordAutoModerationActionExecution;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
-	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/gateway/DiscordAutoModerationActionExecution;)V
+	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/gateway/DiscordAutoModerationActionExecution;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
 	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
@@ -333,27 +347,26 @@ public final class dev/kord/gateway/DiscordAutoModerationActionExecution$Compani
 
 public final class dev/kord/gateway/DiscordCreatedInvite {
 	public static final field Companion Ldev/kord/gateway/DiscordCreatedInvite$Companion;
-	public synthetic fun <init> (ILdev/kord/common/entity/Snowflake;Ljava/lang/String;Lkotlinx/datetime/Instant;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;Lkotlin/time/Duration;ILdev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;ZILkotlinx/serialization/internal/SerializationConstructorMarker;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public synthetic fun <init> (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Lkotlinx/datetime/Instant;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;JILdev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;ZIILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public synthetic fun <init> (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Lkotlinx/datetime/Instant;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;JILdev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;ZILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Lkotlin/time/Instant;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;JILdev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;ZIILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Lkotlin/time/Instant;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;JILdev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;ZILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ldev/kord/common/entity/Snowflake;
 	public final fun component10 ()Ldev/kord/common/entity/optional/Optional;
 	public final fun component11 ()Z
 	public final fun component12 ()I
 	public final fun component2 ()Ljava/lang/String;
-	public final fun component3 ()Lkotlinx/datetime/Instant;
+	public final fun component3 ()Lkotlin/time/Instant;
 	public final fun component4 ()Ldev/kord/common/entity/optional/OptionalSnowflake;
 	public final fun component5 ()Ldev/kord/common/entity/optional/Optional;
 	public final fun component6-UwyO8pc ()J
 	public final fun component7 ()I
 	public final fun component8 ()Ldev/kord/common/entity/optional/Optional;
 	public final fun component9 ()Ldev/kord/common/entity/optional/Optional;
-	public final fun copy-w3P_Jxs (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Lkotlinx/datetime/Instant;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;JILdev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;ZI)Ldev/kord/gateway/DiscordCreatedInvite;
-	public static synthetic fun copy-w3P_Jxs$default (Ldev/kord/gateway/DiscordCreatedInvite;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Lkotlinx/datetime/Instant;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;JILdev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;ZIILjava/lang/Object;)Ldev/kord/gateway/DiscordCreatedInvite;
+	public final fun copy-w3P_Jxs (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Lkotlin/time/Instant;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;JILdev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;ZI)Ldev/kord/gateway/DiscordCreatedInvite;
+	public static synthetic fun copy-w3P_Jxs$default (Ldev/kord/gateway/DiscordCreatedInvite;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Lkotlin/time/Instant;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;JILdev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;ZIILjava/lang/Object;)Ldev/kord/gateway/DiscordCreatedInvite;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getChannelId ()Ldev/kord/common/entity/Snowflake;
 	public final fun getCode ()Ljava/lang/String;
-	public final fun getCreatedAt ()Lkotlinx/datetime/Instant;
+	public final fun getCreatedAt ()Lkotlin/time/Instant;
 	public final fun getGuildId ()Ldev/kord/common/entity/optional/OptionalSnowflake;
 	public final fun getInviter ()Ldev/kord/common/entity/optional/Optional;
 	public final fun getMaxAge-UwyO8pc ()J
@@ -365,16 +378,15 @@ public final class dev/kord/gateway/DiscordCreatedInvite {
 	public final fun getUses ()I
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final synthetic fun write$Self (Ldev/kord/gateway/DiscordCreatedInvite;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
-public final class dev/kord/gateway/DiscordCreatedInvite$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+public final synthetic class dev/kord/gateway/DiscordCreatedInvite$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/gateway/DiscordCreatedInvite$$serializer;
-	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
-	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/gateway/DiscordCreatedInvite;
+	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/gateway/DiscordCreatedInvite;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
-	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/gateway/DiscordCreatedInvite;)V
+	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/gateway/DiscordCreatedInvite;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
 	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
@@ -385,7 +397,6 @@ public final class dev/kord/gateway/DiscordCreatedInvite$Companion {
 
 public final class dev/kord/gateway/DiscordDeletedInvite {
 	public static final field Companion Ldev/kord/gateway/DiscordDeletedInvite$Companion;
-	public synthetic fun <init> (ILdev/kord/common/entity/Snowflake;Ldev/kord/common/entity/optional/OptionalSnowflake;Ljava/lang/String;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/optional/OptionalSnowflake;Ljava/lang/String;)V
 	public synthetic fun <init> (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/optional/OptionalSnowflake;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ldev/kord/common/entity/Snowflake;
@@ -399,16 +410,15 @@ public final class dev/kord/gateway/DiscordDeletedInvite {
 	public final fun getGuildId ()Ldev/kord/common/entity/optional/OptionalSnowflake;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final synthetic fun write$Self (Ldev/kord/gateway/DiscordDeletedInvite;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
-public final class dev/kord/gateway/DiscordDeletedInvite$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+public final synthetic class dev/kord/gateway/DiscordDeletedInvite$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/gateway/DiscordDeletedInvite$$serializer;
-	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
-	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/gateway/DiscordDeletedInvite;
+	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/gateway/DiscordDeletedInvite;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
-	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/gateway/DiscordDeletedInvite;)V
+	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/gateway/DiscordDeletedInvite;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
 	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
@@ -419,32 +429,30 @@ public final class dev/kord/gateway/DiscordDeletedInvite$Companion {
 
 public final class dev/kord/gateway/DiscordPresence {
 	public static final field Companion Ldev/kord/gateway/DiscordPresence$Companion;
-	public synthetic fun <init> (ILdev/kord/common/entity/PresenceStatus;ZLkotlinx/datetime/Instant;Ldev/kord/common/entity/DiscordBotActivity;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
-	public fun <init> (Ldev/kord/common/entity/PresenceStatus;ZLkotlinx/datetime/Instant;Ldev/kord/common/entity/DiscordBotActivity;)V
-	public synthetic fun <init> (Ldev/kord/common/entity/PresenceStatus;ZLkotlinx/datetime/Instant;Ldev/kord/common/entity/DiscordBotActivity;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Ldev/kord/common/entity/PresenceStatus;ZLkotlin/time/Instant;Ldev/kord/common/entity/DiscordBotActivity;)V
+	public synthetic fun <init> (Ldev/kord/common/entity/PresenceStatus;ZLkotlin/time/Instant;Ldev/kord/common/entity/DiscordBotActivity;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ldev/kord/common/entity/PresenceStatus;
 	public final fun component2 ()Z
-	public final fun component3 ()Lkotlinx/datetime/Instant;
+	public final fun component3 ()Lkotlin/time/Instant;
 	public final fun component4 ()Ldev/kord/common/entity/DiscordBotActivity;
-	public final fun copy (Ldev/kord/common/entity/PresenceStatus;ZLkotlinx/datetime/Instant;Ldev/kord/common/entity/DiscordBotActivity;)Ldev/kord/gateway/DiscordPresence;
-	public static synthetic fun copy$default (Ldev/kord/gateway/DiscordPresence;Ldev/kord/common/entity/PresenceStatus;ZLkotlinx/datetime/Instant;Ldev/kord/common/entity/DiscordBotActivity;ILjava/lang/Object;)Ldev/kord/gateway/DiscordPresence;
+	public final fun copy (Ldev/kord/common/entity/PresenceStatus;ZLkotlin/time/Instant;Ldev/kord/common/entity/DiscordBotActivity;)Ldev/kord/gateway/DiscordPresence;
+	public static synthetic fun copy$default (Ldev/kord/gateway/DiscordPresence;Ldev/kord/common/entity/PresenceStatus;ZLkotlin/time/Instant;Ldev/kord/common/entity/DiscordBotActivity;ILjava/lang/Object;)Ldev/kord/gateway/DiscordPresence;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getAfk ()Z
 	public final fun getGame ()Ldev/kord/common/entity/DiscordBotActivity;
-	public final fun getSince ()Lkotlinx/datetime/Instant;
+	public final fun getSince ()Lkotlin/time/Instant;
 	public final fun getStatus ()Ldev/kord/common/entity/PresenceStatus;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final synthetic fun write$Self (Ldev/kord/gateway/DiscordPresence;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
-public final class dev/kord/gateway/DiscordPresence$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+public final synthetic class dev/kord/gateway/DiscordPresence$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/gateway/DiscordPresence$$serializer;
-	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
-	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/gateway/DiscordPresence;
+	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/gateway/DiscordPresence;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
-	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/gateway/DiscordPresence;)V
+	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/gateway/DiscordPresence;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
 	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
@@ -455,7 +463,6 @@ public final class dev/kord/gateway/DiscordPresence$Companion {
 
 public final class dev/kord/gateway/DiscordRemovedEmoji {
 	public static final field Companion Ldev/kord/gateway/DiscordRemovedEmoji$Companion;
-	public synthetic fun <init> (ILdev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/gateway/DiscordRemovedReactionEmoji;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/gateway/DiscordRemovedReactionEmoji;)V
 	public final fun component1 ()Ldev/kord/common/entity/Snowflake;
 	public final fun component2 ()Ldev/kord/common/entity/Snowflake;
@@ -470,16 +477,15 @@ public final class dev/kord/gateway/DiscordRemovedEmoji {
 	public final fun getMessageId ()Ldev/kord/common/entity/Snowflake;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final synthetic fun write$Self (Ldev/kord/gateway/DiscordRemovedEmoji;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
-public final class dev/kord/gateway/DiscordRemovedEmoji$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+public final synthetic class dev/kord/gateway/DiscordRemovedEmoji$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/gateway/DiscordRemovedEmoji$$serializer;
-	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
-	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/gateway/DiscordRemovedEmoji;
+	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/gateway/DiscordRemovedEmoji;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
-	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/gateway/DiscordRemovedEmoji;)V
+	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/gateway/DiscordRemovedEmoji;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
 	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
@@ -490,7 +496,6 @@ public final class dev/kord/gateway/DiscordRemovedEmoji$Companion {
 
 public final class dev/kord/gateway/DiscordRemovedReactionEmoji {
 	public static final field Companion Ldev/kord/gateway/DiscordRemovedReactionEmoji$Companion;
-	public synthetic fun <init> (ILdev/kord/common/entity/Snowflake;Ljava/lang/String;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;)V
 	public final fun component1 ()Ldev/kord/common/entity/Snowflake;
 	public final fun component2 ()Ljava/lang/String;
@@ -501,16 +506,15 @@ public final class dev/kord/gateway/DiscordRemovedReactionEmoji {
 	public final fun getName ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final synthetic fun write$Self (Ldev/kord/gateway/DiscordRemovedReactionEmoji;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
-public final class dev/kord/gateway/DiscordRemovedReactionEmoji$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+public final synthetic class dev/kord/gateway/DiscordRemovedReactionEmoji$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/gateway/DiscordRemovedReactionEmoji$$serializer;
-	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
-	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/gateway/DiscordRemovedReactionEmoji;
+	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/gateway/DiscordRemovedReactionEmoji;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
-	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/gateway/DiscordRemovedReactionEmoji;)V
+	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/gateway/DiscordRemovedReactionEmoji;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
 	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
@@ -521,7 +525,6 @@ public final class dev/kord/gateway/DiscordRemovedReactionEmoji$Companion {
 
 public final class dev/kord/gateway/DiscordThreadListSync {
 	public static final field Companion Ldev/kord/gateway/DiscordThreadListSync$Companion;
-	public synthetic fun <init> (ILdev/kord/common/entity/Snowflake;Ldev/kord/common/entity/optional/Optional;Ljava/util/List;Ljava/util/List;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/optional/Optional;Ljava/util/List;Ljava/util/List;)V
 	public synthetic fun <init> (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/optional/Optional;Ljava/util/List;Ljava/util/List;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ldev/kord/common/entity/Snowflake;
@@ -537,16 +540,15 @@ public final class dev/kord/gateway/DiscordThreadListSync {
 	public final fun getThreads ()Ljava/util/List;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final synthetic fun write$Self (Ldev/kord/gateway/DiscordThreadListSync;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
-public final class dev/kord/gateway/DiscordThreadListSync$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+public final synthetic class dev/kord/gateway/DiscordThreadListSync$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/gateway/DiscordThreadListSync$$serializer;
-	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
-	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/gateway/DiscordThreadListSync;
+	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/gateway/DiscordThreadListSync;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
-	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/gateway/DiscordThreadListSync;)V
+	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/gateway/DiscordThreadListSync;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
 	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
@@ -557,7 +559,6 @@ public final class dev/kord/gateway/DiscordThreadListSync$Companion {
 
 public final class dev/kord/gateway/DiscordThreadMembersUpdate {
 	public static final field Companion Ldev/kord/gateway/DiscordThreadMembersUpdate$Companion;
-	public synthetic fun <init> (ILdev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;ILdev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;ILdev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;)V
 	public synthetic fun <init> (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;ILdev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ldev/kord/common/entity/Snowflake;
@@ -575,16 +576,15 @@ public final class dev/kord/gateway/DiscordThreadMembersUpdate {
 	public final fun getRemovedMemberIds ()Ldev/kord/common/entity/optional/Optional;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final synthetic fun write$Self (Ldev/kord/gateway/DiscordThreadMembersUpdate;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
-public final class dev/kord/gateway/DiscordThreadMembersUpdate$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+public final synthetic class dev/kord/gateway/DiscordThreadMembersUpdate$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/gateway/DiscordThreadMembersUpdate$$serializer;
-	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
-	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/gateway/DiscordThreadMembersUpdate;
+	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/gateway/DiscordThreadMembersUpdate;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
-	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/gateway/DiscordThreadMembersUpdate;)V
+	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/gateway/DiscordThreadMembersUpdate;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
 	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
@@ -595,6 +595,45 @@ public final class dev/kord/gateway/DiscordThreadMembersUpdate$Companion {
 
 public abstract class dev/kord/gateway/DispatchEvent : dev/kord/gateway/Event {
 	public abstract fun getSequence ()Ljava/lang/Integer;
+}
+
+public final class dev/kord/gateway/EntitlementCreate : dev/kord/gateway/DispatchEvent {
+	public fun <init> (Ldev/kord/common/entity/DiscordEntitlement;Ljava/lang/Integer;)V
+	public final fun component1 ()Ldev/kord/common/entity/DiscordEntitlement;
+	public final fun component2 ()Ljava/lang/Integer;
+	public final fun copy (Ldev/kord/common/entity/DiscordEntitlement;Ljava/lang/Integer;)Ldev/kord/gateway/EntitlementCreate;
+	public static synthetic fun copy$default (Ldev/kord/gateway/EntitlementCreate;Ldev/kord/common/entity/DiscordEntitlement;Ljava/lang/Integer;ILjava/lang/Object;)Ldev/kord/gateway/EntitlementCreate;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getEntitlement ()Ldev/kord/common/entity/DiscordEntitlement;
+	public fun getSequence ()Ljava/lang/Integer;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class dev/kord/gateway/EntitlementDelete : dev/kord/gateway/DispatchEvent {
+	public fun <init> (Ldev/kord/common/entity/DiscordEntitlement;Ljava/lang/Integer;)V
+	public final fun component1 ()Ldev/kord/common/entity/DiscordEntitlement;
+	public final fun component2 ()Ljava/lang/Integer;
+	public final fun copy (Ldev/kord/common/entity/DiscordEntitlement;Ljava/lang/Integer;)Ldev/kord/gateway/EntitlementDelete;
+	public static synthetic fun copy$default (Ldev/kord/gateway/EntitlementDelete;Ldev/kord/common/entity/DiscordEntitlement;Ljava/lang/Integer;ILjava/lang/Object;)Ldev/kord/gateway/EntitlementDelete;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getEntitlement ()Ldev/kord/common/entity/DiscordEntitlement;
+	public fun getSequence ()Ljava/lang/Integer;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class dev/kord/gateway/EntitlementUpdate : dev/kord/gateway/DispatchEvent {
+	public fun <init> (Ldev/kord/common/entity/DiscordEntitlement;Ljava/lang/Integer;)V
+	public final fun component1 ()Ldev/kord/common/entity/DiscordEntitlement;
+	public final fun component2 ()Ljava/lang/Integer;
+	public final fun copy (Ldev/kord/common/entity/DiscordEntitlement;Ljava/lang/Integer;)Ldev/kord/gateway/EntitlementUpdate;
+	public static synthetic fun copy$default (Ldev/kord/gateway/EntitlementUpdate;Ldev/kord/common/entity/DiscordEntitlement;Ljava/lang/Integer;ILjava/lang/Object;)Ldev/kord/gateway/EntitlementUpdate;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getEntitlement ()Ldev/kord/common/entity/DiscordEntitlement;
+	public fun getSequence ()Ljava/lang/Integer;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
 }
 
 public abstract class dev/kord/gateway/Event {
@@ -637,6 +676,7 @@ public final class dev/kord/gateway/GatewayCloseCode : java/lang/Enum {
 	public static final field Unknown Ldev/kord/gateway/GatewayCloseCode;
 	public static final field UnknownOpCode Ldev/kord/gateway/GatewayCloseCode;
 	public final fun getCode ()I
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public static fun valueOf (Ljava/lang/String;)Ldev/kord/gateway/GatewayCloseCode;
 	public static fun values ()[Ldev/kord/gateway/GatewayCloseCode;
 }
@@ -683,10 +723,11 @@ public final class dev/kord/gateway/GatewayConfigurationBuilder {
 
 public final class dev/kord/gateway/GatewayKt {
 	public static final fun editPresence (Ldev/kord/gateway/Gateway;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static final fun getGatewayOnLogger ()Lmu/KLogger;
+	public static final fun logCaughtThrowable (Ljava/lang/Throwable;)V
 	public static final fun requestGuildMembers (Ldev/kord/gateway/Gateway;Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;)Lkotlinx/coroutines/flow/Flow;
 	public static final fun requestGuildMembers (Ldev/kord/gateway/Gateway;Ldev/kord/gateway/RequestGuildMembers;)Lkotlinx/coroutines/flow/Flow;
 	public static synthetic fun requestGuildMembers$default (Ldev/kord/gateway/Gateway;Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lkotlinx/coroutines/flow/Flow;
+	public static final fun requestSoundboardSounds (Ldev/kord/gateway/Gateway;Ljava/util/List;)Lkotlinx/coroutines/flow/Flow;
 	public static final fun start (Ldev/kord/gateway/Gateway;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static synthetic fun start$default (Ldev/kord/gateway/Gateway;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 }
@@ -836,7 +877,6 @@ public final class dev/kord/gateway/GuildMembersChunk : dev/kord/gateway/Dispatc
 
 public final class dev/kord/gateway/GuildMembersChunkData {
 	public static final field Companion Ldev/kord/gateway/GuildMembersChunkData$Companion;
-	public synthetic fun <init> (ILdev/kord/common/entity/Snowflake;Ljava/util/List;IILdev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Ldev/kord/common/entity/Snowflake;Ljava/util/List;IILdev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;)V
 	public synthetic fun <init> (Ldev/kord/common/entity/Snowflake;Ljava/util/List;IILdev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ldev/kord/common/entity/Snowflake;
@@ -858,16 +898,15 @@ public final class dev/kord/gateway/GuildMembersChunkData {
 	public final fun getPresences ()Ldev/kord/common/entity/optional/Optional;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final synthetic fun write$Self (Ldev/kord/gateway/GuildMembersChunkData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
-public final class dev/kord/gateway/GuildMembersChunkData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+public final synthetic class dev/kord/gateway/GuildMembersChunkData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/gateway/GuildMembersChunkData$$serializer;
-	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
-	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/gateway/GuildMembersChunkData;
+	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/gateway/GuildMembersChunkData;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
-	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/gateway/GuildMembersChunkData;)V
+	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/gateway/GuildMembersChunkData;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
 	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
@@ -969,7 +1008,6 @@ public final class dev/kord/gateway/GuildScheduledEventUserAdd : dev/kord/gatewa
 
 public final class dev/kord/gateway/GuildScheduledEventUserMetadata {
 	public static final field Companion Ldev/kord/gateway/GuildScheduledEventUserMetadata$Companion;
-	public synthetic fun <init> (ILdev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;)V
 	public final fun component1 ()Ldev/kord/common/entity/Snowflake;
 	public final fun component2 ()Ldev/kord/common/entity/Snowflake;
@@ -982,16 +1020,15 @@ public final class dev/kord/gateway/GuildScheduledEventUserMetadata {
 	public final fun getUserId ()Ldev/kord/common/entity/Snowflake;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final synthetic fun write$Self (Ldev/kord/gateway/GuildScheduledEventUserMetadata;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
-public final class dev/kord/gateway/GuildScheduledEventUserMetadata$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+public final synthetic class dev/kord/gateway/GuildScheduledEventUserMetadata$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/gateway/GuildScheduledEventUserMetadata$$serializer;
-	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
-	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/gateway/GuildScheduledEventUserMetadata;
+	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/gateway/GuildScheduledEventUserMetadata;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
-	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/gateway/GuildScheduledEventUserMetadata;)V
+	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/gateway/GuildScheduledEventUserMetadata;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
 	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
@@ -1013,6 +1050,58 @@ public final class dev/kord/gateway/GuildScheduledEventUserRemove : dev/kord/gat
 	public fun toString ()Ljava/lang/String;
 }
 
+public final class dev/kord/gateway/GuildSoundboardSoundCreate : dev/kord/gateway/DispatchEvent {
+	public fun <init> (Ldev/kord/common/entity/DiscordSoundboardSound;Ljava/lang/Integer;)V
+	public final fun component1 ()Ldev/kord/common/entity/DiscordSoundboardSound;
+	public final fun component2 ()Ljava/lang/Integer;
+	public final fun copy (Ldev/kord/common/entity/DiscordSoundboardSound;Ljava/lang/Integer;)Ldev/kord/gateway/GuildSoundboardSoundCreate;
+	public static synthetic fun copy$default (Ldev/kord/gateway/GuildSoundboardSoundCreate;Ldev/kord/common/entity/DiscordSoundboardSound;Ljava/lang/Integer;ILjava/lang/Object;)Ldev/kord/gateway/GuildSoundboardSoundCreate;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun getSequence ()Ljava/lang/Integer;
+	public final fun getSound ()Ldev/kord/common/entity/DiscordSoundboardSound;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class dev/kord/gateway/GuildSoundboardSoundDelete : dev/kord/gateway/DispatchEvent {
+	public fun <init> (Ldev/kord/gateway/DeletedSound;Ljava/lang/Integer;)V
+	public final fun component1 ()Ldev/kord/gateway/DeletedSound;
+	public final fun component2 ()Ljava/lang/Integer;
+	public final fun copy (Ldev/kord/gateway/DeletedSound;Ljava/lang/Integer;)Ldev/kord/gateway/GuildSoundboardSoundDelete;
+	public static synthetic fun copy$default (Ldev/kord/gateway/GuildSoundboardSoundDelete;Ldev/kord/gateway/DeletedSound;Ljava/lang/Integer;ILjava/lang/Object;)Ldev/kord/gateway/GuildSoundboardSoundDelete;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun getSequence ()Ljava/lang/Integer;
+	public final fun getSound ()Ldev/kord/gateway/DeletedSound;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class dev/kord/gateway/GuildSoundboardSoundUpdate : dev/kord/gateway/DispatchEvent {
+	public fun <init> (Ldev/kord/common/entity/DiscordSoundboardSound;Ljava/lang/Integer;)V
+	public final fun component1 ()Ldev/kord/common/entity/DiscordSoundboardSound;
+	public final fun component2 ()Ljava/lang/Integer;
+	public final fun copy (Ldev/kord/common/entity/DiscordSoundboardSound;Ljava/lang/Integer;)Ldev/kord/gateway/GuildSoundboardSoundUpdate;
+	public static synthetic fun copy$default (Ldev/kord/gateway/GuildSoundboardSoundUpdate;Ldev/kord/common/entity/DiscordSoundboardSound;Ljava/lang/Integer;ILjava/lang/Object;)Ldev/kord/gateway/GuildSoundboardSoundUpdate;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun getSequence ()Ljava/lang/Integer;
+	public final fun getSound ()Ldev/kord/common/entity/DiscordSoundboardSound;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class dev/kord/gateway/GuildSoundboardSoundsUpdate : dev/kord/gateway/DispatchEvent {
+	public fun <init> (Ldev/kord/gateway/SoundboardSoundsChunk;Ljava/lang/Integer;)V
+	public final fun component1 ()Ldev/kord/gateway/SoundboardSoundsChunk;
+	public final fun component2 ()Ljava/lang/Integer;
+	public final fun copy (Ldev/kord/gateway/SoundboardSoundsChunk;Ljava/lang/Integer;)Ldev/kord/gateway/GuildSoundboardSoundsUpdate;
+	public static synthetic fun copy$default (Ldev/kord/gateway/GuildSoundboardSoundsUpdate;Ldev/kord/gateway/SoundboardSoundsChunk;Ljava/lang/Integer;ILjava/lang/Object;)Ldev/kord/gateway/GuildSoundboardSoundsUpdate;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getData ()Ldev/kord/gateway/SoundboardSoundsChunk;
+	public fun getSequence ()Ljava/lang/Integer;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
 public final class dev/kord/gateway/GuildUpdate : dev/kord/gateway/DispatchEvent {
 	public fun <init> (Ldev/kord/common/entity/DiscordGuild;Ljava/lang/Integer;)V
 	public final fun component1 ()Ldev/kord/common/entity/DiscordGuild;
@@ -1028,22 +1117,19 @@ public final class dev/kord/gateway/GuildUpdate : dev/kord/gateway/DispatchEvent
 
 public final class dev/kord/gateway/Heartbeat : dev/kord/gateway/Event {
 	public static final field Companion Ldev/kord/gateway/Heartbeat$Companion;
-	public fun <init> (J)V
-	public final fun component1 ()J
+	public fun <init> (Ljava/lang/Long;)V
+	public final fun component1 ()Ljava/lang/Long;
 	public final fun copy (J)Ldev/kord/gateway/Heartbeat;
+	public final fun copy (Ljava/lang/Long;)Ldev/kord/gateway/Heartbeat;
 	public static synthetic fun copy$default (Ldev/kord/gateway/Heartbeat;JILjava/lang/Object;)Ldev/kord/gateway/Heartbeat;
+	public static synthetic fun copy$default (Ldev/kord/gateway/Heartbeat;Ljava/lang/Long;ILjava/lang/Object;)Ldev/kord/gateway/Heartbeat;
 	public fun equals (Ljava/lang/Object;)Z
-	public final fun getData ()J
+	public final fun getData ()Ljava/lang/Long;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class dev/kord/gateway/Heartbeat$Companion : kotlinx/serialization/KSerializer {
-	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/gateway/Heartbeat;
-	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
-	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/gateway/Heartbeat;)V
-	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+public final class dev/kord/gateway/Heartbeat$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
@@ -1054,7 +1140,6 @@ public final class dev/kord/gateway/HeartbeatACK : dev/kord/gateway/Event {
 public final class dev/kord/gateway/Hello : dev/kord/gateway/Event {
 	public static final field Companion Ldev/kord/gateway/Hello$Companion;
 	public fun <init> (I)V
-	public synthetic fun <init> (IILkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public final fun component1 ()I
 	public final fun copy (I)Ldev/kord/gateway/Hello;
 	public static synthetic fun copy$default (Ldev/kord/gateway/Hello;IILjava/lang/Object;)Ldev/kord/gateway/Hello;
@@ -1062,16 +1147,15 @@ public final class dev/kord/gateway/Hello : dev/kord/gateway/Event {
 	public final fun getHeartbeatInterval ()I
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final synthetic fun write$Self (Ldev/kord/gateway/Hello;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
-public final class dev/kord/gateway/Hello$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+public final synthetic class dev/kord/gateway/Hello$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/gateway/Hello$$serializer;
-	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
-	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/gateway/Hello;
+	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/gateway/Hello;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
-	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/gateway/Hello;)V
+	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/gateway/Hello;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
 	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
@@ -1082,7 +1166,6 @@ public final class dev/kord/gateway/Hello$Companion {
 
 public final class dev/kord/gateway/Identify : dev/kord/gateway/Command {
 	public static final field Companion Ldev/kord/gateway/Identify$Companion;
-	public synthetic fun <init> (ILjava/lang/String;Ldev/kord/gateway/IdentifyProperties;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/gateway/Intents;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Ljava/lang/String;Ldev/kord/gateway/IdentifyProperties;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/gateway/Intents;)V
 	public synthetic fun <init> (Ljava/lang/String;Ldev/kord/gateway/IdentifyProperties;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/gateway/Intents;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ljava/lang/String;
@@ -1104,16 +1187,15 @@ public final class dev/kord/gateway/Identify : dev/kord/gateway/Command {
 	public final fun getToken ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final synthetic fun write$Self (Ldev/kord/gateway/Identify;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
-public final class dev/kord/gateway/Identify$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+public final synthetic class dev/kord/gateway/Identify$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/gateway/Identify$$serializer;
-	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
-	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/gateway/Identify;
+	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/gateway/Identify;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
-	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/gateway/Identify;)V
+	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/gateway/Identify;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
 	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
@@ -1124,7 +1206,6 @@ public final class dev/kord/gateway/Identify$Companion {
 
 public final class dev/kord/gateway/IdentifyProperties {
 	public static final field Companion Ldev/kord/gateway/IdentifyProperties$Companion;
-	public synthetic fun <init> (ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun component2 ()Ljava/lang/String;
@@ -1137,16 +1218,15 @@ public final class dev/kord/gateway/IdentifyProperties {
 	public final fun getOs ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final synthetic fun write$Self (Ldev/kord/gateway/IdentifyProperties;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
-public final class dev/kord/gateway/IdentifyProperties$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+public final synthetic class dev/kord/gateway/IdentifyProperties$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/gateway/IdentifyProperties$$serializer;
-	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
-	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/gateway/IdentifyProperties;
+	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/gateway/IdentifyProperties;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
-	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/gateway/IdentifyProperties;)V
+	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/gateway/IdentifyProperties;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
 	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
@@ -1196,9 +1276,14 @@ public final class dev/kord/gateway/IntegrationUpdate : dev/kord/gateway/Dispatc
 
 public abstract class dev/kord/gateway/Intent {
 	public static final field Companion Ldev/kord/gateway/Intent$Companion;
-	public synthetic fun <init> (Ldev/kord/common/DiscordBitSet;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public synthetic fun <init> ([JLkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun equals (Ljava/lang/Object;)Z
 	public final fun getCode ()Ldev/kord/common/DiscordBitSet;
+	public final fun getShift ()I
+	public final fun hashCode ()I
+	public final fun plus (Ldev/kord/gateway/Intent;)Ldev/kord/gateway/Intents;
+	public final fun plus (Ldev/kord/gateway/Intents;)Ldev/kord/gateway/Intents;
+	public final fun toString ()Ljava/lang/String;
 }
 
 public final class dev/kord/gateway/Intent$AutoModerationConfiguration : dev/kord/gateway/Intent {
@@ -1210,7 +1295,8 @@ public final class dev/kord/gateway/Intent$AutoModerationExecution : dev/kord/ga
 }
 
 public final class dev/kord/gateway/Intent$Companion {
-	public final fun getValues ()Ljava/util/Set;
+	public final fun fromShift (I)Ldev/kord/gateway/Intent;
+	public final fun getEntries ()Ljava/util/List;
 }
 
 public final class dev/kord/gateway/Intent$DirectMessageTyping : dev/kord/gateway/Intent {
@@ -1225,12 +1311,12 @@ public final class dev/kord/gateway/Intent$DirectMessagesReactions : dev/kord/ga
 	public static final field INSTANCE Ldev/kord/gateway/Intent$DirectMessagesReactions;
 }
 
-public final class dev/kord/gateway/Intent$GuildBans : dev/kord/gateway/Intent {
-	public static final field INSTANCE Ldev/kord/gateway/Intent$GuildBans;
-}
-
 public final class dev/kord/gateway/Intent$GuildEmojis : dev/kord/gateway/Intent {
 	public static final field INSTANCE Ldev/kord/gateway/Intent$GuildEmojis;
+}
+
+public final class dev/kord/gateway/Intent$GuildExpressions : dev/kord/gateway/Intent {
+	public static final field INSTANCE Ldev/kord/gateway/Intent$GuildExpressions;
 }
 
 public final class dev/kord/gateway/Intent$GuildIntegrations : dev/kord/gateway/Intent {
@@ -1257,6 +1343,10 @@ public final class dev/kord/gateway/Intent$GuildMessages : dev/kord/gateway/Inte
 	public static final field INSTANCE Ldev/kord/gateway/Intent$GuildMessages;
 }
 
+public final class dev/kord/gateway/Intent$GuildModeration : dev/kord/gateway/Intent {
+	public static final field INSTANCE Ldev/kord/gateway/Intent$GuildModeration;
+}
+
 public final class dev/kord/gateway/Intent$GuildPresences : dev/kord/gateway/Intent {
 	public static final field INSTANCE Ldev/kord/gateway/Intent$GuildPresences;
 }
@@ -1281,24 +1371,23 @@ public final class dev/kord/gateway/Intent$MessageContent : dev/kord/gateway/Int
 	public static final field INSTANCE Ldev/kord/gateway/Intent$MessageContent;
 }
 
+public final class dev/kord/gateway/Intent$Unknown : dev/kord/gateway/Intent {
+}
+
 public final class dev/kord/gateway/IntentKt {
 	public static final fun Intents (Ljava/lang/Iterable;)Ldev/kord/gateway/Intents;
-	public static final fun Intents (Ljava/lang/String;)Ldev/kord/gateway/Intents;
 	public static final fun Intents (Lkotlin/jvm/functions/Function1;)Ldev/kord/gateway/Intents;
 	public static final fun Intents ([Ldev/kord/gateway/Intent;)Ldev/kord/gateway/Intents;
 	public static final fun Intents ([Ldev/kord/gateway/Intents;)Ldev/kord/gateway/Intents;
 	public static synthetic fun Intents$default (Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Ldev/kord/gateway/Intents;
-	public static final fun IntentsWithIterable (Ljava/lang/Iterable;)Ldev/kord/gateway/Intents;
+	public static final fun Intents0 (Ljava/lang/Iterable;)Ldev/kord/gateway/Intents;
 }
 
 public final class dev/kord/gateway/Intents {
 	public static final field Companion Ldev/kord/gateway/Intents$Companion;
-	public final fun component1 ()Ldev/kord/common/DiscordBitSet;
 	public final fun contains (Ldev/kord/gateway/Intent;)Z
 	public final fun contains (Ldev/kord/gateway/Intents;)Z
-	public final fun copy (Ldev/kord/common/DiscordBitSet;)Ldev/kord/gateway/Intents;
 	public final fun copy (Lkotlin/jvm/functions/Function1;)Ldev/kord/gateway/Intents;
-	public static synthetic fun copy$default (Ldev/kord/gateway/Intents;Ldev/kord/common/DiscordBitSet;ILjava/lang/Object;)Ldev/kord/gateway/Intents;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getCode ()Ldev/kord/common/DiscordBitSet;
 	public final fun getValues ()Ljava/util/Set;
@@ -1310,32 +1399,26 @@ public final class dev/kord/gateway/Intents {
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class dev/kord/gateway/Intents$Companion {
-	public final fun getAll ()Ldev/kord/gateway/Intents;
-	public final fun getNonPrivileged ()Ldev/kord/gateway/Intents;
-	public final fun getNone ()Ldev/kord/gateway/Intents;
-	public final fun getPrivileged ()Ldev/kord/gateway/Intents;
-	public final fun serializer ()Lkotlinx/serialization/KSerializer;
-}
-
-public final class dev/kord/gateway/Intents$IntentsBuilder {
+public final class dev/kord/gateway/Intents$Builder {
 	public fun <init> ()V
 	public fun <init> (Ldev/kord/common/DiscordBitSet;)V
 	public synthetic fun <init> (Ldev/kord/common/DiscordBitSet;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun flags ()Ldev/kord/gateway/Intents;
+	public final fun build ()Ldev/kord/gateway/Intents;
 	public final fun unaryMinus (Ldev/kord/gateway/Intent;)V
 	public final fun unaryMinus (Ldev/kord/gateway/Intents;)V
 	public final fun unaryPlus (Ldev/kord/gateway/Intent;)V
 	public final fun unaryPlus (Ldev/kord/gateway/Intents;)V
 }
 
-public final class dev/kord/gateway/IntentsSerializer : kotlinx/serialization/KSerializer {
-	public static final field INSTANCE Ldev/kord/gateway/IntentsSerializer;
-	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/gateway/Intents;
-	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
-	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/gateway/Intents;)V
-	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+public final class dev/kord/gateway/Intents$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class dev/kord/gateway/IntentsKt {
+	public static final fun getALL (Ldev/kord/gateway/Intents$Companion;)Ldev/kord/gateway/Intents;
+	public static final fun getNONE (Ldev/kord/gateway/Intents$Companion;)Ldev/kord/gateway/Intents;
+	public static final fun getNON_PRIVILEGED (Ldev/kord/gateway/Intents$Companion;)Ldev/kord/gateway/Intents;
+	public static final fun getPRIVILEGED (Ldev/kord/gateway/Intents$Companion;)Ldev/kord/gateway/Intents;
 }
 
 public final class dev/kord/gateway/InteractionCreate : dev/kord/gateway/DispatchEvent {
@@ -1498,30 +1581,27 @@ public final class dev/kord/gateway/MessageUpdate : dev/kord/gateway/DispatchEve
 }
 
 public final class dev/kord/gateway/OpCode : java/lang/Enum {
+	public static final field Companion Ldev/kord/gateway/OpCode$Companion;
 	public static final field Dispatch Ldev/kord/gateway/OpCode;
 	public static final field Heartbeat Ldev/kord/gateway/OpCode;
 	public static final field HeartbeatACK Ldev/kord/gateway/OpCode;
 	public static final field Hello Ldev/kord/gateway/OpCode;
 	public static final field Identify Ldev/kord/gateway/OpCode;
 	public static final field InvalidSession Ldev/kord/gateway/OpCode;
-	public static final field OpCodeSerializer Ldev/kord/gateway/OpCode$OpCodeSerializer;
 	public static final field Reconnect Ldev/kord/gateway/OpCode;
 	public static final field RequestGuildMembers Ldev/kord/gateway/OpCode;
+	public static final field RequestSoundboardSounds Ldev/kord/gateway/OpCode;
 	public static final field Resume Ldev/kord/gateway/OpCode;
 	public static final field StatusUpdate Ldev/kord/gateway/OpCode;
 	public static final field Unknown Ldev/kord/gateway/OpCode;
 	public static final field VoiceStateUpdate Ldev/kord/gateway/OpCode;
 	public final fun getCode ()I
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public static fun valueOf (Ljava/lang/String;)Ldev/kord/gateway/OpCode;
 	public static fun values ()[Ldev/kord/gateway/OpCode;
 }
 
-public final class dev/kord/gateway/OpCode$OpCodeSerializer : kotlinx/serialization/KSerializer {
-	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/gateway/OpCode;
-	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
-	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/gateway/OpCode;)V
-	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+public final class dev/kord/gateway/OpCode$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
@@ -1556,7 +1636,6 @@ public final class dev/kord/gateway/Ready : dev/kord/gateway/DispatchEvent {
 
 public final class dev/kord/gateway/ReadyData {
 	public static final field Companion Ldev/kord/gateway/ReadyData$Companion;
-	public synthetic fun <init> (IILdev/kord/common/entity/DiscordUser;Ljava/util/List;Ljava/util/List;Ljava/lang/String;Ljava/lang/String;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ljava/util/List;Ldev/kord/common/entity/optional/Optional;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (ILdev/kord/common/entity/DiscordUser;Ljava/util/List;Ljava/util/List;Ljava/lang/String;Ljava/lang/String;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ljava/util/List;Ldev/kord/common/entity/optional/Optional;)V
 	public synthetic fun <init> (ILdev/kord/common/entity/DiscordUser;Ljava/util/List;Ljava/util/List;Ljava/lang/String;Ljava/lang/String;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ljava/util/List;Ldev/kord/common/entity/optional/Optional;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()I
@@ -1586,16 +1665,15 @@ public final class dev/kord/gateway/ReadyData {
 	public final fun getVersion ()I
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final synthetic fun write$Self (Ldev/kord/gateway/ReadyData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
-public final class dev/kord/gateway/ReadyData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+public final synthetic class dev/kord/gateway/ReadyData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/gateway/ReadyData$$serializer;
-	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
-	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/gateway/ReadyData;
+	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/gateway/ReadyData;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
-	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/gateway/ReadyData;)V
+	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/gateway/ReadyData;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
 	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
@@ -1610,7 +1688,6 @@ public final class dev/kord/gateway/Reconnect : dev/kord/gateway/Event {
 
 public final class dev/kord/gateway/RequestGuildMembers : dev/kord/gateway/Command {
 	public static final field Companion Ldev/kord/gateway/RequestGuildMembers$Companion;
-	public synthetic fun <init> (ILdev/kord/common/entity/Snowflake;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;)V
 	public synthetic fun <init> (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ldev/kord/common/entity/Snowflake;
@@ -1630,16 +1707,15 @@ public final class dev/kord/gateway/RequestGuildMembers : dev/kord/gateway/Comma
 	public final fun getUserIds ()Ldev/kord/common/entity/optional/Optional;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final synthetic fun write$Self (Ldev/kord/gateway/RequestGuildMembers;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
-public final class dev/kord/gateway/RequestGuildMembers$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+public final synthetic class dev/kord/gateway/RequestGuildMembers$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/gateway/RequestGuildMembers$$serializer;
-	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
-	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/gateway/RequestGuildMembers;
+	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/gateway/RequestGuildMembers;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
-	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/gateway/RequestGuildMembers;)V
+	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/gateway/RequestGuildMembers;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
 	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
@@ -1653,9 +1729,35 @@ public final class dev/kord/gateway/RequestGuildMembers$Nonce {
 	public final fun new ()Ljava/lang/String;
 }
 
+public final class dev/kord/gateway/RequestSoundboardSounds : dev/kord/gateway/Command {
+	public static final field Companion Ldev/kord/gateway/RequestSoundboardSounds$Companion;
+	public fun <init> (Ljava/util/List;)V
+	public final fun component1 ()Ljava/util/List;
+	public final fun copy (Ljava/util/List;)Ldev/kord/gateway/RequestSoundboardSounds;
+	public static synthetic fun copy$default (Ldev/kord/gateway/RequestSoundboardSounds;Ljava/util/List;ILjava/lang/Object;)Ldev/kord/gateway/RequestSoundboardSounds;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getGuildIds ()Ljava/util/List;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final synthetic class dev/kord/gateway/RequestSoundboardSounds$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Ldev/kord/gateway/RequestSoundboardSounds$$serializer;
+	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/gateway/RequestSoundboardSounds;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/gateway/RequestSoundboardSounds;)V
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class dev/kord/gateway/RequestSoundboardSounds$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
 public final class dev/kord/gateway/Resume : dev/kord/gateway/Command {
 	public static final field Companion Ldev/kord/gateway/Resume$Companion;
-	public synthetic fun <init> (ILjava/lang/String;Ljava/lang/String;ILkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Ljava/lang/String;Ljava/lang/String;I)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun component2 ()Ljava/lang/String;
@@ -1668,16 +1770,15 @@ public final class dev/kord/gateway/Resume : dev/kord/gateway/Command {
 	public final fun getToken ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final synthetic fun write$Self (Ldev/kord/gateway/Resume;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
-public final class dev/kord/gateway/Resume$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+public final synthetic class dev/kord/gateway/Resume$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/gateway/Resume$$serializer;
-	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
-	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/gateway/Resume;
+	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/gateway/Resume;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
-	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/gateway/Resume;)V
+	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/gateway/Resume;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
 	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
@@ -1688,7 +1789,6 @@ public final class dev/kord/gateway/Resume$Companion {
 
 public final class dev/kord/gateway/Resumed : dev/kord/gateway/DispatchEvent {
 	public static final field Companion Ldev/kord/gateway/Resumed$Companion;
-	public synthetic fun <init> (ILjava/lang/Integer;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Ljava/lang/Integer;)V
 	public final fun component1 ()Ljava/lang/Integer;
 	public final fun copy (Ljava/lang/Integer;)Ldev/kord/gateway/Resumed;
@@ -1697,22 +1797,141 @@ public final class dev/kord/gateway/Resumed : dev/kord/gateway/DispatchEvent {
 	public fun getSequence ()Ljava/lang/Integer;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final synthetic fun write$Self (Ldev/kord/gateway/Resumed;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
-public final class dev/kord/gateway/Resumed$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+public final synthetic class dev/kord/gateway/Resumed$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/gateway/Resumed$$serializer;
-	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
-	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/gateway/Resumed;
+	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/gateway/Resumed;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
-	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/gateway/Resumed;)V
+	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/gateway/Resumed;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
 	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/gateway/Resumed$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class dev/kord/gateway/SoundboardSounds : dev/kord/gateway/DispatchEvent {
+	public fun <init> (Ldev/kord/gateway/SoundboardSoundsChunk;Ljava/lang/Integer;)V
+	public final fun component1 ()Ldev/kord/gateway/SoundboardSoundsChunk;
+	public final fun component2 ()Ljava/lang/Integer;
+	public final fun copy (Ldev/kord/gateway/SoundboardSoundsChunk;Ljava/lang/Integer;)Ldev/kord/gateway/SoundboardSounds;
+	public static synthetic fun copy$default (Ldev/kord/gateway/SoundboardSounds;Ldev/kord/gateway/SoundboardSoundsChunk;Ljava/lang/Integer;ILjava/lang/Object;)Ldev/kord/gateway/SoundboardSounds;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getData ()Ldev/kord/gateway/SoundboardSoundsChunk;
+	public fun getSequence ()Ljava/lang/Integer;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class dev/kord/gateway/SoundboardSoundsChunk {
+	public static final field Companion Ldev/kord/gateway/SoundboardSoundsChunk$Companion;
+	public fun <init> (Ljava/util/List;Ldev/kord/common/entity/Snowflake;)V
+	public final fun component1 ()Ljava/util/List;
+	public final fun component2 ()Ldev/kord/common/entity/Snowflake;
+	public final fun copy (Ljava/util/List;Ldev/kord/common/entity/Snowflake;)Ldev/kord/gateway/SoundboardSoundsChunk;
+	public static synthetic fun copy$default (Ldev/kord/gateway/SoundboardSoundsChunk;Ljava/util/List;Ldev/kord/common/entity/Snowflake;ILjava/lang/Object;)Ldev/kord/gateway/SoundboardSoundsChunk;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getGuildId ()Ldev/kord/common/entity/Snowflake;
+	public final fun getSoundboardSounds ()Ljava/util/List;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final synthetic class dev/kord/gateway/SoundboardSoundsChunk$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Ldev/kord/gateway/SoundboardSoundsChunk$$serializer;
+	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/gateway/SoundboardSoundsChunk;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/gateway/SoundboardSoundsChunk;)V
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class dev/kord/gateway/SoundboardSoundsChunk$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class dev/kord/gateway/StageInstanceCreate : dev/kord/gateway/DispatchEvent {
+	public fun <init> (Ldev/kord/common/entity/DiscordStageInstance;Ljava/lang/Integer;)V
+	public final fun component1 ()Ldev/kord/common/entity/DiscordStageInstance;
+	public final fun component2 ()Ljava/lang/Integer;
+	public final fun copy (Ldev/kord/common/entity/DiscordStageInstance;Ljava/lang/Integer;)Ldev/kord/gateway/StageInstanceCreate;
+	public static synthetic fun copy$default (Ldev/kord/gateway/StageInstanceCreate;Ldev/kord/common/entity/DiscordStageInstance;Ljava/lang/Integer;ILjava/lang/Object;)Ldev/kord/gateway/StageInstanceCreate;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun getSequence ()Ljava/lang/Integer;
+	public final fun getStageInstance ()Ldev/kord/common/entity/DiscordStageInstance;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class dev/kord/gateway/StageInstanceDelete : dev/kord/gateway/DispatchEvent {
+	public fun <init> (Ldev/kord/common/entity/DiscordStageInstance;Ljava/lang/Integer;)V
+	public final fun component1 ()Ldev/kord/common/entity/DiscordStageInstance;
+	public final fun component2 ()Ljava/lang/Integer;
+	public final fun copy (Ldev/kord/common/entity/DiscordStageInstance;Ljava/lang/Integer;)Ldev/kord/gateway/StageInstanceDelete;
+	public static synthetic fun copy$default (Ldev/kord/gateway/StageInstanceDelete;Ldev/kord/common/entity/DiscordStageInstance;Ljava/lang/Integer;ILjava/lang/Object;)Ldev/kord/gateway/StageInstanceDelete;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun getSequence ()Ljava/lang/Integer;
+	public final fun getStageInstance ()Ldev/kord/common/entity/DiscordStageInstance;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class dev/kord/gateway/StageInstanceUpdate : dev/kord/gateway/DispatchEvent {
+	public fun <init> (Ldev/kord/common/entity/DiscordStageInstance;Ljava/lang/Integer;)V
+	public final fun component1 ()Ldev/kord/common/entity/DiscordStageInstance;
+	public final fun component2 ()Ljava/lang/Integer;
+	public final fun copy (Ldev/kord/common/entity/DiscordStageInstance;Ljava/lang/Integer;)Ldev/kord/gateway/StageInstanceUpdate;
+	public static synthetic fun copy$default (Ldev/kord/gateway/StageInstanceUpdate;Ldev/kord/common/entity/DiscordStageInstance;Ljava/lang/Integer;ILjava/lang/Object;)Ldev/kord/gateway/StageInstanceUpdate;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun getSequence ()Ljava/lang/Integer;
+	public final fun getStageInstance ()Ldev/kord/common/entity/DiscordStageInstance;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class dev/kord/gateway/SubscriptionCreate : dev/kord/gateway/DispatchEvent {
+	public fun <init> (Ldev/kord/common/entity/DiscordSubscription;Ljava/lang/Integer;)V
+	public final fun component1 ()Ldev/kord/common/entity/DiscordSubscription;
+	public final fun component2 ()Ljava/lang/Integer;
+	public final fun copy (Ldev/kord/common/entity/DiscordSubscription;Ljava/lang/Integer;)Ldev/kord/gateway/SubscriptionCreate;
+	public static synthetic fun copy$default (Ldev/kord/gateway/SubscriptionCreate;Ldev/kord/common/entity/DiscordSubscription;Ljava/lang/Integer;ILjava/lang/Object;)Ldev/kord/gateway/SubscriptionCreate;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun getSequence ()Ljava/lang/Integer;
+	public final fun getSubscription ()Ldev/kord/common/entity/DiscordSubscription;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class dev/kord/gateway/SubscriptionDelete : dev/kord/gateway/DispatchEvent {
+	public fun <init> (Ldev/kord/common/entity/DiscordSubscription;Ljava/lang/Integer;)V
+	public final fun component1 ()Ldev/kord/common/entity/DiscordSubscription;
+	public final fun component2 ()Ljava/lang/Integer;
+	public final fun copy (Ldev/kord/common/entity/DiscordSubscription;Ljava/lang/Integer;)Ldev/kord/gateway/SubscriptionDelete;
+	public static synthetic fun copy$default (Ldev/kord/gateway/SubscriptionDelete;Ldev/kord/common/entity/DiscordSubscription;Ljava/lang/Integer;ILjava/lang/Object;)Ldev/kord/gateway/SubscriptionDelete;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun getSequence ()Ljava/lang/Integer;
+	public final fun getSubscription ()Ldev/kord/common/entity/DiscordSubscription;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class dev/kord/gateway/SubscriptionUpdate : dev/kord/gateway/DispatchEvent {
+	public fun <init> (Ldev/kord/common/entity/DiscordSubscription;Ljava/lang/Integer;)V
+	public final fun component1 ()Ldev/kord/common/entity/DiscordSubscription;
+	public final fun component2 ()Ljava/lang/Integer;
+	public final fun copy (Ldev/kord/common/entity/DiscordSubscription;Ljava/lang/Integer;)Ldev/kord/gateway/SubscriptionUpdate;
+	public static synthetic fun copy$default (Ldev/kord/gateway/SubscriptionUpdate;Ldev/kord/common/entity/DiscordSubscription;Ljava/lang/Integer;ILjava/lang/Object;)Ldev/kord/gateway/SubscriptionUpdate;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun getSequence ()Ljava/lang/Integer;
+	public final fun getSubscription ()Ldev/kord/common/entity/DiscordSubscription;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
 }
 
 public final class dev/kord/gateway/ThreadCreate : dev/kord/gateway/DispatchEvent {
@@ -1832,31 +2051,29 @@ public final class dev/kord/gateway/UnknownDispatchEvent : dev/kord/gateway/Disp
 
 public final class dev/kord/gateway/UpdateStatus : dev/kord/gateway/Command {
 	public static final field Companion Ldev/kord/gateway/UpdateStatus$Companion;
-	public synthetic fun <init> (ILkotlinx/datetime/Instant;Ljava/util/List;Ldev/kord/common/entity/PresenceStatus;ZLkotlinx/serialization/internal/SerializationConstructorMarker;)V
-	public fun <init> (Lkotlinx/datetime/Instant;Ljava/util/List;Ldev/kord/common/entity/PresenceStatus;Z)V
-	public final fun component1 ()Lkotlinx/datetime/Instant;
+	public fun <init> (Lkotlin/time/Instant;Ljava/util/List;Ldev/kord/common/entity/PresenceStatus;Z)V
+	public final fun component1 ()Lkotlin/time/Instant;
 	public final fun component2 ()Ljava/util/List;
 	public final fun component3 ()Ldev/kord/common/entity/PresenceStatus;
 	public final fun component4 ()Z
-	public final fun copy (Lkotlinx/datetime/Instant;Ljava/util/List;Ldev/kord/common/entity/PresenceStatus;Z)Ldev/kord/gateway/UpdateStatus;
-	public static synthetic fun copy$default (Ldev/kord/gateway/UpdateStatus;Lkotlinx/datetime/Instant;Ljava/util/List;Ldev/kord/common/entity/PresenceStatus;ZILjava/lang/Object;)Ldev/kord/gateway/UpdateStatus;
+	public final fun copy (Lkotlin/time/Instant;Ljava/util/List;Ldev/kord/common/entity/PresenceStatus;Z)Ldev/kord/gateway/UpdateStatus;
+	public static synthetic fun copy$default (Ldev/kord/gateway/UpdateStatus;Lkotlin/time/Instant;Ljava/util/List;Ldev/kord/common/entity/PresenceStatus;ZILjava/lang/Object;)Ldev/kord/gateway/UpdateStatus;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getActivities ()Ljava/util/List;
 	public final fun getAfk ()Z
-	public final fun getSince ()Lkotlinx/datetime/Instant;
+	public final fun getSince ()Lkotlin/time/Instant;
 	public final fun getStatus ()Ldev/kord/common/entity/PresenceStatus;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final synthetic fun write$Self (Ldev/kord/gateway/UpdateStatus;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
-public final class dev/kord/gateway/UpdateStatus$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+public final synthetic class dev/kord/gateway/UpdateStatus$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/gateway/UpdateStatus$$serializer;
-	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
-	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/gateway/UpdateStatus;
+	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/gateway/UpdateStatus;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
-	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/gateway/UpdateStatus;)V
+	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/gateway/UpdateStatus;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
 	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
@@ -1867,7 +2084,6 @@ public final class dev/kord/gateway/UpdateStatus$Companion {
 
 public final class dev/kord/gateway/UpdateVoiceStatus : dev/kord/gateway/Command {
 	public static final field Companion Ldev/kord/gateway/UpdateVoiceStatus$Companion;
-	public synthetic fun <init> (ILdev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;ZZLkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;ZZ)V
 	public final fun component1 ()Ldev/kord/common/entity/Snowflake;
 	public final fun component2 ()Ldev/kord/common/entity/Snowflake;
@@ -1882,16 +2098,15 @@ public final class dev/kord/gateway/UpdateVoiceStatus : dev/kord/gateway/Command
 	public final fun getSelfMute ()Z
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final synthetic fun write$Self (Ldev/kord/gateway/UpdateVoiceStatus;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
-public final class dev/kord/gateway/UpdateVoiceStatus$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+public final synthetic class dev/kord/gateway/UpdateVoiceStatus$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/gateway/UpdateVoiceStatus$$serializer;
-	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
-	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/gateway/UpdateVoiceStatus;
+	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/gateway/UpdateVoiceStatus;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
-	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/gateway/UpdateVoiceStatus;)V
+	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/gateway/UpdateVoiceStatus;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
 	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
@@ -1913,8 +2128,59 @@ public final class dev/kord/gateway/UserUpdate : dev/kord/gateway/DispatchEvent 
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class dev/kord/gateway/UtilsKt {
-	public static final fun error (Lmu/KLogger;Ljava/lang/Throwable;)V
+public final class dev/kord/gateway/VoiceChannelEffect {
+	public static final field Companion Ldev/kord/gateway/VoiceChannelEffect$Companion;
+	public fun <init> (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/OptionalDouble;)V
+	public synthetic fun <init> (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/OptionalDouble;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ldev/kord/common/entity/Snowflake;
+	public final fun component2 ()Ldev/kord/common/entity/Snowflake;
+	public final fun component3 ()Ldev/kord/common/entity/Snowflake;
+	public final fun component4 ()Ldev/kord/common/entity/optional/Optional;
+	public final fun component5 ()Ldev/kord/common/entity/optional/Optional;
+	public final fun component6 ()Ldev/kord/common/entity/optional/OptionalInt;
+	public final fun component7 ()Ldev/kord/common/entity/optional/OptionalSnowflake;
+	public final fun component8 ()Ldev/kord/common/entity/optional/OptionalDouble;
+	public final fun copy (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/OptionalDouble;)Ldev/kord/gateway/VoiceChannelEffect;
+	public static synthetic fun copy$default (Ldev/kord/gateway/VoiceChannelEffect;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/OptionalDouble;ILjava/lang/Object;)Ldev/kord/gateway/VoiceChannelEffect;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getAnimationId ()Ldev/kord/common/entity/optional/OptionalInt;
+	public final fun getAnimationType ()Ldev/kord/common/entity/optional/Optional;
+	public final fun getChannelId ()Ldev/kord/common/entity/Snowflake;
+	public final fun getEmoji ()Ldev/kord/common/entity/optional/Optional;
+	public final fun getGuildId ()Ldev/kord/common/entity/Snowflake;
+	public final fun getSoundId ()Ldev/kord/common/entity/optional/OptionalSnowflake;
+	public final fun getSoundVolume ()Ldev/kord/common/entity/optional/OptionalDouble;
+	public final fun getUserId ()Ldev/kord/common/entity/Snowflake;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final synthetic class dev/kord/gateway/VoiceChannelEffect$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Ldev/kord/gateway/VoiceChannelEffect$$serializer;
+	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/gateway/VoiceChannelEffect;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/gateway/VoiceChannelEffect;)V
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class dev/kord/gateway/VoiceChannelEffect$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class dev/kord/gateway/VoiceEffectSend : dev/kord/gateway/DispatchEvent {
+	public fun <init> (Ldev/kord/gateway/VoiceChannelEffect;Ljava/lang/Integer;)V
+	public final fun component1 ()Ldev/kord/gateway/VoiceChannelEffect;
+	public final fun component2 ()Ljava/lang/Integer;
+	public final fun copy (Ldev/kord/gateway/VoiceChannelEffect;Ljava/lang/Integer;)Ldev/kord/gateway/VoiceEffectSend;
+	public static synthetic fun copy$default (Ldev/kord/gateway/VoiceEffectSend;Ldev/kord/gateway/VoiceChannelEffect;Ljava/lang/Integer;ILjava/lang/Object;)Ldev/kord/gateway/VoiceEffectSend;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getEffect ()Ldev/kord/gateway/VoiceChannelEffect;
+	public fun getSequence ()Ljava/lang/Integer;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
 }
 
 public final class dev/kord/gateway/VoiceServerUpdate : dev/kord/gateway/DispatchEvent {
@@ -1972,12 +2238,14 @@ public final class dev/kord/gateway/builder/PresenceBuilder {
 	public fun <init> ()V
 	public final fun competing (Ljava/lang/String;)V
 	public final fun getAfk ()Z
-	public final fun getSince ()Lkotlinx/datetime/Instant;
+	public final fun getSince ()Lkotlin/time/Instant;
+	public final fun getState ()Ljava/lang/String;
 	public final fun getStatus ()Ldev/kord/common/entity/PresenceStatus;
 	public final fun listening (Ljava/lang/String;)V
 	public final fun playing (Ljava/lang/String;)V
 	public final fun setAfk (Z)V
-	public final fun setSince (Lkotlinx/datetime/Instant;)V
+	public final fun setSince (Lkotlin/time/Instant;)V
+	public final fun setState (Ljava/lang/String;)V
 	public final fun setStatus (Ldev/kord/common/entity/PresenceStatus;)V
 	public final fun streaming (Ljava/lang/String;Ljava/lang/String;)V
 	public final fun toPresence ()Ldev/kord/gateway/DiscordPresence;

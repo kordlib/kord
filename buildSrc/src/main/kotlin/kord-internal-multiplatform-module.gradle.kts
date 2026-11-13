@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
+
 plugins {
     org.jetbrains.kotlin.multiplatform
 }
@@ -6,18 +8,29 @@ repositories {
     mavenCentral()
 }
 
+@OptIn(ExperimentalKotlinGradlePluginApi::class)
 kotlin {
-    jvm()
-    js(IR) {
-        nodejs()
+    compilerOptions {
+        applyKordCommonCompilerOptions()
     }
-    jvmToolchain(Jvm.target)
 
-    targets {
-        all {
-            compilations.all {
-                compilerOptions.options.applyKordCompilerOptions()
-            }
+    jvm {
+        compilerOptions {
+            applyKordJvmCompilerOptions()
         }
+    }
+    js {
+        nodejs()
+        useEsModules()
+
+        compilerOptions {
+            target = "es2015"
+        }
+    }
+}
+
+tasks {
+    withType<Test>().configureEach {
+        useJUnitPlatform()
     }
 }

@@ -3,6 +3,7 @@ package dev.kord.core.entity.application
 import dev.kord.common.Locale
 import dev.kord.common.entity.ApplicationCommandType
 import dev.kord.common.entity.ChannelType
+import dev.kord.common.entity.InteractionContextType
 import dev.kord.common.entity.Permissions
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.orEmpty
@@ -55,9 +56,11 @@ public sealed interface ApplicationCommand : ApplicationCommandBehavior {
     /**
      * whether the command is enabled by default when the app is added to a guild.
      */
-    @Suppress("DeprecatedCallableAddReplaceWith")
-    @Deprecated("'defaultPermission' is deprecated in favor of 'defaultMemberPermissions' and 'dmPermission'.")
-    public val defaultPermission: Boolean? get() = @Suppress("DEPRECATION") data.defaultPermission.value
+    @Suppress("DEPRECATION_ERROR")
+    @Deprecated("'defaultPermission' is deprecated in favor of 'defaultMemberPermissions' and 'dmPermission'." +
+            " The deprecation level will be raised to HIDDEN in 0.19.0 and this declaration will be removed in 0.20.0",
+        level = DeprecationLevel.ERROR)
+    public val defaultPermission: Boolean? get() = data.defaultPermission.value
 
     /** Indicates whether the command is age-restricted. */
     public val isNsfw: Boolean get() = data.nsfw.orElse(false)
@@ -68,7 +71,14 @@ public interface GlobalApplicationCommand : ApplicationCommand, GlobalApplicatio
     /**
      * Whether this command is available in DMs with the application.
      */
-    public val dmPermission: Boolean get() = data.dmPermission.orElse(true)
+    @Suppress("DeprecatedCallableAddReplaceWith")
+    @Deprecated("'dmPermission' is deprecated in favor of 'contexts'.")
+    public val dmPermission: Boolean get() = @Suppress("DEPRECATION") data.dmPermission.orElse(true)
+
+    /**
+     * Interaction context(s) where the command can be used.
+     */
+    public val contexts: List<InteractionContextType>? get() = data.contexts.value
 }
 public class UnknownGlobalApplicationCommand(
     override val data: ApplicationCommandData,
@@ -85,6 +95,7 @@ public fun GlobalApplicationCommand(data: ApplicationCommandData, service: Inter
         ApplicationCommandType.ChatInput -> GlobalChatInputCommand(data, service)
         ApplicationCommandType.Message -> GlobalMessageCommand(data, service)
         ApplicationCommandType.User -> GlobalUserCommand(data, service)
+        ApplicationCommandType.PrimaryEntryPoint -> GlobalPrimaryEntryPointCommand(data, service)
         is ApplicationCommandType.Unknown ->  UnknownGlobalApplicationCommand(data, service)
         null -> error("The type value is missing, can't determine the type")
     }
@@ -113,6 +124,7 @@ public fun GuildApplicationCommand(data: ApplicationCommandData, service: Intera
         ApplicationCommandType.ChatInput -> GuildChatInputCommand(data, service)
         ApplicationCommandType.Message -> GuildMessageCommand(data, service)
         ApplicationCommandType.User -> GuildUserCommand(data, service)
+        ApplicationCommandType.PrimaryEntryPoint -> GuildPrimaryEntryPointCommand(data, service)
         is ApplicationCommandType.Unknown ->  UnknownGuildApplicationCommand(data, service)
         null -> error("The type value is missing, can't determine the type")
     }

@@ -7,7 +7,7 @@ kotlin {
         commonMain {
             dependencies {
                 api(libs.bundles.test.common)
-                api(libs.ktor.utils)
+                api(libs.ktor.io)
             }
         }
         jsMain {
@@ -18,6 +18,7 @@ kotlin {
         jvmMain {
             dependencies {
                 api(libs.bundles.test.jvm)
+                runtimeOnly(libs.bundles.test.jvm.runtime)
             }
         }
     }

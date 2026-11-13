@@ -6,9 +6,9 @@ import dev.kord.core.cache.data.MemberData
 import dev.kord.core.cache.data.UserData
 import dev.kord.core.equality.BehaviorEqualityTest
 import dev.kord.core.equality.GuildEntityEqualityTest
+import dev.kord.core.mockKord
 import io.mockk.every
 import io.mockk.mockk
-import dev.kord.core.mockKord
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
 

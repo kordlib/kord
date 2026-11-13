@@ -86,7 +86,7 @@ public data class AutoModerationActionData(
 public data class AutoModerationActionMetadataData(
     val channelId: OptionalSnowflake = OptionalSnowflake.Missing,
     val durationSeconds: Optional<DurationInSeconds> = Optional.Missing(),
-    val customMessage: Optional<String> = Optional.Missing(),
+    val customMessage: Optional<String?> = Optional.Missing(),
 ) {
     public companion object {
         public fun from(metadata: DiscordAutoModerationActionMetadata): AutoModerationActionMetadataData =

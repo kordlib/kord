@@ -35,6 +35,10 @@ public sealed class Command {
                     composite.encodeSerializableElement(descriptor, 0, OpCode.serializer(), OpCode.RequestGuildMembers)
                     composite.encodeSerializableElement(descriptor, 1, RequestGuildMembers.serializer(), value)
                 }
+                is RequestSoundboardSounds -> {
+                    composite.encodeSerializableElement(descriptor, 0, OpCode.serializer(), OpCode.RequestSoundboardSounds)
+                    composite.encodeSerializableElement(descriptor, 1, RequestSoundboardSounds.serializer(), value)
+                }
                 is UpdateVoiceStatus -> {
                     composite.encodeSerializableElement(descriptor, 0, OpCode.serializer(), OpCode.VoiceStateUpdate)
                     composite.encodeSerializableElement(descriptor, 1, UpdateVoiceStatus.serializer(), value)
@@ -60,9 +64,7 @@ public sealed class Command {
 
             composite.endStructure(descriptor)
         }
-
     }
-
 }
 
 
@@ -125,7 +127,7 @@ public data class Resume(
 
 /**
  * A representation of the
- * [Discord Request Guild Members command](https://discord.com/developers/docs/topics/gateway#request-guild-members).
+ * [Discord Request Guild Members command](https://discord.com/developers/docs/topics/gateway-events#request-guild-members).
  *
  * When connecting to a [Gateway] Discord will send members up to [Identify.largeThreshold], any additional
  * members can be requested via this command. Sending this command will result in a variable amount of
@@ -166,8 +168,15 @@ public data class RequestGuildMembers(
         public fun new(): String = counter.getAndIncrement().toUInt().toString()
 
     }
-
 }
+
+/**
+ * This will similarly to [RequestGuildMembers] request the soundboard sounds of the specified [guilds][guildIds].
+ *
+ * This will cause a [SoundboardSounds] event to be sent for every guild in [guildIds], containing the requested sounds.
+ */
+@Serializable
+public data class RequestSoundboardSounds(@SerialName("guild_ids") val guildIds: List<Snowflake>) : Command()
 
 @Serializable
 public data class UpdateVoiceStatus(

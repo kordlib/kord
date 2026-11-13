@@ -1,13 +1,19 @@
 package dev.kord.core.entity.interaction
 
 import dev.kord.common.Locale
+import dev.kord.common.entity.ApplicationIntegrationType
+import dev.kord.common.entity.InteractionContextType
 import dev.kord.common.entity.InteractionType
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.OptionalSnowflake
+import dev.kord.common.entity.optional.mapList
+import dev.kord.common.entity.optional.orEmpty
 import dev.kord.core.Kord
 import dev.kord.core.behavior.interaction.InteractionBehavior
 import dev.kord.core.cache.data.InteractionData
 import dev.kord.core.entity.User
+import dev.kord.core.entity.monetization.Entitlement
+import dev.kord.core.entity.monetization.Sku
 import dev.kord.core.supplier.EntitySupplyStrategy
 
 /**
@@ -24,7 +30,7 @@ public sealed interface Interaction : InteractionBehavior {
 
     override val applicationId: Snowflake get() = data.applicationId
 
-    override val channelId: Snowflake get() = data.channelId
+    override val channelId: Snowflake get() = data.channel.value?.id ?: data.channelId.value!!
 
     override val token: String get() = data.token
 
@@ -52,6 +58,35 @@ public sealed interface Interaction : InteractionBehavior {
      * read-only property, always 1
      */
     public val version: Int get() = data.version
+
+    /**
+     * For [monetized apps](https://discord.com/developers/docs/monetization/overview), any [Entitlement]s for the
+     * [invoking user][user], representing access to premium [Sku]s.
+     */
+    public val entitlements: List<Entitlement> get() = data.entitlements.mapList { Entitlement(it, kord) }.orEmpty()
+
+    /**
+     * Map of the authorizing users id by [type][ApplicationIntegrationType].
+     *
+     * For [ApplicationIntegrationType.GuildInstall] this will be:
+     *  - the guildId, if it's on a guild
+     *  - `0` if it is from a user DM
+     *
+     * For [ApplicationIntegrationType.UserInstall] this will be:
+     * - The id of the authorizing user
+     */
+    public val authorizingIntegrationOwners: Map<ApplicationIntegrationType, Snowflake>
+        get() = data.authorizingIntegrationOwners
+
+    /**
+     * [Context][InteractionContextType] where the interaction was triggered from.
+     */
+    public val context: InteractionContextType? get() = data.context.value
+
+    /**
+     * Attachment size limit in bytes
+     */
+    public val attachmentSizeLimit: Int get() = data.attachmentSizeLimit
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): Interaction
 

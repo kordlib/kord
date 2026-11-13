@@ -41,6 +41,10 @@ class LinearRetryTest {
         val end = currentTime
         val elapsed = (end - start).milliseconds
 
-        assertEquals(1000.seconds, elapsed)
+        // first retry is exactly 1s, retries 2 to 1000 are between 1.000000027s and 1.000027447s,
+        // kotlinx.coroutines.delay (used by LinearRetry) rounds nanoseconds up to full milliseconds since 1.8.0:
+        // https://github.com/Kotlin/kotlinx.coroutines/pull/3921
+        // -> 1s + 999 * 1.001s = 1000.999s
+        assertEquals(1000.seconds + 999.milliseconds, elapsed)
     }
 }

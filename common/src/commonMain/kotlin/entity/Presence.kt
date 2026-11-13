@@ -1,5 +1,5 @@
-@file:GenerateKordEnum(
-    name = "PresenceStatus", valueType = STRING,
+@file:Generate(
+    STRING_KORD_ENUM, name = "PresenceStatus",
     docUrl = "https://discord.com/developers/docs/topics/gateway-events#update-presence-status-types",
     entries = [
         Entry("Online", stringValue = "online", kDoc = "Online."),
@@ -14,9 +14,9 @@ package dev.kord.common.entity
 
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalSnowflake
-import dev.kord.ksp.GenerateKordEnum
-import dev.kord.ksp.GenerateKordEnum.Entry
-import dev.kord.ksp.GenerateKordEnum.ValueType.STRING
+import dev.kord.ksp.Generate
+import dev.kord.ksp.Generate.EntityType.STRING_KORD_ENUM
+import dev.kord.ksp.Generate.Entry
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

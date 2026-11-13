@@ -3,16 +3,11 @@ package dev.kord.core.behavior.channel
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.exception.RequestException
 import dev.kord.core.Kord
-import dev.kord.core.entity.Webhook
 import dev.kord.core.entity.channel.TopGuildMessageChannel
 import dev.kord.core.exception.EntityNotFoundException
+import dev.kord.core.hash
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
-import dev.kord.rest.builder.webhook.WebhookCreateBuilder
-import kotlin.DeprecationLevel.HIDDEN
-import dev.kord.core.hash
-import kotlin.contracts.InvocationKind
-import kotlin.contracts.contract
 
 /**
  * The behavior of a non-thread Discord message channel associated to a [guild].
@@ -89,19 +84,4 @@ internal fun TopGuildMessageChannelBehavior(
     override fun toString(): String {
         return "TopGuildMessageChannelBehavior(id=$id, guildId=$guildId, kord=$kord, supplier=$supplier)"
     }
-}
-
-
-@Deprecated(
-    "Binary compatibility, this is now available on the CategorizableChannelBehavior supertype. Keep for some releases.",
-    level = HIDDEN,
-)
-public suspend inline fun TopGuildMessageChannelBehavior.createWebhook(
-    name: String,
-    builder: WebhookCreateBuilder.() -> Unit = {}
-): Webhook {
-    contract {
-        callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
-    }
-    return (this as CategorizableChannelBehavior).createWebhook(name, builder)
 }

@@ -1,12 +1,12 @@
 package dev.kord.gateway.handler
 
 import dev.kord.gateway.Event
+import io.github.oshai.kotlinlogging.KotlinLogging
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import mu.KotlinLogging
 import kotlin.coroutines.CoroutineContext
 
 private val logger = KotlinLogging.logger("[Handler]")

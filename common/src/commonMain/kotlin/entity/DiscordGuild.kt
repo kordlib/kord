@@ -1,5 +1,5 @@
-@file:GenerateKordEnum(
-    name = "DefaultMessageNotificationLevel", valueType = INT,
+@file:Generate(
+    INT_KORD_ENUM, name = "DefaultMessageNotificationLevel",
     docUrl = "https://discord.com/developers/docs/resources/guild#guild-object-default-message-notification-level",
     entries = [
         Entry("AllMessages", intValue = 0, kDoc = "Members will receive notifications for all messages by default."),
@@ -10,8 +10,8 @@
     ],
 )
 
-@file:GenerateKordEnum(
-    name = "ExplicitContentFilter", valueType = INT,
+@file:Generate(
+    INT_KORD_ENUM, name = "ExplicitContentFilter",
     docUrl = "https://discord.com/developers/docs/resources/guild#guild-object-explicit-content-filter-level",
     entries = [
         Entry("Disabled", intValue = 0, kDoc = "Media content will not be scanned."),
@@ -23,8 +23,8 @@
     ],
 )
 
-@file:GenerateKordEnum(
-    name = "MFALevel", valueType = INT,
+@file:Generate(
+    INT_KORD_ENUM, name = "MFALevel",
     docUrl = "https://discord.com/developers/docs/resources/guild#guild-object-mfa-level",
     entries = [
         Entry("None", intValue = 0, kDoc = "Guild has no MFA/2FA requirement for moderation actions."),
@@ -32,8 +32,8 @@
     ],
 )
 
-@file:GenerateKordEnum(
-    name = "VerificationLevel", valueType = INT,
+@file:Generate(
+    INT_KORD_ENUM, name = "VerificationLevel",
     docUrl = "https://discord.com/developers/docs/resources/guild#guild-object-verification-level",
     entries = [
         Entry("None", intValue = 0, kDoc = "Unrestricted."),
@@ -44,8 +44,8 @@
     ],
 )
 
-@file:GenerateKordEnum(
-    name = "NsfwLevel", valueType = INT,
+@file:Generate(
+    INT_KORD_ENUM, name = "NsfwLevel",
     docUrl = "https://discord.com/developers/docs/resources/guild#guild-object-guild-nsfw-level",
     entries = [
         Entry("Default", intValue = 0),
@@ -55,8 +55,8 @@
     ],
 )
 
-@file:GenerateKordEnum(
-    name = "PremiumTier", valueType = INT,
+@file:Generate(
+    INT_KORD_ENUM, name = "PremiumTier",
     docUrl = "https://discord.com/developers/docs/resources/guild#guild-object-premium-tier",
     entries = [
         Entry("None", intValue = 0, kDoc = "Guild has not unlocked any Server Boost perks."),
@@ -66,10 +66,18 @@
     ],
 )
 
-@file:GenerateKordEnum(
-    name = "GuildFeature", valueType = STRING,
+@file:Generate(
+    STRING_KORD_ENUM, name = "GuildFeature",
     docUrl = "https://discord.com/developers/docs/resources/guild#guild-object-guild-features",
     entries = [
+        Entry(
+            "ActivityFeedDisabled", stringValue = "ACTIVITY_FEED_DISABLED_BY_USER",
+            kDoc = "Guild has disabled the activity feed."
+        ),
+        Entry(
+            "ActivityFeedEnabled", stringValue = "ACTIVITY_FEED_ENABLED_BY_USER",
+            kDoc = "Guild has enabled the activity feed."
+        ),
         Entry(
             "AnimatedBanner", stringValue = "ANIMATED_BANNER",
             kDoc = "Guild has access to set an animated guild banner image.",
@@ -115,26 +123,12 @@
             "MemberVerificationGateEnabled", stringValue = "MEMBER_VERIFICATION_GATE_ENABLED",
             kDoc = "Guild has enabled Membership Screening.",
         ),
-        Entry(
-            "MonetizationEnabled", stringValue = "MONETIZATION_ENABLED", kDoc = "Guild has enabled monetization.",
-            deprecated = Deprecated(
-                "Replaced by CreatorMonetizableProvisional.",
-                ReplaceWith("GuildFeature.CreatorMonetizableProvisional", "dev.kord.common.entitiy.GuildFeature"),
-                level = HIDDEN,
-            ),
-        ),
         Entry("MoreStickers", stringValue = "MORE_STICKERS", kDoc = "Guild has increased custom sticker slots."),
         Entry("News", stringValue = "NEWS", kDoc = "Guild has access to create announcement channels."),
         Entry("Partnered", stringValue = "PARTNERED", kDoc = "Guild is partnered."),
         Entry(
             "PreviewEnabled", stringValue = "PREVIEW_ENABLED",
             kDoc = "Guild can be previewed before joining via Membership Screening or the directory.",
-        ),
-        Entry(
-            "PrivateThreads", stringValue = "PRIVATE_THREADS", kDoc = "Guild has access to create private threads",
-            deprecated = Deprecated(
-                "Creating a private thread no longer requires the server to be boosted.", level = HIDDEN,
-            ),
         ),
         Entry(
             "RaidAlertsDisabled", stringValue = "RAID_ALERTS_DISABLED",
@@ -164,27 +158,39 @@
     ],
 )
 
+@file:Generate(
+    INT_FLAGS, name = "SystemChannelFlag", valueName = "code",
+    docUrl = "https://discord.com/developers/docs/resources/guild#guild-object-system-channel-flags",
+    entries = [
+        Entry("SuppressJoinNotifications", shift = 0, kDoc = "Suppress member join notifications."),
+        Entry("SuppressPremiumSubscriptions", shift = 1, kDoc = "Suppress server boost notifications."),
+        Entry("SuppressGuildReminderNotifications", shift = 2, kDoc = "Suppress server setup tips."),
+        Entry("SuppressJoinNotificationReplies", shift = 3, kDoc = "Hide member join sticker reply buttons."),
+        Entry(
+            "SuppressRoleSubscriptionPurchaseNotifications", shift = 4,
+            kDoc = "Suppress role subscription purchase and renewal notifications.",
+        ),
+        Entry(
+            "SuppressRoleSubscriptionPurchaseNotificationReplies", shift = 5,
+            kDoc = "Hide role subscription sticker reply buttons.",
+        ),
+    ],
+)
+
 package dev.kord.common.entity
 
+import dev.kord.common.annotation.DiscordAPIPreview
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalInt
 import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.common.serialization.DurationInSeconds
-import dev.kord.ksp.GenerateKordEnum
-import dev.kord.ksp.GenerateKordEnum.Entry
-import dev.kord.ksp.GenerateKordEnum.ValueType.INT
-import dev.kord.ksp.GenerateKordEnum.ValueType.STRING
-import kotlinx.datetime.Instant
-import kotlinx.serialization.KSerializer
+import dev.kord.ksp.Generate
+import dev.kord.ksp.Generate.EntityType.*
+import dev.kord.ksp.Generate.Entry
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.descriptors.PrimitiveKind
-import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
-import kotlinx.serialization.descriptors.SerialDescriptor
-import kotlinx.serialization.encoding.Decoder
-import kotlinx.serialization.encoding.Encoder
-import kotlin.DeprecationLevel.HIDDEN
+import kotlin.time.Instant
 
 /**
  * A partial representation of a [DiscordGuild] that may be [unavailable].
@@ -207,6 +213,7 @@ public data class DiscordUnavailableGuild(
  * @param iconHash The icon hash, returned when in the template object.
  * @param splash The splash hash.
  * @param discoverySplash The discovery splash hash; only present for guilds with the [GuildFeature.Discoverable] feature.
+ * @param homeHeader The home header hash; Used in new member welcome
  * @param owner True if [DiscordUser] is the owner of the guild.
  * @param ownerId The id of the owner.
  * @param permissions The total permissions for [DiscordUser] in the guild (excludes [overwrites][Overwrite]).
@@ -258,6 +265,7 @@ public data class DiscordGuild(
     @SerialName("icon_hash") val iconHash: Optional<String?> = Optional.Missing(),
     val splash: Optional<String?> = Optional.Missing(),
     @SerialName("discovery_splash") val discoverySplash: Optional<String?> = Optional.Missing(),
+    @SerialName("home_header") val homeHeader: String?,
     val owner: OptionalBoolean = OptionalBoolean.Missing,
     @SerialName("owner_id") val ownerId: Snowflake,
     val permissions: Optional<Permissions> = Optional.Missing(),
@@ -347,55 +355,29 @@ public data class DiscordPartialGuild(
     val stickers: Optional<List<DiscordMessageSticker>> = Optional.Missing(),
     @SerialName("guild_scheduled_events")
     val guildScheduledEvents: Optional<List<DiscordGuildScheduledEvent>> = Optional.Missing(),
+    @SerialName("approximate_member_count")
+    val approximateMemberCount: OptionalInt = OptionalInt.Missing,
+    @SerialName("approximate_presence_count")
+    val approximatePresenceCount: OptionalInt = OptionalInt.Missing,
     @SerialName("premium_progress_bar_enabled")
     val premiumProgressBarEnabled: OptionalBoolean = OptionalBoolean.Missing,
 )
 
-@Serializable(with = SystemChannelFlags.Companion::class)
-public data class SystemChannelFlags(val code: Int) {
-
-    public operator fun contains(flag: SystemChannelFlags): Boolean {
-        return this.code and flag.code == flag.code
-    }
-
-    public companion object : KSerializer<SystemChannelFlags> {
-
-        override val descriptor: SerialDescriptor
-            get() = PrimitiveSerialDescriptor("system_channel_flags", PrimitiveKind.INT)
-
-        override fun deserialize(decoder: Decoder): SystemChannelFlags {
-            return SystemChannelFlags(decoder.decodeInt())
-        }
-
-        override fun serialize(encoder: Encoder, value: SystemChannelFlags) {
-            encoder.encodeInt(value.code)
-        }
-    }
-
-}
-
 /**
- * A representation of a [Discord Channels Flag](https://discord.com/developers/docs/resources/guild#guild-object-system-channel-flags).
+ * A partial representation of a [Discord Guild structure](https://discord.com/developers/docs/resources/guild#guild-object)
+ *
+ * see [The user-docs](https://docs.discord.food/interactions/receiving-and-responding#interaction-guild-structure)
+ *
+ * @param id The guild id.
+ * @param features The enabled guild features.
+ * @param locale The current guild locale.
  */
-public enum class SystemChannelFlag(public val code: Int) {
-    /** Suppress member join notifications. **/
-    SuppressJoinNotifications(1.shl(0)),
-
-    /** Suppress server boost notifications. **/
-    SuppressPremiumSubscriptions(1.shl(1)),
-
-    /** Hide server setup tips. **/
-    SuppressGuildReminderNotifications(1.shl(2)),
-
-    /** Hide member join sticker reply buttons. **/
-    SuppressJoinNotificationReplies(1.shl(3)),
-
-    /** Suppress role subscription purchase and renewal notifications. **/
-    SuppressRoleSubscriptionPurchaseNotifications(1.shl(4)),
-
-    /** Hide role subscription sticker reply buttons. **/
-    SuppressRoleSubscriptionPurchaseNotificationReplies(1.shl(5)),
-}
+@Serializable
+public data class DiscordInteractionPartialGuild(
+    val id: Snowflake,
+    val features: List<GuildFeature>,
+    val locale: String,
+)
 
 @Serializable
 public data class DiscordGuildBan(
@@ -419,6 +401,42 @@ public data class DiscordIntegrationDelete(
 public data class DiscordIntegrationAccount(
     val id: String,
     val name: String,
+)
+
+/**
+ * A representation of a [Discord Member Verification Guild structure](https://docs.discord.food/resources/guild#member-verification-guild-structure)
+ *
+ * @param id The guild ID
+ * @param name The name of the guild (2-100 characters)
+ * @param icon The guild icon hash
+ * @param description The description for the guild (max 300 characters)
+ * @param splash The guilds splash hash
+ * @param discoverySplash The guilds discovery splash hash
+ * @param homeHeader The guilds home header hash, used in new member welcome
+ * @param verificationLevel The [VerificationLevel] required for the guild
+ * @param features A list of enabled [GuildFeature]s
+ * @param emojis A List of custom guild emoji
+ * @param approximateMemberCount Approximate total of guild members
+ * @param approximatePresenceCount Approximate total of non-offline guild members
+ */
+@DiscordAPIPreview
+@Serializable
+public data class DiscordMemberVerificationGuild(
+    val id: Snowflake,
+    val name: String,
+    val icon: String?,
+    val description: String?,
+    val splash: String?,
+    @SerialName("discovery_splash")
+    val discoverySplash: String?,
+    @SerialName("home_header")
+    val homeHeader: String?,
+    @SerialName("verification_level")
+    val verificationLevel: VerificationLevel,
+    val features: List<GuildFeature>,
+    val emojis: List<Snowflake>,
+    val approximateMemberCount: Int,
+    val approximatePresenceCount: Int
 )
 
 
@@ -466,7 +484,7 @@ public data class DiscordVoiceState(
     @SerialName("guild_id") val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
     @SerialName("channel_id") val channelId: Snowflake?,
     @SerialName("user_id") val userId: Snowflake,
-    @SerialName("guild_member") val member: Optional<DiscordGuildMember> = Optional.Missing(),
+    val member: Optional<DiscordGuildMember> = Optional.Missing(),
     @SerialName("session_id") val sessionId: String,
     val deaf: Boolean,
     val mute: Boolean,
@@ -509,3 +527,4 @@ public data class DiscordWelcomeScreen(
     val description: String?,
     @SerialName("welcome_channels") val welcomeChannels: List<DiscordWelcomeScreenChannel>,
 )
+

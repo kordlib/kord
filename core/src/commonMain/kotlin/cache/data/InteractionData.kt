@@ -18,16 +18,21 @@ public data class InteractionData(
     val type: InteractionType,
     val data: ApplicationInteractionData,
     val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
-    val channelId: Snowflake,
+    val channel: Optional<ChannelData> = Optional.Missing(),
+    val channelId: OptionalSnowflake = OptionalSnowflake.Missing,
     val member: Optional<MemberData> = Optional.Missing(),
     val user: Optional<UserData> = Optional.Missing(),
     val token: String,
     val permissions: Optional<Permissions> = Optional.Missing(),
     val version: Int,
     val message: Optional<MessageData> = Optional.Missing(),
-    val appPermissions: Optional<Permissions> = Optional.Missing(),
+    val appPermissions: Permissions,
     val locale: Optional<Locale> = Optional.Missing(),
-    val guildLocale: Optional<Locale> = Optional.Missing()
+    val guildLocale: Optional<Locale> = Optional.Missing(),
+    val authorizingIntegrationOwners: Map<ApplicationIntegrationType, Snowflake>,
+    val context: Optional<InteractionContextType> = Optional.Missing(),
+    val entitlements: Optional<List<EntitlementData>> = Optional.Missing(),
+    val attachmentSizeLimit: Int
 ) {
     public companion object {
         public fun from(interaction: DiscordInteraction): InteractionData {
@@ -38,6 +43,7 @@ public data class InteractionData(
                     type,
                     ApplicationInteractionData.from(data, guildId.value),
                     guildId,
+                    channel.map { ChannelData.from(it) },
                     channelId,
                     member.map { it.toData(it.user.value!!.id, guildId.value!!) },
                     //borrow user from member if present
@@ -50,7 +56,11 @@ public data class InteractionData(
                     },
                     appPermissions,
                     locale,
-                    guildLocale
+                    guildLocale,
+                    authorizingIntegrationOwners,
+                    context,
+                    entitlements.mapList { EntitlementData.from(it) },
+                    attachmentSizeLimit
                 )
             }
         }

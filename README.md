@@ -1,18 +1,13 @@
 # Kord
 
 [![Discord](https://img.shields.io/discord/556525343595298817.svg?color=&label=Kord&logo=discord&style=for-the-badge)](https://discord.gg/6jcx5ev)
-[![Download](https://img.shields.io/maven-central/v/dev.kord/kord-core.svg?label=Maven%20Central&style=for-the-badge)](https://search.maven.org/search?q=g:%22dev.kord%22%20AND%20a:%22kord-core%22)
+[![Download](https://img.shields.io/maven-central/v/dev.kord/kord-core.svg?label=Maven%20Central&style=for-the-badge)](https://central.sonatype.com/artifact/dev.kord/kord-core)
 [![Github CI status (branch)](https://img.shields.io/github/actions/workflow/status/kordlib/kord/deployment-ci.yml?branch=main&label=CI&style=for-the-badge)]()
-
-__Kord is still in an experimental stage, as such we can't guarantee API stability between releases. While we'd love for
-you to try out our library, we don't recommend you use this in production just yet.__
-
-If you have any feedback, we'd love to hear it, hit us up on discord or write up an issue if you have any suggestions!
-
-## What is Kord?
 
 Kord is a [coroutine-based](https://kotlinlang.org/docs/reference/coroutines-overview.html), modularized implementation
 of the Discord API, written 100% in [Kotlin](https://kotlinlang.org/).
+
+If you have any feedback, we'd love to hear it, hit us up on discord or write up an issue if you have any suggestions!
 
 ## Why use Kord
 
@@ -61,44 +56,36 @@ Replace `{version}` with the latest version number on maven central.
 
 For Snapshots replace `{version}` with `{branch}-SNAPSHOT`
 
-e.g: `feature-mpp-SNAPSHOT` for the branch `feature/mpp`
+e.g: `feature-amazing-thing-SNAPSHOT` for the branch `feature/amazing-thing`
 
 For Snapshots for the branch `main` replace `{version}` with `{nextPlannedVersion}-SNAPSHOT` (see `nextPlannedVersion`
 in [`gradle.properties`](gradle.properties))
 
-[![Download](https://img.shields.io/maven-central/v/dev.kord/kord-core.svg?label=Maven%20Central&style=for-the-badge)](https://search.maven.org/search?q=g:%22dev.kord%22%20AND%20a:%22kord-core%22)
+[![Download](https://img.shields.io/maven-central/v/dev.kord/kord-core.svg?label=Maven%20Central&style=for-the-badge)](https://central.sonatype.com/artifact/dev.kord/kord-core)
 
-### Gradle (groovy)
+### Gradle (Kotlin)
 
-```groovy
+```kotlin
 repositories {
     mavenCentral()
-    // Kord Snapshots Repository (Optional):
-    maven {
-        url "https://oss.sonatype.org/content/repositories/snapshots"
-    }
+    maven("https://snapshots.kord.dev")
 }
-```
 
-```groovy
 dependencies {
     implementation("dev.kord:kord-core:{version}")
 }
 ```
 
-### Gradle (kotlin)
+### Gradle (Groovy)
 
-```kotlin
+```groovy
 repositories {
     mavenCentral()
-    // Kord Snapshots Repository (Optional):
-    maven("https://oss.sonatype.org/content/repositories/snapshots")
+    maven {
+        url "https://snapshots.kord.dev/"
+    }
 }
-```
 
----
-
-```kotlin
 dependencies {
     implementation("dev.kord:kord-core:{version}")
 }
@@ -106,13 +93,12 @@ dependencies {
 
 ### Maven
 
-##### Kord Snapshots Repository (Optional):
+##### Kord Snapshot Repositories:
 
 ```xml
-
 <repository>
     <id>snapshots-repo</id>
-    <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+    <url>https://snapshots.kord.dev</url>
     <releases>
         <enabled>false</enabled>
     </releases>
@@ -125,7 +111,6 @@ dependencies {
 ---
 
 ```xml
-
 <dependency>
     <groupId>dev.kord</groupId>
     <artifactId>kord-core-jvm</artifactId>
@@ -146,4 +131,4 @@ Yes.
 
 # This project is supported by JetBrains
 
-[![JetBrains Logo (Main) logo](https://resources.jetbrains.com/storage/products/company/brand/logos/jb_beam.svg)](https://jb.gg/OpenSourceSupport)
+[![JetBrains Logo (Main) logo](https://resources.jetbrains.com/storage/products/company/brand/logos/jetbrains.svg)](https://jb.gg/OpenSourceSupport)

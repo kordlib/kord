@@ -18,7 +18,7 @@ internal class XSalsa20Poly1305Encryption(private val key: ByteArray) {
         m.fill(0)
         c.fill(0)
 
-        for (i in 0 until mLength)
+        for (i in 0..<mLength)
             m[i + zerobytesLength] = message[i + mOffset]
 
         val messageBufferLength = mLength + zerobytesLength
@@ -38,7 +38,7 @@ internal class XSalsa20Poly1305Encryption(private val key: ByteArray) {
         c.fill(0)
         m.fill(0)
 
-        for (i in 0 until boxLength)
+        for (i in 0..<boxLength)
             c[i + boxzerobytesLength] = box[i + boxOffset]
 
         val cipherLength = boxLength + TweetNaclFast.Box.boxzerobytesLength

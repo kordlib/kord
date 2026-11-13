@@ -1,17 +1,13 @@
-@file:Suppress("DEPRECATION_ERROR")
-
 package dev.kord.rest.builder.component
 
 import dev.kord.common.annotation.KordDsl
-import dev.kord.common.entity.ChannelType
-import dev.kord.common.entity.ComponentType
-import dev.kord.common.entity.DiscordChatComponent
-import dev.kord.common.entity.DiscordSelectOption
+import dev.kord.common.entity.*
+import dev.kord.common.entity.SelectDefaultValueType.*
 import dev.kord.common.entity.optional.Optional
+import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalInt
 import dev.kord.common.entity.optional.delegate.delegate
 import dev.kord.common.entity.optional.mapCopy
-import kotlin.DeprecationLevel.HIDDEN
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -22,36 +18,7 @@ import kotlin.contracts.contract
  * @param customId The identifier for the menu, max 100 characters.
  */
 @KordDsl
-public open class SelectMenuBuilder
-// actually:
-//@Deprecated(
-//    "This will be made a sealed class in the future, please stop using this constructor. You can instead use the " +
-//            "constructor of one of the subtypes.",
-//    ReplaceWith("StringSelectBuilder(customId)", "dev.kord.rest.builder.component.StringSelectBuilder"),
-//    level = HIDDEN,
-//)
-@PublishedApi internal constructor(public var customId: String) : ActionRowComponentBuilder() {
-
-    /**
-     * The choices in the select, max 25.
-     */
-    // actually:
-    //@Deprecated(
-    //    "This is only available for 'ComponentType.StringSelect' (in the 'StringSelectBuilder' subclass).",
-    //    ReplaceWith(
-    //        "(this as? StringSelectBuilder)?.options ?: mutableListOf()",
-    //        "dev.kord.rest.builder.component.StringSelectBuilder",
-    //        "dev.kord.rest.builder.component.options",
-    //    ),
-    //    level = HIDDEN,
-    //)
-    @PublishedApi
-    @Suppress("INVISIBLE_MEMBER", "INVISIBLE_REFERENCE")
-    @kotlin.internal.LowPriorityInOverloadResolution
-    internal val options: MutableList<SelectOptionBuilder> get() = _options
-
-    @Suppress("PropertyName")
-    internal var _options = mutableListOf<SelectOptionBuilder>()
+public sealed class SelectMenuBuilder(public var customId: String) : ActionRowComponentBuilder() {
 
     /**
      * The range of values that can be accepted. Accepts any range between [0,25].
@@ -71,46 +38,25 @@ public open class SelectMenuBuilder
     public var placeholder: String? by ::_placeholder.delegate()
 
     /**
-     * Adds a new option to the select menu with the given [label] and [value] and configured by the [builder].
-     *
-     * @param label The user-facing name of the option, max 100 characters.
-     * @param value The dev-defined value of the option, max 100 characters.
+     * Whether the select is required to answer in a modal. This field is only available for modals; It is ignored in
+     * messages.
      */
-    @Deprecated(
-        "This is only available for 'ComponentType.StringSelect' (in the 'StringSelectBuilder' subclass).",
-        ReplaceWith(
-            "(this as? StringSelectBuilder)?.option(label, value, builder)",
-            "dev.kord.rest.builder.component.StringSelectBuilder",
-            "dev.kord.rest.builder.component.option",
-        ),
-        level = HIDDEN,
-    )
-    @Suppress("INVISIBLE_MEMBER", "INVISIBLE_REFERENCE")
-    @kotlin.internal.LowPriorityInOverloadResolution
-    public inline fun option(label: String, value: String, builder: SelectOptionBuilder.() -> Unit = {}) {
-        contract {
-            callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
-        }
+    public var required: Boolean = true
 
-        options.add(SelectOptionBuilder(label = label, value = value).apply(builder))
-    }
-
-    // TODO make abstract when this is turned into a sealed class
-    protected open val type: ComponentType get() = ComponentType.StringSelect
-
-    // TODO return Optional.Missing() here when options is exclusively moved to StringSelectBuilder
-    protected open fun buildOptions(): Optional<List<DiscordSelectOption>> =
-        if (type == ComponentType.StringSelect) Optional(options.map { it.build() }) else Optional.Missing()
-
+    protected abstract val type: ComponentType
+    protected open fun buildOptions(): Optional<List<DiscordSelectOption>> = Optional.Missing()
     protected open fun buildChannelTypes(): Optional<List<ChannelType>> = Optional.Missing()
+    protected open fun buildDefaultValues(): Optional<List<DiscordSelectDefaultValue>> = Optional.Missing()
     final override fun build(): DiscordChatComponent = DiscordChatComponent(
         type = type,
         customId = Optional(customId),
         options = buildOptions(),
         channelTypes = buildChannelTypes(),
         placeholder = _placeholder,
+        defaultValues = buildDefaultValues(),
         minValues = OptionalInt.Value(allowedValues.start),
         maxValues = OptionalInt.Value(allowedValues.endInclusive),
+        required = OptionalBoolean.Value(required),
         disabled = _disabled,
     )
 }
@@ -119,16 +65,11 @@ public open class SelectMenuBuilder
 public class StringSelectBuilder(customId: String) : SelectMenuBuilder(customId) {
     override val type: ComponentType get() = ComponentType.StringSelect
 
+    /** The choices in the select, max 25. */
+    public var options: MutableList<SelectOptionBuilder> = mutableListOf()
+
     override fun buildOptions(): Optional<List<DiscordSelectOption>> = Optional(options.map { it.build() })
 }
-
-// TODO replace with member in StringSelectBuilder when SelectMenuBuilder.options is removed
-/** The choices in the select, max 25. */
-public var StringSelectBuilder.options: MutableList<SelectOptionBuilder>
-    get() = _options
-    set(value) {
-        _options = value
-    }
 
 /**
  * Adds a new option to the select menu with the given [label] and [value] that can be configured by the [builder].
@@ -136,7 +77,6 @@ public var StringSelectBuilder.options: MutableList<SelectOptionBuilder>
  * @param label The user-facing name of the option, max 100 characters.
  * @param value The dev-defined value of the option, max 100 characters.
  */
-@Suppress("EXTENSION_SHADOWED_BY_MEMBER") // can be removed when member in SelectMenuBuilder is removed
 public inline fun StringSelectBuilder.option(
     label: String,
     value: String,
@@ -150,16 +90,55 @@ public inline fun StringSelectBuilder.option(
 @KordDsl
 public class UserSelectBuilder(customId: String) : SelectMenuBuilder(customId) {
     override val type: ComponentType get() = ComponentType.UserSelect
+
+    /**
+     * The list of default user IDs for this [user select menu][ComponentType.UserSelect].
+     *
+     * The number of default values must be in the range defined by [allowedValues].
+     */
+    public val defaultUsers: MutableList<Snowflake> = mutableListOf()
+
+    override fun buildDefaultValues(): Optional<List<DiscordSelectDefaultValue>> =
+        Optional.missingOnEmpty(defaultUsers.map { id -> DiscordSelectDefaultValue(id, type = User) })
 }
 
 @KordDsl
 public class RoleSelectBuilder(customId: String) : SelectMenuBuilder(customId) {
     override val type: ComponentType get() = ComponentType.RoleSelect
+
+    /**
+     * The list of default role IDs for this [role select menu][ComponentType.RoleSelect].
+     *
+     * The number of default values must be in the range defined by [allowedValues].
+     */
+    public val defaultRoles: MutableList<Snowflake> = mutableListOf()
+
+    override fun buildDefaultValues(): Optional<List<DiscordSelectDefaultValue>> =
+        Optional.missingOnEmpty(defaultRoles.map { id -> DiscordSelectDefaultValue(id, type = Role) })
 }
 
 @KordDsl
 public class MentionableSelectBuilder(customId: String) : SelectMenuBuilder(customId) {
     override val type: ComponentType get() = ComponentType.MentionableSelect
+
+    /**
+     * The list of default user IDs for this [mentionable select menu][ComponentType.MentionableSelect].
+     *
+     * The number of default values must be in the range defined by [allowedValues].
+     */
+    public val defaultUsers: MutableList<Snowflake> = mutableListOf()
+
+    /**
+     * The list of default role IDs for this [mentionable select menu][ComponentType.MentionableSelect].
+     *
+     * The number of default values must be in the range defined by [allowedValues].
+     */
+    public val defaultRoles: MutableList<Snowflake> = mutableListOf()
+
+    override fun buildDefaultValues(): Optional<List<DiscordSelectDefaultValue>> = Optional.missingOnEmpty(
+        defaultUsers.map { id -> DiscordSelectDefaultValue(id, type = User) } +
+            defaultRoles.map { id -> DiscordSelectDefaultValue(id, type = Role) }
+    )
 }
 
 @KordDsl
@@ -169,7 +148,16 @@ public class ChannelSelectBuilder(customId: String) : SelectMenuBuilder(customId
     private var _channelTypes: Optional<MutableList<ChannelType>> = Optional.Missing()
     public var channelTypes: MutableList<ChannelType>? by ::_channelTypes.delegate()
 
+    /**
+     * The list of default channel IDs for this [channel select menu][ComponentType.ChannelSelect].
+     *
+     * The number of default values must be in the range defined by [allowedValues].
+     */
+    public val defaultChannels: MutableList<Snowflake> = mutableListOf()
+
     override fun buildChannelTypes(): Optional<List<ChannelType>> = _channelTypes.mapCopy()
+    override fun buildDefaultValues(): Optional<List<DiscordSelectDefaultValue>> =
+        Optional.missingOnEmpty(defaultChannels.map { id -> DiscordSelectDefaultValue(id, type = Channel) })
 }
 
 public fun ChannelSelectBuilder.channelType(type: ChannelType) {

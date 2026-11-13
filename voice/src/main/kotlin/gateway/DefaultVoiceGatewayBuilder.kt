@@ -5,7 +5,7 @@ import dev.kord.common.entity.Snowflake
 import dev.kord.gateway.retry.LinearRetry
 import dev.kord.gateway.retry.Retry
 import io.ktor.client.*
-import io.ktor.client.engine.cio.*
+import io.ktor.client.engine.okhttp.OkHttp
 import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.plugins.websocket.*
 import io.ktor.serialization.kotlinx.json.*
@@ -23,7 +23,7 @@ public class DefaultVoiceGatewayBuilder(
     public var eventFlow: MutableSharedFlow<VoiceEvent> = MutableSharedFlow(extraBufferCapacity = Int.MAX_VALUE)
 
     public fun build(): DefaultVoiceGateway {
-        val client = client ?: HttpClient(CIO) {
+        val client = client ?: HttpClient(OkHttp) {
             install(WebSockets)
             install(ContentNegotiation) {
                 json()

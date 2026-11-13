@@ -1,12 +1,14 @@
-import org.jetbrains.dokka.gradle.AbstractDokkaLeafTask
+@file:OptIn(ExperimentalAbiValidation::class)
+
+import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
+import org.jetbrains.kotlin.gradle.dsl.abi.ExperimentalAbiValidation
 import org.jetbrains.kotlin.gradle.targets.js.testing.KotlinJsTest
 
 plugins {
     org.jetbrains.kotlin.multiplatform
     org.jetbrains.kotlin.plugin.serialization
     org.jetbrains.dokka
-    `kotlinx-atomicfu`
-    org.jetbrains.kotlinx.`binary-compatibility-validator`
+    org.jetbrains.kotlinx.atomicfu
     com.google.devtools.ksp
 }
 
@@ -18,29 +20,40 @@ dependencies {
     kspCommonMainMetadata(project(":ksp-processors"))
 }
 
-apiValidation {
-    applyKordBCVOptions()
-}
-
+@OptIn(ExperimentalKotlinGradlePluginApi::class)
 kotlin {
     explicitApi()
-
-    jvm()
-    js(IR) {
-        nodejs()
+    compilerOptions {
+        applyKordCommonCompilerOptions()
+        optIn.addAll(kordOptIns)
     }
-    jvmToolchain(Jvm.target)
 
-    targets.all {
-        compilations.all {
-            compilerOptions.options.applyKordCompilerOptions()
+    jvm {
+        compilerOptions {
+            applyKordJvmCompilerOptions()
         }
     }
+    js {
+        nodejs {
+            testTask {
+                useMocha {
+                    // disable timeouts, some tests are too slow for default 2-second timeout:
+                    // https://mochajs.org/#-timeout-ms-t-ms
+                    timeout = "0"
+                }
+            }
+
+            compilerOptions {
+                target = "es2015"
+            }
+        }
+        useEsModules()
+    }
+
+    applyDefaultHierarchyTemplate()
 
     sourceSets {
-        all {
-            applyKordOptIns()
-        }
+        applyKordTestOptIns()
         commonMain {
             // mark ksp src dir
             kotlin.srcDir("build/generated/ksp/metadata/commonMain/kotlin")
@@ -50,21 +63,22 @@ kotlin {
                 implementation(project(":test-kit"))
             }
         }
-        val nonJvmMain by creating {
+        val nonJvmMain = create("nonJvmMain") {
             dependsOn(commonMain.get())
         }
-        targets
-            .map { it.name }
-            .filter { it != "jvm" && it != "metadata" }
-            .forEach { target ->
-                sourceSets.getByName("${target}Main") {
-                    dependsOn(nonJvmMain)
-                }
-            }
+        jsMain {
+            dependsOn(nonJvmMain)
+        }
+    }
+
+    abiValidation {
+        applyKordBCVOptions()
     }
 }
 
-configureAtomicFU()
+dokka {
+    applyKordDokkaOptions(project)
+}
 
 tasks {
     withType<Test>().configureEach {
@@ -75,9 +89,20 @@ tasks {
         environment("PROJECT_ROOT", rootProject.projectDir.absolutePath)
     }
 
-    for (task in listOf("compileKotlinJvm", "compileKotlinJs", "jvmSourcesJar", "jsSourcesJar")) {
-        named(task) {
-            dependsOn("kspCommonMainKotlinMetadata")
+    for (task in listOf(
+        "compileKotlinJvm",
+        "compileKotlinJs",
+        "jvmSourcesJar",
+        "jsSourcesJar",
+        "dokkaGenerateModuleHtml",
+        "dokkaGeneratePublicationHtml",
+        "kspKotlinJvm",
+        "kspKotlinJs"
+    )) {
+        afterEvaluate {
+            findByName(task)?.apply {
+                dependsOn("kspCommonMainKotlinMetadata")
+            }
         }
     }
 
@@ -85,10 +110,5 @@ tasks {
         named("sourcesJar") {
             dependsOn("kspCommonMainKotlinMetadata")
         }
-    }
-
-    withType<AbstractDokkaLeafTask>().configureEach {
-        applyKordDokkaOptions()
-        dependsOn("kspCommonMainKotlinMetadata")
     }
 }

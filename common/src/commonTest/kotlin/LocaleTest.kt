@@ -1,6 +1,5 @@
 package dev.kord.common
 
-import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import kotlin.js.JsName
@@ -17,6 +16,7 @@ class LocaleTest {
             "en-GB" to ENGLISH_GREAT_BRITAIN,
             "en-US" to ENGLISH_UNITED_STATES,
             "es-ES" to SPANISH_SPAIN,
+            "es-419" to SPANISH_LATIN_AMERICA,
             "fr" to FRENCH,
             "hr" to CROATIAN,
             "it" to ITALIAN,

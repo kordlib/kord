@@ -8,7 +8,7 @@ import dev.kord.core.Kord
 import dev.kord.core.KordObject
 import dev.kord.core.cache.data.*
 import dev.kord.rest.builder.message.EmbedBuilder
-import kotlinx.datetime.Instant
+import kotlin.time.Instant
 
 /**
  * An instance of a [Discord Embed](https://discord.com/developers/docs/resources/channel#embed-object).

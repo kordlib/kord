@@ -4,7 +4,7 @@ import dev.kord.common.annotation.KordVoice
 import dev.kord.common.entity.Snowflake
 import dev.kord.gateway.Gateway
 import dev.kord.gateway.UpdateVoiceStatus
-import dev.kord.voice.encryption.strategies.NonceStrategy
+import dev.kord.voice.encryption.strategies.*
 import dev.kord.voice.gateway.VoiceGateway
 import dev.kord.voice.gateway.VoiceGatewayConfiguration
 import dev.kord.voice.handlers.StreamsHandler
@@ -41,10 +41,9 @@ public data class VoiceConnectionData(
  * @param audioProvider a [AudioProvider] that will provide [AudioFrame] when required.
  * @param frameInterceptor a [FrameInterceptor] that will intercept all outgoing [AudioFrame]s.
  * @param frameSender the [AudioFrameSender] that will handle the sending of audio packets.
- * @param nonceStrategy the [NonceStrategy] that is used during encryption of audio.
  */
 @KordVoice
-public class VoiceConnection(
+public class VoiceConnection internal constructor(
     public val data: VoiceConnectionData,
     public val gateway: Gateway,
     public val voiceGateway: VoiceGateway,
@@ -54,9 +53,49 @@ public class VoiceConnection(
     public val audioProvider: AudioProvider,
     public val frameInterceptor: FrameInterceptor,
     public val frameSender: AudioFrameSender,
-    public val nonceStrategy: NonceStrategy,
-    connectionDetachDuration: Duration
+    connectionDetachDuration: Duration,
+    internal val strategy: @Suppress("DEPRECATION") NonceStrategy?
 ) {
+    @Deprecated(
+        DEPRECATION_NONCE_STRATEGY,
+        ReplaceWith(
+            "VoiceConnection(data, gateway, voiceGateway, socket, voiceGatewayConfiguration, streams, audioProvider, " +
+                    "frameInterceptor, frameSender, connectionDetachDuration)",
+            imports = ["dev.kord.voice.VoiceConnection"],
+        ),
+        DeprecationLevel.WARNING,
+    )
+    public constructor(
+        data: VoiceConnectionData, gateway: Gateway, voiceGateway: VoiceGateway, socket: VoiceUdpSocket,
+        voiceGatewayConfiguration: VoiceGatewayConfiguration, streams: Streams, audioProvider: AudioProvider,
+        frameInterceptor: FrameInterceptor, frameSender: AudioFrameSender,
+        nonceStrategy: @Suppress("DEPRECATION") NonceStrategy, connectionDetachDuration: Duration,
+    ) : this(
+        data, gateway, voiceGateway, socket, voiceGatewayConfiguration, streams, audioProvider, frameInterceptor,
+        frameSender, connectionDetachDuration, nonceStrategy,
+    )
+
+    public constructor(
+        data: VoiceConnectionData, gateway: Gateway, voiceGateway: VoiceGateway, socket: VoiceUdpSocket,
+        voiceGatewayConfiguration: VoiceGatewayConfiguration, streams: Streams, audioProvider: AudioProvider,
+        frameInterceptor: FrameInterceptor, frameSender: AudioFrameSender, connectionDetachDuration: Duration,
+    ) : this(
+        data, gateway, voiceGateway, socket, voiceGatewayConfiguration, streams, audioProvider, frameInterceptor,
+        frameSender, connectionDetachDuration, strategy = null,
+    )
+
+    @Suppress("DeprecatedCallableAddReplaceWith")
+    @Deprecated(
+        "$DEPRECATION_NONCE_STRATEGY A 'VoiceConnection' instance " +
+                "can be created without a 'nonceStrategy' in which case this property throws an " +
+                "'UnsupportedOperationException'.",
+        level = DeprecationLevel.WARNING,
+    )
+    public val nonceStrategy: @Suppress("DEPRECATION") NonceStrategy
+        get() = strategy
+            ?: throw UnsupportedOperationException("This VoiceConnection instance was created without a nonceStrategy.")
+
+
     public val scope: CoroutineScope =
         CoroutineScope(SupervisorJob() + CoroutineName("kord-voice-connection[${data.guildId.value}]"))
 

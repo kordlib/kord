@@ -6,7 +6,7 @@ import dev.kord.core.entity.KordEntity
 import dev.kord.core.event.Event
 import dev.kord.core.event.message.MessageUpdateEvent
 import dev.kord.core.event.message.ReactionAddEvent
-import dev.kord.core.kordLogger
+import dev.kord.core.logCaughtThrowable
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
@@ -53,5 +53,5 @@ public inline fun <reified T : Event> LiveKordEntity.on(
     noinline consumer: suspend (T) -> Unit
 ): Job =
     events.buffer(Channel.UNLIMITED).filterIsInstance<T>().onEach {
-        runCatching { consumer(it) }.onFailure { kordLogger.catching(it) }
-    }.catch { kordLogger.catching(it) }.launchIn(scope)
+        runCatching { consumer(it) }.onFailure(::logCaughtThrowable)
+    }.catch { logCaughtThrowable(it) }.launchIn(scope)

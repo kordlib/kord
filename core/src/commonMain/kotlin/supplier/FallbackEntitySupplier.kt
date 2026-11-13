@@ -11,9 +11,13 @@ import dev.kord.core.entity.channel.TopGuildChannel
 import dev.kord.core.entity.channel.thread.ThreadChannel
 import dev.kord.core.entity.channel.thread.ThreadMember
 import dev.kord.core.entity.interaction.followup.FollowupMessage
+import dev.kord.core.entity.monetization.Entitlement
+import dev.kord.core.entity.monetization.Subscription
 import dev.kord.core.switchIfEmpty
+import dev.kord.rest.json.request.EntitlementsListRequest
+import dev.kord.rest.json.request.SkuSubscriptionsListRequest
 import kotlinx.coroutines.flow.Flow
-import kotlinx.datetime.Instant
+import kotlin.time.Instant
 
 /**
  * Creates supplier providing a strategy which will first operate on this supplier. When an entity
@@ -45,6 +49,9 @@ private class FallbackEntitySupplier(val first: EntitySupplier, val second: Enti
 
     override suspend fun getMemberOrNull(guildId: Snowflake, userId: Snowflake): Member? =
         first.getMemberOrNull(guildId, userId) ?: second.getMemberOrNull(guildId, userId)
+
+    override suspend fun getMemberVoiceStateOrNull(guildId: Snowflake, userId: Snowflake): VoiceState? =
+        first.getMemberVoiceStateOrNull(guildId, userId) ?: second.getMemberVoiceStateOrNull(guildId, userId)
 
     override suspend fun getMessageOrNull(channelId: Snowflake, messageId: Snowflake): Message? =
         first.getMessageOrNull(channelId, messageId) ?: second.getMessageOrNull(channelId, messageId)
@@ -91,6 +98,12 @@ private class FallbackEntitySupplier(val first: EntitySupplier, val second: Enti
 
     override fun getEmojis(guildId: Snowflake): Flow<GuildEmoji> =
         first.getEmojis(guildId).switchIfEmpty(second.getEmojis(guildId))
+
+    override suspend fun getGuildSoundboardSoundOrNull(guildId: Snowflake, soundId: Snowflake): GuildSoundboardSound? =
+        first.getGuildSoundboardSoundOrNull(guildId, soundId) ?: second.getGuildSoundboardSoundOrNull(guildId, soundId)
+
+    override fun getGuildSoundboardSounds(guildId: Snowflake): Flow<GuildSoundboardSound> =
+        first.getGuildSoundboardSounds(guildId).switchIfEmpty(second.getGuildSoundboardSounds(guildId))
 
     override fun getCurrentUserGuilds(limit: Int?): Flow<Guild> =
         first.getCurrentUserGuilds(limit).switchIfEmpty(second.getCurrentUserGuilds(limit))
@@ -276,6 +289,15 @@ private class FallbackEntitySupplier(val first: EntitySupplier, val second: Enti
 
     override suspend fun getAutoModerationRuleOrNull(guildId: Snowflake, ruleId: Snowflake): AutoModerationRule? =
         first.getAutoModerationRuleOrNull(guildId, ruleId) ?: second.getAutoModerationRuleOrNull(guildId, ruleId)
+
+    override fun getEntitlements(applicationId: Snowflake, request: EntitlementsListRequest): Flow<Entitlement> =
+        first.getEntitlements(applicationId, request).switchIfEmpty(second.getEntitlements(applicationId, request))
+
+    override fun getSubscriptions(skuId: Snowflake, request: SkuSubscriptionsListRequest): Flow<Subscription> =
+        first.getSubscriptions(skuId, request).switchIfEmpty(second.getSubscriptions(skuId, request))
+
+    override suspend fun getSubscriptionOrNull(skuId: Snowflake, subscriptionId: Snowflake): Subscription? =
+        first.getSubscriptionOrNull(skuId, subscriptionId) ?: second.getSubscriptionOrNull(skuId, subscriptionId)
 
 
     override fun toString(): String = "FallbackEntitySupplier(first=$first, second=$second)"

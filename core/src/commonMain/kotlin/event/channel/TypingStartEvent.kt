@@ -17,7 +17,7 @@ import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.core.supplier.getChannelOf
 import dev.kord.core.supplier.getChannelOfOrNull
-import kotlinx.datetime.Instant
+import kotlin.time.Instant
 
 public class TypingStartEvent(
     public val data: TypingStartEventData,
@@ -72,19 +72,6 @@ public class TypingStartEvent(
      * @throws [RequestException] if anything went wrong during the request.
      */
     public suspend fun getUserOrNull(): User? = supplier.getUserOrNull(userId)
-
-    /**
-     * Requests to get the guild this event was triggered in,
-     * returns null if the [Guild] isn't present.
-     *
-     * @throws [RequestException] if anything went wrong during the request.
-     */
-    @Deprecated(
-        "Deprecated in favour of getGuildOrNull() as it provides more clarity over the functionality",
-        ReplaceWith("getGuildOrNull()"),
-        DeprecationLevel.HIDDEN
-    )
-    public suspend fun getGuild(): Guild? = guildId?.let { supplier.getGuildOrNull(it) }
 
     /**
      * Requests to get the guild this event was triggered in,

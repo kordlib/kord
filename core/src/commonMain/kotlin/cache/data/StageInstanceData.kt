@@ -1,5 +1,7 @@
 package dev.kord.core.cache.data
 
+import dev.kord.cache.api.data.DataDescription
+import dev.kord.cache.api.data.description
 import dev.kord.common.entity.DiscordStageInstance
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.StageInstancePrivacyLevel
@@ -15,6 +17,8 @@ public data class StageInstanceData(
     val guildScheduledEventId: Snowflake?,
 ) {
     public companion object {
+        public val description: DataDescription<StageInstanceData, Snowflake> = description(StageInstanceData::id)
+
         public fun from(stageInstance: DiscordStageInstance): StageInstanceData = with(stageInstance) {
             StageInstanceData(
                 id = id,

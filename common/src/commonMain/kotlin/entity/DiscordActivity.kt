@@ -1,5 +1,5 @@
-@file:GenerateKordEnum(
-    name = "ActivityType", valueType = INT, valueName = "code",
+@file:Generate(
+    INT_KORD_ENUM, name = "ActivityType", valueName = "code",
     docUrl = "https://discord.com/developers/docs/topics/gateway-events#activity-object-activity-types",
     entries = [
         Entry("Game", intValue = 0),
@@ -11,15 +11,48 @@
     ],
 )
 
+@file:Generate(
+    INT_FLAGS, name = "ActivityFlag",
+    docUrl = "https://discord.com/developers/docs/topics/gateway-events#activity-object-activity-flags",
+    entries = [
+        Entry(name = "Instance", shift = 0),
+        Entry(name = "Join", shift = 1),
+        Entry(name = "Spectate", shift = 2),
+        Entry(name = "JoinRequest", shift = 3),
+        Entry(name = "Sync", shift = 4),
+        Entry(name = "Play", shift = 5),
+        Entry(name = "PartyPrivacyFriends", shift = 6),
+        Entry(name = "PartyPrivacyVoiceChannel", shift = 7),
+        Entry(name = "Embedded", shift = 8),
+    ],
+)
+
+@file:Generate(
+    STRING_KORD_ENUM, name = "ActivityPlatform",
+    docUrl = "https://discord.com/developers/docs/events/gateway-events#activity-object",
+    entries = [
+        Entry("Desktop", stringValue = "desktop"),
+        Entry("Xbox", stringValue = "xbox"),
+        Entry("Samsung", stringValue = "samsung"),
+        Entry("Ios", stringValue = "ios"),
+        Entry("Android", stringValue = "android"),
+        Entry("Embedded", stringValue = "embedded"),
+        Entry("PS4", stringValue = "ps4"),
+        Entry("PS5", stringValue = "ps5"),
+    ],
+)
+
 package dev.kord.common.entity
 
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.common.serialization.InstantInEpochMilliseconds
-import dev.kord.ksp.GenerateKordEnum
-import dev.kord.ksp.GenerateKordEnum.Entry
-import dev.kord.ksp.GenerateKordEnum.ValueType.INT
+import dev.kord.ksp.Generate
+import dev.kord.ksp.Generate.EntityType.INT_FLAGS
+import dev.kord.ksp.Generate.EntityType.INT_KORD_ENUM
+import dev.kord.ksp.Generate.EntityType.STRING_KORD_ENUM
+import dev.kord.ksp.Generate.Entry
 import kotlinx.serialization.*
 import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.builtins.serializer
@@ -31,7 +64,8 @@ import kotlinx.serialization.encoding.Encoder
 public data class DiscordBotActivity(
     val name: String,
     val type: ActivityType,
-    val url: Optional<String?> = Optional.Missing()
+    val url: Optional<String?> = Optional.Missing(),
+    val state: Optional<String?> = Optional.Missing(),
 )
 
 @Serializable
@@ -46,6 +80,7 @@ public data class DiscordActivity(
     val applicationId: OptionalSnowflake = OptionalSnowflake.Missing,
     val details: Optional<String?> = Optional.Missing(),
     val state: Optional<String?> = Optional.Missing(),
+    val platform: Optional<ActivityPlatform?> = Optional.Missing(),
     val emoji: Optional<DiscordActivityEmoji?> = Optional.Missing(),
     val party: Optional<DiscordActivityParty> = Optional.Missing(),
     val assets: Optional<DiscordActivityAssets> = Optional.Missing(),
@@ -54,35 +89,6 @@ public data class DiscordActivity(
     val flags: Optional<ActivityFlags> = Optional.Missing(),
     val buttons: Optional<List<String>> = Optional.Missing()
 )
-
-public enum class ActivityFlag(public val value: Int) {
-    Instance(1),
-    Join(2),
-    Spectate(4),
-    JoinRequest(8),
-    Sync(16),
-    Play(32)
-}
-
-@Serializable(with = ActivityFlags.Serializer::class)
-public class ActivityFlags(public val value: Int) {
-
-    public val flags: Set<ActivityFlag>
-        get() = ActivityFlag.values().filter { (it.value and value) == it.value }.toSet()
-
-    public operator fun contains(flag: ActivityFlag): Boolean = (flag.value and value) == flag.value
-
-    internal object Serializer : KSerializer<ActivityFlags> {
-        override val descriptor: SerialDescriptor
-            get() = PrimitiveSerialDescriptor("Kord.ActivityFlags", PrimitiveKind.INT)
-
-        override fun deserialize(decoder: Decoder): ActivityFlags = ActivityFlags(decoder.decodeInt())
-
-        override fun serialize(encoder: Encoder, value: ActivityFlags) {
-            encoder.encodeInt(value.value)
-        }
-    }
-}
 
 @Serializable
 public data class DiscordActivityTimestamps(

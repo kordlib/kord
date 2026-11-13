@@ -1,14 +1,11 @@
-import org.jetbrains.dokka.gradle.AbstractDokkaLeafTask
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.jetbrains.kotlin.gradle.dsl.abi.ExperimentalAbiValidation
 
 plugins {
     org.jetbrains.kotlin.jvm
     org.jetbrains.kotlin.plugin.serialization
     org.jetbrains.dokka
-    `kotlinx-atomicfu`
-    org.jetbrains.kotlinx.`binary-compatibility-validator`
+    org.jetbrains.kotlinx.atomicfu
     com.google.devtools.ksp
-    `maven-publish`
 }
 
 repositories {
@@ -19,43 +16,33 @@ dependencies {
     ksp(project(":ksp-processors"))
 }
 
-apiValidation {
-    applyKordBCVOptions()
-}
-
 kotlin {
     explicitApi()
-
-    jvmToolchain(Jvm.target)
+    compilerOptions {
+        applyKordJvmCompilerOptions()
+        optIn.addAll(kordOptIns)
+    }
 
     sourceSets {
-        // allow `ExperimentalCoroutinesApi` for `TestScope.currentTime`
-        test { languageSettings.optIn(OptIns.coroutines) }
+        applyKordTestOptIns()
+    }
+
+    @OptIn(ExperimentalAbiValidation::class)
+    abiValidation {
+        applyKordBCVOptions()
     }
 }
 
-configureAtomicFU()
+dokka {
+    applyKordDokkaOptions(project)
+}
 
 tasks {
-    withType<KotlinCompile>().configureEach {
-        compilerOptions {
-            applyKordCompilerOptions()
-            freeCompilerArgs.addAll(kordOptIns.map { "-opt-in=$it" })
-        }
-    }
-
     withType<Test>().configureEach {
         useJUnitPlatform()
     }
 
-    withType<AbstractDokkaLeafTask>().configureEach {
-        applyKordDokkaOptions()
-    }
-}
-
-publishing {
-    publications.register<MavenPublication>(Library.name) {
-        from(components["java"])
-        artifact(tasks.kotlinSourcesJar)
+    withType<JavaCompile>().configureEach {
+        options.release = KORD_JVM_TARGET
     }
 }

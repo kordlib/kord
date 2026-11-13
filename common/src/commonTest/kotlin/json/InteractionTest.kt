@@ -1,6 +1,7 @@
 package dev.kord.common.json
 
 import dev.kord.common.entity.*
+import dev.kord.common.entity.Permission.*
 import dev.kord.common.entity.optional.orEmpty
 import dev.kord.common.readFile
 import kotlinx.coroutines.test.runTest
@@ -10,6 +11,24 @@ import kotlin.test.Test
 import kotlin.test.assertIs
 
 private suspend fun file(name: String): String = readFile("interaction", name)
+
+private val perms = Permissions(
+    CreateInstantInvite, KickMembers, BanMembers, Administrator, ManageChannels, ManageGuild, AddReactions,
+    ViewAuditLog, PrioritySpeaker, Stream, ViewChannel, SendMessages, SendTTSMessages, ManageMessages, EmbedLinks,
+    AttachFiles, ReadMessageHistory, MentionEveryone, UseExternalEmojis, ViewGuildInsights, Connect, Speak, MuteMembers,
+    DeafenMembers, MoveMembers, UseVAD, ChangeNickname, ManageNicknames, ManageRoles, ManageWebhooks,
+    ManageGuildExpressions,
+)
+
+private val testEntitlements = listOf(
+    DiscordEntitlement(
+        id = Snowflake.min,
+        applicationId = Snowflake.min,
+        skuId = Snowflake.min,
+        type = EntitlementType.ApplicationSubscription,
+        deleted = false,
+    ),
+)
 
 class InteractionTest {
 
@@ -41,7 +60,10 @@ class InteractionTest {
             arg.type shouldBe ApplicationCommandOptionType.Integer
             arg.name shouldBe "testint"
             arg.value shouldBe 1L
-            appPermissions shouldBe Permissions("2147483647")
+            appPermissions shouldBe perms
+            entitlements shouldBe testEntitlements
+            context shouldBe InteractionContextType.Guild
+            attachmentSizeLimit shouldBe 1
         }
     }
 
@@ -67,7 +89,9 @@ class InteractionTest {
             arg.type shouldBe ApplicationCommandOptionType.Integer
             arg.name shouldBe "testint"
             arg.value shouldBe 1L
-            appPermissions shouldBe Permissions("2147483647")
+            appPermissions shouldBe perms
+            entitlements shouldBe testEntitlements
+            attachmentSizeLimit shouldBe 1
         }
     }
 
@@ -92,7 +116,10 @@ class InteractionTest {
             arg.type shouldBe ApplicationCommandOptionType.Integer
             arg.name shouldBe "testint"
             arg.value shouldBe 1L
-            appPermissions shouldBe Permissions("2147483647")
+            appPermissions shouldBe perms
+            entitlements shouldBe testEntitlements
+            context shouldBe InteractionContextType.BotDM
+            attachmentSizeLimit shouldBe 1
         }
     }
 
@@ -132,7 +159,10 @@ class InteractionTest {
             }
             guildId shouldBe "772904309264089089"
             id shouldBe "847587388497854464"
-            appPermissions shouldBe Permissions("2147483647")
+            appPermissions shouldBe perms
+            entitlements shouldBe testEntitlements
+            context shouldBe InteractionContextType.PrivateChannel
+            attachmentSizeLimit shouldBe 1
         }
     }
 

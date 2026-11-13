@@ -9,7 +9,7 @@ import dev.kord.common.entity.optional.coerceToMissing
 import dev.kord.common.entity.optional.optional
 import dev.kord.common.entity.optional.optionalInt
 import dev.kord.gateway.*
-import kotlinx.datetime.Instant
+import kotlin.time.Instant
 import kotlinx.serialization.json.*
 import kotlin.js.JsName
 import kotlin.test.Test
@@ -156,7 +156,7 @@ class CommandTest {
                 largeThreshold.optionalInt(),
                 shard.optional(),
                 presence.optional().coerceToMissing(),
-                Intents.all
+                Intents.ALL
             )
         )
 
@@ -175,7 +175,7 @@ class CommandTest {
                     add(JsonPrimitive(0))
                     add(JsonPrimitive(1))
                 })
-                put("intents", Intents.all.code.value)
+                put("intents", Intents.ALL.code.value)
             })
         })
 

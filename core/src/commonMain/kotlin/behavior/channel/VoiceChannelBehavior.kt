@@ -1,18 +1,22 @@
 package dev.kord.core.behavior.channel
 
+import dev.kord.common.entity.Permission
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.exception.RequestException
 import dev.kord.core.Kord
+import dev.kord.core.behavior.SoundboardSoundBehavior
 import dev.kord.core.cache.data.ChannelData
+import dev.kord.core.entity.SoundboardSound
+import dev.kord.core.entity.VoiceState
 import dev.kord.core.entity.channel.Channel
 import dev.kord.core.entity.channel.VoiceChannel
 import dev.kord.core.exception.EntityNotFoundException
+import dev.kord.core.hash
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.rest.builder.channel.VoiceChannelModifyBuilder
 import dev.kord.rest.request.RestRequestException
 import dev.kord.rest.service.patchVoiceChannel
-import dev.kord.core.hash
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -20,6 +24,21 @@ import kotlin.contracts.contract
  * The behavior of a Discord Voice Channel associated to a guild.
  */
 public interface VoiceChannelBehavior : TopGuildMessageChannelBehavior, BaseVoiceChannelBehavior {
+
+    /**
+     * Plays [sound] in this channel.
+     *
+     * This requires the [Permission.Speak] and [Permission.UseSoundboard] permissions, and also the
+     * [Permission.UseExternalSounds] permission if the sound is from a different server.
+     * Additionally, requires the user to be connected to the voice channel,
+     * having a [voice state] without [VoiceState.isDeafened], [VoiceState.isSelfDeafened], [VoiceState.isMuted],
+     * or [VoiceState.isSuppressed] enabled.
+     *
+     * @see SoundboardSoundBehavior.send
+     *
+     * @throws RestRequestException if something went wrong during the request.
+     */
+    public suspend fun playSound(sound: SoundboardSoundBehavior): Unit = sound.send(this)
 
     /**
      * Requests to get the this behavior as a [VoiceChannel].

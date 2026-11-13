@@ -13,11 +13,11 @@ import dev.kord.core.entity.KordEntity
 import dev.kord.core.entity.Strategizable
 import dev.kord.core.entity.automoderation.*
 import dev.kord.core.exception.EntityNotFoundException
+import dev.kord.core.hash
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.rest.builder.automoderation.*
 import dev.kord.rest.request.RestRequestException
-import dev.kord.core.hash
 import kotlin.contracts.InvocationKind.EXACTLY_ONCE
 import kotlin.contracts.contract
 
@@ -141,6 +141,7 @@ internal fun TypedAutoModerationRuleBehavior(
     Spam -> SpamAutoModerationRuleBehaviorImpl(guildId, ruleId, kord, supplier)
     KeywordPreset -> KeywordPresetAutoModerationRuleBehaviorImpl(guildId, ruleId, kord, supplier)
     MentionSpam -> MentionSpamAutoModerationRuleBehaviorImpl(guildId, ruleId, kord, supplier)
+    MemberProfile -> MemberProfileAutoModerationRuleBehaviorImpl(guildId, ruleId, kord, supplier)
     is Unknown -> UnknownAutoModerationRuleBehavior(guildId, ruleId, triggerType, kord, supplier)
 }
 
@@ -389,6 +390,68 @@ public suspend inline fun MentionSpamAutoModerationRuleBehavior.edit(
     contract { callsInPlace(builder, EXACTLY_ONCE) }
     val rule = kord.rest.autoModeration.modifyMentionSpamAutoModerationRule(guildId, ruleId = id, builder)
     return MentionSpamAutoModerationRule(AutoModerationRuleData.from(rule), kord, supplier)
+}
+
+
+/** The behavior of a [MemberProfileAutoModerationRule]. */
+public interface MemberProfileAutoModerationRuleBehavior : TypedAutoModerationRuleBehavior {
+
+    override val triggerType: MemberProfile get() = MemberProfile
+
+    /**
+     * Requests to get this behavior as a [MemberProfileAutoModerationRule].
+     * Returns `null` if it wasn't found or if the rule isn't a [MemberProfileAutoModerationRule].
+     *
+     * This requires the [ManageGuild] permission.
+     *
+     * @throws RequestException if anything went wrong during the request.
+     */
+    override suspend fun asAutoModerationRuleOrNull(): MemberProfileAutoModerationRule? =
+        super.asAutoModerationRuleOrNull() as? MemberProfileAutoModerationRule
+
+    /**
+     * Requests to get this behavior as a [MemberProfileAutoModerationRule].
+     *
+     * This requires the [ManageGuild] permission.
+     *
+     * @throws RequestException if anything went wrong during the request.
+     * @throws EntityNotFoundException if the [MemberProfileAutoModerationRule] wasn't found.
+     * @throws ClassCastException if the rule isn't a [MemberProfileAutoModerationRule].
+     */
+    override suspend fun asAutoModerationRule(): MemberProfileAutoModerationRule =
+        super.asAutoModerationRule() as MemberProfileAutoModerationRule
+
+    override fun withStrategy(strategy: EntitySupplyStrategy<*>): MemberProfileAutoModerationRuleBehavior
+}
+
+internal class MemberProfileAutoModerationRuleBehaviorImpl(
+    override val guildId: Snowflake,
+    override val id: Snowflake,
+    override val kord: Kord,
+    override val supplier: EntitySupplier = kord.defaultSupplier,
+) : MemberProfileAutoModerationRuleBehavior {
+    override fun withStrategy(strategy: EntitySupplyStrategy<*>) =
+        MemberProfileAutoModerationRuleBehaviorImpl(guildId, id, kord, strategy.supply(kord))
+
+    override fun equals(other: Any?) = autoModerationRuleEquals(other)
+    override fun hashCode() = autoModerationRuleHashCode()
+    override fun toString() =
+        "MemberProfileAutoModerationRuleBehavior(guildId=$guildId, id=$id, kord=$kord, supplier=$supplier)"
+}
+
+/**
+ * Requests to edit this [MemberProfileAutoModerationRule] and returns the edited rule.
+ *
+ * This requires the [ManageGuild] permission.
+ *
+ * @throws RestRequestException if something went wrong during the request.
+ */
+public suspend inline fun MemberProfileAutoModerationRuleBehavior.edit(
+    builder: MemberProfileAutoModerationRuleModifyBuilder.() -> Unit,
+): MemberProfileAutoModerationRule {
+    contract { callsInPlace(builder, EXACTLY_ONCE) }
+    val rule = kord.rest.autoModeration.modifyMemberProfileAutoModerationRule(guildId, ruleId = id, builder)
+    return MemberProfileAutoModerationRule(AutoModerationRuleData.from(rule), kord, supplier)
 }
 
 

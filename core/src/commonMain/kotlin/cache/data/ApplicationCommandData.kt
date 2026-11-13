@@ -20,16 +20,22 @@ public data class ApplicationCommandData(
     val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
     val options: Optional<List<ApplicationCommandOptionData>> = Optional.Missing(),
     val defaultMemberPermissions: Permissions?,
+    @Deprecated("'dmPermission' is deprecated in favor of 'contexts'.")
     val dmPermission: OptionalBoolean = OptionalBoolean.Missing,
-    @Deprecated("'defaultPermission' is deprecated in favor of 'defaultMemberPermissions' and 'dmPermission'.")
+    val contexts: Optional<List<InteractionContextType>?> = Optional.Missing(),
+    @Deprecated("'defaultPermission' is deprecated in favor of 'defaultMemberPermissions' and 'dmPermission'." +
+            " The deprecation level will be raised to HIDDEN in 0.19.0 and this declaration will be removed in 0.20.0" ,
+        level = DeprecationLevel.ERROR)
     val defaultPermission: OptionalBoolean? = OptionalBoolean.Missing,
     val nsfw: OptionalBoolean = OptionalBoolean.Missing,
     val version: Snowflake
 ) {
     public companion object {
-        public val description: DataDescription<ApplicationCommandData, Snowflake> = description(ApplicationCommandData::id) {
-            link(ApplicationCommandData::guildId to GuildData::id)
-        }
+        public val description: DataDescription<ApplicationCommandData, Snowflake> =
+            description(ApplicationCommandData::id) {
+                link(ApplicationCommandData::id to GuildApplicationCommandPermissionsData::id)
+            }
+
         public fun from(command: DiscordApplicationCommand): ApplicationCommandData {
             return with(command) {
                 ApplicationCommandData(
@@ -43,8 +49,9 @@ public data class ApplicationCommandData(
                     guildId,
                     options.mapList { ApplicationCommandOptionData.from(it) },
                     defaultMemberPermissions,
-                    dmPermission,
-                    @Suppress("DEPRECATION") defaultPermission,
+                    @Suppress("DEPRECATION") dmPermission,
+                    contexts,
+                    @Suppress("DEPRECATION_ERROR") defaultPermission,
                     nsfw,
                     version
                 )
@@ -155,7 +162,7 @@ public data class ApplicationCommandOptionChoiceData(
     val value: String
 ) {
     public companion object {
-        public fun from(choice: Choice<*>): ApplicationCommandOptionChoiceData {
+        public fun from(choice: Choice): ApplicationCommandOptionChoiceData {
             return with(choice) {
                 ApplicationCommandOptionChoiceData(name, value.toString())
             }

@@ -6,7 +6,7 @@ import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalInt
 import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.common.serialization.DurationInDays
-import kotlinx.datetime.Instant
+import kotlin.time.Instant
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -16,7 +16,6 @@ public data class IntegrationData(
     val name: String,
     val type: String,
     val enabled: Boolean,
-    val syncing: OptionalBoolean = OptionalBoolean.Missing,
     val roleId: OptionalSnowflake = OptionalSnowflake.Missing,
     val enableEmoticons: OptionalBoolean = OptionalBoolean.Missing,
     val expireBehavior: Optional<IntegrationExpireBehavior> = Optional.Missing(),
@@ -38,7 +37,6 @@ public data class IntegrationData(
                 name,
                 type,
                 enabled,
-                syncing,
                 roleId,
                 enableEmoticons,
                 expireBehavior,

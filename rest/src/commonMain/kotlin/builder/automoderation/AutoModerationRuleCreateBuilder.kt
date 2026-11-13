@@ -74,8 +74,8 @@ public class KeywordAutoModerationRuleCreateBuilder(
     private var _allowedKeywords: Optional<MutableList<String>> = Optional.Missing()
     override var allowedKeywords: MutableList<String>? by ::_allowedKeywords.delegate()
 
-    // one of keywords or regexPatterns is required, don't bother to send missing trigger metadata if both are missing
-    override fun buildTriggerMetadata(): Optional.Value<DiscordAutoModerationRuleTriggerMetadata> =
+    // triggerMetadata is required for Keyword rules
+    override fun buildTriggerMetadata(): Optional<DiscordAutoModerationRuleTriggerMetadata> =
         DiscordAutoModerationRuleTriggerMetadata(
             keywordFilter = _keywords.mapCopy(),
             regexPatterns = _regexPatterns.mapCopy(),
@@ -97,19 +97,16 @@ public class KeywordPresetAutoModerationRuleCreateBuilder(
     eventType: AutoModerationRuleEventType,
 ) : AutoModerationRuleCreateBuilder(name, eventType), KeywordPresetAutoModerationRuleBuilder {
 
-    override var presets: MutableList<AutoModerationRuleKeywordPresetType> = mutableListOf()
-
-    /** @suppress Use `this.presets = presets` instead. */
-    override fun assignPresets(presets: MutableList<AutoModerationRuleKeywordPresetType>) {
-        this.presets = presets
-    }
+    private var _presets: Optional<MutableList<AutoModerationRuleKeywordPresetType>> = Optional.Missing()
+    override var presets: MutableList<AutoModerationRuleKeywordPresetType>? by ::_presets.delegate()
 
     private var _allowedKeywords: Optional<MutableList<String>> = Optional.Missing()
     override var allowedKeywords: MutableList<String>? by ::_allowedKeywords.delegate()
 
-    override fun buildTriggerMetadata(): Optional.Value<DiscordAutoModerationRuleTriggerMetadata> =
+    // triggerMetadata is required for KeywordPreset rules
+    override fun buildTriggerMetadata(): Optional<DiscordAutoModerationRuleTriggerMetadata> =
         DiscordAutoModerationRuleTriggerMetadata(
-            presets = presets.toList().optional(),
+            presets = _presets.mapCopy(),
             allowList = _allowedKeywords.mapCopy(),
         ).optional()
 }
@@ -120,41 +117,6 @@ public class MentionSpamAutoModerationRuleCreateBuilder(
     name: String,
     eventType: AutoModerationRuleEventType,
 ) : AutoModerationRuleCreateBuilder(name, eventType), MentionSpamAutoModerationRuleBuilder {
-    @Deprecated(
-        "The 'mentionLimit' parameter is optional, only 'mentionLimit' OR 'mentionRaidProtectionEnabled' is required.",
-        ReplaceWith(
-            "MentionSpamAutoModerationRuleCreateBuilder(name, eventType).apply { this@apply.mentionLimit = mentionLimit }",
-            imports = ["dev.kord.rest.builder.automoderation.MentionSpamAutoModerationRuleCreateBuilder"],
-        ),
-        DeprecationLevel.WARNING,
-    )
-    public constructor(name: String, eventType: AutoModerationRuleEventType, mentionLimit: Int) : this(
-        name,
-        eventType,
-    ) {
-        this.mentionLimit = mentionLimit
-    }
-
-    /** @suppress Use `this.mentionLimit = mentionLimit` instead. */
-    @Deprecated(
-        "This can be replaced with 'mentionLimit', it is now a 'var'.",
-        ReplaceWith("this.run { this@run.mentionLimit = mentionLimit }"),
-        DeprecationLevel.WARNING,
-    )
-    override fun assignMentionLimit(mentionLimit: Int) {
-        this.mentionLimit = mentionLimit
-    }
-
-    /** @suppress This declaration only exists to preserve binary compatibility. */
-    @Suppress("NON_FINAL_MEMBER_IN_FINAL_CLASS")
-    @Deprecated(
-        "This can be replaced with 'mentionLimit', it is now a 'var'.",
-        ReplaceWith("this.run { this@run.mentionLimit = mentionLimit }"),
-        DeprecationLevel.WARNING,
-    )
-    public open fun setMentionLimit(mentionLimit: Int) {
-        this.mentionLimit = mentionLimit
-    }
 
     private var _mentionLimit: OptionalInt = OptionalInt.Missing
     override var mentionLimit: Int? by ::_mentionLimit.delegate()
@@ -162,11 +124,35 @@ public class MentionSpamAutoModerationRuleCreateBuilder(
     private var _mentionRaidProtectionEnabled: OptionalBoolean = OptionalBoolean.Missing
     override var mentionRaidProtectionEnabled: Boolean? by ::_mentionRaidProtectionEnabled.delegate()
 
-    // one of mentionTotalLimit or mentionRaidProtectionEnabled is required, don't bother to send missing trigger
-    // metadata if both are missing
-    override fun buildTriggerMetadata(): Optional.Value<DiscordAutoModerationRuleTriggerMetadata> =
+    // triggerMetadata is required for MentionSpam rules
+    override fun buildTriggerMetadata(): Optional<DiscordAutoModerationRuleTriggerMetadata> =
         DiscordAutoModerationRuleTriggerMetadata(
             mentionTotalLimit = _mentionLimit,
             mentionRaidProtectionEnabled = _mentionRaidProtectionEnabled,
+        ).optional()
+}
+
+/** A [MemberProfileAutoModerationRuleBuilder] for building [AutoModerationRuleCreateRequest]s. */
+@KordDsl
+public class MemberProfileAutoModerationRuleCreateBuilder(
+    name: String,
+    eventType: AutoModerationRuleEventType,
+) : AutoModerationRuleCreateBuilder(name, eventType), MemberProfileAutoModerationRuleBuilder {
+
+    private var _keywords: Optional<MutableList<String>> = Optional.Missing()
+    override var keywords: MutableList<String>? by ::_keywords.delegate()
+
+    private var _regexPatterns: Optional<MutableList<String>> = Optional.Missing()
+    override var regexPatterns: MutableList<String>? by ::_regexPatterns.delegate()
+
+    private var _allowedKeywords: Optional<MutableList<String>> = Optional.Missing()
+    override var allowedKeywords: MutableList<String>? by ::_allowedKeywords.delegate()
+
+    // triggerMetadata is required for MemberProfile rules
+    override fun buildTriggerMetadata(): Optional<DiscordAutoModerationRuleTriggerMetadata> =
+        DiscordAutoModerationRuleTriggerMetadata(
+            keywordFilter = _keywords.mapCopy(),
+            regexPatterns = _regexPatterns.mapCopy(),
+            allowList = _allowedKeywords.mapCopy(),
         ).optional()
 }

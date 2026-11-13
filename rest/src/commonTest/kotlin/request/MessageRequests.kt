@@ -8,13 +8,12 @@ import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.Optional
 import dev.kord.rest.json.readFile
 import dev.kord.rest.service.ChannelService
-import dev.kord.test.Platform
 import io.ktor.client.*
 import io.ktor.client.engine.mock.*
 import io.ktor.client.request.forms.*
+import io.ktor.utils.io.*
 import kotlinx.coroutines.test.runTest
-import kotlinx.datetime.Clock
-import kotlinx.serialization.encodeToString
+import kotlin.time.Clock
 import kotlinx.serialization.json.Json
 import kotlin.js.JsName
 import kotlin.test.Test
@@ -62,10 +61,9 @@ class MessageRequests {
 
         val channelService = ChannelService(KtorRequestHandler(client = HttpClient(mockEngine), token = ""))
 
-        val fileChannel = readFile("images/kord.png")
+        val fileChannel = readFile("images/kord.png").counted()
 
         with(fileChannel) {
-            if (Platform.IS_JVM) assertFalse(isClosedForWrite) // only read lazily on jvm
             assertFalse(isClosedForRead)
             assertEquals(0L, totalBytesRead)
 
@@ -74,7 +72,6 @@ class MessageRequests {
             }
             assertEquals(mockMessage, createdMessage)
 
-            assertTrue(isClosedForWrite)
             assertTrue(isClosedForRead)
             assertTrue(totalBytesRead > 0L)
         }

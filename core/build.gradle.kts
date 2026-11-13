@@ -1,19 +1,13 @@
+@file:OptIn(ExperimentalAbiValidation::class)
+
+import org.jetbrains.kotlin.gradle.dsl.abi.ExperimentalAbiValidation
+
 plugins {
     `kord-multiplatform-module`
     `kord-publishing`
 }
 
 kotlin {
-    js {
-        nodejs {
-            testTask {
-                useMocha {
-                    timeout = "10000" // KordEventDropTest is too slow for default 2 seconds timeout
-                }
-            }
-        }
-    }
-
     sourceSets {
         commonMain {
             dependencies {
@@ -23,6 +17,13 @@ kotlin {
 
                 api(libs.kord.cache.api)
                 api(libs.kord.cache.map)
+
+                implementation(libs.kotlin.logging)
+            }
+        }
+        jvmMain {
+            dependencies {
+                implementation(libs.slf4j.api)
             }
         }
         jvmTest {
@@ -31,10 +32,5 @@ kotlin {
             }
         }
     }
-}
 
-tasks {
-    dokkaHtmlMultiModule {
-        enabled = false
-    }
 }

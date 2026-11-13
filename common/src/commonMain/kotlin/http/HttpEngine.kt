@@ -5,4 +5,4 @@ import io.ktor.client.engine.*
 
 /** @suppress */
 @KordInternal
-public expect object HttpEngine : HttpClientEngineFactory<HttpClientEngineConfig>
+public expect fun httpEngine(): HttpClientEngineFactory<HttpClientEngineConfig>

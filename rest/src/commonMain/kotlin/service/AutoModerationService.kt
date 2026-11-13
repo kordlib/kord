@@ -79,26 +79,15 @@ public class AutoModerationService(requestHandler: RequestHandler) : RestService
         return createAutoModerationRule(guildId, request.toRequest(), request.reason)
     }
 
-    @Deprecated(
-        "The 'mentionLimit' parameter is optional, only 'mentionLimit' OR 'mentionRaidProtectionEnabled' is required.",
-        ReplaceWith(
-            "this.createMentionSpamAutoModerationRule(guildId, name, eventType) { " +
-                "this@createMentionSpamAutoModerationRule.mentionLimit = mentionLimit\nbuilder() }"
-        ),
-        DeprecationLevel.WARNING,
-    )
-    public suspend inline fun createMentionSpamAutoModerationRule(
+    public suspend inline fun createMemberProfileAutoModerationRule(
         guildId: Snowflake,
         name: String,
         eventType: AutoModerationRuleEventType,
-        mentionLimit: Int,
-        builder: MentionSpamAutoModerationRuleCreateBuilder.() -> Unit,
+        builder: MemberProfileAutoModerationRuleCreateBuilder.() -> Unit,
     ): DiscordAutoModerationRule {
         contract { callsInPlace(builder, EXACTLY_ONCE) }
-        return createMentionSpamAutoModerationRule(guildId, name, eventType) {
-            this.mentionLimit = mentionLimit
-            builder()
-        }
+        val request = MemberProfileAutoModerationRuleCreateBuilder(name, eventType).apply(builder)
+        return createAutoModerationRule(guildId, request.toRequest(), request.reason)
     }
 
     public suspend fun modifyAutoModerationRule(
@@ -160,6 +149,16 @@ public class AutoModerationService(requestHandler: RequestHandler) : RestService
     ): DiscordAutoModerationRule {
         contract { callsInPlace(builder, EXACTLY_ONCE) }
         val request = MentionSpamAutoModerationRuleModifyBuilder().apply(builder)
+        return modifyAutoModerationRule(guildId, ruleId, request.toRequest(), request.reason)
+    }
+
+    public suspend inline fun modifyMemberProfileAutoModerationRule(
+        guildId: Snowflake,
+        ruleId: Snowflake,
+        builder: MemberProfileAutoModerationRuleModifyBuilder.() -> Unit,
+    ): DiscordAutoModerationRule {
+        contract { callsInPlace(builder, EXACTLY_ONCE) }
+        val request = MemberProfileAutoModerationRuleModifyBuilder().apply(builder)
         return modifyAutoModerationRule(guildId, ruleId, request.toRequest(), request.reason)
     }
 

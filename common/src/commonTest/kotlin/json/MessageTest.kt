@@ -3,7 +3,7 @@ package dev.kord.common.json
 import dev.kord.common.entity.*
 import dev.kord.common.readFile
 import kotlinx.coroutines.test.runTest
-import kotlinx.datetime.Instant
+import kotlin.time.Instant
 import kotlinx.serialization.json.Json
 import kotlin.js.JsName
 import kotlin.test.Test
@@ -37,7 +37,6 @@ class MessageTest {
             editedTimestamp shouldBe null
             with(author) {
                 username shouldBe "Mason"
-                @Suppress("DEPRECATION")
                 discriminator shouldBe "9999"
                 globalName shouldBe null
                 id shouldBe "53908099506183680"
@@ -77,7 +76,6 @@ class MessageTest {
             editedTimestamp shouldBe null
             with(author) {
                 username shouldBe "Mason"
-                @Suppress("DEPRECATION")
                 discriminator shouldBe "9999"
                 globalName shouldBe "Mason!"
                 id.toString() shouldBe "53908099506183680"

@@ -3,6 +3,7 @@ package dev.kord.core.entity.interaction
 import dev.kord.core.Kord
 import dev.kord.core.cache.data.InteractionData
 import dev.kord.core.entity.Guild
+import dev.kord.core.entity.Member
 import dev.kord.core.entity.application.ChatInputCommandCommand
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy

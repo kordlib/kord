@@ -1,47 +1,37 @@
-import kotlinx.atomicfu.plugin.gradle.AtomicFUPluginExtension
-import org.gradle.api.Project
-import org.gradle.api.artifacts.VersionCatalogsExtension
+import org.gradle.api.NamedDomainObjectSet
 import org.gradle.kotlin.dsl.assign
-import org.gradle.kotlin.dsl.configure
-import org.gradle.kotlin.dsl.getByType
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_1_8
 import org.jetbrains.kotlin.gradle.dsl.KotlinCommonCompilerOptions
+import org.jetbrains.kotlin.gradle.dsl.KotlinJvmCompilerOptions
 import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet
 
-object OptIns {
-    const val coroutines = "kotlinx.coroutines.ExperimentalCoroutinesApi"
-}
-
 val kordOptIns = listOf(
-    "kotlin.time.ExperimentalTime",
     "kotlin.contracts.ExperimentalContracts",
 
     "dev.kord.common.annotation.KordInternal",
     "dev.kord.common.annotation.KordPreview",
     "dev.kord.common.annotation.KordExperimental",
     "dev.kord.common.annotation.KordVoice",
+    "kotlin.time.ExperimentalTime"
 )
 
-object Jvm {
-    const val target = 8
-}
-
-fun KotlinCommonCompilerOptions.applyKordCompilerOptions() {
+internal fun KotlinCommonCompilerOptions.applyKordCommonCompilerOptions() {
     allWarningsAsErrors = true
-    freeCompilerArgs.add("-progressive")
+    progressiveMode = true
+    freeCompilerArgs.addAll("-Xexpect-actual-classes", "-Xdont-warn-on-error-suppression", "-Xcollection-literals")
 }
 
-fun KotlinSourceSet.applyKordOptIns() {
-    languageSettings {
+internal const val KORD_JVM_TARGET = 8
+
+internal fun KotlinJvmCompilerOptions.applyKordJvmCompilerOptions() {
+    applyKordCommonCompilerOptions()
+    jvmTarget = JVM_1_8
+    freeCompilerArgs.add("-Xjdk-release=1.8")
+}
+
+internal fun NamedDomainObjectSet<KotlinSourceSet>.applyKordTestOptIns() {
+    named { it.contains("test", ignoreCase = true) }.configureEach {
         // allow `ExperimentalCoroutinesApi` for `TestScope.currentTime`
-        if ("Test" in name) optIn(OptIns.coroutines)
-        kordOptIns.forEach(::optIn)
-    }
-}
-
-fun Project.configureAtomicFU() {
-    // https://github.com/Kotlin/kotlinx-atomicfu/issues/210
-    configure<AtomicFUPluginExtension> {
-        val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")
-        dependenciesVersion = libs.findVersion("kotlinx-atomicfu").get().requiredVersion
+        languageSettings.optIn("kotlinx.coroutines.ExperimentalCoroutinesApi")
     }
 }

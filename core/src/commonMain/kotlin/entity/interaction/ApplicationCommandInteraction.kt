@@ -54,6 +54,7 @@ public fun GlobalApplicationCommandInteraction(
         ApplicationCommandType.ChatInput -> GlobalChatInputCommandInteraction(data, kord, supplier)
         ApplicationCommandType.User -> GlobalUserCommandInteraction(data, kord, supplier)
         ApplicationCommandType.Message -> GlobalMessageCommandInteraction(data, kord, supplier)
+        ApplicationCommandType.PrimaryEntryPoint -> GlobalPrimaryEntryPointCommandInteraction(data, kord, supplier)
         is ApplicationCommandType.Unknown -> error("Unknown application command type ${type.value}")
         null -> error("No application command type was provided")
     }
@@ -76,6 +77,7 @@ public fun GuildApplicationCommandInteraction(
         ApplicationCommandType.ChatInput -> GuildChatInputCommandInteraction(data, kord, supplier)
         ApplicationCommandType.User -> GuildUserCommandInteraction(data, kord, supplier)
         ApplicationCommandType.Message -> GuildMessageCommandInteraction(data, kord, supplier)
+        ApplicationCommandType.PrimaryEntryPoint -> GuildPrimaryEntryPointCommandInteraction(data, kord, supplier)
         is ApplicationCommandType.Unknown -> error("Unknown application command type ${type.value}")
         null -> error("No application command type was provided")
     }

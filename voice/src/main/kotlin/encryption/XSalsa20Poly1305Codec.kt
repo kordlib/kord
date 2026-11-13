@@ -4,6 +4,9 @@ import com.iwebpp.crypto.TweetNaclFast
 import dev.kord.voice.io.MutableByteArrayCursor
 import dev.kord.voice.io.mutableCursor
 
+private const val DEPRECATION_SALSA = "This is no longer used by Kord and all voice encryption modes using XSalsa20Poly1305 are no longer supported by Discord. This will be removed in the future."
+
+@Deprecated(DEPRECATION_SALSA)
 public class XSalsa20Poly1305Codec(public val key: ByteArray) {
     private val encryption = XSalsa20Poly1305Encryption(key)
 
@@ -26,7 +29,8 @@ public class XSalsa20Poly1305Codec(public val key: ByteArray) {
         encryption.open(box, boxOffset, boxLength, nonce, output)
 }
 
-public fun XSalsa20Poly1305Codec.encrypt(
+@Deprecated(DEPRECATION_SALSA)
+public fun @Suppress("DEPRECATION") XSalsa20Poly1305Codec.encrypt(
     message: ByteArray,
     mOffset: Int = 0,
     mLength: Int = message.size,
@@ -37,7 +41,8 @@ public fun XSalsa20Poly1305Codec.encrypt(
     return buffer
 }
 
-public fun XSalsa20Poly1305Codec.decrypt(
+@Deprecated(DEPRECATION_SALSA)
+public fun @Suppress("DEPRECATION") XSalsa20Poly1305Codec.decrypt(
     box: ByteArray,
     boxOffset: Int = 0,
     boxLength: Int = box.size,

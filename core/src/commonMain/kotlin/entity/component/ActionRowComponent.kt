@@ -19,7 +19,7 @@ public class ActionRowComponent(override val data: ComponentData) : Component {
         get() = data.components.orEmpty().map { Component(it) }
 
     /**
-     * The [ButtonComponent]s of this action row that are not a link button, indexed by their
+     * The [ButtonComponent]s of this action row that are not a link or premium button, indexed by their
      * [customId][ButtonComponent.customId] (which is always present on these buttons).
      *
      * @see components
@@ -37,6 +37,15 @@ public class ActionRowComponent(override val data: ComponentData) : Component {
      */
     public val linkButtons: List<ButtonComponent>
         get() = components.filterIsInstance<ButtonComponent>().filter { it.url != null }
+
+    /**
+     * The [ButtonComponent]s of this action row that are a premium button. [skuId][ButtonComponent.skuId] is always
+     * present on these buttons.
+     *
+     * @see components
+     */
+    public val premiumButtons: List<ButtonComponent>
+        get() = components.filterIsInstance<ButtonComponent>().filter { it.skuId != null }
 
     /**
      * The [SelectMenuComponent]s of this action row, indexed by their [customId][SelectMenuComponent.customId].

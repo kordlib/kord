@@ -6,7 +6,7 @@ import dev.kord.common.entity.GuildScheduledEventStatus
 import dev.kord.common.entity.ScheduledEntityType
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalSnowflake
-import kotlinx.datetime.Instant
+import kotlin.time.Instant
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 

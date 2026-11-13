@@ -1,5 +1,5 @@
-@file:GenerateKordEnum(
-    name = "WebhookType", valueType = INT,
+@file:Generate(
+    INT_KORD_ENUM, name = "WebhookType",
     docUrl = "https://discord.com/developers/docs/resources/webhook#webhook-object-webhook-types",
     entries = [
         Entry(
@@ -19,9 +19,9 @@ package dev.kord.common.entity
 
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalSnowflake
-import dev.kord.ksp.GenerateKordEnum
-import dev.kord.ksp.GenerateKordEnum.Entry
-import dev.kord.ksp.GenerateKordEnum.ValueType.INT
+import dev.kord.ksp.Generate
+import dev.kord.ksp.Generate.EntityType.INT_KORD_ENUM
+import dev.kord.ksp.Generate.Entry
 import kotlinx.serialization.*
 
 /**

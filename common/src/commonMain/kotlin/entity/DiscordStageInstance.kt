@@ -1,10 +1,11 @@
-@file:GenerateKordEnum(
-    name = "StageInstancePrivacyLevel", valueType = INT,
+@file:Generate(
+    INT_KORD_ENUM, name = "StageInstancePrivacyLevel",
     docUrl = "https://discord.com/developers/docs/resources/stage-instance#stage-instance-object-privacy-level",
     entries = [
         Entry(
             "Public", intValue = 1, kDoc = "The Stage instance is visible publicly.",
-            deprecated = Deprecated("Stages are no longer discoverable", level = WARNING),
+            deprecated = Deprecated("Stages are no longer discoverable. The deprecation level will be raised" +
+                    " to HIDDEN in 0.19.0 and this declaration will be removed in 0.20.0", level = DeprecationLevel.ERROR),
         ),
         Entry("GuildOnly", intValue = 2, kDoc = "The Stage instance is visible to only guild members."),
     ],
@@ -12,12 +13,11 @@
 
 package dev.kord.common.entity
 
-import dev.kord.ksp.GenerateKordEnum
-import dev.kord.ksp.GenerateKordEnum.Entry
-import dev.kord.ksp.GenerateKordEnum.ValueType.INT
+import dev.kord.ksp.Generate
+import dev.kord.ksp.Generate.EntityType.INT_KORD_ENUM
+import dev.kord.ksp.Generate.Entry
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import kotlin.DeprecationLevel.WARNING
 
 
 /**
@@ -42,7 +42,8 @@ public data class DiscordStageInstance(
     val topic: String,
     @SerialName("privacy_level")
     val privacyLevel: StageInstancePrivacyLevel,
-    @Deprecated("Stages are no longer discoverable")
+    @Deprecated("Stages are no longer discoverable. The deprecation level will be raised to HIDDEN in 0.19.0" +
+            " and this declaration will be removed in 0.20.0", level = DeprecationLevel.ERROR)
     @SerialName("discoverable_disabled")
     val discoverableDisabled: Boolean,
     @SerialName("guild_scheduled_event_id")

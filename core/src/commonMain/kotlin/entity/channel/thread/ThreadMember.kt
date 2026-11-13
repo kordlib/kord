@@ -6,7 +6,7 @@ import dev.kord.core.behavior.ThreadMemberBehavior
 import dev.kord.core.cache.data.ThreadMemberData
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
-import kotlinx.datetime.Instant
+import kotlin.time.Instant
 
 public class ThreadMember(
     public val data: ThreadMemberData,

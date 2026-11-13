@@ -1,5 +1,6 @@
 package dev.kord.core.entity
 
+import dev.kord.common.annotation.DiscordAPIPreview
 import dev.kord.common.entity.MessageStickerType
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.Kord
@@ -48,18 +49,19 @@ public class Asset private constructor(
         public fun guildBanner(guildId: Snowflake, hash: String, kord: Kord): Asset =
             Asset(hash.isAnimated, DiscordCdn.guildBanner(guildId, hash), kord)
 
+        @DiscordAPIPreview
+        public fun guildHomeHeader(guildId: Snowflake, hash: String, kord: Kord): Asset =
+            Asset(isAnimated = false, DiscordCdn.guildHomeHeader(guildId, hash), kord)
+
+        @DiscordAPIPreview
+        public fun guildTagBadge(guildId: Snowflake, hash: String, kord: Kord): Asset =
+            Asset(isAnimated = false, DiscordCdn.guildTagBadge(guildId, hash), kord)
+
         public fun userBanner(userId: Snowflake, hash: String, kord: Kord): Asset =
             Asset(hash.isAnimated, DiscordCdn.userBanner(userId, hash), kord)
 
-        @Suppress("DEPRECATION")
-        @Deprecated(
-            "Discord's username system is changing and discriminators are being removed, see " +
-                "https://discord.com/developers/docs/change-log#unique-usernames-on-discord for details.",
-            ReplaceWith("Asset.defaultUserAvatar(userId, kord)", imports = ["dev.kord.core.entity.Asset"]),
-            DeprecationLevel.WARNING,
-        )
         public fun defaultUserAvatar(discriminator: Int, kord: Kord): Asset =
-            Asset(isAnimated = false, DiscordCdn.defaultAvatar(discriminator), kord, recommendedFormat = PNG)
+            Asset(isAnimated = false, DiscordCdn.defaultUserAvatar(discriminator), kord, recommendedFormat = PNG)
 
         public fun defaultUserAvatar(userId: Snowflake, kord: Kord): Asset =
             Asset(isAnimated = false, DiscordCdn.defaultUserAvatar(userId), kord, recommendedFormat = PNG)
@@ -69,6 +71,14 @@ public class Asset private constructor(
 
         public fun memberAvatar(guildId: Snowflake, userId: Snowflake, hash: String, kord: Kord): Asset =
             Asset(hash.isAnimated, DiscordCdn.memberAvatar(guildId, userId, hash), kord)
+
+        public fun avatarDecoration(hash: String, kord: Kord): Asset =
+            Asset(isAnimated = false, DiscordCdn.avatarDecoration(hash), kord, recommendedFormat = PNG)
+
+        public fun nameplate(hash: String, kord: Kord): Asset = when (hash.isAnimated) {
+            true -> Asset(true, DiscordCdn.animatedNameplate(hash), kord, recommendedFormat = PNG)
+            false -> Asset(false, DiscordCdn.staticNameplate(hash), kord, recommendedFormat = WEBM)
+        }
 
         public fun applicationIcon(applicationId: Snowflake, hash: String, kord: Kord): Asset =
             Asset(isAnimated = false, DiscordCdn.applicationIcon(applicationId, hash), kord)
@@ -106,5 +116,8 @@ public class Asset private constructor(
 
         public fun memberBanner(guildId: Snowflake, userId: Snowflake, hash: String, kord: Kord): Asset =
             Asset(hash.isAnimated, DiscordCdn.memberBanner(guildId, userId, hash), kord)
+
+        public fun tagBadge(guildId: Snowflake, hash: String, kord: Kord): Asset =
+            Asset(isAnimated = false, DiscordCdn.tagBadge(guildId, hash), kord)
     }
 }

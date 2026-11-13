@@ -4,9 +4,9 @@ import dev.kord.common.annotation.KordUnsafe
 import dev.kord.rest.request.Request
 import dev.kord.rest.request.RequestIdentifier
 import dev.kord.rest.request.identifier
-import mu.KLogger
-import mu.KotlinLogging
-import kotlinx.datetime.Clock
+import io.github.oshai.kotlinlogging.KLogger
+import io.github.oshai.kotlinlogging.KotlinLogging
+import kotlin.time.Clock
 
 private val parallelLogger = KotlinLogging.logger {}
 

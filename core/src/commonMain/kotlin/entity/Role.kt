@@ -2,14 +2,15 @@ package dev.kord.core.entity
 
 import dev.kord.common.Color
 import dev.kord.common.entity.Permissions
+import dev.kord.common.entity.RoleFlags
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.unwrap
 import dev.kord.core.Kord
 import dev.kord.core.behavior.RoleBehavior
 import dev.kord.core.cache.data.RoleData
+import dev.kord.core.hash
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
-import dev.kord.core.hash
 
 public data class Role(
     val data: RoleData,
@@ -26,10 +27,6 @@ public data class Role(
     public val color: Color get() = Color(data.color)
 
     public val hoisted: Boolean get() = data.hoisted
-
-    @Suppress("DEPRECATION_ERROR")
-    @Deprecated("Binary compatibility", level = DeprecationLevel.HIDDEN)
-    public fun getIcon(): Icon? = data.icon.value?.let { Icon.RoleIcon(data.id, it, kord) }
 
     val iconHash: String? get() = data.icon.value
 
@@ -55,6 +52,9 @@ public data class Role(
      * The tags of this role, if present.
      */
     public val tags: RoleTags? get() = data.tags.unwrap { RoleTags(it, guildId, kord) }
+
+    /** The [RoleFlags] of this role. */
+    public val flags: RoleFlags get() = data.flags
 
     override fun compareTo(other: Entity): Int = when (other) {
         is Role -> compareBy<Role> { it.rawPosition }.thenBy { it.guildId }.compare(this, other)

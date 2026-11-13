@@ -2,6 +2,8 @@ package dev.kord.gateway
 
 import io.ktor.websocket.*
 
-internal expect class Inflater() {
+internal interface Inflater : AutoCloseable {
     fun Frame.inflateData(): String
 }
+
+internal expect fun Inflater(): Inflater

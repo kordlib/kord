@@ -131,6 +131,11 @@ public sealed class Optional<out T> {
             if (value.isEmpty()) Missing()
             else Value(value)
 
+        public fun <T, C : Collection<T>> Optional<C>.missingOnEmpty(): Optional<C> = when(this) {
+            is Value -> if (value.isEmpty()) Missing() else this
+            else -> this
+        }
+
         /**
          * Returns a [Missing] optional of type [T].
          */
@@ -214,6 +219,13 @@ public fun <E> Optional<Set<E>>.orEmpty(): Set<E> = when (this) {
 public inline fun <E, T> Optional<List<E>>.mapList(mapper: (E) -> T): Optional<List<T>> = when (this) {
     is Missing, is Null<*> -> this as Optional<List<T>>
     is Value -> Value(value.map(mapper))
+}
+
+@JvmName("mapNullableList")
+public inline fun <E, T> Optional<List<E>?>.mapList(mapper: (E) -> T): Optional<List<T>?> = when (this) {
+    is Missing -> Missing()
+    is Null -> Null()
+    is Value -> Value(value!!.map(mapper))
 }
 
 public fun <T> Optional<MutableList<T>>.mapCopy(): Optional<List<T>> = map { mutable -> mutable.toList() }

@@ -1,6 +1,8 @@
 package dev.kord.core.supplier
 
 import dev.kord.common.entity.DiscordAuditLogEntry
+import dev.kord.common.entity.DiscordEntitlement
+import dev.kord.common.entity.DiscordSubscription
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.common.entity.optional.optionalSnowflake
@@ -16,17 +18,16 @@ import dev.kord.core.entity.channel.TopGuildChannel
 import dev.kord.core.entity.channel.thread.ThreadChannel
 import dev.kord.core.entity.channel.thread.ThreadMember
 import dev.kord.core.entity.interaction.followup.FollowupMessage
+import dev.kord.core.entity.monetization.Entitlement
+import dev.kord.core.entity.monetization.Subscription
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.rest.builder.auditlog.AuditLogGetRequestBuilder
-import dev.kord.rest.json.request.AuditLogGetRequest
-import dev.kord.rest.json.request.GuildScheduledEventUsersResponse
-import dev.kord.rest.json.request.ListThreadsBySnowflakeRequest
-import dev.kord.rest.json.request.ListThreadsByTimestampRequest
+import dev.kord.rest.json.request.*
 import dev.kord.rest.request.RestRequestException
 import dev.kord.rest.route.Position
 import dev.kord.rest.service.RestClient
 import kotlinx.coroutines.flow.*
-import kotlinx.datetime.Instant
+import kotlin.time.Instant
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 import kotlin.math.min
@@ -48,21 +49,21 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
     private inline val interaction get() = kord.rest.interaction
 
     // resources
+    private inline val application get() = kord.rest.application
     private inline val auditLog get() = kord.rest.auditLog
     private inline val autoModeration get() = kord.rest.autoModeration
     private inline val channel get() = kord.rest.channel
     private inline val emoji get() = kord.rest.emoji
+    private inline val entitlement get() = kord.rest.entitlement
     private inline val guild get() = kord.rest.guild
     private inline val template get() = kord.rest.template
     private inline val invite get() = kord.rest.invite
     private inline val stageInstance get() = kord.rest.stageInstance
     private inline val sticker get() = kord.rest.sticker
+    private inline val subscription get() = kord.rest.subscription
     private inline val user get() = kord.rest.user
     private inline val voice get() = kord.rest.voice
     private inline val webhook get() = kord.rest.webhook
-
-    // topics
-    private inline val application get() = kord.rest.application
 
 
     // max batchSize/limit: see https://discord.com/developers/docs/resources/user#get-current-user-guilds
@@ -70,7 +71,7 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
         get() = paginateForwards(batchSize = 200, idSelector = { it.id }) { after ->
             user.getCurrentUserGuilds(position = after, limit = 200)
         }.map {
-            val data = guild.getGuild(it.id).toData()
+            val data = guild.getGuild(it.id, withCounts = true).toData()
             Guild(data, kord)
         }
 
@@ -96,7 +97,7 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
     }
 
     override suspend fun getGuildOrNull(id: Snowflake): Guild? =
-        catchNotFound { Guild(guild.getGuild(id).toData(), kord) }
+        catchNotFound { Guild(guild.getGuild(id, withCounts = true).toData(), kord) }
 
     override suspend fun getGuildPreviewOrNull(guildId: Snowflake): GuildPreview? = catchNotFound {
         val discordPreview = guild.getGuildPreview(guildId)
@@ -110,22 +111,29 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
         Member(memberData, userData, kord)
     }
 
+    override suspend fun getMemberVoiceStateOrNull(guildId: Snowflake, userId: Snowflake): VoiceState? = catchNotFound {
+        val voiceState = guild.getGuildMemberVoiceState(guildId = guildId, userId = userId)
+        val voiceStateData = VoiceStateData.from(guildId = guildId, entity = voiceState)
+        VoiceState(voiceStateData, kord)
+    }
+
     override suspend fun getMessageOrNull(channelId: Snowflake, messageId: Snowflake): Message? = catchNotFound {
         Message(channel.getMessage(channelId = channelId, messageId = messageId).toData(), kord)
     }
 
-    // maxBatchSize: see https://discord.com/developers/docs/resources/channel#get-channel-messages
+    // maxBatchSize: see https://docs.discord.com/developers/resources/message#get-channel-messages
     override fun getMessagesAfter(messageId: Snowflake, channelId: Snowflake, limit: Int?): Flow<Message> =
         limitedPagination(limit, maxBatchSize = 100) { batchSize ->
             paginateForwards(batchSize, start = messageId, idSelector = { it.id }) { after ->
-                channel.getMessages(channelId, position = after, limit = batchSize)
+                // Discord returns in reverse-chronological order, so reverse for chronological flow
+                channel.getMessages(channelId, position = after, limit = batchSize).reversed()
             }
         }.map {
             val data = MessageData.from(it)
             Message(data, kord)
         }
 
-    // maxBatchSize: see https://discord.com/developers/docs/resources/channel#get-channel-messages
+    // maxBatchSize: see https://docs.discord.com/developers/resources/message#get-channel-messages
     override fun getMessagesBefore(messageId: Snowflake, channelId: Snowflake, limit: Int?): Flow<Message> =
         limitedPagination(limit, maxBatchSize = 100) { batchSize ->
             paginateBackwards(batchSize, start = messageId, idSelector = { it.id }) { before ->
@@ -223,6 +231,19 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
         }
     }
 
+    override suspend fun getGuildSoundboardSoundOrNull(guildId: Snowflake, soundId: Snowflake): GuildSoundboardSound? = catchNotFound {
+        val data = SoundboardSoundData.from(guild.getGuildSoundboardSound(guildId, soundId))
+
+        return GuildSoundboardSound(data, kord)
+    }
+
+    override fun getGuildSoundboardSounds(guildId: Snowflake): Flow<GuildSoundboardSound> = flow {
+        for (sound in guild.listGuildSoundboardSounds(guildId).items) {
+            val data = SoundboardSoundData.from(sound)
+            emit(GuildSoundboardSound(data, kord))
+        }
+    }
+
     // maxBatchSize: see https://discord.com/developers/docs/resources/user#get-current-user-guilds
     override fun getCurrentUserGuilds(limit: Int?): Flow<Guild> =
         limitedPagination(limit, maxBatchSize = 200) { batchSize ->
@@ -230,7 +251,7 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
                 user.getCurrentUserGuilds(position = after, limit = batchSize)
             }
         }.map {
-            val data = guild.getGuild(it.id).toData()
+            val data = guild.getGuild(it.id, withCounts = true).toData()
             Guild(data, kord)
         }
 
@@ -646,6 +667,45 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
         val data = ApplicationCommandData.from(response)
         GuildApplicationCommand(data, interaction)
     }
+
+    // maxBatchSize: see https://discord.com/developers/docs/resources/entitlement#list-entitlements
+    override fun getEntitlements(
+        applicationId: Snowflake,
+        request: EntitlementsListRequest,
+    ): Flow<Entitlement> = limitedPagination(request.limit, maxBatchSize = 100) { batchSize ->
+        val req: suspend (Position.BeforeOrAfter) -> List<DiscordEntitlement> = { position ->
+            entitlement.listEntitlements(applicationId, request.copy(position = position, limit = batchSize))
+        }
+        when (val start = request.position) {
+            null, is Position.After ->
+                paginateForwards(batchSize, start = start?.value ?: Snowflake.min, idSelector = { it.id }, req)
+
+            is Position.Before -> paginateBackwards(batchSize, start.value, idSelector = { it.id }, req)
+        }
+    }.map { entitlement -> Entitlement(data = EntitlementData.from(entitlement), kord) }
+
+    // maxBatchSize: see https://discord.com/developers/docs/resources/subscription#list-sku-subscriptions
+    override fun getSubscriptions(
+        skuId: Snowflake,
+        request: SkuSubscriptionsListRequest,
+    ): Flow<Subscription> = limitedPagination(request.limit, maxBatchSize = 100) { batchSize ->
+        val req: suspend (Position.BeforeOrAfter) -> List<DiscordSubscription> = { position ->
+            subscription.listSkuSubscriptions(skuId, request.copy(position = position, limit = batchSize))
+        }
+        when (val start = request.position) {
+            null, is Position.After ->
+                paginateForwards(batchSize, start = start?.value ?: Snowflake.min, idSelector = { it.id }, req)
+
+            is Position.Before -> paginateBackwards(batchSize, start.value, idSelector = { it.id }, req)
+        }
+    }.map { subscription -> Subscription(data = SubscriptionData.from(subscription), kord) }
+
+    override suspend fun getSubscriptionOrNull(skuId: Snowflake, subscriptionId: Snowflake): Subscription? =
+        catchNotFound {
+            val response = subscription.getSkuSubscription(skuId, subscriptionId)
+            val data = SubscriptionData.from(response)
+            Subscription(data, kord)
+        }
 
 
     override fun toString(): String = "RestEntitySupplier(rest=${kord.rest})"

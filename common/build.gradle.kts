@@ -11,8 +11,6 @@ kotlin {
                 api(libs.kotlinx.coroutines.core)
                 api(libs.kotlinx.serialization.json)
                 api(libs.kotlinx.datetime)
-                api(libs.kotlin.logging)
-
                 api(libs.ktor.client.core)
 
                 compileOnly(projects.kspAnnotations)
@@ -20,12 +18,11 @@ kotlin {
         }
         jvmMain {
             dependencies {
-                api(libs.ktor.client.cio)
+                api(libs.ktor.client.okhttp)
             }
         }
         nonJvmMain {
             dependencies {
-                implementation(libs.ktor.utils)
                 implementation(libs.bignum)
                 implementation(libs.stately.collections)
             }
@@ -34,9 +31,15 @@ kotlin {
             dependencies {
                 api(libs.ktor.client.js)
 
-                // workaround for https://youtrack.jetbrains.com/issue/KT-43500
-                // (intended to be compileOnly in commonMain only)
+                // workaround for https://youtrack.jetbrains.com/issue/KT-43500 /
+                // https://youtrack.jetbrains.com/issue/KT-64109#focus=Comments-27-10064206.0-0 /
+                // https://youtrack.jetbrains.com/issue/KT-61096 (intended to be compileOnly in commonMain only)
                 implementation(projects.kspAnnotations)
+            }
+        }
+        jvmTest {
+            dependencies {
+                implementation(libs.kbson)
             }
         }
     }
@@ -52,15 +55,15 @@ internal const val BUILD_CONFIG_GENERATED_COMMIT_HASH: String = "<commit hash>"
 internal const val BUILD_CONFIG_GENERATED_SHORT_COMMIT_HASH: String = "<short commit hash>"
 */
 buildConfig {
-    packageName("dev.kord.common")
-    className("BuildConfigGenerated")
+    packageName = "dev.kord.common"
+    className = "BuildConfigGenerated"
 
     useKotlinOutput {
         topLevelConstants = true
         internalVisibility = true
     }
 
-    buildConfigField("String", "BUILD_CONFIG_GENERATED_LIBRARY_VERSION", "\"$libraryVersion\"")
-    buildConfigField("String", "BUILD_CONFIG_GENERATED_COMMIT_HASH", "\"$commitHash\"")
-    buildConfigField("String", "BUILD_CONFIG_GENERATED_SHORT_COMMIT_HASH", "\"$shortCommitHash\"")
+    buildConfigField("BUILD_CONFIG_GENERATED_LIBRARY_VERSION", libraryVersion)
+    buildConfigField("BUILD_CONFIG_GENERATED_COMMIT_HASH", commitHash)
+    buildConfigField("BUILD_CONFIG_GENERATED_SHORT_COMMIT_HASH", shortCommitHash)
 }

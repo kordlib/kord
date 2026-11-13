@@ -1,7 +1,8 @@
 package dev.kord.common.json
 
-import dev.kord.common.DiscordBitSet
-import dev.kord.common.entity.*
+import dev.kord.common.entity.DiscordRole
+import dev.kord.common.entity.Permission
+import dev.kord.common.entity.Permissions
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.put
@@ -14,15 +15,9 @@ class PermissionsTest {
     @Test
     @JsName("test1")
     fun `adding permissions together does not swallow the universe`() {
-        Permission.values.fold(Permissions(DiscordBitSet(0))) { acc, permission ->
+        Permission.entries.fold(Permissions()) { acc, permission ->
             acc + permission
         }
-    }
-
-    @Test
-    @JsName("test2")
-    fun `Permission All does not swallow the universe`() {
-        Permission.All //oh yeah, this is worthy of a test
     }
 
     @Test
@@ -37,6 +32,7 @@ class PermissionsTest {
             put("permissions", "123456789876543000000000000")
             put("managed", false)
             put("mentionable", false)
+            put("flags", 0)
         }
         val actual = Json.decodeFromJsonElement(DiscordRole.serializer(), expected)
         assertEquals(

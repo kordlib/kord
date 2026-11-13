@@ -13,9 +13,13 @@ import dev.kord.core.entity.channel.TopGuildChannel
 import dev.kord.core.entity.channel.thread.ThreadChannel
 import dev.kord.core.entity.channel.thread.ThreadMember
 import dev.kord.core.entity.interaction.followup.FollowupMessage
+import dev.kord.core.entity.monetization.Entitlement
+import dev.kord.core.entity.monetization.Subscription
+import dev.kord.rest.json.request.EntitlementsListRequest
+import dev.kord.rest.json.request.SkuSubscriptionsListRequest
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.onEach
-import kotlinx.datetime.Instant
+import kotlin.time.Instant
 
 /**
  * [EntitySupplier] that delegates to another [EntitySupplier] to resolve entities.
@@ -60,8 +64,14 @@ public class StoreEntitySupplier(
 
     }
 
-    override suspend fun getMemberOrNull(guildId: Snowflake, userId: Snowflake): Member? {
-        return storeAndReturn(supplier.getMemberOrNull(guildId, userId)) { it.data }
+    override suspend fun getMemberOrNull(guildId: Snowflake, userId: Snowflake): Member? =
+        supplier.getMemberOrNull(guildId, userId)?.also { member ->
+            cache.put(member.data)
+            cache.put(member.memberData)
+        }
+
+    override suspend fun getMemberVoiceStateOrNull(guildId: Snowflake, userId: Snowflake): VoiceState? {
+        return storeAndReturn(supplier.getMemberVoiceStateOrNull(guildId, userId)) { it.data }
     }
 
     override suspend fun getMessageOrNull(channelId: Snowflake, messageId: Snowflake): Message? {
@@ -104,9 +114,11 @@ public class StoreEntitySupplier(
         return storeOnEach(supplier.getGuildBans(guildId, limit)) { it.data }
     }
 
-    override fun getGuildMembers(guildId: Snowflake, limit: Int?): Flow<Member> {
-        return storeOnEach(supplier.getGuildMembers(guildId, limit)) { it.data }
-    }
+    override fun getGuildMembers(guildId: Snowflake, limit: Int?): Flow<Member> =
+        supplier.getGuildMembers(guildId, limit).onEach { member ->
+            cache.put(member.data)
+            cache.put(member.memberData)
+        }
 
     override fun getGuildVoiceRegions(guildId: Snowflake): Flow<Region> {
         return storeOnEach(supplier.getGuildVoiceRegions(guildId)) { it.data }
@@ -118,8 +130,13 @@ public class StoreEntitySupplier(
 
     override fun getEmojis(guildId: Snowflake): Flow<GuildEmoji> {
         return storeOnEach(supplier.getEmojis(guildId)) { it.data }
-
     }
+
+    override suspend fun getGuildSoundboardSoundOrNull(guildId: Snowflake, soundId: Snowflake): GuildSoundboardSound? =
+        storeAndReturn(supplier.getGuildSoundboardSoundOrNull(guildId, soundId)) { it.data }
+
+    override fun getGuildSoundboardSounds(guildId: Snowflake): Flow<GuildSoundboardSound> =
+        storeOnEach(supplier.getGuildSoundboardSounds(guildId)) { it.data }
 
     override fun getCurrentUserGuilds(limit: Int?): Flow<Guild> {
         return storeOnEach(supplier.getCurrentUserGuilds(limit)) { it.data }
@@ -304,6 +321,15 @@ public class StoreEntitySupplier(
 
     override suspend fun getAutoModerationRuleOrNull(guildId: Snowflake, ruleId: Snowflake): AutoModerationRule? =
         storeAndReturn(supplier.getAutoModerationRuleOrNull(guildId, ruleId)) { it.data }
+
+    override fun getEntitlements(applicationId: Snowflake, request: EntitlementsListRequest): Flow<Entitlement> =
+        storeOnEach(supplier.getEntitlements(applicationId, request)) { it.data }
+
+    override fun getSubscriptions(skuId: Snowflake, request: SkuSubscriptionsListRequest): Flow<Subscription> =
+        storeOnEach(supplier.getSubscriptions(skuId, request)) { it.data }
+
+    override suspend fun getSubscriptionOrNull(skuId: Snowflake, subscriptionId: Snowflake): Subscription? =
+        storeAndReturn(supplier.getSubscriptionOrNull(skuId, subscriptionId)) { it.data }
 
 
     private inline fun <T, reified R : Any> storeOnEach(source: Flow<T>, crossinline transform: (T) -> R): Flow<T> {

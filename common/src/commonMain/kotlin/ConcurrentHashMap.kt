@@ -8,4 +8,4 @@ import dev.kord.common.annotation.KordInternal
  * @suppress
  */
 @KordInternal
-public expect class ConcurrentHashMap<K, V>() : MutableMap<K, V>
+public expect fun <K, V> concurrentHashMap(): MutableMap<K, V>

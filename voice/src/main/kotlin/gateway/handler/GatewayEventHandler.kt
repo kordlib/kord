@@ -1,12 +1,12 @@
 package dev.kord.voice.gateway.handler
 
 import dev.kord.voice.gateway.VoiceEvent
+import io.github.oshai.kotlinlogging.KotlinLogging
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import mu.KotlinLogging
 
 private val logger = KotlinLogging.logger("[Handler]")
 

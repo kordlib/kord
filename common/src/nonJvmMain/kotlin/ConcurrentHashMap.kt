@@ -5,4 +5,4 @@ import dev.kord.common.annotation.KordInternal
 
 /** @suppress */
 @KordInternal
-public actual typealias ConcurrentHashMap<K, V> = ConcurrentMutableMap<K, V>
+public actual fun <K, V> concurrentHashMap(): MutableMap<K, V> = ConcurrentMutableMap()

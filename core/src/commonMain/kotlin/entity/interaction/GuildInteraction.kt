@@ -25,7 +25,7 @@ public sealed interface GuildInteraction : Interaction, GuildInteractionBehavior
      * [Permissions] the [application][applicationId] has within the [channel][GuildInteractionBehavior.channel] the
      * interaction was sent from.
      */
-    public val appPermissions: Permissions get() = data.appPermissions.value!!
+    public val appPermissions: Permissions get() = data.appPermissions
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): GuildInteraction
 }

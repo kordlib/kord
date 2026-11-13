@@ -16,7 +16,7 @@ import dev.kord.gateway.GuildMemberRemove
 import dev.kord.gateway.GuildMemberUpdate
 import kotlinx.coroutines.job
 import kotlinx.coroutines.test.runTest
-import kotlinx.datetime.Instant
+import kotlin.time.Instant
 import kotlin.js.JsName
 import kotlin.test.BeforeTest
 import kotlin.test.Ignore
@@ -40,6 +40,7 @@ class LiveMemberTest : AbstractLiveEntityTest<LiveMember>() {
                     joinedAt = Instant.fromEpochMilliseconds(0),
                     premiumSince = Optional.Missing(),
                     avatar = Optional.Missing(),
+                    flags = GuildMemberFlags(),
                 ),
                 userData = UserData(
                     id = userId,
@@ -69,6 +70,7 @@ class LiveMemberTest : AbstractLiveEntityTest<LiveMember>() {
                             avatar = null
                         ),
                         joinedAt = Instant.fromEpochMilliseconds(0),
+                        flags = GuildMemberFlags(),
                     ),
                     0
                 )

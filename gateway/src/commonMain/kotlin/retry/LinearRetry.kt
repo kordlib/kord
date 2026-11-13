@@ -1,9 +1,9 @@
 package dev.kord.gateway.retry
 
+import io.github.oshai.kotlinlogging.KotlinLogging
 import kotlinx.atomicfu.atomic
 import kotlinx.atomicfu.update
 import kotlinx.coroutines.delay
-import mu.KotlinLogging
 import kotlin.time.Duration
 import kotlin.time.times
 

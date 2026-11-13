@@ -1,7 +1,7 @@
 package dev.kord.rest.ratelimit
 
 import dev.kord.common.annotation.KordUnsafe
-import kotlinx.datetime.Clock
+import kotlin.time.Clock
 
 class ParallelRequestRateLimiterTest : AbstractRequestRateLimiterTest() {
 

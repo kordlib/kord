@@ -1,13 +1,10 @@
 package dev.kord.gateway.json
 
 import dev.kord.common.entity.Snowflake
+import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.buildJsonObject
-import kotlinx.serialization.json.decodeFromJsonElement
-import kotlinx.serialization.json.put
+import kotlinx.serialization.json.*
 import kotlin.js.JsName
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -56,14 +53,14 @@ class SnowflakeTest {
     @Test
     @JsName("test4")
     fun `Deserialization of Snowflake as large Number completes successfully`() {
-        // ULong is inline class and therefore cannot extend abstract class Number but put only takes Number
-        val value = Snowflake.validValues.last.toNumber()
+        val value = Snowflake.validValues.last
         val json = buildJsonObject {
-            put("snowflake", value)
+            @OptIn(ExperimentalSerializationApi::class)
+            put("snowflake", JsonPrimitive(value))
         }
 
         val container = Json.decodeFromJsonElement<SnowflakeContainer>(json)
-        assertEquals(value.value, container.snowflake.value)
+        assertEquals(value, container.snowflake.value)
     }
 
     @Test

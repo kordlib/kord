@@ -35,11 +35,11 @@ internal class ThreadEventHandler : BaseGatewayEventHandler() {
         val channelData = event.channel.toData()
         kord.cache.put(channelData)
 
-        // update lastMessageId for forum channels when thread is created
+        // update lastMessageId for forum and media channels when thread is created
         // (same for other channels when message is created)
         val parentId = channelData.parentId?.value!!
         kord.cache.query {
-            ChannelData::type eq ChannelType.GuildForum
+            ChannelData::type predicate { it == ChannelType.GuildForum || it == ChannelType.GuildMedia }
             idEq(ChannelData::id, parentId)
         }.update {
             it.copy(lastMessageId = channelData.id.optionalSnowflake())

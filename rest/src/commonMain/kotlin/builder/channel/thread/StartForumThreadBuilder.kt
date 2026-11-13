@@ -52,3 +52,8 @@ public class StartForumThreadBuilder(public var name: String) : AuditRequestBuil
         )
     }
 }
+
+/** Add a [tagId] to [appliedTags][StartForumThreadBuilder.appliedTags]. */
+public fun StartForumThreadBuilder.applyTag(tagId: Snowflake) {
+    appliedTags?.add(tagId) ?: run { appliedTags = mutableListOf(tagId) }
+}

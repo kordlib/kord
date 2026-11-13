@@ -9,7 +9,13 @@ dependencies {
     api(projects.common)
     api(projects.gateway)
 
+    implementation(libs.kotlin.logging)
+    implementation(libs.slf4j.api)
+
     compileOnly(projects.kspAnnotations)
 
     api(libs.ktor.network)
+
+    implementation(libs.libsodiumBindings)
+    compileOnly(libs.jna)
 }

@@ -1,6 +1,12 @@
 package dev.kord.common
 
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonPrimitive
+import kotlinx.serialization.json.encodeToJsonElement
 import kotlin.js.JsName
+import kotlin.random.Random
+import kotlin.random.nextLong
 import kotlin.test.*
 
 class BitSetTests {
@@ -98,5 +104,62 @@ class BitSetTests {
                 "0000000000000000000000000000000000000000000000000000000000001011",
             DiscordBitSet(0b1011, 0b111001, 0b110).binary,
         )
+    }
+
+    @Test
+    fun value_works_for_DiscordBitSet_with_empty_data_array() {
+        val bits = DiscordBitSet(data = LongArray(size = 0))
+        assertEquals("0", bits.value)
+    }
+
+    @Test
+    fun value_works_for_all_single_bit_Longs() {
+        for (shift in 0..<Long.SIZE_BITS) {
+            val value = 1L shl shift
+            val bits = DiscordBitSet(value)
+            assertEquals(value.toULong().toString(), bits.value)
+        }
+    }
+
+    @Test
+    fun value_is_never_negative() {
+        for (size in 1..10) {
+            val data = LongArray(size)
+            data[size - 1] = Random.nextLong(Long.MIN_VALUE..-1)
+            val bits = DiscordBitSet(data)
+            assertTrue(bits.value.all { it in '0'..'9' })
+        }
+    }
+
+    @Test
+    fun negative_values_cant_be_parsed() {
+        assertFailsWith<NumberFormatException> { DiscordBitSet("-1") }
+        assertFailsWith<NumberFormatException> { DiscordBitSet("-99999999999999999999999999999999") }
+    }
+
+    private val numberStrings = listOf("0", "1", "1024", "6543654", "59946645771238946")
+
+    // https://github.com/kordlib/kord/issues/911
+    @Test
+    fun deserialization_works_with_json_strings_and_numbers() {
+        numberStrings.forEach { number ->
+            val string = "\"$number\""
+            val expected = DiscordBitSet(number)
+            assertEquals(expected, Json.decodeFromString(string))
+            assertEquals(expected, Json.decodeFromString(number))
+        }
+    }
+
+    @Test
+    fun serialization_works_and_produces_json_strings() {
+        numberStrings.forEach { number ->
+            val bitSet = DiscordBitSet(number)
+            val string = Json.encodeToString(bitSet)
+            val json = Json.encodeToJsonElement(bitSet)
+            assertEquals("\"$number\"", string)
+            assertIs<JsonPrimitive>(json)
+            assertTrue(json.isString)
+            assertEquals(number, json.content)
+        }
     }
 }
