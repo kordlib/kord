@@ -252,6 +252,7 @@ public data class DiscordMessage(
      * This is a list even though the docs say it's a component
      */
     val components: Optional<List<DiscordComponent>> = Optional.Missing(),
+    @SerialName("interaction_metadata")
     val interactionMetadata: Optional<DiscordInteractionMetadata> = Optional.Missing(),
     @Deprecated("Deprecated in favor of interactionMetadata", ReplaceWith("interactionMetadata"), DeprecationLevel.WARNING)
     val interaction: Optional<DiscordMessageInteraction> = Optional.Missing(),
@@ -423,6 +424,7 @@ public data class DiscordPartialMessage(
     val stickers: Optional<List<DiscordStickerItem>> = Optional.Missing(),
     @SerialName("referenced_message")
     val referencedMessage: Optional<DiscordMessage?> = Optional.Missing(),
+    @SerialName("interaction_metadata")
     val interactionMetadata: Optional<DiscordInteractionMetadata> = Optional.Missing(),
     @Deprecated("Deprecated in favor of interactionMetadata", ReplaceWith("interactionMetadata"), DeprecationLevel.WARNING)
     val interaction: Optional<DiscordMessageInteraction> = Optional.Missing(),
