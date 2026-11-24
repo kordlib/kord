@@ -78,10 +78,11 @@ public data class Identify(
     val shard: Optional<DiscordShard> = Optional.Missing(),
     val presence: Optional<DiscordPresence> = Optional.Missing(),
     val intents: Intents,
+    val capabilities: Int = 0
 ) : Command() {
     override fun toString(): String =
         "Identify(token=hunter2, properties=$properties, compress=$compress, largeThreshold=$largeThreshold, " +
-                "shard=$shard, presence=$presence, intents=$intents)"
+                "shard=$shard, presence=$presence, intents=$intents, capabilities=$capabilities)"
 }
 
 @Serializable
