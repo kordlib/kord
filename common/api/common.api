@@ -1753,6 +1753,10 @@ public abstract class dev/kord/common/entity/ChannelFlag {
 	public final fun toString ()Ljava/lang/String;
 }
 
+public final class dev/kord/common/entity/ChannelFlag$ChannelObfuscated : dev/kord/common/entity/ChannelFlag {
+	public static final field INSTANCE Ldev/kord/common/entity/ChannelFlag$ChannelObfuscated;
+}
+
 public final class dev/kord/common/entity/ChannelFlag$Companion {
 	public final fun fromShift (I)Ldev/kord/common/entity/ChannelFlag;
 	public final fun getEntries ()Ljava/util/List;
@@ -1760,6 +1764,10 @@ public final class dev/kord/common/entity/ChannelFlag$Companion {
 
 public final class dev/kord/common/entity/ChannelFlag$HideMediaDownloadOptions : dev/kord/common/entity/ChannelFlag {
 	public static final field INSTANCE Ldev/kord/common/entity/ChannelFlag$HideMediaDownloadOptions;
+}
+
+public final class dev/kord/common/entity/ChannelFlag$IsSpoilerChannel : dev/kord/common/entity/ChannelFlag {
+	public static final field INSTANCE Ldev/kord/common/entity/ChannelFlag$IsSpoilerChannel;
 }
 
 public final class dev/kord/common/entity/ChannelFlag$Pinned : dev/kord/common/entity/ChannelFlag {

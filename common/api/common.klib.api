@@ -8821,6 +8821,8 @@ sealed class dev.kord.common.entity/ChannelFlag { // dev.kord.common.entity/Chan
 
     final class Unknown : dev.kord.common.entity/ChannelFlag // dev.kord.common.entity/ChannelFlag.Unknown|null[0]
 
+    final object ChannelObfuscated : dev.kord.common.entity/ChannelFlag // dev.kord.common.entity/ChannelFlag.ChannelObfuscated|null[0]
+
     final object Companion { // dev.kord.common.entity/ChannelFlag.Companion|null[0]
         final val entries // dev.kord.common.entity/ChannelFlag.Companion.entries|{}entries[0]
             final fun <get-entries>(): kotlin.collections/List<dev.kord.common.entity/ChannelFlag> // dev.kord.common.entity/ChannelFlag.Companion.entries.<get-entries>|<get-entries>(){}[0]
@@ -8829,6 +8831,8 @@ sealed class dev.kord.common.entity/ChannelFlag { // dev.kord.common.entity/Chan
     }
 
     final object HideMediaDownloadOptions : dev.kord.common.entity/ChannelFlag // dev.kord.common.entity/ChannelFlag.HideMediaDownloadOptions|null[0]
+
+    final object IsSpoilerChannel : dev.kord.common.entity/ChannelFlag // dev.kord.common.entity/ChannelFlag.IsSpoilerChannel|null[0]
 
     final object Pinned : dev.kord.common.entity/ChannelFlag // dev.kord.common.entity/ChannelFlag.Pinned|null[0]
 
