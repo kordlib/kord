@@ -2,6 +2,7 @@ package dev.kord.test
 
 import io.ktor.utils.io.*
 import node.buffer.BufferEncoding
+import node.buffer.utf8
 import node.fs.readFile
 import node.process.process
 

@@ -1031,7 +1031,6 @@ public final class dev/kord/voice/io/ByteArrayCursorsKt {
 
 public final class dev/kord/voice/io/ByteArrayView : java/lang/Iterable, kotlin/jvm/internal/markers/KMappedMarker {
 	public static final field Companion Ldev/kord/voice/io/ByteArrayView$Companion;
-	public synthetic fun <init> ([BIILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun asInt ()I
 	public final fun asShort ()S
 	public final fun clone ()Ldev/kord/voice/io/ByteArrayView;

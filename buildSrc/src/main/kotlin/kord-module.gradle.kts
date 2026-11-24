@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.dsl.abi.ExperimentalAbiValidation
+
 plugins {
     org.jetbrains.kotlin.jvm
     org.jetbrains.kotlin.plugin.serialization
@@ -25,6 +27,7 @@ kotlin {
         applyKordTestOptIns()
     }
 
+    @OptIn(ExperimentalAbiValidation::class)
     abiValidation {
         applyKordBCVOptions()
     }

@@ -63,7 +63,7 @@ kotlin {
                 implementation(project(":test-kit"))
             }
         }
-        val nonJvmMain by creating {
+        val nonJvmMain = create("nonJvmMain") {
             dependsOn(commonMain.get())
         }
         jsMain {
@@ -73,9 +73,6 @@ kotlin {
 
     abiValidation {
         applyKordBCVOptions()
-        klib {
-            enabled = true
-        }
     }
 }
 
@@ -99,9 +96,13 @@ tasks {
         "jsSourcesJar",
         "dokkaGenerateModuleHtml",
         "dokkaGeneratePublicationHtml",
+        "kspKotlinJvm",
+        "kspKotlinJs"
     )) {
-        named(task) {
-            dependsOn("kspCommonMainKotlinMetadata")
+        afterEvaluate {
+            findByName(task)?.apply {
+                dependsOn("kspCommonMainKotlinMetadata")
+            }
         }
     }
 
