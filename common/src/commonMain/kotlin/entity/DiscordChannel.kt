@@ -63,6 +63,17 @@
             kDoc = "When set hides the embedded media download options. Available only for " +
                 "[GuildMedia][ChannelType.GuildMedia] channels.",
         ),
+        Entry(
+            "ChannelObfuscated", shift = 17,
+            kDoc = "This channel's metadata has been obfuscated because the current user cannot view it. Only ever " +
+                    "set on channels received over the Gateway; the HTTP API never sets this flag."
+        ),
+        Entry(
+            "IsSpoilerChannel", shift = 21,
+            kDoc = "This channel is a Spoiler Channel i.e. users must opt in to view its contents. Can be set on all " +
+                    "textual guild channels and voice channels (not [GuildStage][ChannelType.GuildStageVoice]). Can " +
+                    "only be set if channel's `nsfw` is false"
+        )
     ],
 )
 

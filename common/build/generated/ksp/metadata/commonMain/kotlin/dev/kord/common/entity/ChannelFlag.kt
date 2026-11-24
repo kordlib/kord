@@ -77,6 +77,16 @@ public sealed class ChannelFlag(
      */
     public object HideMediaDownloadOptions : ChannelFlag(15)
 
+    /**
+     * This channel's metadata has been obfuscated because the current user cannot view it. Only ever set on channels received over the Gateway; the HTTP API never sets this flag.
+     */
+    public object ChannelObfuscated : ChannelFlag(17)
+
+    /**
+     * This channel is a Spoiler Channel i.e. users must opt in to view its contents. Can be set on all textual guild channels and voice channels (not [GuildStage][ChannelType.GuildStageVoice]). Can only be set if channel's `nsfw` is false
+     */
+    public object IsSpoilerChannel : ChannelFlag(21)
+
     public companion object {
         /**
          * A [List] of all known [ChannelFlag]s.
@@ -86,6 +96,8 @@ public sealed class ChannelFlag(
                 Pinned,
                 RequireTag,
                 HideMediaDownloadOptions,
+                ChannelObfuscated,
+                IsSpoilerChannel,
             )
         }
 
@@ -98,6 +110,8 @@ public sealed class ChannelFlag(
             1 -> Pinned
             4 -> RequireTag
             15 -> HideMediaDownloadOptions
+            17 -> ChannelObfuscated
+            21 -> IsSpoilerChannel
             else -> Unknown(shift)
         }
     }
