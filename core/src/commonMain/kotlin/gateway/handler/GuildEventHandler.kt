@@ -264,12 +264,12 @@ internal class GuildEventHandler : BaseGatewayEventHandler() {
         with(event.member) {
             val userData = UserData.from(user)
 
-            val oldData = kord.cache.query {
+            val query = kord.cache.query {
                 idEq(MemberData::userId, userData.id)
                 idEq(MemberData::guildId, guildId)
-            }.singleOrNull()
-
-            kord.cache.query { idEq(UserData::id, userData.id) }.remove()
+            }
+            val oldData = query.singleOrNull()
+            query.remove()
 
             val user = User(userData, kord)
             val old = oldData?.let { Member(it, userData, kord) }
