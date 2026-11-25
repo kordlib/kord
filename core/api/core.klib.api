@@ -8702,6 +8702,8 @@ final class dev.kord.core.entity/AuditLogEntry : dev.kord.core/KordObject { // d
         final fun <get-changes>(): kotlin.collections/List<dev.kord.common.entity/AuditLogChange<*>> // dev.kord.core.entity/AuditLogEntry.changes.<get-changes>|<get-changes>(){}[0]
     final val data // dev.kord.core.entity/AuditLogEntry.data|{}data[0]
         final fun <get-data>(): dev.kord.common.entity/DiscordAuditLogEntry // dev.kord.core.entity/AuditLogEntry.data.<get-data>|<get-data>(){}[0]
+    final val guildId // dev.kord.core.entity/AuditLogEntry.guildId|{}guildId[0]
+        final fun <get-guildId>(): dev.kord.common.entity/Snowflake? // dev.kord.core.entity/AuditLogEntry.guildId.<get-guildId>|<get-guildId>(){}[0]
     final val id // dev.kord.core.entity/AuditLogEntry.id|{}id[0]
         final fun <get-id>(): dev.kord.common.entity/Snowflake // dev.kord.core.entity/AuditLogEntry.id.<get-id>|<get-id>(){}[0]
     final val kord // dev.kord.core.entity/AuditLogEntry.kord|{}kord[0]
